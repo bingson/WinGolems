@@ -187,33 +187,52 @@
  +^!k::     Send {shift down}{up}{shift up}                                     ;[TS] select to line above
  +^!h::     Send {shift down}{home}{shift up}                                   ;[TS] select to beg of current line
 
-; TEXT NAVIGATION ______________________________________________________________
-
- #h::                                                                           ;[TN] Home
- !^Left::                                                                       ;[TN] Home
- PrintScreen & h::                                                              ;[TN] Home
- ^!h:: send {home}                                                              ;[TN] Home
- #l::                                                                           ;[TN] End
- !^Right::                                                                      ;[TN] End
- PrintScreen & l::                                                              ;[TN] End
- ^!l:: send {end}                                                               ;[TN] End
- !h::  send {Left}                                                              ;[TN] Left
- !l::  send {Right}                                                             ;[TN] Right
- !k::  send {Up}                                                                ;[TN] Up
- !j::  send {Down}                                                              ;[TN] Down
- #e:: send {ctrl down}{home}{ctrl up}                                           ;[TN] Ctrl + Home
- +#e::send {ctrl down}{end}{ctrl up}                                            ;[TN] Ctrl + End
+; NAVIGATION & KEY REPLACEMENT__________________________________________________
  
+ #h::                                                                           ;[NKR] Home
+ !^Left::                                                                       ;[NKR] Home
+ PrintScreen & h::                                                              ;[NKR] Home
+ ^!h:: send {home}                                                              ;[NKR] Home
+ #l::                                                                           ;[NKR] End
+ !^Right::                                                                      ;[NKR] End
+ PrintScreen & l::                                                              ;[NKR] End
+ ^!l:: send {end}                                                               ;[NKR] End
+ $!h:: send {Left}                                                              ;[NKR] Left
+ $!l:: send {Right}                                                             ;[NKR] Right
+ $!k:: send {Up}                                                                ;[NKR] Up
+ $!j:: send {Down}                                                              ;[NKR] Down
+ #e::  send {ctrl down}{home}{ctrl up}                                          ;[NKR] Ctrl + Home
+ +#e:: send {ctrl down}{end}{ctrl up}                                           ;[NKR] Ctrl + End
+ 
+ ^SC027::          Send {AppsKey}                                               ;[NKR] appkey press
+ ^m::              Send ^c                                                      ;[NKR] Right-handed copy (ctrl-c)
+ $!SC027::                                                                      ;[NKR] esc key
+ $!<space::        Send {esc}                                                   ;[NKR] esc key
+ +CapsLock::       Send {Backspace down}                                        ;[NKR] Toggle capslock
+ CapsLock::        Send {Delete}                                                ;[NKR] Delete 
+ !CapsLock::       CapsLock                                                     ;[NKR] Backspace
+ ins & enter::     send {Insert}                                                ;[NKR] insert key
+ del & BackSpace:: send {del}                                                   ;[NKR] del key
+
+ Insert::          return                                                       ;[NKR] modifier key no action otherwise
+ home::            return                                                       ;[NKR] modifier key no action otherwise
+ end::             return                                                       ;[NKR] modifier key no action otherwise
+ del::             return                                                       ;[NKR] modifier key no action otherwise
+ PrintScreen::     return                                                       ;[NKR] modifier key no action otherwise
+ RemoveToolTip:
+ ToolTip
+ return
+
 ; TEXT BRACKETS ________________________________________________________________
 
  +!9::                                                                          ;[TB] enclose selected text with ( )
- !9::       Clip("(" Clip() ")")                                                ;[TB] enclose selected text with ( )
- $+!SC01A:: Clip("{" Clip() "}")                                                ;[TB] enclose selected text with { }
- !SC01A::   Clip("[" Clip() "]")                                                ;[TB] enclose selected text with [ ]
- ^SC028::   Clip("'" Clip() "'")                                                ;[TB] enclose selected text with ' '
- +!SC028::  Clip("""" Clip() """")                                              ;[TB] enclose selected text with " "
- !5::       Clip("%" Clip() "%")                                                ;[TB] enclose selected text with % %
- !4::       Clip("$" Clip() "$")                                                ;[TB] enclose selected text with $ $
+ !9::               Clip("(" Clip() ")")                                        ;[TB] enclose selected text with ( )
+ $+!SC01A::         Clip("{" Clip() "}")                                        ;[TB] enclose selected text with { }
+ !SC01A::           Clip("[" Clip() "]")                                        ;[TB] enclose selected text with [ ]
+ ^SC028::           Clip("'" Clip() "'")                                        ;[TB] enclose selected text with ' '
+ +!SC028::          Clip("""" Clip() """")                                      ;[TB] enclose selected text with " "
+ !5::               Clip("%" Clip() "%")                                        ;[TB] enclose selected text with % %
+ !4::               Clip("$" Clip() "$")                                        ;[TB] enclose selected text with $ $
  :?*:;;::{{}                                                                    ;[TB] open curly braces
  :?*:;'::{}}                                                                    ;[TB] close curly braces
 
@@ -228,26 +247,8 @@
  +!sc00C::     Send, {ASC 0150}                                                 ;[C] en dash (–)
  !sc00C::      Send, {ASC 0151}                                                 ;[C] em dash (—)
  
- 
-
-; KEY REASSIGNMENT _____________________________________________________________
- ^SC027::          Send {AppsKey}                                               ;[KR] appkey press
- ^m::              Send ^c                                                      ;[KR] Right-handed copy (ctrl-c)
- $!SC027::                                                                      ;[KR] esc key
- $!<space::        Send {esc}                                                   ;[KR] esc key
- +CapsLock::       CapsLock                                                     ;[KR] Toggle capslock
- CapsLock::        Send {Delete}                                                ;[KR] Delete 
- !CapsLock::       Send {Backspace down}                                        ;[KR] Backspace
- ins & enter::     send {Insert}                                                ;[KR] insert key
- del & BackSpace:: send {del}                                                   ;[KR] del key
- PrintScreen::     return                                                       ;[KR] hotkey modifier for more frequently used functions 
- Insert::          return                                                       ;[KR] hotkey modifier for less frequently used functions
- home::            return                                                       ;[KR] hotkey modifier to open a specific file/folder/setting
- end::             return                                                       ;[KR] hotkey modifier for hotkeys that change the state of the system
- del::             return                                                       ;[KR] hotkey modifier for hotkeys that change the state of the system
- 
-
 ; TABS _________________________________________________________________________
+ ; system wide shortcut for changing tabs
  !b:: send ^{PgUp}                                                              ;[T] move => tab
  >!space::                                                                      ;[T] move <= tab
  <!space::                                                                      ;[T] move <= tab
@@ -257,6 +258,8 @@
  
 
 ; MOUSE FUNCTIONS ______________________________________________________________
+ ; simulate mouse functions with keyboard shortcuts
+
  PrintScreen & j::                                                              ;[MF] scroll wheel down
  #j:: Click, WheelDown 4                                                        ;[MF] scroll wheel down
  PrintScreen & k::                                                              ;[MF] scroll wheel up

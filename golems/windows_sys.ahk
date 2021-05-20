@@ -1,6 +1,6 @@
 ; MANIPULATE ACTIVE WINDOW _____________________________________________________
 
- ^#sc027::                Send {lwin down}{d}{lwin up}                          ;[MAW] show desktop
+ ^#sc027::                Send {lwin down}d{lwin up}                            ;[MAW] show desktop
  ^#w::                    WinClose,A                                            ;[MAW] close active window
  ^#q::                    CloseClass()                                          ;[MAW] close all instances of the active program
  +#capslock::             ActivatePrevInstance()                                ;[MAW] rotate through instances of active program starting from oldest 
@@ -27,13 +27,13 @@
  End & F10:: Run explorer.exe ms-settings:bluetooth                             ;[SS] bluetooth settings
  End & F7::  Run explorer.exe ms-settings:display                               ;[SS] display setting
  End & F3::  Run explorer.exe %A_WinDir%\system32\mmsys.cpl                     ;[SS] sound settings
- End & k::   send {lwin down}{k}{lwin up}                                       ;[SS] quick connect window
- End & a::   Send {lwin down}{a}{lwin up}                                       ;[SS] notification window
- End & x::   Send {lwin down}{x}{lwin up}                                       ;[SS] power shell
- End & i::   Send {lwin down}{i}{lwin up}                                       ;[SS] windows settings
- End & r::   Send {lwin down}{r}{lwin up}                                       ;[SS] run program
- End & p::   Send {lwin down}{p}{lwin up}                                       ;[SS] activate monitor 
-
+ End & k::   send {lwin down}k{lwin up}                                         ;[SS] quick connect window
+ End & a::   Send {lwin down}a{lwin up}                                         ;[SS] notification window
+ End & x::   Send {lwin down}x{lwin up}                                         ;[SS] power shell
+ End & i::   Send {lwin down}i{lwin up}                                         ;[SS] windows settings
+ End & r::   Send {lwin down}r{lwin up}                                         ;[SS] run program
+ End & p::   Send {lwin down}p{lwin up}                                         ;[SS] activate monitor 
+  
 ; SYS COMMANDS _________________________________________________________________
 
  ^#!Left:: Send {ctrl down}{lwin down}{Left}{ctrl up}{lwin up}                  ;[SC] switch desktop environments (Left)
@@ -52,9 +52,9 @@
 
  #IfWinActive ahk_class 7a56577c-6143-43d9-bdcb-bcf234d86e98
  !s::                                                                           ;[FS] Scan document
-    send !{f}{n}{s}
+    send !fns
     sleep, sleep_num
-    send {s}
+    send s
     return
  #IfWinActive
 
@@ -63,7 +63,7 @@
  PrintScreen & SC035::                                                          ;[S] search Google for selected text
  #SC035::  Run % "http://www.google.com/search?q=" . clip()                     ;[S] search Google for selected text  
  !#SC035:: Run % "http://en.wikipedia.org/w/index.php?search=" . clip()         ;[S] search Wikipedia for selected text  
- ; #F11::     Run % "http://www.investopedia.com/search/default.aspx?q=" . clip()  
+ ; #F11::  Run % "http://www.investopedia.com/search/default.aspx?q=" . clip()  
 
 ; FILE EXPLORER ________________________________________________________________
  
@@ -71,7 +71,7 @@
  $+!c::     clipboard := Explorer_GetSelection()                                ;[FE] store file path(s) of selected file(s) in clipboard
  ^s::       SelectByRegEx()                                                     ;[FE] select files by regex
  !r::       Send {F2}                                                           ;[FE] rename file
- ^!c::      OpenCommandPromptHere()                                             ;[FE] Open Command Prompt Here
+ ^!c::      SendInput !dcmd{Enter}                                              ;[FE] Open Command Prompt Here
  !b::       send !{left}                                                        ;[FE] prev folder
  !n::       send !{right}                                                       ;[FE] forward folder
  ^!k::                                                                          ;[FE] up one directory level
@@ -80,31 +80,31 @@
  ^q::                                                                           ;[FE] close file exploer window
  !p::       Send ^w                                                             ;[FE] close file exploer window
  !z::       Send !vn{enter}                                                     ;[FE] panes: toggle navigation pane
- ^p::       Send {alt down}{p}{alt up}                                          ;[FE] panes: toggle preview plane
+ ^p::       Send {alt down}p{alt up}                                            ;[FE] panes: toggle preview plane
 
  <^j::                                                                          ;[FE] sort by name
     send {Ctrl Down}{NumpadAdd}{Ctrl up}     
-    send !{v}{o}{enter} 
+    send !vo{enter} 
     return  
  
  <^k::                                                                          ;[FE] sort by date modified
     send {Ctrl Down}{NumpadAdd}{Ctrl up}     
-    send !{v}{o}{Down}{enter}   
+    send !vo{Down}{enter}   
     return  
  
  >^j::                                                                          ;[FE] sort by type
     send {Ctrl Down}{NumpadAdd}{Ctrl up}     
-    send !{v}{o}{Down}{Down}{enter} 
+    send !vo{Down}{Down}{enter} 
     return  
  
  >^k::                                                                          ;[FE] sort by size
     send {Ctrl Down}{NumpadAdd}{Ctrl up}     
-    send !{v}{o}{Down}{Down}{Down}{enter}   
+    send !vo{Down}{Down}{Down}{enter}   
     return  
  
- ^u::      send !{v}{g}{up 4}{enter}                                            ;[FE] groups: toggle groupby name/remove grouping
- ^o::      Send !{v}{g}{down 2}{enter}                                          ;[FE] groups: group by file type
- ^i::      Send !{v}{g}{down 1}{enter}                                          ;[FE] groups: group by date
+ ^u::      send !vg{up 4}{enter}                                                ;[FE] groups: toggle groupby name/remove grouping
+ ^o::      Send !vg{down 2}{enter}                                              ;[FE] groups: group by file type
+ ^i::      Send !vg{down 1}{enter}                                              ;[FE] groups: group by date
  !sc035::                                                                       ;[FE] groups: group folding: Expand all 
  ^sc035::  ExpandCollapseAllGroups()                                            ;[FE] groups: group folding: Collapse all
  
@@ -118,14 +118,9 @@
  >!Space:: ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                 ;[FE] activate current folder pane 
  
  !SC027::                                                                       ;[FE] view: detailed view with resized columns
-    send {ctrl down}{shift down}{6}{ctrl up}{shift up}
+    send {ctrl down}{shift down}6{ctrl up}{shift up}
     send {Ctrl Down}{NumpadAdd}{Ctrl up}
     return
-
- 
- 
-   
-   ; return
      
  del & v::                                                                      ;[FE] hide/unhide invisible files
     send !v
@@ -163,31 +158,28 @@
     ReleaseModifiers()
     EditFile("HotKey_List.txt", "vscode_path")
     return
-
-                                                                                                
+ #enter::                                                                       ;[AHK] reload all ahk scripts with ~^#r reload hotkey
  $^#r::                                                                         ;[AHK] reload all ahk scripts with ~^#r reload hotkey
     Reload                                               
     return                                               
                                                
  $^#b::                                                                         ;[AHK] run test script
-    sleep, med 
+    sleep, med*2 
     run test.ahk                      
-    sleep, med 
     return                                          
 
-; MEMORY SLOTS _________________________________________________________________
+; MEMORY SYSTEM ________________________________________________________________
 
- !#0::                                                                          ;[MS] cut selected text and overwrite mem slot 0
- !#9::                                                                          ;[MS] cut selected text and overwrite mem slot 9
- !#8::                                                                          ;[MS] cut selected text and overwrite mem slot 8
- !#7::                                                                          ;[MS] cut selected text and overwrite mem slot 7
- !#6::                                                                          ;[MS] cut selected text and overwrite mem slot 6
- !#5::                                                                          ;[MS] cut selected text and overwrite mem slot 5
- !#4::                                                                          ;[MS] cut selected text and overwrite mem slot 4
- !#3::                                                                          ;[MS] cut selected text and overwrite mem slot 3
- !#2::                                                                          ;[MS] cut selected text and overwrite mem slot 2
- !#1::                                                                          ;[MS] cut selected text and overwrite mem slot 1
- ^#0::                                                                          ;[MS] copy selected text and overwrite mem slot 0
+ del & 9::                                                                      ;[MS] cut selected text and overwrite mem slot 9
+ del & 8::                                                                      ;[MS] cut selected text and overwrite mem slot 8
+ del & 7::                                                                      ;[MS] cut selected text and overwrite mem slot 7
+ del & 6::                                                                      ;[MS] cut selected text and overwrite mem slot 6
+ del & 5::                                                                      ;[MS] cut selected text and overwrite mem slot 5
+ del & 4::                                                                      ;[MS] cut selected text and overwrite mem slot 4
+ del & 3::                                                                      ;[MS] cut selected text and overwrite mem slot 3
+ del & 2::                                                                      ;[MS] cut selected text and overwrite mem slot 2
+ del & 1::                                                                      ;[MS] cut selected text and overwrite mem slot 1
+ del & 0::                                                                      ;[MS] cut selected text and overwrite mem slot 0
  ^#9::                                                                          ;[MS] copy selected text and overwrite mem slot 9
  ^#8::                                                                          ;[MS] copy selected text and overwrite mem slot 8
  ^#7::                                                                          ;[MS] copy selected text and overwrite mem slot 7
@@ -197,45 +189,51 @@
  ^#3::                                                                          ;[MS] copy selected text and overwrite mem slot 3
  ^#2::                                                                          ;[MS] copy selected text and overwrite mem slot 2
  ^#1::                                                                          ;[MS] copy selected text and overwrite mem slot 1
+ ^#0::                                                                          ;[MS] copy selected text and overwrite mem slot 0
     OverwriteMemory() {
         slot       := substr(A_ThisHotkey, 0)                                 
-        del_toggle := Instr(A_ThisHotkey, "!") ? True : False
-        WriteToCache("m" slot, del_toggle) 
-        ShowModePopup("m" slot " overwritten",,"200")
+        del_toggle := Instr(A_ThisHotkey, "del") ? True : False                 
+        WriteToCache("m" slot, del_toggle)                                      ;     note: if no text selected, no overwrite will occur
+        ShowModePopup("m" slot "`noverwritten",,"200")
         return
     }
  
- ins & 0::                                                                      ;[MS] append selected text to mem slot 0                                                                      
- ins & 9::                                                                      ;[MS] append selected text to mem slot 9
- ins & 8::                                                                      ;[MS] append selected text to mem slot 8
- ins & 7::                                                                      ;[MS] append selected text to mem slot 7
- ins & 6::                                                                      ;[MS] append selected text to mem slot 6
- ins & 5::                                                                      ;[MS] append selected text to mem slot 5
- ins & 4::                                                                      ;[MS] append selected text to mem slot 4
- ins & 3::                                                                      ;[MS] append selected text to mem slot 3
- ins & 2::                                                                      ;[MS] append selected text to mem slot 2
- ins & 1::                                                                      ;[MS] append selected text to mem slot 1
-    AddToMemory(add_to_top = False){
+ !#9::                                                                          ;[MS] copy selection and add to bottom of mem slot 9
+ !#8::                                                                          ;[MS] copy selection and add to bottom of mem slot 8
+ !#7::                                                                          ;[MS] copy selection and add to bottom of mem slot 7
+ !#6::                                                                          ;[MS] copy selection and add to bottom of mem slot 6
+ !#5::                                                                          ;[MS] copy selection and add to bottom of mem slot 5
+ !#4::                                                                          ;[MS] copy selection and add to bottom of mem slot 4
+ !#3::                                                                          ;[MS] copy selection and add to bottom of mem slot 3
+ !#2::                                                                          ;[MS] copy selection and add to bottom of mem slot 2
+ !#1::                                                                          ;[MS] copy selection and add to bottom of mem slot 1 
+ !#0::                                                                          ;[MS] copy selection and add to bottom of mem slot 0
+    AddToMemory(del_after_copy = "0", prepend = False){
         slot            := substr(A_ThisHotkey, 0)
         new_text_to_add := trim(clip())
-        if (add_to_top = True)
+        if (prepend = True) {
             FilePrepend("mem_cache\m" slot ".txt", new_text_to_add) 
-        else
-            FileAppend % "`n" . new_text_to_add, mem_cache\m%slot%.txt                
-        ShowModePopup("added to m" slot ,,"200")
+            ShowModePopup("added to top `nm" slot ,,"250")
+        } else {
+            FileAppend % "`n" . new_text_to_add, mem_cache\m%slot%.txt           
+            ShowModePopup("added to bottom `nm" slot ,,"250")
+        }
+        ; cut := Instr(A_ThisHotkey, "!") ? True : False 
+        if (cut = true)
+           send {del}
         return
-    } 
+   } 
 
- +#0::                                                                          ;[MS] paste contents of mem slot 0 
  +#9::                                                                          ;[MS] paste contents of mem slot 9   
  +#8::                                                                          ;[MS] paste contents of mem slot 8   
  +#7::                                                                          ;[MS] paste contents of mem slot 7 
- +#6::                                                                          ;[MS] paste contents of mem slot 6   
+ +#6::                                                                          ;[MS] paste contents of mem slot 6    
  +#5::                                                                          ;[MS] paste contents of mem slot 5   
  +#4::                                                                          ;[MS] paste contents of mem slot 4   
  +#3::                                                                          ;[MS] paste contents of mem slot 3   
  +#2::                                                                          ;[MS] paste contents of mem slot 2   
  +#1::                                                                          ;[MS] paste contents of mem slot 1 
+ +#0::                                                                          ;[MS] paste contents of mem slot 0 
  :*:m>::                                                                        ;[MS] paste contents of mem slot # by typing "m>" followed by the slot number 
     RetrieveMemory() {
         hotstring_pressed := Instr(A_ThisHotkey, "#") ? True : False
@@ -253,41 +251,42 @@
  
    CreateHotstringSnippet() will create a .txt copy of selected text
    in the mem_cache folder that can be retrieved through dynamically created 
-   hotstring (script is automatically modified and reloaded). 
+   hotstring (i.e., hotstring can be used immediately after creation). 
  
-    — Python and R hotstring snippets will only work on designated windows 
-     configured in the language specific ahk files. Allows the same hotstring 
-     to be used if they embody equivalent ideas represented in different 
-     code syntax.
- 
+    — Python and R hotstring snippets are kept in separate directories. So the same
+      hotstring name can be applied to corresponding layers of abstraction. 
+      For example, "plot_scatter_plot" can be used in both python and R to output 
+      language/api specific syntax for the same idea.
+  
     — To see an index of hotstrings created through CreateHotstringSnippet() open 
-     mem_cache/hotstring_creation_log.csv
+      mem_cache/hotstring_creation_log.csv
  
     — FORMAT:
  
-    	1) First line of text will be transformed into the hotstring trigger string
-   		with a ">" character appended to the end.
-   	2) Second line will be transformed into a comment in the target .ahk file
-   	3) Third line should be the target text to store
+      1) First line of text will be transformed into the hotstring trigger string
+         with a ">" character appended to the end.
+      2) Second line will be transformed into a comment in the target .ahk file
+      3) Third line should be the target text to store
  
     — EXAMPLE:
  
-    	hotstring_label
-   	comment/description of hotstring for hotkey_help.ahk indexing>
-   	text to store
+      hotstring_label
+      comment/description of hotstring for hotkey_help.ahk indexing>
+      text to store
  
-    	select above 3 lines and press insert & w to create a hotstring.
-   	Afterwards, typing "hotstring_label>" will output "text to store"  
+      select above 3 lines and press insert & w to create a hotstring.
+      Afterwards, typing "hotstring_label>" will output "text to store"  
  */
-
- ^#!w:: CreateHotstringSnippet("80", "windows_sys.ahk")                      ;[D] create windows hotstring
- ^#!r:: CreateHotstringSnippet("80", "R.ahk")                                ;[D] create R programming hotstring
- ^#!p:: CreateHotstringSnippet("80", "Python.ahk")                           ;[D] create python programming hotstring 
-
+ 
+ 
  Home & F8::                                                                    ;[D] open hotstring_creation_log.csv
  :*:hs~~::                                                                      ;[D] open hotstring_creation_log.csv
  run %A_ScriptDir%\mem_cache\hotstring_creation_log.csv
  return
+
+ ^#!w:: CreateHotstringSnippet("80", "windows_sys.ahk")                         ;[D] create windows hotstring
+ ^#!r:: CreateHotstringSnippet("80", "R.ahk")                                   ;[D] create R programming hotstring
+ ^#!p:: CreateHotstringSnippet("80", "Python.ahk")                              ;[D] create python programming hotstring 
 
  ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
  

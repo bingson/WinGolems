@@ -47,10 +47,10 @@
     WinGetClass, class, A
     if (state = "ON") {
         Winset, Alwaysontop, ON , A                                             
-        ShowModePopup(Process_Name " always on top: ON")
+        ShowModePopup(Process_Name "`nalways on top: ON",,,"80", "-800")
     } else {
         Winset, Alwaysontop, OFF , A                                            ; A stands for active window
-        ShowModePopup(Process_Name " always on top: OFF", "FF0000")
+        ShowModePopup(Process_Name "`nalways on top: OFF", "FF0000",,"80","-800")
     }
     return
  }
@@ -86,19 +86,16 @@
     if (state = "ON") {
         ActivateApp("ahk_exe googledrivesync.exe"
             , A_ProgramFiles . "\Google\Drive\googledrivesync.exe")           
-        ; MsgBox,64,, "cloud sync initiated"
-        ShowModePopup("cloud sync initiated")
+        ShowModePopup("cloud sync initiated",,"300", "50")
         sleep, med
         return 
     } else {
         if WinExist("ahk_exe googledrivesync.exe"){
             WinClose, ahk_exe googledrivesync.exe
-            ; MsgBox, 16,, "closing cloud sync"   
-            ShowModePopup("closing cloud sync", "FF0000")
+            ShowModePopup("closing cloud sync", "FF0000", "300", "50") 
             sleep, med 
         } else {
-            ; MsgBox, 32,, "no cloud sync running"
-            ShowModePopup("no cloud sync running", "008080")
+            ShowModePopup("cloud sync not running", "008080", "300", "50")
             sleep, med
         }
         return
@@ -193,15 +190,15 @@
     new_hotstring := "`r:*:" key ">::"                                          
     num_char      := width - StrLen(new_hotstring) + 1                           
     string_char   := RepeatString(" ", num_char)                                 
-    new_hotstring := new_hotstring string_char ";" desc "`n"                    ; # CREATE HOTSTRING INSTANTIATION CODE  
+    new_hotstring := new_hotstring string_char ";" desc "`n"                    ; create hotstring instantiation code  
                    . "AccessCache(" """" mem_path key """" ")`n"                
                    . "return`n"
     
     head    = %key% `, %A_YYYY% `, %A_MMM% `, %A_DD% `,                          
     tail    = %A_Hour% `, %A_Min% `, %dest_file%, %desc% `n                     
     log_txt = %head%%tail%                                                      
-    FileAppend, %log_txt%, %A_ScriptDir%\mem_cache\hotstring_creation_log.csv   ; # UPDATE HOTSTRING CREATION LOG 
-    FileAppend, %new_hotstring%, %A_ScriptDir%\golems\%dest_file%               ; # ADD HOTSTRING CODE TO RELEVANT AHK FILE
+    FileAppend, %log_txt%, %A_ScriptDir%\mem_cache\hotstring_creation_log.csv   ; update hotstring creation log 
+    FileAppend, %new_hotstring%, %A_ScriptDir%\golems\%dest_file%               ; add hotstring code to relevant ahk file
     AccessCache(key, mem_path)                                                  
     reload
     return
@@ -233,8 +230,54 @@
     return %output%
  } 
 
-; INI FILE _____________________________________________________________________ 
+; AHK UTILITIES ________________________________________________________________
+
+
+ CreateConfigINI() {
+    global config_path
+    global UProfile
+    global PF_x86
+    global med
+    msg = No configuration file detected `nplease wait while a new one is created.
+    ShowModePopup(msg, "000000",, "65", "-10000", "14", "560")                  
+    PATH := FindAppPath("winword.exe", "excel.exe", "powerpnt.exe", "AcroRd32.exe", "chrome.exe")
+    IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %config_path%, %A_ComputerName%, vscode_path
+    IniWrite, % PATH["chrome.exe"],   %config_path%, %A_ComputerName%, chrome_path
+    IniWrite, % PATH["winword.exe"],  %config_path%, %A_ComputerName%, word_path
+    IniWrite, % PATH["excel.exe"],    %config_path%, %A_ComputerName%, excel_path
+    IniWrite, % PATH["powerpnt.exe"], %config_path%, %A_ComputerName%, ppt_path
+    IniWrite, % PATH["AcroRd32.exe"], %config_path%, %A_ComputerName%, pdf_path
+    IniWrite,141,                     %config_path%, %A_ComputerName%, F_height
+    IniWrite,415,                     %config_path%, %A_ComputerName%, F_width
+    IniWrite,blue.ico,                %config_path%, settings, starting_icon
+    ShowModePopup("Done!",,, "50", "-10000", "15")  
+    sleep, med
+    ClosePopup()
+    return
+ } 
+
+ FindAppPath(app*) {
+     global PF_x86
+     FOLDER := [PF_x86 "\*",A_ProgramFiles "\*"]
+     PATH := {}
  
+     for each, exe in APP
+     {  
+         for each, dir in FOLDER
+         {
+             Loop Files, %dir%%exe%, R
+             {
+
+                 PATH[exe] := A_LoopFileFullPath
+             }
+         }
+     }   
+     
+     return % PATH
+ }
+ 
+
+
  RetrieveINI(section="passwords", key="b_Login", paste=False) {
     global config_path 
     IniRead, output, %config_path%, %section%, %key%
@@ -251,22 +294,6 @@
     return
  }
  
- CreateConfigINI() {
-    global config_path
-    global UProfile
-    global PF_x86
-    IniWrite,%A_ProgramFiles%\Google\Chrome\Application\chrome.exe,        %config_path%, %A_ComputerName%, chrome_path
-    IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %config_path%, %A_ComputerName%, vscode_path
-    IniWrite,%PF_x86%\Microsoft Office\root\Office16\winword.exe,          %config_path%, %A_ComputerName%, word_path
-    IniWrite,%PF_x86%\Microsoft Office\root\Office16\excel.exe,            %config_path%, %A_ComputerName%, excel_path
-    IniWrite,%PF_x86%\Microsoft Office\root\Office16\powerpnt.exe,         %config_path%, %A_ComputerName%, ppt_path
-    IniWrite,%PF_x86%\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe,         %config_path%, %A_ComputerName%, pdf_path
-    IniWrite,141,                                                          %config_path%, %A_ComputerName%, F_height
-    IniWrite,415,                                                          %config_path%, %A_ComputerName%, F_width
-    return
- } 
- 
-; SYS TRAY _____________________________________________________________________ 
  set_tray_icon(ico_file) {
     ; change tray icon
     IfExist, %ico_file%
@@ -275,6 +302,7 @@
     }
        
  } 
+
  ChangeTrayIcon(ico_path) {
     FileList := []
     FileCount := 0
@@ -293,14 +321,13 @@
     WriteINI("settings", "starting_icon", ico_file)
     return
  } 
-; MISC _________________________________________________________________________
 
- ShowModePopup(msg, CTn = "008000", width = "400", height = "56") {
+ ShowModePopup(msg, ctn = "008000", wn = "400", hn = "75", ms = "-1000", fmn = "16", wmn = "610") {
     ClosePopup()                                                                ; clean up any lingering popups
-    popx := A_ScreenWidth - width - 25
-    popy := A_ScreenHeight - height - 25
-    Progress, b x%popx% y%popy% zh0 w%width% h%height% fm18 CT%CTn%,, %msg%,,SimSun
-    SetTimer, ClosePopup, -1600
+    popx := (A_ScreenWidth - wn)/2                                              ; popx := A_ScreenWidth - width - 25
+    popy := A_ScreenHeight - hn                                                 ; popy := A_ScreenHeight - height - 25
+    Progress, b C11 X%popx% Y%popy% ZH0 ZX10 zy10 W%wn% H%hn% FM%fmn% WM%wmn% CT%ctn% CWffffff,, %msg% ,,Gadugi
+    SetTimer, ClosePopup, %ms%
     POP_UP := true
  }   
 
@@ -309,14 +336,21 @@
     Progress, Off
     POP_UP := false
  }   
+
  
- MonitorLeftEdge() {
-    mx := 0
-    CoordMode, Mouse, Screen
-    MouseGetPos, mx
-    monitor := (mx // A_ScreenWidth)  
-    return monitor * A_ScreenWidth
- }   
+ getMousePos() {
+    MouseGetPos, xpos, ypos
+    xy := "x" xpos " y" ypos
+    ToolTip %xy%
+    Clipboard := xy
+    SetTimer toolTipClear, -3000
+    return
+ }
+ 
+ tooltipClear() {
+    ToolTip
+    return
+ }
  
  WinLLock(state=TRUE) { 
     ; state = TRUE enables Win+L to lock the workstation. (admin privilege req'd)
@@ -381,23 +415,11 @@
     return 0
  }
 
- getMousePos() {
-    MouseGetPos, xpos, ypos
-    xy := "x" xpos " y" ypos
-    ToolTip %xy%
-    Clipboard := xy
-    SetTimer toolTipClear, -3000
-    return
- }
- 
- tooltipClear() {
-    ToolTip
-    return
- }
 
 ; FILE AND FOLDER RELATED FUNCTIONS ____________________________________________
  
  Explorer_GetSelection() {
+    ; Get path of selected files/folders                                        https://www.autohotkey.com/boards/viewtopic.php?style=17&t=60403
     WinGetClass, winClass, % "ahk_id" . hWnd := WinExist("A")
     if !(winClass ~="Progman|WorkerW|(Cabinet|Explore)WClass")
        Return
@@ -428,7 +450,7 @@
  }
 
  SelectByRegEx() {
-     ; Select files in file explorer by regex                                    ; http://www.autohotkey.com/board/topic/60985-get-paths-of-selected-items-in-an-explorer-window/
+     ; Select files in file explorer by regex                                   ; https://sharats.me/posts/the-magic-of-autohotkey-2/
      static selectionPattern := ""
      WinGetPos, wx, wy
      ControlGetPos, cx, cy, cw, , DirectUIHWND3
@@ -460,19 +482,6 @@
          }
      Progress, Off
  }
- 
- OpenCommandPromptHere() {                                                                      
-    backup_clipboard := clipboardall
-    clipwait
-    send, !d
-    sleep, med
-    send, ^c                        
-    sleep, med
-    Run, cmd.exe, %Clipboard%
-    sleep, med
-    Clipboard := backup_clipboard
-    return
- } 
 
  ExpandCollapseAllGroups(){
     global med
@@ -534,8 +543,7 @@
  }
  
  NavRun(Path) {
-    ; change file explorer current folder path
-    ; https://autohotkey.com/board/topic/102127-navigating-explorer-directories/
+    ; change file explorer current folder path                                  ; https://autohotkey.com/board/topic/102127-navigating-explorer-directories/
     try{
         if (-1 != objIE := GetActiveExplorer())
             objIE.Navigate(Path)
@@ -749,7 +757,7 @@
 ; TEXT MANIPULATION ____________________________________________________________
 
   Join(s,p*) {
-    ; Function to Join strings python style
+    ; Function to Join strings python style                                     ; https://www.autohotkey.com/boards/viewtopic.php?t=7124
     static _:="".base.Join:=Func("Join")
     for k,v in p
     {
@@ -962,3 +970,26 @@
     clip(var, True)
     return
   }
+
+; CODING _______________________________________________________________________
+
+
+ TimeCode()                                                                      
+ {
+    ; time ahk code                                                             ; https://www.autohotkey.com/boards/viewtopic.php?t=45263
+    Global StartTimer
+    
+    If (StartTimer != "")
+    {
+        FinishTimer := A_TickCount
+        TimedDuration := FinishTimer - StartTimer
+        StartTimer := ""
+         Sec := round(TimedDuration/1000)
+ 
+        MsgBox, % "around " . Sec . " sec have elapsed!`n"
+         . "(" . round(TimedDuration) . " ms)"
+        Return TimedDuration
+    }
+    Else
+        StartTimer := A_TickCount
+ }
