@@ -12,16 +12,16 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
 
 ## GETTING STARTED
 
-### 1. &nbsp; Dependencies
+### 1. Dependencies
  <ul>
    <li>
      <p>  <b>Required:</b> </p>
-     <p>  â€“ &nbsp; A working copy of Windows 10 (tested on Home Version 20H2 OS build 19042.985)
-     <br> â€“ &nbsp; Installation of Autohotkey version 1.1.33.09 (<a href="https://www.autohotkey.com/">www.autohotkey.com</a>).
+     <p>  – &nbsp; A working copy of Windows 10 (tested on Home Version 20H2 OS build 19042.985)
+     <br> – &nbsp; Installation of Autohotkey version 1.1.33.09 (<a href="https://www.autohotkey.com/">www.autohotkey.com</a>).
    </li>
    <li>
      <p>  <b>Recommended:</b> </p>
-     <p>  â€“ &nbsp; Visual Studio Code Editor (<a href="https://code.visualstudio.com/">code.visualstudio.com</a>) with the following extension IDs: 
+     <p>  – &nbsp; Visual Studio Code Editor (<a href="https://code.visualstudio.com/">code.visualstudio.com</a>) with the following extension IDs: 
      <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-autohotkey
      <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
      <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
@@ -31,12 +31,12 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
  <br>
 
 
-### 2. &nbsp; WinGolems Installation
+### 2. WinGolem Installation
 
  <ul>
    <li>
      <p><b> Option 1: ZIP </b></p>
-     <p> Download WinGolems as a zip file from the following url address and <a href="https://www.7-zip.org/">unzip</a> to a folder of your choice. 
+     <p> Download the WinGolems zip file from the following link and <a href="https://www.7-zip.org/">unzip</a> to a location of your choice. 
 
 ``` 
 https://github.com/bingson/WinGolems/archive/refs/heads/master.zip
@@ -46,7 +46,7 @@ https://github.com/bingson/WinGolems/archive/refs/heads/master.zip
    <li>
      <p><b> Option 2: Git </b></p>
      <p>    This option requires the installation of Git and is recommended if you want to make contributions 
-            to the project and easily update your local repo with new versions via git pull. To download this project through git, run command
+            to the project and easily update your local repo with new versions via git pull. To download this project through git, run
 
 ``` 
 git clone https://github.com/bingson/WinGolems.git 
@@ -55,9 +55,37 @@ git clone https://github.com/bingson/WinGolems.git
    </li>
  </ul>
 
+<p> <details><summary markdown="span"><b> Option 1: Cloning </b> 
+<p> Recommended if you want to make contributions and update your local repo with new versions via git pull.
+
+  
+</summary>
+
+<p> To download this repository (along with the binary) through git clone run the following command. </p>
 
 
-### 3. &nbsp; Executing program
+``` 
+git clone https://github.com/bingson/WinGolems.git 
+```
+</details>
+<p> <b> <font color = '0099cc'>Option 2: Zip</font> </b> 
+<p> Cloning is recommended if you want to make contributions or quickly update your local repo with new versions via git pull.
+<p> 
+
+To download this project and binary through git cloning run the following command. You'll need to install Git if you don't have it 
+
+``` 
+git clone https://github.com/bingson/WinGolems.git 
+```
+
+    
+  </li>
+
+</ul>
+
+
+### Executing program
+
 
 
 * How to run the program
