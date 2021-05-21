@@ -36,8 +36,8 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
  <ul>
    <li>
      <p><b> Option 1 ZIP: </b></p>
-     <p>    This option requires the installation of <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git</a> and is recommended if you want to make contributions and update your local repo with new versions via git pull.       
-     <p>    To download this project through git, run 
+     <p>    Recommended if you want to make contributions and regularly update your local repo with new versions via git pull.       
+     <p>    This option requires the installation of Git, if you don't have it. To download this project through git run the command
 
 ``` 
 git clone https://github.com/bingson/WinGolems.git 
@@ -47,7 +47,7 @@ git clone https://github.com/bingson/WinGolems.git
    <li>
      <p><b> Option 2 Cloning: </b></p>
      <p>    Recommended if you want to make contributions and regularly update your local repo with new versions via git pull.       
-     <p>    This option requires the installation of Git, if you don't have it. To download this project through git, run the command
+     <br>    This option requires the installation of Git, if you don't have it. To download this project through git, run the command
 
 ``` 
 git clone https://github.com/bingson/WinGolems.git 
