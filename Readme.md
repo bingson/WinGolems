@@ -21,19 +21,26 @@ keyboard shortcuts, otherwise known as hotkeys.
 ### DEPENDENCIES
 * WinGolems was tested on
   * Windows 10 Home Version 20H2 OS build 19042.985  
-  * Autohotkey version 1.1.33.09. <font color = 'grey'> Installation is optional if you just want to run the precompiled binary. To make changes to any golems (ahk helper scripts) and installation is required</font>
+  * Autohotkey version 1.1.33.09. To make changes to any scripts, installation is required, but optional if you just want to run the precompiled binary to try it out. 
  
- 
-
 ### INSTALLATION
 
+<p> <details><summary markdown="span"><b> Option 1: Cloning </b> 
+<p> 
 
-<ul>
-  <li>
-<p> <b> <font color = '0099cc'>Option 1: Cloning</font> </b> 
-<p> &nbsp; Cloning is recommended if you want to make contributions or quickly update your local repo with new versions via git pull.
-<p> &nbsp; To download this project and binary through git cloning run the following command. 
-<font color = 'grey'>You'll need to install Git if you don't have it</font> </p>
+  Recommended if you want to make contributions and update your local repo with new versions via git pull.
+</summary>
+
+<p> To download this repository (along with the binary) through git clone run the following command. </p>
+
+
+``` 
+git clone https://github.com/bingson/WinGolems.git 
+```
+</details>
+<p> <b> <font color = '0099cc'>Option 2: Zip</font> </b> 
+<p> Cloning is recommended if you want to make contributions or quickly update your local repo with new versions via git pull.
+<p> To download this project and binary through git cloning run the following command. You'll need to install Git if you don't have it </p>
 
 
 ``` 
@@ -42,6 +49,7 @@ git clone https://github.com/bingson/WinGolems.git
 
     
   </li>
+
 </ul>
 
 
@@ -54,18 +62,6 @@ git clone https://github.com/bingson/WinGolems.git
 ```
 code blocks for commands
 ```
-
-<details>
-  <summary markdown="span">This is the summary text, click me to expand</summary>
-
-  This is the detailed text.
-
-  We can still use markdown, but we need to take the additional step of using the `parse_block_html` option as described in the [Mix HTML + Markdown Markup section](#mix-html--markdown-markup).
-
-  You can learn more about expected usage of this approach in the [GitLab UI docs](https://gitlab-org.gitlab.io/gitlab-ui/?path=/story/base-collapse--default) though the solution we use above is specific to usage in markdown.
-
-</details>
-
 
 
 
