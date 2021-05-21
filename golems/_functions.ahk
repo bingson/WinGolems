@@ -234,7 +234,6 @@
 
 ; AHK UTILITIES ________________________________________________________________
 
-
  CreateConfigINI() {
     global config_path
     global UProfile
@@ -297,12 +296,11 @@
  }
  
  set_tray_icon(ico_file) {
-    ; change tray icon
+    ; change tray iconm
     IfExist, %ico_file%
     {
         Menu, Tray, Icon, %ico_file%
     }
-       
  } 
 
  ChangeTrayIcon(ico_path) {

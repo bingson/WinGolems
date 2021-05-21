@@ -23,16 +23,26 @@ keyboard shortcuts, otherwise known as hotkeys.
   <li>
     <p> Required: </p>
     <p> – &nbsp; Windows 10 (tested on Home Version 20H2 OS build 19042.985) 
-    <p> – &nbsp; Autohotkey version 1.1.33.09.
+    <br> – &nbsp; Autohotkey version 1.1.33.09 (<a href="https://www.autohotkey.com/">https://www.autohotkey.com/</a>).
   </li>
   <li>
     <p> Recommended: </p>
-    <p> – &nbsp; Windows 10 (tested on Home Version 20H2 OS build 19042.985) 
-    <p> – &nbsp; Autohotkey version 1.1.33.09.
+    <p> – &nbsp; Visual Studio Code (<a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>) with the following extension IDs: 
+    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-autohotkey
+    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
+    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
   </li>
+  
 </ul>
 
+<p>Foo  
+bar</p>
+<pre><code>    foo
+bar
+</code></pre> 
+
 Recommended: VS Code with the following
+
 ### INSTALLATION
 
 <p> <details><summary markdown="span"><b> Option 1: Cloning </b> 

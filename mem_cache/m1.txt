@@ -1,8 +1,1 @@
- #Include %A_ScriptDir%           
- #Include golems\_functions.ahk   
- #Include *i golems\windows_sys.ahk
- #Include *i golems\windows_text_navigation.ahk
- #Include *i golems\windows_goto.ahk
- #Include *i golems\VS_code.ahk                                                 ; *i => ignore if script doesn't exist
- #Include *i golems\Python.ahk                                                  
- #Include *i golems\R.ahk        
+\{(\w)\}

@@ -18,7 +18,8 @@
   SetWinDelay, 10                                                               
   SetControlDelay, 20                                                            
   SendMode Event                                                                ; faster input
-
+  ; SetTimer, Restart, 60000                                                      ; reloads the script once every minute; necessary if multiple ahk scripts running at once, optional otherwise
+                                                                                ; are loaded in the system tray simultaneously instead of included into 1 script
   ; INITIALIZE GLOBAL VARIABLES  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
   #NoEnv                                                                        ; prevents empty variables from being looked up as potential environment variables
@@ -30,7 +31,7 @@
   short            := 100                                                       ; set sleep time in milliseconds between actions for specific functions
   med              := 300                                                       
   long             := 900                                                       
-  
+ 
   gosub, WinTextNav_Autoexecution
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and save as dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW
@@ -40,14 +41,18 @@
      , Software\Microsoft\Windows\CurrentVersion\Policies\System                ; frees WIN+L key combo for ahk usage.
      , DisableLockWorkstation, 1
   
-  config_path := A_ScriptDir "\config.ini"
+  ; config_path := A_ScriptDir "\config.ini"
+  config_path      := UProfile "\Google Drive\secure\config.ini"
   icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; A_ScriptDir = active AHK script directory
 
   path := RetrieveINI(A_ComputerName, "vscode_path") 
   if (!FileExist(config_path) or path = "ERROR")
      CreateConfigINI()
      
-  ChangeTrayIcon(icon_path)                                                     ; change icon to confirm script reloaded
+  ; ChangeTrayIcon(icon_path)                                                   ; changes icon color every time script reloads
+  set_tray_icon(icon_path "red.ico")                                           ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
+
+
   
 ; LOAD AHK SCRIPTS _____________________________________________________________
 
@@ -58,7 +63,11 @@
  #Include *i golems\windows_goto.ahk
  #Include *i golems\VS_code.ahk                                                 ; *i => ignore if script doesn't exist
  #Include *i golems\Python.ahk                                                  
- #Include *i golems\R.ahk                                                       
+ #Include *i golems\R.ahk                            
+ #Include *i ..\AHK\golems\chrome.ahk        
+ #Include *i ..\AHK\golems\office.ahk        
+ #Include *i ..\Google Drive\secure\bing.ahk
+ #Include *i ..\Google Drive\secure\mm.ahk                              
  
 /* #INCLUDE MECHANICS **********************************************************
 

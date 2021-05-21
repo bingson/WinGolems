@@ -13,7 +13,7 @@
     return
  /*
   >^space::                                                                      ;<TM> Jupyter window
-    ReleaseModifiers()                                                          ;     window search will stop after the first successful activation
+    ReleaseModifiers()                                                          ;      window search will stop after the first successful activation
     ActivateWindow("Ho me Page - Select or create a notebook - Google Chrome")      
     ActivateWindow("1_DAG")
     ActivateWindow("Jupyter Notebook")
@@ -98,7 +98,7 @@
  >+1::      ChangeFolder(A_ScriptDir "\golems\")                                ;<F> AHK golems folder
  >+2::      ChangeFolder(A_ScriptDir "\lib\")                                   ;<F> AHK libs folder    
  >+m::      ChangeFolder(A_ScriptDir "\mem_cache\")                             ;<F> win img
- >+c::      ChangeFolder(hdrive)                                                ;<F> %Homedrive% (C:)
+ >+c::      ChangeFolder(hdrive)                                                ;<F> C:\ or %Homedrive%
  >+o::      ChangeFolder(A_ProgramFiles)                                        ;<F> C:\Program Files
  >!o::      ChangeFolder(PF_x86)                                                ;<F> C:\Program Files(x86)
  >+u::      ChangeFolder(UProfile)                                              ;<F> %UserProfile% 

@@ -147,7 +147,6 @@
  :X:ws~~:: run, C:\Program Files\AutoHotkey\WindowSpy.ahk                       ;[AHK] open windows spy
  +^#r::       ExitApp                                                           ;[AHK] quit ahk script
  End & l:: % (toggle := !toggle) ? WinLLock(False) : WinLLock(TRUE)             ;[AHK] toggle to enable win+L to lock screen
-
  Lwin & home::                                                                  ;[AHK] generate a list of hotkeys in working directory.
     ReleaseModifiers()
     GenerateHotkeyList()                                             
@@ -160,6 +159,7 @@
     return
  #enter::                                                                       ;[AHK] reload all ahk scripts with ~^#r reload hotkey
  $^#r::                                                                         ;[AHK] reload all ahk scripts with ~^#r reload hotkey
+    Restart:
     Reload                                               
     return                                               
                                                
