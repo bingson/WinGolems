@@ -19,9 +19,9 @@ keyboard shortcuts, otherwise known as hotkeys.
 <br>
 
 ### DEPENDENCIES
-* WinGolems was tested on
-  * Windows 10 Home Version 20H2 OS build 19042.985  
-  * Autohotkey version 1.1.33.09. To make changes to any scripts, installation is required, but optional if you just want to run the precompiled binary to try it out. 
+* Tested on Windows 10 Home Version 20H2 OS build 19042.985  
+* Built with Autohotkey version 1.1.33.09. To make changes to any scripts, installation is required, but optional if you just want to run the precompiled binary to try it out. 
+* Recommended: VS Code with the following
  
 ### INSTALLATION
 
