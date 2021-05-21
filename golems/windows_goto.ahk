@@ -8,13 +8,17 @@
     ReleaseModifiers()                                                          ;     note: VLC windows can't distinguish between lctrl vs rctrl
     ActivateWindow("Udemy")                                                               
     return
-
  >^space::                                                                      ;<TM> Jupyter window
+    ActivateWindow("WinGolems - Visual Studio Code")
+    return
+ /*
+  >^space::                                                                      ;<TM> Jupyter window
     ReleaseModifiers()                                                          ;     window search will stop after the first successful activation
     ActivateWindow("Ho me Page - Select or create a notebook - Google Chrome")      
     ActivateWindow("1_DAG")
     ActivateWindow("Jupyter Notebook")
     return
+ */
 
  #y:: ActivateWindow("VLC media player")                                        ;<TM> VLC
  

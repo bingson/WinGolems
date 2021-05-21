@@ -1,5 +1,6 @@
 ; AUTO-EXECUTION SECTION _______________________________________________________
-  ; SCRIPT OPTIMIZATION CODE                                                    ; https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
+  ; SCRIPT OPTIMIZATION -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+  ; change the below settings if WinGolems isn't running smoothly               https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
  
   SetWorkingDir %A_ScriptDir%
   #MaxHotkeysPerInterval 99000000

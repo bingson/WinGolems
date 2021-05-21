@@ -1,41 +1,53 @@
 # WinGolems
 
-A collection of for Windows 10 AutoHotkey automation and convenience scripts 
-along with a framework for script management in a multi-system environment. 
+<b>A collection of for Windows 10 automation and enhancement scripts written in autohotkey.</b>
 
-[AutoHotkey](https://autohotkey.com/) is a free, open source macro-creation and 
+AutoHotkey is a free, open source macro-creation and 
 automation software utility that allows users to automate repetitive tasks. It 
 is driven by a custom scripting language that is aimed specifically at providing 
 keyboard shortcuts, otherwise known as hotkeys.
 
-
-
 ----
 
-## Contents 
+## CONTENTS 
 
 * [Getting Started](##Getting-Started)
 
 ----
 
-
-
-
-## Getting Started 
+## GETTING STARTED 
 <br>
 
-### Dependencies
+### DEPENDENCIES
+* WinGolems was tested on
+  * Windows 10 Home Version 20H2 OS build 19042.985  
+  * Autohotkey version 1.1.33.09. <font color = 'grey'> Installation is optional if you just want to run the precompiled binary. To make changes to any golems (ahk helper scripts) and installation is required</font>
+ 
+ 
 
-* Tested on Windows 10 Home Version 20H2 OS build 19042.985
-* To run from source or to make changes [AutoHotkey](https://autohotkey.com/) installation is required. This is not necessary, if you just want to run the precompiled Binary.
+### INSTALLATION
 
-### Installation
 
-**Option 1** : Download the script and binary by cloning this repository from GitHub. (You'll need to install
-Git if you don't have it.) The command to run is: `git clone https://github.com/cutejs/vim_mouse_2.ahk.git`
+<ul>
+  <li>
+<p> <b> <font color = '0099cc'>Option 1: Cloning</font> </b> 
+<p> &nbsp; Cloning is recommended if you want to make contributions or quickly update your local repo with new versions via git pull.
+<p> &nbsp; To download this project and binary through git cloning run the following command. 
+<font color = 'grey'>You'll need to install Git if you don't have it</font> </p>
+
+
+``` 
+git clone https://github.com/bingson/WinGolems.git 
+```
+
+    
+  </li>
+</ul>
 
 
 ### Executing program
+
+
 
 * How to run the program
 * Step-by-step bullets

@@ -1,6 +1,7 @@
 SetTitleMatchMode, 3
 #If (WinActive("ahk_exe Code.exe"))
  
+ !o::                 send !0                                                   ;[base] open last editor in group
  +!Right::            send ^!{sc028}                                            ;[base] move to group 1
  +!Left::             send +!{1}                                                ;[base] move to group 2
  ^m::                 send ^m                                                   ;[base] toggle tab moves focus
@@ -47,6 +48,11 @@ SetTitleMatchMode, 3
 #If (WinActive("ahk_exe Code.exe") and TabCondition(".ahk"))
  $+^!8::          Clip("/*" Clip() "*/")                                        ;[ahk] surround selected text with block comment braces
  
- 
+#If (WinActive("ahk_exe Code.exe") and TabCondition(".md"))
+ ins & a:: Clip(send "[[link]](" Clip() ")")                                    ;[md] insert hyperlink
+ +^b::     Clip(send "<b>" Clip() "</b>")                                       ;[md] make selected text bold
+ !r::      Clip("<font color = 'blue'>" Clip() "</font>")                       ;[md] make selected text blue
+ !c::      Clip("<font color = 'grey'>" Clip() "</font>")                       ;[md] make selected text blue
+ :*:4s>::&nbsp;&nbsp;&nbsp;&nbsp;                                                ;[md] add 4 spaces
 
 #IfWinActive
