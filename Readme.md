@@ -55,7 +55,7 @@ git clone https://github.com/bingson/WinGolems.git
    </li>
  </ul>
 
-
+<br>
 
 ### 3. &nbsp; Run and configure WinGolems
 
@@ -82,6 +82,7 @@ pdf_path
 
    </li>
  </ul>
+<br>
 
 ## Help
 
