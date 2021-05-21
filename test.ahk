@@ -51,6 +51,9 @@
     return
 
 Autoexecution: 
+
+CreateConfigINI()
+
 return ; end of auto execution section _________________________________________
 
 

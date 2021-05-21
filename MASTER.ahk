@@ -50,7 +50,7 @@
      CreateConfigINI()
      
   ; ChangeTrayIcon(icon_path)                                                   ; changes icon color every time script reloads
-  set_tray_icon(icon_path "red.ico")                                           ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
+  set_tray_icon(icon_path "lg.ico")                                           ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
 
 
   
