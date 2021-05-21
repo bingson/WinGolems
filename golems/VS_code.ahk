@@ -51,11 +51,6 @@ SetTitleMatchMode, 3
 #If (WinActive("ahk_exe Code.exe") and TabCondition(".md"))
  
  ins & f::        clip("<a href=""" clip() """>" clip() "</a>")                 ;[md] insert hyperlink
- ins & p::        clip("<p><img src=""" clip() """ alt=""" clip() """ title=""" clip() """ /></p>)")
-             
-             
-
  +^b::            clip("<b>" clip() "</b>")                 ;[md] bold text
- ^tab::           Send % (toggle := !toggle) ? "^1" : "^2"                      ;[md] toggle editor group 1 and 2
- :*:_>::&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ ; ^tab::           Send % (toggle := !toggle) ? "^1" : "^2"                      ;[md] toggle editor group 1 and 2
 #IfWinActive

@@ -364,9 +364,11 @@
  GenerateHotkeyList() {
     ; generate a .txt list of all active hotkeys and hotstrings
     ; then opens that .txt in the default editor (config.ini)
+    ShowModePopup("Please wait, building hotkey list", "000000",, "65", "-10000", "14", "560")                  
     run %A_ScriptDir%\golems\Hotkey_Help.ahk                                    ; Run modified version of original script 
     global long
-    sleep long                                                                  
+    global med
+    sleep, long                                                                  
     DetectHiddenWindows On                                                      ; Allows a script's hidden main window to be detected.                 
     SetTitleMatchMode 2                                                         
     WinClose %A_ScriptDir%\golems\Hotkey_Help.ahk  
@@ -384,6 +386,9 @@
     sleep, long * 1.5
     EditFile("""" New_Location """")
     FileDelete, %Orig_File%
+    ShowModePopup("Done!",,, "50", "-10000", "15")  
+    sleep, med
+    ClosePopup()
     return
  }
  

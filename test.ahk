@@ -45,14 +45,13 @@
     send, ^s                                                                    ; master.ahk has the run test.ahk code that is execution after a small sleep period
     return
 
- end & b::
+ end & b:                                                                       ; end test script process
     ReleaseModifiers()
     ExitApp                                                                     ; close running test script
     return
 
 Autoexecution: 
 
-CreateConfigINI()
 
 return ; end of auto execution section _________________________________________
 

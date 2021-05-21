@@ -7,7 +7,7 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
 ## CONTENTS 
 
 * [Getting Started](##Getting-Started)
-
+* [Help](##Help)
 ----
 
 ## GETTING STARTED
@@ -68,7 +68,7 @@ git clone https://github.com/bingson/WinGolems.git
    </li>
    <li>
      <p><b> Configure WinGolems </b></p>
-     <p> If WinGolems MASTER.ahk doesn't detect a settings file (<code>config.ini</code>) in the same folder, a new settings file will be created. WinGolems will search through Program Files (x86) and Program Files folders for application paths used to activate application specific windows and open associated file types. To modify these settings, please open <code>config.ini</code> in any text editor and modify the file path values for the following variables. 
+     <p> If WinGolems doesn't detect a settings file (<code>config.ini</code>), a new settings file will be created. WinGolems will search through Program Files (x86) and Program Files directories for application paths used to identify specific windows and open associated file types. To modify these settings, please open <code>config.ini</code> in any text editor and modify the file path values for the following variables. The vscode_path also doubles as the default editor for unassigned file types. 
 
 ``` 
 vscode_path
@@ -83,68 +83,7 @@ pdf_path
    </li>
  </ul>
 
-## Usage
-
-
-
-
 ## Help
 
-* For an introduction to AutoHotkey please visit [AHK Beginner Tutorial](https://www.autohotkey.com/docs/Tutorial.htm) 
-
-
-To run this project, install it locally using npm:
-
-```
-$ cd ../lorem
-$ npm install
-$ npm start   
-```
-
-<hr>
-<hr>
-<hr>
-
-# Project Title
-
-Simple overview of use/purpose.
-
-## Description
-
-An in-depth paragraph about your project and overview of use.
-
-
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
-
-## Authors
-
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+* Open HotKey_List.txt for a list of hotkeys
+* [AHK Beginner Tutorial](https://www.autohotkey.com/docs/Tutorial.htm) 

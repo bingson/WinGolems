@@ -1,1 +1,4 @@
-\{(\w)\}
+ShowModePopup(msg, "000000",, "65", "-10000", "14", "560")                  
+ShowModePopup("Done!",,, "50", "-10000", "15")  
+    sleep, med
+    ClosePopup()

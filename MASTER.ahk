@@ -41,8 +41,8 @@
      , Software\Microsoft\Windows\CurrentVersion\Policies\System                ; frees WIN+L key combo for ahk usage.
      , DisableLockWorkstation, 1
   
-  ; config_path := A_ScriptDir "\config.ini"
-  config_path      := UProfile "\Google Drive\secure\config.ini"
+  config_path := A_ScriptDir "\config.ini"
+  ; config_path      := UProfile "\Google Drive\secure\config.ini"
   icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; A_ScriptDir = active AHK script directory
 
   path := RetrieveINI(A_ComputerName, "vscode_path") 
@@ -64,10 +64,7 @@
  #Include *i golems\VS_code.ahk                                                 ; *i => ignore if script doesn't exist
  #Include *i golems\Python.ahk                                                  
  #Include *i golems\R.ahk                            
- #Include *i ..\AHK\golems\chrome.ahk        
- #Include *i ..\AHK\golems\office.ahk        
- #Include *i ..\Google Drive\secure\bing.ahk
- #Include *i ..\Google Drive\secure\mm.ahk                              
+                  
  
 /* #INCLUDE MECHANICS **********************************************************
 
