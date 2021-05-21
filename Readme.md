@@ -1,11 +1,6 @@
 # WinGolems
 
-<b>A collection of for Windows 10 automation and enhancement scripts written in autohotkey.</b>
-
-AutoHotkey is a free, open source macro-creation and 
-automation software utility that allows users to automate repetitive tasks. It 
-is driven by a custom scripting language that is aimed specifically at providing 
-keyboard shortcuts, otherwise known as hotkeys.
+A collection of Windows 10 automation and enhancement scripts (golems) written in autohotkey that brings users one step closer to a frictionless work environment. AutoHotkey is a free, open source macro-creation and automation software utility specialized at providing keyboard shortcuts (aka. hotkeys).
 
 ----
 
@@ -16,39 +11,55 @@ keyboard shortcuts, otherwise known as hotkeys.
 ----
 
 ## GETTING STARTED
-<br>
 
 ### DEPENDENCIES
-<ul>
-  <li>
-    <p> Required: </p>
-    <p> – &nbsp; Windows 10 (tested on Home Version 20H2 OS build 19042.985) 
-    <br> – &nbsp; Autohotkey version 1.1.33.09 (<a href="https://www.autohotkey.com/">https://www.autohotkey.com/</a>).
-  </li>
-  <li>
-    <p> Recommended: </p>
-    <p> – &nbsp; Visual Studio Code (<a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>) with the following extension IDs: 
-    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-autohotkey
-    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
-    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
-  </li>
-  
-</ul>
+ <ul>
+   <li>
+     <p>  <b>Required:</b> </p>
+     <p>  – &nbsp; Windows 10 (tested on Home Version 20H2 OS build 19042.985)
+     <br> – &nbsp; Autohotkey version 1.1.33.09 (<a href="https://www.autohotkey.com/">www.autohotkey.com</a>).
+   </li>
+   <li>
+     <p>  <b>Recommended:</b> </p>
+     <p>  – &nbsp; Visual Studio Code Editor (<a href="https://code.visualstudio.com/">code.visualstudio.com</a>) with the following extension IDs: 
+     <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-autohotkey
+     <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
+     <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
+   </li>
+ </ul>
+ 
+ <br>
 
-<p>Foo  
-bar</p>
-<pre><code>    foo
-bar
-</code></pre> 
-
-Recommended: VS Code with the following
 
 ### INSTALLATION
 
-<p> <details><summary markdown="span"><b> Option 1: Cloning </b> 
-<p> 
+ <ul>
+   <li>
+     <p><b> Option 1 ZIP: </b></p>
+     <p>    This option requires the installation of <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git</a> and is recommended if you want to make contributions and update your local repo with new versions via git pull.       
+     <p>    To download this project through git, run 
 
-  Recommended if you want to make contributions and update your local repo with new versions via git pull.
+``` 
+git clone https://github.com/bingson/WinGolems.git 
+```
+
+   </li>
+   <li>
+     <p><b> Option 2 Cloning: </b></p>
+     <p>    Recommended if you want to make contributions and regularly update your local repo with new versions via git pull.       
+     <p>    This option requires the installation of Git, if you don't have it. To download this project through git, run the command
+
+``` 
+git clone https://github.com/bingson/WinGolems.git 
+```
+
+   </li>
+ </ul>
+
+<p> <details><summary markdown="span"><b> Option 1: Cloning </b> 
+<p> Recommended if you want to make contributions and update your local repo with new versions via git pull.
+
+  
 </summary>
 
 <p> To download this repository (along with the binary) through git clone run the following command. </p>
@@ -60,8 +71,9 @@ git clone https://github.com/bingson/WinGolems.git
 </details>
 <p> <b> <font color = '0099cc'>Option 2: Zip</font> </b> 
 <p> Cloning is recommended if you want to make contributions or quickly update your local repo with new versions via git pull.
-<p> To download this project and binary through git cloning run the following command. You'll need to install Git if you don't have it </p>
+<p> 
 
+To download this project and binary through git cloning run the following command. You'll need to install Git if you don't have it 
 
 ``` 
 git clone https://github.com/bingson/WinGolems.git 

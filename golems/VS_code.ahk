@@ -39,18 +39,19 @@ SetTitleMatchMode, 3
     return
 
 #If (WinActive("ahk_exe Code.exe") and TabCondition(".notes"))
- ins & sc034::        send #l                                                 ;[notes] add checkbox to current line
+ ins & sc034::    send #l                                                       ;[notes] add checkbox to current line
 
 #If (WinActive("ahk_exe Code.exe") and TabCondition(".py"))
  $+^!8::          Clip("""""""" Clip() """""""")                                ;[py] surround selected text with block comment braces
- ^enter::         send +^!r                                                   ;[py] run selected code
+ ^enter::         send +^!r                                                     ;[py] run selected code
 
 #If (WinActive("ahk_exe Code.exe") and TabCondition(".ahk"))
  $+^!8::          Clip("/*" Clip() "*/")                                        ;[ahk] surround selected text with block comment braces
  
 #If (WinActive("ahk_exe Code.exe") and TabCondition(".md"))
  
- ins & f:: clip("<a href=""" clip() """>" clip() "</a>")                                ;[md] insert hyperlink
- ^tab::            Send % (toggle := !toggle) ? "^1" : "^2"      ;[base] fold/unfold all code toggle
+ ins & f::        clip("<a href=""" clip() """>" clip() "</a>")                 ;[md] insert hyperlink
+ +^b::            clip("<b>" clip() "</b>")                 ;[md] bold text
+ ^tab::           Send % (toggle := !toggle) ? "^1" : "^2"                      ;[md] toggle editor group 1 and 2
  :*:_>::&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 #IfWinActive

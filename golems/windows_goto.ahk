@@ -56,6 +56,7 @@
  EditFile("golems\_functions.ahk", "vscode_path")
  return
  
+ PrintScreen & v::                                                              ;<EF> VS_code.ahk
  Home & v::                                                                     ;<EF> VS_code.ahk
  :*:v~~::                                                                       ;<EF> VS_code.ahk
  EditFile("golems\VS_code.ahk", "vscode_path")
