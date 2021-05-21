@@ -64,7 +64,9 @@
  #Include *i golems\VS_code.ahk                                                 ; *i => ignore if script doesn't exist
  #Include *i golems\Python.ahk                                                  
  #Include *i golems\R.ahk                            
-                  
+ #Include *i ..\AHK\golems\chrome.ahk        
+ #Include *i ..\Google Drive\secure\bing.ahk
+ #Include *i ..\Google Drive\secure\mm.ahk                     
  
 /* #INCLUDE MECHANICS **********************************************************
 
