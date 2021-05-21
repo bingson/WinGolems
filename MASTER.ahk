@@ -32,6 +32,9 @@
   long             := 900                                                       
   
   gosub, WinTextNav_Autoexecution
+  GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and save as dialogue boxes
+  GroupAdd, FileListers, ahk_class WorkerW
+  GroupAdd, FileListers, ahk_class #32770, ShellView
   
   RegWrite, REG_DWORD, HKEY_CURRENT_USER                                        ; disables windows lockscreen key hook
      , Software\Microsoft\Windows\CurrentVersion\Policies\System                ; frees WIN+L key combo for ahk usage.
