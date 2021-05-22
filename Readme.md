@@ -1,6 +1,6 @@
 # WinGolems
 
-A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. 
+A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The overarching idea is to move closer to a frictionless work 
 
 ----
 
@@ -18,7 +18,7 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
    <li>
      <p>  <b>Required:</b> </p>
      <p>  – &nbsp; Windows 10 (tested on Home Version 20H2 OS build 19042.985)
-     <br> – &nbsp; <a href="https://www.autohotkey.com/">Autohotkey</a> version 1.1.33.09.
+     <br> – &nbsp; <a href="https://www.autohotkey.com/docs/Tutorial.htm#s11">Autohotkey</a> version 1.1.33.09.
    </li>
    <li>
      <p>  <b>Recommended:</b> </p>
@@ -90,7 +90,9 @@ The overarching goal of this project was reduce
  
 ## Help
 
-* Open HotKey_List.txt for a list of hotkeys
-<p><a href="HotKey_List.txt" title="title">HotKey_List.txt</a></p>
+* Open <a href="https://github.com/bingson/WinGolems/blob/master/HotKey_List.txt" title="title">HotKey_List.txt</a> for a list of hotkeys 
 
 * [AHK Beginner Tutorial](https://www.autohotkey.com/docs/Tutorial.htm) 
+ 
+
+

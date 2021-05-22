@@ -154,6 +154,7 @@
     return
  #enter::                                                                       ;[AHK] reload all ahk scripts with ~^#r reload hotkey
  $^#r::                                                                         ;[AHK] reload all ahk scripts with ~^#r reload hotkey
+    Reload:                                               
     Reload                                               
     return                                               
                                                
