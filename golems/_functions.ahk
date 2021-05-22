@@ -44,12 +44,13 @@
  AlwaysOnTop(state = "ON") {
     ; toggle active window to be always on top
     WinGet, Process_Name, ProcessName, A
+    WinGetTitle, Title, A
     WinGetClass, class, A
     if (state = "ON") {
         Winset, Alwaysontop, ON , A                                             
         ShowModePopup(Process_Name "`nalways on top: ON",,,"80", "-800")
     } else {
-        Winset, Alwaysontop, OFF , A                                            
+        Winset, Alwaysontop, OFF , A                                            ; A stands for active window
         ShowModePopup(Process_Name "`nalways on top: OFF", "FF0000",,"80","-800")
     }
     return
@@ -84,8 +85,7 @@
     ; Turn ON/OFF google cloud sync 
     global med
     if (state = "ON") {
-        ActivateApp("ahk_exe googledrivesync.exe"
-            , A_ProgramFiles . "\Google\Drive\googledrivesync.exe")           
+        ActivateApp("cloud_sync_path")           
         ShowModePopup("cloud sync initiated",,"300", "50")
         sleep, med
         return 
@@ -147,33 +147,32 @@
     /*
      CreateHotstringSnippet() will create a .txt copy of selected text
      in the mem_cache folder that can be retrieved through dynamically created 
-     hotstring (i.e., hotstring can be used immediately after creation). 
-                                                    
-     — Python and R hotstring snippets are kept in separate directories. So the same
-       hotstring name can be applied to corresponding layers of abstraction. 
-       For example, "plot_scatter_plot" can be used in both python and R to output 
-       language/api specific syntax for the same idea.
-   
+     hotstring (script is automatically modified and reloaded). 
+    
+     — Python and R hotstring snippets will only work on designated windows 
+       configured in the language specific ahk files. Allows the same hotstring 
+       to be used if they embody equivalent ideas represented in different 
+       code syntax.
+    
      — To see an index of hotstrings created through CreateHotstringSnippet() open 
        mem_cache/hotstring_creation_log.csv
-  
-     — FORMAT:
-  
-       1) First line of text will be transformed into the hotstring trigger string
-          with a ">" character appended to the end.
-       2) Second line will be transformed into a comment in the target .ahk file
-       3) Third line should be the target text to store
-  
-     — EXAMPLE:
-  
-       hotstring_label
-       comment/description of hotstring for hotkey_help.ahk indexing>
-       text to store
-  
-       select above 3 lines and press insert & w to create a hotstring.
-       Afterwards, typing "hotstring_label>" will output "text to store"  
-    */ 
     
+     — FORMAT:
+    
+        1) First line of text will be transformed into the hotstring trigger string
+            with a ">" character appended to the end.
+        2) Second line will be transformed into a comment in the target .ahk file
+        3) Third line should be the target text to store
+    
+     — EXAMPLE:
+    
+        hotstring_label
+        comment/description of hotstring for hotkey_help.ahk indexing>
+        text to store
+    
+        select above 3 lines and press insert & w to create a hotstring.
+        Afterwards, typing "hotstring_label>" will output "text to store" 
+    */ 
     input := trim(clip(), "`r`n`t")                                             
     key := SubStr(input,1,InStr(input,"`r")-1)                                 
     if (key = "")                                                  
@@ -187,8 +186,7 @@
         case "python.ahk":      mem_path := "python\"                                           
         case "windows_sys.ahk": mem_path := ""                                           
     }
-    WriteToCache(key, False, mem_path, body)                                    
-    
+    WriteToCache(key, False, mem_path, body)                                      
     new_hotstring := "`r:*:" key ">::"                                          
     num_char      := width - StrLen(new_hotstring) + 1                           
     string_char   := RepeatString(" ", num_char)                                 
@@ -234,6 +232,7 @@
 
 ; AHK UTILITIES ________________________________________________________________
 
+
  CreateConfigINI() {
     global config_path
     global UProfile
@@ -241,13 +240,14 @@
     global med
     msg = No configuration file detected `nplease wait while a new one is created.
     ShowModePopup(msg, "000000",, "65", "-10000", "14", "560")                  
-    PATH := FindAppPath("winword.exe", "excel.exe", "powerpnt.exe", "AcroRd32.exe", "chrome.exe")
+    PATH := FindAppPath("winword.exe", "excel.exe", "powerpnt.exe", "AcroRd32.exe", "chrome.exe", "googledrivesync.exe")
     IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %config_path%, %A_ComputerName%, vscode_path
-    IniWrite, % PATH["chrome.exe"],   %config_path%, %A_ComputerName%, chrome_path
-    IniWrite, % PATH["winword.exe"],  %config_path%, %A_ComputerName%, word_path
-    IniWrite, % PATH["excel.exe"],    %config_path%, %A_ComputerName%, excel_path
+    IniWrite, % PATH["chrome.exe"],   %config_path%, %A_ComputerName%, html_path
+    IniWrite, % PATH["winword.exe"],  %config_path%, %A_ComputerName%, doc_path
+    IniWrite, % PATH["excel.exe"],    %config_path%, %A_ComputerName%, xls_path
     IniWrite, % PATH["powerpnt.exe"], %config_path%, %A_ComputerName%, ppt_path
     IniWrite, % PATH["AcroRd32.exe"], %config_path%, %A_ComputerName%, pdf_path
+    IniWrite, % PATH["googledrivesync.exe"], %config_path%, %A_ComputerName%, cloud_sync_path
     IniWrite,141,                     %config_path%, %A_ComputerName%, F_height
     IniWrite,415,                     %config_path%, %A_ComputerName%, F_width
     IniWrite,blue.ico,                %config_path%, settings, starting_icon
@@ -295,12 +295,13 @@
     return
  }
  
- set_tray_icon(ico_file) {
-    ; change tray iconm
+ SetTrayIcon(ico_file) {
+    ; change tray icon
     IfExist, %ico_file%
     {
         Menu, Tray, Icon, %ico_file%
     }
+       
  } 
 
  ChangeTrayIcon(ico_path) {
@@ -317,13 +318,13 @@
     Random, rand, 1, %FileCount%
     ico_file_path := ico_path FileList[rand]
     ico_file := FileList[rand]
-    set_tray_icon(ico_file_path) 
+    SetTrayIcon(ico_file_path) 
     WriteINI("settings", "starting_icon", ico_file)
     return
  } 
 
  ShowModePopup(msg, ctn = "008000", wn = "400", hn = "75", ms = "-1000", fmn = "16", wmn = "610") {
-    ClosePopup()                                                                
+    ClosePopup()                                                                ; clean up any lingering popups
     popx := (A_ScreenWidth - wn)/2                                              ; popx := A_ScreenWidth - width - 25
     popy := A_ScreenHeight - hn                                                 ; popy := A_ScreenHeight - height - 25
     Progress, b C11 X%popx% Y%popy% ZH0 ZX10 zy10 W%wn% H%hn% FM%fmn% WM%wmn% CT%ctn% CWffffff,, %msg% ,,Gadugi
@@ -364,11 +365,9 @@
  GenerateHotkeyList() {
     ; generate a .txt list of all active hotkeys and hotstrings
     ; then opens that .txt in the default editor (config.ini)
-    ShowModePopup("Please wait, building hotkey list", "000000",, "65", "-10000", "14", "560")                  
     run %A_ScriptDir%\golems\Hotkey_Help.ahk                                    ; Run modified version of original script 
     global long
-    global med
-    sleep, long                                                                  
+    sleep long                                                                  
     DetectHiddenWindows On                                                      ; Allows a script's hidden main window to be detected.                 
     SetTitleMatchMode 2                                                         
     WinClose %A_ScriptDir%\golems\Hotkey_Help.ahk  
@@ -386,9 +385,6 @@
     sleep, long * 1.5
     EditFile("""" New_Location """")
     FileDelete, %Orig_File%
-    ShowModePopup("Done!",,, "50", "-10000", "15")  
-    sleep, med
-    ClosePopup()
     return
  }
  
@@ -424,7 +420,7 @@
 ; FILE AND FOLDER RELATED FUNCTIONS ____________________________________________
  
  Explorer_GetSelection() {
-    ; Get path of selected files/folders                                        ; https://www.autohotkey.com/boards/viewtopic.php?style=17&t=60403
+    ; Get path of selected files/folders                                        https://www.autohotkey.com/boards/viewtopic.php?style=17&t=60403
     WinGetClass, winClass, % "ahk_id" . hWnd := WinExist("A")
     if !(winClass ~="Progman|WorkerW|(Cabinet|Explore)WClass")
        Return
@@ -574,7 +570,41 @@
     return %output%
  }
  
- ActivateApp(identifier, app_path = "", arguments = "", admin = False) {
+ActivateApp(app_path = "", arguments = "", admin = False) {
+   global config_path
+   if InStr(app_path , "_path") 
+   {
+      IniRead, file_path, %config_path%, %A_ComputerName%, %app_path% 
+      RegExMatch(file_path, "[^\\]+$", exe_name)
+      ActivateOrOpen(exe_name, file_path, arguments) 
+   } 
+   else 
+   {
+      if InStr(arguments , "_path")
+         IniRead, arguments, %config_path%, %A_ComputerName%, %arguments%
+      ActivateOrOpen(app_path,,arguments)                                                  ; only compatible options are file explorer or command window 
+   }
+}
+ 
+
+ActivateOrOpen(exe_name, file_path = "", arguments = "") {
+   grp_identifier := (exe_name = "explorer.exe")                                ; file explorer is a one off special case that requires a class identifier as well
+                   ? "ahk_class CabinetWClass ahk_exe " exe_name                ; other apps share the explorer.exe template
+                   : "ahk_exe " exe_name
+
+   WinGet, wList, List, %grp_identifier%  
+   if !wList {
+      file_path := (exe_name = "explorer.exe" or exe_name = "cmd.exe")
+                 ? exe_name
+                 : file_path
+      RunAsUser(file_path, arguments, A_ScriptDir) ; cmd.exe and explorer.exe do not need filepaths
+   } else {
+      WinActivate, % "ahk_id " wList1 
+   }
+   return
+}
+
+ ActivateApp_old(identifier, app_path = "", arguments = "", admin = False) {
     /* creates dedicated hotkey to activate/open an application
      identifier: Window Title, Class, or Process name from window spy
      app_dir: directory where app is located
@@ -733,7 +763,7 @@
   LoadURL(URL) {
     ; Browser path used to load urls dependent on computer
     global config_path
-    IniRead, output, %config_path%, %A_ComputerName%, chrome_path
+    IniRead, output, %config_path%, %A_ComputerName%, html_path
     Run, %output% %URL%
     return
   }
