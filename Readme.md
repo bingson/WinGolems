@@ -12,6 +12,7 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
 
 ## GETTING STARTED
 
+  
 ### 1. &nbsp; Install Dependencies
  <ul>
    <li>
@@ -81,10 +82,15 @@ pdf_path
  </ul>
 <br>
 
+
+
 ## Usage
 
-
+The overarching goal of this project was reduce 
+ 
 ## Help
 
 * Open HotKey_List.txt for a list of hotkeys
+<p><a href="HotKey_List.txt" title="title">HotKey_List.txt</a></p>
+
 * [AHK Beginner Tutorial](https://www.autohotkey.com/docs/Tutorial.htm) 
