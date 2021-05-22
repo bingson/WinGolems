@@ -123,7 +123,7 @@
     IfWinExist, Inbox - Gmail
         WinActivate                                                             ; use the window found above
     else
-        Run "C:\Users\bings\Desktop\Mail.lnk"
+        Run % A_ScriptDir "\assets\win\Mail.lnk"
     return
  }
  
@@ -420,7 +420,7 @@
 ; FILE AND FOLDER RELATED FUNCTIONS ____________________________________________
  
  Explorer_GetSelection() {
-    ; Get path of selected files/folders                                        https://www.autohotkey.com/boards/viewtopic.php?style=17&t=60403
+    ; Get path of selected files/folders                                        ; https://www.autohotkey.com/boards/viewtopic.php?style=17&t=60403
     WinGetClass, winClass, % "ahk_id" . hWnd := WinExist("A")
     if !(winClass ~="Progman|WorkerW|(Cabinet|Explore)WClass")
        Return
@@ -570,21 +570,22 @@
     return %output%
  }
  
-ActivateApp(app_path = "", arguments = "", admin = False) {
-   global config_path
-   if InStr(app_path , "_path") 
-   {
-      IniRead, file_path, %config_path%, %A_ComputerName%, %app_path% 
-      RegExMatch(file_path, "[^\\]+$", exe_name)
-      ActivateOrOpen(exe_name, file_path, arguments) 
-   } 
-   else 
-   {
-      if InStr(arguments , "_path")
-         IniRead, arguments, %config_path%, %A_ComputerName%, %arguments%
-      ActivateOrOpen(app_path,,arguments)                                                  ; only compatible options are file explorer or command window 
-   }
-}
+ ActivateApp(app_path = "", arguments = "", admin = False) {
+     
+    global config_path
+    if InStr(app_path , "_path") 
+    {
+        IniRead, file_path, %config_path%, %A_ComputerName%, %app_path% 
+        RegExMatch(file_path, "[^\\]+$", exe_name)
+        ActivateOrOpen(exe_name, file_path, arguments) 
+    } 
+    else 
+    {
+        if InStr(arguments , "_path")
+           IniRead, arguments, %config_path%, %A_ComputerName%, %arguments%
+        ActivateOrOpen(app_path,,arguments)                                     ; only compatible options are file explorer or command window
+    }
+ }
  
 
 ActivateOrOpen(exe_name, file_path = "", arguments = "") {
