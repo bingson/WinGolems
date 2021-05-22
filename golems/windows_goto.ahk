@@ -1,28 +1,30 @@
 
-; TITLE MATCH __________________________________________________________________
- ; hotkey to activate window with match string anywhere in the window title
+; TITLE MATCH WINDOW ACTIVATION_________________________________________________
+ ; activate window with match string anywhere in the title
  
  SetTitleMatchMode, 2
- 
+ /*
  <^space::                                                                      ;<TM> activate udemy window, 
     ReleaseModifiers()                                                          ;     note: VLC windows can't distinguish between lctrl vs rctrl
     ActivateWindow("Udemy")                                                               
     return
+
  >^space::                                                                      ;<TM> Jupyter window
-    ActivateWindow("WinGolems - Visual Studio Code")
-    return
- /*
-  >^space::                                                                      ;<TM> Jupyter window
-    ReleaseModifiers()                                                          ;      window search will stop after the first successful activation
+    ReleaseModifiers()                                                          ;     window search will stop after the first successful activation
     ActivateWindow("Ho me Page - Select or create a notebook - Google Chrome")      
     ActivateWindow("1_DAG")
     ActivateWindow("Jupyter Notebook")
     return
- */
-
  #y:: ActivateWindow("VLC media player")                                        ;<TM> VLC
  
+ */
  
+; SEARCH _______________________________________________________________________
+
+ PrintScreen & SC035::                                                          ;[S] search Google for selected text
+ #SC035::  Run % "http://www.google.com/search?q=" . clip()                     ;[S] search Google for selected text  
+ !#SC035:: Run % "http://en.wikipedia.org/w/index.php?search=" . clip()         ;[S] search Wikipedia for selected text  
+ ; #F11::  Run % "http://www.investopedia.com/search/default.aspx?q=" . clip()  
 
 ; EDIT FILE ____________________________________________________________________
  ; edit file from anywhere in windows
@@ -99,7 +101,7 @@
  >+1::      ChangeFolder(A_ScriptDir "\golems\")                                ;<F> AHK golems folder
  >+2::      ChangeFolder(A_ScriptDir "\lib\")                                   ;<F> AHK libs folder    
  >+m::      ChangeFolder(A_ScriptDir "\mem_cache\")                             ;<F> win img
- >+c::      ChangeFolder(hdrive)                                                ;<F> C:\ or %Homedrive%
+ >+c::      ChangeFolder(hdrive)                                                ;<F> %Homedrive% (C:)
  >+o::      ChangeFolder(A_ProgramFiles)                                        ;<F> C:\Program Files
  >!o::      ChangeFolder(PF_x86)                                                ;<F> C:\Program Files(x86)
  >+u::      ChangeFolder(UProfile)                                              ;<F> %UserProfile% 
@@ -116,13 +118,13 @@
  ;shorcuts to launch/reactivate specific apps with the same key
  
  PrintScreen & n::                                                              ;<A> VS Code
- #n::   ActivateApp("ahk_exe Code.exe",             "vscode_path")              ;<A> VS Code
- #s::   ActivateApp("ahk_exe chrome.exe",           "chrome_path")              ;<A> Chrome
- #w::   ActivateApp("ahk_exe winword.exe",          "word_path")                ;<A> Word
- #a::   ActivateApp("ahk_exe excel.exe",            "excel_path")               ;<A> Excel
- #q::   ActivateApp("ahk_exe powerpnt.exe",         "ppt_path")                 ;<A> Powerpoint
- #r::   ActivateApp("ahk_exe pdfxedit.exe",         "pdf_path")                 ;<A> pdf-xchange
- ; #r::   ActivateApp("ahk_exe AcroRd32.exe",         "pdf_path")               ;<A> Adobe Acrobat Reader
+ #n::       ActivateApp("ahk_exe Code.exe",     "vscode_path")                  ;<A> VS Code
+ #s::       ActivateApp("ahk_exe chrome.exe",   "chrome_path")                  ;<A> Chrome
+ #w::       ActivateApp("ahk_exe winword.exe",  "word_path")                    ;<A> Word
+ #a::       ActivateApp("ahk_exe excel.exe",    "excel_path")                   ;<A> Excel
+ #q::       ActivateApp("ahk_exe powerpnt.exe", "ppt_path")                     ;<A> Powerpoint
+ #r::       ActivateApp("ahk_exe pdfxedit.exe", "pdf_path")                     ;<A> pdf-xchange
+ ; #r::   ActivateApp("ahk_exe AcroRd32.exe",  "pdf_path")                      ;<A> Adobe Acrobat Reader
 
  #t::   ActivateApp("ahk_class ConsoleWindowClass", "cmd.exe")                  ;<A> Command Window
  ^#!m:: ActivateMail()                                                          ;<A> Mail

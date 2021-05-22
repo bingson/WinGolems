@@ -67,13 +67,12 @@ git clone https://github.com/bingson/WinGolems.git
    </li>
    <li>
      <p><b> Configure WinGolems </b></p>
-     <p> Upon first run, a new settings file will be created. WinGolems will search through 32 bit and 64 bit Program File directories for executable paths used to launch specific apps and modify associated file types. To change these settings, please open <code>config.ini</code> in any text editor and update the file path values for the following variables.  
+     <p> Upon first run, a new settings file will be created. WinGolems will search through both 32 bit and 64 bit program file folders for executable paths used to launch specific apps and modify associated file types. To change these settings, please open <code>config.ini</code> in a text editor and update the file path values for the following variables.  
 
 ``` 
-vscode_path
-chrome_path
-word_path
-excel_path
+html_path
+doc_path
+xls_path
 ppt_path
 pdf_path
 ```

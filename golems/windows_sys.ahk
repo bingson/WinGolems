@@ -58,12 +58,6 @@
     return
  #IfWinActive
 
-; SEARCH _______________________________________________________________________
-
- PrintScreen & SC035::                                                          ;[S] search Google for selected text
- #SC035::  Run % "http://www.google.com/search?q=" . clip()                     ;[S] search Google for selected text  
- !#SC035:: Run % "http://en.wikipedia.org/w/index.php?search=" . clip()         ;[S] search Wikipedia for selected text  
- ; #F11::  Run % "http://www.investopedia.com/search/default.aspx?q=" . clip()  
 
 ; FILE EXPLORER ________________________________________________________________
  
@@ -147,6 +141,7 @@
  :X:ws~~:: run, C:\Program Files\AutoHotkey\WindowSpy.ahk                       ;[AHK] open windows spy
  +^#r::       ExitApp                                                           ;[AHK] quit ahk script
  End & l:: % (toggle := !toggle) ? WinLLock(False) : WinLLock(TRUE)             ;[AHK] toggle to enable win+L to lock screen
+
  Lwin & home::                                                                  ;[AHK] generate a list of hotkeys in working directory.
     ReleaseModifiers()
     GenerateHotkeyList()                                             
@@ -159,7 +154,6 @@
     return
  #enter::                                                                       ;[AHK] reload all ahk scripts with ~^#r reload hotkey
  $^#r::                                                                         ;[AHK] reload all ahk scripts with ~^#r reload hotkey
-    Restart:
     Reload                                               
     return                                               
                                                
