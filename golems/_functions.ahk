@@ -57,7 +57,7 @@
  }
  
  ActivatePrevInstance() {
-    ; activate newest instance of active program if multiple instances exist
+    ; activate newest instance of active program if multiple instances exist  
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
     WinGet,      n_instances, List,         ahk_class %ActiveClass%
@@ -85,7 +85,7 @@
     ; Turn ON/OFF google cloud sync 
     global med
     if (state = "ON") {
-        ActivateApp("cloud_sync_path")           
+        ActivateApp("sync_path")           
         ShowModePopup("cloud sync initiated",,"300", "50")
         sleep, med
         return 
@@ -145,36 +145,38 @@
   
  CreateHotstringSnippet(width = "80", dest_file = "R.ahk") {
     /*
-     CreateHotstringSnippet() will create a .txt copy of selected text
-     in the mem_cache folder that can be retrieved through dynamically created 
-     hotstring (script is automatically modified and reloaded). 
-    
-     — Python and R hotstring snippets will only work on designated windows 
-       configured in the language specific ahk files. Allows the same hotstring 
-       to be used if they embody equivalent ideas represented in different 
-       code syntax.
-    
-     — To see an index of hotstrings created through CreateHotstringSnippet() open 
-       mem_cache/hotstring_creation_log.csv
-    
-     — FORMAT:
-    
-        1) First line of text will be transformed into the hotstring trigger string
-            with a ">" character appended to the end.
-        2) Second line will be transformed into a comment in the target .ahk file
-        3) Third line should be the target text to store
-    
-     — EXAMPLE:
-    
-        hotstring_label
-        comment/description of hotstring for hotkey_help.ahk indexing>
-        text to store
-    
-        select above 3 lines and press insert & w to create a hotstring.
-        Afterwards, typing "hotstring_label>" will output "text to store" 
-    */ 
+ 
+   CreateHotstringSnippet() will create a .txt copy of selected text
+   in the mem_cache folder that can be retrieved through dynamically created 
+   hotstring (i.e., hotstring can be used immediately after creation). 
+ 
+    — Python and R hotstring snippets are kept in separate directories. So the same
+      hotstring name can be applied to corresponding layers of abstraction. 
+      For example, "PlotScatter" can be used in both python and R to output 
+      language/api specific syntax for the same idea.
+  
+    — To see an index of hotstrings created through CreateHotstringSnippet() open 
+      mem_cache/hotstring_creation_log.csv
+ 
+    — FORMAT:
+ 
+      1) First line of text will be transformed into the hotstring trigger string
+         with a ">" character appended to the end.
+      2) Second line will be transformed into a comment in the target .ahk file
+      3) Third line should be the target text to store
+ 
+    — EXAMPLE:
+ 
+      hotstring_label
+      comment/description of hotstring for hotkey_help.ahk indexing>
+      text to store
+ 
+      select above 3 lines and press insert & w to create a hotstring.
+      Afterwards, typing "hotstring_label>" will output "text to store"  
+ */
+
     input := trim(clip(), "`r`n`t")                                             
-    key := SubStr(input,1,InStr(input,"`r")-1)                                 
+    key := trim(SubStr(input,1,InStr(input,"`r")-1))
     if (key = "")                                                  
         return                                                     
     desc := trim(SubStr(input,InStr(input,"`r") + 2
@@ -186,13 +188,13 @@
         case "python.ahk":      mem_path := "python\"                                           
         case "windows_sys.ahk": mem_path := ""                                           
     }
-    WriteToCache(key, False, mem_path, body)                                      
-    new_hotstring := "`r:*:" key ">::"                                          
+    WriteToCache(key, False, mem_path, body)      
+    new_hotstring := "`r :*:" key ">::"             
     num_char      := width - StrLen(new_hotstring) + 1                           
     string_char   := RepeatString(" ", num_char)                                 
-    new_hotstring := new_hotstring string_char ";" desc "`n"                    ; create hotstring instantiation code  
-                   . "AccessCache(" """" mem_path key """" ")`n"                
-                   . "return`n"
+    new_hotstring := new_hotstring string_char ";" desc                         ; create hotstring instantiation code  
+                   . " AccessCache(" """" mem_path key """" ")`n"                
+                   . " return`n"
     
     head    = %key% `, %A_YYYY% `, %A_MMM% `, %A_DD% `,                          
     tail    = %A_Hour% `, %A_Min% `, %dest_file%, %desc% `n                     
@@ -247,7 +249,7 @@
     IniWrite, % PATH["excel.exe"],    %config_path%, %A_ComputerName%, xls_path
     IniWrite, % PATH["powerpnt.exe"], %config_path%, %A_ComputerName%, ppt_path
     IniWrite, % PATH["AcroRd32.exe"], %config_path%, %A_ComputerName%, pdf_path
-    IniWrite, % PATH["googledrivesync.exe"], %config_path%, %A_ComputerName%, cloud_sync_path
+    IniWrite, % PATH["googledrivesync.exe"], %config_path%, %A_ComputerName%, sync_path
     IniWrite,141,                     %config_path%, %A_ComputerName%, F_height
     IniWrite,415,                     %config_path%, %A_ComputerName%, F_width
     IniWrite,blue.ico,                %config_path%, settings, starting_icon
