@@ -68,7 +68,7 @@
  +!v::         PasteWithoutBreaks(True)                                         ;[TM] replace multiple paragraph breaks, reselect text
  #!sc00C::     ReplaceUnderscoreWithSpace()                                     ;[TM] replace "_" with " " in selected text
  ^#sc00C::     ReplaceSpaceWithUnderscore()                                     ;[TM] replace " " with "_" in selected text
- !#space::                                                                  ;[TM] replace "+" or "," with " " in selected text
+ ^#backspace::                                                                  ;[TM] replace "+" or "," with " " in selected text
      var := clip()       
      var := StrReplace(var, ",", A_Space)
      var := StrReplace(var, "+", A_Space)

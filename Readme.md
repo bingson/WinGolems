@@ -16,12 +16,12 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
  <ul>
    <li>
      <p>  <b>Required:</b> </p>
-     <p>  – &nbsp; Install Windows 10 (tested on Home Version 20H2 OS build 19042.985)
-     <br> – &nbsp; Install <a href="https://www.autohotkey.com/">Autohotkey</a> version 1.1.33.09.
+     <p>  – &nbsp; Windows 10 (tested on Home Version 20H2 OS build 19042.985)
+     <br> – &nbsp; <a href="https://www.autohotkey.com/">Autohotkey</a> version 1.1.33.09.
    </li>
    <li>
      <p>  <b>Recommended:</b> </p>
-     <p>  – &nbsp; Install <a href="https://code.visualstudio.com/">Visual Studio Code</a> Editor with the following extension IDs 
+     <p>  – &nbsp; <a href="https://code.visualstudio.com/">Visual Studio Code</a> Editor with the following extension IDs 
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-autohotkey
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
@@ -36,7 +36,7 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
  <ul>
    <li>
      <p><b> Option 1: Download zip file</b></p>
-     <p> Download WinGolems as a zip file from the following web address and <a href="https://www.7-zip.org/">unzip</a> to the same drive Windows 10 and program files are installed.
+     <p> Download WinGolems as a zip file from the following url and <a href="https://www.7-zip.org/">unzip</a> to the same drive Windows 10 and program files are installed.
 
 ``` 
 https://github.com/bingson/WinGolems/archive/refs/heads/master.zip
@@ -45,8 +45,7 @@ https://github.com/bingson/WinGolems/archive/refs/heads/master.zip
    </li>
    <li>
      <p><b> Option 2: GIT </b></p>
-     <p>    This option requires the installation of <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git</a> and is recommended if you want to make contributions 
-            to the project and easily update your local repo with new versions via git pull. To download this project through git, run command
+     <p>    This option requires the installation of <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git</a> and is recommended if you want to make contributions to the project as well as periodically update your local repo with new versions via git pull. To download this project through git, run command
 
 ``` 
 git clone https://github.com/bingson/WinGolems.git 
@@ -68,16 +67,14 @@ git clone https://github.com/bingson/WinGolems.git
    </li>
    <li>
      <p><b> Configure WinGolems </b></p>
-     <p> If WinGolems doesn't detect a settings file (<code>config.ini</code>), a new settings file will be created. WinGolems will search through Program Files (x86) and Program Files directories for application paths used to identify specific windows and open associated file types. To modify these settings, please open <code>config.ini</code> in any text editor and modify the file path values for the following variables. The vscode_path also doubles as the default editor for unassigned file types. 
+     <p> Upon first run, a new settings file will be created. WinGolems will search through both 32 bit and 64 bit program file folders for executable paths used to launch specific apps and modify associated file types. To change these settings, please open <code>config.ini</code> in a text editor and update the file path values for the following variables.  
 
 ``` 
-vscode_path
-chrome_path
-word_path
-excel_path
+html_path
+doc_path
+xls_path
 ppt_path
 pdf_path
-
 ```
 
    </li>

@@ -18,7 +18,7 @@
   SetWinDelay, 10                                                               
   SetControlDelay, 20                                                            
   SendMode Event                                                                ; faster input
-  ; SetTimer, Restart, 60000                                                      ; reloads the script once every minute; necessary if multiple ahk scripts running at once, optional otherwise
+  ; SetTimer, Restart, 60000                                                    ; reloads the script once every minute; makes the script reliable when running multiple ahk scripts running on older hardware. 
                                                                                 ; are loaded in the system tray simultaneously instead of included into 1 script
   ; INITIALIZE GLOBAL VARIABLES  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 

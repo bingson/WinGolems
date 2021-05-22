@@ -1,6 +1,6 @@
 
-; TITLE MATCH __________________________________________________________________
- ; hotkey to activate window with match string anywhere in the window title
+; TITLE MATCH WINDOW ACTIVATION_________________________________________________
+ ; activate window with match string anywhere in the title
  
  SetTitleMatchMode, 2
  /*
