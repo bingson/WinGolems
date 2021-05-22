@@ -62,7 +62,7 @@ git clone https://github.com/bingson/WinGolems.git
  <ul>
    <li>
      <p><b> Run MASTER.ahk as administrator </b></p>
-     <p> After you have installed Autohotkey and unzipped the WinGolems project folder, navigate to the WinGolems folder using file explorer and run MASTER.ahk as administrator through the right-click context menu. 
+     <p> After you have installed Autohotkey and unzipped the WinGolems project folder, open the WinGolems project folder using file explorer and run MASTER.ahk as administrator using the right-click context menu. 
      <p><img src="assets\Screens\run_master.png" alt="run_master.png" title="run_master.png" /></p>
    </li>
    <li>
@@ -75,6 +75,7 @@ doc_path
 xls_path
 ppt_path
 pdf_path
+cloud_sync_path
 ```
 
    </li>
