@@ -1,6 +1,7 @@
 # WinGolems
 
-A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The overarching idea is to move closer to a frictionless work 
+A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The overarching idea is to move closer to a frictionless work environment by reducing 
+effort it takes to 
 
 ----
 ## CONTENTS 
@@ -21,6 +22,7 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
    </li>
    <li>
      <p>  <b>Recommended:</b> </p>
+     <p> Any code editor which supports indentation-based code folding and autohotkey syntax support. 
      <p>  – &nbsp; <a href="https://code.visualstudio.com/">Visual Studio Code</a> Editor with the following extension IDs 
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-autohotkey
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
