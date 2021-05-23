@@ -3,7 +3,6 @@
 A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The overarching idea is to move closer to a frictionless work 
 
 ----
-
 ## CONTENTS 
 
 * [Getting Started](##Getting-Started)
