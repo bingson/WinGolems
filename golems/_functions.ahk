@@ -48,10 +48,10 @@
     WinGetClass, class, A
     if (state = "ON") {
         Winset, Alwaysontop, ON , A                                             
-        ShowModePopup(Process_Name "`nalways on top: ON",,,"80", "-800")
+        ShowModePopup(Process_Name "`nalways on top: ON",,"240","80", "-800")
     } else {
         Winset, Alwaysontop, OFF , A                                            ; A stands for active window
-        ShowModePopup(Process_Name "`nalways on top: OFF", "FF0000",,"80","-800")
+        ShowModePopup(Process_Name "`nalways on top: OFF", "FF0000","240","80","-800")
     }
     return
  }
@@ -244,15 +244,15 @@
     ShowModePopup(msg, "000000",, "65", "-10000", "14", "560")                  
     PATH := FindAppPath("winword.exe", "excel.exe", "powerpnt.exe", "AcroRd32.exe", "chrome.exe", "googledrivesync.exe")
     IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %config_path%, %A_ComputerName%, vscode_path
-    IniWrite, % PATH["chrome.exe"],   %config_path%, %A_ComputerName%, html_path
-    IniWrite, % PATH["winword.exe"],  %config_path%, %A_ComputerName%, doc_path
-    IniWrite, % PATH["excel.exe"],    %config_path%, %A_ComputerName%, xls_path
-    IniWrite, % PATH["powerpnt.exe"], %config_path%, %A_ComputerName%, ppt_path
-    IniWrite, % PATH["AcroRd32.exe"], %config_path%, %A_ComputerName%, pdf_path
+    IniWrite, % PATH["chrome.exe"],          %config_path%, %A_ComputerName%, html_path
+    IniWrite, % PATH["winword.exe"],         %config_path%, %A_ComputerName%, doc_path
+    IniWrite, % PATH["excel.exe"],           %config_path%, %A_ComputerName%, xls_path
+    IniWrite, % PATH["powerpnt.exe"],        %config_path%, %A_ComputerName%, ppt_path
+    IniWrite, % PATH["AcroRd32.exe"],        %config_path%, %A_ComputerName%, pdf_path
     IniWrite, % PATH["googledrivesync.exe"], %config_path%, %A_ComputerName%, sync_path
-    IniWrite,141,                     %config_path%, %A_ComputerName%, F_height
-    IniWrite,415,                     %config_path%, %A_ComputerName%, F_width
-    IniWrite,blue.ico,                %config_path%, settings, starting_icon
+    IniWrite,141,                            %config_path%, %A_ComputerName%, F_height
+    IniWrite,415,                            %config_path%, %A_ComputerName%, F_width
+    IniWrite,blue.ico,                       %config_path%, settings, starting_icon
     ShowModePopup("Done!",,, "50", "-10000", "15")  
     sleep, med
     ClosePopup()
@@ -334,6 +334,7 @@
     POP_UP := true
  }   
 
+
  
  ClosePopup() {
     Progress, Off
@@ -354,13 +355,20 @@
     ToolTip
     return
  }
- 
- WinLLock(state=TRUE) { 
+
+ WinLLock(state = TRUE, supress = False) { 
     ; state = TRUE enables Win+L to lock the workstation. (admin privilege req'd)
     ; False disables the Windows hook, enabling AHK to repurpose #l 
     RegWrite, REG_DWORD, HKEY_CURRENT_USER
     , Software\Microsoft\Windows\CurrentVersion\Policies\System
     , DisableLockWorkstation, % !state
+
+    if (supress = False) {
+        if state
+              ShowModePopup("Win+L Lock: ON",,"200","50", "-800")
+        else           
+              ShowModePopup("Win+L Lock: OFF","FF0000","200","50", "-800")
+    }
     return
  }
  
@@ -373,7 +381,6 @@
     DetectHiddenWindows On                                                      ; Allows a script's hidden main window to be detected.                 
     SetTitleMatchMode 2                                                         
     WinClose %A_ScriptDir%\golems\Hotkey_Help.ahk  
-    
     Orig_File = %A_WorkingDir%\golems\HotKey Help - Dialog.txt
     TF_Replace(Orig_File, "$", "") 
     Updated = %A_WorkingDir%\golems\HotKey Help - Dialog_copy.txt
@@ -528,7 +535,7 @@
  }
  
  changeDialDir(path) {
-    ; change directory of "save as" dialogue box
+    ; change directory of "save as" dialogue box                                ; https://www.reddit.com/r/AutoHotkey/comments/ce8mu3/changing_folders_in_save_as_dialogue_with_com/
     WinGet, hWnd, ID, A                                                         ; Get handle of active window 
     Send ^l
     ControlSetText, Edit2, %path%, ahk_id %hWnd%
@@ -575,37 +582,41 @@
  ActivateApp(app_path = "", arguments = "", admin = False) {
      
     global config_path
-    if InStr(app_path , "_path") 
+    if InStr(app_path , "_path")                                                ; "_path" string match indicates a config.ini path reference
     {
-        IniRead, file_path, %config_path%, %A_ComputerName%, %app_path% 
-        RegExMatch(file_path, "[^\\]+$", exe_name)
-        ActivateOrOpen(exe_name, file_path, arguments) 
+        IniRead, ini_app_path, %config_path%, %A_ComputerName%, %app_path% 
+        RegExMatch(ini_app_path, "[^\\]+$", exe_name)
+        ActivateOrOpen(exe_name, ini_app_path, arguments) 
     } 
-    else 
+    else if app_path in cmd.exe,explorer.exe
     {
         if InStr(arguments , "_path")
            IniRead, arguments, %config_path%, %A_ComputerName%, %arguments%
         ActivateOrOpen(app_path,,arguments)                                     ; only compatible options are file explorer or command window
     }
+    else
+    {
+        RegExMatch(app_path, "[^\\]+$", exe_name)
+        ActivateOrOpen(exe_name, app_path, arguments) 
+    }
  }
  
-
-ActivateOrOpen(exe_name, file_path = "", arguments = "") {
-   grp_identifier := (exe_name = "explorer.exe")                                ; file explorer is a one off special case that requires a class identifier as well
-                   ? "ahk_class CabinetWClass ahk_exe " exe_name                ; other apps share the explorer.exe template
-                   : "ahk_exe " exe_name
-
-   WinGet, wList, List, %grp_identifier%  
-   if !wList {
-      file_path := (exe_name = "explorer.exe" or exe_name = "cmd.exe")
-                 ? exe_name
-                 : file_path
-      RunAsUser(file_path, arguments, A_ScriptDir) ; cmd.exe and explorer.exe do not need filepaths
-   } else {
-      WinActivate, % "ahk_id " wList1 
-   }
-   return
-}
+ ActivateOrOpen(exe_name, app_path = "", arguments = "") {
+    grp_identifier := (exe_name = "explorer.exe")                               ; file explorer is a one off special case that requires a class identifier as well
+                    ? "ahk_class CabinetWClass ahk_exe " exe_name               ; because there are other apps share the explorer.exe template
+                    : "ahk_exe " exe_name
+ 
+    WinGet, wList, List, %grp_identifier%  
+    if !wList {
+       app_path := (exe_name = "explorer.exe" or exe_name = "cmd.exe")
+                  ? exe_name
+                  : app_path
+       RunAsUser(app_path, arguments, A_ScriptDir) ; cmd.exe and explorer.exe do not need filepaths
+    } else {
+       WinActivate, % "ahk_id " wList1 
+    }
+    return
+ }
 
  ActivateApp_old(identifier, app_path = "", arguments = "", admin = False) {
     /* creates dedicated hotkey to activate/open an application
@@ -1008,6 +1019,17 @@ ActivateOrOpen(exe_name, file_path = "", arguments = "") {
     clip(var, True)
     return
   }
+
+  addQuotesAroundCommaSeparatedElements() {
+        input := clip()
+        input := trim(input)
+        StringReplace , input, input, %A_Space%,,All
+        word_array := StrSplit(input, ",")
+        Joined_array := """, """.Join(word_array)
+        Joined_array := """" . Joined_array . """"
+        clip(Joined_array)
+        return
+    }
 
 ; CODING _______________________________________________________________________
 

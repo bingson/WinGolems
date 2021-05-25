@@ -65,7 +65,7 @@
  !#enter::     RemoveBlankLines()                                               ;[TM] remove empty lines from selected text
  del & s::     RemoveAllSpaces()                                                ;[TM] remove all spaces from selected text
  !v::          PasteWithoutBreaks()                                             ;[TM] replace multiple paragraph breaks in selected text
- +!v::         PasteWithoutBreaks(True)                                         ;[TM] replace multiple paragraph breaks, reselect text
+ +!v::         PasteWithoutBreaks(True)                                         ;[TM] replace multiple paragraph breaks, reselect text = True
  #!sc00C::     ReplaceUnderscoreWithSpace()                                     ;[TM] replace "_" with " " in selected text
  ^#sc00C::     ReplaceSpaceWithUnderscore()                                     ;[TM] replace " " with "_" in selected text
  ^#backspace::                                                                  ;[TM] replace "+" or "," with " " in selected text
@@ -75,6 +75,7 @@
      var := RegExReplace(var, "S) +", A_Space)                                  
      clip(var, True)
      return
+
  del & space::                                                                  ;[TM] replace multiple consecutive spaces w/ one in selected text
      var := clip()
      var := RegExReplace(var, "S) +", A_space) 
@@ -106,15 +107,7 @@
      return  
 
  End & sc02b::                                                                  ;[TM] replace "," with "", "" in selected text
- ^#sc028::                                                                      ;[TM] replace "," with "", "" in selected text
-    input := clip()
-    input := trim(input)
-    StringReplace , input, input, %A_Space%,,All
-    word_array := StrSplit(input, ",")
-    Joined_array := """, """.Join(word_array)
-    Joined_array := """" . Joined_array . """"
-    clip(Joined_array)
-    return
+ ^#sc028:: addQuotesAroundCommaSeparatedElements()                              ;[TM] replace "," with "", "" in selected text
 
  ins & SC00D::                                                                  ;[TM] replace " " with "+" in selected text
  ^#SC00D::                                                                      ;[TM] replace " " with "+" in selected text
@@ -171,7 +164,7 @@
  ^#Right::                                                                      ;[TS] select to end of line
  ^#l::      send {Shift Down}{End}{Shift Up}                                    ;[TS] select to end of line
  ^#j::                                                                          ;[TS] select all below
- +^#l::     send {ctrl down}{shift down}{end}{ctrl up}{shift up}                ;[TS] select all below v
+ +^#l::     send {ctrl down}{shift down}{end}{ctrl up}{shift up}                ;[TS] select all below
  ^#k::                                                                          ;[TS] select all above
  +^#h::     send {ctrl down}{shift down}{home}{ctrl up}{shift up}               ;[TS] select all above
  !f::       SelectWord()                                                        ;[TS] select word at cursor
@@ -180,7 +173,7 @@
  +^l::      Send {shift down}{ctrl down}{Right}{shift up}{ctrl up}              ;[TS] extend selection Right one word
  +^sc027::  Send {shift down}{Right}{shift up}                                  ;[TS] extend selection Right one space
  +^h::      Send {shift down}{ctrl down}{Left}{shift up}{ctrl up}               ;[TS] extend selection Left one word
- +^g::      Send {shift down}{Left}{ctrl up}                                    ;[TS] extend selection Left one word
+ +^b::      Send {shift down}{Left}{ctrl up}                                    ;[TS] extend selection Left one space
  +^j::                                                                          ;[TS] select to next line
  +^!j::     Send {shift down}{down}{shift up}                                   ;[TS] select to next line
  +^k::                                                                          ;[TS] select to line above
@@ -249,9 +242,9 @@
  
 ; TABS _________________________________________________________________________
  ; system wide shortcut for changing tabs
- !b:: send ^{PgUp}                                                              ;[T] move => tab
- >!space::                                                                      ;[T] move <= tab
- <!space::                                                                      ;[T] move <= tab
+ !b:: send ^{PgUp}                                                              ;[T] move to right tab
+ >!space::                                                                      ;[T] move to left tab
+ <!space::                                                                      ;[T] move to left tab
     keywait space 
     send ^{PgDn}                                                                
     return

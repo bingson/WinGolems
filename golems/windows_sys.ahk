@@ -24,9 +24,9 @@
 
 ; SYS SETTINGS _________________________________________________________________
 
- End & F10:: Run explorer.exe ms-settings:bluetooth                             ;[SS] bluetooth settings
- End & F7::  Run explorer.exe ms-settings:display                               ;[SS] display setting
- End & F3::  Run explorer.exe %A_WinDir%\system32\mmsys.cpl                     ;[SS] sound settings
+ End & b::   Run explorer.exe ms-settings:bluetooth                             ;[SS] bluetooth settings
+ End & d::   Run explorer.exe ms-settings:display                               ;[SS] display setting
+ End & s::   Run explorer.exe %A_WinDir%\system32\mmsys.cpl                     ;[SS] sound settings
  End & k::   send {lwin down}k{lwin up}                                         ;[SS] quick connect window
  End & a::   Send {lwin down}a{lwin up}                                         ;[SS] notification window
  End & x::   Send {lwin down}x{lwin up}                                         ;[SS] power shell
@@ -142,6 +142,10 @@
  +^#r::       ExitApp                                                           ;[AHK] quit ahk script
  End & l:: % (toggle := !toggle) ? WinLLock(False) : WinLLock(TRUE)             ;[AHK] toggle to enable win+L to lock screen
 
+ 
+
+      
+
  Lwin & home::                                                                  ;[AHK] generate a list of hotkeys in working directory.
     ReleaseModifiers()
     GenerateHotkeyList()                                             
@@ -153,14 +157,14 @@
     EditFile("HotKey_List.txt", "vscode_path")
     return
  #enter::                                                                       ;[AHK] reload all ahk scripts with ~^#r reload hotkey
- $^#r::                                                                         ;[AHK] reload all ahk scripts with ~^#r reload hotkey
-    Reload:                                               
+ $^#r::
+    Reload:                                                                         ;[AHK] reload all ahk scripts with ~^#r reload hotkey
     Reload                                               
     return                                               
                                                
- $^#b::                                                                         ;[AHK] run test script
+ end & t::                                                                         ;[AHK] run test script
     sleep, med*2 
-    run test.ahk                      
+    run config_test.ahk                      
     return                                          
 
 ; MEMORY SYSTEM ________________________________________________________________
@@ -279,9 +283,9 @@
  run %A_ScriptDir%\mem_cache\hotstring_creation_log.csv
  return
 
- ^#!w:: CreateHotstringSnippet("80", "windows_sys.ahk")                         ;[D] create windows hotstring
- ^#!r:: CreateHotstringSnippet("80", "R.ahk")                                   ;[D] create R programming hotstring
- ^#!p:: CreateHotstringSnippet("80", "Python.ahk")                              ;[D] create python programming hotstring 
+ #!w:: CreateHotstringSnippet("80", "windows_sys.ahk")                          ;[D] create windows hotstring
+ #!r:: CreateHotstringSnippet("80", "R.ahk")                                    ;[D] create R programming hotstring
+ #!p:: CreateHotstringSnippet("80", "Python.ahk")                               ;[D] create python programming hotstring 
 
  ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
  
@@ -302,3 +306,8 @@
  :*:color_code>::                                                               ;[D] 6-digit RGB color values
  AccessCache("color_code")
  return
+
+ :*:gc>::                                                                       ;;[DHS] favorite git commands
+ AccessCache("gc")
+ return
+
