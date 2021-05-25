@@ -1,8 +1,42 @@
 # WinGolems
 
-A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The overarching idea is to reduce the effort it takes 
+A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The larger idea is to provide an easy to use template and function library for creating shortcuts to ones most frequently performed actions in any application and across Windows 10 in general.
 
-move closer to a frictionless work environment by reducing effort it takes to perform the most common actions 
+More specifically, WinGolems provides code examples of how to create dedicated shortcuts to
+* launch a particular application or reactivate it (if hidden beneath other windows)
+* open file from anywhere in windows
+* goto a specific folder in file explorer
+* select and navigate through text using homerow keys + (win + alt + ctrl) combination
+* execute different text manipulation macros on selected text
+* and much more . . . 
+
+Another dimension of WinGolems is a text file based memory system that allows on to abstract away  
+
+that serves as a foundation for a uniform function api. 
+
+
+
+
+
+
+ additional keyboard shortcuts for text selection and navigation. 
+
+Complementing the 
+
+additional
+shortcuts
+
+change and modify shortcuts
+
+execute frequent operations. This translates 
+
+
+
+
+
+
+
+effort it takes to 
 
 ----
 ## CONTENTS 
