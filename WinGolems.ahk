@@ -37,10 +37,8 @@
   GroupAdd, FileListers, ahk_class WorkerW
   GroupAdd, FileListers, ahk_class #32770, ShellView
   
-  RegWrite, REG_DWORD, HKEY_CURRENT_USER                                        ; disables windows lockscreen key hook
-     , Software\Microsoft\Windows\CurrentVersion\Policies\System                ; frees WIN+L key combo for ahk usage.
-     , DisableLockWorkstation, 1
-  
+  ; WinLLock(False, True)                                                         ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage. 
+                                                                                ; True = enables windows lockscreen key hook (WIN+L); Second True disables pop up window confirmation 
   config_path := A_ScriptDir "\config.ini"
   ; config_path      := UProfile "\Google Drive\secure\config.ini"
   icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; A_ScriptDir = active AHK script directory

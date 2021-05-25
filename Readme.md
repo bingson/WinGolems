@@ -1,7 +1,8 @@
 # WinGolems
 
-A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The overarching idea is to move closer to a frictionless work environment by reducing 
-effort it takes to 
+A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The overarching idea is to reduce the effort it takes 
+
+move closer to a frictionless work environment by reducing effort it takes to perform the most common actions 
 
 ----
 ## CONTENTS 
