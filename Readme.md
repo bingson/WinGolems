@@ -5,9 +5,11 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
 <ol>
 <li>
 
-<p> WinGolems offers library of autohotkey functions and examples of how to use them to create more convenient shortcuts for the most frequently performed actions, reducing the need to use a mouse. Included templates show how to create/modify shortcuts to </p>
+<p> WinGolems offers library of autohotkey functions and examples of how to use them to create more convenient shortcuts for the most frequently performed actions, reducing the need to use a mouse and speeding up workflow. 
 
-* switch between / launch / reactivate specific windows or groups of applications
+Included templates show how to create shortcuts to </p>
+
+* switch between, launch, and reactivate specific application windows
 * open a file in any particular program from anywhere in windows
 * change folders in file explorer and save as dialogue boxes
 * select and navigate through text using homerow keys
@@ -16,7 +18,9 @@ A collection of Windows 10 automation and enhancement scripts (golems) written i
 </li>
 <li>
 
-<p> Another feature of WinGolems is a text file based memory system and examples of how to use hotstrings to create universal function APIs. Explained in more detail in the usage section, Universal function APIs were created to speed up data analysis and modeling by abstracting away the need to remember library specific syntax through hotstring initiated text manipulation. </p>
+
+
+<p> Another feature of WinGolems is a text file based memory system and examples of how to use hotstrings to create universal function APIs. </p>
 
 For example 
 
