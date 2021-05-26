@@ -1,42 +1,34 @@
 # WinGolems
 
-A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. The larger idea is to provide an easy to use template and function library for creating shortcuts to ones most frequently performed actions in any application and across Windows 10 in general.
+A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. 
 
-More specifically, WinGolems provides code examples of how to create dedicated shortcuts to
-* launch a particular application or reactivate it (if hidden beneath other windows)
-* open file from anywhere in windows
-* goto a specific folder in file explorer
-* select and navigate through text using homerow keys + (win + alt + ctrl) combination
-* execute different text manipulation macros on selected text
-* and much more . . . 
+<ol>
+<li>
 
-Another dimension of WinGolems is a text file based memory system that allows on to abstract away  
+<p> WinGolems offers library of autohotkey functions and examples of how to use them to create more convenient shortcuts for the most frequently performed actions, reducing the need to use a mouse. Included templates show how to create/modify shortcuts to </p>
 
-that serves as a foundation for a uniform function api. 
+* switch between / launch / reactivate specific windows or groups of applications
+* open a file in any particular program from anywhere in windows
+* change folders in file explorer and save as dialogue boxes
+* select and navigate through text using homerow keys
+* execute different text manipulation macros 
+* and much more
+</li>
+<li>
 
+<p> Another feature of WinGolems is a text file based memory system and examples of how to use hotstrings to create universal function APIs. Explained in more detail in the usage section, Universal function APIs were created to speed up data analysis and modeling by abstracting away the need to remember library specific syntax through hotstring initiated text manipulation. </p>
 
+For example 
 
-
-
-
- additional keyboard shortcuts for text selection and navigation. 
-
-Complementing the 
-
-additional
-shortcuts
-
-change and modify shortcuts
-
-execute frequent operations. This translates 
+```
+DF, X, Y <g.pt 
+```
 
 
 
 
-
-
-
-effort it takes to 
+</li>
+<br>
 
 ----
 ## CONTENTS 
@@ -92,6 +84,7 @@ git clone https://github.com/bingson/WinGolems.git
  </ul>
 
 <br>
+
 
 ### 3. &nbsp; Run and configure WinGolems
 

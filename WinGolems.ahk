@@ -37,8 +37,10 @@
   GroupAdd, FileListers, ahk_class WorkerW
   GroupAdd, FileListers, ahk_class #32770, ShellView
   
-  ; WinLLock(False, True)                                                         ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage. 
+  ; uncomment to disable WIN+L key for locking screen on script startup         ; requires registry write premission, end & L hotkey toggles this as well
+  ; WinLLock(False, True)                                                       ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage.
                                                                                 ; True = enables windows lockscreen key hook (WIN+L); Second True disables pop up window confirmation 
+  
   config_path := A_ScriptDir "\config.ini"
   ; config_path      := UProfile "\Google Drive\secure\config.ini"
   icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; A_ScriptDir = active AHK script directory
@@ -48,7 +50,7 @@
      CreateConfigINI()
      
   ; ChangeTrayIcon(icon_path)                                                   ; changes icon color every time script reloads
-  set_tray_icon(icon_path "lg.ico")                                           ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
+  set_tray_icon(icon_path "lg.ico")                                             ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
 
 
   
