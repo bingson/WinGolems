@@ -183,30 +183,33 @@
 ; NAVIGATION & KEY REPLACEMENT__________________________________________________
  
  #h::                                                                           ;[NKR] Home
+ ^!h::                                                                          ;[NKR] Home
  !^Left::                                                                       ;[NKR] Home
- PrintScreen & h::                                                              ;[NKR] Home
- ^!h:: send {home}                                                              ;[NKR] Home
+ PrintScreen & h:: send {home}                                                  ;[NKR] Home
  #l::                                                                           ;[NKR] End
+ ^!l::                                                                          ;[NKR] End
  !^Right::                                                                      ;[NKR] End
- PrintScreen & l::                                                              ;[NKR] End
- ^!l:: send {end}                                                               ;[NKR] End
+ PrintScreen & l:: send {end}                                                   ;[NKR] End
+
  $!h:: send {Left}                                                              ;[NKR] Left
  $!l:: send {Right}                                                             ;[NKR] Right
  $!k:: send {Up}                                                                ;[NKR] Up
  $!j:: send {Down}                                                              ;[NKR] Down
+
  #e::  send {ctrl down}{home}{ctrl up}                                          ;[NKR] Ctrl + Home
- +#e:: send {ctrl down}{end}{ctrl up}                                           ;[NKR] Ctrl + End
+ #d:: send {ctrl down}{end}{ctrl up}                                            ;[NKR] Ctrl + End
  
  ^SC027::          Send {AppsKey}                                               ;[NKR] appkey press
  ^m::              Send ^c                                                      ;[NKR] Right-handed copy (ctrl-c)
  $!SC027::                                                                      ;[NKR] esc key
  $!<space::        Send {esc}                                                   ;[NKR] esc key
- +CapsLock::       Send {Backspace down}                                        ;[NKR] Toggle capslock
+ +CapsLock::       Send {Backspace down}                                        ;[NKR] Backspace
  CapsLock::        Send {Delete}                                                ;[NKR] Delete 
- !CapsLock::       CapsLock                                                     ;[NKR] Backspace
+ !CapsLock::       CapsLock                                                     ;[NKR] Toggle capslock
  ins & enter::     send {Insert}                                                ;[NKR] insert key
  del & BackSpace:: send {del}                                                   ;[NKR] del key
-
+ 
+ lwin::            return                                                       ;[NKR] modifier key, use ctrl+esc to access start menu 
  Insert::          return                                                       ;[NKR] modifier key no action otherwise
  home::            return                                                       ;[NKR] modifier key no action otherwise
  end::             return                                                       ;[NKR] modifier key no action otherwise
@@ -258,7 +261,7 @@
  PrintScreen & k::                                                              ;[MF] scroll wheel up
  #k:: Click, WheelUp 4                                                          ;[MF] scroll wheel up 
  PrintScreen & i::                                                              ;[MF] 1 Left click
- *#d::                                                                          ;[MF] 1 Left click
+ ; *#d::                                                                        ;[MF] 1 Left click
  *#i:: click                                                                    ;[MF] 1 Left click 
 
  #f::                                                                           ;[MF] 2 Left clicks

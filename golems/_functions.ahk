@@ -82,21 +82,22 @@
  }
  
  CloudSync(state="ON") {
-    ; Turn ON/OFF google cloud sync 
+    ; Turn ON/OFF google cloud sync  
     global med
     if (state = "ON") {
-        ActivateApp("sync_path")           
-        ShowModePopup("cloud sync initiated",,"300", "50")
-        sleep, med
-        return 
+        try {
+            ActivateApp("sync_path")           
+            ShowModePopup("cloud sync initiated",,"300", "50", "-2000")
+            return 
+        } catch e {
+            msgbox can't open cloud cloud sync app.
+        }
     } else {
         if WinExist("ahk_exe googledrivesync.exe"){
             WinClose, ahk_exe googledrivesync.exe
-            ShowModePopup("closing cloud sync", "FF0000", "300", "50") 
-            sleep, med 
+            ShowModePopup("closing cloud sync", "FF0000", "300", "50", "-2000")
         } else {
-            ShowModePopup("cloud sync not running", "008080", "300", "50")
-            sleep, med
+            ShowModePopup("cloud sync not running", "008080", "300", "50", "-2000")
         }
         return
     } 
@@ -243,7 +244,7 @@
     msg = No configuration file detected `nplease wait while a new one is created.
     ShowModePopup(msg, "000000",, "65", "-10000", "14", "560")                  
     PATH := FindAppPath("winword.exe", "excel.exe", "powerpnt.exe", "AcroRd32.exe", "chrome.exe", "googledrivesync.exe")
-    IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %config_path%, %A_ComputerName%, vscode_path
+    IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %config_path%, %A_ComputerName%, editor_path
     IniWrite, % PATH["chrome.exe"],          %config_path%, %A_ComputerName%, html_path
     IniWrite, % PATH["winword.exe"],         %config_path%, %A_ComputerName%, doc_path
     IniWrite, % PATH["excel.exe"],           %config_path%, %A_ComputerName%, xls_path
@@ -497,7 +498,7 @@
     global med
     WinGetActiveStats, Title, Width, Height, X, Y
     MouseGetPos, StartX, StartY
-    sleep, med
+    sleep, med * 1.5
     MouseClick, right, % GetConfig("F_width"), % GetConfig("F_height")           
     n := 0
     Loop {
@@ -579,7 +580,7 @@
     return %output%
  }
  
- ActivateApp(app_path = "", arguments = "", admin = False) {
+ ActivateApp(app_path = "", arguments = "", new_instance = False) {
      
     global config_path
     if InStr(app_path , "_path")                                                ; "_path" string match indicates a config.ini path reference
@@ -592,6 +593,8 @@
     {
         if InStr(arguments , "_path")
            IniRead, arguments, %config_path%, %A_ComputerName%, %arguments%
+        if (new_instance = True)
+            RunAsUser(app_path, arguments, A_ScriptDir)
         ActivateOrOpen(app_path,,arguments)                                     ; only compatible options are file explorer or command window
     }
     else
@@ -603,14 +606,14 @@
  
  ActivateOrOpen(exe_name, app_path = "", arguments = "") {
     grp_identifier := (exe_name = "explorer.exe")                               ; file explorer is a one off special case that requires a class identifier as well
-                    ? "ahk_class CabinetWClass ahk_exe " exe_name               ; because there are other apps share the explorer.exe template
+                    ? "ahk_class CabinetWClass ahk_exe " exe_name               ; because there are other apps that share the explorer.exe file manager template
                     : "ahk_exe " exe_name
  
     WinGet, wList, List, %grp_identifier%  
     if !wList {
        app_path := (exe_name = "explorer.exe" or exe_name = "cmd.exe")
-                  ? exe_name
-                  : app_path
+                 ? exe_name
+                 : app_path
        RunAsUser(app_path, arguments, A_ScriptDir) ; cmd.exe and explorer.exe do not need filepaths
     } else {
        WinActivate, % "ahk_id " wList1 
@@ -618,44 +621,6 @@
     return
  }
 
- ActivateApp_old(identifier, app_path = "", arguments = "", admin = False) {
-    /* creates dedicated hotkey to activate/open an application
-     identifier: Window Title, Class, or Process name from window spy
-     app_dir: directory where app is located
-
-     Usage example:
- 
-     #a::ActivateApp("ahk_exe chrome.exe")
-     ,"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe") 
-     
-     creates keyboard shortcut: 'win + a' combo will activate the
-     last opened chrome window or launch new instance if none found
-    
-    */  
-    global config_path
-    WinGet, wList, List, %identifier%  
-    if !wList                                                                   ; if wList is empty/zero, no app windows exist 
-    {                       
-        RegExMatch(app_path, "[^.]+$", ext)
-        ext := rtrim(ext, """")
-        if (ext = "exe") or (ext = "lnk")
-            RunAsUser(app_path, arguments, A_ScriptDir)                         ; launch new instance of program with standard user priviledges
-        else                                                                    ; else must be a system dependent path
-        {
-            try
-            {
-                IniRead, output, %config_path%, %A_ComputerName%, %app_path%                                                    
-                RunAsUser(output, arguments, A_ScriptDir)             
-            }
-        }
-        return
-    } 
-    Else if (wList > 0) 
-    {                                                                           ; activates app if window already exists     
-        WinActivate, % "ahk_id " wList1                                         ; activates last currently opened instance
-    }
- }
- 
  ActivateEnv(key) { 
     ; retrieves anaconda environment dependent on the system
     global config_path
@@ -664,7 +629,7 @@
     return
  }
  
- EditFile(file_path = "0_MASTER.ahk", app_path = "vscode_path") {
+ EditFile(file_path = "0_MASTER.ahk", app_path = "editor_path") {
     ; opens or activates file in windows 10
     RegExMatch(file_path, "[^\\]+$", file_name)                                 ; file_name = everyting after the last \ 
     file_name := rtrim(file_name,"""")
@@ -821,8 +786,7 @@
   
   FormatCode() { 
     ; Adds formatting for math operators and code syntax
-    ; if A_ThisHotkey
-    If !Instr(A_ThisHotkey, "del") 
+    If !Instr(A_ThisHotkey, "del")                                              ; selects text to the left of hotstring (if no hotkey activation detected)
         send +{home}
     var := clip()
     var := RegExReplace(var, "(\+|-|\*|\/|\>\=|\<\=|!\=|\=|\<|\>|:)", " $0 ") 
@@ -908,7 +872,7 @@
   }
      
   RepeatString(_string, _count) {
-    ; FAST WAY TO CREATE A STRING OF A REPEATED CHARACTER
+    ; Fast way to create a string of a repeated character
     local result
     VarSetCapacity(result, StrLen(_string) * _count)
     AutoTrim Off

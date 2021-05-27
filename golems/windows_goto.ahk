@@ -25,7 +25,8 @@
 ; SEARCH _______________________________________________________________________
 
  PrintScreen & SC035::                                                          ;[S] search Google for selected text
- #SC035::  Run % "http://www.google.com/search?q=" . clip()                     ;[S] search Google for selected text  
+ #SC035::  Run % "http://www.google.com/search?q=" . clip()                     ;[S] search Google for selected text
+ ^#SC035::  Run % "https://www.google.com/search?tbm=isch&q=" . clip()          ;[S] search Google images for selected text
  !#SC035:: Run % "http://en.wikipedia.org/w/index.php?search=" . clip()         ;[S] search Wikipedia for selected text  
  ; #F11::  Run % "http://www.investopedia.com/search/default.aspx?q=" . clip()  
 
@@ -117,11 +118,7 @@
                                                                                 ;    https://www.autohotkey.com/docs/misc/CLSID-List.htm
  #IfWinActive
 
- printscreen & m::                                                              ;<F> open mem_cache folder from anywhere in windows
-   ActivateApp("explorer.exe")
-   sleep, med * 1.5
-   ChangeFolder(A_ScriptDir "\mem_cache\")
-   return
+ printscreen & m:: ActivateApp("explorer.exe",A_ScriptDir "\mem_cache\",True)   ;<F> open mem_cache folder from anywhere in windows (new explorer instance)
 
 
 
@@ -129,7 +126,7 @@
  ;shorcuts to launch/reactivate applications with the same key
  
  PrintScreen & n::                                                              ;<A> VS Code
- #n::       ActivateApp("vscode_path")                                          ;<A> VS Code
+ #n::       ActivateApp("editor_path")                                          ;<A> VS Code
  #s::       ActivateApp("html_path")                                            ;<A> Chrome
  #w::       ActivateApp("doc_path")                                             ;<A> Word
  #a::       ActivateApp("xls_path")                                             ;<A> Excel

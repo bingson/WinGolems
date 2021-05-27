@@ -3,8 +3,8 @@
  ^#sc027::                Send {lwin down}d{lwin up}                            ;[MAW] show desktop
  ^#w::                    WinClose,A                                            ;[MAW] close active window
  ^#q::                    CloseClass()                                          ;[MAW] close all instances of the active program
- +#capslock::             ActivatePrevInstance()                                ;[MAW] rotate through instances of active program starting from oldest 
- #capslock::              ActivateNextInstance()                                ;[MAW] rotate through instances of active program starting from newest 
+ +#capslock::             ActivatePrevInstance()                                ;[MAW] rotate through active program instances starting from oldest 
+ #capslock::              ActivateNextInstance()                                ;[MAW] rotate through active program instances starting from newest 
  >+enter::                send {F11}                                            ;[MAW] full screen {F11}
  PrintScreen & space::                                                          ;[MAW] move window btn monitors
  +#space::                Send {lwin down}{shift down}{Left}{shift up}{lwin up} ;[MAW] move window btn monitors    
@@ -36,17 +36,20 @@
   
 ; SYS COMMANDS _________________________________________________________________
 
- ^#!Left:: Send {ctrl down}{lwin down}{Left}{ctrl up}{lwin up}                  ;[SC] switch desktop environments (Left)
- ^#!Right:: Send {ctrl down}{lwin down}{Right}{ctrl up}{lwin up}                ;[SC] switch desktop environments (Right)
+ ^#!Left::   Send {ctrl down}{lwin down}{Left}{ctrl up}{lwin up}                ;[SC] switch desktop environments (Left)
+ ^#!Right::  Send {ctrl down}{lwin down}{Right}{ctrl up}{lwin up}               ;[SC] switch desktop environments (Right)
  End & F9::  Run assets\win\Add Remove Programs.lnk                             ;[SC] Add Remove Programs 
  End & c::   Run assets\win\Alarms & Clock.lnk                                  ;[SC] alarm clock
  +^!del::    DllCall("PowrProf\SetSuspendState", "int", 0, "int", 0, "int", 0)  ;[SC] enter sleep with the '(single quote) key 
  ^#!del::    DllCall("PowrProf\SetSuspendState", "int", 1, "int", 0, "int", 0)  ;[SC] enter hybernate with the '\' key 
  ^#!esc::    ShutDown, 9                                                        ;[SC] shutdown + power down 
  +^!esc::    ShutDown, 2                                                        ;[SC] restart the computer
- End & F4:: CloseEverything()                                                   ;[SC] close all open programs 
- ^#!F12::  CloudSync("ON")                                                      ;[SC] turn on google cloud sync
- +^#F12::  CloudSync("OFF")                                                     ;[SC] turn off google cloud sync
+ End & F4::  CloseEverything()                                                  ;[SC] close all open programs 
+ 
+ :*:sync~~::
+ ^#!F12::    CloudSync("ON")                                                    ;[SC] turn on cloud sync
+ :*:!sync~~::
+ +^#F12::    CloudSync("OFF")                                                   ;[SC] turn off cloud sync
 
 ; FAX/SCANNER __________________________________________________________________
 
@@ -140,7 +143,7 @@
  :X:kh~~:: KeyHistory                                                           ;[AHK] open key history
  :X:ws~~:: run, C:\Program Files\AutoHotkey\WindowSpy.ahk                       ;[AHK] open windows spy
  +^#r::       ExitApp                                                           ;[AHK] quit ahk script
- End & l:: % (toggle := !toggle) ? WinLLock(False) : WinLLock(TRUE)             ;[AHK] toggle to enable win+L to lock screen
+ End & l:: % (toggle := !toggle) ? WinLLock(False) : WinLLock(True)             ;[AHK] toggle to enable win+L to lock screen
 
  
 
@@ -152,33 +155,33 @@
     return
 
  Lwin & end::                                                                   ;[AHK] open last generated list of hotstrings and hotkeys
-    :*:hl~~::                                                                   ;[AHK] open last generated list of hotstrings and hotkeys
+ :*:hl~~::                                                                      ;[AHK] open last generated list of hotstrings and hotkeys
     ReleaseModifiers()
-    EditFile("HotKey_List.txt", "vscode_path")
+    EditFile("HotKey_List.txt", "editor_path")
     return
  #enter::                                                                       ;[AHK] reload all ahk scripts with ~^#r reload hotkey
  $^#r::
-    Reload:                                                                         ;[AHK] reload all ahk scripts with ~^#r reload hotkey
+    Reload:                                                                     ;[AHK] reload all ahk scripts with ~^#r reload hotkey
     Reload                                               
     return                                               
                                                
- end & t::                                                                         ;[AHK] run test script
+ end & t::                                                                      ;[AHK] run test script
     sleep, med*2 
     run config_test.ahk                      
     return                                          
 
 ; MEMORY SYSTEM ________________________________________________________________
-
- del & 9::                                                                      ;[MS] cut selected text and overwrite mem slot 9
- del & 8::                                                                      ;[MS] cut selected text and overwrite mem slot 8
- del & 7::                                                                      ;[MS] cut selected text and overwrite mem slot 7
- del & 6::                                                                      ;[MS] cut selected text and overwrite mem slot 6
- del & 5::                                                                      ;[MS] cut selected text and overwrite mem slot 5
- del & 4::                                                                      ;[MS] cut selected text and overwrite mem slot 4
- del & 3::                                                                      ;[MS] cut selected text and overwrite mem slot 3
- del & 2::                                                                      ;[MS] cut selected text and overwrite mem slot 2
- del & 1::                                                                      ;[MS] cut selected text and overwrite mem slot 1
- del & 0::                                                                      ;[MS] cut selected text and overwrite mem slot 0
+ ; del & # hotkey prerequisite  
+ ;del & 9::                                                                     ;[MS] cut selected text and overwrite mem slot 9
+ ;del & 8::                                                                     ;[MS] cut selected text and overwrite mem slot 8
+ ;del & 7::                                                                     ;[MS] cut selected text and overwrite mem slot 7
+ ;del & 6::                                                                     ;[MS] cut selected text and overwrite mem slot 6
+ ;del & 5::                                                                     ;[MS] cut selected text and overwrite mem slot 5
+ ;del & 4::                                                                     ;[MS] cut selected text and overwrite mem slot 4
+ ;del & 3::                                                                     ;[MS] cut selected text and overwrite mem slot 3
+ ;del & 2::                                                                     ;[MS] cut selected text and overwrite mem slot 2
+ ;del & 1::                                                                     ;[MS] cut selected text and overwrite mem slot 1
+ ;del & 0::                                                                     ;[MS] cut selected text and overwrite mem slot 0
  ^#9::                                                                          ;[MS] copy selected text and overwrite mem slot 9
  ^#8::                                                                          ;[MS] copy selected text and overwrite mem slot 8
  ^#7::                                                                          ;[MS] copy selected text and overwrite mem slot 7
@@ -283,9 +286,9 @@
  run %A_ScriptDir%\mem_cache\hotstring_creation_log.csv
  return
 
- #!w:: CreateHotstringSnippet("80", "windows_sys.ahk")                          ;[D] create windows hotstring
- #!r:: CreateHotstringSnippet("80", "R.ahk")                                    ;[D] create R programming hotstring
- #!p:: CreateHotstringSnippet("80", "Python.ahk")                               ;[D] create python programming hotstring 
+ #!F1:: CreateHotstringSnippet("80", "windows_sys.ahk")                          ;[D] create windows hotstring
+ #!F2:: CreateHotstringSnippet("80", "R.ahk")                                    ;[D] create R programming hotstring
+ #!F3:: CreateHotstringSnippet("80", "Python.ahk")                               ;[D] create python programming hotstring 
 
  ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
  
