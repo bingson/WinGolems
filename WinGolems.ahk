@@ -6,7 +6,7 @@
   #MaxHotkeysPerInterval 99000000
   SetBatchLines -1
   ListLines Off                                                                 ; ListLines/KeyHistory are used to log keys for debugging
-  #KeyHistory 0                                                                 ; higher number for debugging
+  #KeyHistoryg0                                                                 ; higher number for debugging
   #UseHook                                                
   #InstallKeybdHook                                               
   ; #InstallMouseHook                                             
@@ -56,15 +56,17 @@
   
 ; LOAD AHK SCRIPTS _____________________________________________________________
 
- #Include %A_ScriptDir%           
- #Include golems\_functions.ahk   
- #Include *i golems\windows_sys.ahk
- #Include *i golems\windows_text_navigation.ahk
- #Include *i golems\windows_goto.ahk
- #Include *i golems\VS_code.ahk                                                 ; *i => ignore if script doesn't exist
- #Include *i golems\Python.ahk                                                  
- #Include *i golems\R.ahk                            
- #Include *i ..\AHK\golems\chrome.ahk        
+ #Include %A_ScriptDir%\golems                                                  ; folder reference changes subsequent includes to look from that location
+ #Include _functions.ahk   
+ #Include *i win_text_navigation.ahk            
+ #Include *i win_sys.ahk   
+ #Include *i win_goto.ahk   
+ #Include *i win_mem_system.ahk   
+ #Include *i win_mouse_functions.ahk   
+ #Include *i R.ahk                               
+ #Include *i Python.ahk                          
+ #Include *i test.ahk   
+     
  #Include *i ..\Google Drive\secure\bing.ahk
  #Include *i ..\Google Drive\secure\mm.ahk                     
  

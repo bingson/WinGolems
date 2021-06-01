@@ -62,8 +62,8 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  <HS>  f~~               <EF> _functions.ahk
  <HS>  ini~~             <EF> config.ini
  <HS>  hh~~              <EF> Hotkey_Help.ahk
- <HS>  m~~               <EF> MASTER.ahk
- Home & M                <EF> MASTER.ahk
+ <HS>  m~~               <EF> WinGolems.ahk
+ Home & M                <EF> WinGolems.ahk
  <HS>  p~~               <EF> Python.ahk
  Home & P                <EF> Python.ahk
  Home & R                <EF> R.ahk

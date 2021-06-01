@@ -629,7 +629,7 @@
     return
  }
  
- EditFile(file_path = "0_MASTER.ahk", app_path = "editor_path") {
+ EditFile(file_path = "WinGolems.ahk", app_path = "editor_path") {
     ; opens or activates file in windows 10
     RegExMatch(file_path, "[^\\]+$", file_name)                                 ; file_name = everyting after the last \ 
     file_name := rtrim(file_name,"""")

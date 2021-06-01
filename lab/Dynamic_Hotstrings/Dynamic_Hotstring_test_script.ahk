@@ -4,7 +4,7 @@
 	; #If WinActive("ahk_class Notepad++") 
 	#If WinActive("Notepad++") 
 	#Include %A_ScriptDir%
-	; #Include MASTER.ahk
+	; #Include WinGolems.ahk
 }
 
 

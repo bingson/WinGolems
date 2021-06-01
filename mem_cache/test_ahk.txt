@@ -39,7 +39,7 @@
   ChangeTrayIcon(icon_path)
   Gosub, Autoexecution
   
-  ~^#b::                                                                        ; reload script, MASTER.ahk has same hotkey which runs test.ahk
+  ~^#b::                                                                        ; reload script, WinGolems.ahk has same hotkey which runs test.ahk
     send, {ctrl down}s{ctrl up}
     return
 
