@@ -21,6 +21,7 @@
  #SC027::                 WinMinimize,A                                         ;[MAW] minimize window 
  !#SC027::                Send #{SC027}                                         ;[MAW] insert emoji popup
  PrintScreen & PgDn::     MoveWindowToOtherDesktop()                            ;[MAW] MoveWindowToOtherDesktop
+ 
 
 ; SYS SETTINGS _________________________________________________________________
 

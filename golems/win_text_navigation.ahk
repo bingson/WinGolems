@@ -22,7 +22,7 @@
 
 
  #If WinActive("ahk_exe Code.exe") or WinActive("ahk_exe notepad++.exe")
-  printscreen & capslock:: AddSpaceBeforeComment(f)                             ;[FC] Add Space Before Comment (default)                       
+  printscreen & tab:: AddSpaceBeforeComment(f)                                  ;[FC] Add Space Before Comment (default)
   F12 & 1::                AddBorder(f, "_"  , c)                               ;[FC] Add lvl 1 Border (default)                        
   F12 & 2::                AddBorder(f, "-- ", c)                               ;[FC] Add lvl 2 Border (default)                         
   F12 & 3::                AddBorder(f, "... " , c)                             ;[FC] Add lvl 3 Border (default)
@@ -58,9 +58,7 @@
  +!u::         ConvertLower()                                                   ;[TM] case: convert selected text to lower case
  ^!u::         FirstLetterCapitalized()                                         ;[TM] case: every FirstLetterCapitalized
  ^!+u::        EveryFirstLetterCapitalized()                                    ;[TM] case: convert selected text
- #^x::                                                                          ;[TM] cut and trim whitespace around selected text
  #x::          TrimText(True)                                                   ;[TM] cut and trim whitespace around selected text
- #^c::                                                                          ;[TM] cut and trim whitespace around selected text
  #c::          TrimText()                                                       ;[TM] cut and trim whitespace around selected text
  ^!v::         FormatTranscript()                                               ;[TM] remove time index from selected text
  !#enter::     RemoveBlankLines()                                               ;[TM] remove empty lines from selected text
@@ -70,27 +68,12 @@
  #!sc028::     ReplaceQuotesWithSpaces()                                        ;[TM] replace double quotation marks with spaces in selected text
  !#space::     RemoveAllSpaces()                                                ;[TM] remove all spaces from selected text
  ^#space::     ReplaceManySpaceWith1Space()                                     ;[TM] replace multiple consecutive spaces w/ one in selected text
- 
- ^#del::                                                                        ;[TM] replace "+" or "," with " " in selected text
-     var := clip()       
-     var := StrReplace(var, ",", A_Space)
-     var := StrReplace(var, "+", A_Space)
-     var := RegExReplace(var, "S) +", A_Space)                                  
-     clip(var, True)
-     return
+ ^#del::       ReplacePlusOrCommaWithSpace()                                    ;[TM] replace "+" or "," with " " in selected text
  #!sc00C::     ReplaceUnderscoreWithSpace()                                     ;[TM] replace "_" with " " in selected text
  ^#sc00C::     ReplaceSpaceWithUnderscore()                                     ;[TM] replace " " with "_" in selected text
- #!SC034::                                                                      ;[TM] replace "." with " " in selected text
-     var := clip()
-     var := StrReplace(var, "."," ")
-     clip(var, True)
-     return
+ #!SC034::     ReplacePeriodWithSpace()                                         ;[TM] replace "." with " " in selected text
+ F1 & space::  ReplaceEqualWithSpace()                                          ;[TM] replace "=" with " " in selected text
  
- F1 & space::                                                                   ;[TM] replace "=" with " " in selected text
-     var := clip()
-     var := StrReplace(var, "="," ")
-     clip(var)
-     return
 
  F1 & sc00C::                                                                   ;[TM] replace "=" with "_" in selected text
      var := clip()
@@ -202,18 +185,18 @@
  #f11::     send {f11}                                                          ;[NKR] f11          
  #f12::     send {f12}                                                          ;[NKR] f12          
  
- f1::       return                                                              ;[NKR] modifier key no action otherwise
- f2::       return                                                              ;[NKR] modifier key no action otherwise
- f3::       return                                                              ;[NKR] modifier key no action otherwise
- f4::       return                                                              ;[NKR] modifier key no action otherwise
- f5::       return                                                              ;[NKR] modifier key no action otherwise
- f6::       return                                                              ;[NKR] modifier key no action otherwise
- f7::       return                                                              ;[NKR] modifier key no action otherwise
- f8::       return                                                              ;[NKR] modifier key no action otherwise
- f9::       return                                                              ;[NKR] modifier key no action otherwise
- f10::      return                                                              ;[NKR] modifier key no action otherwise
- f11::      return                                                              ;[NKR] modifier key no action otherwise
- f12::      return                                                              ;[NKR] modifier key no action otherwise                                                              
+;  f1::       return                                                              ;[NKR] modifier key no action otherwise
+;  f2::       return                                                              ;[NKR] modifier key no action otherwise
+;  f3::       return                                                              ;[NKR] modifier key no action otherwise
+;  f4::       return                                                              ;[NKR] modifier key no action otherwise
+;  f5::       return                                                              ;[NKR] modifier key no action otherwise
+;  f6::       return                                                              ;[NKR] modifier key no action otherwise
+;  f7::       return                                                              ;[NKR] modifier key no action otherwise
+;  f8::       return                                                              ;[NKR] modifier key no action otherwise
+;  f9::       return                                                              ;[NKR] modifier key no action otherwise
+;  f10::      return                                                              ;[NKR] modifier key no action otherwise
+;  f11::      return                                                              ;[NKR] modifier key no action otherwise
+;  f12::      return                                                              ;[NKR] modifier key no action otherwise                                                              
 
  lwin::            return                                                       ;[NKR] modifier key, use ctrl+esc to access start menu 
  home::            return                                                       ;[NKR] modifier key no action otherwise

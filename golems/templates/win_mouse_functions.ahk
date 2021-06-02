@@ -8,15 +8,9 @@
  PrintScreen & i::                                                              ;[MF] 1 Left click
  *#i:: click                                                                    ;[MF] 1 Left click 
 
- #f::                                                                           ;[MF] 2 Left clicks
-    DoubleClick() {
-      Click
-      sleep, short
-      Click
-      return
-   }
+ #f:: DoubleClick()                                                             ;[MF] 2 Left clicks
  
- ^#f::                                                                          ;[MF] 3 Left clicks
+ ^#f::                                                                          ;[MF] 3 Left clicks (select line)
     Click
     sleep, short
     Click

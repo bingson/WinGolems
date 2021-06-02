@@ -1,38 +1,87 @@
+; JUMP LISTS ___________________________________________________________________
 
-Goto_AutoExecution:
+ JumpList_AutoExecution:
+  
+  File_Dict := { "f"  : "golems\_functions.ahk"                                 ; options for edit file jump list
+               , "t"  : "golems\test.ahk"  
+               , "g"  : "golems\win_goto.ahk"
+               , "p"  : "golems\Python.ahk"
+               , "r"  : "golems\R.ahk"
+               , "t"  : "golems\win_text_navigation.ahk"
+               , "w"  : "golems\win_sys.ahk"
+               , "ms" : "golems\win_mem_system.ahk"
+               , "wg" : "WinGolems.ahk"
+               , "b"  : UProfile """\Google Drive\secure\bing.ahk"""            ; example of file path with spaces in directory name i.e., "Google Drive"
+               , "aq" : UProfile "\Google Drive\1-Jobs\2_Monzo\AQ_1_1.docm"
+               , "i"  : """" config_path """"                                   ; example of file path variable with spaces in directory name
+               , "h"  : "golems\Hotkey_Help.ahk" }
+  
+  
+  Folder_Dict := { "m"   : A_ScriptDir                                          ; options for open folder jump list
+                 , "g"   : A_ScriptDir "\golems"
+                 , "c"   : hdrive
+                 , "p"   : A_ProgramFiles
+                 , "o"   : PF_x86
+                 , "u"   : UProfile
+                 , "pic" : UProfile "\Pictures"
+                 , "d"   : UProfile "\Google Drive"
+                 , "j"   : UProfile "\Downloads"
+                 , "md"  : UProfile "\Documents"
+                 , "mem" : A_ScriptDir "\mem_cache"
+                 , "b"   : "buffer_path" }
  
- ; options for edit file jump list
- File_Dict := { "f"  : "golem\_functions.ahk"
-              , "wg" : "WinGolems.ahk"
-              , "i"  : """" config_path """"
-              , "t"  : "golems\test.ahk"
-              , "p"  : "golems\Python.ahk"
-              , "r"  : "golems\R.ahk"
-              , "t"  : "golems\win_text_navigation.ahk"
-              , "g"  : "golems\win_goto.ahk"
-              , "w"  : "golems\win_sys.ahk"
-              , "ms" : "golems\win_mem_system.ahk"
-              , "mf" : "golems\win_mouse_functions.ahk"
-              , "h"  : "golems\Hotkey_Help.ahk" }
+  command_dict := { "b"    : "BluetoothSettings"                                ; options for run system command jump list
+                  , "d"    : "DisplaySettings"              
+                  , "s"    : "SoundSettings"                
+                  , "n"    : "NotificationWindow"           
+                  , "r"    : "RunProgWindow"                
+                  , "x"    : "StartContextMenu"             
+                  , "a"    : "AlarmClock"           
+                  , "arp"  : "AddRemovePrograms"           
+                  , "c"    : "QuickConnectWindow"           
+                  , "lon"  : "WinLLockTrue"           
+                  , "loff" : "WinLLockFalse"           
+                  , "i"    : "WindowsSettings"              
+                  , "?"    : "EditHotkeyList"              
+                  , "kh"   : "KeyHistory"              
+                  , "ws"   : "WindowSpy"              
+                  , "p"    : "PresentationDisplayMode"
+                  , "cap"  : "CloseAllPrograms"
+                  , "ss"   : "CloudSyncON"
+                  , "cs"   : "CloudSyncOFF" }   
  
- ; options for open folder jump list
- Folder_Dict := { "m"   : A_ScriptDir
-                , "g"   : A_ScriptDir "\golems"
-                , "c"   : hdrive
-                , "p"   : A_ProgramFiles
-                , "o"   : PF_x86
-                , "u"   : UProfile
-                , "pic" : UProfile "\Pictures"
-                , "d"   : UProfile "\Google Drive"
-                , "j"   : UProfile "\Downloads"
-                , "md"  : UProfile "\Documents"
-                , "mem" : A_ScriptDir "\mem_cache"
-                , "a"   : A_ScriptDir "\assets"
-                , "b"   : "buffer_path" }
+  TOC_dict     := { "b"    : "cfg:`tOpenBluetoothSettings"                      ; table of contents for run system command jump list
+                  , "d"    : "cfg:`tOpenDisplaySettings"              
+                  , "s"    : "cfg:`tOpenSoundSettings"                
+                  , "n"    : "cfg:`tOpen Notifications"           
+                  , "x"    : "cfg:`tOpenStartContextMenu"             
+                  , "c"    : "cfg:`tOpenQuickConnectWindow"           
+                  , "i"    : "cfg:`tOpenWindowsSettings"              
+                  , "p"    : "cfg:`tSet presentation display mode"
+                  , "p"    : "cfg:`tSet presentation display mode"
+                  , "lon"  : "cfg:`tTurn ON Win + L Lock Computer Shortcut"           
+                  , "loff" : "cfg:`tTurn OFF Win + L Lock Computer Shortcut"           
+                  , "gh~~" : "ahk:`tGenerate a new list of shortcuts from all running scripts"       
+                  , "?"    : "ahk:`tOpen last generated list of shortcuts"              
+                  , "kh"   : "ahk:`tOpen Key History"              
+                  , "ws"   : "ahk:`tOpen Window Spy"     
+                  , "arp"  : "app:`tAddRemovePrograms"           
+                  , "r"    : "app:`tOpen Run Dialog Box"                
+                  , "a"    : "app:`tOpenAlarmClock"           
+                  , "cap"  : "app:`tCloseAllPrograms"         
+                  , "ss"   : "bup:`tStart Cloud Sync"
+                  , "cs"   : "bup:`tClose Cloud Sync" }  
+ 
+   thm := new TapHoldManager(250,,maxTaps = 3,"$","")                           ; 300 ms is the detection interval for double tab triggered commands
+   thm.Add("rctrl",       Func("FileJumpList"))                                 ; press right ctrl twice to activate file Jump List
+   thm.Add("ralt",        Func("FolderJumpList"))                               ; press right alt twice to activate folder Jump List
+   thm.Add("printscreen", Func("WinJumpList"))                                  ; press right alt twice to activate system command Jump List
+ 
+ return 
 
- ActivateExplorer := Func("ActivateApp").Bind("explorer.exe")                   ; create bound function to 
-
-return 
+ #sc01a::      RunInputCommand("EditFile", File_Dict, "EDIT FILE")              ;<JL> opens edit file jump list
+ #sc01b::      RunInputCommand(ActivateExplorer, Folder_Dict, "OPEN FOLDER")    ;<JL> opens goto folder jump list
+ #sc02b::      RunInputCommand(, command_dict, "RUN SYS COMMAND", TOC_dict)     ;<JL> opens run sys command jump list
 
 ; TITLE MATCH __________________________________________________________________
  ; hotkey to activate window with match string anywhere in the title
@@ -56,11 +105,7 @@ return
 
 ; EDIT FILE ____________________________________________________________________
  ; edit file from anywhere in windows; if already open but not active, hotkey will activate file window
-
- :*:>d::                                                                        ;<EF> opens edit file jump list
- #sc034:: RunInputCommand("EditFile", File_Dict, "EDIT FILE")                   ;<EF> opens edit file jump list
-
-
+ 
  ^#g::              EditFile("golems\test.ahk")                                 ;<EF> test.ahk
  PrintScreen & g::  EditFile("golems\win_goto.ahk")                             ;<EF> win_goto.ahk
  PrintScreen & t::  EditFile("golems\win_text_navigation.ahk")                  ;<EF> win_text_navigation.ahk
@@ -71,18 +116,13 @@ return
  
 ; GOTO FOLDER ________________________________________________________________
  
- :*:>f::                                                                        ;<F> opens goto folder jump list from anywhere in windows
- #sc033:: RunInputCommand(ActivateExplorer, Folder_Dict, "OPEN FOLDER")         ;<F> opens goto folder jump list from anywhere in windows
-
- #m::                                                                           ;<F> open mem_cache folder from anywhere in windows (new explorer instance)
- printscreen & m:: ActivateApp("explorer.exe", A_ScriptDir "\mem_cache")        ;<F> open mem_cache folder from anywhere in windows (new explorer instance)
- 
- 
+ printscreen & m::                                                              ;<F> open mem_cache folder from anywhere in windows (new explorer instance)                                                                           
+ #m::      ActivateApp("explorer.exe", A_ScriptDir "\mem_cache")                ;<F> open mem_cache folder from anywhere in windows (new explorer instance)                                                                           
+  
  
  SetTitleMatchMode, 2
- #IfWinActive ahk_group FileListers                                             
- ; ChangeFolders works in file explorer and open file + save as dialogue boxes
-                
+ #IfWinActive ahk_group FileListers                                             ;    ChangeFolders works in file explorer and open file + save as dialogue boxes
+ 
  >+sc029::  ChangeFolder(A_ScriptDir)                                           ;<F> AHK folder
  :*:golems>::                                                                   ;<F> AHK golems folder
  >+1::      ChangeFolder(A_ScriptDir "\golems\")                                ;<F> AHK golems folder

@@ -1,5 +1,6 @@
 ; MEMORY SYSTEM ________________________________________________________________
  
+ ^#0::                                                                          ;[MS] copy selected text and overwrite mem slot 0
  ^#9::                                                                          ;[MS] copy selected text and overwrite mem slot 9
  ^#8::                                                                          ;[MS] copy selected text and overwrite mem slot 8
  ^#7::                                                                          ;[MS] copy selected text and overwrite mem slot 7
@@ -9,7 +10,6 @@
  ^#3::                                                                          ;[MS] copy selected text and overwrite mem slot 3
  ^#2::                                                                          ;[MS] copy selected text and overwrite mem slot 2
  ^#1::                                                                          ;[MS] copy selected text and overwrite mem slot 1
- ^#0::                                                                          ;[MS] copy selected text and overwrite mem slot 0
     OverwriteMemory(del_toggle = false) {
         ReleaseModifiers()
         slot := substr(A_ThisHotkey, 0)                                 
@@ -19,6 +19,7 @@
         return
     }
  
+ !#0::                                                                          ;[MS] copy selection and add to bottom of mem slot 0
  !#9::                                                                          ;[MS] copy selection and add to bottom of mem slot 9
  !#8::                                                                          ;[MS] copy selection and add to bottom of mem slot 8
  !#7::                                                                          ;[MS] copy selection and add to bottom of mem slot 7
@@ -28,7 +29,6 @@
  !#3::                                                                          ;[MS] copy selection and add to bottom of mem slot 3
  !#2::                                                                          ;[MS] copy selection and add to bottom of mem slot 2
  !#1::                                                                          ;[MS] copy selection and add to bottom of mem slot 1 
- !#0::                                                                          ;[MS] copy selection and add to bottom of mem slot 0
     AddToMemory(del_after_copy = "0", prepend = False){
         ReleaseModifiers()
         slot            := substr(A_ThisHotkey, 0)
@@ -46,6 +46,7 @@
         return
    } 
 
+ +#0::                                                                          ;[MS] paste contents of mem slot 0 
  +#9::                                                                          ;[MS] paste contents of mem slot 9   
  +#8::                                                                          ;[MS] paste contents of mem slot 8   
  +#7::                                                                          ;[MS] paste contents of mem slot 7 
@@ -55,16 +56,15 @@
  +#3::                                                                          ;[MS] paste contents of mem slot 3   
  +#2::                                                                          ;[MS] paste contents of mem slot 2   
  +#1::                                                                          ;[MS] paste contents of mem slot 1 
- +#0::                                                                          ;[MS] paste contents of mem slot 0 
- #!LButton::                                                                    ;[MS] paste contents of mem slot # entered at prompt
  ^#LButton::                                                                    ;[MS] paste contents of mem slot 1 
- :*:m>::                                                                        ;[MS] paste contents of mem slot # by typing the slot number at the prompt
+ #!LButton::                                                                    ;[MS] paste contents of mem slot # entered at prompt
+ :*:m>::                                                                        ;[MS] paste contents of mem slot # entered at prompt 
     RetrieveMemory() {
         global med
         global short
         ReleaseModifiers()
-        hotstring_pressed := Instr(A_ThisHotkey, "#") ? True : False
-        if (hotstring_pressed = False) or Instr(A_ThisHotkey, "!LButton") 
+        hotkey_pressed := Instr(A_ThisHotkey, "#") ? True : False
+        if (hotkey_pressed = False) or Instr(A_ThisHotkey, "!LButton") 
         {
             if Instr(A_ThisHotkey, "#!LButton") {
                 DoubleClick()
@@ -79,6 +79,7 @@
                 DoubleClick()
                 sleep, short * 2
                 mem_slot := "1"
+                ShowPopup("SLOT 1 PASTED", "000000", "200", "45", "-5000", "14", "610", "DEF2F1")
             }
             else 
                 mem_slot := substr(A_ThisHotkey, 0) 
@@ -86,4 +87,5 @@
         AccessCache("m" mem_slot)  
         return
     } 
+     
      
