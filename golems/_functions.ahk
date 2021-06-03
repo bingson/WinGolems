@@ -176,7 +176,7 @@
     Progress,
     Return
  }
- 
+
 ; SYSTEM SETTINGS / JUMP LISTS__________________________________________________
 
  DisplaySettings() {
@@ -227,6 +227,9 @@
     KeyHistory
  }
  
+ StartMenu() {
+    send ^{esc} 
+ }
  Windowspy() {
     run, golems\WindowSpy.ahk                       
  }
@@ -238,6 +241,7 @@
  SoundSettings           := Func("SoundSettings")
  NotificationWindow      := Func("NotificationWindow")
  RunProgWindow           := Func("RunProgWindow")
+ StartMenu               := Func("StartMenu")
  StartContextMenu        := Func("StartContextMenu")
  QuickConnectWindow      := Func("QuickConnectWindow")
  WindowsSettings         := Func("WindowsSettings")
@@ -255,19 +259,20 @@
 
  
  FileJumpList(isHold, taps, state) {
-    global File_Dict
-    % (taps > 1) ? RunInputCommand("EditFile", File_Dict, "EDIT FILE") : ""
+    global File_DICT
+    % (taps > 1) ? RunInputCommand("EditFile", File_DICT, "EDIT FILE") : ""
  }
 
  FolderJumpList(isHold, taps, state){
-    global Folder_Dict
-    % (taps > 1) ? RunInputCommand(ActivateExplorer, Folder_Dict, "OPEN FOLDER") : ""
+    global Folder_DICT
+    global ActivateExplorer
+    % (taps > 1) ? RunInputCommand(ActivateExplorer, Folder_DICT, "OPEN FOLDER") : ""
  }
  
  WinJumpList(isHold, taps, state){
-    global command_dict
-    global TOC_dict
-    % (taps > 1) ? RunInputCommand(, command_dict, "RUN SYS COMMAND", TOC_dict) : ""
+    global command_DICT
+    global Command_TOC
+    % (taps > 1) ? RunInputCommand(, command_DICT, "RUN SYS COMMAND", Command_TOC) : ""
  }
  
 ; INPUT BOX COMMANDS ___________________________________________________________
@@ -280,12 +285,12 @@
     ; treated as a parameter to that function. If leaving func blank, 
     ; RunInputCommand assumes 
     ;
-
+    global UProfile
     global med
-    sleep ,med                                                                  ; ensures there's enough time to delete hotstring
-    tbl_data := (name_dict) ? BuildTOC(,name_dict) : BuildTOC(,dest_dict)
-    
-    InputBox, UserInput, %prompt% , % tbl_data[1],, % tbl_data[2], % tbl_data[3] 
+    sleep ,med                                                                  ; short wait to delete hotstring
+    tbl_data := (name_dict) ? BuildTOC(,,name_dict) : BuildTOC(,dest_dict)      ; tbl_data := [TOC, width, height, x_pos, y_pos]
+    InputBox, UserInput, %prompt% , % tbl_data[1],
+            , % tbl_data[2] , % tbl_data[3] , % tbl_data[4], % tbl_data[5], 
     if ErrorLevel {
     } else {
         if (func and dest_dict[UserInput]) {
@@ -302,27 +307,54 @@
     return
  }
  
- BuildTOC(msg_prefix = "Key`tSelection`n----`t-----------`r", arr = "") { 
-    ; outputs: 3 arrays 
-    ; constructs the table of contents as a string translated from 
-    ; an associative array/dictionary
+ BuildTOC(TOC_prefix = "", arr = "", alt_arr = "") { 
+    ; output: [TOC, width, height, x_pos, y_pos]
+    ; TOC = table of contents string created from array input. 
+    ; length, width: input box dimensions to fit the text
+    ; x_pos, y_pos: input box window placement coordinates 
     arr_KV_swapped := {}                                                        ; key value swapped version of input array 
     max_rows := max_str_len := 0
+    arr := alt_arr ? alt_arr : arr
     
-    for key, val in arr                                                         ; TOC is value            
-    {
+    for key, val in arr                                                         ; this loop cleans the label dictionary values and creates a key:value swapped 
+    {                                                                           ; version of the array (done to display TOC sorted by value instead of key)
         RegExMatch(val, "[^\\]+$", selection)
-        selection := AddSpaceBtnCaseChange(selection, False) 
         selection := ReplaceManySpaceWith1Space(selection, False)
-        ;selection := FirstLetterCapitalized(selection, False)  
         arr_KV_swapped[selection] := key
         max_str_len := max(max_str_len, strlen(key . selection))
         max_rows++ 
     }
-    TOC := msg_prefix
+    
+    line := RepeatString("-", max_str_len + 4) 
+    TOC  := TOC_prefix 
+          ? TOC_prefix
+          : "   Key`tSelection`n   ----`t" line "`r"
+          ; : "   Key`tSelection`n   ----`t-----------`r"
+
     For dest, ref in arr_KV_swapped                                             ; sort dictionary by value rather than key
-        TOC .= (TOC <> "" ? "`n" : "") ref "`t" trim(dest, """")
-    return [TOC, max(max_str_len * 9, 240), max((max_rows * 23) + 80, 380)] 
+    {
+        if alt_arr {
+            prefix := substr(dest, 1, 3)
+            if (prefix <> prev_prefix and prev_prefix and prefix) {
+               TOC .= "`n"
+               max_rows++
+            }
+            prev_prefix := prefix
+        } 
+        TOC .= (TOC <> "" ? "`n" : "") "   " ref "`t" rtrim(dest, """")
+
+    }
+    height := max((max_rows * 22.75) + 70, 420)                                 ; height of input box
+    width  := max((max_str_len * 7.5), 270)                                     ; width 
+
+    if alt_arr {
+      height -= 30
+      width  := max(width, 420)
+    }
+    coords := ActiveWinCoord()
+    x_pos  := (coords[1] < 0) ? (coords[1] - width) // 2 : ""                   ; changes window position if active window is on secondary monitor
+    y_pos  := ""
+    return [TOC, width, height, x_pos, y_pos] 
  }
 
 ; MEM_CACHE FUNCTIONS __________________________________________________________
@@ -422,6 +454,18 @@
 
 ; AHK UTILITIES ________________________________________________________________
 
+ ActiveWinCoord() {
+        ; returns an 1-D array with the bounding coordinates of the monitor the window is on.
+        winHandle := WinExist("A")                                              ; The window to operate on
+        VarSetCapacity(monitorInfo, 40), NumPut(40, monitorInfo)                
+        monitorHandle := DllCall("MonitorFromWindow", "Ptr", winHandle, "UInt", 0x2)
+        DllCall("GetMonitorInfo", "Ptr", monitorHandle, "Ptr", &monitorInfo)    
+        Left      := NumGet(monitorInfo, 20, "Int")                             ; Left
+        Top       := NumGet(monitorInfo, 24, "Int")                             ; Top
+        Right     := NumGet(monitorInfo, 28, "Int")                             ; Right
+        Bottom    := NumGet(monitorInfo, 32, "Int")                             ; Bottom
+        return [Left, Top, Right, Bottom] 
+ }
 
  TimeCode()                                                                      
  {
@@ -443,24 +487,25 @@
         StartTimer := A_TickCount
  }
 
- CreateConfigINI() {
-    global config_path
+ CreateConfigINI(apps*) {
+    global Config_Path
     global UProfile
     global PF_x86
     global med
+
     msg = No configuration file detected `nplease wait while a new one is created.
     ShowPopup(msg, "000000",, "65", "-10000", "14", "560")                  
-    PATH := FindAppPath("winword.exe", "excel.exe", "powerpnt.exe", "AcroRd32.exe", "chrome.exe", "googledrivesync.exe")
-    IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %config_path%, %A_ComputerName%, editor_path
-    IniWrite, % PATH["chrome.exe"],          %config_path%, %A_ComputerName%, html_path
-    IniWrite, % PATH["winword.exe"],         %config_path%, %A_ComputerName%, doc_path
-    IniWrite, % PATH["excel.exe"],           %config_path%, %A_ComputerName%, xls_path
-    IniWrite, % PATH["powerpnt.exe"],        %config_path%, %A_ComputerName%, ppt_path
-    IniWrite, % PATH["AcroRd32.exe"],        %config_path%, %A_ComputerName%, pdf_path
-    IniWrite, % PATH["googledrivesync.exe"], %config_path%, %A_ComputerName%, sync_path
-    IniWrite,141,                            %config_path%, %A_ComputerName%, F_height
-    IniWrite,415,                            %config_path%, %A_ComputerName%, F_width
-    IniWrite,blue.ico,                       %config_path%, settings, starting_icon
+    PATH := FindAppPath(apps*)
+    IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %Config_Path%, %A_ComputerName%, editor_path
+    IniWrite, % PATH["chrome.exe"],          %Config_Path%, %A_ComputerName%, html_path
+    IniWrite, % PATH["winword.exe"],         %Config_Path%, %A_ComputerName%, doc_path
+    IniWrite, % PATH["excel.exe"],           %Config_Path%, %A_ComputerName%, xls_path
+    IniWrite, % PATH["powerpnt.exe"],        %Config_Path%, %A_ComputerName%, ppt_path
+    IniWrite, % PATH["AcroRd32.exe"],        %Config_Path%, %A_ComputerName%, pdf_path
+    IniWrite, % PATH["googledrivesync.exe"], %Config_Path%, %A_ComputerName%, sync_path
+    IniWrite,141,                            %Config_Path%, %A_ComputerName%, F_height
+    IniWrite,415,                            %Config_Path%, %A_ComputerName%, F_width
+    IniWrite,lg.ico,                         %Config_Path%, settings, starting_icon
     ShowPopup("Done!",,, "50", "-10000", "15")  
     sleep, med
     ClosePopup()
@@ -530,8 +575,8 @@
 
  ShowPopup(msg, ctn = "008000", wn = "400", hn = "75", ms = "-1000", fmn = "16", wmn = "610", cwn = "ffffff") {
     ClosePopup()                                                                ; clean up any lingering popups
-    popx := (A_ScreenWidth - wn)/2                                              ; popx := A_ScreenWidth - width - 25
-    popy := A_ScreenHeight - hn                                                 ; popy := A_ScreenHeight - height - 25
+    popx := (A_ScreenWidth - wn)/2                                              
+    popy := A_ScreenHeight - hn                                                 
     Progress, b C11 X%popx% Y%popy% ZH0 ZX10 zy10 W%wn% H%hn% FM%fmn% WM%wmn% CT%ctn% CW%cwn%,, %msg% ,,Gadugi
     SetTimer, ClosePopup, %ms%
     POP_UP := true
@@ -663,7 +708,7 @@
  }
 
  SelectByRegEx() {
-    ; Select files in file explorer by regex                                   ; https://sharats.me/posts/the-magic-of-autohotkey-2/
+    ; Select files in file explorer by regex                                    ; https://sharats.me/posts/the-magic-of-autohotkey-2/
     static selectionPattern := ""
     WinGetPos, wx, wy
     ControlGetPos, cx, cy, cw, , DirectUIHWND3
@@ -724,15 +769,15 @@
     } 
     try
     {
-        if WinActive("ahk_class #32770")                                        ; class for "save as" dialogue boxes
-        {                                      
-            changeDialDir(path)
-        } 
-        else if (WinActive("ahk_exe explorer.exe") 
-        AND WinActive("ahk_class CabinetWClass")) 
+        if  WinActive("ahk_exe explorer.exe") 
+        and WinActive("ahk_class CabinetWClass") 
         {
             NavRun(path)
         }
+        else                                                                    ; WinActive("ahk_class #32770") = class for "save" dialogue boxes
+        {                                      
+            changeDialDir(path)
+        } 
         return
     }
  }
@@ -807,6 +852,8 @@
  }
  
  ActivateOrOpen(exe_name, app_path = "", arguments = "", start_folder_toggle = False) {
+    ; opens application located at app_path or activates application (brings to top) if underneath
+    ; other windows
 
     if (exe_name = "explorer.exe") {
         RegExMatch(arguments, "[^\\]+$", win_title)
@@ -821,7 +868,7 @@
         app_path := (exe_name = "explorer.exe" or exe_name = "cmd.exe")
                  ? exe_name
                  : app_path
-        RunAsUser(app_path, arguments, A_ScriptDir)                              ; cmd.exe and explorer.exe do not need filepaths
+        RunAsUser(app_path, arguments, A_ScriptDir)                             ; cmd.exe and explorer.exe do not need filepaths
     } else {
         WinActivate, % "ahk_id " wList1 
     }
@@ -836,7 +883,7 @@
     return
  }
  
- EditFile(file_path = "WinGolems.ahk", app_path = "editor_path") {
+ EditFile(file_path = "master.ahk", app_path = "editor_path") {
     ; opens or activates file in windows 10
     RegExMatch(file_path, "[^\\]+$", file_name)                                 ; file_name = everyting after the last \ 
     file_name := rtrim(file_name,"""")
@@ -953,7 +1000,7 @@
     return
  }
  
-; CHROME BROWSER _________________________________________________________________
+; CHROME BROWSER _______________________________________________________________
 
  LoadURL(URL) {
     ; Browser path used to load urls dependent on computer

@@ -74,7 +74,7 @@
                   , "scs"  : "bup:`tStart Cloud Sync"
                   , "ccs"  : "bup:`tClose Cloud Sync" }  
 
-  url_DICT   :=   { "gm"   : "mail.google.com"
+  URL_DICT   :=   { "gm"   : "mail.google.com"
                   , "gc"   : "www.google.com/calendar"
                   , "gk"   : "keep.google.com"
                   , "gn"   : "news.google.com"
@@ -83,7 +83,7 @@
                   , "t"    : "twitter.com/"
                   , "n"    : "netflix.com" }
     
-  url_TOC:=       { "gc"   : "utl`tGoogle Calendar"                             
+  URL_TOC:=       { "gc"   : "utl`tGoogle Calendar"                             
                   , "gk"   : "utl`tGoogle Keepcom"
                   , "gn"   : "utl`tGoogle News"
                   , "w"    : "utl`tWeather"
@@ -95,14 +95,14 @@
    thm := new TapHoldManager(275,,maxTaps = 3,"$","")                           ; 275 ms is the detection interval for double tab triggered commands
    thm.Add("ralt",        Func("FileJumpList"))                                 ; press right ctrl twice to activate file Jump List
    thm.Add("rctrl",       Func("FolderJumpList"))                               ; press right alt twice to activate folder Jump List
-   thm.Add("printscreen", Func("WinJumpList"))                                  ; press right alt twice to activate system command Jump List
+   thm.Add("printscreen", Func("WinJumpList"))                                  ; press right printscreen twice to activate system command Jump List
  
  return 
 
- #sc01a::      RunInputCommand("EditFile", File_Dict, "EDIT FILE")              ;<JL> opens edit file jump list
- #sc01b::      RunInputCommand(ActivateExplorer, Folder_Dict, "OPEN FOLDER")    ;<JL> opens goto folder jump list
- #sc02b::      RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC)  ;<JL> opens run sys command jump list
- #sc033::      RunInputCommand("LoadURL", url_DICT, "LOAD URL", url_TOC)        ;<JL> opens webpage jump list
+ #sc01a::      RunInputCommand("EditFile", File_Dict, "EDIT FILE")              ;<JL> edit file jump list
+ #sc01b::      RunInputCommand(ActivateExplorer, Folder_Dict, "OPEN FOLDER")    ;<JL> open folder jump list
+ #sc02b::      RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC)  ;<JL> run sys command jump list
+ #sc033::      RunInputCommand("LoadURL", URL_DICT, "LOAD URL", URL_TOC)        ;<JL> url jump list
 
 ; TITLE MATCH __________________________________________________________________
  ; hotkey to activate window with match string anywhere in the title
@@ -127,7 +127,7 @@
  PrintScreen & t::  EditFile("golems\win_text_navigation.ahk")                  ;<EF> win_text_navigation.ahk
  PrintScreen & w::  EditFile("golems\win_sys.ahk")                              ;<EF> win_sys.ahk
  PrintScreen & f::  EditFile("golems\_functions.ahk")                           ;<EF> _functions.ahk
- ; PrintScreen & f::  EditFile("path\example.doc")                              ;     MS office doc example 
+ ; PrintScreen & f::  EditFile("path\example.doc")                              ;     MS office doc example (EditFile also accepts txt, ppt, xls, pdf file types)
 
 
  
