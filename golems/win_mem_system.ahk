@@ -1,3 +1,5 @@
+#IfWinActive
+
 ; MEMORY SYSTEM ________________________________________________________________
  
  ^#0::                                                                          ;[MS] copy selected text and overwrite mem slot 0
