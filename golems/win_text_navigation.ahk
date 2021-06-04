@@ -1,58 +1,8 @@
-; FORMAT CODE __________________________________________________________________
- 
- WinTextNav_Autoexecution:
- 
-  c := ";"
-  h := "40" 
-  f := "80"
- 
- return                                                                         
- 
- #If WinActive("ahk_exe Code.exe") and TabCondition(".notes")
-  F12 & 1::        AddBorder(f, "_"  , "")                                      ;[FC] Add lvl 1 Border .notes files 
-  F12 & 2::        AddBorder(f, "-- ", "#")                                     ;[FC] Add lvl 2 Border .notes files
-  F12 & 3::        AddBorder(f, "... " , "##")                                  ;[FC] Add lvl 3 Border .notes files
-
- #If WinActive("ahk_exe Chrome.exe") and TabCondition("Jupyter Notebook")        
-  printscreen & capslock:: AddSpaceBeforeComment("50")                          ;[FC] Add Space Before Comment .ipynb files               
-  F12 & tab::              AddSpaceBeforeComment(h)                             ;[FC] Add Space Before Comment .ipynb files
-  F12 & 1::                AddBorder(h, "_"  , c)                               ;[FC] Add lvl 1 Border .ipynb files
-  F12 & 2::                AddBorder(h, "-- ", c)                               ;[FC] Add lvl 2 Border .ipynb files
-  F12 & 3::                AddBorder(h, "... " , c)                             ;[FC] Add lvl 3 Border .ipynb files
-
-
- #If WinActive("ahk_exe Code.exe") or WinActive("ahk_exe notepad++.exe")
-  printscreen & tab:: AddSpaceBeforeComment(f)                                  ;[FC] Add Space Before Comment (default)
-  F12 & 1::                AddBorder(f, "_"  , c)                               ;[FC] Add lvl 1 Border (default)                        
-  F12 & 2::                AddBorder(f, "-- ", c)                               ;[FC] Add lvl 2 Border (default)                         
-  F12 & 3::                AddBorder(f, "... " , c)                             ;[FC] Add lvl 3 Border (default)
-  
-  #If WinActive("ahk_exe Code.exe") or WinActive("ahk_exe notepad++.exe") or
- (WinActive("ahk_exe Chrome.exe") and TabCondition("Jupyter Notebook"))
-  F11 & c::                                                                     ;[FC] format code by adding spaces between math operators, before commas, ... (selected text)
-  :X:c<::                  FormatCode()                                         ;[FC] format code add spaces between math operators, before commas, ... (any text to the Left of c<)
-  <+^Backspace::           Send {BackSpace 4}                                   ;[FC] Send {BackSpace 4}
-  <+^Space::               Send {Space 4}                                       ;[FC] Send {Space 4}    
- 
- 
-
- F12 & c::                                                                      ;[FC] convert selected snake_case or space delimited text to CamelCase
-    ReplaceUnderscoreWithSpace()                                                
-    EveryFirstLetterCapitalized()                                               
-    RemoveAllSpaces()                                                           
-    return
- 
- F12 & s::                                                                      ;[FC] convert selected CamelCase text to snake_case
-    AddSpaceBtnCaseChange()
-    ReplaceSpaceWithUnderscore()
-    return
-
- $+^q:: send {shift down}{home}{shift up}{Left}{sc027}{space}{end}              ;[FC] comment line while preserving leading whitespace         
-    
  #IfWinActive 
  
 ; TEXT MANIPULATION ____________________________________________________________
  !Backspace::  Send {Backspace}{End}{Shift Down}{Up}{End}{Shift Up}{Backspace}  ;[TM] edit: Delete line with backspace from end of line
+ ^#Backspace::  replaceDeletedCharWithSpaces() 
  ^Capslock::   Send {del}{home}{shift down}{down}{shift up}{del}                ;[TM] edit: Delete line
  +^u::         ConvertUpper()                                                   ;[TM] case: capitalize selected text
  +!u::         ConvertLower()                                                   ;[TM] case: convert selected text to lower case
@@ -73,8 +23,6 @@
  ^#sc00C::     ReplaceSpaceWithUnderscore()                                     ;[TM] replace " " with "_" in selected text
  #!SC034::     ReplacePeriodWithSpace()                                         ;[TM] replace "." with " " in selected text
  F1 & space::  ReplaceEqualWithSpace()                                          ;[TM] replace "=" with " " in selected text
- 
-
  F1 & sc00C::                                                                   ;[TM] replace "=" with "_" in selected text
      var := clip()
      var := StrReplace(var, "=","_")
