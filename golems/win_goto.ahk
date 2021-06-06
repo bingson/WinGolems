@@ -111,26 +111,6 @@
                   , "p"    : "ent`tpocket"
                   , "wg"   : "pri`tgithub/bingson/wingolems"} 
 
-
-/*
-  URL_DICT   :=   { "gm"   : "mail.google.com"
-                  , "gc"   : "www.google.com/calendar"
-                  , "gk"   : "keep.google.com"
-                  , "gn"   : "news.google.com"
-                  , "cal"  : "calendar.sharats.me/"
-                  , "w"    : "www.accuweather.com"
-                  , "t"    : "twitter.com/"
-                  , "n"    : "netflix.com" }
-    
-  URL_TOC:=       { "gc"   : "utl`tGoogle Calendar"                             
-                  , "gk"   : "utl`tGoogle Keepcom"
-                  , "gn"   : "utl`tGoogle News"
-                  , "w"    : "utl`tWeather"
-                  , "cal"  : "utl`tCalendar"
-                  , "f"    : "fin`tFinance.yahoo"
-                  , "t"    : "sm`tTwitter"
-                  , "n"    : "sm`tNetflix" }
- */
  return 
 
  #sc01a::                                                                       ;[JL] opens edit file jump list
