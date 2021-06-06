@@ -78,9 +78,10 @@
  #Include *i Python.ahk                          
  #Include *i test.ahk   
  #Include *i TapHoldManager.ahk
-     
- #Include *i ..\Google Drive\secure\bing.ahk
- #Include *i ..\Google Drive\secure\mm.ahk                     
+ 
+ #Include %A_ScriptDir%\..\Google Drive\secure\
+ #Include *i bing.ahk
+ #Include *i mm.ahk                     
  #Include *i %A_ScriptDir%\..\ahk\golems\coding_environments.ahk
  
 
