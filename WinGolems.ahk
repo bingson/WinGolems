@@ -20,7 +20,9 @@
   ; SetTimer, Reload, 60000                                                     ; reloads the script once every minute; makes the script reliable when running multiple ahk scripts on older hardware
                                                                                 ; or when multiple scripts (not recommended) are loaded in the system tray simultaneously instead of included into 1 script 
 ; INITIALIZE GLOBAL VARIABLES __________________________________________________
-
+  
+  config_path := A_ScriptDir "\config.ini"
+  
   #NoEnv                                                                        ; prevents empty variables from being looked up as potential environment variables
   EnvGet, hdrive, Homedrive                                                     ; see a list of available Environment variables at the command prompt by typing SET
   EnvGet, hpath, Homepath
@@ -31,15 +33,24 @@
   med              := 300                                                       
   long             := 900                                                       
  
-  gosub, test_autoexecution                                                     ; initializes variables for script testing template
-  gosub, JL_AutoExecution                                                       ; jump lists (in win_goto.ahk) initializations    gosub, win_goto_autoexecution                                                 ; initializes variables for jump lists
-  gosub, win_sys_autoexecution                                                  ; initializes variables for jump lists
+  ; gosub, test_autoexecution                                                     ; initializes variables for script testing template
+  ; gosub, JL_AutoExecution                                                       ; jump lists (in win_goto.ahk) initializations    gosub, win_goto_autoexecution                                                 ; initializes variables for jump lists
+  ; gosub, win_sys_autoexecution                                                  ; initializes variables for jump lists
+  ; gosub, coding_autoexecution ; (remove later)
 
+  gosub, test_autoexecution    
+  gosub, coding_autoexecution  
+  gosub, JL_AutoExecution      
+  gosub, win_sys_autoexecution 
+  gosub, Bing_autoexecution    
+  ; gosub, chrome_autoexecution  
+  
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and save as dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW
   GroupAdd, FileListers, ahk_class #32770, ShellView
   
-  config_path := A_ScriptDir "\config.ini"
+  
+  
   icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; A_ScriptDir = active AHK script directory
   SetTrayIcon(icon_path "lg.ico")                                             ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
   
@@ -74,15 +85,16 @@
  #Include *i win_sys.ahk   
  #Include *i win_goto.ahk   
  #Include *i win_mem_system.ahk   
+ #Include *i test.ahk   
  #Include *i R.ahk                               
  #Include *i Python.ahk                          
- #Include *i test.ahk   
  #Include *i TapHoldManager.ahk
  
  #Include %A_ScriptDir%\..\Google Drive\secure\
  #Include *i bing.ahk
  #Include *i mm.ahk                     
  #Include *i %A_ScriptDir%\..\ahk\golems\coding_environments.ahk
+ #Include *i %A_ScriptDir%\..\ahk\golems\chrome.ahk
  
 
 /* #INCLUDE MECHANICS ********************************************************** 

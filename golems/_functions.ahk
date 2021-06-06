@@ -215,7 +215,7 @@
  KeyHistory              := Func("KeyHistory")
  WindowSpy               := Func("WindowSpy")
  ReloadAHK               := Func("ReloadAHK")
- ExitAHK                 := Func("ExitAHK")
+ ExitApp                 := Func("ExitApp")
  GenerateHotkeyList      := Func("GenerateHotkeyList")
  EditHotkeyList          := Func("EditFile").Bind("HotKey_List.txt", "editor_path") 
  CloudSyncON             := Func("CloudSync").Bind("ON") 
@@ -285,7 +285,7 @@
     Reload
  }
 
- ExitAHK() {
+ ExitApp() {
     ExitApp
  }
 
@@ -545,8 +545,8 @@
     IniWrite, % PATH[apps[1]], %config_path%, %A_ComputerName%, doc_path
     IniWrite, % PATH[apps[2]], %config_path%, %A_ComputerName%, xls_path
     IniWrite, % PATH[apps[3]], %config_path%, %A_ComputerName%, ppt_path
-    IniWrite, % PATH[apps[4]], %config_path%, %A_ComputerName%, pdf_path
-    IniWrite, % PATH[apps[5]], %config_path%, %A_ComputerName%, html_path
+    IniWrite, % PATH[apps[4]], %config_path%, %A_ComputerName%, html_path
+    IniWrite, % PATH[apps[5]], %config_path%, %A_ComputerName%, pdf_path
     IniWrite, % PATH[apps[6]], %config_path%, %A_ComputerName%, sync_path
     IniWrite, % PATH[apps[7]], %config_path%, %A_ComputerName%, editor_path
     IniWrite,141,              %config_path%, %A_ComputerName%, F_height

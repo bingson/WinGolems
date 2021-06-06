@@ -2,18 +2,26 @@
 ; JUMP LISTS ___________________________________________________________________
 
  JL_AutoExecution:
-  
-  File_DICT :=    { "f"  : "golems\_functions.ahk"                              ; options for edit file jump list
-                  , "t"  : "golems\test.ahk"  
-                  , "g"  : "golems\win_goto.ahk"
-                  , "p"  : "golems\Python.ahk"
-                  , "r"  : "golems\R.ahk"
-                  , "t"  : "golems\win_text_navigation.ahk"
-                  , "w"  : "golems\win_sys.ahk"
-                  , "ms" : "golems\win_mem_system.ahk"
-                  , "wg" : "WinGolems.ahk"
-                  , "i"  : """" config_path """" }                              ; example of file path variable
 
+  File_DICT :=    { "f"    : "golems\_functions.ahk"                            ; options for edit file jump list
+                  , "t"    : "golems\test.ahk"  
+                  , "g"    : "golems\win_goto.ahk"
+                  , "c"    : "golems\chrome.ahk"
+                  , "o"    : "golems\office.ahk"
+                  , "j"    : "golems\jupyter.ahk"
+                  , "p"    : "golems\Python.ahk"
+                  , "v"    : "golems\coding_environments.ahk"
+                  , "tn"   : "golems\win_text_navigation.ahk"
+                  , "w"    : "golems\win_sys.ahk"
+                  , "ms"   : "golems\win_mem_system.ahk"
+                  , "r"    : "golems\R.ahk"
+                  , "m"    : "master.ahk"
+                  , "b"    : UProfile """\Google Drive\secure\bing.ahk"""
+                  , "mm"   : UProfile """\Google Drive\secure\mm.ahk"""
+                  , "aq"   : UProfile "\Google Drive\1-Jobs\2_Monzo\AQ_1_1.docm"
+                  , "i"    : """" config_path """"
+                  , "h"    : "golems\Hotkey_Help.ahk" }                              
+                  
                   ; , "b"  : UProfile """\Google Drive\example.ahk"""           ; example of Editfile compatible path with spaces in the directory name; 
                   ; , "aq" : UProfile "\Google Drive\eg_folder\example.doc"     ; example of file path with spaces in directory name and MS office .doc file
                                                                                 ; syntax difference with different file types is quirk of AHK
@@ -54,7 +62,7 @@
                   , "ss"   : "CloudSyncON"
                   , "qs"   : "CloudSyncOFF" }   
  
-  command_TOC  := { "b"    : "cfg:`tOpen Bluetooth Settings"                    ; table of contents for run system command jump list
+  Command_TOC  := { "b"    : "cfg:`tOpen Bluetooth Settings"                    ; table of contents for run system command jump list
                   , "d"    : "cfg:`tOpen Display Settings"                        
                   , "ss"   : "cfg:`tOpen Sound Settings"                
                   , "n"    : "cfg:`tOpen Notifications"           
@@ -77,6 +85,34 @@
                   , "scs"  : "bup:`tStart Cloud Sync"
                   , "ccs"  : "bup:`tClose Cloud Sync" }  
 
+  URL_DICT :=     { "gm"   : "mail.google.com"
+                  , "gc"   : "www.google.com/calendar"
+                  , "gk"   : "keep.google.com"
+                  , "gn"   : "news.google.com"
+                  , "f"    : "ca.finance.yahoo.com/portfolio/pf_1/view/v1"
+                  , "w"    : "www.accuweather.com/en/ca/kanata-lakes/k2l/weather-forecast/3385448"
+                  , "cal"  : "calendar.sharats.me/"
+                  , "i"    : "www.inoreader.com"
+                  , "t"    : "twitter.com/"
+                  , "n"    : "netflix.com" 
+                  , "p"    : "getpocket.com/a/queue/"
+                  , "wg"   : "github.com/bingson/wingolems"}
+  
+  URL_TOC :=      { "gm"   : "utl`tGoogle Mail"
+                  , "gc"   : "utl`tGoogle Calendar"
+                  , "gk"   : "utl`tGoogle Keepcom"
+                  , "gn"   : "utl`tGoogle News"
+                  , "f"    : "utl`tca.finance.yahoo"
+                  , "w"    : "utl`tweather"
+                  , "cal"  : "utl`tcalendar"
+                  , "i"    : "ent`tinoreader"
+                  , "t"    : "ent`ttwitter"
+                  , "n"    : "ent`tnetflix"
+                  , "p"    : "ent`tpocket"
+                  , "wg"   : "pri`tgithub/bingson/wingolems"} 
+
+
+/*
   URL_DICT   :=   { "gm"   : "mail.google.com"
                   , "gc"   : "www.google.com/calendar"
                   , "gk"   : "keep.google.com"
@@ -94,7 +130,7 @@
                   , "f"    : "fin`tFinance.yahoo"
                   , "t"    : "sm`tTwitter"
                   , "n"    : "sm`tNetflix" }
- 
+ */
  return 
 
  #sc01a::                                                                       ;[JL] opens edit file jump list

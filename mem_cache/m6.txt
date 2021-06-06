@@ -1,0 +1,10 @@
+{ "f"  : "golems\_functions.ahk"                              ; options for edit file jump list
+                  , "t"  : "golems\test.ahk"  
+                  , "g"  : "golems\win_goto.ahk"
+                  , "p"  : "golems\Python.ahk"
+                  , "r"  : "golems\R.ahk"
+                  , "tn"  : "golems\win_text_navigation.ahk"
+                  , "w"  : "golems\win_sys.ahk"
+                  , "ms" : "golems\win_mem_system.ahk"
+                  , "i"  : """" config_path """"  
+                  , "wg" : "WinGolems.ahk" }
