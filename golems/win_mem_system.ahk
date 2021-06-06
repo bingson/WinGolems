@@ -15,7 +15,7 @@
     OverwriteMemory(del_toggle = false) {
         ReleaseModifiers()
         slot := substr(A_ThisHotkey, 0)                                 
-        ; del_toggle := Instr(A_ThisHotkey, "del") ? True : False               ;     cut selected text hot key condition  
+        ; del_toggle := Instr(A_ThisHotkey, "del") ? True : False               
         WriteToCache("m" slot, del_toggle)                                      ;     note: if no text selected, no overwrite will occur 
         ShowPopup("m" slot "`noverwritten",,"200")
         return
@@ -46,7 +46,7 @@
         if (cut = true)
            send {del}
         return
-   } 
+    } 
 
  <+#0::                                                                         ;[MS] paste contents of mem slot 0 
  <+#9::                                                                         ;[MS] paste contents of mem slot 9   
@@ -78,14 +78,14 @@
         if Instr(A_ThisHotkey, "m>") or Instr(A_ThisHotkey, "#!LButton") 
         {
             if Instr(A_ThisHotkey, "#!LButton")
-                MouseCursorSelectWord()
+                MouseClicks(2)
             ShowPopup("PASTE SLOT #", "000000", "200", "45", "-5000", "14", "610", "DEF2F1")
             input, mem_slot, L1 T5
             ClosePopup() 
         } 
         else if Instr(A_ThisHotkey, "^#LButton") 
         {
-            MouseCursorSelectWord()
+            MouseClicks(2)
             mem_slot := "1"
             ShowPopup("SLOT 1 PASTED", "000000", "200", "45", "-5000", "14", "610", "DEF2F1")
         }
@@ -96,8 +96,8 @@
         AccessCache("m" mem_slot)
         if Instr(A_ThisHotkey, "printscreen") {                               
             del_char := strlen(AccessCache("m" mem_slot, ,False))
-            del_char := (del_char < 200) ? del_char : ""                        ; delete after paste inconsistent with large blocks of multi-line text
-            send {del %del_char%}
+            del_char := (del_char < 200) ? del_char : ""                        ; put a character limit because delete after paste inconsistent with very large blocks of multi-line text
+            sendinput {del %del_char%}
             return
         }
         return

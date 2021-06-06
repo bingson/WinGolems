@@ -1,6 +1,18 @@
-; MANIPULATE ACTIVE WINDOW _____________________________________________________
+#IfWinActive
+SetTitleMatchMode, 2
+win_sys_autoexecution:                                                          ; initialize class instances for double-tap to execute commands
+ 
+ ; tap twice to execute shortcuts
+ thm_sys := new TapHoldManager(270,,maxTaps = 3,"$","")                         ; with window parameter set here, default window criteria that will be set for all sub-created hotkeys under this manager object is notepad
+ thm_sys.Add("printscreen", Func("WinMaximize"))                                ; maximize window by pressing printscreen twice in 300 milliseconds
+ thm_sys.Add("rctrl",       Func("BrowserForward"))                             ; simulates Alt+Right 
+ thm_sys.Add("ralt",        Func("BrowserBack"))                                ; simulates Alt+Left 
 
- ^#sc027::                Send {lwin down}d{lwin up}                            ;[MAW] show desktop
+ return
+
+; MANIPULATE APPLICATION WINDOWS _______________________________________________
+
+ ^#sc027::                Send {lwin down}d{lwin up }                           ;[MAW] show desktop
  ^#w::                    WinClose,A                                            ;[MAW] close active window
  ^#q::                    CloseClass()                                          ;[MAW] close all instances of the active program
  +#capslock::             ActivatePrevInstance()                                ;[MAW] rotate through active program instances starting from oldest 
@@ -12,12 +24,10 @@
  #del::                   AlwaysOnTop("OFF")                                    ;[MAW] Always on top: Off
  PrintScreen & Left::     send {LWin down}{Left}{LWin up}                       ;[MAW] resize window to left half of screen
  PrintScreen & Right::    send {LWin down}{Right}{LWin up}                      ;[MAW] resize window to right half of screen
- PrintScreen & sc034::                                                          ;[MAW] maximize window
- $#space::                                                                      ;[MAW] maximize window
+ #space::                                                                       ;[MAW] maximize window
  PrintScreen & Up::                                                             ;[MAW] maximize window   
  #Up::                    WinMaximize,A                                         ;[MAW] maximize window 
  PrintScreen & SC027::                                                          ;[MAW] minimize window 
- +#k::                                                                          ;[MAW] minimize window 
  #SC027::                 WinMinimize,A                                         ;[MAW] minimize window 
  !#SC027::                Send #{SC027}                                         ;[MAW] insert emoji popup
  PrintScreen & PgDn::     MoveWindowToOtherDesktop()                            ;[MAW] MoveWindowToOtherDesktop
@@ -25,26 +35,26 @@
 
 ; SYS SETTINGS _________________________________________________________________
 
- F9 & b::    BluetoothSettings()                                                ;[SS] bluetooth settings
- F9 & d::    DisplaySettings()                                                  ;[SS] display settings
- F9 & v::    SoundSettings()                                                    ;[SS] sound settings
- F9 & a::    NotificationWindow()                                               ;[SS] notification window
- F9 & r::    RunProgWindow()                                                    ;[SS] run program
- F9 & x::    StartContextMenu()                                                 ;[SS] context menu for the Start button
- F9 & c::    QuickConnectWindow()                                               ;[SS] quick connect window
- F9 & s::    WindowsSettings()                                                  ;[SS] windows settings
- F9 & p::    PresentationDisplayMode()                                          ;[SS] presentation display mode
+ :X:b~~::    BluetoothSettings()                                                ;[SS] bluetooth settings
+ :X:d~~::    DisplaySettings()                                                  ;[SS] display settings
+ :X:n~~::    NotificationWindow()                                               ;[SS] notification window
+ :X:v~~::    SoundSettings()                                                    ;[SS] sound settings
+ :X:r~~::    RunProgWindow()                                                    ;[SS] run program
+ :X:x~~::    StartContextMenu()                                                 ;[SS] context menu for the Start button
+ :X:k~~::    QuickConnectWindow()                                               ;[SS] quick connect window
+ :X:i~~::    WindowsSettings()                                                  ;[SS] windows settings
+ :X:p~~::    PresentationDisplayMode()                                          ;[SS] presentation display mode
 
 ; SYS COMMANDS _________________________________________________________________
 
  ^#!Left::   Send {ctrl down}{lwin down}{Left}{ctrl up}{lwin up}                ;[SC] switch desktop environments (Left)
  ^#!Right::  Send {ctrl down}{lwin down}{Right}{ctrl up}{lwin up}               ;[SC] switch desktop environments (Right)
- F8 & c::    AlarmClock()                                                       ;[SC] alarm clock
- +^!del::    DllCall("PowrProf\SetSuspendState", "int", 0, "int", 0, "int", 0)  ;[SC] enter sleep with the '(single quote) key 
- ^#!del::    DllCall("PowrProf\SetSuspendState", "int", 1, "int", 0, "int", 0)  ;[SC] enter hybernate with the '\' key 
+ +^!del::    DllCall("PowrProf\SetSuspendState", "int", 0, "int", 0, "int", 0)  ;[SC] enter sleep mode
+ ^#!del::    DllCall("PowrProf\SetSuspendState", "int", 1, "int", 0, "int", 0)  ;[SC] enter hybernate mode
  ^#!esc::    ShutDown, 9                                                        ;[SC] shutdown + power down 
  +^!esc::    ShutDown, 2                                                        ;[SC] restart the computer
- :cX:cap~~:: CloseAllPrograms()                                                ;[SC] close all open programs 
+ :X:a~~::    AlarmClock()                                                       ;[SC] alarm clock
+ :cX:ce~~::  CloseAllPrograms()                                                 ;[SC] close all open programs 
  ^#!F12::    CloudSync("ON")                                                    ;[SC] turn on cloud sync 
  +^#F12::    CloudSync("OFF")                                                   ;[SC] turn off cloud sync
 
@@ -59,57 +69,26 @@
  !n::       send !{right}                                                       ;[FE] forward folder
  ^!k::                                                                          ;[FE] up one directory level
  !u::       send !{up}                                                          ;[FE] up one directory level
-
- ^q::                                                                           ;[FE] close file exploer window
- !p::       Send ^w                                                             ;[FE] close file exploer window
- !z::       Send !vn{enter}                                                     ;[FE] panes: toggle navigation pane
- ^p::       Send {alt down}p{alt up}                                            ;[FE] panes: toggle preview plane
-
- <^j::                                                                          ;[FE] sort by name
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}     
-    send !vo{enter} 
-    return  
+ !p::       Send ^w                                                             ;[FE] close file explorer window
  
- <^k::                                                                          ;[FE] sort by date modified
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}     
-    send !vo{Down}{enter}   
-    return  
+ !SC027::   DetailedView()                                                      ;[FE] view: detailed file info with resized columns
+ ^h::       ToggleInvisible()                                                   ;[FE] view: toggle hide/unhide invisible files
+ <^j::      SortByName()                                                        ;[FE] view: sort by name
+ <^k::      SortByDate()                                                        ;[FE] view: sort by date modified
+ >^j::      SortByType()                                                        ;[FE] view: sort by type
+ >^k::      SortBySize()                                                        ;[FE] view: sort by size
  
- >^j::                                                                          ;[FE] sort by type
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}     
-    send !vo{Down}{Down}{enter} 
-    return  
- 
- >^k::                                                                          ;[FE] sort by size
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}     
-    send !vo{Down}{Down}{Down}{enter}   
-    return  
- 
- ^u::      send !vg{up 4}{enter}                                                ;[FE] groups: toggle groupby name/remove grouping
+ ^u::      send !vg{up   4}{enter}                                              ;[FE] groups: toggle groupby name/remove grouping
  ^o::      Send !vg{down 2}{enter}                                              ;[FE] groups: group by file type
  ^i::      Send !vg{down 1}{enter}                                              ;[FE] groups: group by date
  !sc035::                                                                       ;[FE] groups: group folding: Expand all 
  ^sc035::  ExpandCollapseAllGroups()                                            ;[FE] groups: group folding: Collapse all
  
- ^SC034::                                                                       ;[FE] activate navigation pane
- +!Left::                                                                       ;[FE] activate navigation pane
- +!Space:: ControlFocus, SysTreeView321, ahk_class CabinetWClass                ;[FE] activate navigation pane
+ !z::       Send !vn{enter}                                                     ;[FE] panes: toggle navigation pane
+ ^p::       Send {alt down}p{alt up}                                            ;[FE] panes: toggle preview plane
+ <+Space:: ControlFocus, SysTreeView321, ahk_class CabinetWClass                ;[FE] panes: move focus to navigation pane
+ >+Space:: ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                 ;[FE] panes: move focus to current folder pane 
  
- +!Right::                                                                      ;[FE] activate current folder pane 
- >+Space::                                                                      ;[FE] activate current folder pane 
- <!Space::                                                                      ;[FE] activate current folder pane 
- >!Space:: ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                 ;[FE] activate current folder pane 
- 
- !SC027::                                                                       ;[FE] view: detailed view with resized columns
-    send {ctrl down}{shift down}6{ctrl up}{shift up}
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
-    return
-     
- F1 & h::                                                                      ;[FE] hide/unhide invisible files
-    send !v
-    sleep, med 
-    send {h 2}
-    return
 
  #IfWinActive    
 
@@ -129,22 +108,20 @@
  :X:kh~~:: KeyHistory                                                           ;[AHK] open key history
  :X:ws~~:: run, C:\Program Files\AutoHotkey\WindowSpy.ahk                       ;[AHK] open windows spy
  +^#r::    ExitApp                                                              ;[AHK] quit ahk script
- F6 & l::  WinLLock(True)                                                       ;[AHK] enable win+L shortcut to lock screen
- F5 & l::  WinLLock(False)                                                      ;[AHK] disable win+L shortcut to lock screen (frees combo for ahk)
  
- :*:gh~~::                                                                      ;[AHK] generate a list of hotkeys in working directory.
+ :*:g?~~::                                                                      ;[AHK] generate a list of hotkeys in working directory.
     ReleaseModifiers()
     send {esc}
     GenerateHotkeyList()                                             
     return
 
- :*:?~~::                                                                      ;[AHK] open last generated list of hotstrings and hotkeys
+ :*:?~~::                                                                       ;[AHK] open last generated list of hotstrings and hotkeys
     ReleaseModifiers()
-    EditFile("HotKey_List.txt", "editor_path")
+    EditFile("HotKey_List.txt")
     return
  
  $^#r::                                                                         ;[AHK] reload all ahk scripts with ~^#r reload hotkeyp
-    Reload:                                                                     ;[AHK] reload all ahk scripts with ~^#r reload hotkey
+    Reload:                                                                     
     Reload                                               
     return                                               
 
@@ -202,20 +179,7 @@
  AccessCache("3key")
  return
 
- :*:test_ahk>::                                                                 ;[D] code for testing ahk code
- AccessCache("test_ahk")
- return
- 
  :*:cc>::                                                                       ;[D] 6-digit RGB color values
  :*:color_code>::                                                               ;[D] 6-digit RGB color values
  AccessCache("color_code")
  return
-
- :*:gc>::                                                                       ;[D] favorite git commands
- AccessCache("gc")
- return
- 
- :*:pu>::                                                                       ;[D] popupbox code
- AccessCache("pu")
- return
-

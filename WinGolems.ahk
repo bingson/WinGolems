@@ -5,7 +5,7 @@
   #MaxHotkeysPerInterval 99000000
   SetBatchLines -1
   ListLines Off                                                                 ; ListLines/KeyHistory are used to log keys for debugging
-  #KeyHistory                                                                   ; higher number for debugging
+  #KeyHistory 0                                                                 ; higher number for debugging 
   #UseHook                                                
   #InstallKeybdHook                                                             ; The keyboard hook monitors keystrokes for the purpose of activating hotstrings and any keyboard hotkeys
   ; #InstallMouseHook                                                           ; The mouse hook monitors mouse clicks for the purpose of activating mouse hotkeys and facilitating hotstrings.
@@ -31,9 +31,9 @@
   med              := 300                                                       
   long             := 900                                                       
  
-  gosub, WinTextNav_Autoexecution
-  gosub, Test_AutoExecution
-  gosub, JumpList_AutoExecution
+  gosub, test_autoexecution                                                     ; initializes variables for script testing template
+  gosub, JL_AutoExecution                                                       ; jump lists (in win_goto.ahk) initializations    gosub, win_goto_autoexecution                                                 ; initializes variables for jump lists
+  gosub, win_sys_autoexecution                                                  ; initializes variables for jump lists
 
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and save as dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW
@@ -41,28 +41,32 @@
   
   config_path := A_ScriptDir "\config.ini"
   icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; A_ScriptDir = active AHK script directory
-  set_tray_icon(icon_path "lg.ico")                                             ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
+  SetTrayIcon(icon_path "lg.ico")                                             ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
   
   ; uncomment to disable WIN+L key for locking screen upon WinGolems startup    ; requires registry write premission, end & L hotkey toggles this as well
   ; WinLLock(False, True)                                                       ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage.
                                                                                 ; True = enables windows lockscreen key hook (WIN+L); Second True disables pop up window confirmation 
 ; FIRST TIME SETUP (only executed if no config.ini detected)____________________
+ ; please confirm/change the following application associations. 
+ ; To generate an updated config.ini reflecting new changes, delete config.ini 
+ ; and reload/rerun wingolems.ahk 
 
-  path := RetrieveINI(A_ComputerName, "editor_path") 
-  if (!FileExist(config_path) or path = "ERROR") {
-
-    ; please confirm/modify the below application defaults WinGolems will associate with 
-    ; particular files types or system functions 
-    apps := [ "winword.exe"           ; docm,doc,docx,dotx,dotm -> Word           
-            , "excel.exe"             ; xlsx,xlsm,xltx,xltm     -> Excel                                  
-	          , "powerpnt.exe"          ; ppt,pptx,pptm           -> PowerPoint     
-	          , "AcroRd32.exe"          ; pdf                     -> adobe acrobat                         
-	          , "chrome.exe"            ; html, urls, ipynb       -> chrome                                   
-	          , "googledrivesync.exe"]  ; cloud backup            -> google cloud                     
-     
-    CreateConfigINI(apps*)
-  }
-
+ apps := [ "winword.exe"           ; Word          -> docm,doc,docx,dotx,dotm  
+         , "excel.exe"             ; Excel         -> xlsx,xlsm,xltx,xltm               
+         , "powerpnt.exe"          ; PowerPoint    -> ppt,pptx,pptm            
+         , "acrord32.exe"          ; Adobe Acrobat -> pdf                       
+         , "chrome.exe"            ; Chrome        -> html, urls, ipynb                   
+         , "googledrivesync.exe"   ; Google Drive  -> backup program
+         , "code.exe" ]            ; VS Code       -> coding and editor of last resort
+          
+ path := RetrieveINI(A_ComputerName, "editor_path") 
+ if (!FileExist(config_path) or path = "ERROR") {
+    MsgBox,4100, WinGolems Setup, A valid config.ini was not detected, would you like to create a new one?
+    IfMsgBox Yes
+        CreateConfigINI(apps*)
+    else
+        exitApp
+ }
 ; LOAD AHK SCRIPTS (end of auto-execution section)______________________________
  #Include %A_ScriptDir%\golems                                                  ; folder reference changes subsequent includes to look from that location
  #Include _functions.ahk   
@@ -73,9 +77,11 @@
  #Include *i R.ahk                               
  #Include *i Python.ahk                          
  #Include *i test.ahk   
+ #Include *i TapHoldManager.ahk
      
  #Include *i ..\Google Drive\secure\bing.ahk
  #Include *i ..\Google Drive\secure\mm.ahk                     
+ #Include *i %A_ScriptDir%\..\ahk\golems\coding_environments.ahk
  
 
 /* #INCLUDE MECHANICS ********************************************************** 
@@ -84,21 +90,21 @@
      MsgBox, this message will not be shown
  
  Return.ahk: 
-     Return <- After the return line no more code will execute unless it's 
+     Return <- After the return line, no more code will execute unless it's 
                started by a hotkey, gui action, timer, etc. Encountering 
                a "Return" will end the auto-execute section of any script.
                
                Note: Encountering a return from a Gosub block where only variables are 
-               initialized will not end the autoexecute, providing a way of declaring 
-               variables in other ahk files with multiple gosubs to variable 
-               intialization blocks.  
+               initialized will not end the autoexecute -> providing a way of declaring 
+               variables in other ahk files through gosubs variable intialization blocks.  
 
  You can think of #Include as "pasting" the included script's contents at the 
  line where you wrote #Include. 
  
- If the included script only contains functions or commands that don't end the 
- auto-execute section you're fine. If it contains a hotkey or return or the like, 
- it will stop execution at that point and AHK will never reach the code in your 
- main script. From that point on variables must be instantiated in functions
+ If the included script only contains functions, that include line won't end the 
+ auto-execute section. If the included script contains a hotkey/hotstring with a return
+ statement, ahk will stop execution at that point. From that point on, functions/hotkeys/hotstrings
+ will still be loaded as usual but variables and class objects can only be created within functions
+ (ie., will otherwise never be initialized).
 
 *******************************************************************************/

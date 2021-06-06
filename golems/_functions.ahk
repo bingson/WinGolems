@@ -33,6 +33,23 @@
  
  }
  
+ SaveWinID(key = "L") {
+    ; writes the Y
+    global config_path
+    WinID_%key% := WinExist("A")
+    IniWrite, % WinID_%key%, %config_path%, %A_ComputerName%, WinID_%key%
+    ShowPopup("Window shortcut assigned", "405d27", "300", "70", "-1000", "16", "610")
+    return
+ }
+
+ 
+ ActivateWinID(key = "L") {
+    global config_path
+    IniRead, output, %config_path%, %A_ComputerName%, WinID_%key%
+    ActivateWindow("ahk_id" output)
+    return
+ }
+
  CloseAllPrograms() {
     ; close all open programs (used before system shutdown)
     WinGet, id, list, , , Program Manager
@@ -177,8 +194,37 @@
     Return
  }
 
-; SYSTEM SETTINGS / JUMP LISTS__________________________________________________
+; BOUND FUNCTIONS ______________________________________________________________
+ ; used for Jump Lists and TapHoldManager class instantiations
+ BluetoothSettings       := Func("BluetoothSettings")
+ AddRemovePrograms       := Func("AddRemovePrograms")
+ AlarmClock              := Func("AlarmClock")
+ DisplaySettings         := Func("DisplaySettings")
+ SoundSettings           := Func("SoundSettings")
+ NotificationWindow      := Func("NotificationWindow")
+ RunProgWindow           := Func("RunProgWindow")
+ StartMenu               := Func("StartMenu")
+ StartContextMenu        := Func("StartContextMenu")
+ QuickConnectWindow      := Func("QuickConnectWindow")
+ WindowsSettings         := Func("WindowsSettings")
+ PresentationDisplayMode := Func("PresentationDisplayMode")
+ CloseAllPrograms        := Func("CloseAllPrograms")
+ WinMaximize             := Func("WinMaximize")
+ WinMinimize             := Func("WinMinimize")
+ WinClose                := Func("WinClose")
+ KeyHistory              := Func("KeyHistory")
+ WindowSpy               := Func("WindowSpy")
+ ReloadAHK               := Func("ReloadAHK")
+ ExitAHK                 := Func("ExitAHK")
+ GenerateHotkeyList      := Func("GenerateHotkeyList")
+ EditHotkeyList          := Func("EditFile").Bind("HotKey_List.txt", "editor_path") 
+ CloudSyncON             := Func("CloudSync").Bind("ON") 
+ CloudSyncOFF            := Func("CloudSync").Bind("OFF") 
+ WinLLockTrue            := Func("WinLLock").Bind(True) 
+ WinLLockFalse           := Func("WinLLock").Bind(False) 
+ ActivateExplorer        := Func("ActivateApp").Bind("explorer.exe")    
 
+ 
  DisplaySettings() {
     Run explorer.exe ms-settings:display                                
  }
@@ -230,34 +276,36 @@
  StartMenu() {
     send ^{esc} 
  }
+
  Windowspy() {
     run, golems\WindowSpy.ahk                       
  }
+ 
+ ReloadAHK() {
+    Reload
+ }
 
- BluetoothSettings       := Func("BluetoothSettings")
- AddRemovePrograms       := Func("AddRemovePrograms")
- AlarmClock              := Func("AlarmClock")
- DisplaySettings         := Func("DisplaySettings")
- SoundSettings           := Func("SoundSettings")
- NotificationWindow      := Func("NotificationWindow")
- RunProgWindow           := Func("RunProgWindow")
- StartMenu               := Func("StartMenu")
- StartContextMenu        := Func("StartContextMenu")
- QuickConnectWindow      := Func("QuickConnectWindow")
- WindowsSettings         := Func("WindowsSettings")
- PresentationDisplayMode := Func("PresentationDisplayMode")
- CloseAllPrograms        := Func("CloseAllPrograms")
- KeyHistory              := Func("KeyHistory")
- WindowSpy               := Func("WindowSpy")
- GenerateHotkeyList      := Func("GenerateHotkeyList")
- EditHotkeyList          := Func("EditFile").Bind("HotKey_List.txt", "editor_path") 
- CloudSyncON             := Func("CloudSync").Bind("ON") 
- CloudSyncOFF            := Func("CloudSync").Bind("OFF") 
- WinLLockTrue            := Func("WinLLock").Bind(True) 
- WinLLockFalse           := Func("WinLLock").Bind(False) 
- ActivateExplorer        := Func("ActivateApp").Bind("explorer.exe")    
+ ExitAHK() {
+    ExitApp
+ }
 
  
+ 
+ WinMaximize(isHold, taps, state) {
+    if (taps > 1) 
+        WinMaximize,A
+ }
+ 
+ WinClose(isHold, taps, state) {
+    if (taps > 1) 
+        WinClose,A
+ }
+
+ WinMinimize(isHold, taps, state) {
+    if (taps > 1)
+        WinMinimize,A
+ }
+
  FileJumpList(isHold, taps, state) {
     global File_DICT
     % (taps > 1) ? RunInputCommand("EditFile", File_DICT, "EDIT FILE") : ""
@@ -270,9 +318,9 @@
  }
  
  WinJumpList(isHold, taps, state){
-    global command_DICT
+    global Command_DICT
     global Command_TOC
-    % (taps > 1) ? RunInputCommand(, command_DICT, "RUN SYS COMMAND", Command_TOC) : ""
+    % (taps > 1) ? RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC) : ""
  }
  
 ; INPUT BOX COMMANDS ___________________________________________________________
@@ -284,11 +332,12 @@
     ; func: if supplied with a function, the value of dest_dict will be
     ; treated as a parameter to that function. If leaving func blank, 
     ; RunInputCommand assumes 
-    ;
+    
     global UProfile
     global med
     sleep ,med                                                                  ; short wait to delete hotstring
     tbl_data := (name_dict) ? BuildTOC(,,name_dict) : BuildTOC(,dest_dict)      ; tbl_data := [TOC, width, height, x_pos, y_pos]
+    Gui +LastFound +OwnDialogs +AlwaysOnTop                                     ; set input box to always on top
     InputBox, UserInput, %prompt% , % tbl_data[1],
             , % tbl_data[2] , % tbl_data[3] , % tbl_data[4], % tbl_data[5], 
     if ErrorLevel {
@@ -325,13 +374,12 @@
         max_rows++ 
     }
     
-    line := RepeatString("-", max_str_len + 4) 
+    line := RepeatString("-", max_str_len + 2) 
     TOC  := TOC_prefix 
           ? TOC_prefix
-          : "   Key`tSelection`n   ----`t" line "`r"
-          ; : "   Key`tSelection`n   ----`t-----------`r"
+          : "   Key`tSelection`n  ----`t" line "`r"
 
-    For dest, ref in arr_KV_swapped                                             ; sort dictionary by value rather than key
+    For dest, ref in arr_KV_swapped                                             
     {
         if alt_arr {
             prefix := substr(dest, 1, 3)
@@ -341,15 +389,15 @@
             }
             prev_prefix := prefix
         } 
-        TOC .= (TOC <> "" ? "`n" : "") "   " ref "`t" rtrim(dest, """")
-
+        TOC .= (TOC <> "" ? "`n" : "") "  " ref "`t" rtrim(dest, """")
     }
-    height := max((max_rows * 22.75) + 70, 420)                                 ; height of input box
-    width  := max((max_str_len * 7.5), 270)                                     ; width 
+
+    height := (max_rows * 22.5) + 80                                              ; height of input box
+    width  := ((max_str_len + 4) * 9.5)                                                 ; width 
 
     if alt_arr {
-      height -= 30
-      width  := max(width, 420)
+      height  -= 23                                                             
+      width := min(width, 570)
     }
     coords := ActiveWinCoord()
     x_pos  := (coords[1] < 0) ? (coords[1] - width) // 2 : ""                   ; changes window position if active window is on secondary monitor
@@ -416,7 +464,7 @@
     tail    = %A_Hour% `, %A_Min% `, %dest_file%, %desc% `n                     
     log_txt = %head%%tail%                                                      
     FileAppend, %log_txt%, %A_ScriptDir%\mem_cache\hotstring_creation_log.csv   ; update hotstring creation log 
-    FileAppend, %new_hotstring%, %A_ScriptDir%\golems\%dest_file%               ; add hotstring code to relevant ahk file
+    FileAppend, %new_hotstring%, %A_ScriptDir%\golems\%dest_file%               ; add hotstring code to relevant ahk file ()
     AccessCache(key, mem_path)                                                  
     ShowPopup("new hotstring created", "008000", "300", "50", "-1000", "16", "610")
     global long
@@ -445,11 +493,11 @@
     ; paste contents of mem folder txt file or assign to variable
     FileRead, output, %A_ScriptDir%\mem_cache\%mem_path%%key%.txt
     output := rtrim(output, "`t`n`r")
-    if (paste = True) {
-        clip(output)
-        return
+    if !paste {
+       return %output%
     }
-    return %output%
+    clip(output)                                                                ; clip(output, True)
+    return
  } 
 
 ; AHK UTILITIES ________________________________________________________________
@@ -488,41 +536,44 @@
  }
 
  CreateConfigINI(apps*) {
-    global Config_Path
+    global config_path
     global UProfile
-    global PF_x86
     global med
-
     msg = No configuration file detected `nplease wait while a new one is created.
     ShowPopup(msg, "000000",, "65", "-10000", "14", "560")                  
     PATH := FindAppPath(apps*)
-    IniWrite,%UProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe, %Config_Path%, %A_ComputerName%, editor_path
-    IniWrite, % PATH["chrome.exe"],          %Config_Path%, %A_ComputerName%, html_path
-    IniWrite, % PATH["winword.exe"],         %Config_Path%, %A_ComputerName%, doc_path
-    IniWrite, % PATH["excel.exe"],           %Config_Path%, %A_ComputerName%, xls_path
-    IniWrite, % PATH["powerpnt.exe"],        %Config_Path%, %A_ComputerName%, ppt_path
-    IniWrite, % PATH["AcroRd32.exe"],        %Config_Path%, %A_ComputerName%, pdf_path
-    IniWrite, % PATH["googledrivesync.exe"], %Config_Path%, %A_ComputerName%, sync_path
-    IniWrite,141,                            %Config_Path%, %A_ComputerName%, F_height
-    IniWrite,415,                            %Config_Path%, %A_ComputerName%, F_width
-    IniWrite,lg.ico,                         %Config_Path%, settings, starting_icon
-    ShowPopup("Done!",,, "50", "-10000", "15")  
-    sleep, med
+    IniWrite, % PATH[apps[1]], %config_path%, %A_ComputerName%, doc_path
+    IniWrite, % PATH[apps[2]], %config_path%, %A_ComputerName%, xls_path
+    IniWrite, % PATH[apps[3]], %config_path%, %A_ComputerName%, ppt_path
+    IniWrite, % PATH[apps[4]], %config_path%, %A_ComputerName%, pdf_path
+    IniWrite, % PATH[apps[5]], %config_path%, %A_ComputerName%, html_path
+    IniWrite, % PATH[apps[6]], %config_path%, %A_ComputerName%, sync_path
+    IniWrite, % PATH[apps[7]], %config_path%, %A_ComputerName%, editor_path
+    IniWrite,141,              %config_path%, %A_ComputerName%, F_height
+    IniWrite,415,              %config_path%, %A_ComputerName%, F_width
+    IniWrite,lg.ico,           %config_path%, settings, starting_icon
+    ShowPopup("Done!",,, "50", "-10000", "15")
+    sleep, med*2
     ClosePopup()
     return
  } 
 
  FindAppPath(app*) {
+    global UProfile
     global PF_x86
-    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*"]
+    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*"]
     PATH := {}
     for each, exe in APP
     {  
+        ShowPopup("Searching for " exe,,, "50", "-10000", "15")  
         for each, dir in FOLDER
         {
             Loop Files, %dir%%exe%, R
-            {
-                PATH[exe] := A_LoopFileFullPath
+            {  
+                RegExMatch(A_LoopFileFullPath, "[^\\]+$", file_name)
+                if (strlen(exe) = strlen(file_name)) {                          ; Equal (=), case-sensitive-equal (==)
+                    PATH[exe] := A_LoopFileFullPath
+                }
             }
         }
     }   
@@ -674,8 +725,8 @@
  }
 
 
-; FILE AND FOLDER RELATED FUNCTIONS ____________________________________________
- 
+; FILE AND FOLDER RELATED ______________________________________________________
+
  Explorer_GetSelection() {
     ; Get path of selected files/folders                                        ; https://www.autohotkey.com/boards/viewtopic.php?style=17&t=60403
     WinGetClass, winClass, % "ahk_id" . hWnd := WinExist("A")
@@ -759,6 +810,44 @@
     Return
  }
  
+ SortByName() {   
+    send {Ctrl Down}{NumpadAdd}{Ctrl up}     
+    send !vo{enter} 
+    return  
+ }
+ 
+ SortBySize() {
+    send {Ctrl Down}{NumpadAdd}{Ctrl up}     
+    send !vo{Down}{Down}{Down}{enter}   
+    return  
+ }
+ 
+ SortByType() {
+    send {Ctrl Down}{NumpadAdd}{Ctrl up}     
+    send !vo{Down}{Down}{enter} 
+    return  
+ }
+ 
+ ToggleInvisible() {        
+   send !v
+   sleep, med 
+   send {h 2}
+   return
+ }
+
+
+ SortByDate() {
+    send {Ctrl Down}{NumpadAdd}{Ctrl up}     
+    send !vo{Down}{enter}   
+    return  
+ }
+
+ DetailedView() {
+    send {ctrl down}{shift down}6{ctrl up}{shift up}
+    send {Ctrl Down}{NumpadAdd}{Ctrl up}
+    return
+ }
+
  ChangeFolder(path, sys_dependent = False) {
     ; this function instantiates a hotkey for changing the current folder
     ; in file explorer or windows "save as" type dialogue boxes
@@ -941,11 +1030,13 @@
  }
  
 ; MOUSE FUNCTIONS_______________________________________________________________
- 
- DoubleClick() {
-    Click
-    sleep, short
-    Click
+
+ MouseClicks(num = 2) {
+    ; temporarily blocks mouse movement for more consistent doubleclick to select word
+    ReleaseModifiers()
+    BlockInput, MouseMove
+    click, %num%
+    BlockInput, MouseMoveOff
     return
  }
 
@@ -1001,6 +1092,7 @@
  }
  
 ; CHROME BROWSER _______________________________________________________________
+ 
 
  LoadURL(URL) {
     ; Browser path used to load urls dependent on computer
@@ -1032,6 +1124,16 @@
  }
 
 ; TEXT MANIPULATION ____________________________________________________________
+ 
+ PasteClipboardAtMouseCursor() {    
+    MouseClicks(2)
+    var := Clipboard
+    var := trim(var, "`r`n`t")
+    Clipboard := var
+    sleep, short
+    send ^v
+    return
+ }
 
  Join(s,p*) {
     ; Function to Join strings python style                                     ; https://www.autohotkey.com/boards/viewtopic.php?t=7124
@@ -1319,4 +1421,78 @@
        return %var%
     clip(var, True)
     return  
+ }
+
+ replaceDeletedCharWithSpaces() {
+    var := clip()
+    clip(RepeatString(" ", strlen(var)))
+    return 
+ }
+
+ ReplaceEqualWithUnderscore() {
+     var := clip()
+     var := StrReplace(var, "=","_")
+     clip(var)
+     return
+ }
+
+ ReplaceDashWithSpaces() {
+     var := clip()
+     var := StrReplace(var, "-"," ")
+     clip(var)
+     return
+ }
+
+ ReplaceSpacesWithDash() {
+     var := clip()
+     var := StrReplace(var, " ","-")
+     clip(var)
+     return
+ }
+
+ PasteDelExtraSpaces() {
+    char_count := strlen(clipboard)
+    send ^v
+    sendinput {del %char_count%}
+    return
+ }
+ 
+ ReplaceSpacesWithPluses() {
+    var := clip()
+    var := RegExReplace(var, "S) +", A_Space)                                  
+    var := RegExReplace(var, A_Space, " + ") 
+    clip(var)
+    return
+ }
+
+ ReplaceSpacesWithCommas() {
+     var := clip()
+     var := RegExReplace(var, "S) +", A_Space)                                 
+     var := RegExReplace(var, A_Space, ", ") 
+     clip(var, True)
+     return
+ }
+
+ ReplaceCommasWithPluses() {
+     var := clip()
+     var := StrReplace(var, A_Space,"")                                          
+     var := StrReplace(var, ",", " + ")
+     clip(var, True)
+     return
+ }
+
+ ReplacePlusesWithCommas() {
+    var := clip()       
+    var := StrReplace(var, A_Space,"")
+    var := StrReplace(var, "+", ", ")
+    clip(var, True)
+    return
+ }
+
+ ReplaceSpacesWithPipe() {
+     var := clip()
+     var := RegExReplace(var, "S) +", A_Space) 
+     var := RegExReplace(var, A_Space, "|") 
+     clip(var, True)
+     return 
  }

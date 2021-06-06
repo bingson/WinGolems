@@ -1,9 +1,9 @@
 #IfWinActive
 ; JUMP LISTS ___________________________________________________________________
 
- JumpList_AutoExecution:
+ JL_AutoExecution:
   
-  File_DICT :=    { "f"  : "golems\_functions.ahk"                              
+  File_DICT :=    { "f"  : "golems\_functions.ahk"                              ; options for edit file jump list
                   , "t"  : "golems\test.ahk"  
                   , "g"  : "golems\win_goto.ahk"
                   , "p"  : "golems\Python.ahk"
@@ -12,12 +12,13 @@
                   , "w"  : "golems\win_sys.ahk"
                   , "ms" : "golems\win_mem_system.ahk"
                   , "wg" : "WinGolems.ahk"
-                  , "i"  : """" config_path """"                                ; example of file path variable
-                  ; , "b"  : UProfile """\Google Drive\example.ahk"""           ; example of file path with spaces in directory name; syntax difference with different file types is quirk of ahk
+                  , "i"  : """" config_path """" }                              ; example of file path variable
+
+                  ; , "b"  : UProfile """\Google Drive\example.ahk"""           ; example of Editfile compatible path with spaces in the directory name; 
                   ; , "aq" : UProfile "\Google Drive\eg_folder\example.doc"     ; example of file path with spaces in directory name and MS office .doc file
-                  , "h"  : "golems\Hotkey_Help.ahk" }
+                                                                                ; syntax difference with different file types is quirk of AHK
   
-  Folder_DICT :=  { "m"   : A_ScriptDir                                          ; options for open folder jump list
+  Folder_DICT :=  { "m"   : A_ScriptDir                                         ; options for open folder jump list
                   , "g"   : A_ScriptDir "\golems"
                   , "c"   : hdrive
                   , "p"   : A_ProgramFiles
@@ -31,25 +32,27 @@
                   , "b"   : "buffer_path" }
  
   Command_DICT := { "b"    : "BluetoothSettings"                                ; options for run system command jump list
-                  , "d"    : "DisplaySettings"              
-                  , "ss"   : "SoundSettings"                
-                  , "s"   :  "StartMenu"                
-                  , "n"    : "NotificationWindow"           
-                  , "r"    : "RunProgWindow"                
-                  , "x"    : "StartContextMenu"             
-                  , "a"    : "AlarmClock"           
-                  , "arp"  : "AddRemovePrograms"           
-                  , "k"    : "QuickConnectWindow"           
-                  , "Lon"  : "WinLLockTrue"           
-                  , "Loff" : "WinLLockFalse"           
-                  , "i"    : "WindowsSettings"              
-                  , "?"    : "EditHotkeyList"              
-                  , "kh"   : "KeyHistory"              
-                  , "ws"   : "WindowSpy"              
+                  , "d"    : "DisplaySettings"
+                  , "v"    : "SoundSettings"
+                  , "s"    : "StartMenu"
+                  , "n"    : "NotificationWindow"
+                  , "r"    : "RunProgWindow"
+                  , "x"    : "StartContextMenu"
+                  , "a"    : "AlarmClock"
+                  , "ap"   : "AddRemovePrograms"
+                  , "k"    : "QuickConnectWindow"
+                  , "Lon"  : "WinLLockTrue"
+                  , "Loff" : "WinLLockFalse"
+                  , "i"    : "WindowsSettings"
+                  , "?"    : "EditHotkeyList"
+                  , "rw"   : "ReloadAHK"
+                  , "qw"   : "ExitAHK"
+                  , "kh"   : "KeyHistory"
+                  , "ws"   : "WindowSpy"
                   , "p"    : "PresentationDisplayMode"
-                  , "cap"  : "CloseAllPrograms"
-                  , "scs"  : "CloudSyncON"
-                  , "ccs"  : "CloudSyncOFF" }   
+                  , "ce"   : "CloseAllPrograms"
+                  , "ss"   : "CloudSyncON"
+                  , "qs"   : "CloudSyncOFF" }   
  
   command_TOC  := { "b"    : "cfg:`tOpen Bluetooth Settings"                    ; table of contents for run system command jump list
                   , "d"    : "cfg:`tOpen Display Settings"                        
@@ -92,35 +95,43 @@
                   , "t"    : "sm`tTwitter"
                   , "n"    : "sm`tNetflix" }
  
-   thm := new TapHoldManager(275,,maxTaps = 3,"$","")                           ; 275 ms is the detection interval for double tab triggered commands
-   thm.Add("ralt",        Func("FileJumpList"))                                 ; press right ctrl twice to activate file Jump List
-   thm.Add("rctrl",       Func("FolderJumpList"))                               ; press right alt twice to activate folder Jump List
-   thm.Add("printscreen", Func("WinJumpList"))                                  ; press right printscreen twice to activate system command Jump List
- 
  return 
 
- #sc01a::      RunInputCommand("EditFile", File_Dict, "EDIT FILE")              ;<JL> edit file jump list
- #sc01b::      RunInputCommand(ActivateExplorer, Folder_Dict, "OPEN FOLDER")    ;<JL> open folder jump list
- #sc02b::      RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC)  ;<JL> run sys command jump list
- #sc033::      RunInputCommand("LoadURL", URL_DICT, "LOAD URL", URL_TOC)        ;<JL> url jump list
+ #sc01a::                                                                       ;[JL] opens edit file jump list
+ ^#b::         RunInputCommand("EditFile", File_DICT, "EDIT FILE")              ;[JL] opens edit file jump list
+ #sc01b::                                                                       ;[JL] opens goto folder jump list
+ +#b::         RunInputCommand(ActivateExplorer, Folder_DICT, "OPEN FOLDER")    ;[JL] opens goto folder jump list
+ #sc034::                                                                       ;[JL] opens run sys command jump list
+ #sc02b::      RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC)  ;[JL] opens run sys command jump list
+ #sc033::      RunInputCommand("LoadURL", URL_DICT, "LOAD URL", URL_TOC)        ;[JL] opens webpage jump list
 
-; TITLE MATCH __________________________________________________________________
+; ACTIVATE SAVED WINDOWS ________________________________________________________
  ; hotkey to activate window with match string anywhere in the title
  
- SetTitleMatchMode, 2
+ #If, GetKeyState("ralt", "P")
+ printscreen & q::   SaveWinID("Q")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & q 
+ printscreen & s::   SaveWinID("S")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & s 
+ printscreen & a::   SaveWinID("A")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & a 
+ printscreen & z::   SaveWinID("Z")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & z 
+ printscreen & x::   SaveWinID("X")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & x 
+ #If
  
- <^space::                                                                      ;<TM> activate udemy window, 
-    ReleaseModifiers()                                                          ;     note: VLC windows can't distinguish between lctrl vs rctrl
-    ActivateWindow("Google Chrome")                                                               
-    return
+ printscreen & s::   ActivateWinID("S")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + S
+ printscreen & q::   ActivateWinID("Q")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + Q
+ printscreen & a::   ActivateWinID("A")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + A
+ printscreen & z::   ActivateWinID("Z")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + Z
+ printscreen & x::   ActivateWinID("X")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + X
 
- >^space::                                                                      ;<TM> Jupyter window
-    ReleaseModifiers()                                                          ;     window search will stop after the first successful activation
-    ActivateWindow("WinGolems")      
-    return
+ #PgUp::   SaveWinID("L")                                                       ;[ASW] Saves ID of selected window for later activation with LCtrl + space 
+ #PgDn::   SaveWinID("R")                                                       ;[ASW] Saves ID of selected window for later activation with RCtrl + space 
+ <^space:: ActivateWinID("L")                                                   ;[ASW] activates Window ID saved w/ Win + PgUp
+ >^space:: ActivateWinID("R")                                                   ;[ASW] activates Window ID saved w/ Win + PgDn
+ 
+
+ #y:: ActivateWindow("VLC media player")                                        ;[ASW] activates VLC 
 
 ; EDIT FILE ____________________________________________________________________
- ; edit file from anywhere in windows; if already open but not active, hotkey will activate file window
+ ; edit file from anywhere in windows
  
  ^#g::              EditFile("golems\test.ahk")                                 ;<EF> test.ahk
  PrintScreen & g::  EditFile("golems\win_goto.ahk")                             ;<EF> win_goto.ahk
@@ -133,9 +144,7 @@
  
 ; GOTO FOLDER ________________________________________________________________
  
- printscreen & m::                                                              ;<F> open mem_cache folder from anywhere in windows (new explorer instance)                                                                           
  #m::      ActivateApp("explorer.exe", A_ScriptDir "\mem_cache")                ;<F> open mem_cache folder from anywhere in windows (new explorer instance)                                                                           
-  
  
  SetTitleMatchMode, 2
  #IfWinActive ahk_group FileListers                                             ;    ChangeFolders works in file explorer and open file + save as dialogue boxes
@@ -165,12 +174,13 @@
  #n::       ActivateApp("editor_path")                                          ;<A> VS Code
  #s::       ActivateApp("html_path")                                            ;<A> Chrome
  #w::       ActivateApp("doc_path")                                             ;<A> Word
- #a::       ActivateApp("xls_path")                                             ;<A> Excel
- #q::       ActivateApp("ppt_path")                                             ;<A> Powerpoint
- #r::       ActivateApp("pdf_path")                                             ;<A> pdf-xchange
+ #q::       ActivateApp("xls_path")                                             ;<A> Excel
+ #r::       ActivateApp("ppt_path")                                             ;<A> Powerpoint
+ #a::       ActivateApp("pdf_path")                                             ;<A> pdf-xchange
  #t::       ActivateApp("cmd.exe")                                              ;<A> Command Window
  PrintScreen & b::                                                              ;<A> File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
  #b::       ActivateApp("explorer.exe", "buffer_path", True)                    ;<A> File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
- +#m::      ActivateMail()                                                      ;<A> Mail
+ ^#!m::     ActivateMail()                                                      ;<A> Mail
  +#c::      ActivateCalc()                                                      ;<A> Calculator
+ 
  
