@@ -32,28 +32,22 @@
   short            := 100                                                       ; set sleep time in milliseconds between actions for specific functions
   med              := 300                                                       
   long             := 900                                                       
- 
-  ; gosub, test_autoexecution                                                     ; initializes variables for script testing template
-  ; gosub, JL_AutoExecution                                                       ; jump lists (in win_goto.ahk) initializations    gosub, win_goto_autoexecution                                                 ; initializes variables for jump lists
-  ; gosub, win_sys_autoexecution                                                  ; initializes variables for jump lists
-  ; gosub, coding_autoexecution ; (remove later)
-
-  gosub, test_autoexecution    
-  gosub, coding_autoexecution  
-  gosub, JL_AutoExecution      
-  gosub, win_sys_autoexecution 
-  gosub, Bing_autoexecution    
-  ; gosub, chrome_autoexecution  
+  thm_sys          := new TapHoldManager(270,,maxTaps = 3,"$","")               ; instantiate TapHoldManager class for double press to execute hotkeys
   
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and save as dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW
   GroupAdd, FileListers, ahk_class #32770, ShellView
   
-  
-  
-  icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; A_ScriptDir = active AHK script directory
-  SetTrayIcon(icon_path "lg.ico")                                             ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
-  
+  gosub, test_autoexecution                                                     ; initializes variables for script testing template
+  gosub, JL_AutoExecution                                                       ; [JL]  win_goto.ahk  
+  gosub, MAW_AutoExecution                                                      ; [MAW] win_sys.ahk   
+  ; gosub, coding_autoexecution  
+  ; gosub, Bing_autoexecution    
+  ; gosub, chrome_autoexecution  
+
+  icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; set tray icon to desired letter path
+  SetTrayIcon(icon_path "lg.ico")                                               ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
+
   ; uncomment to disable WIN+L key for locking screen upon WinGolems startup    ; requires registry write premission, end & L hotkey toggles this as well
   ; WinLLock(False, True)                                                       ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage.
                                                                                 ; True = enables windows lockscreen key hook (WIN+L); Second True disables pop up window confirmation 
@@ -68,16 +62,11 @@
          , "acrord32.exe"          ; Adobe Acrobat -> pdf                       
          , "chrome.exe"            ; Chrome        -> html, urls, ipynb                   
          , "googledrivesync.exe"   ; Google Drive  -> backup program
-         , "code.exe" ]            ; VS Code       -> coding and editor of last resort
-          
- path := RetrieveINI(A_ComputerName, "editor_path") 
- if (!FileExist(config_path) or path = "ERROR") {
-    MsgBox,4100, WinGolems Setup, A valid config.ini was not detected, would you like to create a new one?
-    IfMsgBox Yes
-        CreateConfigINI(apps*)
-    else
-        exitApp
- }
+         , "code.exe" ]            ; VS Code       -> IDE + editor of last resort
+         
+ ConfigureWinGolems(config_path, apps*)
+ 
+
 ; LOAD AHK SCRIPTS (end of auto-execution section)______________________________
  #Include %A_ScriptDir%\golems                                                  ; folder reference changes subsequent includes to look from that location
  #Include _functions.ahk   

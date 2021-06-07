@@ -47,16 +47,16 @@ win_sys_autoexecution:                                                          
 
 ; SYS COMMANDS _________________________________________________________________
 
- ^#!Left::   Send {ctrl down}{lwin down}{Left}{ctrl up}{lwin up}                ;[SC] switch desktop environments (Left)
- ^#!Right::  Send {ctrl down}{lwin down}{Right}{ctrl up}{lwin up}               ;[SC] switch desktop environments (Right)
- +^!del::    DllCall("PowrProf\SetSuspendState", "int", 0, "int", 0, "int", 0)  ;[SC] enter sleep mode
- ^#!del::    DllCall("PowrProf\SetSuspendState", "int", 1, "int", 0, "int", 0)  ;[SC] enter hybernate mode
- ^#!esc::    ShutDown, 9                                                        ;[SC] shutdown + power down 
- +^!esc::    ShutDown, 2                                                        ;[SC] restart the computer
- :X:a~~::    AlarmClock()                                                       ;[SC] alarm clock
- :cX:ce~~::  CloseAllPrograms()                                                 ;[SC] close all open programs 
- ^#!F12::    CloudSync("ON")                                                    ;[SC] turn on cloud sync 
- +^#F12::    CloudSync("OFF")                                                   ;[SC] turn off cloud sync
+ ^#!Left::  Send {ctrl down}{lwin down}{Left}{ctrl up}{lwin up}                ;[SC] switch desktop environments (Left)
+ ^#!Right:: Send {ctrl down}{lwin down}{Right}{ctrl up}{lwin up}               ;[SC] switch desktop environments (Right)
+ +^!del::   DllCall("PowrProf\SetSuspendState", "int", 0, "int", 0, "int", 0)  ;[SC] enter sleep mode
+ ^#!del::   DllCall("PowrProf\SetSuspendState", "int", 1, "int", 0, "int", 0)  ;[SC] enter hybernate mode
+ ^#!esc::   ShutDown, 9                                                        ;[SC] shutdown + power down 
+ +^!esc::   ShutDown, 2                                                        ;[SC] restart the computer
+ :X:a~~::   AlarmClock()                                                       ;[SC] alarm clock
+ :cX:ce~~:: CloseAllPrograms()                                                 ;[SC] close all open programs 
+ ^#!F12::   CloudSync("ON")                                                    ;[SC] turn on cloud sync 
+ +^#F12::   CloudSync("OFF")                                                   ;[SC] turn off cloud sync
 
 ; FILE EXPLORER ________________________________________________________________
  
@@ -78,16 +78,16 @@ win_sys_autoexecution:                                                          
  >^j::      SortByType()                                                        ;[FE] view: sort by type
  >^k::      SortBySize()                                                        ;[FE] view: sort by size
  
- ^u::      send !vg{up   4}{enter}                                              ;[FE] groups: toggle groupby name/remove grouping
- ^o::      Send !vg{down 2}{enter}                                              ;[FE] groups: group by file type
- ^i::      Send !vg{down 1}{enter}                                              ;[FE] groups: group by date
+ ^u::       send !vg{up   4}{enter}                                             ;[FE] groups: toggle groupby name/remove grouping
+ ^o::       Send !vg{down 2}{enter}                                             ;[FE] groups: group by file type
+ ^i::       Send !vg{down 1}{enter}                                             ;[FE] groups: group by date
  !sc035::                                                                       ;[FE] groups: group folding: Expand all 
- ^sc035::  ExpandCollapseAllGroups()                                            ;[FE] groups: group folding: Collapse all
+ ^sc035::   ExpandCollapseAllGroups()                                           ;[FE] groups: group folding: Collapse all
  
  !z::       Send !vn{enter}                                                     ;[FE] panes: toggle navigation pane
  ^p::       Send {alt down}p{alt up}                                            ;[FE] panes: toggle preview plane
- <+Space:: ControlFocus, SysTreeView321, ahk_class CabinetWClass                ;[FE] panes: move focus to navigation pane
- >+Space:: ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                 ;[FE] panes: move focus to current folder pane 
+ <+Space::  ControlFocus, SysTreeView321, ahk_class CabinetWClass               ;[FE] panes: move focus to navigation pane
+ >+Space::  ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                ;[FE] panes: move focus to current folder pane 
  
 
  #IfWinActive    
@@ -104,10 +104,10 @@ win_sys_autoexecution:                                                          
 
 ; AHK RELATED __________________________________________________________________
  
- >+esc::   getMousePos()                                                        ;[AHK] display current mouse cursor coordinates in a tool tip
- :X:kh~~:: KeyHistory                                                           ;[AHK] open key history
- :X:ws~~:: run, C:\Program Files\AutoHotkey\WindowSpy.ahk                       ;[AHK] open windows spy
- +^#r::    ExitApp                                                              ;[AHK] quit ahk script
+ >+esc::         getMousePos()                                                  ;[AHK] display current mouse cursor coordinates in a tool tip
+ :X:kh~~::       KeyHistory                                                     ;[AHK] open key history
+ :X:ws~~::       run, C:\Program Files\AutoHotkey\WindowSpy.ahk                 ;[AHK] open windows spy
+ +^#r::          ExitApp                                                        ;[AHK] quit ahk script
  
  :*:g?~~::                                                                      ;[AHK] generate a list of hotkeys in working directory.
     ReleaseModifiers()
