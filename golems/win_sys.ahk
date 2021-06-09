@@ -15,7 +15,8 @@
  #capslock::              ActivateNextInstance()                                ;[MAW] rotate through active program instances starting from newest 
  >+enter::                send {F11}                                            ;[MAW] full screen {F11}
  PrintScreen & space::                                                          ;[MAW] move window btn monitors
- +#space::                Send {lwin down}{shift down}{Left}{shift up}{lwin up} ;[MAW] move window btn monitors    
+ +#space::                MoveWindowToOtherMonitor()                            ;[MAW] move window btn monitors
+ 
  #ins::                   AlwaysOnTop()                                         ;[MAW] Always on top: ON
  #del::                   AlwaysOnTop("OFF")                                    ;[MAW] Always on top: Off
  PrintScreen & Left::     send {LWin down}{Left}{LWin up}                       ;[MAW] resize window to left half of screen

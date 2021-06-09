@@ -1,8 +1,9 @@
 #IfWinActive 
 ; TEXT MANIPULATION ____________________________________________________________
- !Backspace::  Send {Backspace}{End}{Shift Down}{Up}{End}{Shift Up}{Backspace}  ;[TM] edit: Delete line with backspace from end of line
- ^#Backspace:: replaceDeletedCharWithSpaces()                                   ;[TM] edit: Delete selected text and replace with blank spaces 
- ^Capslock::   Send {del}{home}{shift down}{down}{shift up}{del}                ;[TM] edit: Delete line
+ !Backspace::  Send {Backspace}{End}{Shift Down}{Up}{End}{Shift Up}{Backspace}  ;[TM] Delete line with backspace from end of line
+ ^#Backspace:: replaceDeletedCharWithSpaces()                                   ;[TM] Delete selected text and replace with blank spaces 
+ ^Capslock::   Send {del}{home}{shift down}{down}{shift up}{del}                ;[TM] Delete line
+
  +^u::         ConvertUpper()                                                   ;[TM] case: capitalize selected text
  +!u::         ConvertLower()                                                   ;[TM] case: convert selected text to lower case
  ^!u::         FirstLetterCapitalized()                                         ;[TM] case: First letter capitalized
@@ -97,7 +98,7 @@
  
  $#LButton::  PasteClipboardAtMouseCursor()                                     ;[C] double click, trim(clipboard), paste 
  $^!LButton:: send ^{esc}                                                       ;[C] open start menu (alt: Ctrl+Esc)
- 
+ click
 ; TABS _________________________________________________________________________
  ; system wide shortcuts for navigating between tabs
  !b:: send ^{PgUp}                                                              ;[T] move to right tab
@@ -111,18 +112,14 @@
  ; mouse functions with keyboard shortcuts 
 
  PrintScreen & j::                                                              ;[MF] scroll wheel down
- #j::                            Click, WheelDown 3                             ;[MF] scroll wheel down
+ #j::                            Click, WheelDown 2                             ;[MF] scroll wheel down
  PrintScreen & k::                                                              ;[MF] scroll wheel up
- #k::                            Click, WheelUp 3                               ;[MF] scroll wheel up 
- PrintScreen & i::                                                              ;[MF] 1 Left click
- *#d::                                                                          ;[MF] 1 Left click 
- *#i::                           click                                          ;[MF] 1 Left click 
+ #k::                            Click, WheelUp 2                               ;[MF] scroll wheel up 
+ 
+ *#d::                           click                                          ;[MF] 1 Left click 
  #f::                            MouseClicks(2)                                 ;[MF] 2 Left clicks
  ^#f::                           MouseClicks(3)                                 ;[MF] 3 Left clicks (select line)
- PrintScreen & o::                                                              ;[MF] mouse middle click
- #o::                            Click, middle                                  ;[MF] mouse middle click 
- PrintScreen & sc028::                                                          ;[MF] mouse Right click
- #sc028::                        Click, Right                                   ;[MF] mouse Right click
+
  ~lwin & rshift::                                                               ;[MF] move mouse cursor to middle
  PrintScreen & rctrl::           JumpMiddle()                                   ;[MF] move mouse cursor to middle
  +#k::                           JumpTopEdge()                                  ;[MF] move mouse cursor to top edge

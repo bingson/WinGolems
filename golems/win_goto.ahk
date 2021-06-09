@@ -6,19 +6,12 @@
   File_DICT :=    { "f"    : "golems\_functions.ahk"                            ; options for edit file jump list
                   , "t"    : "golems\test.ahk"  
                   , "g"    : "golems\win_goto.ahk"
-                  , "c"    : "golems\chrome.ahk"
-                  , "o"    : "golems\office.ahk"
-                  , "j"    : "golems\jupyter.ahk"
                   , "p"    : "golems\Python.ahk"
-                  , "v"    : "golems\coding_environments.ahk"
                   , "tn"   : "golems\win_text_navigation.ahk"
                   , "w"    : "golems\win_sys.ahk"
                   , "ms"   : "golems\win_mem_system.ahk"
                   , "r"    : "golems\R.ahk"
-                  , "m"    : "master.ahk"
-                  , "b"    : UProfile """\Google Drive\secure\bing.ahk"""
-                  , "mm"   : UProfile """\Google Drive\secure\mm.ahk"""
-                  , "aq"   : UProfile "\Google Drive\1-Jobs\2_Monzo\AQ_1_1.docm"
+                  , "wg"   : "WinGolems.ahk"
                   , "i"    : """" config_path """"
                   , "h"    : "golems\Hotkey_Help.ahk" }                              
                   
@@ -100,8 +93,7 @@
                   , "i"    : "www.inoreader.com"
                   , "t"    : "twitter.com/"
                   , "n"    : "netflix.com" 
-                  , "p"    : "getpocket.com/a/queue/"
-                  , "wg"   : "github.com/bingson/wingolems"}
+                  , "p"    : "getpocket.com/a/queue/"}
   
   URL_TOC :=      { "gm"   : "utl`tGoogle Mail"
                   , "gc"   : "utl`tGoogle Calendar"
@@ -113,18 +105,16 @@
                   , "i"    : "ent`tinoreader"
                   , "t"    : "ent`ttwitter"
                   , "n"    : "ent`tnetflix"
-                  , "p"    : "ent`tpocket"
-                  , "wg"   : "pri`tgithub/bingson/wingolems"} 
+                  , "p"    : "ent`tpocket"} 
 
  return 
 
- #sc01a::                                                                       ;[JL] opens edit file jump list
- ^#b::         RunInputCommand("EditFile", File_DICT, "EDIT FILE")              ;[JL] opens edit file jump list
- #sc01b::                                                                       ;[JL] opens goto folder jump list
- +#b::         RunInputCommand(ActivateExplorer, Folder_DICT, "OPEN FOLDER")    ;[JL] opens goto folder jump list
- #sc034::                                                                       ;[JL] opens run sys command jump list
- #sc02b::      RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC)  ;[JL] opens run sys command jump list
- #sc033::      RunInputCommand("LoadURL", URL_DICT, "LOAD URL", URL_TOC)        ;[JL] opens webpage jump list
+ ; Opens various input box menues to edit different file types, open and folders.
+ ; RunInputCommand(func="", dest_dict="", title_prompt="", name_dict = "",color_code ="f6f7f1")
+ ^#b::    RunInputCommand("EditFile", File_DICT, "EDIT FILE",, lg)              ;[JL] opens edit file jump list
+ +#b::    RunInputCommand(ActivateExplorer, Folder_DICT, "OPEN FOLDER",,lb)     ;[JL] opens goto folder jump list
+ #sc034:: RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC, ly)   ;[JL] opens run sys command jump list
+ #sc033:: RunInputCommand("LoadURL", URL_DICT, "LOAD URL", URL_TOC, lp)         ;[JL] opens webpage jump list
 
 ; ACTIVATE SAVED WINDOWS ________________________________________________________
  ; hotkey to activate window with match string anywhere in the title
@@ -157,7 +147,7 @@
  ^#g::              EditFile("golems\test.ahk")                                 ;<EF> test.ahk
  PrintScreen & g::  EditFile("golems\win_goto.ahk")                             ;<EF> win_goto.ahk
  PrintScreen & t::  EditFile("golems\win_text_navigation.ahk")                  ;<EF> win_text_navigation.ahk
- PrintScreen & w::  EditFile("golems\win_sys.ahk")                              ;<EF> win_sys.ahk
+ PrintScreen & r::  EditFile("golems\win_sys.ahk")                              ;<EF> win_sys.ahk
  PrintScreen & f::  EditFile("golems\_functions.ahk")                           ;<EF> _functions.ahk
  ; PrintScreen & f::  EditFile("path\example.doc")                              ;     MS office doc example (EditFile also accepts txt, ppt, xls, pdf file types)
 
@@ -170,8 +160,8 @@
  SetTitleMatchMode, 2
  #IfWinActive ahk_group FileListers                                             ;    ChangeFolders works in file explorer and open file + save as dialogue boxes
  
+ :*:wg>::                                                                       ;<F> AHK folder
  >+sc029::  ChangeFolder(A_ScriptDir)                                           ;<F> AHK folder
- :*:golems>::                                                                   ;<F> AHK golems folder
  >+1::      ChangeFolder(A_ScriptDir "\golems\")                                ;<F> AHK golems folder
  >+2::      ChangeFolder(A_ScriptDir "\lib\")                                   ;<F> AHK libs folder    
  >+m::      ChangeFolder(A_ScriptDir "\mem_cache\")                             ;<F> mem_cache
@@ -199,9 +189,8 @@
  #r::       ActivateApp("ppt_path")                                             ;<A> Powerpoint
  #a::       ActivateApp("pdf_path")                                             ;<A> pdf-xchange
  #t::       ActivateApp("cmd.exe")                                              ;<A> Command Window
- PrintScreen & b::                                                              ;<A> File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
  #b::       ActivateApp("explorer.exe", "buffer_path", True)                    ;<A> File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
- ^#!m::     ActivateMail()                                                      ;<A> Mail
+ +#m::      ActivateMail()                                                      ;<A> Mail
  +#c::      ActivateCalc()                                                      ;<A> Calculator
  
  

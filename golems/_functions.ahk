@@ -12,6 +12,12 @@
     return % InStr(title, tab_name)
  }
 
+ MoveWindowToOtherMonitor() {
+    Send {lwin down}{shift down}{Left}{shift up}{lwin up}
+    JumpMiddle()
+    return
+ }
+
  MoveCMDToOtherDesktop(title = "jupyter") {
     SetTitleMatchMode, 2
     ; TabCondition(tab_name="MISC.txt", exact = False)
@@ -224,6 +230,7 @@
  WinLLockTrue            := Func("WinLLock").Bind(True)
  WinLLockFalse           := Func("WinLLock").Bind(False)
  ActivateExplorer        := Func("ActivateApp").Bind("explorer.exe")
+ ClosePopup              := Func("ClosePopup")
 
  DisplaySettings() {
     Run explorer.exe ms-settings:display
@@ -301,6 +308,7 @@
     if (taps > 1)
         ActivatePrevInstance()
  }
+
  WinClose(isHold, taps, state) {
     if (taps > 1)
         WinClose,A
@@ -585,7 +593,7 @@
  ConfigureWinGolems(config_path = "", apps*) {
     path := RetrieveINI(A_ComputerName, "editor_path")
     if (!FileExist(config_path) or path = "ERROR") {
-        MsgBox,4100, WinGolems Setup, A valid config.ini entry for this computer was not detected, would you like WinGolems to create one?
+        MsgBox,4132, WinGolems Setup, A valid configuration profile for this computer was not detected, would you like to create one?
         IfMsgBox Yes
         {
             CreateConfigINI(apps*)
@@ -694,13 +702,11 @@
     popx := CoordXCenterScreen(GUI_Width, CurrentMonitorIndex) - (wn/2)         ; Calculate where the GUI should be positioned
     popy := CoordYCenterScreen(GUI_Height, CurrentMonitorIndex) * 2 - (hn/2)
     Progress, b C11 X%popx% Y%popy% ZH0 ZX10 zy10 W%wn% H%hn% FM%fmn% WM%wmn% CT%ctn% CW%cwn%,, %msg% ,,Gadugi
-    SetTimer, ClosePopup, %ms%
-    POP_UP := true
+    SetTimer, ClosePopup, 1000
  }
 
  ClosePopup() {
     Progress, Off
-    POP_UP := false
  }
 
  getMousePos() {

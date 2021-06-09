@@ -45,7 +45,7 @@
  Gosub, Test_autoexecution                                                      ; initializes variables for script testing template
  Gosub, JL_AutoExecution                                                        ; [JL]  win_goto.ahk  
  Gosub, MAW_AutoExecution                                                       ; [MAW] win_sys.ahk   
- ; gosub, coding_autoexecution  
+ gosub, coding_autoexecution  
  ; gosub, Bing_autoexecution    
  ; gosub, chrome_autoexecution  
 
