@@ -7,33 +7,16 @@
  +!u::         ConvertLower()                                                   ;[TM] case: convert selected text to lower case
  ^!u::         FirstLetterCapitalized()                                         ;[TM] case: First letter capitalized
  ^!+u::        EveryFirstLetterCapitalized()                                    ;[TM] case: Every First Letter Capitalized
+ 
  #x::          TrimText(True)                                                   ;[TM] cut and trim whitespace around selected text
  #c::          TrimText()                                                       ;[TM] copy and trim whitespace around selected text
- ^#t::         FormatTranscript()                                               ;[TM] remove time index from selected transcript
  !#enter::     RemoveBlankLines()                                               ;[TM] remove empty lines from selected text
- +#v::                                                                          ;[TM] paste, then delete same number of spaces (aka. overtype paste)
- ^#v::         PasteDelExtraSpaces()                                            ;[TM] paste, then delete same number of spaces (aka. overtype paste)
  !v::          PasteWithoutBreaks()                                             ;[TM] replace multiple paragraph breaks in selected text
- +!v::         PasteWithoutBreaks(True)                                         ;[TM] replace multiple paragraph breaks, reselect text = True
  ^#sc028::     addQuotesAroundCommaSeparatedElements()                          ;[TM] surround each element of comma separated list with quotation marks
  #!sc028::     ReplaceQuotesWithSpaces()                                        ;[TM] replace double quotation marks with spaces in selected text
  !#space::     RemoveAllSpaces()                                                ;[TM] remove all spaces from selected text
  ^#space::     ReplaceManySpaceWith1Space()                                     ;[TM] replace multiple consecutive spaces w/ one in selected text
  ^#del::       ReplacePlusOrCommaWithSpace()                                    ;[TM] replace "+" or "," with " " in selected text
- #!sc00C::     ReplaceUnderscoreWithSpace()                                     ;[TM] replace "_" with " " in selected text
- ^#sc00C::     ReplaceSpaceWithUnderscore()                                     ;[TM] replace " " with "_" in selected text
- #!SC034::     ReplacePeriodWithSpace()                                         ;[TM] replace "." with " " in selected text
- ^#SC00D::     ReplaceSpacesWithPluses()                                        ;[TM] replace " " with "+" in selected text
- ^#SC033::     ReplaceSpacesWithCommas()                                        ;[TM] replace " " with "," in selected text
- #!SC00D::     ReplaceCommasWithPluses()                                        ;[TM] replace "," with "+" in selected text
- #!SC033::     ReplacePlusesWithCommas()                                        ;[TM] replace "+" with "," in selected text
- ^#SC02B::     ReplaceSpacesWithPipe()                                          ;[TM] replace " " with "|" in selected text
- #!d::         ReplaceDashWithSpaces()                                          ;[TM] replace "-" with " " in selected text
- ^#d::         ReplaceSpacesWithDash()                                          ;[TM] replace " " with "-" in selected text
- <!#e::        ReplaceEqualWithSpace()                                          ;[TM] replace "=" with " " in selected text
- #If GetKeyState("PrintScreen", "P")
- ralt & e::    ReplaceEqualWithUnderscore()                                     ;[TM] replace "=" with "_" in selected text (requires printscreen key pressed as well)
- #If
 
 ; TEXT SELECTION _______________________________________________________________
 
@@ -80,7 +63,6 @@
  +#e::  send {ctrl down}{end}{ctrl up}                                          ;[NKR] Ctrl + End
  
  ^SC027::          Send {AppsKey}                                               ;[NKR] appkey press
- ^m::              Send ^c                                                      ;[NKR] Right-handed copy (ctrl-c)
  $!SC027::         Send {esc}                                                   ;[NKR] esc key
  +CapsLock::       Send {Backspace down}                                        ;[NKR] Backspace
  CapsLock::        Send {Delete}                                                ;[NKR] Delete 

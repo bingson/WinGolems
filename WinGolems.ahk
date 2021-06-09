@@ -20,41 +20,44 @@
   ; SetTimer, Reload, 60000                                                     ; reloads the script once every minute; makes the script reliable when running multiple ahk scripts on older hardware
                                                                                 ; or when multiple scripts (not recommended) are loaded in the system tray simultaneously instead of included into 1 script 
 ; INITIALIZE GLOBAL VARIABLES __________________________________________________
-  
-  config_path := A_ScriptDir "\config.ini"
-  
-  #NoEnv                                                                        ; prevents empty variables from being looked up as potential environment variables
-  EnvGet, hdrive, Homedrive                                                     ; see a list of available Environment variables at the command prompt by typing SET
-  EnvGet, hpath, Homepath
-  EnvGet, UProfile, UserProfile
-  EnvGet, PF_x86, ProgramFiles(x86)
-  
-  short            := 100                                                       ; set sleep time in milliseconds between actions for specific functions
-  med              := 300                                                       
-  long             := 900                                                       
-  thm_sys          := new TapHoldManager(270,,maxTaps = 3,"$","")               ; instantiate TapHoldManager class for double press to execute hotkeys
-  
-  GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and save as dialogue boxes
-  GroupAdd, FileListers, ahk_class WorkerW
-  GroupAdd, FileListers, ahk_class #32770, ShellView
-  
-  gosub, test_autoexecution                                                     ; initializes variables for script testing template
-  gosub, JL_AutoExecution                                                       ; [JL]  win_goto.ahk  
-  gosub, MAW_AutoExecution                                                      ; [MAW] win_sys.ahk   
-  ; gosub, coding_autoexecution  
-  ; gosub, Bing_autoexecution    
-  ; gosub, chrome_autoexecution  
 
-  icon_path   := A_ScriptDir "\assets\Aikawns\W\"                               ; set tray icon to desired letter path
-  SetTrayIcon(icon_path "lg.ico")                                               ; set static icon color, black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
+ #NoEnv                                                                         ; prevents empty variables from being looked up as potential environment variables
+ EnvGet, hdrive, Homedrive                                                      ; see a list of available Environment variables at the command prompt by typing SET
+ EnvGet, hpath, Homepath
+ EnvGet, UProfile, UserProfile
+ EnvGet, PF_x86, ProgramFiles(x86)
+ 
+ config_path      := A_ScriptDir "\config.ini"
+ short            := 100                                                        ; set sleep time in milliseconds between actions for specific functions
+ med              := 300                                                        
+ long             := 900                                                        
+ thm_sys          := new TapHoldManager(270,,maxTaps = 3,"$","")                ; instantiate TapHoldManager class for double press to execute hotkeys
+ 
+ lg     := "D2DEBF", lb    := "BED7D6", ly     := "F2EFDB", lp      := "CDC9D9" ; light green (lg), light blue (lb), light yellow (ly), light purple (lp), light red (lr)
+ black  := "000000", white := "FFFFFF", red    := "FF0000", green   := "008000"
+ navy   := "000080", blue  := "0000FF", purple := "800080", lpurple := "CE93D8"
+ bgreen := "29524A", lr    := "F6E1E0"
+ 
+ GroupAdd, FileListers, ahk_class CabinetWClass                                 ; create reference group for file explorer and save as dialogue boxes
+ GroupAdd, FileListers, ahk_class WorkerW
+ GroupAdd, FileListers, ahk_class #32770, ShellView
+ 
+ Gosub, Test_autoexecution                                                      ; initializes variables for script testing template
+ Gosub, JL_AutoExecution                                                        ; [JL]  win_goto.ahk  
+ Gosub, MAW_AutoExecution                                                       ; [MAW] win_sys.ahk   
+ ; gosub, coding_autoexecution  
+ ; gosub, Bing_autoexecution    
+ ; gosub, chrome_autoexecution  
 
-  ; uncomment to disable WIN+L key for locking screen upon WinGolems startup    ; requires registry write premission, end & L hotkey toggles this as well
-  ; WinLLock(False, True)                                                       ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage.
+ SetTrayIcon(A_ScriptDir "\assets\Aikawns\W\gold.ico")                          ; set static icon color: black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
+
+ ; uncomment to disable WIN+L key for locking screen upon WinGolems startup     ; requires registry write premission, end & L hotkey toggles this as well
+ ; WinLLock(False, True)                                                        ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage.
                                                                                 ; True = enables windows lockscreen key hook (WIN+L); Second True disables pop up window confirmation 
 ; FIRST TIME SETUP (only executed if no config.ini detected)____________________
  ; please confirm/change the following application associations. 
- ; To generate an updated config.ini reflecting new changes, delete config.ini 
- ; and reload/rerun wingolems.ahk 
+ ; To generate a new configuration file reflecting changes in app associations, 
+ ; delete config.ini and reload/rerun wingolems.ahk 
 
  apps := [ "winword.exe"           ; Word          -> docm,doc,docx,dotx,dotm  
          , "excel.exe"             ; Excel         -> xlsx,xlsm,xltx,xltm               
@@ -64,11 +67,11 @@
          , "googledrivesync.exe"   ; Google Drive  -> backup program
          , "code.exe" ]            ; VS Code       -> IDE + editor of last resort
          
- ConfigureWinGolems(config_path, apps*)
+ ConfigureWinGolems(config_path, apps*)                                         
  
 
-; LOAD AHK SCRIPTS (end of auto-execution section)______________________________
- #Include %A_ScriptDir%\golems                                                  ; folder reference changes subsequent includes to look from that location
+; LOAD AHK SCRIPTS _______________________________ end of auto-execution section
+ #Include %A_ScriptDir%\golems                                                  ; note: subsequent include statements look for files in the last #include + folder path
  #Include _functions.ahk   
  #Include *i win_text_navigation.ahk            
  #Include *i win_sys.ahk   

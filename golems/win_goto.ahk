@@ -53,6 +53,7 @@
                   , "Loff" : "WinLLockFalse"
                   , "i"    : "WindowsSettings"
                   , "?"    : "EditHotkeyList"
+                  , "hs?"  : "OpenHotStringLog"
                   , "rw"   : "ReloadAHK"
                   , "qw"   : "ExitAHK"
                   , "kh"   : "KeyHistory"
@@ -60,30 +61,34 @@
                   , "p"    : "PresentationDisplayMode"
                   , "ce"   : "CloseAllPrograms"
                   , "ss"   : "CloudSyncON"
-                  , "qs"   : "CloudSyncOFF" }   
- 
-  Command_TOC  := { "b"    : "cfg:`tOpen Bluetooth Settings"                    ; table of contents for run system command jump list
-                  , "d"    : "cfg:`tOpen Display Settings"                        
-                  , "ss"   : "cfg:`tOpen Sound Settings"                
-                  , "n"    : "cfg:`tOpen Notifications"           
-                  , "x"    : "cfg:`tOpen Start Context Menu"             
-                  , "k"    : "cfg:`tOpen Quick Connect Window"           
-                  , "i"    : "cfg:`tOpen Windows Settings"       
-                  , "p"    : "cfg:`tSet presentation display mode"
-                  , "p"    : "cfg:`tSet presentation display mode"
-                  , "Lon"  : "cfg:`tTurn ON Win + L Lock Computer Shortcut"           
-                  , "Loff" : "cfg:`tTurn OFF Win + L Lock Computer Shortcut"           
-                  , "gh~~" : "hlp:`tGenerate a new list of shortcuts from all running scripts"       
-                  , "?"    : "hlp:`tOpen last generated list of shortcuts"              
-                  , "kh"   : "ahk:`tOpen Key History"              
-                  , "ws"   : "ahk:`tOpen Window Spy"     
-                  , "s"    : "win:`tStart Menu"                
-                  , "arp"  : "win:`tAdd Remove Programs"           
-                  , "r"    : "win:`tOpen Run Dialog Box"                
-                  , "a"    : "win:`tOpen Alarm Clock"           
-                  , "cap"  : "win:`tClose All Programs"         
-                  , "scs"  : "bup:`tStart Cloud Sync"
-                  , "ccs"  : "bup:`tClose Cloud Sync" }  
+                  , "qs"   : "CloudSyncOFF" }
+
+  Command_TOC  := { "b"    : "CFG`tBluetooth"                                   ; table of contents for run system command jump list
+                  , "d"    : "CFG`tDisplay"                                     ; sorted by values. With a break between each user entered group prefix
+                  , "v"    : "CFG`tSound"
+                  , "n"    : "CFG`tNotifications"
+                  , "k"    : "CFG`tQuick Connect"
+                  , "i"    : "CFG`tWindows Settings"
+                  , "p"    : "CFG`tPresentation mode"
+                  , "Lon"  : "LCK`tTurn ON Win + L Lock Computer Shortcut"
+                  , "Loff" : "LCK`tTurn OFF Win + L Lock Computer Shortcut"
+                  , "g?~~" : "HLP`tGenerate a new shortcuts list from all running AHK scripts"
+                  , "hs"   : "HLP`tOpen log of user created hotstrings"
+                  , "?"    : "HLP`tOpen last generated list of shortcuts"
+                  , "kh"   : "AHK`tOpen Key History (#KeyHistory > 0 required)"
+                  , "ws"   : "AHK`tOpen Window Spy"
+                  , "rw"   : "AHK`tReload WinGolems (Ctrl+Win+R)"
+                  , "qw"   : "AHK`tQuit WinGolems"
+                  , "ws"   : "AHK`tOpen Window Spy"
+                  , "x"    : "WIN`tStart Context Menu"
+                  , "s"    : "WIN`tStart Menu"
+                  , "ap"   : "WIN`tAdd Remove Programs"
+                  , "r"    : "WIN`tOpen Run Dialog Box"
+                  , "ce"   : "WIN`tClose All Programs"
+                  , "a"    : "WIN`tAlarm Clock"
+                  , "ss"   : "B/U`tStart Sync"
+                  , "qs"   : "B/U`tQuit Sync" }
+
 
   URL_DICT :=     { "gm"   : "mail.google.com"
                   , "gc"   : "www.google.com/calendar"
@@ -124,7 +129,7 @@
 ; ACTIVATE SAVED WINDOWS ________________________________________________________
  ; hotkey to activate window with match string anywhere in the title
  
- #If, GetKeyState("ralt", "P")
+ #If, GetKeyState("alt", "P")
  printscreen & q::   SaveWinID("Q")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & q 
  printscreen & s::   SaveWinID("S")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & s 
  printscreen & a::   SaveWinID("A")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & a 
@@ -158,7 +163,7 @@
 
 
  
-; GOTO FOLDER ________________________________________________________________
+; GOTO FOLDER __________________________________________________________________
  
  #m::      ActivateApp("explorer.exe", A_ScriptDir "\mem_cache")                ;<F> open mem_cache folder from anywhere in windows (new explorer instance)                                                                           
  
