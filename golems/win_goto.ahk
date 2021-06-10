@@ -35,7 +35,7 @@
   Command_DICT := { "b"    : "BluetoothSettings"                                ; options for run system command jump list
                   , "d"    : "DisplaySettings"
                   , "v"    : "SoundSettings"
-                  , "cfw"  : "TglCursorFollowWin"
+                  , "cf"   : "TglCursorFollowWin"
                   , "s"    : "StartMenu"
                   , "n"    : "NotificationWindow"
                   , "r"    : "RunProgWindow"
@@ -64,9 +64,9 @@
                   , "k"    : "cfg`tQuick Connect"
                   , "i"    : "cfg`tWindows Settings"
                   , "p"    : "cfg`tPresentation mode"
-                  , "Lon"  : "tgl`tTurn ON:`t Win + L Lock Computer Shortcut"
-                  , "Loff" : "tgl`tTurn OFF:`t Win + L Lock Computer Shortcut"
-                  , "cfw"  : "tgl`tToggle ON/OFF: cursor follows active window"
+                  , "Lon"  : "tgl`tTurn ON:`tWin + L Locks Computer"
+                  , "Loff" : "tgl`tTurn OFF:`tWin + L Locks Computer"
+                  , "cf"   : "tgl`tToggle ON/OFF: cursor follows active window"
                   , "g?~~" : "ahk`thelp: Generate a new shortcuts list from all running AHK scripts"
                   , "hs"   : "ahk`thelp: Open log of user created hotstrings"
                   , "?"    : "ahk`thelp: Open last generated list of shortcuts"
@@ -81,8 +81,8 @@
                   , "r"    : "win`tOpen Run Dialog Box"
                   , "ce"   : "win`tClose All Programs"
                   , "a"    : "win`tAlarm Clock"
-                  , "ss"   : "tgl`tBackup:`tStart Sync"
-                  , "qs"   : "tgl`tBackup:`tQuit Sync" }
+                  , "ss"   : "tgl`tStart Sync"
+                  , "qs"   : "tgl`tQuit Sync" }
 
 
   URL_DICT :=     { "gm"   : "mail.google.com"
@@ -97,10 +97,10 @@
                   , "n"    : "netflix.com" 
                   , "p"    : "getpocket.com/a/queue/"}
   
-  URL_TOC :=      { "gm"   : "utl`tGoogle Mail"
-                  , "gc"   : "utl`tGoogle Calendar"
-                  , "gk"   : "utl`tGoogle Keepcom"
-                  , "gn"   : "utl`tGoogle News"
+  URL_TOC :=      { "gm"   : "google`tmail"
+                  , "gc"   : "google`tcalendar"
+                  , "gk"   : "google`tkeepcom"
+                  , "gn"   : "google`tnews"
                   , "f"    : "utl`tca.finance.yahoo"
                   , "w"    : "utl`tweather"
                   , "cal"  : "utl`tcalendar"
