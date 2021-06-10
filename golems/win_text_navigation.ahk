@@ -49,11 +49,11 @@
  #h::                                                                           ;[NKR] Home
  ^!h::                                                                          ;[NKR] Home
  !^Left::                                                                       ;[NKR] Home
- PrintScreen & h:: send {home}                                                  ;[NKR] Home
+ rwin & h:: send {home}                                                  ;[NKR] Home
  #l::                                                                           ;[NKR] End
  ^!l::                                                                          ;[NKR] End
  !^Right::                                                                      ;[NKR] End
- PrintScreen & l:: send {end}                                                   ;[NKR] End
+ rwin & l:: send {end}                                                   ;[NKR] End
 
  $!h:: send {Left}                                                              ;[NKR] Left
  $!l:: send {Right}                                                             ;[NKR] Right
@@ -69,6 +69,7 @@
  CapsLock::        Send {Delete}                                                ;[NKR] Delete 
  !CapsLock::       CapsLock                                                     ;[NKR] Toggle capslock
 
+ rwin::                                                                         ;[NKR] modifier key (use ctrl+esc or windows key + left mouse click to access start menu) 
  lwin::            return                                                       ;[NKR] modifier key (use ctrl+esc or windows key + left mouse click to access start menu) 
  PrintScreen::     return                                                       ;[NKR] modifier key no action otherwise
 
@@ -111,17 +112,14 @@
 ; MOUSE FUNCTIONS ______________________________________________________________
  ; mouse functions with keyboard shortcuts 
 
- PrintScreen & j::                                                              ;[MF] scroll wheel down
  #j::                            Click, WheelDown 2                             ;[MF] scroll wheel down
- PrintScreen & k::                                                              ;[MF] scroll wheel up
  #k::                            Click, WheelUp 2                               ;[MF] scroll wheel up 
  
  *#d::                           click                                          ;[MF] 1 Left click 
  #f::                            MouseClicks(2)                                 ;[MF] 2 Left clicks
  ^#f::                           MouseClicks(3)                                 ;[MF] 3 Left clicks (select line)
 
- ~lwin & rshift::                                                               ;[MF] move mouse cursor to middle
- PrintScreen & rctrl::           JumpMiddle()                                   ;[MF] move mouse cursor to middle
+ ~lwin & rshift::                JumpMiddle()                                   ;[MF] move mouse cursor to middle
  +#k::                           JumpTopEdge()                                  ;[MF] move mouse cursor to top edge
  +#j::                           JumpBottomEdge()                               ;[MF] move mouse cursor to bottom edge 
  +#h::                           JumpLeftEdge()                                 ;[MF] move mouse cursor to Left edge

@@ -1,6 +1,7 @@
 
 ; APP MANAGEMENT _______________________________________________________________
 
+ 
  TabCondition(tab_name="MISC.txt", exact = False) {
     ; checks if tab_name occurs somewhere in the window title
     if (exact = True) {
@@ -26,7 +27,7 @@
         WinActivate
         sleep, long
         MoveWindowToOtherDesktop()
-    }
+    } 
     return
  }
 
@@ -45,12 +46,11 @@
     return
  }
 
- ActivateWinID(key = "L", center_mouse = True) {
+ ActivateWinID(key = "L") {
     global config_path
     IniRead, output, %config_path%, %A_ComputerName%, WinID_%key%
     ActivateWindow("ahk_id" output)
-    if center_mouse
-        JumpMiddle()
+    CursorFollowWin()
     return
  }
 
@@ -101,6 +101,7 @@
         WinSet, Bottom,, A
         WinActivate, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
     }
+    CursorFollowWin()
     return
  }
 
@@ -112,6 +113,7 @@
 
     if (n_instances > 1)
         WinActivateBottom, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
+    CursorFollowWin()
     return
  }
 
@@ -199,6 +201,27 @@
     Return
  }
 
+ 
+ TglCursorFollowWin() {
+    global config_path, red, bgreen, lr, lg     
+    IniRead,  state,    %config_path%, %A_ComputerName%, cursor_follow, 0
+    IniWrite, % !state, %config_path%, %A_ComputerName%, cursor_follow
+    if !state
+        ShowPopup("Cursor Follows Active Window: ON", bgreen,"300","90", "-800",,,lg)
+    else if state
+        ShowPopup("Cursor Follows Active Window: Off", red,"300","90", "-800",,,lr)
+    return
+ }
+
+ CursorFollowWin(x = "280", y = "200") {
+    global config_path
+    IniRead, state, %config_path%, %A_ComputerName%, cursor_follow, 0
+    if state
+        JumpMiddle(x,y)                                                        ; x,y = 0,0 = center of app window
+    return
+ }
+
+
 ; BOUND FUNCTIONS ______________________________________________________________
  ; used for Jump Lists and TapHoldManager class instantiations
  BluetoothSettings       := Func("BluetoothSettings")
@@ -224,6 +247,7 @@
  ReloadAHK               := Func("ReloadAHK")
  ExitAHK                 := Func("ExitAHK")
  GenerateHotkeyList      := Func("GenerateHotkeyList")
+ TglCursorFollowWin      := Func("TglCursorFollowWin")
  EditHotkeyList          := Func("EditFile").Bind("HotKey_List.txt", "editor_path")
  CloudSyncON             := Func("CloudSync").Bind("ON")
  CloudSyncOFF            := Func("CloudSync").Bind("OFF")
@@ -358,7 +382,7 @@
             %command%.call()
         }
     } else if UserInput                                                         
-        RunInputCommand(func,dest_dict,title_prompt,name_dict)
+        RunInputCommand(func,dest_dict,title_prompt,name_dict, color_code)
     else
     return
  }
@@ -367,10 +391,12 @@
     global UserInput := ""
     Gui, New, ,%title%
     Gui, font,s13 , calibri
-    Gui, add, text, xp yp+10, % prompt "`n"
-    Gui, Add, Edit, h35 w120 vUserInput
+    Gui, Add, text, xp yp+10, % prompt "`n"
+    Gui, Add, Edit, w120 vUserInput
     Gui, Add, Button, W60 X+10 Default gButtonOK, OK
     Gui, Add, Button, W60 X+5 gButtonCancel, Cancel
+    Gui, font,s8 , calibri
+    Gui, add, text, xs yp+30, case insensitive
     Gui, Color, %color_code%
     Gui +LastFound +OwnDialogs +AlwaysOnTop
                                                                                 ; https://www.autohotkey.com/boards/viewtopic.php?t=31716
@@ -416,7 +442,7 @@
         max_str_len := max(max_str_len, strlen(key . selection))
     }
     line := RepeatString("-", max_str_len * 1.35)
-    TOC := "Key`tSelection`n----`t" line "`r"
+    TOC := "Key`tSelection`n-----`t" line "`r"
     For dest, ref in arr_KV_swapped
     {
         if alt_arr {
@@ -701,7 +727,7 @@
     DetectHiddenWindows Off
     popx := CoordXCenterScreen(GUI_Width, CurrentMonitorIndex) - (wn/2)         ; Calculate where the GUI should be positioned
     popy := CoordYCenterScreen(GUI_Height, CurrentMonitorIndex) * 2 - (hn/2)
-    Progress, b C11 X%popx% Y%popy% ZH0 ZX10 zy10 W%wn% H%hn% FM%fmn% WM%wmn% CT%ctn% CW%cwn%,, %msg% ,,Gadugi
+    Progress, b C11 X%popx% Y%popy% ZH0 ZX10 zy10 W%wn% H%hn% FM%fmn% WM%wmn% CT%ctn% CW%cwn%,, %msg% ,,Gaduigi
     SetTimer, ClosePopup, 1000
  }
 
@@ -983,7 +1009,7 @@
     return %output%
  }
 
- ActivateApp(app_path = "", arguments = "", start_folder_toggle = False, ctr_cursor = True) {
+ ActivateApp(app_path = "", arguments = "", start_folder_toggle = False) {
     ; wrapper for ActivateOrOpen to process ini file path references
     ; and arguments
     global config_path
@@ -991,23 +1017,23 @@
     {
         IniRead, ini_app_path, %config_path%, %A_ComputerName%, %app_path%
         RegExMatch(ini_app_path, "[^\\]+$", exe_name)
-        ActivateOrOpen(exe_name, ini_app_path, arguments, ctr_cursor)
+        ActivateOrOpen(exe_name, ini_app_path, arguments)
     }
     else if app_path in cmd.exe,explorer.exe
     {
         if InStr(arguments , "_path") {
             IniRead, arguments, %config_path%, %A_ComputerName%, %arguments%
         }
-        ActivateOrOpen(app_path,,arguments, start_folder_toggle, ctr_cursor)    ; only compatible options are file explorer or command window
+        ActivateOrOpen(app_path,,arguments, start_folder_toggle)    ; only compatible options are file explorer or command window
     }
     else
     {
         RegExMatch(app_path, "[^\\]+$", exe_name)
-        ActivateOrOpen(exe_name, app_path, arguments, ctr_cursor)
+        ActivateOrOpen(exe_name, app_path, arguments)
     }
  }
 
- ActivateOrOpen(exe_name, app_path = "", arguments = "", start_folder_toggle = False, ctr_cursor = True) {
+ ActivateOrOpen(exe_name, app_path = "", arguments = "", start_folder_toggle = False) {
     ; opens application located at app_path or activates application (brings to top) if underneath
     ; other windows
 
@@ -1029,9 +1055,7 @@
     } else {
         WinActivate, % "ahk_id " wList1
     }
-    if ctr_cursor {
-        JumpMiddle("100","100")
-    }
+    CursorFollowWin()
     return
  }
 
@@ -1359,27 +1383,27 @@
         string_char   := RepeatString(char, num_char)
         output        := string . A_Space . string_char
         output        := substr(output, 1, length)
+        sleep 200
         clip(output)
     }
     return
  }
 
+ 
  AddSpaceBeforeComment(length = "80", char = " ") {
-    ; Add spaces until cursor hits the desired comment column
-    global short, long, med
-    clipsaved := clipboard
-    clipboard := ""
-    Send {space}{left}+{end}                                                    ; in vscode ^x on empty selection will cut the whole line
-    TrimText(True)
-    Send {home 2}{shift down}{end}{shift up}
-    ; sleep long
-    FillChar(length, char)
-    if clipboard {
-        sleep long
-        send ^v
-    }
-    clipboard := clipsaved
-    return
+   ; Add spaces until cursor hits the desired comment column
+   clipsaved := clipboard
+   clipboard := ""
+   Send {space}{left}+{end}                                                    ; in vscode ^x on empty selection will cut the whole line
+   TrimText(True)
+   Send {home 2}{shift down}{end}{shift up}
+   FillChar(length, char)
+   if clipboard {
+       sleep, long * 0.8
+       send ^v
+   }
+   clipboard := clipsaved
+   return
  }
 
  AddBorder(length = "80", char = "_", prefix = "" )  {
@@ -1396,7 +1420,7 @@
 
  TrimText(cut = False) {
     ; cut/copy and trim selected text
-    if (cut = False)
+    if !cut
         send ^c
     else
         send ^x

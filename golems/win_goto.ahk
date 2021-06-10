@@ -35,6 +35,7 @@
   Command_DICT := { "b"    : "BluetoothSettings"                                ; options for run system command jump list
                   , "d"    : "DisplaySettings"
                   , "v"    : "SoundSettings"
+                  , "cfw"  : "TglCursorFollowWin"
                   , "s"    : "StartMenu"
                   , "n"    : "NotificationWindow"
                   , "r"    : "RunProgWindow"
@@ -56,31 +57,32 @@
                   , "ss"   : "CloudSyncON"
                   , "qs"   : "CloudSyncOFF" }
 
-  Command_TOC  := { "b"    : "CFG`tBluetooth"                                   ; table of contents for run system command jump list
-                  , "d"    : "CFG`tDisplay"                                     ; sorted by values. With a break between each user entered group prefix
-                  , "v"    : "CFG`tSound"
-                  , "n"    : "CFG`tNotifications"
-                  , "k"    : "CFG`tQuick Connect"
-                  , "i"    : "CFG`tWindows Settings"
-                  , "p"    : "CFG`tPresentation mode"
-                  , "Lon"  : "LCK`tTurn ON Win + L Lock Computer Shortcut"
-                  , "Loff" : "LCK`tTurn OFF Win + L Lock Computer Shortcut"
-                  , "g?~~" : "HLP`tGenerate a new shortcuts list from all running AHK scripts"
-                  , "hs"   : "HLP`tOpen log of user created hotstrings"
-                  , "?"    : "HLP`tOpen last generated list of shortcuts"
-                  , "kh"   : "AHK`tOpen Key History (#KeyHistory > 0 required)"
-                  , "ws"   : "AHK`tOpen Window Spy"
-                  , "rw"   : "AHK`tReload WinGolems (Ctrl+Win+R)"
-                  , "qw"   : "AHK`tQuit WinGolems"
-                  , "ws"   : "AHK`tOpen Window Spy"
-                  , "x"    : "WIN`tStart Context Menu"
-                  , "s"    : "WIN`tStart Menu"
-                  , "ap"   : "WIN`tAdd Remove Programs"
-                  , "r"    : "WIN`tOpen Run Dialog Box"
-                  , "ce"   : "WIN`tClose All Programs"
-                  , "a"    : "WIN`tAlarm Clock"
-                  , "ss"   : "B/U`tStart Sync"
-                  , "qs"   : "B/U`tQuit Sync" }
+  Command_TOC  := { "b"    : "cfg`tBluetooth"                                   ; table of contents for run system command jump list
+                  , "d"    : "cfg`tDisplay"                                     ; sorted by values. With a break between each user entered group prefix
+                  , "v"    : "cfg`tSound"
+                  , "n"    : "cfg`tNotifications"
+                  , "k"    : "cfg`tQuick Connect"
+                  , "i"    : "cfg`tWindows Settings"
+                  , "p"    : "cfg`tPresentation mode"
+                  , "Lon"  : "tgl`tTurn ON:`t Win + L Lock Computer Shortcut"
+                  , "Loff" : "tgl`tTurn OFF:`t Win + L Lock Computer Shortcut"
+                  , "cfw"  : "tgl`tToggle ON/OFF: cursor follows active window"
+                  , "g?~~" : "ahk`thelp: Generate a new shortcuts list from all running AHK scripts"
+                  , "hs"   : "ahk`thelp: Open log of user created hotstrings"
+                  , "?"    : "ahk`thelp: Open last generated list of shortcuts"
+                  , "kh"   : "ahk`tOpen Key History (#KeyHistory > 0 required)"
+                  , "ws"   : "ahk`tOpen Window Spy"
+                  , "rw"   : "ahk`tReload WinGolems (Ctrl+Win+R)"
+                  , "qw"   : "ahk`tQuit WinGolems"
+                  , "ws"   : "ahk`tOpen Window Spy"
+                  , "x"    : "win`tStart Context Menu"
+                  , "s"    : "win`tStart Menu"
+                  , "ap"   : "win`tAdd Remove Programs"
+                  , "r"    : "win`tOpen Run Dialog Box"
+                  , "ce"   : "win`tClose All Programs"
+                  , "a"    : "win`tAlarm Clock"
+                  , "ss"   : "tgl`tBackup:`tStart Sync"
+                  , "qs"   : "tgl`tBackup:`tQuit Sync" }
 
 
   URL_DICT :=     { "gm"   : "mail.google.com"
@@ -119,24 +121,19 @@
 ; ACTIVATE SAVED WINDOWS ________________________________________________________
  ; hotkey to activate window with match string anywhere in the title
  
- #If, GetKeyState("alt", "P")
- printscreen & q::   SaveWinID("Q")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & q 
- printscreen & s::   SaveWinID("S")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & s 
- printscreen & a::   SaveWinID("A")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & a 
- printscreen & z::   SaveWinID("Z")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & z 
- printscreen & x::   SaveWinID("X")                                             ;[ASW] (+ RAlt) Saves ID of window for subsequent activation w/ printscreen & x 
- #If
+ printscreen & m::   SaveWinID("M")                                             ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ Lwin + M
+ printscreen & u::   SaveWinID("U")                                             ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ Lwin + U
+ printscreen & i::   SaveWinID("I")                                             ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ Lwin + U
+ printscreen & o::   SaveWinID("O")                                             ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ Lwin + U
+ #PgUp::             SaveWinID("L")                                             ;[ASW] Saves ID of selected window for later activation with LCtrl + space 
+ #PgDn::             SaveWinID("R")                                             ;[ASW] Saves ID of selected window for later activation with RCtrl + space 
  
- printscreen & s::   ActivateWinID("S")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + S
- printscreen & q::   ActivateWinID("Q")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + Q
- printscreen & a::   ActivateWinID("A")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + A
- printscreen & z::   ActivateWinID("Z")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + Z
- printscreen & x::   ActivateWinID("X")                                         ;[ASW] activates Window ID saved w/ Ralt + Printscreen + X
-
- #PgUp::   SaveWinID("L")                                                       ;[ASW] Saves ID of selected window for later activation with LCtrl + space 
- #PgDn::   SaveWinID("R")                                                       ;[ASW] Saves ID of selected window for later activation with RCtrl + space 
- <^space:: ActivateWinID("L")                                                   ;[ASW] activates Window ID saved w/ Win + PgUp
- >^space:: ActivateWinID("R")                                                   ;[ASW] activates Window ID saved w/ Win + PgDn
+ #m::                ActivateWinID("M")                                         ;[ASW] activates Window ID saved w/ Printscreen + M
+ #u::                ActivateWinID("U")                                         ;[ASW] activates Window ID saved w/ Printscreen + U
+ #i::                ActivateWinID("I")                                         ;[ASW] activates Window ID saved w/ Printscreen + I
+ #o::                ActivateWinID("O")                                         ;[ASW] activates Window ID saved w/ Printscreen + O
+ <^space::           ActivateWinID("L")                                         ;[ASW] activates Window ID saved w/ Win + PgUp
+ >^space::           ActivateWinID("R")                                         ;[ASW] activates Window ID saved w/ Win + PgDn
  
 
  #y:: ActivateWindow("VLC media player")                                        ;[ASW] activates VLC 
@@ -154,8 +151,6 @@
 
  
 ; GOTO FOLDER __________________________________________________________________
- 
- #m::      ActivateApp("explorer.exe", A_ScriptDir "\mem_cache")                ;<F> open mem_cache folder from anywhere in windows (new explorer instance)                                                                           
  
  SetTitleMatchMode, 2
  #IfWinActive ahk_group FileListers                                             ;    ChangeFolders works in file explorer and open file + save as dialogue boxes
