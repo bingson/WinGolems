@@ -1,13 +1,13 @@
 # WinGolems
 
-A collection of Windows 10 automation and enhancement scripts (golems) written in Autohotkey. 
+A collection of Windows 10 automation and enhancement scripts (aka. golems) written in Autohotkey. 
 
 <p align="center"><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" width="2000" /></p>
 
 <ol>
 <li>
 
-<p> WinGolems consists of a repository of functions and templates used to alter 
+<p> WinGolems consists of a repository of functions and templates used to enha
 
 create more convenient keyboard/mouse shortcuts for the most frequently performed Windows 10 actions. 
 
