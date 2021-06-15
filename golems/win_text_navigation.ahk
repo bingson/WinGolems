@@ -93,8 +93,8 @@
  
  $#LButton::  PasteClipboardAtMouseCursor()                                     ;[C] double click, trim(clipboard), paste 
  $^!LButton:: send ^{esc}                                                       ;[C] open start menu (alt: Ctrl+Esc)
- click
-; TABS _________________________________________________________________________
+
+ ; TABS _________________________________________________________________________
  ; system wide shortcuts for navigating between tabs
  !b:: send ^{PgUp}                                                              ;[T] move to right tab
  >!space::                                                                      ;[T] move to left tab
