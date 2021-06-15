@@ -8,7 +8,7 @@ A collection of Windows 10 automation and enhancement scripts (aka. golems) writ
 <ol>
 <li>
 
-<p> WinGolems consists of a repository of functions and templates used to enha
+<p> WinGolems consists of a repository of functions and templates designed to help users 
 
 create more convenient keyboard/mouse shortcuts for the most frequently performed Windows 10 actions. 
 
