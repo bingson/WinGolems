@@ -6,12 +6,63 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
  sc01a or b = {[} or {]} 
 
-=================================== TEST ===================================
- ~Ctrl+Win+B             save and rerun test script
+==o====o====o====o====o====o== CHROME ==o====o====o====o====o====o====o====o
+ Alt+0                  
+ Alt+1                  
+ Alt+2                  
+ Alt+3                  
+ Alt+6                  
+ Alt+7                  
+ Alt+8                  
+ Alt+Ctrl+0             
+ Printscreen & Sc035     
+ F12 & 9                 
+ F12 & 8                 
+ Alt+Shift+6            
+ Ctrl+Alt+5             
+ Ctrl+S                 
+ Ctrl+Sc035             
+ Shift+Alt+0            
+ F12 & 0                 
+ Shift+Alt+5            
+ Shift+Alt+8            
+ Shift+Alt+Ctrl+1       
+ Shift+Alt+Ctrl+2       
+ Shift+Alt+Ctrl+3       
+ Shift+Alt+Ctrl+4       
+ Shift+Ctrl+0           
+ Ctrl+R                  
+ Alt+Shift+K             
+ Shift+Ctrl+M           
+ Alt+N                   
+ Alt+R                   
+ Shift+Alt+4            !4 reserved for 
+ Shift+Ctrl+5           !5 reserved for %%
+ Ctrl+B                  <JL> opens edit file jump list
+ Shift+Win+Sc035         [S] search autohotkey.com for selected text
+ Win+Sc035               [S] search Google for selected text
+ Ctrl+Win+Sc035          [S] search Google images for selected text
+ Alt+Win+Sc035           [S] search Wikipedia for selected text
+ Alt+P                   close tab
+ F11                     keyboard shortcuts for chrome extensions
+ Ctrl+Sc034              move tab to first position
+ Ctrl+Sc033              move tab to last position
+ Shift+Ctrl+Alt+R        restart browser
+ Shift+Ctrl+Alt+W       save and close all browser windows
+ Alt+Sc035              SC035 = /
+ Alt+I                  select 1st tab
+ Alt+O                  select last tab
+ Alt+Shift+J             zoom in
 
-==o====o====o====o====o====o== VS_CODE ==o====o====o====o====o====o====o====
+==o====o====o====o====o== CODING_ENVIRONMENTS ==o====o====o====o====o====o==
+ Shift+Ctrl+Alt+R        
+ F11 & S                 
+ Shift+Alt+K             
+ Shift+Alt+Ctrl+K        
+ Shift+Alt+Ctrl+J        
+ Shift+Alt+J             
  Shift+Ctrl+Alt+8       [ahk] surround selected text with block comment braces
- Del & K                 [base] clear all bookmarks
+ F1 & K                  [base] clear all bookmarks
  Alt+P                   [base] close tab
  Alt+D                   [base] delete line
  Ctrl+Alt+D              [base] duplicate line
@@ -26,163 +77,124 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Shift+Alt+Right         [base] move to group 1
  Shift+Alt+Left          [base] move to group 2
  Alt+O                   [base] open last editor in group
+ F12 & F                 [base] search/replace all files in directory
  Shift+Ctrl+Alt+F        [base] search/replace all files in directory
- Del & F                 [base] search/replace all files in directory
  Shift+Ctrl+D            [base] Select all occurrences of current selection
  Alt+G                   [base] select all text in between brackets
- Del & G                 [base] source control
+ F12 & G                 [base] source control
  Ctrl+Q                  [base] toggle comment
  Shift+Ctrl+Alt+O        [base] toggle output window
- Ctrl+M                  [base] toggle tab moves focus
+ Rightctrl+M             [base] toggle tab moves focus
+ Leftctrl+M              [base] toggle tab moves focus
  Alt+Sc035               [base] unfold current code level
  Shift+Alt+Sc035         [base] unfold recursively
  Rightshift+Ctrl+Enter   [base] zen mode
- Shift+Ctrl+B            [md] bold text
- Ins & F                 [md] insert hyperlink
- Ins & Sc034             [notes] add checkbox to current line
+ F12 & 1                 [FC] Add lvl 1 Border (default)
+ F12 & 1                 [FC] Add lvl 1 Border .ipynb files
+ F12 & 1                 [FC] Add lvl 1 Border .notes files
+ F12 & 2                 [FC] Add lvl 2 Border (default)
+ F12 & 2                 [FC] Add lvl 2 Border .ipynb files
+ F12 & 2                 [FC] Add lvl 2 Border .notes files
+ F12 & 3                 [FC] Add lvl 3 Border (default)
+ F12 & 3                 [FC] Add lvl 3 Border .ipynb files
+ F12 & 3                 [FC] Add lvl 3 Border .notes files
+ Printscreen & Tab       [FC] Add Space Before Comment (default)
+ F12 & Tab               [FC] Add Space Before Comment .ipynb files
+ Printscreen & Capslock  [FC] Add Space Before Comment .ipynb files
+ Shift+Ctrl+Q           [FC] comment line while preserving leading whitespace
+ F12 & S                 [FC] convert selected CamelCase text to snake_case
+ F12 & C                 [FC] convert selected snake_case or space delimited text to CamelCase
+ F11 & C                 [FC] format code by adding spaces between math operators, before commas, ... (selected text)
+ Leftshift+Ctrl+Space    [FC] Send {Space 4}
+ Rightshift+B            [md] bold text
+ F21 & F                 [md] insert hyperlink
+ F1 & Sc034              [notes] add checkbox to current line
  Ctrl+Enter              [py] run selected code
  Shift+Ctrl+Alt+8       [py] surround selected text with block comment braces
+ Leftshift+Ctrl+Backspace[FC] Send {BackSpace 4}
 
-==o====o====o====o====o====o== WINDOWS_GOTO ==o====o====o====o====o====o====
- Shift+Win+C             <A> Calculator
- Win+S                   <A> Chrome
- Win+T                   <A> Command Window
- Win+A                   <A> Excel
- Win+B                   <A> File Explorer
- Printscreen & B         <A> File Explorer
- Ctrl+Win+Alt+M          <A> Mail
- Win+R                   <A> pdf-xchange
- Win+Q                   <A> Powerpoint
- Printscreen & N         <A> VS Code
- Win+N                   <A> VS Code
- Win+W                   <A> Word
- <HS>  gi~~              <EF> .gitignore
- Printscreen & F         <EF> _functions.ahk
- Home & F                <EF> _functions.ahk
- <HS>  f~~               <EF> _functions.ahk
- <HS>  ini~~             <EF> config.ini
- <HS>  hh~~              <EF> Hotkey_Help.ahk
- <HS>  m~~               <EF> WinGolems.ahk
- Home & M                <EF> WinGolems.ahk
- <HS>  p~~               <EF> Python.ahk
- Home & P                <EF> Python.ahk
- Home & R                <EF> R.ahk
- <HS>  r~~               <EF> R.ahk
- Ctrl+Win+G              <EF> test.ahk
- <HS>  t~~               <EF> test.ahk
- <HS>  v~~               <EF> VS_code.ahk
- Home & V                <EF> VS_code.ahk
- Printscreen & V         <EF> VS_code.ahk
- <HS>  g~~               <EF> windows_goto.ahk
- Printscreen & G         <EF> windows_goto.ahk
- Home & G                <EF> windows_goto.ahk
- <HS>  w~~               <EF> windows_sys.ahk
- Home & W                <EF> windows_sys.ahk
- Printscreen & W         <EF> windows_sys.ahk
- <HS>  wt~~              <EF> windows_text_navigation.ahk
- Printscreen & T         <EF> windows_text_navigation.ahk
- Home & T                <EF> windows_text_navigation.ahk
- Rightshift+U            <F> %UserProfile%
- Rightshift+Sc029        <F> AHK folder
- Rightshift+1            <F> AHK golems folder
- Rightshift+2            <F> AHK libs folder
- Rightshift+C            <F> C:\ or %Homedrive%
- Rightshift+O            <F> C:\Program Files
- Rightalt+O              <F> C:\Program Files(x86)
- Rightshift+D            <F> Documents
- Rightshift+J            <F> Downloads
- Rightshift+P            <F> Pictures
- Rightshift+G            <F> Pictures
- Rightshift+R            <F> Recycle bin (doesn't work for save as diag)
- Rightshift+T            <F> This PC / My Computer
- Rightshift+M            <F> win img
- Leftctrl+Space          <TM> activate udemy window,
- Rightctrl+Space         <TM> Jupyter window
- Win+Y                   <TM> VLC
-
-==o====o====o====o====o====o== WINDOWS_SYS ==o====o====o====o====o====o====o
- Rightshift+Esc          [AHK] display current mouse cursor coordinates in a tool tip
- Lwin & Home             [AHK] generate a list of hotkeys in working directory.
- Lwin & End              [AHK] open last generated list of hotstrings and hotkeys
- <HS>  hl~~              [AHK] open last generated list of hotstrings and hotkeys
- Shift+Ctrl+Win+R        [AHK] quit ahk script
- Ctrl+Win+R             [AHK] reload all ahk scripts with ~^#r reload hotkey
- Win+Enter               [AHK] reload all ahk scripts with ~^#r reload hotkey
- Ctrl+Win+B             [AHK] run test script
- End & L                 [AHK] toggle to enable win+L to lock screen
- <HS>  color_code>       [D] 6-digit RGB color values
- <HS>  cc>               [D] 6-digit RGB color values
- <HS>  test_ahk>         [D] code for testing ahk code
- Ctrl+Win+Alt+P          [D] create python programming hotstring
- Ctrl+Win+Alt+R          [D] create R programming hotstring
- Ctrl+Win+Alt+W          [D] create windows hotstring
- <HS>  3k>               [D] example of 3 button hotkey using &
- <HS>  3key>             [D] example of 3 button hotkey using &
- Home & F8               [D] open hotstring_creation_log.csv
- <HS>  hs~~              [D] open hotstring_creation_log.csv
- <HS>  sck>              [D] sc key legend
- Rightalt+Space          [FE] activate current folder pane
- Shift+Alt+Right         [FE] activate current folder pane
- Rightshift+Space        [FE] activate current folder pane
- Leftalt+Space           [FE] activate current folder pane
- Shift+Alt+Space         [FE] activate navigation pane
- Ctrl+Sc034              [FE] activate navigation pane
- Shift+Alt+Left          [FE] activate navigation pane
- Ctrl+Q                  [FE] close file exploer window
- Alt+P                   [FE] close file exploer window
+==o====o====o====o====o== WIN_FILE_EXPLORER ==o====o====o====o====o====o====
+ Alt+P                   [FE] close file explorer window
  Alt+N                   [FE] forward folder
  Ctrl+I                  [FE] groups: group by date
  Ctrl+O                  [FE] groups: group by file type
  Ctrl+Sc035              [FE] groups: group folding: Collapse all
  Alt+Sc035               [FE] groups: group folding: Expand all
  Ctrl+U                  [FE] groups: toggle groupby name/remove grouping
- Del & V                 [FE] hide/unhide invisible files
  Ctrl+Alt+C              [FE] Open Command Prompt Here
+ Rightshift+Space        [FE] panes: move focus to current folder pane
+ Leftshift+Space         [FE] panes: move focus to navigation pane
  Alt+Z                   [FE] panes: toggle navigation pane
  Ctrl+P                  [FE] panes: toggle preview plane
  Alt+B                   [FE] prev folder
  Alt+R                   [FE] rename file
  Ctrl+S                  [FE] select files by regex
- Leftctrl+K              [FE] sort by date modified
- Leftctrl+J              [FE] sort by name
- Rightctrl+K             [FE] sort by size
- Rightctrl+J             [FE] sort by type
  Shift+Alt+C            [FE] store file path(s) of selected file(s) in clipboard
- Alt+U                   [FE] up one directory level
  Ctrl+Alt+K              [FE] up one directory level
- Alt+Sc027               [FE] view: detailed view with resized columns
- Alt+S                   [FS] Scan document
- Win+Del                 [MAW] Always on top: Off
- Win+Ins                 [MAW] Always on top: ON
- Ctrl+Win+W              [MAW] close active window
- Ctrl+Win+Q              [MAW] close all instances of the active program
- Rightshift+Enter        [MAW] full screen {F11}
- Alt+Win+Sc027           [MAW] insert emoji popup
- Win+Space              [MAW] maximize window
- Printscreen & Sc034     [MAW] maximize window
- Printscreen & Up        [MAW] maximize window
- Win+Up                  [MAW] maximize window
- Win+Sc027               [MAW] minimize window
- Shift+Win+K             [MAW] minimize window
- Printscreen & Sc027     [MAW] minimize window
- Shift+Win+Space         [MAW] move window btn monitors
- Printscreen & Space     [MAW] move window btn monitors
- Printscreen & Pgdn      [MAW] MoveWindowToOtherDesktop
- Printscreen & Left      [MAW] resize window to left half of screen
- Printscreen & Right     [MAW] resize window to right half of screen
- Win+Capslock            [MAW] rotate through instances of active program starting from newest
- Shift+Win+Capslock      [MAW] rotate through instances of active program starting from oldest
- Ctrl+Win+Sc027          [MAW] show desktop
- Ctrl+Win+0              [MS] copy selected text and overwrite mem slot 0
- Ctrl+Win+1              [MS] copy selected text and overwrite mem slot 1
- Ctrl+Win+2              [MS] copy selected text and overwrite mem slot 2
- Ctrl+Win+3              [MS] copy selected text and overwrite mem slot 3
- Ctrl+Win+4              [MS] copy selected text and overwrite mem slot 4
- Ctrl+Win+5              [MS] copy selected text and overwrite mem slot 5
- Ctrl+Win+6              [MS] copy selected text and overwrite mem slot 6
- Ctrl+Win+7              [MS] copy selected text and overwrite mem slot 7
- Ctrl+Win+8              [MS] copy selected text and overwrite mem slot 8
- Ctrl+Win+9              [MS] copy selected text and overwrite mem slot 9
+ Alt+U                   [FE] up one directory level
+ Alt+Sc027               [FE] view: detailed file info with resized columns
+ Leftctrl+K              [FE] view: sort by date modified
+ Leftctrl+J              [FE] view: sort by name
+ Rightctrl+K             [FE] view: sort by size
+ Rightctrl+J             [FE] view: sort by type
+ Ctrl+H                  [FE] view: toggle hide/unhide invisible files
+
+==o====o====o====o====o====o== WIN_GOTO ==o====o====o====o====o====o====o===
+ Shift+Win+C             <A> Calculator
+ Win+S                   <A> Chrome
+ Win+T                   <A> Command Window
+ Win+E                   <A> Excel
+ Win+B                   <A> File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
+ Shift+Win+M             <A> Mail
+ Win+D                   <A> pdf-xchange
+ Win+Q                   <A> Powerpoint
+ Printscreen & N         <A> VS Code
+ Win+A                   <A> VS Code
+ Win+W                   <A> Word
+ Printscreen & F         <EF> _functions.ahk
+ Ctrl+Win+G              <EF> test.ahk
+ Printscreen & G         <EF> win_goto.ahk
+ Printscreen & R         <EF> win_sys.ahk
+ Printscreen & T         <EF> win_text_navigation.ahk
+ Rightshift+C            <F> %Homedrive% (C:)
+ Rightshift+U            <F> %UserProfile%
+ <HS>  wg>               <F> AHK folder
+ Rightshift+Sc029        <F> AHK folder
+ Rightshift+1            <F> AHK golems folder
+ Rightshift+2            <F> AHK libs folder
+ Rightshift+O            <F> C:\Program Files
+ Rightalt+O              <F> C:\Program Files(x86)
+ Rightshift+D            <F> Documents
+ Rightshift+J            <F> Downloads
+ Rightshift+M            <F> mem_cache
+ Rightshift+P            <F> Pictures
+ Rightshift+G            <F> Pictures
+ Rightshift+R            <F> Recycle bin (doesn't work for save as diag)
+ Rightshift+T            <F> This PC / My Computer
+ Win+F3                  [ASW] (+ Alt) Saves ID of window for subsequent activation w/ #f
+ Win+F4                  [ASW] (+ Alt) Saves ID of window for subsequent activation w/ #g
+ Win+F1                  [ASW] (+ Alt) Saves ID of window for subsequent activation w/ LCtrl + space
+ Win+F2                  [ASW] (+ Alt) Saves ID of window for subsequent activation w/ RCtrl + space
+ Leftctrl+Space          [ASW] activates Window ID saved w/ #F1
+ Rightctrl+Space         [ASW] activates Window ID saved w/ #F2
+ Win+F                   [ASW] activates Window ID saved w/ #F3
+ Win+G                   [ASW] activates Window ID saved w/ #F4
+ Win+N                   [JL] opens file jump list
+ Win+M                   [JL] opens folder jump list
+ Win+Sc034               [JL] opens sys command jump list
+ Win+Sc033               [JL] opens webpage jump list
+
+==o====o====o====o====o====o== WIN_MEM_SYSTEM ==o====o====o====o====o====o==
+ Shift+Win+0            [MS] copy selected text and save to mem slot 0
+ Shift+Win+1            [MS] copy selected text and save to mem slot 1
+ Shift+Win+2            [MS] copy selected text and save to mem slot 2
+ Shift+Win+3            [MS] copy selected text and save to mem slot 3
+ Shift+Win+4            [MS] copy selected text and save to mem slot 4
+ Shift+Win+5            [MS] copy selected text and save to mem slot 5
+ Shift+Win+6            [MS] copy selected text and save to mem slot 6
+ Shift+Win+7            [MS] copy selected text and save to mem slot 7
+ Shift+Win+8            [MS] copy selected text and save to mem slot 8
+ Shift+Win+9            [MS] copy selected text and save to mem slot 9
  Alt+Win+0               [MS] copy selection and add to bottom of mem slot 0
  Alt+Win+1               [MS] copy selection and add to bottom of mem slot 1
  Alt+Win+2               [MS] copy selection and add to bottom of mem slot 2
@@ -193,180 +205,149 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Alt+Win+7               [MS] copy selection and add to bottom of mem slot 7
  Alt+Win+8               [MS] copy selection and add to bottom of mem slot 8
  Alt+Win+9               [MS] copy selection and add to bottom of mem slot 9
- Del & 0                 [MS] cut selected text and overwrite mem slot 0
- Del & 1                 [MS] cut selected text and overwrite mem slot 1
- Del & 2                 [MS] cut selected text and overwrite mem slot 2
- Del & 3                 [MS] cut selected text and overwrite mem slot 3
- Del & 4                 [MS] cut selected text and overwrite mem slot 4
- Del & 5                 [MS] cut selected text and overwrite mem slot 5
- Del & 6                 [MS] cut selected text and overwrite mem slot 6
- Del & 7                 [MS] cut selected text and overwrite mem slot 7
- Del & 8                 [MS] cut selected text and overwrite mem slot 8
- Del & 9                 [MS] cut selected text and overwrite mem slot 9
- <HS>  m>                [MS] paste contents of mem slot # by typing "m>" followed by the slot number
- Shift+Win+0             [MS] paste contents of mem slot 0
- Shift+Win+1             [MS] paste contents of mem slot 1
- Shift+Win+2             [MS] paste contents of mem slot 2
- Shift+Win+3             [MS] paste contents of mem slot 3
- Shift+Win+4             [MS] paste contents of mem slot 4
- Shift+Win+5             [MS] paste contents of mem slot 5
- Shift+Win+6             [MS] paste contents of mem slot 6
- Shift+Win+7             [MS] paste contents of mem slot 7
- Shift+Win+8             [MS] paste contents of mem slot 8
- Shift+Win+9             [MS] paste contents of mem slot 9
- Win+Sc035               [S] search Google for selected text
- Printscreen & Sc035     [S] search Google for selected text
- Alt+Win+Sc035           [S] search Wikipedia for selected text
- End & F9                [SC] Add Remove Programs
- End & C                 [SC] alarm clock
- End & F4                [SC] close all open programs
- Ctrl+Win+Alt+Del        [SC] enter hybernate with the '\' key
- Shift+Ctrl+Alt+Del      [SC] enter sleep with the '(single quote) key
+ Win+Alt+Lbutton         [MS] paste contents of mem slot # entered at prompt
+ Ctrl+Win+0              [MS] paste contents of mem slot 0
+ Printscreen & 0         [MS] paste contents of mem slot 0, then del # characters the same length of just pasted text
+ Ctrl+Win+Lbutton        [MS] paste contents of mem slot 1
+ Ctrl+Win+1              [MS] paste contents of mem slot 1
+ Printscreen & 1         [MS] paste contents of mem slot 1, then del # characters the same length of just pasted text
+ Ctrl+Win+2              [MS] paste contents of mem slot 2
+ Printscreen & 2         [MS] paste contents of mem slot 2, then del # characters the same length of just pasted text
+ Ctrl+Win+3              [MS] paste contents of mem slot 3
+ Printscreen & 3         [MS] paste contents of mem slot 3, then del # characters the same length of just pasted text
+ Ctrl+Win+4              [MS] paste contents of mem slot 4
+ Printscreen & 4         [MS] paste contents of mem slot 4, then del # characters the same length of just pasted text
+ Ctrl+Win+5              [MS] paste contents of mem slot 5
+ Printscreen & 5         [MS] paste contents of mem slot 5, then del # characters the same length of just pasted text
+ Ctrl+Win+6              [MS] paste contents of mem slot 6
+ Printscreen & 6         [MS] paste contents of mem slot 6, then del # characters the same length of just pasted text
+ Ctrl+Win+7              [MS] paste contents of mem slot 7
+ Printscreen & 7         [MS] paste contents of mem slot 7, then del # characters the same length of just pasted text
+ Ctrl+Win+8              [MS] paste contents of mem slot 8
+ Printscreen & 8         [MS] paste contents of mem slot 8, then del # characters the same length of just pasted text
+ Ctrl+Win+9              [MS] paste contents of mem slot 9
+ Printscreen & 9         [MS] paste contents of mem slot 9, then del # characters the same length of just pasted text
+
+==o====o====o====o====o====o== WIN_SYS ==o====o====o====o====o====o====o====
+ <HS>  cc>               6-digit RGB color values
+ <HS>  color_code>       6-digit RGB color values
+ <HS>  g?~~              [AHK] generate a list of hotkeys in working directory.
+ <HS>  hs~~              [AHK] open hotstring_creation_log.csv
+ Ctrl+Win+Alt+R          [AHK] quit WinGolems
+ Ctrl+Win+R             [AHK] reload all ahk scripts with ~^#r reload hotkeyp
+ Win+Del                 [MAW] Always on top: Off
+ Win+Ins                 [MAW] Always on top: ON
+ Ctrl+Win+W              [MAW] close active window
+ Ctrl+Win+Q              [MAW] close all instances of the active program
+ Rightshift+Enter        [MAW] full screen {F11}
+ Alt+Win+Sc027           [MAW] insert emoji popup
+ Win+Up                  [MAW] maximize window
+ Printscreen & Up        [MAW] maximize window
+ Win+Space               [MAW] maximize window
+ Win+Sc027               [MAW] minimize window
+ Printscreen & Sc027     [MAW] minimize window
+ Printscreen & Space     [MAW] move window btn monitors
+ Shift+Win+Space         [MAW] move window btn monitors
+ Printscreen & Left      [MAW] resize window to left half of screen
+ Printscreen & Right     [MAW] resize window to right half of screen
+ Alt+Capslock            [MAW] rotate through active program instances starting from newest
+ Win+Capslock            [MAW] rotate through active program instances starting from oldest
+ Ctrl+Win+Sc027          [MAW] show desktop
+ Ctrl+Win+Alt+Del        [SC] enter hybernate mode
+ Shift+Ctrl+Alt+Del      [SC] enter sleep mode
  Shift+Ctrl+Alt+Esc      [SC] restart the computer
  Ctrl+Win+Alt+Esc        [SC] shutdown + power down
  Ctrl+Win+Alt+Left       [SC] switch desktop environments (Left)
  Ctrl+Win+Alt+Right      [SC] switch desktop environments (Right)
- Shift+Ctrl+Win+F12      [SC] turn off google cloud sync
- Ctrl+Win+Alt+F12        [SC] turn on google cloud sync
- End & P                 [SS] activate monitor
- End & F10               [SS] bluetooth settings
- End & F7                [SS] display setting
- End & A                 [SS] notification window
- End & X                 [SS] power shell
- End & K                 [SS] quick connect window
- End & R                 [SS] run program
- End & F3                [SS] sound settings
- End & I                 [SS] windows settings
+ Shift+Ctrl+Win+F12      [SC] turn off cloud sync
+ Ctrl+Win+Alt+F12        [SC] turn on cloud sync
+ Printscreen & F3        create python programming hotstring
+ Printscreen & F2        create R programming hotstring
+ Printscreen & F1        create windows hotstring
+ <HS>  3k>               example of 3 button hotkey using &
+ <HS>  3key>             example of 3 button hotkey using &
+ <HS>  sck>              sc key legend
 
-==o====o====o====o====o== WINDOWS_TEXT_NAVIGATION ==o====o====o====o====o===
+==o====o====o====o====o== WIN_TEXT_NAVIGATION ==o====o====o====o====o====o==
  <HS>  date*             [C] current date
- Printscreen & 1         [FC] Add lvl 1 Border (default)
- Printscreen & 1         [FC] Add lvl 1 Border .ipynb files
- Printscreen & 1         [FC] Add lvl 1 Border .notes files
- Printscreen & 2         [FC] Add lvl 2 Border (default)
- Printscreen & 2         [FC] Add lvl 2 Border .ipynb files
- Printscreen & 2         [FC] Add lvl 2 Border .notes files
- Printscreen & 3         [FC] Add lvl 3 Border (default)
- Printscreen & 3         [FC] Add lvl 3 Border .ipynb files
- Printscreen & 3         [FC] Add lvl 3 Border .notes files
- Printscreen & Tab       [FC] Add Space Before Comment (default)
- Printscreen & Tab       [FC] Add Space Before Comment .ipynb files
- Printscreen & Capslock  [FC] Add Space Before Comment .ipynb files
- Shift+Ctrl+Q           [FC] comment line while preserving leading whitespace
- Del & C                 [FC] convert selected CamelCase text to snake_case
- Ins & C                 [FC] convert selected snake_case or space delimited text to CamelCase
- Del & Ins               [FC] format code by adding spaces between math operators, before commas, ... (selected text)
- Leftshift+Ctrl+Space    [FC] Send {Space 4}
+ Win+Lbutton            [C] double click, trim(clipboard), paste
+ Ctrl+Alt+Lbutton       [C] open start menu (alt: Ctrl+Esc)
  *Win+I                  [MF] 1 Left click
- *Win+D                  [MF] 1 Left click
- Printscreen & I         [MF] 1 Left click
- Win+F                   [MF] 2 Left clicks
- Ctrl+Win+F              [MF] 3 Left clicks
- Win+O                   [MF] mouse middle click
- Printscreen & O         [MF] mouse middle click
- Win+Sc028               [MF] mouse Right click
- Printscreen & Sc028     [MF] mouse Right click
- Alt+Win+J               [MF] move mouse cursor to bottom edge
- Printscreen & J         [MF] move mouse cursor to bottom edge
- Alt+Win+H               [MF] move mouse cursor to Left edge
- Printscreen & H         [MF] move mouse cursor to Left edge
- Printscreen & Rctrl     [MF] move mouse cursor to middle
- Lalt & Ralt             [MF] move mouse cursor to middle
- Printscreen & L         [MF] move mouse cursor to Right edge
- Alt+Win+L               [MF] move mouse cursor to Right edge
- Win+U                   [MF] move mouse cursor to top edge
- Alt+Win+K               [MF] move mouse cursor to top edge
- Printscreen & J         [MF] scroll wheel down
+ Ctrl+Win+F              [MF] 3 Left clicks (select line)
+ Shift+Win+J             [MF] move mouse cursor to bottom edge
+ Shift+Win+H             [MF] move mouse cursor to Left edge
+ ~Lwin & Rshift          [MF] move mouse cursor to middle
+ Shift+Win+L             [MF] move mouse cursor to Right edge
+ Shift+Win+K             [MF] move mouse cursor to top edge
  Win+J                   [MF] scroll wheel down
  Win+K                   [MF] scroll wheel up
- Printscreen & K         [MF] scroll wheel up
  Ctrl+Sc027              [NKR] appkey press
- Alt+Capslock            [NKR] Backspace
- Shift+Win+E             [NKR] Ctrl + End
- Win+E                   [NKR] Ctrl + Home
- Del & Backspace         [NKR] del key
- Capslock                [NKR] Delete
+ Shift+Capslock          [NKR] Backspace
  Alt+J                  [NKR] Down
  Alt+Ctrl+Right          [NKR] End
- Printscreen & L         [NKR] End
- Ctrl+Alt+L              [NKR] End
  Win+L                   [NKR] End
- Alt+Leftspace          [NKR] esc key
+ Ctrl+Alt+L              [NKR] End
  Alt+Sc027              [NKR] esc key
+ Win+H                   [NKR] Home
  Ctrl+Alt+H              [NKR] Home
  Alt+Ctrl+Left           [NKR] Home
- Printscreen & H         [NKR] Home
- Win+H                   [NKR] Home
- Ins & Enter             [NKR] insert key
  Alt+H                  [NKR] Left
- Del                     [NKR] modifier key no action otherwise
- End                     [NKR] modifier key no action otherwise
- Home                    [NKR] modifier key no action otherwise
+ Lwin                    [NKR] modifier key (use ctrl+esc or windows key + left mouse click to access start menu)
+ Rwin                    [NKR] modifier key (use ctrl+esc or windows key + left mouse click to access start menu)
  Printscreen             [NKR] modifier key no action otherwise
- Insert                  [NKR] modifier key no action otherwise
  Alt+L                  [NKR] Right
- Ctrl+M                  [NKR] Right-handed copy (ctrl-c)
- Shift+Capslock          [NKR] Toggle capslock
+ Ctrl+Capslock           [NKR] Toggle capslock
  Alt+K                  [NKR] Up
- Leftalt+Space           [T] move <= tab
- Rightalt+Space          [T] move <= tab
- Alt+B                   [T] move => tab
+ Rightalt+Space          [T] move to left tab
+ Leftalt+Space           [T] move to left tab
+ Alt+B                   [T] move to right tab
+ Ctrl+Alt+Sc028          [TB] close curly braces
  Shift+Alt+Sc028         [TB] enclose selected text with " "
  Alt+4                   [TB] enclose selected text with  
  Alt+5                   [TB] enclose selected text with % %
  Ctrl+Sc028              [TB] enclose selected text with ' '
- Alt+9                   [TB] enclose selected text with ( )
  Shift+Alt+9             [TB] enclose selected text with ( )
+ Alt+9                   [TB] enclose selected text with ( )
+ Ctrl+Alt+Sc027          [TB] open curly braces
  Shift+Ctrl+U            [TM] case: capitalize selected text
- Ctrl+Alt+Shift+U        [TM] case: convert selected text
  Shift+Alt+U             [TM] case: convert selected text to lower case
- Ctrl+Alt+U              [TM] case: every FirstLetterCapitalized
- Win+Ctrl+X              [TM] cut and trim whitespace around selected text
+ Ctrl+Alt+Shift+U        [TM] case: Every First Letter Capitalized
+ Ctrl+Alt+U              [TM] case: First letter capitalized
+ Win+C                   [TM] copy and trim whitespace around selected text
  Win+X                   [TM] cut and trim whitespace around selected text
- Win+Ctrl+C              [TM] cut and trim whitespace around selected text
- Win+C                   [TM] cut and trim whitespace around selected text
- Ctrl+Capslock           [TM] edit: Delete line
- Alt+Backspace           [TM] edit: Delete line with backspace from end of line
- Del & S                 [TM] remove all spaces from selected text
+ Alt+Backspace           [TM] Delete line with backspace from end of line
+ Ctrl+Win+Backspace      [TM] Delete selected text and replace with blank spaces
+ Alt+Win+Space           [TM] remove all spaces from selected text
  Alt+Win+Enter           [TM] remove empty lines from selected text
- Ctrl+Alt+V              [TM] remove time index from selected text
- Ins & Sc033             [TM] replace " " with "," in selected text
- Ctrl+Win+Sc033          [TM] replace " " with "," in selected text
- Win+Alt+Sc028           [TM] replace """ with " " in selected text
- Alt+Win+Space           [TM] replace "+" or "," with " " in selected text
- Win+Alt+Sc033           [TM] replace "+" with "," in selected text
- End & Sc033             [TM] replace "+" with "," in selected text
- Ctrl+Win+Sc028          [TM] replace "," with "", "" in selected text
- Win+Alt+Sc034           [TM] replace "." with " " in selected text
- Del & Space             [TM] replace multiple consecutive spaces w/ one in selected text
+ Ctrl+Win+Del            [TM] replace "+" or "," with " " in selected text
+ Win+Alt+Sc028           [TM] replace double quotation marks with spaces in selected text
+ Ctrl+Win+Space          [TM] replace multiple consecutive spaces w/ one in selected text
  Alt+V                   [TM] replace multiple paragraph breaks in selected text
- Shift+Alt+V             [TM] replace multiple paragraph breaks, reselect text
+ Ctrl+Win+Sc028          [TM] surround each element of comma separated list with quotation marks
+ Shift+Ctrl+Alt+H        [TS] extend selection Left one space
  Shift+Ctrl+H            [TS] extend selection Left one word
- Shift+Ctrl+G            [TS] extend selection Left one word
- Shift+Ctrl+Sc027        [TS] extend selection Right one space
+ Ctrl+Shift+Alt+L        [TS] extend selection Right one space
  Shift+Ctrl+L            [TS] extend selection Right one word
  Shift+Alt+H             [TS] jump to next word = simulate ctrl+Left
  Shift+Alt+L             [TS] jump to next word = simulate ctrl+Right
- Ctrl+Win+K              [TS] select all above
  Shift+Ctrl+Win+H        [TS] select all above
+ Ctrl+Win+K              [TS] select all above
+ Shift+Ctrl+Win+L        [TS] select all below
  Ctrl+Win+J              [TS] select all below
- Shift+Ctrl+Win+L        [TS] select all below v
  Shift+Alt+F             [TS] select current line from begining of line
  Ctrl+Alt+F              [TS] select current line from end of line
- Shift+Ctrl+Alt+H        [TS] select to beg of current line
- Ctrl+Win+Left           [TS] select to beginning of line
  Ctrl+Win+H              [TS] select to beginning of line
+ Ctrl+Win+Left           [TS] select to beginning of line
  Ctrl+Win+L              [TS] select to end of line
  Ctrl+Win+Right          [TS] select to end of line
- Ctrl+Shift+Alt+L        [TS] select to end of line
- Shift+Ctrl+K            [TS] select to line above
  Shift+Ctrl+Alt+K        [TS] select to line above
- Shift+Ctrl+Alt+J        [TS] select to next line
+ Shift+Ctrl+K            [TS] select to line above
  Shift+Ctrl+J            [TS] select to next line
- Alt+F                   [TS] select word at cursor
- Leftshift+Ctrl+Backspace[FC] Send {BackSpace 4}
+ Shift+Ctrl+Alt+J        [TS] select to next line
+ Alt+F                   [TS] select word at text cursor
 
----------------------------------- MASTER ----------------------------------
+-------------------------------- WINGOLEMS ---------------------------------
 --o----o----o----o----o----o-- PYTHON --o----o----o----o----o----o----o----o
 --o----o----o----o----o----o----o-- R --o----o----o----o----o----o----o----o
---o----o----o----o----o----o-- RETURN --o----o----o----o----o----o----o----o
+--o----o----o----o----o----o-- RETURN_AHK --o----o----o----o----o----o----o-
+--o----o----o----o----o----o----o-- TEST --o----o----o----o----o----o----o--

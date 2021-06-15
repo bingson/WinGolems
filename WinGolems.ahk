@@ -79,7 +79,6 @@
  #Include *i test.ahk   
  #Include *i R.ahk                               
  #Include *i Python.ahk                          
- #Include *i TapHoldManager.ahk
  
  #Include %A_ScriptDir%\..\Google Drive\secure\
  ; #Include *i bing.ahk
@@ -90,8 +89,8 @@
 
 /* #INCLUDE MECHANICS ********************************************************** 
  Start.ahk:
-     #include Return.ahk
-     MsgBox, this message will not be shown
+     include Return.ahk
+     MsgBox, this message will not be shown 
  
  Return.ahk: 
      Return <- After the return line, no more code will execute unless it's 
