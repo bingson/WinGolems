@@ -1,9 +1,9 @@
 # WinGolems
 
 A collection of Windows 10 automation and enhancement scripts (aka. golems) written in Autohotkey. 
-
-<p align="center"><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" width="2000" /></p>
-
+<center>
+<p><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" width="2000" /></p>
+</center>
 <ol>
 <li>
 
