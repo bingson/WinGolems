@@ -84,7 +84,7 @@
         Winset, Alwaysontop, ON , A
         ShowPopup(Process_Name "`nalways on top: ON", bgreen,"250","95", "-800",,,lg)
     } else {
-        Winset, Alwaysontop, OFF , A                                            ; A stands for active window
+        Winset, Alwaysontop, OFF , A                                            
         ShowPopup(Process_Name "`nalways on top: OFF", red,"250","95","-800",,,lr)
     }
     return
@@ -119,7 +119,7 @@
 
  CloudSync(state="ON") {
     ; Turn ON/OFF google cloud sync
-    global med, bgreen, lb, lr 
+    global med, bgreen, lb, lr, lg, lp, purple 
     if (state = "ON") {
         try {
             ActivateApp("sync_path")
@@ -133,7 +133,7 @@
             WinClose, ahk_exe googledrivesync.exe
             ShowPopup("closing cloud sync", "FF0000", "300", "70", "-2000",,,lr)
         } else {
-            ShowPopup("cloud sync not running", , "300", "70", "-2000",,,lr)
+            ShowPopup("cloud sync not running",purple , "300", "70", "-2000",,,lp)
         }
         return
     }
@@ -201,7 +201,6 @@
     Return
  }
 
- 
  TglCursorFollowWin() {
     global config_path, red, bgreen, lr, lg     
     IniRead,  state,    %config_path%, %A_ComputerName%, cursor_follow, 0
@@ -217,13 +216,13 @@
     global config_path
     IniRead, state, %config_path%, %A_ComputerName%, cursor_follow, 0
     if state
-        JumpMiddle(x,y)                                                        ; x,y = 0,0 = center of app window
+        JumpMiddle(x,y)                                                         ; x,y = 0,0 = center of app window
     return
  }
 
 
-; BOUND FUNCTIONS ______________________________________________________________
- ; used for Jump Lists and TapHoldManager class instantiations
+; BOUND FUNCTIONS FOR JUMP LISTS________________________________________________
+ 
  BluetoothSettings       := Func("BluetoothSettings")
  AddRemovePrograms       := Func("AddRemovePrograms")
  AlarmClock              := Func("AlarmClock")
@@ -248,6 +247,8 @@
  ExitAHK                 := Func("ExitAHK")
  GenerateHotkeyList      := Func("GenerateHotkeyList")
  TglCursorFollowWin      := Func("TglCursorFollowWin")
+ AHKBeginnerTutorial     := Func("loadURL").Bind("https://www.autohotkey.com/docs/Tutorial.htm")
+ AHKconfig               := Func("EditFile").Bind("""" config_path """")
  EditHotkeyList          := Func("EditFile").Bind("HotKey_List.txt", "editor_path")
  CloudSyncON             := Func("CloudSync").Bind("ON")
  CloudSyncOFF            := Func("CloudSync").Bind("OFF")
@@ -323,6 +324,7 @@
  ExitAHK() {
     ExitApp
  }
+ 
  WinMaximize(isHold, taps, state) {
     if (taps > 1)
         WinMaximize,A
@@ -360,7 +362,7 @@
 
 ; INPUT BOX COMMANDS ___________________________________________________________
 
- RunInputCommand(func="", dest_dict="", title_prompt="", name_dict = "", color_code ="F6F7F1") {
+ RunInputCommand(func="", dest_dict="", title_prompt="", name_dict = "", w_color ="F6F7F1", t_color ="000000") {
     ; opens an input box offering choices based on dest_dict
     ; dictionary, name_dict(optional) will replace labels Programmatically generated
     ; from dest_dict.
@@ -372,7 +374,7 @@
     global UserInput, med
     sleep ,med                                                                  ; short wait to delete hotstring
     TOC := (name_dict) ? BuildTOC(,name_dict) : BuildTOC(dest_dict)
-    ShowInputBox(TOC,title_prompt,color_code)
+    ShowInputBox(TOC,title_prompt,w_color, t_color)
     if (func and dest_dict[UserInput]) {
         %func%(dest_dict[UserInput])
     } else if (!func and dest_dict[UserInput]) {
@@ -382,22 +384,22 @@
             %command%.call()
         }
     } else if UserInput                                                         
-        RunInputCommand(func,dest_dict,title_prompt,name_dict, color_code)
+        RunInputCommand(func,dest_dict,title_prompt,name_dict, w_color, t_color)
     else
     return
  }
 
- ShowInputBox(prompt,title, color_code) {
+ ShowInputBox(prompt,title, w_color ="F6F7F1", t_color = "FFFFFF" ) {
     global UserInput := ""
     Gui, New, ,%title%
     Gui, font,s13 , calibri
-    Gui, Add, text, xp yp+10, % prompt "`n"
+    Gui, Add, text, xp yp+10 c%t_color%, % prompt "`n"
     Gui, Add, Edit, w120 vUserInput
     Gui, Add, Button, W60 X+10 Default gButtonOK, OK
     Gui, Add, Button, W60 X+5 gButtonCancel, Cancel
     Gui, font,s8 , calibri
     Gui, add, text, xs yp+30, case insensitive
-    Gui, Color, %color_code%
+    Gui, Color, %w_color%
     Gui +LastFound +OwnDialogs +AlwaysOnTop
                                                                                 ; https://www.autohotkey.com/boards/viewtopic.php?t=31716
     CurrentMonitorIndex := GetCurrentMonitorIndex()                             ; get current monitor index
@@ -558,14 +560,16 @@
 
  WriteToCache(key, del_toggle = False, mem_path = "", input = "") {
     ; creates a txt file in \mem_cache from selected text
-    if (input = "")
+    global lb
+    if !input
         input := clip()                                                         ; captures selected text if no input given
 
-    FileRead, output, %A_ScriptDir%\mem_cache\%mem_path%%key%.txt
-    if (output = input) or (input = "") {
+    if (trim(input) = "") {
+                                
     } else {
         FileDelete, %A_ScriptDir%\mem_cache\%mem_path%%key%.txt
         FileAppend, %input%, %A_ScriptDir%\mem_cache\%mem_path%%key%.txt
+        ShowPopup("saved to `n" key,,"200",,,,,lb)
     }
     if (del_toggle = TRUE)
         send {del}
@@ -728,7 +732,7 @@
     popx := CoordXCenterScreen(GUI_Width, CurrentMonitorIndex) - (wn/2)         ; Calculate where the GUI should be positioned
     popy := CoordYCenterScreen(GUI_Height, CurrentMonitorIndex) * 2 - (hn/2)
     Progress, b C11 X%popx% Y%popy% ZH0 ZX10 zy10 W%wn% H%hn% FM%fmn% WM%wmn% CT%ctn% CW%cwn%,, %msg% ,,Gaduigi
-    SetTimer, ClosePopup, 1000
+    SetTimer, ClosePopup, %ms%
  }
 
  ClosePopup() {
@@ -1134,7 +1138,7 @@
     return
  }
 
- JumpLeftEdge(offset = "20") {                                                               ; move mouse pointer with hotkeys
+ JumpLeftEdge(offset = "0") {                                                               ; move mouse pointer with hotkeys
     ; move mouse cursor to the left edge of active window
     global short
     Sleep, short*0.5
@@ -1145,7 +1149,7 @@
     return
  }
 
- JumpRightEdge(offset = "20") {
+ JumpRightEdge(offset = "0") {
     ; move mouse cursor to the right edge of active window
     global short
     Sleep, short*0.5
@@ -1156,7 +1160,7 @@
     return
  }
 
- JumpTopEdge(offset = "20") {
+ JumpTopEdge(offset = "0") {
     ; move mouse cursor to the top edge of active window
     global short
     Sleep, short*0.5
@@ -1167,7 +1171,7 @@
     return
  }
 
- JumpBottomEdge(offset = "20") {
+ JumpBottomEdge(offset = "0") {
     ; move mouse cursor to the bottom edge of active window
     global short
     Sleep, short*0.5
@@ -1612,5 +1616,11 @@
     var := RegExReplace(var, "S) +", A_Space)
     var := RegExReplace(var, A_Space, "|")
     clip(var, True)
+    return
+ }
+
+ moveWinBtnMonitors() {
+    Send {lwin down}{shift down}{Left}{shift up}{lwin up}
+    CursorFollowWin()
     return
  }

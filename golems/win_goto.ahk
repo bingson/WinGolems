@@ -3,7 +3,7 @@
 
  JL_AutoExecution:
 
-  File_DICT :=    { "f"    : "golems\_functions.ahk"                            ; options for edit file jump list
+  File_DICT    := { "f"    : "golems\_functions.ahk"                            ; options for edit file jump list
                   , "t"    : "golems\test.ahk"  
                   , "g"    : "golems\win_goto.ahk"
                   , "p"    : "golems\Python.ahk"
@@ -19,7 +19,7 @@
                   ; , "aq" : UProfile "\Google Drive\eg_folder\example.doc"     ; example of file path with spaces in directory name and MS office .doc file
                                                                                 ; syntax difference with different file types is quirk of AHK
   
-  Folder_DICT :=  { "m"   : A_ScriptDir                                         ; options for open folder jump list
+  Folder_DICT  := { "m"   : A_ScriptDir                                         ; options for open folder jump list
                   , "g"   : A_ScriptDir "\golems"
                   , "c"   : hdrive
                   , "p"   : A_ProgramFiles
@@ -32,12 +32,13 @@
                   , "mem" : A_ScriptDir "\mem_cache"
                   , "b"   : "buffer_path" }
  
-  Command_DICT := { "b"    : "BluetoothSettings"                                ; options for run system command jump list
+  Sys_DICT     := { "b"    : "BluetoothSettings"                                ; options for run system command jump list
                   , "d"    : "DisplaySettings"
                   , "v"    : "SoundSettings"
                   , "cf"   : "TglCursorFollowWin"
                   , "s"    : "StartMenu"
                   , "n"    : "NotificationWindow"
+                  , "tut"  : "AHKBeginnerTutorial"
                   , "r"    : "RunProgWindow"
                   , "x"    : "StartContextMenu"
                   , "a"    : "AlarmClock"
@@ -50,6 +51,7 @@
                   , "hs?"  : "OpenHotStringLog"
                   , "rw"   : "ReloadAHK"
                   , "qw"   : "ExitAHK"
+                  , "ac"   : "AHKconfig"
                   , "kh"   : "KeyHistory"
                   , "ws"   : "WindowSpy"
                   , "p"    : "PresentationDisplayMode"
@@ -57,7 +59,7 @@
                   , "ss"   : "CloudSyncON"
                   , "qs"   : "CloudSyncOFF" }
 
-  Command_TOC  := { "b"    : "cfg`tBluetooth"                                   ; table of contents for run system command jump list
+  Sys_TOC      := { "b"    : "cfg`tBluetooth"                                   ; table of contents for run system command jump list
                   , "d"    : "cfg`tDisplay"                                     ; sorted by values. With a break between each user entered group prefix
                   , "v"    : "cfg`tSound"
                   , "n"    : "cfg`tNotifications"
@@ -67,10 +69,13 @@
                   , "Lon"  : "tgl`tTurn ON:`tWin + L Locks Computer"
                   , "Loff" : "tgl`tTurn OFF:`tWin + L Locks Computer"
                   , "cf"   : "tgl`tToggle ON/OFF: cursor follows active window"
-                  , "g?~~" : "ahk`thelp: Generate a new shortcuts list from all running AHK scripts"
-                  , "hs"   : "ahk`thelp: Open log of user created hotstrings"
-                  , "?"    : "ahk`thelp: Open last generated list of shortcuts"
+                  , "g?~~" : "ahk`tGenerate a new shortcuts list from all running AHK scripts"
+                  , "hs"   : "ahk`tOpen log of user created hotstrings"
+                  , "?"    : "ahk`tOpen last generated list of shortcuts"
                   , "kh"   : "ahk`tOpen Key History (#KeyHistory > 0 required)"
+                  , "ac"   : "ahk`tAHK config.ini"
+                  , "b"    : "ahk`tAHK Beginner Tutorial"
+                  , "tut"  : "ahk`tAHK Beginner Tutorial"
                   , "ws"   : "ahk`tOpen Window Spy"
                   , "rw"   : "ahk`tReload WinGolems (Ctrl+Win+R)"
                   , "qw"   : "ahk`tQuit WinGolems"
@@ -99,7 +104,7 @@
   
   URL_TOC :=      { "gm"   : "google`tmail"
                   , "gc"   : "google`tcalendar"
-                  , "gk"   : "google`tkeepcom"
+                  , "gk"   : "google`tkeep"
                   , "gn"   : "google`tnews"
                   , "f"    : "utl`tca.finance.yahoo"
                   , "w"    : "utl`tweather"
@@ -111,32 +116,23 @@
 
  return 
 
- ; Opens various input box menues to edit different file types, open and folders.
- ; RunInputCommand(func="", dest_dict="", title_prompt="", name_dict = "",color_code ="f6f7f1")
- ^#b::    RunInputCommand("EditFile", File_DICT, "EDIT FILE",, lg)              ;[JL] opens edit file jump list
- +#b::    RunInputCommand(ActivateExplorer, Folder_DICT, "OPEN FOLDER",,lb)     ;[JL] opens goto folder jump list
- #sc034:: RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC, ly)   ;[JL] opens run sys command jump list
+ #n::     RunInputCommand("EditFile", File_DICT, "EDIT FILE",, lg)              ;[JL] opens file jump list
+ #m::     RunInputCommand(ActivateExplorer, Folder_DICT, "OPEN FOLDER",,lb)     ;[JL] opens folder jump list
  #sc033:: RunInputCommand("LoadURL", URL_DICT, "LOAD URL", URL_TOC, lp)         ;[JL] opens webpage jump list
+ #sc034:: RunInputCommand(, Sys_DICT, "RUN SYS COMMAND", Sys_TOC, ly)           ;[JL] opens sys command jump list
 
 ; ACTIVATE SAVED WINDOWS ________________________________________________________
  ; hotkey to activate window with match string anywhere in the title
  
- printscreen & m::   SaveWinID("M")                                             ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ Lwin + M
- printscreen & u::   SaveWinID("U")                                             ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ Lwin + U
- printscreen & i::   SaveWinID("I")                                             ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ Lwin + U
- printscreen & o::   SaveWinID("O")                                             ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ Lwin + U
- #PgUp::             SaveWinID("L")                                             ;[ASW] Saves ID of selected window for later activation with LCtrl + space 
- #PgDn::             SaveWinID("R")                                             ;[ASW] Saves ID of selected window for later activation with RCtrl + space 
+ #F1::               SaveWinID("F1")                                            ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ LCtrl + space
+ #F2::               SaveWinID("F2")                                            ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ RCtrl + space
+ #F3::               SaveWinID("F3")                                            ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ #f
+ #F4::               SaveWinID("F4")                                            ;[ASW] (+ Alt) Saves ID of window for subsequent activation w/ #g
  
- #m::                ActivateWinID("M")                                         ;[ASW] activates Window ID saved w/ Printscreen + M
- #u::                ActivateWinID("U")                                         ;[ASW] activates Window ID saved w/ Printscreen + U
- #i::                ActivateWinID("I")                                         ;[ASW] activates Window ID saved w/ Printscreen + I
- #o::                ActivateWinID("O")                                         ;[ASW] activates Window ID saved w/ Printscreen + O
- <^space::           ActivateWinID("L")                                         ;[ASW] activates Window ID saved w/ Win + PgUp
- >^space::           ActivateWinID("R")                                         ;[ASW] activates Window ID saved w/ Win + PgDn
- 
-
- #y:: ActivateWindow("VLC media player")                                        ;[ASW] activates VLC 
+ <^space::           ActivateWinID("F1")                                        ;[ASW] activates Window ID saved w/ #F1
+ >^space::           ActivateWinID("F2")                                        ;[ASW] activates Window ID saved w/ #F2
+ #f::                ActivateWinID("F3")                                        ;[ASW] activates Window ID saved w/ #F3
+ #g::                ActivateWinID("F4")                                        ;[ASW] activates Window ID saved w/ #F4
 
 ; EDIT FILE ____________________________________________________________________
  ; edit file from anywhere in windows
@@ -146,7 +142,7 @@
  PrintScreen & t::  EditFile("golems\win_text_navigation.ahk")                  ;<EF> win_text_navigation.ahk
  PrintScreen & r::  EditFile("golems\win_sys.ahk")                              ;<EF> win_sys.ahk
  PrintScreen & f::  EditFile("golems\_functions.ahk")                           ;<EF> _functions.ahk
- ; PrintScreen & f::  EditFile("path\example.doc")                              ;     MS office doc example (EditFile also accepts txt, ppt, xls, pdf file types)
+ ; PrintScreen & f::  EditFile("path\example.doc")                              ;     MS office doc example; EditFile also accepts txt, ppt, xls, pdf file types
 
 
  
@@ -177,12 +173,12 @@
  ;shorcuts to launch/reactivate applications with the same key
  
  PrintScreen & n::                                                              ;<A> VS Code 
- #n::       ActivateApp("editor_path")                                          ;<A> VS Code
+ #a::       ActivateApp("editor_path")                                          ;<A> VS Code
  #s::       ActivateApp("html_path")                                            ;<A> Chrome
  #w::       ActivateApp("doc_path")                                             ;<A> Word
- #q::       ActivateApp("xls_path")                                             ;<A> Excel
- #r::       ActivateApp("ppt_path")                                             ;<A> Powerpoint
- #a::       ActivateApp("pdf_path")                                             ;<A> pdf-xchange
+ #e::       ActivateApp("xls_path")                                             ;<A> Excel
+ #q::       ActivateApp("ppt_path")                                             ;<A> Powerpoint
+ #d::       ActivateApp("pdf_path")                                             ;<A> pdf-xchange
  #t::       ActivateApp("cmd.exe")                                              ;<A> Command Window
  #b::       ActivateApp("explorer.exe", "buffer_path", True)                    ;<A> File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
  +#m::      ActivateMail()                                                      ;<A> Mail

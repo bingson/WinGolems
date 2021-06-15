@@ -31,7 +31,6 @@
  short            := 100                                                        ; set sleep time in milliseconds between actions for specific functions
  med              := 300                                                        
  long             := 900                                                        
- thm_sys          := new TapHoldManager(270,,maxTaps = 3,"$","")                ; instantiate TapHoldManager class for double press to execute hotkeys
  
  lg     := "D2DEBF", lb    := "BED7D6", ly     := "F2EFDB", lp      := "CDC9D9" ; light green (lg), light blue (lb), light yellow (ly), light purple (lp), light red (lr)
  black  := "000000", white := "FFFFFF", red    := "FF0000", green   := "008000"
@@ -44,10 +43,9 @@
  
  Gosub, Test_autoexecution                                                      ; initializes variables for script testing template
  Gosub, JL_AutoExecution                                                        ; [JL]  win_goto.ahk  
- Gosub, MAW_AutoExecution                                                       ; [MAW] win_sys.ahk   
  gosub, coding_autoexecution  
- ; gosub, Bing_autoexecution    
- ; gosub, chrome_autoexecution  
+ ; Gosub, Bing_autoexecution    
+ ; Gosub, chrome_autoexecution  
 
  SetTrayIcon(A_ScriptDir "\assets\Aikawns\W\gold.ico")                          ; set static icon color: black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
 
@@ -77,13 +75,14 @@
  #Include *i win_sys.ahk   
  #Include *i win_goto.ahk   
  #Include *i win_mem_system.ahk   
+ #Include *i win_file_explorer.ahk   
  #Include *i test.ahk   
  #Include *i R.ahk                               
  #Include *i Python.ahk                          
  #Include *i TapHoldManager.ahk
  
  #Include %A_ScriptDir%\..\Google Drive\secure\
- #Include *i bing.ahk
+ ; #Include *i bing.ahk
  #Include *i mm.ahk                     
  #Include *i %A_ScriptDir%\..\ahk\golems\coding_environments.ahk
  #Include *i %A_ScriptDir%\..\ahk\golems\chrome.ahk
