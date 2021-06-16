@@ -1,14 +1,27 @@
 # WinGolems
 
-A collection of Windows 10 automation and enhancement scripts (aka. golems) written in Autohotkey.  
+Paraphrasing some of Michael Nielsen's [writings on Tools for Thought ](https://michaelnielsen.org/), an innovative computer interface is one that makes it easier to complete common tasks and produce useful insights/work that would otherwise be more difficult or impossible to accompish. Because mastering an interface involves internalizing its component objects and operations, an interface designer has the ability to introduce entirely new elements of cognition that enable new modes of thought. 
 
-<h2>Sample template:</h2> One 
+WinGolems is a collection of templates, automation and enhancement scripts (aka. golems) written in Autohotkey. 
+
+http://cognitivemedium.com/tat/index.html
+
+<p> WinGolems consists of a repository of functions and templates designed to help users 
+
+
+<h2>Quick Start Template:</h2>  
 <p><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" width="2000" /></p>
 
 <ol>
 <li>
 
-<p> WinGolems consists of a repository of functions and templates designed to help users 
+
+to use such an interface is to enter a new world, containing objects and actions unlike any you've previously seen. At first these elements seem strange. But as they become familiar, you internalize the elements of this world. Eventually, you become fluent, discovering powerful and surprising idioms, emergent patterns hidden within the interface. You begin to think with the interface, learning patterns of thought that would formerly have seemed strange, but which become second nature. The interface begins to disappear, becoming part of your consciousness. You have been, in some measure, transformed.
+
+
+easy to do things that were formerly difficult or impossible
+
+a more direct connection 
 
 create more convenient keyboard/mouse shortcuts for the most frequently performed Windows 10 actions. 
 
