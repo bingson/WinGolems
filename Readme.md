@@ -1,8 +1,8 @@
 # WinGolems
 
-Paraphrasing some of Michael Nielsen's [writings on Tools for Thought ](https://michaelnielsen.org/), an innovative computer interface is one that makes it easier to complete common tasks and produce useful insights/work that would otherwise be more difficult or impossible to accompish. Because mastering an interface involves internalizing its component objects and operations, an interface designer has the ability to introduce entirely new elements of cognition that enable new modes of thought. 
+Paraphrasing some of Michael Nielsen's [writings on Tools for Thought ](https://michaelnielsen.org/), an innovative computer interface is one that makes it easier to complete common tasks and produce useful insights/work that would be more difficult or impossible to accompish otherwise. Because mastering an interface involves internalizing its component objects and operations, an interface designer has the power to introduce entirely new elements of cognition enabling new modes of thought. 
 
-WinGolems is a collection of templates, automation and enhancement scripts (aka. golems) written in Autohotkey. 
+WinGolems is a collection of templates and functions written in Autohotkey. 
 
 http://cognitivemedium.com/tat/index.html
 

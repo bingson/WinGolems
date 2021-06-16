@@ -649,7 +649,7 @@
     IniWrite,141,              %config_path%, %A_ComputerName%, F_height
     IniWrite,415,              %config_path%, %A_ComputerName%, F_width
     IniWrite,lg.ico,           %config_path%, settings, starting_icon
-    ShowPopup("Done!", bgreen, "200", "60", " - 1000", "15",, lg) 
+    ShowPopup("Done!", bgreen, "200", "60", "-1000", "15",, lg) 
     sleep, med*2
     ClosePopup()
     return
@@ -732,11 +732,13 @@
     popx := CoordXCenterScreen(GUI_Width, CurrentMonitorIndex) - (wn/2)         ; Calculate where the GUI should be positioned
     popy := CoordYCenterScreen(GUI_Height, CurrentMonitorIndex) * 2 - (hn/2)
     Progress, b C11 X%popx% Y%popy% ZH0 ZX10 zy10 W%wn% H%hn% FM%fmn% WM%wmn% CT%ctn% CW%cwn%,, %msg% ,,Gaduigi
-    SetTimer, ClosePopup, %ms%
+    SetTimer,ClosePopup,%ms%
+    return
  }
 
  ClosePopup() {
     Progress, Off
+    return
  }
 
  getMousePos() {
