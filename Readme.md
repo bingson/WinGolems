@@ -1,56 +1,14 @@
 # WinGolems
 
-Paraphrasing some of Michael Nielsen's [essays on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface is one that makes it easier to complete frequent tasks and produce useful insights/work that would be more difficult or impossible to accomplish without. Because mastering an interface requires internalizing its component objects and operations, interfaces can  serve as transformative cognitive artifacts that introduce entirely new elements of cognition and modes of thought. 
+Paraphrasing some of Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to achieve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to create transformative cognitive artifacts that introduce entirely new elements of cognition and modes of thought. 
 
-Channeling some of the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written or adapted from the AHK community to expand and augment how I interact any Windows 10 computer.  
+Channeling the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written myself or adapted from the AHK community over the years to augment and enhance how I interact with any Windows 10 application.   
 
+The quick start template below is a highly simplified variation of my own setup which I created to highlight some key features and provide code examples new users can modify after reading through the usage section below (no prior AHK knowledge is necessary).    
 
-The quick start template below is a pared down variation of my own template  
+<h2>Quick Start Template</h2>  
+<p><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" /></p>
 
-<h2>Quick Start Template:</h2>  
-<p><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" width="2000" /></p>
-a
-<ol>
-<li>
-A common informal model of augmentation is what we may call the cognitive outsourcing model: we specify a problem, send it to our device, which solves the problem, perhaps in a way we-the-user don't understand, and sends back a solution:
-
-to use such an interface is to enter a new world, containing objects and actions unlike any you've previously seen. At first these elements seem strange. But as they become familiar, you internalize the elements of this world.
-
- Eventually, you become fluent, discovering powerful and surprising idioms, emergent patterns hidden within the interface. You begin to think with the interface, learning patterns of thought that would formerly have seemed strange, but which become second nature. The interface begins to disappear, becoming part of your consciousness. You have been, in some measure, transformed.
-
-
-easy to do things that were formerly difficult or impossible
-
-a more direct connection 
-
-create more convenient keyboard/mouse shortcuts for the most frequently performed Windows 10 actions. 
-
-WinGolem templates show how to create shortcuts to </p>
-
-* switch between, launch, and reactivate specific application windows
-* open a file in any particular program from anywhere in windows
-* change folders in file explorer and save as dialogue boxes
-* select and navigate through text using homerow keys
-* execute different text manipulation macros 
-* and much more
-</li>
-<li>
-
-
-
-<p> Another feature of WinGolems is a text file based memory system that combines with metaprogramming functions to create dynamic hotstrings  </p>
-
-For example 
-
-```
-DF, X, Y <g.pt 
-```
-
-
-
-
-</li>
-<br>
 
 ----
 ## CONTENTS 
@@ -71,8 +29,8 @@ DF, X, Y <g.pt
    </li>
    <li>
      <p>  <b>Recommended:</b> </p>
-     <p> Any code editor which supports indentation-based code folding and autohotkey syntax support. 
-     <p>  – &nbsp; <a href="https://code.visualstudio.com/">Visual Studio Code</a> Editor with the following extension IDs 
+     <p> Any code editor that supports indentation-based code folding and autohotkey syntax highlighting. 
+     <p>  – &nbsp; <a href="https://code.visualstudio.com/">Visual Studio Code</a> editor with the following extension IDs 
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-autohotkey
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
