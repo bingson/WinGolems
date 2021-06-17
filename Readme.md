@@ -2,10 +2,10 @@
 
 Paraphrasing some of Michael Nielsen's [essays on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface is one that makes it easier to complete frequent tasks and produce useful insights/work that would be more difficult or impossible to accomplish without. Because mastering an interface requires internalizing its component objects and operations, interfaces can serve as powerful cognitive artifacts that introduce entirely new elements of cognition and modes of thought. 
 
-Channeling some of the ideas above, WinGolems represents a constantly evolving collection of autohotkey (AHK) templates and functions I have written or adapted from the AHK community to expand and augment how I interact with different Windows 10 applications.  
+Channeling some of the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written or adapted from the AHK community to expand and augment how I interact with Windows 10 computers.  
 
-The quick start template below 
-a pared down variation of my own template  
+
+The quick start template below is a pared down variation of my own template  
 
 <h2>Quick Start Template:</h2>  
 <p><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" width="2000" /></p>
