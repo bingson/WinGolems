@@ -1,22 +1,22 @@
 # WinGolems
 
-Paraphrasing some of Michael Nielsen's [writings on Tools for Thought ](https://michaelnielsen.org/), an innovative computer interface is one that makes it easier to complete common tasks and produce useful insights/work that would be more difficult or impossible to accompish otherwise. Because mastering an interface involves internalizing its component objects and operations, an interface designer has the power to introduce entirely new elements of cognition enabling new modes of thought. 
+Paraphrasing some of Michael Nielsen's [essays on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface is one that makes it easier to complete frequent tasks and produce useful insights/work that would be more difficult or impossible to accomplish without. Because mastering an interface requires internalizing its component objects and operations, interfaces can serve as powerful cognitive artifacts that introduce entirely new elements of cognition and modes of thought. 
 
-WinGolems is a collection of templates and functions written in Autohotkey. 
+Channeling some of the ideas above, WinGolems represents a constantly evolving collection of autohotkey (AHK) templates and functions I have written or adapted from the AHK community to expand and augment how I interact with different Windows 10 applications.  
 
-http://cognitivemedium.com/tat/index.html
-
-<p> WinGolems consists of a repository of functions and templates designed to help users 
-
+The quick start template below 
+a pared down variation of my own template  
 
 <h2>Quick Start Template:</h2>  
 <p><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" width="2000" /></p>
-
+a
 <ol>
 <li>
+A common informal model of augmentation is what we may call the cognitive outsourcing model: we specify a problem, send it to our device, which solves the problem, perhaps in a way we-the-user don't understand, and sends back a solution:
 
+to use such an interface is to enter a new world, containing objects and actions unlike any you've previously seen. At first these elements seem strange. But as they become familiar, you internalize the elements of this world.
 
-to use such an interface is to enter a new world, containing objects and actions unlike any you've previously seen. At first these elements seem strange. But as they become familiar, you internalize the elements of this world. Eventually, you become fluent, discovering powerful and surprising idioms, emergent patterns hidden within the interface. You begin to think with the interface, learning patterns of thought that would formerly have seemed strange, but which become second nature. The interface begins to disappear, becoming part of your consciousness. You have been, in some measure, transformed.
+ Eventually, you become fluent, discovering powerful and surprising idioms, emergent patterns hidden within the interface. You begin to think with the interface, learning patterns of thought that would formerly have seemed strange, but which become second nature. The interface begins to disappear, becoming part of your consciousness. You have been, in some measure, transformed.
 
 
 easy to do things that were formerly difficult or impossible
