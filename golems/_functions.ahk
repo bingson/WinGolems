@@ -1,10 +1,16 @@
 
 ; APP MANAGEMENT _______________________________________________________________
-
+ 
+ moveWinBtnMonitors() {
+    Send {lwin down}{shift down}{Left}{shift up}{lwin up}
+    CursorFollowWin()
+    return
+ }
  
  TabCondition(tab_name="MISC.txt", exact = False) {
     ; checks if tab_name occurs somewhere in the window title
-    if (exact = True) {
+    if exact 
+    {
         SetTitleMatchMode, 3
         return % WinActive(tab_name)
     }
@@ -15,7 +21,7 @@
 
  MoveWindowToOtherMonitor() {
     Send {lwin down}{shift down}{Left}{shift up}{lwin up}
-    JumpMiddle()
+    CursorFollowWin()
     return
  }
 
@@ -1197,6 +1203,15 @@
  }
 
 ; CHROME _______________________________________________________________________
+ 
+ KeyboardShortcuts() {
+    send {esc}
+    ActivateApp("html_path")
+    sendinput ^l
+    clip("chrome://extensions/shortcuts") ;keyboard shortcuts
+    send !{enter}
+    return
+ }
 
  BrowserForward(isHold, taps, state) {
     if (taps > 1) {
@@ -1400,7 +1415,7 @@
    ; Add spaces until cursor hits the desired comment column
    clipsaved := clipboard
    clipboard := ""
-   Send {space}{left}+{end}                                                    ; in vscode ^x on empty selection will cut the whole line
+   Send {space}{left}+{end}                                                     ; in vscode ^x on empty selection will cut the whole line
    TrimText(True)
    Send {home 2}{shift down}{end}{shift up}
    FillChar(length, char)
@@ -1618,11 +1633,5 @@
     var := RegExReplace(var, "S) +", A_Space)
     var := RegExReplace(var, A_Space, "|")
     clip(var, True)
-    return
- }
-
- moveWinBtnMonitors() {
-    Send {lwin down}{shift down}{Left}{shift up}{lwin up}
-    CursorFollowWin()
     return
  }

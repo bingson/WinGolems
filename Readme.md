@@ -1,10 +1,10 @@
 # WinGolems
 
-Paraphrasing some of Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to achieve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to create transformative cognitive artifacts that introduce entirely new elements of cognition and modes of thought. 
+Paraphrasing some of Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to discover otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to create transformative cognitive artifacts that introduce new elements of cognition and modes of thought. 
 
-Channeling the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written myself or adapted from the AHK community over the years to augment and enhance how I interact with any Windows 10 application.   
+Channeling the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written myself or adapted from the AHK community over the years to augment and enhance how I interact with Windows 10 applications.   
 
-The quick start template below is a highly simplified variation of my own setup which I created to highlight some key features and provide code examples new users can modify after reading through the usage section below (no prior AHK knowledge is necessary).    
+The quick start template below is a highly simplified variation of my own setup which I created to highlight some key features and provide code examples new users can modify after reading through a short tutorial section below (no prior AHK knowledge is necessary).    
 
 <h2>Quick Start Template</h2>  
 <p><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" /></p>
