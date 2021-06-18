@@ -1,10 +1,11 @@
 # WinGolems
 
-Paraphrasing some of Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to discover otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to create transformative cognitive artifacts that introduce new elements of cognition and modes of thought. 
+Borrowing some ideas from Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to discover otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to create transformative cognitive artifacts that introduce new elements of cognition and modes of thought. 
 
-Channeling the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written myself or adapted from the AHK community over the years to augment and enhance how I interact with Windows 10 applications.   
+Channeling the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written myself or adapted from the AHK community over the years to augment and enhance how I interact with Windows 10 applications. 
 
-The quick start template below is a highly simplified variation of my own setup which I created to highlight some key features and provide code examples new users can modify after reading through a short tutorial section below (no prior AHK knowledge is necessary).    
+The assignment of keyboard shortcuts and user-specific settings are separated from the functions that execute the desired task for ease of use. Within this readme, I will walk through the assignment of shortcuts in the quick start template below to illustrate how to adapt WinGolems to your own needs.   
+  
 
 <h2>Quick Start Template</h2>  
 <p><img src="assets\Screens\WinGolemnsQuickReferenc.png" alt="run_master.png" title="run_master.png" /></p>
