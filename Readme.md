@@ -1,8 +1,11 @@
 # WinGolems
 
-Borrowing some ideas from Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to discover otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to create transformative cognitive artifacts that introduce new elements of cognition and modes of thought. 
+Borrowing ideas from Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to discover otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to create transformative cognitive artifacts that introduce new elements of cognition and modes of thought. 
 
-Channeling the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written myself or adapted from the AHK community over the years to augment and enhance how I interact with Windows 10 applications. 
+Channeling the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written or adapted from the AHK community to augment and enhance how I interact with Windows 10 applications. 
+
+To reduce the cognitive load 
+This repository separates the assignment of keyboard shortcuts
 
 The assignment of keyboard shortcuts and user-specific settings are separated from the functions that execute the desired task for ease of use. Within this readme, I will walk through the assignment of shortcuts in the quick start template below to illustrate how to adapt WinGolems to your own needs.   
   
