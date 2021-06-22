@@ -366,7 +366,7 @@
     % (taps > 1) ? RunInputCommand(, Command_DICT, "RUN SYS COMMAND", Command_TOC) : ""
  }
 
-; INPUT BOX COMMANDS ___________________________________________________________
+; JumpLists ____________________________________________________________________
 
  RunInputCommand(func="", dest_dict="", title_prompt="", name_dict = "", w_color ="F6F7F1", t_color ="000000") {
     ; opens an input box offering choices based on dest_dict
@@ -1149,7 +1149,7 @@
  JumpLeftEdge(offset = "0") {                                                               ; move mouse pointer with hotkeys
     ; move mouse cursor to the left edge of active window
     global short
-    Sleep, short*0.5
+    Sleep, short * 2
     CoordMode,Mouse,Screen
     WinGetPos, winTopL_x, winTopL_y, width, height, A
     MouseGetPos,,y
@@ -1160,7 +1160,7 @@
  JumpRightEdge(offset = "0") {
     ; move mouse cursor to the right edge of active window
     global short
-    Sleep, short*0.5
+    Sleep, short * 2
     CoordMode,Mouse,Screen
     WinGetPos, winTopL_x, winTopL_y, width, height, A
     MouseGetPos,,y
@@ -1171,7 +1171,7 @@
  JumpTopEdge(offset = "0") {
     ; move mouse cursor to the top edge of active window
     global short
-    Sleep, short*0.5
+    Sleep, short * 2
     CoordMode, Mouse, Screen
     WinGetPos, winTopL_x, winTopL_y, width, height, A
     MouseGetPos, x
@@ -1182,7 +1182,7 @@
  JumpBottomEdge(offset = "0") {
     ; move mouse cursor to the bottom edge of active window
     global short
-    Sleep, short*0.5
+    Sleep, short * 2
     CoordMode,Mouse,Screen
     WinGetPos, winTopL_x, winTopL_y, width, height, A
     MouseGetPos, x
@@ -1193,7 +1193,7 @@
  JumpMiddle(add_x = "0", add_y = "0") {
     ; move mouse cursor to the middle of active window
     global short
-    Sleep, short*0.5
+    Sleep, short * 2
     CoordMode, Mouse, Screen
     WinGetPos, winTopL_x, winTopL_y, width, height, A
     winCenter_x := winTopL_x + width/2

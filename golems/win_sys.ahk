@@ -6,6 +6,7 @@
  ^#q::                    CloseClass()                                          ;[MAW] close all instances of the active program
  #capslock::              ActivatePrevInstance()                                ;[MAW] rotate through active program instances starting from oldest 
  !capslock::              ActivateNextInstance()                                ;[MAW] rotate through active program instances starting from newest 
+ ~!tab::                  CursorFollowWin()                                     ;[MAW] mouse cursor follows active window (option turned on in Sys Jumplist)
  >+enter::                send {F11}                                            ;[MAW] full screen {F11}
  PrintScreen & space::                                                          ;[MAW] move window btn monitors
  +#space::                MoveWindowToOtherMonitor()                            ;[MAW] move window btn monitors
