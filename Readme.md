@@ -1,10 +1,31 @@
 # WinGolems
 
-Borrowing ideas from Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to uncover otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to create transformative cognitive artifacts that introduce new elements of cognition and modes of thought. 
+Borrowing some ideas from Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), an innovative computer interface makes it easier to complete common tasks and produce useful insights that would be more difficult or impossible to discover otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to introduce new elements of cognition and modes of thought. 
 
-Channeling the ideas above, WinGolems embodies a constantly evolving collection of autohotkey (AHK) templates and functions I have written or adapted from the AHK community to augment and enhance how I interact with Windows 10 applications. To reduce the 
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates I have written or adapted from others over the years to personalize and augment how I interact with my computer. I am quite impressed by how powerful and simple AHK's syntax is for creating different interface layers on top of Windows. 
 
+For that reason, I have placed code for the creation of interface elements (ie., interface templates) in separate files from the code used to execute the underlying task (ie., function libraries). To take full advantage of WinGolems convenience and automation features, a user only needs to modify interface templates, requiring minimal knowledge of AHK. 
+```ahk
 
+; create 3 different shortcuts for activating a web browser window.
+
+c:                                             ; command input
+::c~~:: 									   ; hotstring
+#s::       ActivateApp("html_path")            ; hotkey
+
+```
+
+For example, the interface template code above creates three ways a user can activate a web browser window from anywhere in Windows. 
+
+> 1. &nbsp; **Command Input:** 
+    > <br>&nbsp; - &nbsp; open command input box with ```win + enter```
+    > <br>&nbsp; - &nbsp; type ``` c```, then press  ``` enter ``` 
+>
+> 2. &nbsp; **Hotstring:** 
+	> <br>&nbsp; - &nbsp; type the ``` c~~ ```, then press ` space ` or ` enter `.
+>
+> 3. &nbsp; **Hotkey:** 
+	> <br>&nbsp; - &nbsp; press ``` win + s ```
 
 To give back to the AHK community, I am sharing
 The assignment of interface 
