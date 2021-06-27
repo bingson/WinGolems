@@ -10,7 +10,7 @@ For that reason, I have placed code for the creation of interface elements (ie.,
 ; create 3 different shortcuts for activating a web browser window.
 
 c:                                             ; command input
-::c~~:: 									   ; hotstring
+::c~~::                                        ; hotstring
 #s::       ActivateApp("html_path")            ; hotkey
 
 ```
@@ -22,10 +22,10 @@ For example, the interface template code above creates three ways a user can act
     > <br>&nbsp; - &nbsp; type ``` c```, then press  ``` enter ``` 
 >
 > 2. &nbsp; **Hotstring:** 
-	> <br>&nbsp; - &nbsp; type the ``` c~~ ```, then press ` space ` or ` enter `.
+    > <br>&nbsp; - &nbsp; type the ``` c~~ ```, then press ` space ` or ` enter `.
 >
 > 3. &nbsp; **Hotkey:** 
-	> <br>&nbsp; - &nbsp; press ``` win + s ```
+    > <br>&nbsp; - &nbsp; press ``` win + s ```
 
 To give back to the AHK community, I am sharing
 The assignment of interface 
