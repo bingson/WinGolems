@@ -22,7 +22,7 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 Within WinGolems the AHK code for the creation of interface elements (i.e., interface templates) is kept in separate files from the code for the algorithms carrying out the underlying operations. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights only a small sample of WinGolems' convenience functions. For a more advanced reference template, please see \Golems\TrackPointKB. 
 
-<img src="assets\Screens\simple.png">
+<img src="assets\Screens\CB.png">
 
 <br>
 
@@ -33,6 +33,7 @@ Command Box: Multi-function keyboard driven GUI (Graphical User Interface)
 FAQ
 free up windows keys
 #F https://superuser.com/questions/1251384/how-to-disable-windows-10-feedback-hub
+
 ```
  _________________________________________________________________________________________________________________________________________
 | CommandBox (CB) Creation:     # win  ! alt  ^ ctrl  | KEY    WINGOLEMS UTILITIES, HELP, CONFIGURATION     | KEY  WINDOWS SELECTION     |
@@ -74,6 +75,8 @@ free up windows keys
 | Rf~  Modify file w/ pattern in another file  Rf~1~p n             Modify 1.txt w/ replacement pattern in p.txt, save chg as n.txt   (~)|
 |      pattern file fmt: no R at beginning     ,~+__A~B,            linebreaks btn _ _ will be ignored. E.g.,  _,~+_ *line break* _A~B_  |
 |________________________________________________________________________________________________________________________________________|
+```
+
 After creating different interfaces elements, the next step is to connect that interface to functions that do something useful. 
 
 Before writing any new functions, I suggest searching the following AHK community forums to find relevant discussions and pre-maid scripts that can be adapted to suit your needs. Over a third of \' function library was modified from AHK community scripts.
