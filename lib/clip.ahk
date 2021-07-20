@@ -40,7 +40,10 @@ Clip(Text = "", Reselect = False) {
             Return LastClip := Clipboard
         }
         Else If ReSelect and ((ReSelect = True) or (StrLen(Text) < 3000))
+        {
+            sleep 100
             SendInput, % "{Shift Down}{Left " StrLen(StrReplace(Text, "`r")) "}{Shift Up}"
+        }
     }
     Return
     
