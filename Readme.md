@@ -22,7 +22,7 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 Within WinGolems the AHK code for the creation of interface elements (i.e., interface templates) is kept in separate files from the code for the algorithms carrying out the underlying operations. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights only a small sample of WinGolems' convenience functions. For a more advanced reference template, please see \Golems\TrackPointKB. 
 
-<img src="assets\Screens\CB.png">
+<img src="assets\Screens\simple.png">
 
 <br>
 
