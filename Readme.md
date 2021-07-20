@@ -29,7 +29,7 @@ Within WinGolems the AHK code for the creation of interface elements (i.e., inte
 
 ![ScreenShot](assets/Screens/WG_QuickReference.png)
 
-![ScreenShot](assets\Screens\CB.png)
+![ScreenShot](assets/Screens/CB.png)
 
 
 
