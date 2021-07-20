@@ -25,7 +25,10 @@ Within WinGolems the AHK code for the creation of interface elements (i.e., inte
 <!-- <img src="assets\Screens\simple.png" width = "> -->
 <!-- <img src="assets\Screens\CB.png"> -->
 
+<br>
+
 ![ScreenShot](assets\Screens\simple.png)
+
 ![ScreenShot](assets\Screens\CB.png)
 
 
