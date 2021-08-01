@@ -38,19 +38,3 @@
         }
     Progress, Off
  }
-
- 1SelectByRegEx(fsz = "15", fnt = "Consolas", w_color = "F6F7F1", t_color = "000000") {
-    static selectionPattern := "Si)"
-    global long, med, short, lgreen, config_path, CB_Display := "", UserInput := ""
-    Gui, re: Destroy
-    title_text := Select by regex
-    Gui, re: New, ,%title%
-    Gui, re: +LastFound -dpiscale +Resize +OwnDialogs +AlwaysOnTop +MinSize200x80 
-    hwnd := WinExist()
-    Gui, font ,s%fsz% ,%fnt%
-    msg := Enter regex pattern to select files (empty to select all)
-    Gui, re: Add, Text, c%ctn% xm ym-1 Center, %msg%
-    Gui, 2: Color, %w_color%
-    Gui, re: show
-
- }

@@ -1,8 +1,8 @@
 ReleaseModifiers(timeout := "") {                                              ; timeout in ms
    ; sometimes modifier keys get stuck while switching between programs
    ; this function call can be embedded in a function to fix that.
-   static  aModifiers := ["Ctrl", "Alt", "Shift", "LWin", "RWin"
-                         , "PrintScreen", "del", "ins", "end", "home"]
+   static  aModifiers := ["Ctrl", "Alt", "Shift", "LWin", "RWin", "enter"
+                         , "PrintScreen", "del", "ins", "end", "home", "space"]
    
    startTime := A_Tickcount
    while (isaKeyPhysicallyDown(aModifiers))

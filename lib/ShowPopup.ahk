@@ -1,7 +1,7 @@
- ShowPopup(msg, ctn = "000000", wn = "400", hn = "75", drtn = "-800"
-    , fsz = "16", fwt = "610", w_color = "ffffff", fnt = "Gaduigi") {
-
-    global config_path
+ ShowPopup(msg, w_color = "ffffff", ctn = "000000", wn = "400", hn = "75", drtn = "-200"
+    , fsz = "16", fwt = "610", fnt = "Gaduigi") {
+    
+    global config_path, C, bgreen
     Gui, PopUp: destroy
     
     Gui, PopUp: New
