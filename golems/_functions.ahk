@@ -1,4 +1,6 @@
-; COLOR CODES _________________________________________________________________
+; GLOBAL VARIABLES _____________________________________________________________
+  
+  short := 100, med := 300, long := 900
 
   C := { "lgreen"      : "CEDFBF"
        , "lblue"       : "BED7D6"
@@ -22,58 +24,59 @@
        , "dgrey"       : "525252"
        , "onyx"        : "353839" }
 
+  GroupAdd, FileListers, ahk_class CabinetWClass                                ; reference group for file explorer and save as dialogue boxes
+  GroupAdd, FileListers, ahk_class WorkerW
+  GroupAdd, FileListers, ahk_class #32770, ShellView
+        
+
 ; WINDOW MANAGEMENT ___________________________________________________________
 
-  MoveWin(Q = "TL") {
+  MoveWin(Q = "TL", ha = 8, wa = 8) {
     global config_path, ghwnd
     static x, y, w, h
-    ; IniRead, MonDiff, %config_path%, %A_ComputerName%, MonDimDiff               ; get monitor measurement differences btn SysGet and WinGetPos
-    n := GetCurrentMonitorIndex()
-    
-    MonDiff := GC("MonDimDiff")
-    MonDim := GC("MonDim" n)
-    adj := StrSplit(MonDiff, " ")[1]
-    MD := StrSplit(MonDim, " ")
-    SysGet, XY, MonitorWorkArea , %n%
     WinRestore, A
-    x  := MD[1] 
-    y  := MD[2] + abs(adj)
-    w  := MD[3] 
-    h  := MD[4] - abs(adj)
+    MI := StrSplit(GetMonInfo()," ")  
+    x := MI[1] , y  := MI[2] , w := MI[3] , h  := MI[4]                         ; get monitor dimensions
+    hw:= w//2  , qw := w//4  , hh:= h//2  , qh := h//4
 
-    hw := w / 2 , qw := w / 4   , hh := h / 2 , qh := h / 4
-    
+    if (winactive("ahk_id " ghwnd) and !GC("CB_Display"))
+        return
+
     switch Q
     {
         case "F" ,"Maximize"        : x := x      , y := y       , w := w  , h := h                   
-        case "L" ,"LeftHalf"        : x := x      , y := y       , w := hw , h := h     ; horizontal half
-        case "R" ,"RightHalf"       : x := x+hw   , y := y       , w := hw , h := h     ; horizontal half
-        case "LS","LeftHalfSmall"   : x := x      , y := y       , w := qw , h := h     ; horizontal half
-        case "RS","RightHalfSmall"  : x := x+3*qw , y := y       , w := qw , h := h     ; horizontal half
-        case "T" ,"TopHalf"         : x := x      , y := y       , w := w  , h := hh    ; horizontal half
-        case "TS","TopHalfSmall"    : x := x      , y := y       , w := w  , h := qh    ; horizontal half
-        case "B" ,"BottomHalf"      : x := x      , y := y+hh    , w := w  , h := hh    ; horizontal half
-        case "BS","BottomHalfSmall" : x := x      , y := y+hh+qh , w := w  , h := qh    ; horizontal half
-        case "TL","TopLeft"         : x := x      , y := y       , w := hw , h := hh    ; quadrants
-        case "TR","TopRight"        : x := x+hw   , y := y       , w := hw , h := hh    ; quadrants
-        case "BL","BottomLeft"      : x := x      , y := y+hh    , w := hw , h := hh    ; quadrants
-        case "BR","BottomRight"     : x := x+hw   , y := y+hh    , w := hw , h := hh    ; quadrants
-        case "L1","TopLeftSmall"    : x := x      , y := y       , w := hw , h := qh    ; 1/8
-        case "L4","BottomLeftSmall" : x := x      , y := y+3*qh  , w := hw , h := qh    ; 1/8                     
-        case "R1","TopRightSmall"   : x := x+hw   , y := y       , w := hw , h := qh    ; 1/8 
-        case "R4","BottomRightSmall": x := x+hw   , y := y+3*qh  , w := hw , h := qh    ; 1/8                     
+        case "L" ,"LeftHalf"        : x := x      , y := y       , w := hw , h := h     
+        case "R" ,"RightHalf"       : x := x+hw   , y := y       , w := hw , h := h     
+        case "LS","LeftHalfSmall"   : x := x      , y := y       , w := qw , h := h     
+        case "RS","RightHalfSmall"  : x := x+3*qw , y := y       , w := qw , h := h     
+        case "T" ,"TopHalf"         : x := x      , y := y       , w := w  , h := hh    
+        case "TS","TopHalfSmall"    : x := x      , y := y       , w := w  , h := qh    
+        case "B" ,"BottomHalf"      : x := x      , y := y+hh    , w := w  , h := hh    
+        case "BS","BottomHalfSmall" : x := x      , y := y+hh+qh , w := w  , h := qh    
+        case "TL","TopLeft"         : x := x      , y := y       , w := hw , h := hh    
+        case "TR","TopRight"        : x := x+hw   , y := y       , w := hw , h := hh    
+        case "BL","BottomLeft"      : x := x      , y := y+hh    , w := hw , h := hh    
+        case "BR","BottomRight"     : x := x+hw   , y := y+hh    , w := hw , h := hh    
+        case "L1","TopLeftSmall"    : x := x      , y := y       , w := hw , h := qh    
+        case "L4","BottomLeftSmall" : x := x      , y := y+3*qh  , w := hw , h := qh    
+        case "R1","TopRightSmall"   : x := x+hw   , y := y       , w := hw , h := qh    
+        case "R4","BottomRightSmall": x := x+hw   , y := y+3*qh  , w := hw , h := qh    
         default:                                                              
             return
     }
     ; #if 
     
-    WinMove,A,, x, y, w, h
-    If winactive("ahk_id " ghwnd) {
+    If (winactive("ahk_id " ghwnd))
+    {
+        ; msgbox % "x" x " y"y " w"w " h"h
         GuiControl, 2: -HScroll -VScroll, CB_Display
         Gui, 2: show
         GuiControl, 2: +HScroll +VScroll, CB_Display
+        CC("CB_position", "x" x " y" y " w" w " h" h)
     }
 
+    WinMove,A,, x, y, w, h
+    
   }
  
  
@@ -196,6 +199,17 @@
   }
  
 ; SYSTEM APPS _________________________________________________________________
+ 
+  PowerOptions(s = "") {
+    switch s 
+    {
+        case "sleep":     DllCall("PowrProf\SetSuspendState","int",0,"int",0,"int",0)
+        case "hybernate": DllCall("PowrProf\SetSuspendState","int",1,"int",0,"int",0)
+        case "shutdown":  ShutDown, 9
+        case "restart":   ShutDown, 2
+    }
+    return
+  }
 
   ActivateExplorer := Func("ActivateApp").Bind("explorer.exe")
 
@@ -352,7 +366,27 @@
  
 ; COMMAND BOX / JUMPLISTS _____________________________________________________
   
+  ToggleDisplay(){
+    % (GC("CB_Display") = 1) ? (GUIFocusInput(), clip("Tm"))
+                              : (GUIFocusInput(), clip("Td"))
+    sendinput {enter}
+    return
+  }          
 
+  RunOtherCB(C_input = "", Chr = "") {
+    C_1stchr := SubStr(C_input, 1, 1)
+    if (SubStr(C_input, 1, 1) = "~") 
+    {
+        CC("CB_" Chr "sfx", "~" SubStr(C_input, 2))
+        Gui, 2: destroy
+        return
+    } else {
+        sfx := GC("CB_" Chr "sfx", "~win")  
+        RunLabel(C_input, sfx, TgtWinID)
+    }
+    return
+  }
+  
   ReplaceAlias(arr*) {
     static sect := ""
     for k,v in arr
@@ -392,6 +426,9 @@
     sleep 100
     switch k 
     {
+        case "enter"     : 
+            send % "{enter}"
+            return
         case "u", "up"   : send % "{ up "    n "}"
         case "d", "down" : send % "{ down "  n "}"
         case "l", "left" : send % "{ left "  n "}"
@@ -403,9 +440,9 @@
   }
 
   RunLabel(UserInput, suffix, tgt_winID) {
-    global med
-    ActivateWin("ahk_id " tgt_winID)
-    sleep med
+    global med, TgtWinID
+    ; ActivateWin("ahk_id " TgtWinID)
+    ; sleep med
     Switch 
     {
         Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
@@ -414,28 +451,29 @@
         Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
         Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
         Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
-        ; Case IsLabel(        UserInput)         : UserInput :=         UserInput
-        ; Case IsLabel(":X:" . UserInput)         : UserInput := ":X:" . UserInput
-        ; Case IsLabel(":*:" . UserInput)         : UserInput := ":*:" . UserInput
         Default:
-            UpdateGUI()
-            return 1
+            Gui, 2: destroy
+            return
     }     
     Gosub, %UserInput% 
-    return 
+    Gui, 2: destroy
+    return
   }
 
   CB( sfx = "~win", w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand") {
     ReleaseModifiers()
-    global config_path, ghwnd
+    global config_path
     SetTitleMatchMode, 2
-    ; IniRead, output, %config_path%, %A_ComputerName%, CB_GUI_hwnd
     DetectHiddenText, On
-    if WinExist("ahk_id " . ghwnd) 
-        WinActivate, % "ahk_id " . ghwnd
-    else
-        CommandBox(sfx, w_color, t_color, ProcessMod) 
-    CursorFollowWin()
+    
+    if WinExist("ahk_id " GC("CB_hwnd")) {
+        
+        WinActivate, % "ahk_id " GC("CB_hwnd")
+        GUIFocusInput()
+        return
+    }
+    
+    CommandBox(sfx, w_color, t_color, ProcessMod) 
     DetectHiddenText, off
     return
   }
@@ -444,7 +482,7 @@
     ReleaseModifiers()
     global config_path, FBhwnd
     SetTitleMatchMode, 2
-    ; IniRead, output, %config_path%, %A_ComputerName%, CB_GUI_hwnd
+    ; IniRead, output, %config_path%, %A_ComputerName%, CB_hwnd
     DetectHiddenText, On
     if WinExist("ahk_id " . FBhwnd) 
         WinActivate, % "ahk_id " . FBhwnd
@@ -489,7 +527,7 @@
     }
     ; Sort, cache_contents, CL
     cache_contents := "CACHE CONTENTS`n" . RepeatString("-", char_width) . "`n`r" . cache_contents
-    ; FileAppend, %cache_contents%, mem_cache\%name%.txt
+    FileAppend, %cache_contents%, mem_cache\%name%.txt
     return % cache_contents
   }
 
@@ -505,7 +543,7 @@
  
   GUIRecall() {
     global short, med, long, config_path
-    IniRead, OutputVar, %config_path%, %A_ComputerName%, last_user_input,%A_Space%
+    OutputVar := GC("last_user_input")
     GuiControl,2: Focus, UserInput
     sendinput {home}+{end}
     clip(OutputVar)
@@ -514,9 +552,9 @@
   }
 
   GUIFocusInput() {
-    Gui, +LastFound
-    Gui, show
-    GuiControl,2: Focus, UserInput
+    Gui, 2: +LastFound
+    Gui, 2: restore
+    GuiControl, 2: Focus, UserInput
     sendinput {home}+{end}
     return
   }
@@ -543,53 +581,6 @@
     }
     return
   }
-
-  UpdateGUI(new_txt = "" , old_title_file = "", new_title_file = "") {
-    global config_path, med, InputBox_width, ghwnd, C
-    Gui,+LastFound 
-    IniRead, title_state, %config_path%, %A_ComputerName%, GUI_Titlebar, 1
-    IniRead, ScrollBars,  %config_path%, %A_ComputerName%, GUI_ScrollBars, 0
-    IniRead, display,     %config_path%, %A_ComputerName%, GUI_Display, 1
-    if (!title_state) 
-        Gui, 2: -Caption
-    else 
-        Gui, 2: +Caption
-    
-    if (new_txt) {
-        GuiControl, 2:, CB_Display, %new_txt%
-    } else if (!display) {
-        GuiControl, hide, CB_Display
-    } else {
-        IniRead, out, %config_path%, %A_ComputerName%, CB_last_display, "" 
-        txt :=  AccessCache(out,, 0)
-        GuiControl, 2:, CB_Display, %txt%
-    }
-
-    if new_title_file {
-        RegExMatch(old_title_file, ".*(?= )", v)                                ; get everything before the last space and store in v
-        Gui, 2: Show, , %v% %new_title_file%
-    }
-        
-    IniRead, gui_position, %config_path%, %A_ComputerName%, gui_position, Center
-    wdth := StrSplit(gui_position, " ")[3]
-    GuiControl, MoveDraw, CB_Display, %wdth%                                    ; set the width to the edit box to value stored in ini file
-    CtrXpos := (SubStr(wdth, 2) - InputBox_width) // 2
-    GuiControl, MoveDraw, UserInput, x%CtrXpos%                                 ; set the width to the edit box to value stored in ini file
-    if !ScrollBars
-        GuiControl, 2: -HScroll -VScroll, CB_Display
-    else 
-        GuiControl, 2: +HScroll +VScroll, CB_Display 
-    if (!display) 
-    {
-        t_color := GC("CBt_color")
-        w_color := GC("CBw_color")
-        WinMaximize, ahk_id %ghwnd%
-        WinSet, TransColor,% w_color
-    }
-    Gui, 2: show, hide AutoSize 
-    Gui, 2: show, %gui_position%                                                ;  Gui, 2: show, hide AutoSize
-    GuiControl, 2: +HScroll +VScroll, CB_Display
-  }
  
   countrows(txt) {
     loop, parse, txt, `n, `r
@@ -615,7 +606,7 @@
     Gui, +LastFound 
     Gui, Destroy
     Gui, fb: New, ,%title%
-    Gui, font,s13 , calibri
+    Gui, font,s13 , Consolas
     Gui, fb: Add, text, xp yp+10 c%t_color%, % TOC "`n"
     Gui, fb: Add, Edit, w120 vUserInput
     Gui, fb: Add, Button, W60 X+10 Default gButtonOK, OK
@@ -628,7 +619,7 @@
     Gui, Color, %w_color%
     Gui, fb: Show, % "x" GUI_X " y" GUI_Y,                                          ; Show gui at center of current screen
     ; Gui, +LastFound
-    WinWaitClose                                                                ; WinSet, Transparent , 255, ahk_id %GUI_Hwnd%
+    WinWaitClose                                                                ; WinSet, Transparent , 255, ahk_id %CB_Hwnd%
     return
 
     ButtonOK:
@@ -662,6 +653,7 @@
     TOC := "Key`tSelection`n-----`t" line "`r"
     For dest, ref in arr_KV_swapped
     {
+        dest := Trim(AddSpaceBtnCaseChange(dest, 0))
         if groups {
             prefix := substr(dest, 1, 3)
             if (prefix <> prev_prefix and prev_prefix and prefix) {             ; adds blank line between changes in selection group prefix 
@@ -669,9 +661,10 @@
             }
             prev_prefix := prefix
         }
-        TOC .= (TOC <> "" ? "`n" : "") ref "`t" rtrim(dest, """")
+
+        TOC .= (TOC <> "" ? "`n" : "") ref "`t" trim(dest, """")
     }
-    TOC := AddSpaceBtnCaseChange(TOC, 0)fgg
+    
     return TOC
   }
  
@@ -789,6 +782,26 @@
 
 ; AHK UTILITIES _______________________________________________________________
 
+
+  CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
+    global config_path
+    section := sect ? sect : A_ComputerName
+
+    if (nval = "!") {
+        IniRead,  state,    %config_path%,%section%,%key%, 0
+        IniWrite, % !state, %config_path%,%section%,%key%
+    } else {   
+        IniWrite, %nval%, %config_path%,%section%, %key%
+    }
+    return
+  }
+  
+  GC(key = "CB_Titlebar", d = "") {                                             ; Get Config.ini value
+    global config_path
+    IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
+    return % val
+  }
+
   MsgBoxVar(mb = True) {
     var := clip()
     out := mb ? "Msgbox % " : ""
@@ -852,7 +865,15 @@
     w := NumGet(rc, 8, "int")
     h := NumGet(rc, 12, "int")
   }
- 
+
+  GetMonInfo(wa = "8", ha = "8") {
+    n := GetCurrentMonitorIndex()
+    SysGet, XY, MonitorWorkArea , %n%
+    x  := XYLeft                 , y  := XYtop
+    w  := Abs(XYLeft-XYRight)+wa , h  := Abs(XYtop-XYbottom)+ha
+    return % x " " y " " w " " h
+  }
+
   WriteToINI(section = "DESKTOP-T6USCO1", key = "cursor_follow", var = "") {
     global config_path, C
     var := clip()
@@ -901,43 +922,98 @@
     Else
         StartTimer := A_TickCount
   }
- 
+
   ConfigureWinGolems(config_path = "", apps*) {
-    global C
+    global C, exe := {}
+    static doc_exe, xls_exe, ppt_exe, pdf_exe, html_exe, sync_exe, editor_exe
+
     path := RetrieveINI(A_ComputerName, "editor_path")
     if (!FileExist(config_path) or path = "ERROR") {
-        MsgBox,4132, WinGolems Setup, A valid configuration profile for this computer was not detected, would you like to create one?
-        IfMsgBox Yes
-        {
-            CreateConfigINI(apps*)
-        }
-        else
-        {
-            ShowPopup("Warning WinGolems is not setup", C.white,, "400", "75", "-1000", "16", "610")
-            exit
-        }
+        Gui, c: +LastFound
+        Gui, c: Destroy          
+        Gui, c: New,,WinGolems Configuration
+        Gui, c: +LastFound +OwnDialogs +Owner -DPIscale +Resize +AlwaysOnTop ; +E0x08000000 +Resize  +E0x00200 (border)
+        Gui, c: Color,% C.bwhite
+        
+        lw := 150, rw := 200
+        Gui, c: font, s11 w%lw%, %fnt%, Consolas
+        Gui, c: Add, Text,% "w" . (rw + lw) . " xm"
+            ,No system configuration detected. Please confirm/modify the following default application associations.`n
+        
+        Gui, c: font, s10 w%lw%, %fnt%, Consolas
+        
+        Gui, c: Add, Text, section xm w%lw%,word files
+        Gui, c: Add, Edit, w%rw% ys vdoc_exe,% apps[1]         
+        
+        Gui, c: Add, Text, section xm w%lw%,excel files
+        Gui, c: Add, Edit, section w%rw% ys vxls_exe,% apps[2]
+    
+        Gui, c: Add, Text, section xm w%lw%,powerpoint files
+        Gui, c: Add, Edit, w%rw% ys vppt_exe,% apps[3]         
+        
+        Gui, c: Add, Text, section xm w%lw%,pdf viewer
+        Gui, c: Add, Edit, section w%rw% ys vpdf_exe,% apps[4]
+        
+        Gui, c: Add, Text, section xm w%lw%,web browser
+        Gui, c: Add, Edit, w%rw% ys vhtml_exe,% apps[5]         
+        
+        Gui, c: Add, Text, section xm w%lw%,cloud backup
+        Gui, c: Add, Edit, section w%rw% ys vsync_exe,% apps[6]
+    
+        Gui, c: Add, Text, section xm w%lw%,default editor
+        Gui, c: Add, Edit, w%rw% ys veditor_exe,% apps[7]         
+        
+        Gui, c: Add, Text, section xm w%lw%,
+        Gui, c: Add, Button, w%rw% ys Default gSubmit_Button, submit                   ; Gui, c: Add, Button, ys h35 x+5 w80 Default gEnter_Button, Enter ;
+        
+        Gui, c: show, autosize 
+        return
+    
+        Submit_Button:
+            Gui, c: Submit
+            exe["doc"] := doc_exe
+            exe["xls"] := xls_exe
+            exe["ppt"] := ppt_exe
+            exe["pdf"] := pdf_exe
+            exe["html"] := html_exe
+            exe["sync"] := sync_exe
+            exe["editor"] := editor_exe
+            CreateConfigINI(exe*)
+            return
+    } else {
+        CreateEXEDict()
     }
   }
- 
-  CreateConfigINI(apps*) {
+
+  CreateEXEDict() {
+    apps := ["doc","xls","ppt","pdf","html","sync","editor"]
+    global exe := {}
+    loop % apps.MaxIndex()
+    {
+        SplitPath,% GC(apps[A_Index] "_path"), FileName
+        exe[apps[A_Index]] := FileName
+    }
+    return
+  }
+
+  CreateConfigINI(exe*) {
     global config_path, UProfile, med, C
-    PATH := FindAppPath(apps*)
-    IniWrite, % PATH[apps[1]], %config_path%, %A_ComputerName%, doc_path
-    IniWrite, % PATH[apps[2]], %config_path%, %A_ComputerName%, xls_path
-    IniWrite, % PATH[apps[3]], %config_path%, %A_ComputerName%, ppt_path
-    IniWrite, % PATH[apps[4]], %config_path%, %A_ComputerName%, pdf_path
-    IniWrite, % PATH[apps[5]], %config_path%, %A_ComputerName%, html_path
-    IniWrite, % PATH[apps[6]], %config_path%, %A_ComputerName%, sync_path
-    IniWrite, % PATH[apps[7]], %config_path%, %A_ComputerName%, editor_path
-    IniWrite,141,              %config_path%, %A_ComputerName%, F_height
-    IniWrite,415,              %config_path%, %A_ComputerName%, F_width
-    IniWrite,lg.ico,           %config_path%, settings, starting_icon
-    ShowPopup("Done!", C.lgreen, C.bgreen, "200", "60", "-1000", "15") 
-    sleep, med*2
+
+    PATH := FindAppPath(exe*)
+    CC("doc_path"      , PATH[exe["doc"]])
+    CC("xls_path"      , PATH[exe["xls"]])
+    CC("ppt_path"      , PATH[exe["ppt"]])
+    CC("pdf_path"      , PATH[exe["pdf"]])
+    CC("html_path"     , PATH[exe["html"]])
+    CC("sync_path"     , PATH[exe["sync"]])
+    CC("editor_path"   , PATH[exe["editor"]])
+    CC("starting_icon" , "lg.ico", "settings")
+    ShowPopup("Configuration complete`nYou are good to go!", C.lgreen, C.bgreen, "200", "60", "-1200", "15") 
+    sleep, med*4
     ClosePopup()
     return
   }
- 
+
   FindAppPath(app*) {
     global UProfile, PF_x86, C
     FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*"]
@@ -968,7 +1044,7 @@
     } else
         return %output%
   }
- 
+
   SetTrayIcon(ico_file) {
     ; change tray icon
     IfExist, %ico_file%
@@ -1092,28 +1168,29 @@
     global config_path
     SysGet, monitorsCount, 80
 
-    Loop %monitorsCount% {
-        SysGet, sg, monitor, %A_index%
-        SGw  := Abs(SGLeft - SGRight) , SGh  := Abs(SGtop - SGbottom)
-        IniWrite,%SGLeft% %SGtop% %SGw% %SGh%, %config_path%, %A_ComputerName%, MonDimSG%A_Index%
-        Gui, z: New, 
-        Gui, z: +hwndZhwnd
-        Gui, z: show, x%SGLeft% y%SGtop% w%SGw% h%SGh%
-        WinSet, Transparent, 0, ahk_id %zhwnd%
-        Gui, z: +LastFound -dpiscale +Resize +OwnDialogs +AlwaysOnTop -E0x00200
-        WinRestore,zhwnd
-        WinMaximize,A
-        WinGetPos , xt, yt, wt, ht, A
-        CC("MonDim" A_Index, xt " " yt " " wt " " ht)
-        SysGet, OutputVar, MonitorPrimary
-        if (A_index = OutputVar) {
-            CC("MonDimDiff", (xt-SGLeft) " " (yt-SGtop) " " (wt-SGw) " " (ht-SGh))
-            ; Msgbox % "`n(xt-SGLeft) : " . (xt-SGLeft)  . "`n (yt-SGtop) : " .  (yt-SGtop)  . "`n (wt-SGw) : " .  (wt-SGw)  . "`n (ht-SGh)): " .  (ht-SGh)
+    if (GC("MonDim","error") == "error") 
+        Loop %monitorsCount% {
+            SysGet, sg, monitor, %A_index%
+            SGw  := Abs(SGLeft - SGRight) , SGh  := Abs(SGtop - SGbottom)
+            ; IniWrite,%SGLeft% %SGtop% %SGw% %SGh%, %config_path%, %A_ComputerName%, MonDimSG%A_Index%
+            CC(" MonDimSG" A_Index, SGLeft " " SGtop " " SGw " " SGh)
+            Gui, z: New, 
+            Gui, z: +hwndZhwnd
+            Gui, z: show, x%SGLeft% y%SGtop% w%SGw% h%SGh%
+            WinSet, Transparent, 0, ahk_id %zhwnd%
+            Gui, z: +LastFound -dpiscale +Resize +OwnDialogs +AlwaysOnTop -E0x00200
+            WinRestore,zhwnd
+            WinMaximize,A
+            WinGetPos , xt, yt, wt, ht, A
+            CC("MonDim" A_Index, xt " " yt " " wt " " ht)
+            SysGet, OutputVar, MonitorPrimary
+            if (A_index = OutputVar) {
+                CC("MonDimDiff", (xt-SGLeft) " " (yt-SGtop) " " (wt-SGw) " " (ht-SGh))
+                adj := xt-SGLeft
+            }
+            Gui z: Destroy
         }
-        Gui z: Destroy
-    }
     
-     
     Exit 
     return
 
@@ -1154,8 +1231,6 @@
     MouseGetPos, StartX, StartY
     sleep, med * 1.5
     RecallMousePosClick("FE_cg", "1", "right", 0) 
-    ; sleep, med * 1.5
-    ; MouseClick, right, % GetConfig("F_width"), % GetConfig("F_height")
 
     n := 0
     Loop {
@@ -1265,14 +1340,6 @@
     loop %n%
         dirup%A_Index% := RegExReplace(A_ScriptDir, "(\\[^\\]+) {" A_Index "}$")
     return % dirup%n%
-  }
- 
-  GetConfig(app_key = "F_height") {
-    ; retrieves system dependent file explorer menu coordinates for
-    ; collapsing/uncollapsing grouped views
-    global config_path
-    IniRead, output, %config_path%, %A_ComputerName%, %app_key%
-    return %output%
   }
  
   ActivateApp(app_path = "", arguments = "", start_folder_toggle = False) {
@@ -1646,9 +1713,13 @@
     ; an inter-process communication mechanism. 
     ; Based on a subset of Component Object Model (COM) that 
     ; was intended for use by scripting languages
-    RunMSWordMacro("10")
-    oWord := ComObjActive("Word.Application")
-    oWord.Run(MacroName)
+    try {
+        oWord := ComObjActive("Word.Application")
+        oWord.Run(MacroName)
+    } catch e {
+        MsgBox, something went wrong, check if you have permission to run macros 
+        return
+    }
   }
  
   command(tgt, opt = "") {
@@ -1981,20 +2052,3 @@
  
 ; TEST ________________________________________________________________________
 
-
-CC(sect = "GUI_Titlebar", nval = "") {                                          ; Change Config
-    global config_path
-    if (nval = "!") {
-        IniRead,  state,    %config_path%, %A_ComputerName%, %sect%, 0
-        IniWrite, % !state, %config_path%, %A_ComputerName%, %sect%
-    } else {   
-        IniWrite, %nval%, %config_path%, %A_ComputerName%, %sect%
-    }
-    return
-}
-
-GC(sect = "GUI_Titlebar", d = "") {                                             ; GC
-    global config_path
-    IniRead,  val, %config_path%, %A_ComputerName%, %sect%, %d%
-    return % val
-}

@@ -8,7 +8,7 @@
   #KeyHistory 0                                                                 ; higher number for debugging 
   #UseHook                                                
   #InstallKeybdHook                                                             ; The keyboard hook monitors keystrokes for the purpose of activating hotstrings and any keyboard hotkeys
-  ; #InstallMouseHook                                                           ; The mouse hook monitors mouse clicks for the purpose of activating mouse hotkeys and facilitating hotstrings.
+  #InstallMouseHook                                                             ; The mouse hook monitors mouse clicks for the purpose of activating mouse hotkeys and facilitating hotstrings.
   #Singleinstance Force                                                         ; only one instance of this script can be active
   Process, Priority, , A                                                         
   SetKeyDelay, 10, 10                                             
@@ -26,27 +26,10 @@
  EnvGet, hpath, Homepath
  EnvGet, UProfile, UserProfile
  EnvGet, PF_x86, ProgramFiles(x86)
- 
- config_path      := A_ScriptDir "\config.ini"
- short            := 100                                                        ; set sleep time in milliseconds between actions for specific functions
- med              := 300                                                        
- long             := 900                                                        
- 
- lg     := "D2DEBF", lb    := "BED7D6", ly     := "F2EFDB", lp      := "CDC9D9" ; light green (lg), light blue (lb), light yellow (ly), light purple (lp), light red (lr)
- black  := "000000", white := "FFFFFF", red    := "FF0000", green   := "008000"
- navy   := "000080", blue  := "0000FF", purple := "800080", lpurple := "CE93D8"
- bgreen := "29524A", lr    := "F6E1E0"
- 
- GroupAdd, FileListers, ahk_class CabinetWClass                                 ; create reference group for file explorer and save as dialogue boxes
- GroupAdd, FileListers, ahk_class WorkerW
- GroupAdd, FileListers, ahk_class #32770, ShellView
- 
- Gosub, Test_autoexecution                                                      ; initializes variables for script testing template
- Gosub, JL_AutoExecution                                                        ; [JL]  win_goto.ahk  
- gosub, coding_autoexecution  
- ; Gosub, Bing_autoexecution    
- ; Gosub, chrome_autoexecution  
+ EnvGet, winpath, windir
 
+ config_path := A_ScriptDir "\config.ini"
+ Gosub, Test_autoexecution                                                      ; initializes variables for script testing template
  SetTrayIcon(A_ScriptDir "\assets\Aikawns\W\gold.ico")                          ; set static icon color: black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
 
  ; uncomment to disable WIN+L key for locking screen upon WinGolems startup     ; requires registry write premission, end & L hotkey toggles this as well
@@ -68,25 +51,14 @@
  ConfigureWinGolems(config_path, apps*)                                         
  
 
-; LOAD AHK SCRIPTS _______________________________ end of auto-execution section
- #Include %A_ScriptDir%\golems                                                  ; note: subsequent include statements look for files in the last #include + folder path
+; LOAD AHK GOLEMS __________________________ ***end of auto-execution section***
+ 
+ #Include %A_ScriptDir%\golems                                                  
  #Include _functions.ahk   
- #Include *i win_text_navigation.ahk            
- #Include *i win_sys.ahk   
- #Include *i win_goto.ahk   
- #Include *i win_mem_system.ahk   
- #Include *i win_file_explorer.ahk   
- #Include *i test.ahk   
- #Include *i R.ahk                               
- #Include *i Python.ahk                          
+ #Include *i 1_Template_QuickStart.ahk
+ #Include *i 2_Template_CommandBox.ahk
+ #Include *i 3_Template_ApplicationSpecific.ahk
  
- #Include %A_ScriptDir%\..\Google Drive\secure\
- ; #Include *i bing.ahk
- #Include *i mm.ahk                     
- #Include *i %A_ScriptDir%\..\ahk\golems\coding_environments.ahk
- #Include *i %A_ScriptDir%\..\ahk\golems\chrome.ahk
- 
-
 /* #INCLUDE MECHANICS ********************************************************** 
  Start.ahk:
      include Return.ahk
