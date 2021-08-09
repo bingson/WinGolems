@@ -25,11 +25,11 @@
 |  T   Toggle CommandBox UI options            Td, Tt, Tt, Ts, Tw  mode: (d)isplay,(m)inimal; toggle: t)itlebar,(s)crollbar,(w)rap     T?|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" equivalent to entering b in CB("~win")   W?|
 |  W~  Change W command suffix reference       W~win, W~pdf        M|H|B behave the same as W to access different CB(~suffix) keys    W~?| 
-| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
+| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     => select # of rows below: 3, 10, 20 + delete, 23 + no selection    J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K = 10 if no numbers or other letters entered (e.g., KKKK = 40)   K?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C              (R?~?__?~?) R?~?|
-| R?~  Change replacement separators (1|2)     R1~%; R2~~>         Changes the above replacement separators to % and ~>              R?~?| 
+| R?~  Change replacement separators (1|2)     R1~%; R2~~>         => changes the above replacement separators to % and ~>           R?~?| 
 |  G   Run any function                        GMoveWin,TopLeft    fmt: fn1name,params__fn2name,params                   (G?,?__?,?) G?,?|
 | G?~  Create G function|parameter alias (f|p) Gf~mw~MoveWin       makes Gmw,tl behave identically to GMoveWin,TopLeft             G?~?~?|
 |                                              Gp~tl~TopLeft       list of current aliases in the file ALIAS.ini in /mem_cache/ folder   |
