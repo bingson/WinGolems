@@ -15,7 +15,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 C_input := FirstChar
                 gosub, Load
                 return 1
-            Case "?":
+            Case "?":                                                           ; load help.txt file in display
                 NameNoExt := "help"
                 C_input := "help"
                 gosub, Load
@@ -30,21 +30,23 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     FilePrepend(f_path Dir NameNoExt ".txt", text_to_add) 
                     ShowPopUp("added to top of`n" NameNoExt ,C.lgreen)
                 }    
-                sleep 600
                 gosub, Load
                 return 1    
             Case "L":                                                           ; display file in command box
                 Load:         
                 tgt := f_path dir NameNoExt
-                IniRead, titlebar, %config_path%, %A_ComputerName%, GUI_Titlebar, 1
-                IniRead, titlebar, %config_path%, %A_ComputerName%, GUI_editWrap, 0
                 if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) or (C_input = "l") {
-                    txt  := CreateCacheList("list")
+                    NameNoExt := "list"
+                    CC("CB_last_display", dir NameNoExt)
+                    txt := CreateCacheList("list")
+                    tgt := f_path dir NameNoExt
                 } else {
-                    IniWrite, %dir%%NameNoExt%, %config_path%, %A_ComputerName%, CB_last_display
+                    CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                 }
                 new_title_file := dir . NameNoExt . RetrieveExt(tgt)
+                CC("CB_title", new_title_file)
+                UpdateGUI(txt, title, new_title_file)
                 return 1
             Case "O":                                                           ; overwrite file/clipboard
                 C_input := RegExReplace(C_input, "S) +", A_Space)
@@ -71,7 +73,6 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                             return 1
                     }
                     WriteToCache(namenoext,, dir)   
-                    sleep 800
                     gosub, Load
                     return 1 
                 } else {
@@ -86,12 +87,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         try {
                             Filecopy,% f_path . nDir . nNameNoExt . ".txt",% f_path . oDir . oNameNoExt . ".txt", 1
                             ShowPopUp(oFileName . " overwritten with " . nFileName,C.lgreen,C.bgreen,,,-1000)
-                            sleep 800
                             txt  := AccessCache(oNameNoExt,dir, False)
                             new_title_file := oNameNoExt . ".txt" 
                         } catch {
                             ShowPopUp("invalid path",C.lgreen,C.bgreen,,,-2000)
-                            sleep 800
                             UpdateGUI()
                         }
                     }
@@ -189,7 +188,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     default:
                         ActivateWin("ahk_id " TgtWinID)      
                         vtext := clip()                       
-                        arrN := StrSplit(C_input, "__")
+                        arrN := StrSplit(C_input, "__")  
                         loop % arrN.MaxIndex()
                         {
                             AB := StrSplit(arrN[A_index], "~")
@@ -199,7 +198,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         return
 
                 }        
-                
+                return
             Case "F":                                                           ; fill space with char
                 ActivateWin("ahk_id " TgtWinID)                             
                 arr := StrSplit(C_input, ",")
@@ -242,8 +241,9 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     else
                         UDSelect("down", "10", C_input)
                 }
+                GUI 2: destroy
                 return
-            Case "K":
+            Case "K":                                                           ; select|goto rows above
                 if RegExMatch(c_input,"[a-jl-zA-JL-Z]")                         ; if there are any other letters of the alphabet in the input
                     RunLabel(UserInput, suffix, TgtWinID)
                 else 
@@ -254,10 +254,30 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     else
                         UDSelect("Up", "10", C_input)
                 }
+                GUI 2: destroy
                 return
-            Case "W":
+            Case "W","H","B","M":
+                RunOtherCB(C_input, FirstChar) 
+            Case "Q":       
+                C_1stChr := SubStr(C_input, 1, 3)                                                    ; open cache folder in explorer and (case-insensitive) select files according to match string  
+                switch C_input
+                {
+                    Case "t"   : search("thesaurus.com/browse/")                                 
+                    Case "d"   : search("dictionary.com/browse/")  
+                    Case "f"   : search("finviz.com/quote.ashx?t=") 
+                    case "y"   : search("youtube.com/results?search_query=")
+                    case "i"   : search("google.com/search?tbm=isch&q=")
+                    Case "w"   : search("en.wikipedia.org/w/index.php?search=") 
+                    Case "n"   : search("news.google.com/search?q=") 
+                    Case "a"   : search("autohotkey.com/docs/search.htm?q=", "&m=2")
+                    Case "so"  : search("stackoverflow.com/search?q=") 
+                    Case "io"  : search("investopedia.com/search?q=") 
+                    Case "twt" : search("twitter.com/search?q=")
+                       default : return
+                }            
+
                 return
-            Case "S":                                                           ; open cache folder in explorer and (case-insensitive) select files according to match string  
+            Case "S":                                                           ; search selected text
                 OpenFolder("mem_cache\")
                 ActivateApp("explorer.exe", A_ScriptDir "\mem_cache\", False)
                 sleep 400
@@ -266,25 +286,39 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "T":
                 Switch C_input 
                 {
-                    case "scrollbars","s": CC("GUI_ScrollBars", "!")
-                    case "title"     ,"t": CC("GUI_Titlebar", "!")
-                    case "default"   ,"d": CC("GUI_Display",1), CC("GUI_Titlebar",1), CC("GUI_ScrollBars",0)
-                    case "NoDisplay" ,"i": CC("GUI_Display",0), CC("GUI_Titlebar",0)
-                    case "minimized" ,"m": CC("GUI_input_only",1)
+                    case "scrollbars","s": CC("CB_ScrollBars", "!")
+                    case "title"     ,"t": CC("CB_Titlebar", "!")
+                    case "wrap_text" ,"w": 
+                        CC("CB_Wrap", "!")
+                        return 2
+                    case "default"   ,"d": 
+                        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
+                        MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
+                        d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
+                        CC("CB_position", d)
+                    case "minimized" ,"m": 
+                        CC("CB_Titlebar",0), CC("CB_Display",0)
+                        IBw := GC("CB_InputBox_width")
+                        MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
+                        cX := (MI[3] - IBw) // 2
+                        bY := MI[4] - 25
+                        mw := IBw + 4
+                        mh := 40 
+                        CC("CB_position","x" cX " y" bY " w" mw " h" mh)
                     default:
                 }
-                updateGUI()
+                UpdateGUI()
                 return 1
-            Case "H":
-                msgbox 2
-                return
+
             Default:
                 return 1
         } 
+        return 1
     } 
     Else 
     {
         RunLabel(UserInput, suffix, TgtWinID)
     }
-    return
+    GUI 2: destroy
+    return 1
  }

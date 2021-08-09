@@ -1,10 +1,10 @@
 #IfWinActive
 
-#enter:: CB("~win")                                                             ;win: opens command box that runs ~win suffix CB keys
+  #space:: CB("~win")                                                           ;win: opens command box that runs ~win suffix CB keys
 
 ; CB hotkey assignment _________________________________________________________; shared by all Command Boxes 
 
-  #IF WinActive("ahk_id " ghwnd)                                                ; If command Box active
+  #IF WinActive("ahk_id " ghwnd) or TitleTest("(-_-)")                          ; If command Box active
 
   !q::         MoveWin("TL")                                                    ; move CB window to top left
   !e::         MoveWin("TR")                                                    ; move CB window to top right
@@ -17,9 +17,10 @@
   #right::                                                                      ; move CB window to right half
   !d::         MoveWin("R")                                                     ; move CB window to right half
   #space::     GUISubmit()                                                      ; submit GUI input 
-  !r::         GUIRecall()
+  $!x::        ToggleDisplay()                                                  ; toggle Command Box display/minimalist mode
+  !r::         GUIRecall()                                                      ; reenter last command
 
-  #IF WinExist("ahk_id " ghwnd)                                                 ; If command Box exists
+  #IF WinExist("ahk_id " ghwnd) and !WinActive("ahk_id " ghwnd)                 ; If command Box exists
   
   $<^space::                                                                    ; activate CB if exists and move focus to inputbox
   $>^space:: ActivateWin("ahk_id " ghwnd)                                       ; activate CB if exists and move focus to inputbox

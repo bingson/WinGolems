@@ -1,0 +1,68 @@
+; SELECT TEXT __________________________________________________________________
+
+  $!f::       SelectWord()                                                      ;[ST] select word at text cursor
+  $+!f::      SelectLine()                                                      ;[ST] select current line starting from begining of line
+  $^!f::      Sendinput {end}+{home}                                            ;[ST] select line starting from end of line
+  
+  $^#Left::                                                                     ;[ST] select to beginning of line 
+  $^#h::      sendinput +{Home}                                                 ;[ST] select to beginning of line
+  $^#Right::                                                                    ;[ST] select to end of line
+  $^#l::      sendinput +{End}                                                  ;[ST] select to end of line
+  $+^j::                                                                        ;[ST] select to next line
+  $<+<#j::    Sendinput +{down}                                                 ;[ST] select to next line
+  $+^k::                                                                        ;[ST] select to line above
+  $<+<#k::    Sendinput +{up}                                                   ;[ST] select to line above
+ 
+  $^#j::      sendinput ^+{end}                                                 ;[ST] select all below
+  $^#k::      sendinput ^+{home}                                                ;[ST] select all above
+  
+  
+  $+#h::      Sendinput +^{Left}                                                ;[ST] extend selection Left  1 word
+  $+#l::      Sendinput +^{Right}                                               ;[ST] extend selection Right 1 word
+  
+  #If GetKeyState("shift", "P")
+  PrintScreen & h::      Sendinput +^{Left 2}                                   ;[ST] extend selection Left  1 word
+  PrintScreen & l::      Sendinput +^{Right 2}                                  ;[ST] extend selection Right 1 word
+  #If 
+ 
+  +^h::       Sendinput {shift down}{ctrl down}{left 2}{ctrl up}{shift up}      ;[ST] extend selection left 2 words
+  +^l::       Sendinput {shift down}{ctrl down}{Right 2}{ctrl up}{shift up}     ;[ST] extend selection Right 2 words
+  
+  $+!l::      Sendinput +{Right}                                                ;[ST] extend selection Right 1 character
+  $+!h::      Sendinput +{Left}                                                 ;[ST] extend selection Left  1 character
+  +!j::       sendinput +{down}                                                 ;[ST] extend selection down  1 row
+  +!k::       sendinput +{up}                                                   ;[ST] extend selection up    1 row
+  $+^!l::     Sendinput +{Right 4}                                              ;[ST] extend selection Right 4 character lengths
+  $+^!h::     Sendinput +{Left 4}                                               ;[ST] extend selection Left  4 character lengths
+ 
+
+; NAVIGATE TEXT ________________________________________________________________
+ 
+  $#h::             sendinput ^{Left}                                           ;[NT] jump to next word = simulate ctrl+Left
+  $#l::             sendinput ^{Right}                                          ;[NT] jump to next word = simulate ctrl+Right
+  PrintScreen & h:: sendinput ^{Left 4}
+  PrintScreen & l:: sendinput ^{Right 4}
+ 
+ 
+  home::home 
+  
+  !^Left::                                                                      ;[NT] Home
+  ^!h::             sendinput {home}                                            ;[NT] Home
+  
+  !^Right::                                                                     ;[NT] End
+  ^!l::             sendinput {end}                                             ;[NT] End
+ 
+  $!h::             sendinput {Left}                                            ;[NT] Left
+  $!l::             sendinput {Right}                                           ;[NT] Right
+  *$#k::           
+  *$!k::            sendinput {Up}                                              ;[NT] Up
+  *$#j::           
+  *$!j::            sendinput {Down}                                            ;[NT] Down
+ 
+  #p::
+  printscreen & p::
+  #e::              sendinput ^{home}                                           ;[NT] Ctrl + Home
+  
+  #sc01a::
+  PrintScreen & sc01a::                                                         ;[NT] Ctrl + End
+  +#e::             sendinput ^{end}                                            ;[NT] Ctrl + End

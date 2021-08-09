@@ -1,6 +1,0 @@
-HOTKEY, YEAR, MONTH, DAY, HR, MIN, DESTINATION, COMMENT 
-
- Gosub, Autoexecutio , 2021 , May , 18 ,14 , 43 , windows_sys.ahk,  
- Gosub, AutoexecutionGosub, Autoexecutio , 2021 , May , 18 ,14 , 43 , windows_sys.ahk,  
-; MANIPULATE ACTIVE WINDOW ____________________________________________________ , 2021 , May , 18 ,14 , 43 , windows_sys.ahk,  
-retur , 2021 , May , 18 ,19 , 41 , windows_sys.ahk,  

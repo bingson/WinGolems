@@ -1,3 +1,0 @@
-#If GetKeyState("shift", "P")
-   PrintScreen & j:: 
-#If

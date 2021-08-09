@@ -6,7 +6,7 @@
     
     Gui, PopUp: New
 
-    IniRead, CB_WinID, %config_path%, %A_ComputerName%, CB_GUI_hwnd
+    IniRead, CB_WinID, %config_path%, %A_ComputerName%, CB_hwnd
     if WinExist("ahk_id " CB_WinID) 
         Gui, PopUp:+Owner2
 
