@@ -46,9 +46,3 @@
 | Rf~  Modify file w/ saved replace't pattern  Rf~1~p n            chg 1.txt w/ pattern in p.txt & save result to n.txt          Rf~?~? ?|
 |      pattern file fmt: no R at beginning     ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
 |________________________________________________________________________________________________________________________________________|
- p1 MONZO
- p2 DAG COURSE
- p3 python environment
- wd move window to other desktop
- L..\..\Google Drive\secure\config.ini
- Lb\_hist.txt
