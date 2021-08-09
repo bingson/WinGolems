@@ -23,3 +23,12 @@ kh
 Tm
 Td
 qw~
+Tm
+Td
+gl
+gl
+ls
+Ll
+?
+c~
+qw~

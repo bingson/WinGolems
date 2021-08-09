@@ -6,348 +6,128 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
  sc01a or b = {[} or {]} 
 
-==o====o====o====o====o====o== CHROME ==o====o====o====o====o====o====o====o
- Alt+0                  
- Alt+1                  
- Alt+2                  
- Alt+3                  
- Alt+6                  
- Alt+7                  
- Alt+8                  
- Alt+Ctrl+0             
- Printscreen & Sc035     
- F12 & 9                 
- F12 & 8                 
- Alt+Shift+6            
- Ctrl+Alt+5             
- Ctrl+S                 
- Ctrl+Sc035             
- Shift+Alt+0            
- F12 & 0                 
- Shift+Alt+5            
- Shift+Alt+8            
- Shift+Alt+Ctrl+1       
- Shift+Alt+Ctrl+2       
- Shift+Alt+Ctrl+3       
- Shift+Alt+Ctrl+4       
- Shift+Ctrl+0           
- Ctrl+R                  
- Alt+Shift+K             
- Shift+Ctrl+M           
- Alt+N                   
- Alt+R                   
- Shift+Alt+4            !4 reserved for 
- Shift+Ctrl+5           !5 reserved for %%
- Ctrl+B                  <JL> opens edit file jump list
- Shift+Win+Sc035         [S] search autohotkey.com for selected text
- Win+Sc035               [S] search Google for selected text
- Ctrl+Win+Sc035          [S] search Google images for selected text
- Alt+Win+Sc035           [S] search Wikipedia for selected text
- Alt+P                   close tab
- F11                     keyboard shortcuts for chrome extensions
- Ctrl+Sc034              move tab to first position
- Ctrl+Sc033              move tab to last position
- Shift+Ctrl+Alt+R        restart browser
- Shift+Ctrl+Alt+W       save and close all browser windows
- Alt+Sc035              SC035 = /
- Alt+I                  select 1st tab
- Alt+O                  select last tab
- Alt+Shift+J             zoom in
+==o====o====o====o====o== 1_TEMPLATE_QUICKSTART ==o====o====o====o====o====o
+ Win+F1                  [A] activate app 1 in task bar
+ Win+F2                  [A] activate app 2 in task bar
+ Win+F3                  [A] activate app 3 in task bar
+ Win+F4                  [A] activate app 4 in task bar
+ Win+F5                  [A] activate app 5 in task bar
+ Win+F6                  [A] activate app 6 in task bar
+ Win+F7                  [A] activate app 7 in task bar
+ Win+F8                  [A] activate app 8 in task bar
+ Win+F9                  [A] activate app 9 in task bar
+ Win+C                   [A] Activate Calculator
+ Win+A                   [A] Activate default editor
+ Win+E                   [A] Activate Excel
+ Win+B                   [A] Activate File explorer
+ Win+D                   [A] Activate pdf viewer
+ Win+Q                   [A] Activate Powerpoint
+ Win+F                   [A] Activate previously saved window ID
+ Win+R                   [A] Activate previously saved window ID
+ Win+T                   [A] Activate previously saved window ID
+ Win+G                   [A] Activate previously saved window ID
+ Win+S                   [A] Activate web browser
+ Win+W                   [A] Activate Word
+ Ctrl+Win+F              [A] Save window ID for subsequent activation w/ win + f
+ Ctrl+Win+G              [A] Save window ID for subsequent activation w/ win + g
+ Ctrl+Win+R              [A] Save window ID for subsequent activation w/ win + r
+ Ctrl+Win+T              [A] Save window ID for subsequent activation w/ win + t
+ Alt+Sc027               [C] alternate esc key (alt + semicolon)
+ Win+Ins                 [C] Always on top: OFF
+ Win+Del                 [C] Always on top: ON
+ Win+Sc027               [C] minimize window
+ Win+Tab                 [C] rotate through active program instances starting from newest
+ Shift+Win+Tab           [C] rotate through active program instances starting from oldest
+ Ctrl+Alt+Space          [C] toggle maximize/restore window
+ Alt+Win+0               [M] add selected text to the bottom of 0.txt
+ Alt+Win+1               [M] add selected text to the bottom of 1.txt
+ Alt+Win+2               [M] add selected text to the bottom of 2.txt
+ Alt+Win+3               [M] add selected text to the bottom of 3.txt
+ Alt+Win+4               [M] add selected text to the bottom of 4.txt
+ Alt+Win+5               [M] add selected text to the bottom of 5.txt
+ Alt+Win+6               [M] add selected text to the bottom of 6.txt
+ Alt+Win+7               [M] add selected text to the bottom of 7.txt
+ Alt+Win+8               [M] add selected text to the bottom of 8.txt
+ Alt+Win+9               [M] add selected text to the bottom of 9.txt
+ Ctrl+Win+Lbutton        [M] double click and paste contents of 1.txt at cursor position
+ Shift+Win+0            [M] overwrite 0.txt with selected text
+ Shift+Win+1            [M] overwrite 1.txt with selected text
+ Shift+Win+2            [M] overwrite 2.txt with selected text
+ Shift+Win+3            [M] overwrite 3.txt with selected text
+ Shift+Win+4            [M] overwrite 4.txt with selected text
+ Shift+Win+5            [M] overwrite 5.txt with selected text
+ Shift+Win+6            [M] overwrite 6.txt with selected text
+ Shift+Win+7            [M] overwrite 7.txt with selected text
+ Shift+Win+8            [M] overwrite 8.txt with selected text
+ Shift+Win+9            [M] overwrite 9.txt with selected text
+ Win+0                   [M] paste contents of 0.txt
+ Win+1                   [M] paste contents of 1.txt
+ Win+2                   [M] paste contents of 2.txt
+ Win+3                   [M] paste contents of 3.txt
+ Win+4                   [M] paste contents of 4.txt
+ Win+5                   [M] paste contents of 5.txt
+ Win+6                   [M] paste contents of 6.txt
+ Win+7                   [M] paste contents of 7.txt
+ Win+8                   [M] paste contents of 8.txt
+ Win+9                   [M] paste contents of 9.txt
+ Win+Alt+Lbutton         [M] paste contents of single digit .txt file entered at prompt
+ Win+O                   [MT] remove blank lines in selected text
+ Win+I                   [MT] replace multiple consecutive spaces w/ one space in selected text
+ Shift+Win+Y             [MT] Toggle capitalize the first letter of all selected words (title case) vs only the first word
+ Win+Y                   [MT] Toggle transform selected text to uppercase or lowercase
+ Win+P                   [NT] Ctrl + Home
+ *Alt+J                 [NT] Down
+ *Win+J                 [NT] Down
+ Ctrl+Alt+L              [NT] End
+ Ctrl+Alt+H              [NT] Home
+ Win+H                  [NT] jump to next word = simulate ctrl+Left
+ Win+L                  [NT] jump to next word = simulate ctrl+Right
+ Alt+H                  [NT] Left
+ Alt+L                  [NT] Right
+ Win+J                   [NT] scroll wheel down
+ Win+K                   [NT] scroll wheel Up
+ *Win+K                 [NT] Up
+ *Alt+K                 [NT] Up
+ Shift+Alt+J             [ST] extend selection down  1 row
+ Shift+Alt+H            [ST] extend selection Left  1 character
+ Shift+Win+H            [ST] extend selection Left  1 word
+ Shift+Alt+L            [ST] extend selection Right 1 character
+ Shift+Win+L            [ST] extend selection Right 1 word
+ Shift+Alt+K             [ST] extend selection up    1 row
+ Ctrl+Win+K             [ST] select all above
+ Ctrl+Win+J             [ST] select all below
+ Shift+Alt+F            [ST] select current line starting from begining of line
+ Ctrl+Alt+F             [ST] select line starting from end of line
+ Ctrl+Win+H             [ST] select to beginning of line
+ Ctrl+Win+L             [ST] select to end of line
+ Shift+Ctrl+K           [ST] select to line above
+ Shift+Ctrl+J           [ST] select to next line
+ Alt+F                  [ST] select word at text cursor
+ Win+U                   [ST] select word at text cursor
 
-==o====o====o====o====o== CODING_ENVIRONMENTS ==o====o====o====o====o====o==
- Shift+Ctrl+Alt+R        
- F11 & S                 
- Shift+Alt+K             
- Shift+Alt+Ctrl+K        
- Shift+Alt+Ctrl+J        
- Shift+Alt+J             
- Shift+Ctrl+Alt+8       [ahk] surround selected text with block comment braces
- F1 & K                  [base] clear all bookmarks
- Alt+P                   [base] close tab
- Alt+D                   [base] delete line
- Ctrl+Alt+D              [base] duplicate line
- Shift+Alt+0             [base] fold code to level 0
- Shift+Alt+1             [base] fold code to level 1
- Shift+Alt+2             [base] fold code to level 2
- Shift+Alt+3             [base] fold code to level 3
- Shift+Alt+4             [base] fold code to level 4
- Ctrl+Sc035              [base] fold current code level
- Shift+Ctrl+Sc035        [base] fold recursively
- Ctrl+Alt+Sc035          [base] fold/unfold all code toggle
- Shift+Alt+Right         [base] move to group 1
- Shift+Alt+Left          [base] move to group 2
- Alt+O                   [base] open last editor in group
- F12 & F                 [base] search/replace all files in directory
- Shift+Ctrl+Alt+F        [base] search/replace all files in directory
- Shift+Ctrl+D            [base] Select all occurrences of current selection
- Alt+G                   [base] select all text in between brackets
- F12 & G                 [base] source control
- Ctrl+Q                  [base] toggle comment
- Shift+Ctrl+Alt+O        [base] toggle output window
- Rightctrl+M             [base] toggle tab moves focus
- Leftctrl+M              [base] toggle tab moves focus
- Alt+Sc035               [base] unfold current code level
- Shift+Alt+Sc035         [base] unfold recursively
- Rightshift+Ctrl+Enter   [base] zen mode
- F12 & 1                 [FC] Add lvl 1 Border (default)
- F12 & 1                 [FC] Add lvl 1 Border .ipynb files
- F12 & 1                 [FC] Add lvl 1 Border .notes files
- F12 & 2                 [FC] Add lvl 2 Border (default)
- F12 & 2                 [FC] Add lvl 2 Border .ipynb files
- F12 & 2                 [FC] Add lvl 2 Border .notes files
- F12 & 3                 [FC] Add lvl 3 Border (default)
- F12 & 3                 [FC] Add lvl 3 Border .ipynb files
- F12 & 3                 [FC] Add lvl 3 Border .notes files
- Printscreen & Tab       [FC] Add Space Before Comment (default)
- F12 & Tab               [FC] Add Space Before Comment .ipynb files
- Printscreen & Capslock  [FC] Add Space Before Comment .ipynb files
- Shift+Ctrl+Q           [FC] comment line while preserving leading whitespace
- F12 & S                 [FC] convert selected CamelCase text to snake_case
- F12 & C                 [FC] convert selected snake_case or space delimited text to CamelCase
- F11 & C                 [FC] format code by adding spaces between math operators, before commas, ... (selected text)
- Leftshift+Ctrl+Space    [FC] Send {Space 4}
- Rightshift+B            [md] bold text
- F21 & F                 [md] insert hyperlink
- F1 & Sc034              [notes] add checkbox to current line
- Ctrl+Enter              [py] run selected code
- Shift+Ctrl+Alt+8       [py] surround selected text with block comment braces
- Leftshift+Ctrl+Backspace[FC] Send {BackSpace 4}
-
-==o====o====o====o====o== WIN_FILE_EXPLORER ==o====o====o====o====o====o====
- Alt+P                   [FE] close file explorer window
- Alt+N                   [FE] forward folder
- Ctrl+I                  [FE] groups: group by date
- Ctrl+O                  [FE] groups: group by file type
- Ctrl+Sc035              [FE] groups: group folding: Collapse all
- Alt+Sc035               [FE] groups: group folding: Expand all
- Ctrl+U                  [FE] groups: toggle groupby name/remove grouping
- Ctrl+Alt+C              [FE] Open Command Prompt Here
- Rightshift+Space        [FE] panes: move focus to current folder pane
- Leftshift+Space         [FE] panes: move focus to navigation pane
- Alt+Z                   [FE] panes: toggle navigation pane
- Ctrl+P                  [FE] panes: toggle preview plane
- Alt+B                   [FE] prev folder
- Alt+R                   [FE] rename file
- Ctrl+S                  [FE] select files by regex
- Shift+Alt+C            [FE] store file path(s) of selected file(s) in clipboard
- Ctrl+Alt+K              [FE] up one directory level
- Alt+U                   [FE] up one directory level
- Alt+Sc027               [FE] view: detailed file info with resized columns
- Leftctrl+K              [FE] view: sort by date modified
- Leftctrl+J              [FE] view: sort by name
- Rightctrl+K             [FE] view: sort by size
- Rightctrl+J             [FE] view: sort by type
- Ctrl+H                  [FE] view: toggle hide/unhide invisible files
-
-==o====o====o====o====o====o== WIN_GOTO ==o====o====o====o====o====o====o===
- Shift+Win+C             <A> Calculator
- Win+S                   <A> Chrome
- Win+T                   <A> Command Window
- Win+E                   <A> Excel
- Win+B                   <A> File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
- Shift+Win+M             <A> Mail
- Win+D                   <A> pdf-xchange
- Win+Q                   <A> Powerpoint
- Printscreen & N         <A> VS Code
- Win+A                   <A> VS Code
- Win+W                   <A> Word
- Printscreen & F         <EF> _functions.ahk
- Ctrl+Win+G              <EF> test.ahk
- Printscreen & G         <EF> win_goto.ahk
- Printscreen & R         <EF> win_sys.ahk
- Printscreen & T         <EF> win_text_navigation.ahk
- Rightshift+C            <F> %Homedrive% (C:)
- Rightshift+U            <F> %UserProfile%
- <HS>  wg>               <F> AHK folder
- Rightshift+Sc029        <F> AHK folder
- Rightshift+1            <F> AHK golems folder
- Rightshift+2            <F> AHK libs folder
- Rightshift+O            <F> C:\Program Files
- Rightalt+O              <F> C:\Program Files(x86)
- Rightshift+D            <F> Documents
- Rightshift+J            <F> Downloads
- Rightshift+M            <F> mem_cache
- Rightshift+P            <F> Pictures
- Rightshift+G            <F> Pictures
- Rightshift+R            <F> Recycle bin (doesn't work for save as diag)
- Rightshift+T            <F> This PC / My Computer
- Win+F3                  [ASW] (+ Alt) Saves ID of window for subsequent activation w/ #f
- Win+F4                  [ASW] (+ Alt) Saves ID of window for subsequent activation w/ #g
- Win+F1                  [ASW] (+ Alt) Saves ID of window for subsequent activation w/ LCtrl + space
- Win+F2                  [ASW] (+ Alt) Saves ID of window for subsequent activation w/ RCtrl + space
- Leftctrl+Space          [ASW] activates Window ID saved w/ #F1
- Rightctrl+Space         [ASW] activates Window ID saved w/ #F2
- Win+F                   [ASW] activates Window ID saved w/ #F3
- Win+G                   [ASW] activates Window ID saved w/ #F4
- Win+N                   [JL] opens file jump list
- Win+M                   [JL] opens folder jump list
- Win+Sc034               [JL] opens sys command jump list
- Win+Sc033               [JL] opens webpage jump list
-
-==o====o====o====o====o====o== WIN_MEM_SYSTEM ==o====o====o====o====o====o==
- Shift+Win+0            [MS] copy selected text and save to mem slot 0
- Shift+Win+1            [MS] copy selected text and save to mem slot 1
- Shift+Win+2            [MS] copy selected text and save to mem slot 2
- Shift+Win+3            [MS] copy selected text and save to mem slot 3
- Shift+Win+4            [MS] copy selected text and save to mem slot 4
- Shift+Win+5            [MS] copy selected text and save to mem slot 5
- Shift+Win+6            [MS] copy selected text and save to mem slot 6
- Shift+Win+7            [MS] copy selected text and save to mem slot 7
- Shift+Win+8            [MS] copy selected text and save to mem slot 8
- Shift+Win+9            [MS] copy selected text and save to mem slot 9
- Alt+Win+0               [MS] copy selection and add to bottom of mem slot 0
- Alt+Win+1               [MS] copy selection and add to bottom of mem slot 1
- Alt+Win+2               [MS] copy selection and add to bottom of mem slot 2
- Alt+Win+3               [MS] copy selection and add to bottom of mem slot 3
- Alt+Win+4               [MS] copy selection and add to bottom of mem slot 4
- Alt+Win+5               [MS] copy selection and add to bottom of mem slot 5
- Alt+Win+6               [MS] copy selection and add to bottom of mem slot 6
- Alt+Win+7               [MS] copy selection and add to bottom of mem slot 7
- Alt+Win+8               [MS] copy selection and add to bottom of mem slot 8
- Alt+Win+9               [MS] copy selection and add to bottom of mem slot 9
- Win+Alt+Lbutton         [MS] paste contents of mem slot # entered at prompt
- Ctrl+Win+0              [MS] paste contents of mem slot 0
- Printscreen & 0         [MS] paste contents of mem slot 0, then del # characters the same length of just pasted text
- Ctrl+Win+Lbutton        [MS] paste contents of mem slot 1
- Ctrl+Win+1              [MS] paste contents of mem slot 1
- Printscreen & 1         [MS] paste contents of mem slot 1, then del # characters the same length of just pasted text
- Ctrl+Win+2              [MS] paste contents of mem slot 2
- Printscreen & 2         [MS] paste contents of mem slot 2, then del # characters the same length of just pasted text
- Ctrl+Win+3              [MS] paste contents of mem slot 3
- Printscreen & 3         [MS] paste contents of mem slot 3, then del # characters the same length of just pasted text
- Ctrl+Win+4              [MS] paste contents of mem slot 4
- Printscreen & 4         [MS] paste contents of mem slot 4, then del # characters the same length of just pasted text
- Ctrl+Win+5              [MS] paste contents of mem slot 5
- Printscreen & 5         [MS] paste contents of mem slot 5, then del # characters the same length of just pasted text
- Ctrl+Win+6              [MS] paste contents of mem slot 6
- Printscreen & 6         [MS] paste contents of mem slot 6, then del # characters the same length of just pasted text
- Ctrl+Win+7              [MS] paste contents of mem slot 7
- Printscreen & 7         [MS] paste contents of mem slot 7, then del # characters the same length of just pasted text
- Ctrl+Win+8              [MS] paste contents of mem slot 8
- Printscreen & 8         [MS] paste contents of mem slot 8, then del # characters the same length of just pasted text
- Ctrl+Win+9              [MS] paste contents of mem slot 9
- Printscreen & 9         [MS] paste contents of mem slot 9, then del # characters the same length of just pasted text
-
-==o====o====o====o====o====o== WIN_SYS ==o====o====o====o====o====o====o====
- <HS>  cc>               6-digit RGB color values
- <HS>  color_code>       6-digit RGB color values
- <HS>  g?~~              [AHK] generate a list of hotkeys in working directory.
- <HS>  hs~~              [AHK] open hotstring_creation_log.csv
- Ctrl+Win+Alt+R          [AHK] quit WinGolems
- Ctrl+Win+R             [AHK] reload all ahk scripts with ~^#r reload hotkeyp
- Win+Del                 [MAW] Always on top: Off
- Win+Ins                 [MAW] Always on top: ON
- Ctrl+Win+W              [MAW] close active window
- Ctrl+Win+Q              [MAW] close all instances of the active program
- Rightshift+Enter        [MAW] full screen {F11}
- Alt+Win+Sc027           [MAW] insert emoji popup
- Win+Up                  [MAW] maximize window
- Printscreen & Up        [MAW] maximize window
- Win+Space               [MAW] maximize window
- Win+Sc027               [MAW] minimize window
- Printscreen & Sc027     [MAW] minimize window
- Printscreen & Space     [MAW] move window btn monitors
- Shift+Win+Space         [MAW] move window btn monitors
- Printscreen & Left      [MAW] resize window to left half of screen
- Printscreen & Right     [MAW] resize window to right half of screen
- Alt+Capslock            [MAW] rotate through active program instances starting from newest
- Win+Capslock            [MAW] rotate through active program instances starting from oldest
- Ctrl+Win+Sc027          [MAW] show desktop
- Ctrl+Win+Alt+Del        [SC] enter hybernate mode
- Shift+Ctrl+Alt+Del      [SC] enter sleep mode
- Shift+Ctrl+Alt+Esc      [SC] restart the computer
- Ctrl+Win+Alt+Esc        [SC] shutdown + power down
- Ctrl+Win+Alt+Left       [SC] switch desktop environments (Left)
- Ctrl+Win+Alt+Right      [SC] switch desktop environments (Right)
- Shift+Ctrl+Win+F12      [SC] turn off cloud sync
- Ctrl+Win+Alt+F12        [SC] turn on cloud sync
- Printscreen & F3        create python programming hotstring
- Printscreen & F2        create R programming hotstring
- Printscreen & F1        create windows hotstring
- <HS>  3k>               example of 3 button hotkey using &
- <HS>  3key>             example of 3 button hotkey using &
- <HS>  sck>              sc key legend
-
-==o====o====o====o====o== WIN_TEXT_NAVIGATION ==o====o====o====o====o====o==
- <HS>  date*             [C] current date
- Win+Lbutton            [C] double click, trim(clipboard), paste
- Ctrl+Alt+Lbutton       [C] open start menu (alt: Ctrl+Esc)
- *Win+I                  [MF] 1 Left click
- Ctrl+Win+F              [MF] 3 Left clicks (select line)
- Shift+Win+J             [MF] move mouse cursor to bottom edge
- Shift+Win+H             [MF] move mouse cursor to Left edge
- ~Lwin & Rshift          [MF] move mouse cursor to middle
- Shift+Win+L             [MF] move mouse cursor to Right edge
- Shift+Win+K             [MF] move mouse cursor to top edge
- Win+J                   [MF] scroll wheel down
- Win+K                   [MF] scroll wheel up
- Ctrl+Sc027              [NKR] appkey press
- Shift+Capslock          [NKR] Backspace
- Alt+J                  [NKR] Down
- Alt+Ctrl+Right          [NKR] End
- Win+L                   [NKR] End
- Ctrl+Alt+L              [NKR] End
- Alt+Sc027              [NKR] esc key
- Win+H                   [NKR] Home
- Ctrl+Alt+H              [NKR] Home
- Alt+Ctrl+Left           [NKR] Home
- Alt+H                  [NKR] Left
- Lwin                    [NKR] modifier key (use ctrl+esc or windows key + left mouse click to access start menu)
- Rwin                    [NKR] modifier key (use ctrl+esc or windows key + left mouse click to access start menu)
- Printscreen             [NKR] modifier key no action otherwise
- Alt+L                  [NKR] Right
- Ctrl+Capslock           [NKR] Toggle capslock
- Alt+K                  [NKR] Up
- Rightalt+Space          [T] move to left tab
- Leftalt+Space           [T] move to left tab
- Alt+B                   [T] move to right tab
- Ctrl+Alt+Sc028          [TB] close curly braces
- Shift+Alt+Sc028         [TB] enclose selected text with " "
- Alt+4                   [TB] enclose selected text with  
- Alt+5                   [TB] enclose selected text with % %
- Ctrl+Sc028              [TB] enclose selected text with ' '
- Shift+Alt+9             [TB] enclose selected text with ( )
- Alt+9                   [TB] enclose selected text with ( )
- Ctrl+Alt+Sc027          [TB] open curly braces
- Shift+Ctrl+U            [TM] case: capitalize selected text
- Shift+Alt+U             [TM] case: convert selected text to lower case
- Ctrl+Alt+Shift+U        [TM] case: Every First Letter Capitalized
- Ctrl+Alt+U              [TM] case: First letter capitalized
- Win+C                   [TM] copy and trim whitespace around selected text
- Win+X                   [TM] cut and trim whitespace around selected text
- Alt+Backspace           [TM] Delete line with backspace from end of line
- Ctrl+Win+Backspace      [TM] Delete selected text and replace with blank spaces
- Alt+Win+Space           [TM] remove all spaces from selected text
- Alt+Win+Enter           [TM] remove empty lines from selected text
- Ctrl+Win+Del            [TM] replace "+" or "," with " " in selected text
- Win+Alt+Sc028           [TM] replace double quotation marks with spaces in selected text
- Ctrl+Win+Space          [TM] replace multiple consecutive spaces w/ one in selected text
- Alt+V                   [TM] replace multiple paragraph breaks in selected text
- Ctrl+Win+Sc028          [TM] surround each element of comma separated list with quotation marks
- Shift+Ctrl+Alt+H        [TS] extend selection Left one space
- Shift+Ctrl+H            [TS] extend selection Left one word
- Ctrl+Shift+Alt+L        [TS] extend selection Right one space
- Shift+Ctrl+L            [TS] extend selection Right one word
- Shift+Alt+H             [TS] jump to next word = simulate ctrl+Left
- Shift+Alt+L             [TS] jump to next word = simulate ctrl+Right
- Shift+Ctrl+Win+H        [TS] select all above
- Ctrl+Win+K              [TS] select all above
- Shift+Ctrl+Win+L        [TS] select all below
- Ctrl+Win+J              [TS] select all below
- Shift+Alt+F             [TS] select current line from begining of line
- Ctrl+Alt+F              [TS] select current line from end of line
- Ctrl+Win+H              [TS] select to beginning of line
- Ctrl+Win+Left           [TS] select to beginning of line
- Ctrl+Win+L              [TS] select to end of line
- Ctrl+Win+Right          [TS] select to end of line
- Shift+Ctrl+Alt+K        [TS] select to line above
- Shift+Ctrl+K            [TS] select to line above
- Shift+Ctrl+J            [TS] select to next line
- Shift+Ctrl+Alt+J        [TS] select to next line
- Alt+F                   [TS] select word at text cursor
+==o====o====o====o====o== 2_TEMPLATE_COMMANDBOX ==o====o====o====o====o====o
+ ~Shift+Win+Left         [AHK] cursor follows active window when moving apps btn monitors (if turned on)
+ ~Alt+Tab                [AHK] cursor follows active window when switch apps with alt+tab (if turned on)
+ Shift+Ctrl+Win+R        [AHK] quit ahk script
+ Lshift & Rshift         [AHK] reload ahk script
+ Rshift & Lshift         [AHK] reload ahk script
+ Ctrl+Win+Enter         [SC] open start menu (alt: Ctrl+Esc)
+ Rightctrl+Space        activate CB if exists and move focus to inputbox
+ Leftctrl+Space         activate CB if exists and move focus to inputbox
+ Alt+S                   move CB window to bottom half
+ Alt+Z                   move CB window to bottom left
+ Alt+C                   move CB window to bottom right
+ Alt+A                   move CB window to left half
+ Win+Left                move CB window to left half
+ Alt+D                   move CB window to right half
+ Win+Right               move CB window to right half
+ Alt+W                   move CB window to top half
+ Alt+Q                   move CB window to top left
+ Alt+E                   move CB window to top right
+ Alt+R                   reenter last command
+ Win+Space               submit GUI input
+ Alt+X                  toggle Command Box display/minimalist mode
+ Win+Space               win: opens command box that runs ~win suffix CB keys
 
 -------------------------------- WINGOLEMS ---------------------------------
---o----o----o----o----o----o-- PYTHON --o----o----o----o----o----o----o----o
---o----o----o----o----o----o----o-- R --o----o----o----o----o----o----o----o
---o----o----o----o----o----o-- RETURN_AHK --o----o----o----o----o----o----o-
---o----o----o----o----o----o----o-- TEST --o----o----o----o----o----o----o--
+--o----o----o----o-- 3_TEMPLATE_APPLICATIONSPECIFIC --o----o----o----o----o-
