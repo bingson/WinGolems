@@ -1,6 +1,6 @@
 
 ; Context Specific shortcut template. The shortcuts below are valid only if the 
-; associated application or command box is active.
+; associated application is active or the key is entered in a matching command box.
 
 #If WinActive("ahk_exe " exe["html"])                                           
 
@@ -31,6 +31,10 @@
         #space::   CB("~xls", C.bgreen, C.lgreen)                               ;xls: opens command box that runs ~xls suffix CB keys
         :X:r~xls:: RunExcelMacro("vba_macro_name")                              ;xls: create a command key "r" that runs an excel VBA macro, if entered in a "~xls" Command Box
         ^r::       RunExcelMacro("vba_macro_name")                              ;xls: create keyboard shorcut ctrl + r that runs an excel VBA macro
+        !p::       highlight_cell("40")                                         ;xls: change cell background to pink (color index = "40")
+        !y::       highlight_cell("36")                                         ;xls: change cell background to yellow
+        !g::       highlight_cell("35")                                         ;xls: change cell background to green
+
     */    
 
 #If WinActive("ahk_exe " exe["ppt"])

@@ -1,7 +1,6 @@
 #IfWinActive
 ; The following interface layers are valid anywhere in Windows 10
 
-
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
 
   #F1::          Send #1                                                        ;[A] activate app 1 in task bar 
@@ -42,8 +41,18 @@
   +#tab::        ActivatePrevInstance()                                         ;[C] rotate through active program instances starting from oldest
   #tab::         ActivateNextInstance()                                         ;[C] rotate through active program instances starting from newest
   !SC027::       Send {esc}                                                     ;[C] alternate esc key (alt + semicolon)
-  ^#w::          WinClose,A                                                     ;[c] close active window 
-  ^#q::          CloseClass()                                                   ;[c] close all instances of the active program
+  ^#w::          WinClose,A                                                     ;[C] close active window 
+  ^#q::          CloseClass()                                                   ;[C] close all instances of the active program
+  *LWin::        Send {Blind}{LWin Down}                                        ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ctrl + esc or lwin + left mouse click to access start menu)
+  LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ctrl + esc or lwin + left mouse click to access start menu)
+                                                                                ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
+  
+  !b:: send ^{PgUp}                                                             ;[C] navigate to right tab
+  !space::                                                                      ;[C] navigate to left tab
+      send {Blind}
+      send ^{PgDn}                                                                
+      return
+                                                                              
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; hotkey modifier keys (+#^) can be changed, however the hotkey assignment 

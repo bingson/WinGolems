@@ -1,5 +1,5 @@
 #IfWinActive
-
+  
   #space:: CB("~win")                                                           ; opens command box that runs ~win suffix CB keys
 
 ; CB hotkey assignment _________________________________________________________; shared by all Command Boxes 
@@ -79,8 +79,6 @@
   rshift & lshift::                                                             ;[AHK] reload ahk script
   :X:rw~win::   Reload                                                          ;[AHK] reload ahk script
 
-  *LWin::       Send {Blind}{LWin Down}                                         ;[AHK] modifier key (use ctrl+esc or windows key + left mouse click to access start menu)
-  *LWin Up::    Send {Blind}{vk00}{LWin Up}                                     ;[AHK] modifier key (use ctrl+esc or windows key + left mouse click to access start menu)
-                                                                                ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
+; miscellaneous convenience ____________________________________________________
                                                                                 
   :X:c~~coding::       Send +^!g                                                ;[VSC] git commit all
