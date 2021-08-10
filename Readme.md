@@ -20,9 +20,9 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 Within this repository the AHK code for the creation of interface elements (i.e., interface templates) is kept separate from the code for the algorithms that carry out the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights only a small sample of WinGolems' convenience functions. For a more advanced reference template, please see the template files in \Golems\TpKb which was designed around Lenovo Trackpoint keyboards (my current setup). 
 
-The initial value provided by this repository comes from helping others reduce every day workflow frictions. For instance, when different applications have different shortcuts for the same function. E.g, switching tabs with ctrl+tab vs ctrl+PgUp. Or worse yet, when application developpers assign rarely used functions to prominent key combinations that could be put to better use (e.g., #g for windows game mode). WinGolem's provides template examples of how to alleviate these issues and as well as reengineer how they accomplish things with their computer.  
+The initial value provided by this repository comes from helping others reduce every day workflow frictions. For instance, when different applications have different shortcuts for the same function. E.g, switching tabs with ctrl+tab vs ctrl+PgUp. Or worse yet, when application developpers assign rarely used functions to prominent key combinations that could be put to better use (e.g., #i,#g,#f). WinGolem's provides examples of how to alleviate these issues and 
 
-[Operating systems and devices should mold to our needs, not the other way around.](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple) -- Satya Nadella
+> "Operating systems and devices should mold to our needs, not the other way around."—[Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple)
 
 
 <center>
@@ -35,8 +35,10 @@ At some point,
 
 <details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
 <p>
+
+```
 _________________________________________________________________________________________________________________________________________
-| CommandBox (CB) Creation:                           | KEY    WINGOLEMS UTILITIES, HELP, CONFIGURATION     | KEY  WINDOWS SELECTION     | 
+| CommandBox (CB) Creation:                           | KEY    WINGOLEMS UTILITIES, HELP, CONFIGURATION     | KEY  WINDOWS SELECTION     |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     #space:: CB("~win")                             | lt|lf  Switch ON|OFF:  Win + L Locks Computer       |  d   Display               |
@@ -61,12 +63,12 @@ ________________________________________________________________________________
 |  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)finance,(i)mages     Q?|
 |  T   Toggle CommandBox UI options            Td, Tm, Tt, Ts, Tw  mode: (d)isplay,(m)inimal; toggle: t)itlebar,(s)crollbar,(w)rap     T?|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" equivalent to entering b in CB("~win")   W?|
-|  W~  Change W command suffix reference       W~win, W~pdf        M|H|B behave the same as W to access different CB(~suffix) keys    W~?| 
+|  W~  Change W command suffix reference       W~win, W~pdf        M|H|B behave the same as W to access different CB(~suffix) keys    W~?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K = 10 if no numbers or other letters entered (e.g., KKKK = 40)   K?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C              (R?~?__?~?) R?~?|
-| R?~  Change replacement separators (1|2)     R1~%; R2~~>         Changes the above replacement separators to % and ~>              R?~?| 
+| R?~  Change replacement separators (1|2)     R1~%; R2~~>         Changes the above replacement separators to % and ~>              R?~?|
 |  G   Run any function                        GMoveWin,TopLeft    fmt: fn1name,params__fn2name,params                   (G?,?__?,?) G?,?|
 | G?~  Create G function|parameter alias (f|p) Gf~mw~MoveWin       makes Gmw,tl behave identically to GMoveWin,TopLeft             G?~?~?|
 |                                              Gp~tl~TopLeft       list of current aliases in the file ALIAS.ini in /mem_cache/ folder   |
@@ -83,6 +85,8 @@ ________________________________________________________________________________
 | Rf~  Modify file w/ saved replace't pattern  Rf~1~p n            chg 1.txt w/ pattern in p.txt & save result to n.txt          Rf~?~? ?|
 |      pattern file fmt: no R at beginning     ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
 |________________________________________________________________________________________________________________________________________|
+
+```
 
 </p>
 </details>
