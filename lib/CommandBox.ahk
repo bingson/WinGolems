@@ -18,9 +18,8 @@
     title_state  := GC("CB_Titlebar", 1), ldspl   := GC("CB_last_display")
     wrap_txt := GC("CB_Wrap", 0)
 
-    IBwidth := 400
     wdth := StrSplit(CB_position, " ")[3]
-    wdth := (wdth >= IBwidth) ? wdth : IBWidth 
+    IBwidth := 400
     CC("CB_InputBox_width", IBwidth)
                                                                                
     UserInput := ""
@@ -100,12 +99,13 @@
         
         If A_EventInfo = 1                                                      ; window has been minimized.  No action needed.
             Return
-        sleep 50
+        sleep 100
         AutoXYWH("wh", "CB_Display")
         CtrXpos := (A_GuiWidth - GC("CB_InputBox_width")) // 2
         GuiControl, MoveDraw, UserInput, x%CtrXpos%
         AutoXYWH("y*", "UserInput")
         GuiControl, 2: -HScroll -VScroll, CB_Display
+        WinSet, Redraw,, ahk_id %ghwnd%
         Gui, 2: show
         GuiControl, 2: +HScroll +VScroll, CB_Display
         gosub, save_win_coord

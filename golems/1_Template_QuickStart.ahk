@@ -47,10 +47,13 @@
   $*LWin::       Send {Blind}{LWin Down}                                        ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ^#enter or lwin + left mouse click to access start menu)
   $*LWin Up::    Send {Blind}{vk00}{LWin Up}                                    ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ^#enter or lwin + left mouse click to access start menu)
                                                                                 ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
-  
+
+  $^!j::         Sendinput ^{sc00D}                                             ;[MF] zoom in
+  $^!k::         Sendinput ^{sc00C}                                             ;[MF] zoom out
+                                                                                
   !b:: send ^{PgUp}                                                             ;[C] navigate to right tab
   !space::                                                                      ;[C] navigate to left tab
-      send {Blind}
+      send {Blind}                                                              ; fixes issue with alt key opening application menues
       send ^{PgDn}                                                                
       return
                                                                               
@@ -97,26 +100,21 @@
 
 ; TEXT (PURPLE) ________________________________________________________________
     
-    ^!h::        sendinput {home}                                               ;[NT] Home
-    ^!l::        sendinput {end}                                                ;[NT] End
-    #u::         SelectWord()                                                   ;[ST] select word at text cursor position
-  ; MANIPULATE TEXT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-
-    #y::         % (t := !t) ? ConvertUpper() : ConvertLower()                  ;[MT] Toggle transform selected text to uppercase or lowercase  
-    +#y::        % (t := !t) ? Capitalize1stLetter(,,0) : Capitalize1stLetter() ;[MT] Toggle capitalize the first letter of all selected words (title case) vs only the first word
-    #i::         ReplaceAwithB()                                                ;[MT] replace multiple consecutive spaces w/ one space in selected text
-    #o::         RemoveBlankLines()                                             ;[MT] remove blank lines in selected text
-    !#space::     ReplaceAwithB(" ")                                            ;[MT] remove all spaces starting from selected text
-    ^#space::     ReplaceAwithB()                                               ;[MT] replace multiple consecutive spaces w/  1 in selected text
+  capslock::del                                                                 ;[T] make capslock key function as a delete key. (toggle capslock: alt + capslock)    
+  ^!h::        sendinput {home}                                                 ;[T] Home
+  ^!l::        sendinput {end}                                                  ;[T] End
+  #u::         SelectWord()                                                     ;[T] select word at text cursor position
+  #y::         % (t := !t) ? ConvertUpper() : ConvertLower()                    ;[T] Toggle: change selected text to uppercase or lowercase  
+  +#y::        % (t := !t) ? Capitalize1stLetter(,,0) : Capitalize1stLetter()   ;[T] Toggle: capitalize the first letter of all selected words (title case) or only the first word
+  #i::         ReplaceAwithB()                                                  ;[T] replace multiple consecutive spaces w/ one space in selected text
+  #o::         RemoveBlankLines()                                               ;[T] remove blank lines in selected text
+  !#space::    ReplaceAwithB(" ")                                               ;[T] remove all spaces from selected text
+  ^#space::    ReplaceAwithB()                                                  ;[T] replace multiple consecutive spaces w/ a single space in selected text
   
+ ; TEXT SELECTION AND NAVIGATION -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --; must be turned by entering "tt" in CB("~win") 
 
- 
  #IF GC("T_text_opt",0)                                                         ; get config.ini value for T_text_opt, default to false (0) if no value found. 
  
-    capslock::del                                                               ; make capslock key function as delete key. (to toggle capslock use alt + capslock)
-  ; SELECT TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-     
-    
     $!f::        SelectWord()                                                   ;[ST] select word at text cursor position
     $+!f::       SelectLine()                                                   ;[ST] select current line starting from begining of line
     $^!f::       Sendinput {end}+{home}                                         ;[ST] select line starting from end of line
@@ -138,7 +136,7 @@
     +!k::        sendinput +{up}                                                ;[ST] extend selection up    1 row
     
   ; NAVIGATE TEXT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    
+
     #j::         Sendinput {WheelDown 5}                                        ;[NT] scroll wheel down                                               
     #k::         Sendinput {WheelUp 5}                                          ;[NT] scroll wheel Up           
     #p::         sendinput ^{home}                                              ;[NT] Ctrl + Home
@@ -153,12 +151,11 @@
     *$!j::       sendinput {Down}                                               ;[NT] Down
   
 ; CHANGE FOLDER IN FILELISTERS _________________________________________________
+  
   SetTitleMatchMode, 2
   #IfWinActive ahk_group FileListers                                            ; ChangeFolders works in file explorer and open file + save as dialogue boxes
   
   >+sc029::     ChangeFolder(A_ScriptDir)                                       ;<F> AHK folder
-  
-  
   >+1::         ChangeFolder(A_ScriptDir "\golems\")                            ;<F> AHK golems folder
   >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                         ;<F> mem_cache
   >+c::         ChangeFolder(hdrive)                                            ;<F> %Homedrive% (C:)

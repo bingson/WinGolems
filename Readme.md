@@ -30,7 +30,7 @@ The initial value provided by this repository comes from helping others reduce e
 
 <br>
 At some point, 
-
+<br>
 <img src="assets\Screens\CB.png" width="600">
 
 <details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
@@ -55,37 +55,36 @@ ________________________________________________________________________________
 | ^Space  move focus CB input box        ctrl+spacebar| q~     Quit WinGolems                               |  h~  Hybernate computer    |
 | !r      reenter last submitted key             alt+r| ec     open cache folder in file explorer           |  ce~ Close All Programs    |
 | !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |  rs~ Restart computer      |
-| !e      move & resize CB window to top left    alt+e| tt     toggle text nav and folder bookmark hotkeys  |  sd~ Shut Down computer    |
+| !e      move & resize CB window to top left    alt+e| tt     toggle text navigation and selection hotkeys |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
-| FIRST CHARACTER INITIATED COMMAND (case-sensitive execution key)                                                                       |
-| KEY  DESCRIPTION                             USAGE               Notes:                                                        Format:?|
+| FIRST CHARACTER INITIATED COMMAND: (upper-case first letter required to trigger execution)                                             |
+| KEY  DESCRIPTION                             USAGE               Notes: "__" used to chain link commands that can be repeated   Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)finance,(i)mages     Q?|
-|  T   Toggle CommandBox UI options            Td, Tm, Tt, Ts, Tw  mode: (d)isplay,(m)inimal; toggle: t)itlebar,(s)crollbar,(w)rap     T?|
+|  T   Toggle CommandBox UI options            Td, Tm, Tt, Ts, Tw  mode:(d)isplay,(m)inimal; toggle:t)itlebar,(s)crollbar,(w)ord wrap  T?|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" equivalent to entering b in CB("~win")   W?|
-|  W~  Change W command suffix reference       W~win, W~pdf        M|H|B behave the same as W to access different CB(~suffix) keys    W~?|
+|  W~  Change W command suffix reference       W~win, W~pdf        M|H|B behave the same as W to allow access to multiple CBs         W~?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
-| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K = 10 if no numbers or other letters entered (e.g., KKKK = 40)   K?|
+| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C              (R?~?__?~?) R?~?|
 | R?~  Change replacement separators (1|2)     R1~%; R2~~>         Changes the above replacement separators to % and ~>              R?~?|
-|  G   Run any function                        GMoveWin,TopLeft    fmt: fn1name,params__fn2name,params                   (G?,?__?,?) G?,?|
+|  G   Run any function                        GMoveWin,TopLeft    fmt: fn1_name,fn1_params__fn2name,fn2params           (G?,?__?,?) G?,?|
 | G?~  Create G function|parameter alias (f|p) Gf~mw~MoveWin       makes Gmw,tl behave identically to GMoveWin,TopLeft             G?~?~?|
 |                                              Gp~tl~TopLeft       list of current aliases in the file ALIAS.ini in /mem_cache/ folder   |
 |                                                                                                                                        |
 | KEY  MEM_CACHE COMMANDS ( .txt files only )  USAGE               Notes:                                                         Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                       ?|
-|  L   Load .txt file into CB display          L1, Lhelp, Lr\testr [Load in display] 1.txt, help.txt, r\testr.txt [Ll: .txt file list] L?|
-|  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last window        V?|
-|  C   make copy or make & rename copy         C1, Chelp new_name  duplicate names resolved with added number suffix                   C?|
-|  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace: 1.txt w/ selection, 2.txt w/ help.txt, clipboard w/ 3.txt  O?|
-|  E   Edit file in default editor             E1, Etest, Er\testr entering E or EF will open file or folder jumplist menus            E?|
-| A|P  Append|Prepend selected text to file    A1, Atest, Ar\testr add selected text to bottom|top of 1.txt, test.txt, r\testr.txt   A|P?|
-| Rf~  Modify file w/ saved replace't pattern  Rf~1~p n            chg 1.txt w/ pattern in p.txt & save result to n.txt          Rf~?~? ?|
+|  L   Load .txt file into CB display          L1, Lhelp, Lr\testr [Load in display] 1.txt, help.txt, r\testr.txt ("Ll" for file list) L?|
+|  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
+|  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
+|  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
+|  E   Edit file in default editor             E1, Etest, Er\testr edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
+| A|P  Append|Prepend selected text to file    A1, Atest, Ar\testr add selected text to bottom of => 1.txt, test.txt, r\testr.txt    A|P?|
+| Rf~  Modify file w/ saved replace't pattern  Rf~1~p n            modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf~?~? ?|
 |      pattern file fmt: no R at beginning     ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
 |________________________________________________________________________________________________________________________________________|
-
 ```
 
 </p>

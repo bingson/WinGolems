@@ -52,9 +52,9 @@ ConfigureWinGolems(config_path, apps *)
 
 #Include %A_ScriptDir%\golems
 #Include _functions.ahk
+#Include _system.ahk
 #Include *i 1_Template_QuickStart.ahk
-#Include *i 2_Template_CommandBox.ahk
-#Include *i 3_Template_ApplicationSpecific.ahk
+#Include *i 2_Template_ApplicationSpecific.ahk
 
 /* #INCLUDE MECHANICS ********************************************************** 
  * Start.ahk:

@@ -59,8 +59,8 @@
 ; CB keys assignment: AHK UTILITIES ____________________________________________
   
   :X:tt~win::                                                                   ;[ST] Toggles text navigation and folder bookmark hotkeys
-    CC("T_text_folder","!")
-    ShowPopup("Text and folder hotkeys: " GC("T_text_folder"), C.lpurple)
+    CC("T_text_opt","!")
+    ShowPopup("Text selection & navigation hotkeys: " GC("T_text_opt"), C.lpurple)
     return
 
   :X:ec~win::   OpenFolder("mem_cache\")                                        ;[AHK] open cache folder in file explorer

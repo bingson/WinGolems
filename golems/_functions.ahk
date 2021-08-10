@@ -24,12 +24,13 @@
        , "dgrey"       : "525252"
        , "onyx"        : "353839" }
 
+
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; reference group for file explorer and save as dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW
   GroupAdd, FileListers, ahk_class #32770, ShellView
         
 
-; WINDOW MANAGEMENT ___________________________________________________________
+; WINDOW MANAGEMENT ____________________________________________________________
 
   MoveWin(Q = "TL", ha = 8, wa = 8) {
     global config_path, ghwnd
@@ -198,7 +199,7 @@
     return
   }
  
-; SYSTEM APPS _________________________________________________________________
+; SYSTEM APPS __________________________________________________________________
  
   PowerOptions(s = "") {
     switch s 
@@ -364,7 +365,7 @@
     % (taps > 1) ? FunctionBox(, Command_DICT, "RUN SYS COMMAND", Command_TOC) : ""
   }
  
-; COMMAND BOX / JUMPLISTS _____________________________________________________
+; COMMAND BOX / JUMPLISTS ______________________________________________________
   
   ToggleDisplay(){
     % (GC("CB_Display") = 1) ? (GUIFocusInput(), clip("Tm"))
@@ -609,8 +610,8 @@
     Gui, font,s13 , Consolas
     Gui, fb: Add, text, xp yp+10 c%t_color%, % TOC "`n"
     Gui, fb: Add, Edit, w120 vUserInput
-    Gui, fb: Add, Button, W60 X+10 Default gButtonOK, OK
-    Gui, fb: Add, Button, W60 X+5 gButtonCancel, Cancel
+    Gui, fb: Add, Button, Default Hidden W60 X+10 gButtonOK, OK
+    ; Gui, fb: Add, Button, W60 X+5 gButtonCancel, Cancel
     Gui, font,s8 , calibri
     Gui, fb: add, text, xs yp+30, case insensitive
     Gui, fb: +LastFound +OwnDialogs +AlwaysOnTop
@@ -668,7 +669,7 @@
     return TOC
   }
  
-; MEM_CACHE / CREATE HOTSTRING SNIPPET ________________________________________
+; MEM_CACHE / MEMORY SYSTEM ____________________________________________________
 
   WriteToCache(key, del_toggle = False, mem_path = "", input = "", append = false, supress = False) {
     ; creates a txt file in \mem_cache from selected text
@@ -723,10 +724,7 @@
   }
 
   OverwriteMemory(del_toggle = false) {
-    global C, short
     slot := substr(A_ThisHotkey, 0)        
-    ; ReleaseModifiers()
-    ; del_toggle := Instr(A_ThisHotkey, "del") ? True : False               ;     cut selected text hot key condition  
     WriteToCache(slot, del_toggle)                                          ;     note: if no text selected, no overwrite will occur 
     return
   }
@@ -780,7 +778,7 @@
     return
   } 
 
-; AHK UTILITIES _______________________________________________________________
+; AHK UTILITIES ________________________________________________________________
 
 
   CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
@@ -1201,7 +1199,7 @@
 
   }
 
-; FILE AND FOLDER RELATED _____________________________________________________
+; FILE AND FOLDER RELATED ______________________________________________________
  
   Explorer_GetSelection() {
     ; Get path of selected files/folders                                        ; https://www.autohotkey.com/boards/viewtopic.php?style=17&t=60403
@@ -1465,7 +1463,7 @@
   }
  
 
-; MOUSE FUNCTIONS _____________________________________________________________
+; MOUSE FUNCTIONS ______________________________________________________________
  
   SaveMousPos(key = "A", n = "0") {
     global config_path
@@ -1567,7 +1565,7 @@
   }
 
 
-; CHROME ______________________________________________________________________
+; CHROME _______________________________________________________________________
  
   ChromeConfig(tgt) {    
     send ^l
@@ -1638,7 +1636,7 @@
         return
   }
 
-; OFFICE ______________________________________________________________________
+; OFFICE _______________________________________________________________________
  
   sendEmail() {
     global email := "", subject := "", body := ""
@@ -1730,7 +1728,7 @@
     return
   }
 
-; TEXT MANIPULATION ___________________________________________________________
+; TEXT MANIPULATION ____________________________________________________________
 
   PasteClipboardAtMouseCursor() {
     Clicks(2)
@@ -2050,5 +2048,5 @@
     return
   } 
  
-; TEST ________________________________________________________________________
+; TEST _________________________________________________________________________
 

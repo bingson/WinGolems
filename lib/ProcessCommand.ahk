@@ -256,7 +256,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 GUI 2: destroy
                 return
-            Case "W","H","B","M":
+            Case "W","B","N","M":
                 RunOtherCB(C_input, FirstChar) 
             Case "Q":       
                 C_1stChr := SubStr(C_input, 1, 3)                                                    ; open cache folder in explorer and (case-insensitive) select files according to match string  
