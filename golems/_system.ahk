@@ -50,7 +50,7 @@
   :X:lt~win::   WinLLock(True)                                                  ;[SC] turn on win+L locks computer
   :X:lf~win::   WinLLock(False)                                                 ;[SC] turn off win+L locks computer
   :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;[SC] open add remove programs 
-   #Lbutton::
+   #Lbutton::                                                                   ;[SC] open start menu (alt: Ctrl+Esc)
    $^#Enter::                                                                   ;[SC] open start menu (alt: Ctrl+Esc)
   :X:s~win::    send ^{esc}                                                     ;[SC] open start menu (alt: Ctrl+Esc)
   :X:mod~win::  MoveWindowToOtherDesktop()                                      ;[SC] Move window to other desktop
@@ -96,63 +96,63 @@
   :X:it~coding::           send ^!+{F11}{4}{enter}                              ;[FC] indent using tabs
   :X:is~coding::           send ^!+{F12}{4}{enter}                              ;[FC] indent using spaces
  
-  :X:L1~coding::           AddBorder("80", "_"  )                          ;[FC] Add lvl 1 Border (default)
-  :X:L2~coding::           AddBorder("80", "-- ")                          ;[FC] Add lvl 2 Border (default)
-  :X:L3~coding::           AddBorder("80", "... ")                        ;[FC] Add lvl 3 Border (default)
+  :X:L1~coding::           AddBorder("80", "_"  )                               ;[FC] Add lvl 1 Border (default)
+  :X:L2~coding::           AddBorder("80", "-- ")                               ;[FC] Add lvl 2 Border (default)
+  :X:L3~coding::           AddBorder("80", "... ")                              ;[FC] Add lvl 3 Border (default)
 
-  $+#space::                                                                     ; CB("~coding", lgreen)
+  $+#space::                                                                    ; CB("~coding", lgreen)
   ~*$#enter::
-  #space::             CB("~coding", C.lgreen)                                   ; CB("~coding", lgreen)
+  #space::             CB("~coding", C.lgreen)                                  ; CB("~coding", lgreen)
   
-  $+^sc028::           FocusResults()                                            ; move focus to search results
-  :X:sa~coding::       Send +^!s                                                 ; save as
-  $^+sc027::           send +!^c                                                 ; collapse search results
-  $<+Space::                                                                     ; indent 1 space to left
+  $+^sc028::           FocusResults()                                           ; move focus to search results
+  :X:sa~coding::       Send +^!s                                                ; save as
+  $^+sc027::           send +!^c                                                ; collapse search results
+  $<+Space::                                                                    ; indent 1 space to left
      send +{right}
      send +{space}{left}
      return
-  $>+Space::           Send ^!+i                                                 ; indent 1 space to right
+  $>+Space::           Send ^!+i                                                ; indent 1 space to right
   
-  :X:cfg~coding::      send {F9}                                                 ;[VSC] settings.json
-  ^tab::               Send % (toggle := !toggle) ? "^1" : "^2"                  ;[VSC] fold/unfold all regions toggle
-  !s::                 send ^{F3}                                                ;[VSC] move to next instance of selected text 
-  +^y::                +^u                                                       ;[VSC] output console
-  +^!r::               send {F2}                                                 ;[VSC] rename (F2)
+  :X:cfg~coding::      send {F9}                                                ;[VSC] settings.json
+  ^tab::               Send % (toggle := !toggle) ? "^1" : "^2"                 ;[VSC] fold/unfold all regions toggle
+  !s::                 send ^{F3}                                               ;[VSC] move to next instance of selected text 
+  +^y::                +^u                                                      ;[VSC] output console
+  +^!r::               send {F2}                                                ;[VSC] rename (F2)
   
   +>!j::
-  +!^j::               send +!^{down}                                            ;[VSC] create multicursor instance below
+  +!^j::               send +!^{down}                                           ;[VSC] create multicursor instance below
   +>!k::
-  +!^k::               send +!^{up}                                              ;[VSC] create multicursor instance above
+  +!^k::               send +!^{up}                                             ;[VSC] create multicursor instance above
   
-  !o::                 send !0                                                   ;[VSC] open last editor in group
-  +!Right::            send !t                                                   ;[VSC] move to group 1
-  +!Left::             send +!1                                                  ;[VSC] move to group 2
-  >^m::                send ^c                                                   ;[VSC] toggle tab moves focus
-  <^m::                send ^m                                                   ;[VSC] toggle tab moves focus
-  +^!o::               send +^u                                                  ;[VSC] toggle output window
-  !d::                 send +^k                                                  ;[VSC] delete line
-  ^!d::                send +!{down}                                             ;[VSC] duplicate line
-  +^d::                send +^l                                                  ;[VSC] Select all occurrences of current selection
-  ^!sc01a::            Send % (toggle := !toggle) ? "^k^9" : "^k^8"              ;[VSC] fold/unfold all regions toggle
-  >^f::                                                                          ;NAV| search all files in folder
-  :X:f~coding::        send +^f                                                  ;NAV| search all files in folder
-  :X:h~coding::                                                                  ;NAV| search & replace all files in folder (+subdirectories)
-  +^!f::               Send +^h                                                  ;NAV| search & replace all files in folder
-  $>!f::                                                                         ;[VSC] move focus to search results
+  !o::                 send !0                                                  ;[VSC] open last editor in group
+  +!Right::            send !t                                                  ;[VSC] move to group 1
+  +!Left::             send +!1                                                 ;[VSC] move to group 2
+  >^m::                send ^c                                                  ;[VSC] toggle tab moves focus
+  <^m::                send ^m                                                  ;[VSC] toggle tab moves focus
+  +^!o::               send +^u                                                 ;[VSC] toggle output window
+  !d::                 send +^k                                                 ;[VSC] delete line
+  ^!d::                send +!{down}                                            ;[VSC] duplicate line
+  +^d::                send +^l                                                 ;[VSC] Select all occurrences of current selection
+  ^!sc01a::            Send % (toggle := !toggle) ? "^k^9" : "^k^8"             ;[VSC] fold/unfold all regions toggle
+  >^f::                                                                         ;NAV| search all files in folder
+  :X:f~coding::        send +^f                                                 ;NAV| search all files in folder
+  :X:h~coding::                                                                 ;NAV| search & replace all files in folder (+subdirectories)
+  +^!f::               Send +^h                                                 ;NAV| search & replace all files in folder
+  $>!f::                                                                        ;[VSC] move focus to search results
                        send +^f
                        sleep med
                        send ^{down 3}
                        return
-  ^!sc035::            Send % (toggle := !toggle) ? "^k^0" : "^k^j"              ;[VSC] fold/unfold all code toggle
-  ^q::                 Send ^{sc035}                                             ;[VSC] toggle comment
-  ^sc035::             send +^{[}                                                ;[VSC] fold current code level
-  !sc035::             send +^{]}                                                ;[VSC] unfold current code level
-  +^sc035::            send ^k^[                                                 ;[VSC] fold recursively 
-  +!sc035::            send ^k^]                                                 ;[VSC] unfold recursively
-  >+^enter::           send ^kz                                                  ;[VSC] zen mode
-  !p::                 send ^w                                                   ;[VSC] close tab
-  !g::                 send +!{Right}                                            ;[VSC] select all text in between brackets
-  :X:c~~coding::       Send +^!g                                                 ;[VSC] git commit all
+  ^!sc035::            Send % (toggle := !toggle) ? "^k^0" : "^k^j"             ;[VSC] fold/unfold all code toggle
+  ^q::                 Send ^{sc035}                                            ;[VSC] toggle comment
+  ^sc035::             send +^{[}                                               ;[VSC] fold current code level
+  !sc035::             send +^{]}                                               ;[VSC] unfold current code level
+  +^sc035::            send ^k^[                                                ;[VSC] fold recursively 
+  +!sc035::            send ^k^]                                                ;[VSC] unfold recursively
+  >+^enter::           send ^kz                                                 ;[VSC] zen mode
+  !p::                 send ^w                                                  ;[VSC] close tab
+  !g::                 send +!{Right}                                           ;[VSC] select all text in between brackets
+  :X:c~~coding::       Send +^!g                                                ;[VSC] git commit all
  
   :X:nb~coding::
   :X:ca~coding::
@@ -167,23 +167,23 @@
      ShowPopUp("Add/remove bookmark",C.lgreen)
      return
   cb~coding:
-  F1 & k::                                                                       ;[VSC] clear all bookmarks
+  F1 & k::                                                                      ;[VSC] clear all bookmarks
      send +^!p                                                 
      ShowPopUp("Clear bookmarks",C.lblue)
      return
-  +^g::                                                                      ;[VSC] source control 
+  +^g::                                                                         ;[VSC] source control 
      ;ReleaseModifiers()
      send +^g
      send g
      return
  
-  +!0::                                                                          ;[VSC] fold code to level 0
-  +!1::                                                                          ;[VSC] fold code to level 1
-  +!2::                                                                          ;[VSC] fold code to level 2
-  +!3::                                                                          ;[VSC] fold code to level 3
-  +!4::                                                                          ;[VSC] fold code to level 4
-  +!5::                                                                          ;[VSC] fold code to level 5
-  +!6::                                                                          ;[VSC] fold code to level 6
+  +!0::                                                                         ;[VSC] fold code to level 0
+  +!1::                                                                         ;[VSC] fold code to level 1
+  +!2::                                                                         ;[VSC] fold code to level 2
+  +!3::                                                                         ;[VSC] fold code to level 3
+  +!4::                                                                         ;[VSC] fold code to level 4
+  +!5::                                                                         ;[VSC] fold code to level 5
+  +!6::                                                                         ;[VSC] fold code to level 6
   codefolding() {
      send ^k
      send {ctrl down}
@@ -202,8 +202,8 @@
    ^7::                                                                           
    ^8::                                                                           
    ^9::                                                                           
-   ^0:: send % "!" . substr(A_ThisHotkey, 0)                                     ;[FC] activate tab # 
+   ^0:: send % "!" . substr(A_ThisHotkey, 0)                                    ;[FC] activate tab # 
    
    !1::                                                                           
    !2::                                                                           
-   !3:: send % "^" . substr(A_ThisHotkey, 0)                                     ;[FC] activate editor group #
+   !3:: send % "^" . substr(A_ThisHotkey, 0)                                    ;[FC] activate editor group #
