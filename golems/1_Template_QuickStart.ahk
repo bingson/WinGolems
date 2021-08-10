@@ -41,6 +41,7 @@
   +#tab::        ActivatePrevInstance()                                         ;[C] rotate through active program instances starting from oldest
   #tab::         ActivateNextInstance()                                         ;[C] rotate through active program instances starting from newest
   !SC027::       Send {esc}                                                     ;[C] alternate esc key (alt + semicolon)
+  ^SC027::       Send {AppsKey}                                                 ;[C] appkey press
   ^#w::          WinClose,A                                                     ;[C] close active window 
   ^#q::          CloseClass()                                                   ;[C] close all instances of the active program
   *LWin::        Send {Blind}{LWin Down}                                        ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ctrl + esc or lwin + left mouse click to access start menu)
