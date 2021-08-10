@@ -25,19 +25,19 @@
   $<^space::                                                                    ; activate CB if exists and move focus to inputbox
   $>^space:: ActivateWin("ahk_id " ghwnd)                                       ; activate CB if exists and move focus to inputbox
 
-  #IF                                                                           ; end context specific declarations
+  #IF                                                                           ; end context specific assignments
 
-; CB key assignment: SYS SETTINGS ______________________________________________
+; CB key assignment: System Commands ___________________________________________
 
-  :X:b~win::    BluetoothSettings()                                             ;[SS] bluetooth settings
-  :X:d~win::    DisplaySettings()                                               ;[SS] display settings
-  :X:n~win::    NotificationWindow()                                            ;[SS] notification window
-  :X:v~win::    SoundSettings()                                                 ;[SS] sound settings
-  :X:r~win::    RunProgWindow()                                                 ;[SS] run program
-  :X:x~win::    StartContextMenu()                                              ;[SS] context menu for the Start button
-  :X:k~win::    QuickConnectWindow()                                            ;[SS] quick connect window
-  :X:i~win::    WindowsSettings()                                               ;[SS] windows settings
-  :X:p~win::    PresentationDisplayMode()                                       ;[SS] presentation display mode
+  :X:b~win::    BluetoothSettings()                                             ;[SC] bluetooth settings
+  :X:d~win::    DisplaySettings()                                               ;[SC] display settings
+  :X:n~win::    NotificationWindow()                                            ;[SC] notification window
+  :X:v~win::    SoundSettings()                                                 ;[SC] sound settings
+  :X:r~win::    RunProgWindow()                                                 ;[SC] run program
+  :X:x~win::    StartContextMenu()                                              ;[SC] context menu for the Start button
+  :X:k~win::    QuickConnectWindow()                                            ;[SC] quick connect window
+  :X:i~win::    WindowsSettings()                                               ;[SC] windows settings
+  :X:p~win::    PresentationDisplayMode()                                       ;[SC] presentation display mode
   :X:s~~win::   PowerOptions("sleep")                                           ;[SC] enter sleep mode
   :X:h~~win::   PowerOptions("hybernate")                                       ;[SC] enter hybernate mode
   :X:sd~~win::  PowerOptions("shutdown")                                        ;[SC] shutdown + power down 
@@ -50,8 +50,11 @@
   :X:lt~win::   WinLLock(True)                                                  ;[SC] turn on win+L locks computer
   :X:lf~win::   WinLLock(False)                                                 ;[SC] turn off win+L locks computer
   :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;[SC] open add remove programs 
-  $^#Enter::                                                                    ;[SC] open start menu (alt: Ctrl+Esc)
+   #Lbutton::
+   $^#Enter::                                                                   ;[SC] open start menu (alt: Ctrl+Esc)
   :X:s~win::    send ^{esc}                                                     ;[SC] open start menu (alt: Ctrl+Esc)
+  :X:mod~win::  MoveWindowToOtherDesktop()                                      ;[SC] Move window to other desktop
+  :X:de~win::   send #{tab}                                                     ;[SC] desktop environment overview
 
 ; CB keys assignment: AHK UTILITIES ____________________________________________
   
@@ -76,24 +79,5 @@
   rshift & lshift::                                                             ;[AHK] reload ahk script
   :X:rw~win::   Reload                                                          ;[AHK] reload ahk script
 
-; CHANGE FOLDER IN FILELISTERS _________________________________________________
-  SetTitleMatchMode, 2
-  #IfWinActive ahk_group FileListers                                            ;    ChangeFolders works in file explorer and open file + save as dialogue boxes
-  
-  >+sc029::     ChangeFolder(A_ScriptDir)                                       ;<F> AHK folder
-  >+1::         ChangeFolder(A_ScriptDir "\golems\")                            ;<F> AHK golems folder
-  >+2::         ChangeFolder(A_ScriptDir "\lib\")                               ;<F> AHK libs folder
-  >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                         ;<F> mem_cache
-  >+a::         ChangeFolder(A_ScriptDir "\assets\")                            ;<F> mem_cache
-  >+c::         ChangeFolder(hdrive)                                            ;<F> %Homedrive% (C:)
-  >+o::         ChangeFolder(A_ProgramFiles)                                    ;<F> C:\Program Files
-  >+!o::        ChangeFolder(PF_x86)                                            ;<F> C:\Program Files(x86)
-  >+u::         ChangeFolder(UProfile)                                          ;<F> %UserProfile%
-  >+p::         ChangeFolder(UProfile "\Pictures\")                             ;<F> Pictures
-  >+g::         ChangeFolder(UProfile "\Google Drive")                          ;<F> google drive
-  >+j::         ChangeFolder(UProfile "\Downloads")                             ;<F> Downloads
-  >+d::         ChangeFolder(UProfile "\Documents")                             ;<F> Documents
-  >+r::         ChangeFolder("`:`:{645FF040-5081-101B-9F08-00AA002F954E}")      ;<F> Recycle bin (doesn't work for save as diag)
-  >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")      ;<F> This PC / My Computer
-
-#IfWinActive
+  *LWin::       Send {Blind}{LWin Down}                                      
+  *LWin Up::    Send {Blind}{vk00}{LWin Up}

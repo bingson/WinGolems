@@ -18,8 +18,9 @@
     title_state  := GC("CB_Titlebar", 1), ldspl   := GC("CB_last_display")
     wrap_txt := GC("CB_Wrap", 0)
 
-    wdth := StrSplit(CB_position, " ")[3]
     IBwidth := 400
+    wdth := StrSplit(CB_position, " ")[3]
+    wdth := (wdth >= IBwidth) ? wdth : IBWidth 
     CC("CB_InputBox_width", IBwidth)
                                                                                
     UserInput := ""

@@ -10,10 +10,10 @@
     */
 
 #If WinActive("ahk_exe " exe["editor"]) 
-
+    #space::  CB("~editor", C.lgreen)                                       ;editor: create command box that runs ~editor suffix CB keys
+    :X:c~~editor::       Send +^!g                                                 ;[VSC] git commit all
     /*  SAMPLE CODE
-        #space::  CB("~editor", C.lgreen)                                       ;editor: create command box that runs ~editor suffix CB keys
-       ^!sc01a::       Send % (toggle := !toggle) ? "^k^9" : "^k^8"             ;editor: fold/unfold all regions toggle
+        ^!sc01a:: Send % (toggle := !toggle) ? "^k^9" : "^k^8"                  ;editor: fold/unfold all regions toggle
     */
 
 #If WinActive("ahk_exe " exe["doc"])

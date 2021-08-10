@@ -1,0 +1,23 @@
+
+
+This is a Command Box (CB), an always-on-top keyboard-driven 
+graphical user interface. 
+
+Features: 
+
+ + Designed with WinGolem's memory functions in mind, the CB can
+   be used to display and modify contents of any .txt or .ini file. 
+
+ + Can be used to call and parametize functions on the fly
+   to modify selected text or manipulate application windows.
+
+ + Can also be used to create a new layer of context specific 
+   keyboard shortcuts that are active only when a particular 
+   command box is open
+
+ + Has a minimalist docked command line mode (no display pane) 
+   accessible by pressing alt + x
+
+
+
+Type "?" for CommandBox cheat sheet

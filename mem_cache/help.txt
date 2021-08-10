@@ -5,31 +5,31 @@
 |     #space:: CB("~win")                             | lt|lf  Switch ON|OFF:  Win + L Locks Computer       |  d   Display               |
 |                                                     | ss|qs  Switch ON|OFF:  Cloud Sync                   |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | cf     [Toggle] mouse cursor follows active window  |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | tut    AHK Beginner Tutorial                        |  k   Quick Connect         |
-|                                                     | ci     Edit WinGolems config.ini                    |  v   Sound                 |
-| The above can be adaped to call scripts written in  | kh     Open Key History (#KeyHistory > 0 required)  |  i   Windows Settings      |
-| other languages such as python, VBA, C++, etc ...   | gl     Generate shortcut list from running scripts  |  ap  Add Remove Programs   |
-|                                                     | ls     Open last generated list of shortcuts        |  a   Alarm Clock           |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| hs     Open log of user created hotstrings          |  r   Open Run Dialog Box   |
-|-----------------------------------------------------| ws     Open Window Spy                              |  x   Start Context Menu    |
-| #Space  submit key                      win+spacebar| rw     Reload WinGolems                             |  s   Start Menu            |
-| ^Space  move focus CB input box        ctrl+spacebar| qw~    Quit WinGolems                               |  ce~ Close All Programs    |
-| !r      reenter last submitted key             alt+r| ec     open cache folder in file explorer           |  sd~ Shut Down             |
-| !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |                            |
-| !e      move & resize CB window to top left    alt+e|                                                     |                            |
+|     :X:a~win:: anyFunction()                        | tut    AHK Beginner Tutorial                        |  v   Sound                 |
+|                                                     | ci     Edit WinGolems config.ini                    |  i   Windows Settings      |
+| The above can be adaped to call scripts written in  | kh     Open Key History (#KeyHistory > 0 required)  |  ap  Add Remove Programs   |
+| other languages such as python, VBA, C++, etc ...   | gl     Generate shortcut list from running scripts  |  a   Alarm Clock           |
+|                                                     | ls     Open last generated list of shortcuts        |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| hs     Open log of user created hotstrings          |  x   Start Context Menu    |
+|-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| rw     Reload WinGolems                             |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| qw~    Quit WinGolems                               |  h~  Hybernate computer    |
+| !r      reenter last submitted key             alt+r| ec     open cache folder in file explorer           |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |  rs~ Restart computer      |
+| !e      move & resize CB window to top left    alt+e| mod    move window to other desktop                 |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | FIRST CHARACTER INITIATED COMMAND (case-sensitive execution key)                                                                       |
 | KEY  DESCRIPTION                             USAGE               Notes:                                                        Format:?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)finance,(i)mages     Q?|
-|  T   Toggle CommandBox UI options            Td, Tt, Tt, Ts, Tw  mode: (d)isplay,(m)inimal; toggle: t)itlebar,(s)crollbar,(w)rap     T?|
+|  T   Toggle CommandBox UI options            Td, Tm, Tt, Ts, Tw  mode: (d)isplay,(m)inimal; toggle: t)itlebar,(s)crollbar,(w)rap     T?|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" equivalent to entering b in CB("~win")   W?|
 |  W~  Change W command suffix reference       W~win, W~pdf        M|H|B behave the same as W to access different CB(~suffix) keys    W~?| 
-| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     => select # of rows below: 3, 10, 20 + delete, 23 + no selection    J?|
+| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K = 10 if no numbers or other letters entered (e.g., KKKK = 40)   K?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C              (R?~?__?~?) R?~?|
-| R?~  Change replacement separators (1|2)     R1~%; R2~~>         => changes the above replacement separators to % and ~>           R?~?| 
+| R?~  Change replacement separators (1|2)     R1~%; R2~~>         Changes the above replacement separators to % and ~>              R?~?| 
 |  G   Run any function                        GMoveWin,TopLeft    fmt: fn1name,params__fn2name,params                   (G?,?__?,?) G?,?|
 | G?~  Create G function|parameter alias (f|p) Gf~mw~MoveWin       makes Gmw,tl behave identically to GMoveWin,TopLeft             G?~?~?|
 |                                              Gp~tl~TopLeft       list of current aliases in the file ALIAS.ini in /mem_cache/ folder   |

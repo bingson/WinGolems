@@ -1,5 +1,7 @@
 #IfWinActive
 ; The following interface layers are valid anywhere in Windows 10
+
+
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
 
   #F1::          Send #1                                                        ;[A] activate app 1 in task bar 
@@ -32,7 +34,8 @@
  
 ; CONVENIENCE (ORANGE) _________________________________________________________
   
-  ^!space::      MaximizeWin()                                                  ;[C] toggle maximize/restore window
+  #sc028::                                                                      ;[C] maximize window
+  ^!space::      MaximizeWin()                                                  ;[C] maximize window
   #SC027::       WinMinimize,A                                                  ;[C] minimize window
   #del::         AlwaysOnTop(1)                                                 ;[C] Always on top: ON
   #ins::         AlwaysOnTop(0)                                                 ;[C] Always on top: OFF
@@ -41,7 +44,6 @@
   !SC027::       Send {esc}                                                     ;[C] alternate esc key (alt + semicolon)
   ^#w::          WinClose,A                                                     ;[c] close active window 
   ^#q::          CloseClass()                                                   ;[c] close all instances of the active program
-
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; hotkey modifier keys (+#^) can be changed, however the hotkey assignment 
@@ -94,8 +96,8 @@
 
   ; SELECT TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
-    #u::                                                                        ;[ST] select word at text cursor
-    $!f::        SelectWord()                                                   ;[ST] select word at text cursor
+    #u::                                                                        ;[ST] select word at text cursor position
+    $!f::        SelectWord()                                                   ;[ST] select word at text cursor position
     $+!f::       SelectLine()                                                   ;[ST] select current line starting from begining of line
     $^!f::       Sendinput {end}+{home}                                         ;[ST] select line starting from end of line
     
@@ -133,6 +135,26 @@
     *$#j::                                                                      ;[NT] Down
     *$!j::       sendinput {Down}                                               ;[NT] Down
   
+; CHANGE FOLDER IN FILELISTERS _________________________________________________
+  SetTitleMatchMode, 2
+  #IfWinActive ahk_group FileListers                                            ; ChangeFolders works in file explorer and open file + save as dialogue boxes
+  
+  >+sc029::     ChangeFolder(A_ScriptDir)                                       ;<F> AHK folder
+  
+  /* Sample Code
+     >+1::         ChangeFolder(A_ScriptDir "\golems\")                         ;<F> AHK golems folder
+     >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                      ;<F> mem_cache
+     >+c::         ChangeFolder(hdrive)                                         ;<F> %Homedrive% (C:)
+     >+o::         ChangeFolder(A_ProgramFiles)                                 ;<F> C:\Program Files
+     >+!o::        ChangeFolder(PF_x86)                                         ;<F> C:\Program Files(x86)
+     >+u::         ChangeFolder(UProfile)                                       ;<F> %UserProfile%
+     >+p::         ChangeFolder(UProfile "\Pictures\")                          ;<F> Pictures
+     >+g::         ChangeFolder(UProfile "\Google Drive")                       ;<F> google drive
+     >+j::         ChangeFolder(UProfile "\Downloads")                          ;<F> Downloads
+     >+d::         ChangeFolder(UProfile "\Documents")                          ;<F> Documents
+     >+r::         ChangeFolder("`:`:{645FF040-5081-101B-9F08-00AA002F954E}")   ;<F> Recycle bin (doesn't work for save as diag)
+     >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")   ;<F> This PC / My Computer
+ */
 
 #IfWinActive
 
