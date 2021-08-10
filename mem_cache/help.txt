@@ -14,8 +14,8 @@
 |-----------------------------------------------------| ws     Open Window Spy                              |  x   Start Context Menu    |
 | #Space  submit key                      win+spacebar| rw     Reload WinGolems                             |  s   Start Menu            |
 | ^Space  move focus CB input box        ctrl+spacebar| qw~    Quit WinGolems                               |  ce~ Close All Programs    |
-| !r      reenter last submitted key             alt+r| ec~    open cache folder in file explorer           |  sd~ Shut Down             |
-| !x      toggle GUI minimal or display mode     alt+x| mod    move window to other desktop                 |                            |
+| !r      reenter last submitted key             alt+r| ec     open cache folder in file explorer           |  sd~ Shut Down             |
+| !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |                            |
 | !e      move & resize CB window to top left    alt+e|                                                     |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | FIRST CHARACTER INITIATED COMMAND (case-sensitive execution key)                                                                       |

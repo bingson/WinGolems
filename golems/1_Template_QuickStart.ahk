@@ -39,6 +39,9 @@
   +#tab::        ActivatePrevInstance()                                         ;[C] rotate through active program instances starting from oldest
   #tab::         ActivateNextInstance()                                         ;[C] rotate through active program instances starting from newest
   !SC027::       Send {esc}                                                     ;[C] alternate esc key (alt + semicolon)
+  ^#w::          WinClose,A                                                     ;[c] close active window 
+  ^#q::          CloseClass()                                                   ;[c] close all instances of the active program
+
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; hotkey modifier keys (+#^) can be changed, however the hotkey assignment 
