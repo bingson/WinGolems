@@ -79,5 +79,8 @@
   rshift & lshift::                                                             ;[AHK] reload ahk script
   :X:rw~win::   Reload                                                          ;[AHK] reload ahk script
 
-  *LWin::       Send {Blind}{LWin Down}                                      
-  *LWin Up::    Send {Blind}{vk00}{LWin Up}
+  *LWin::       Send {Blind}{LWin Down}                                         ;[AHK] modifier key (use ctrl+esc or windows key + left mouse click to access start menu)
+  *LWin Up::    Send {Blind}{vk00}{LWin Up}                                     ;[AHK] modifier key (use ctrl+esc or windows key + left mouse click to access start menu)
+                                                                                ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
+                                                                                
+  :X:c~~coding::       Send +^!g                                                ;[VSC] git commit all
