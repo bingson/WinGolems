@@ -1665,7 +1665,7 @@
             Run, mailto:%email%?subject=%Subject%&body=%body%
         Gui, destroy
         return
- }
+  }
  
   RunExcelMacro(MacroName) { ; for AHK_L
     Try {
@@ -1727,6 +1727,22 @@
     send {Enter}%opt%
     return
   }
+
+; VS Code_______________________________________________________________________
+
+  FocusResults() {
+    sleep 300
+    send ^m
+    Send {shift down}{tab 5}{shift up}
+    send ^m
+    return
+  }
+
+  commentSelected(pfx = "/*", sfx = "*/") {
+    send {tab}
+    Clip(pfx clip() sfx)
+    return
+  }                   
 
 ; TEXT MANIPULATION ____________________________________________________________
 
@@ -2048,5 +2064,5 @@
     return
   } 
  
-; TEST _________________________________________________________________________
+; ______________________________________________________________________________
 

@@ -1,2 +1,6 @@
-  $*LWin::        Send {Blind}{LWin Down}                                        ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ctrl + esc or lwin + left mouse click to access start menu)
-  $*LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ctrl + esc or lwin + left mouse click to access start menu)
+ 
+ pfx := ""
+ wdt := "80"
+ wdt2 := "40" 
+ return               
+ 

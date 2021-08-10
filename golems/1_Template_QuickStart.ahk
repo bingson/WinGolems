@@ -44,19 +44,30 @@
   ^SC027::       Send {AppsKey}                                                 ;[C] appkey press
   ^#w::          WinClose,A                                                     ;[C] close active window 
   ^#q::          CloseClass()                                                   ;[C] close all instances of the active program
-  $*LWin::       Send {Blind}{LWin Down}                                        ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ^#enter or lwin + left mouse click to access start menu)
-  $*LWin Up::    Send {Blind}{vk00}{LWin Up}                                    ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ^#enter or lwin + left mouse click to access start menu)
+  *LWin::        Send {Blind}{LWin Down}                                        ;[C] renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;[C] renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
                                                                                 ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
 
-  $^!j::         Sendinput ^{sc00D}                                             ;[MF] zoom in
-  $^!k::         Sendinput ^{sc00C}                                             ;[MF] zoom out
+  $^!j::         Sendinput ^{sc00D}                                             ;[C] zoom in
+  $^!k::         Sendinput ^{sc00C}                                             ;[C] zoom out
                                                                                 
-  !b:: send ^{PgUp}                                                             ;[C] navigate to right tab
+  !b::           send ^{PgUp}                                                   ;[C] navigate to right tab
   !space::                                                                      ;[C] navigate to left tab
-      send {Blind}                                                              ; fixes issue with alt key opening application menues
-      send ^{PgDn}                                                                
-      return
-                                                                              
+    send {Blind}                                                                ; fixes issue with alt key opening application menues
+    send ^{PgDn}                                                                
+    return
+
+  #SC035::    search()                                                          ;[C] google search selected text
+
+  :X:tc~win::                                                                   ;[C] Toggle capslocks = del key
+    CC("T_capslock_del","!")    
+    ShowPopup("capslocks => delete: " GC("T_text_opt"))
+    return
+  
+  #IF GC("T_capslock_del",0)
+    capslock::del                                                               ;[C] makes capslock key function as a delete key. (toggle capslock: alt + capslock)   
+    !capslock::CapsLock
+  #IF                                                                                    
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; hotkey modifier keys (+#^) can be changed, however the hotkey assignment 
@@ -99,8 +110,9 @@
   #!LButton::    RetrieveMemory(,"#!LButton")                                   ;[M] paste contents of single digit .txt file entered at prompt
 
 ; TEXT (PURPLE) ________________________________________________________________
-    
-  capslock::del                                                                 ;[T] make capslock key function as a delete key. (toggle capslock: alt + capslock)    
+
+  #j::         Sendinput {WheelDown 5}                                          ;[NT] scroll wheel down                                               
+  #k::         Sendinput {WheelUp 5}                                            ;[NT] scroll wheel Up           
   ^!h::        sendinput {home}                                                 ;[T] Home
   ^!l::        sendinput {end}                                                  ;[T] End
   #u::         SelectWord()                                                     ;[T] select word at text cursor position
@@ -110,10 +122,17 @@
   #o::         RemoveBlankLines()                                               ;[T] remove blank lines in selected text
   !#space::    ReplaceAwithB(" ")                                               ;[T] remove all spaces from selected text
   ^#space::    ReplaceAwithB()                                                  ;[T] replace multiple consecutive spaces w/ a single space in selected text
-  
- ; TEXT SELECTION AND NAVIGATION -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --; must be turned by entering "tt" in CB("~win") 
 
- #IF GC("T_text_opt",0)                                                         ; get config.ini value for T_text_opt, default to false (0) if no value found. 
+  :X:tt~win::                                                                   ;[T] toggle text navigation and selection hotkeys
+    CC("T_text_opt","!")
+    ShowPopup("Text selection & navigation hotkeys: " GC("T_text_opt"))
+    return
+
+  
+ ; TEXT SELECTION AND NAVIGATION -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --; must be turned on by entering "tt" in CB("~win") 
+ #IF GC("T_text_opt",0)                             
+                             ; get config.ini value for T_text_opt, default to false (0) if no value found. 
+   ; SELECT TEXT ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
  
     $!f::        SelectWord()                                                   ;[ST] select word at text cursor position
     $+!f::       SelectLine()                                                   ;[ST] select current line starting from begining of line
@@ -135,10 +154,8 @@
     +!j::        sendinput +{down}                                              ;[ST] extend selection down  1 row
     +!k::        sendinput +{up}                                                ;[ST] extend selection up    1 row
     
-  ; NAVIGATE TEXT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  ; NAVIGATE TEXT ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
 
-    #j::         Sendinput {WheelDown 5}                                        ;[NT] scroll wheel down                                               
-    #k::         Sendinput {WheelUp 5}                                          ;[NT] scroll wheel Up           
     #p::         sendinput ^{home}                                              ;[NT] Ctrl + Home
     #SC01A::     sendinput ^{end}                                               ;[NT] Ctrl + End  (note: SC01A = "[" to see a SC code reference table type "Lsck" in a Command Box)
     $#h::        sendinput ^{Left}                                              ;[NT] jump to next word = simulate ctrl+Left

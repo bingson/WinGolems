@@ -1,0 +1,7 @@
+es such as python, VBA, C++, etc ...   | gl     Generate shortcut list from running scripts  |  a   Alarm Clock           |
+|                                                     | ls     Open last generated list of shortcuts        |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| hs     Open log of user created hotstrings          |  x   Start Context Menu    |
+|-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| r~     Reload WinGolems                             |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| q~     Quit WinGolems                               |  h~  Hybernate computer    |
+| !r      reenter last submitted key  
