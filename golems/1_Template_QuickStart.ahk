@@ -106,12 +106,11 @@
     +#y::        % (t := !t) ? Capitalize1stLetter(,,0) : Capitalize1stLetter() ;[MT] Toggle capitalize the first letter of all selected words (title case) vs only the first word
     #i::         ReplaceAwithB()                                                ;[MT] replace multiple consecutive spaces w/ one space in selected text
     #o::         RemoveBlankLines()                                             ;[MT] remove blank lines in selected text
+    !#space::     ReplaceAwithB(" ")                                            ;[MT] remove all spaces starting from selected text
+    ^#space::     ReplaceAwithB()                                               ;[MT] replace multiple consecutive spaces w/  1 in selected text
+  
 
-    :X:tt~win::                                                                 ;[ST] Toggles text navigation and folder bookmark hotkeys
-        CC("T_text_folder","!")
-        ShowPopup("Text and folder hotkeys: " GC("T_text_folder"), C.lpurple)
-        return
-
+ 
  #IF GC("T_text_opt",0)                                                         ; get config.ini value for T_text_opt, default to false (0) if no value found. 
  
     capslock::del                                                               ; make capslock key function as delete key. (to toggle capslock use alt + capslock)

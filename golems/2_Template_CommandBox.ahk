@@ -58,6 +58,11 @@
 
 ; CB keys assignment: AHK UTILITIES ____________________________________________
   
+  :X:tt~win::                                                                   ;[ST] Toggles text navigation and folder bookmark hotkeys
+    CC("T_text_folder","!")
+    ShowPopup("Text and folder hotkeys: " GC("T_text_folder"), C.lpurple)
+    return
+
   :X:ec~win::   OpenFolder("mem_cache\")                                        ;[AHK] open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;[AHK] open key history
   :X:ws~win::   run, C:\Program Files\AutoHotkey\WindowSpy.ahk                  ;[AHK] open windows spy

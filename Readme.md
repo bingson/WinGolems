@@ -1,10 +1,8 @@
 <h1> WinGolems </h1>
 
-> Operating systems and devices should mold to our needs, not the other way around. — Satya Nadella
+A great computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A tranformative interface is one that lets you solve problems that would be impossible to solve without. Because mastering an interface requires internalizing its component objects and operations, interfaces can introduce new elements of cognition and modes of thought. 
 
-Borrowing ideas from Michael Nielsen's [writings on Tools for Thought](https://michaelnielsen.org/), a transformative computer interface does more than make it easier to complete common tasks and automate redundant processes, to be considered transformative the interface must give users the ability to discover and leverage insights that would be much harder or impossible to do otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the power to introduce new elements of cognition and modes of thought. 
-
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. After going through a short tutorial below, new users will be able to start building their own interface layers (no prior Autohotkey knowledge is assumed).
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. After going through a short tutorial below, new users can start building their own interface layers (no prior Autohotkey knowledge is assumed) using premade convenience functions that control various aspects of Windows OS.
 
 One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows.  
 
@@ -13,75 +11,82 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
     ; for opening/activating a web browser using WinGolems convenience functions
 
     :X:c~win::                      ; 1. typing "c~win" <space>
-    #s:: ActivateApp("html_path")   ; 2. pressing "win + s" together 
-                                    ; 3. entering "c" in a ~win suffix command box
+    #s:: ActivateApp("html_path")   ; 2. pressing "win + s" 
+                                    ; 3. submitting "c" in a "~win" command box
                                 
 ```
 
 ## Quick Start Template
 
-Within WinGolems the AHK code for the creation of interface elements (i.e., interface templates) is kept in separate files from the code for the algorithms carrying out the underlying operations. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights only a small sample of WinGolems' convenience functions. For a more advanced reference template, please see \Golems\TrackPointKB. 
+Within this repository the AHK code for the creation of interface elements (i.e., interface templates) is kept separate from the code for the algorithms that carry out the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights only a small sample of WinGolems' convenience functions. For a more advanced reference template, please see the template files in \Golems\TpKb which was designed around Lenovo Trackpoint keyboards (my current setup). 
 
-<!-- <img src="assets\Screens\simple.png" width = "> -->
-<!-- <img src="assets\Screens\CB.png"> -->
+The initial value provided by this repository comes from helping others reduce every day workflow frictions. For instance, when different applications have different shortcuts for the same function. E.g, switching tabs with ctrl+tab vs ctrl+PgUp. Or worse yet, when application developpers assign rarely used functions to prominent key combinations that could be put to better use (e.g., #g for windows game mode). WinGolem's provides template examples of how to alleviate these issues and as well as reengineer how they accomplish things with their computer.  
+
+[Operating systems and devices should mold to our needs, not the other way around.](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple) -- Satya Nadella
+
+
+<center>
+<img src="assets\Screens\QuickStartHotkeys.png" width="1000">
 
 <br>
+At some point, 
 
-![ScreenShot](assets/Screens/WG_QuickReference.png)
+<img src="assets\Screens\CB.png" width="600">
 
-![ScreenShot](assets/Screens/CB.png)
-
-
-
-
-Command Box: Multi-function keyboard driven GUI (Graphical User Interface) 
-
-FAQ
-free up windows keys
-#F https://superuser.com/questions/1251384/how-to-disable-windows-10-feedback-hub
-
-```
- _________________________________________________________________________________________________________________________________________
-| CommandBox (CB) Creation:     # win  ! alt  ^ ctrl  | KEY    WINGOLEMS UTILITIES, HELP, CONFIGURATION     | KEY  WINDOWS SELECTION     |
-| ---------------------------                         |------ ----------------------------------------------|----- ----------------------|
+<details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
+<p>
+_________________________________________________________________________________________________________________________________________
+| CommandBox (CB) Creation:                           | KEY    WINGOLEMS UTILITIES, HELP, CONFIGURATION     | KEY  WINDOWS SELECTION     | 
+|-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     #space:: CB("~win")                             | lt|lf  Switch ON|OFF:  Win + L Locks Computer       |  d   Display               |
 |                                                     | ss|qs  Switch ON|OFF:  Cloud Sync                   |  n   Notifications         |
-| 2) Create a command key "a" to call any function:   | cf     Toggle ON|OFF:  Cursor follows active window |  p   Presentation mode     |
-|     :X:a~win:: Function()                           | tut    AHK Beginner Tutorial                        |  k   Quick Connect         |
-|                                                     | ci     Edit WinGolems config.ini                    |  v   Sound                 |
-| The above can be adaped to call scripts written in  | kh     Open Key History (#KeyHistory > 0 required)  |  i   Windows Settings      |
-| other languages such as python, VBA, etc ...        | gl     Generate shortcut list from running scripts  |  ap  Add Remove Programs   |
-|                                                     | ls     Open last generated list of shortcuts        |  a   Alarm Clock           |
-| CB Keyboard Shortcuts:                              | hs     Open log of user created hotstrings          |  r   Open Run Dialog Box   |
-| --------------------------                          | ws     Open Window Spy                              |  x   Start Context Menu    |
-| #Space  submit command key        (win  + spacebar) | rw     Reload WinGolems (Ctrl+Win+R)                |  s   Start Menu            |
-| ^Space  move focus to input box   (ctrl + spacebar) | qw~    Quit WinGolems                               |  ce~ Close All Programs    |
-| !r      enter last command        (alt  + r)        | ec~    open cache folder in file explorer           |  sd~ Shut Down             |
+| 2) Create a command key "a" to call any function:   | cf     [Toggle] mouse cursor follows active window  |  p   Presentation mode     |
+|     :X:a~win:: anyFunction()                        | tut    AHK Beginner Tutorial                        |  v   Sound                 |
+|                                                     | ci     Edit WinGolems config.ini                    |  i   Windows Settings      |
+| The above can be adaped to call scripts written in  | kh     Open Key History (#KeyHistory > 0 required)  |  ap  Add Remove Programs   |
+| other languages such as python, VBA, C++, etc ...   | gl     Generate shortcut list from running scripts  |  a   Alarm Clock           |
+|                                                     | ls     Open last generated list of shortcuts        |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| hs     Open log of user created hotstrings          |  x   Start Context Menu    |
+|-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| r~     Reload WinGolems                             |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| q~     Quit WinGolems                               |  h~  Hybernate computer    |
+| !r      reenter last submitted key             alt+r| ec     open cache folder in file explorer           |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |  rs~ Restart computer      |
+| !e      move & resize CB window to top left    alt+e| tt     toggle text nav and folder bookmark hotkeys  |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
-| FIRST CHARACTER INITIATED COMMANDS (Case-sensitive)                                                                                    |
-| KEY  UTILITIES                               USAGE                                                                       separator (?) |
-|----- --------------------------------------- ------------------------------------------------------------------------------------------|
-| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection       |
-| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J or K = 10 if no numbers used, KK = 20 rows selected above           |
-|  G   Run any WinGolems Library function      GLoadURL,gmail.com  fmt: function name, paramaters                                    (,) |
-|  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                (,) |
-|  R   Replace A with B in selected text       R,~+__A~B           Changes A,C -> B+C  ; replacement (~), btn multiple replacements (__) |
-| R?~  Change separator characters             R1~%, R2~~>         Changes separators to replacement (%), btn multiple replacements (~>) | 
+| FIRST CHARACTER INITIATED COMMAND (case-sensitive execution key)                                                                       |
+| KEY  DESCRIPTION                             USAGE               Notes:                                                        Format:?|
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+|  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)finance,(i)mages     Q?|
+|  T   Toggle CommandBox UI options            Td, Tm, Tt, Ts, Tw  mode: (d)isplay,(m)inimal; toggle: t)itlebar,(s)crollbar,(w)rap     T?|
+|  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" equivalent to entering b in CB("~win")   W?|
+|  W~  Change W command suffix reference       W~win, W~pdf        M|H|B behave the same as W to access different CB(~suffix) keys    W~?| 
+| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
+| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K = 10 if no numbers or other letters entered (e.g., KKKK = 40)   K?|
+|  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
+|  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C              (R?~?__?~?) R?~?|
+| R?~  Change replacement separators (1|2)     R1~%; R2~~>         Changes the above replacement separators to % and ~>              R?~?| 
+|  G   Run any function                        GMoveWin,TopLeft    fmt: fn1name,params__fn2name,params                   (G?,?__?,?) G?,?|
+| G?~  Create G function|parameter alias (f|p) Gf~mw~MoveWin       makes Gmw,tl behave identically to GMoveWin,TopLeft             G?~?~?|
+|                                              Gp~tl~TopLeft       list of current aliases in the file ALIAS.ini in /mem_cache/ folder   |
 |                                                                                                                                        |
-| KEY  MEM_CACHE COMMANDS ( .txt files only )  USAGE                                                                                     |
-|----- --------------------------------------- ------------------------------------------------------------------------------------------|
-| 0-9  Load .txt file 0-9 into CB display      0, 1, 2, ...         alternative to using L1 to load 1.txt                                |
-|  L   Load .txt file into CB display          L1, Lhelp, Lr\testr  Load in display: 1.txt, help.txt, r\testr.txt                        |
-|  V   Paste .txt file contents                V1, Vsck, Vr\testr   Paste contents of 1.txt, sck.txt, r\testr.txt into prior window      |
-|  C   1) make copy 2) make & rename copy      C1, Chelp new_name   duplicate names resolved with added number suffix                    |
-|  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3     overwrite: 1.txt <= selection, 2.txt <= help.txt, clipboard <= 3.txt |
-|  E   Edit file in default editor             E1, Etest, Er\testr  entering E or EF will open file or folder jumplist menus             |
-| A|P  Append|Prepend selected text to file    A1, Atest, Ar\testr  add selected text to bottom|top of: 1.txt, test.txt, r\testr.txt     |
-| Rf~  Modify file w/ pattern in another file  Rf~1~p n             Modify 1.txt w/ replacement pattern in p.txt, save chg as n.txt   (~)|
-|      pattern file fmt: no R at beginning     ,~+__A~B,            linebreaks btn _ _ will be ignored. E.g.,  _,~+_ *line break* _A~B_  |
+| KEY  MEM_CACHE COMMANDS ( .txt files only )  USAGE               Notes:                                                         Format?|
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                       ?|
+|  L   Load .txt file into CB display          L1, Lhelp, Lr\testr [Load in display] 1.txt, help.txt, r\testr.txt [Ll: .txt file list] L?|
+|  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last window        V?|
+|  C   make copy or make & rename copy         C1, Chelp new_name  duplicate names resolved with added number suffix                   C?|
+|  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace: 1.txt w/ selection, 2.txt w/ help.txt, clipboard w/ 3.txt  O?|
+|  E   Edit file in default editor             E1, Etest, Er\testr entering E or EF will open file or folder jumplist menus            E?|
+| A|P  Append|Prepend selected text to file    A1, Atest, Ar\testr add selected text to bottom|top of 1.txt, test.txt, r\testr.txt   A|P?|
+| Rf~  Modify file w/ saved replace't pattern  Rf~1~p n            chg 1.txt w/ pattern in p.txt & save result to n.txt          Rf~?~? ?|
+|      pattern file fmt: no R at beginning     ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
 |________________________________________________________________________________________________________________________________________|
-```
+
+</p>
+</details>
+</center>
 
 After creating different interfaces elements, the next step is to connect that interface to functions that do something useful. 
 
@@ -93,7 +98,7 @@ Before writing any new functions, I suggest searching the following AHK communit
 Moving beyond automation and quality of life features, WinGolems can be used as a toolkit for building building layers of abstraction. 
 
 
-
+#F https://superuser.com/questions/1251384/how-to-disable-windows-10-feedback-hub
 
 
 
@@ -123,9 +128,7 @@ One of the primary use cases I use WinGolems, is as a
 I often create WinGolems scripts 
 The command box was conceived out of a desire to augment my memory and 
 
-```
-. . . [the] aim is to develop a new medium for thought. A medium such as, say, Adobe Illustrator is essentially different from any of the individual tools Illustrator contains. Such a medium creates a powerful immersive context, a context in which the user can have new kinds of thought, thoughts that were formerly impossible for them. Speaking loosely, the range of expressive thoughts possible in such a medium is an emergent property of the elementary objects and actions in that medium. If those are well chosen, the medium expands the possible range of human thought.
-```
+
 
 But beyond creating more convenient Windows shortcuts, WinGolem's also contains modules to facilitate the cognitive outsourcing of complex tasks by 
 
