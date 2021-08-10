@@ -461,7 +461,7 @@
   }
 
   CB( sfx = "~win", w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand") {
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     global config_path
     SetTitleMatchMode, 2
     DetectHiddenText, On
@@ -479,7 +479,7 @@
   }
 
   FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", title="", name_dict = "", grp=1, p*) {
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     global config_path, FBhwnd
     SetTitleMatchMode, 2
     ; IniRead, output, %config_path%, %A_ComputerName%, CB_hwnd
@@ -723,9 +723,9 @@
   }
 
   OverwriteMemory(del_toggle = false) {
-    global lb, short
-    ReleaseModifiers()
+    global C, short
     slot := substr(A_ThisHotkey, 0)        
+    ; ReleaseModifiers()
     ; del_toggle := Instr(A_ThisHotkey, "del") ? True : False               ;     cut selected text hot key condition  
     WriteToCache(slot, del_toggle)                                          ;     note: if no text selected, no overwrite will occur 
     return
@@ -733,7 +733,7 @@
 
   AddToMemory(del_after_copy = "0"){
     global C, ghwnd
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     slot            := substr(A_ThisHotkey, 0)
     new_text_to_add := trim(clip())
     FileAppend % "`n" . new_text_to_add, mem_cache\%slot%.txt           
@@ -748,7 +748,7 @@
 
   RetrieveMemory(mpaste = "^#LButton", mprompt="#!LButton", pasteOvr="printscreen") {
     global med, short, C
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     WinID := WinExist("A") 
     if (Instr(A_ThisHotkey, mprompt))
     ; if (Instr(A_ThisHotkey, "#!LButton"))
@@ -1112,7 +1112,7 @@
   GenerateHotkeyList() {
     ; generate a .txt list of all active hotkeys and hotstrings
     ; then opens that .txt in the default editor (config.ini)
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     global long, med
     run %A_ScriptDir%\golems\Hotkey_Help.ahk                                    ; Run modified version of original script
     sleep, long * 2
@@ -1516,7 +1516,7 @@
  
   Clicks(num = 2, lrm = "left") {
     ; temporarily blocks mouse movement for more consistent doubleclick to select word
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     BlockInput, MouseMove
     click, %num% %lrm%
     BlockInput, MouseMoveOff
@@ -1833,7 +1833,7 @@
 
   ConvertUpper(var = "", paste = True) {
     ; Convert selected text to uppercase
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     var := !var ? clip() : var
     StringReplace, var, var, `r`n, `n, All
     StringUpper, var, var
@@ -1845,7 +1845,7 @@
  
   ConvertLower(var = "", paste = True) {
     ; Convert selected text to lowercase
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     var := !var ? clip() : var
     StringReplace, var, var, `r`n, `n, All
     StringLower, var, var
@@ -1873,7 +1873,7 @@
  
   Capitalize1stLetter(var = "", paste = True, firstWord = True, LowerCaseOthers = True) {
     ; Capitalize just first letter of selected text
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     var := (!var ? clip() : var)
     StringReplace, var, var, `r`n, `n, All
     if firstWord 
@@ -2021,7 +2021,7 @@
   }
  
   ReplaceAwithB(A = "", B = "", var = "", paste = True, select = True, regex = false) {
-    ReleaseModifiers()
+    ;ReleaseModifiers()
     var := (!var ? clip() : var)
     var := RegExReplace(var, "S) +", A_Space)
     if regex

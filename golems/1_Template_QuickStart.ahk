@@ -44,8 +44,8 @@
   ^SC027::       Send {AppsKey}                                                 ;[C] appkey press
   ^#w::          WinClose,A                                                     ;[C] close active window 
   ^#q::          CloseClass()                                                   ;[C] close all instances of the active program
-  *LWin::        Send {Blind}{LWin Down}                                        ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ctrl + esc or lwin + left mouse click to access start menu)
-  LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ctrl + esc or lwin + left mouse click to access start menu)
+  $*LWin::       Send {Blind}{LWin Down}                                        ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ^#enter or lwin + left mouse click to access start menu)
+  $*LWin Up::    Send {Blind}{vk00}{LWin Up}                                    ;[C] makes left windows key a modifier key for AHK keyboard shorcuts (use ^#enter or lwin + left mouse click to access start menu)
                                                                                 ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
   
   !b:: send ^{PgUp}                                                             ;[C] navigate to right tab
@@ -96,7 +96,10 @@
   #!LButton::    RetrieveMemory(,"#!LButton")                                   ;[M] paste contents of single digit .txt file entered at prompt
 
 ; TEXT (PURPLE) ________________________________________________________________
-
+    
+    ^!h::        sendinput {home}                                               ;[NT] Home
+    ^!l::        sendinput {end}                                                ;[NT] End
+    #u::         SelectWord()                                                   ;[ST] select word at text cursor position
   ; MANIPULATE TEXT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
     #y::         % (t := !t) ? ConvertUpper() : ConvertLower()                  ;[MT] Toggle transform selected text to uppercase or lowercase  
@@ -104,9 +107,17 @@
     #i::         ReplaceAwithB()                                                ;[MT] replace multiple consecutive spaces w/ one space in selected text
     #o::         RemoveBlankLines()                                             ;[MT] remove blank lines in selected text
 
-  ; SELECT TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    :X:tt~win::                                                                 ;[ST] Toggles text navigation and folder bookmark hotkeys
+        CC("T_text_folder","!")
+        ShowPopup("Text and folder hotkeys: " GC("T_text_folder"), C.lpurple)
+        return
 
-    #u::                                                                        ;[ST] select word at text cursor position
+ #IF GC("T_text_opt",0)                                                         ; get config.ini value for T_text_opt, default to false (0) if no value found. 
+ 
+    capslock::del                                                               ; make capslock key function as delete key. (to toggle capslock use alt + capslock)
+  ; SELECT TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+     
+    
     $!f::        SelectWord()                                                   ;[ST] select word at text cursor position
     $+!f::       SelectLine()                                                   ;[ST] select current line starting from begining of line
     $^!f::       Sendinput {end}+{home}                                         ;[ST] select line starting from end of line
@@ -128,10 +139,7 @@
     +!k::        sendinput +{up}                                                ;[ST] extend selection up    1 row
     
   ; NAVIGATE TEXT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-  
     
-    ^!h::        sendinput {home}                                               ;[NT] Home
-    ^!l::        sendinput {end}                                                ;[NT] End
     #j::         Sendinput {WheelDown 5}                                        ;[NT] scroll wheel down                                               
     #k::         Sendinput {WheelUp 5}                                          ;[NT] scroll wheel Up           
     #p::         sendinput ^{home}                                              ;[NT] Ctrl + Home
@@ -151,20 +159,20 @@
   
   >+sc029::     ChangeFolder(A_ScriptDir)                                       ;<F> AHK folder
   
-  /* Sample Code
-     >+1::         ChangeFolder(A_ScriptDir "\golems\")                         ;<F> AHK golems folder
-     >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                      ;<F> mem_cache
-     >+c::         ChangeFolder(hdrive)                                         ;<F> %Homedrive% (C:)
-     >+o::         ChangeFolder(A_ProgramFiles)                                 ;<F> C:\Program Files
-     >+!o::        ChangeFolder(PF_x86)                                         ;<F> C:\Program Files(x86)
-     >+u::         ChangeFolder(UProfile)                                       ;<F> %UserProfile%
-     >+p::         ChangeFolder(UProfile "\Pictures\")                          ;<F> Pictures
-     >+g::         ChangeFolder(UProfile "\Google Drive")                       ;<F> google drive
-     >+j::         ChangeFolder(UProfile "\Downloads")                          ;<F> Downloads
-     >+d::         ChangeFolder(UProfile "\Documents")                          ;<F> Documents
-     >+r::         ChangeFolder("`:`:{645FF040-5081-101B-9F08-00AA002F954E}")   ;<F> Recycle bin (doesn't work for save as diag)
-     >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")   ;<F> This PC / My Computer
- */
+  
+  >+1::         ChangeFolder(A_ScriptDir "\golems\")                            ;<F> AHK golems folder
+  >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                         ;<F> mem_cache
+  >+c::         ChangeFolder(hdrive)                                            ;<F> %Homedrive% (C:)
+  >+o::         ChangeFolder(A_ProgramFiles)                                    ;<F> C:\Program Files
+  >+!o::        ChangeFolder(PF_x86)                                            ;<F> C:\Program Files(x86)
+  >+u::         ChangeFolder(UProfile)                                          ;<F> %UserProfile%
+  >+p::         ChangeFolder(UProfile "\Pictures\")                             ;<F> Pictures
+  >+g::         ChangeFolder(UProfile "\Google Drive")                          ;<F> google drive
+  >+j::         ChangeFolder(UProfile "\Downloads")                             ;<F> Downloads
+  >+d::         ChangeFolder(UProfile "\Documents")                             ;<F> Documents
+  >+r::         ChangeFolder("`:`:{645FF040-5081-101B-9F08-00AA002F954E}")      ;<F> Recycle bin (doesn't work for save as diag)
+  >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")      ;<F> This PC / My Computer
+ 
 
 #IfWinActive
 

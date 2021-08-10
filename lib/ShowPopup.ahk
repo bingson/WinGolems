@@ -1,4 +1,4 @@
- ShowPopup(msg, w_color = "ffffff", ctn = "000000", wn = "400", hn = "75", drtn = "-200"
+ ShowPopup(msg, w_color = "ffffff", ctn = "000000", wn = "400", hn = "75", drtn = "-600"
     , fsz = "16", fwt = "610", fnt = "Gaduigi") {
     
     global config_path, C, bgreen

@@ -66,18 +66,18 @@
   :X:cf~win::   TglSetting("cursor_follow", "Cursor follows active window: ")   ;[AHK] toggle mouse cursor follows active window
   ~+#left::                                                                     ;[AHK] cursor follows active window when moving apps btn monitors (if turned on)
   ~!tab::       CursorFollowWin()                                               ;[AHK] cursor follows active window when switch apps with alt+tab (if turned on)
-  :X:clp~win::  WriteToINI(A_ComputerName, "CL_prfx")                           ;[AHK] store label prefix
-  :X:cls~win::  WriteToINI(A_ComputerName, "CL_sffx")                           ;[AHK] store label suffix
+  :X:clp~win::  WriteToINI(A_ComputerName, "CL_prfx")                           ;[AHK] store selected text as label prefix
+  :X:cls~win::  WriteToINI(A_ComputerName, "CL_sffx")                           ;[AHK] store selected text as label suffix
   :X:cl~win::   CreateLabel("CL_prfx", "CL_sffx")                               ;[AHK] create hotstring label with execution option
   :X:!cl~win::  CreateLabel("!", "CL_sffx")                                     ;[AHK] create normal label
   :X:gl~win::   GenerateHotkeyList()                                            ;[AHK] generate a list of hotkeys in working directory.
   :X:ls~win::   EditFile("HotKey_List.txt")                                     ;[AHK] open last generated list of hotstrings and hotkeys
-  :X:qw~~win::                                                                  ;[AHK] quit ahk script
-  +^#r::        ExitApp                                                         ;[AHK] quit ahk script
+  :X:q~~win::                                                                   ;[AHK] quit ahk script
+  +^#q::        ExitApp                                                         ;[AHK] quit ahk script
                                                                      
   lshift & rshift::                                                             ;[AHK] reload ahk script
   rshift & lshift::                                                             ;[AHK] reload ahk script
-  :X:rw~win::   Reload                                                          ;[AHK] reload ahk script
+  :X:r~~win::   Reload                                                          ;[AHK] reload ahk script
 
 ; miscellaneous convenience ____________________________________________________
                                                                                 

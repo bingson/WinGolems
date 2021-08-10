@@ -1,5 +1,5 @@
- _________________________________________________________________________________________________________________________________________
-| CommandBox (CB) Creation:                           | KEY    WINGOLEMS UTILITIES, HELP, CONFIGURATION     | KEY  WINDOWS SELECTION     |
+_________________________________________________________________________________________________________________________________________
+| CommandBox (CB) Creation:                           | KEY    WINGOLEMS UTILITIES, HELP, CONFIGURATION     | KEY  WINDOWS SELECTION     | 
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     #space:: CB("~win")                             | lt|lf  Switch ON|OFF:  Win + L Locks Computer       |  d   Display               |
@@ -12,11 +12,11 @@
 |                                                     | ls     Open last generated list of shortcuts        |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| hs     Open log of user created hotstrings          |  x   Start Context Menu    |
 |-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| rw     Reload WinGolems                             |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| qw~    Quit WinGolems                               |  h~  Hybernate computer    |
+| #Space  submit key                      win+spacebar| r~     Reload WinGolems                             |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| q~     Quit WinGolems                               |  h~  Hybernate computer    |
 | !r      reenter last submitted key             alt+r| ec     open cache folder in file explorer           |  ce~ Close All Programs    |
 | !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |  rs~ Restart computer      |
-| !e      move & resize CB window to top left    alt+e| mod    move window to other desktop                 |  sd~ Shut Down computer    |
+| !e      move & resize CB window to top left    alt+e| tt     toggle text nav and folder bookmark hotkeys  |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | FIRST CHARACTER INITIATED COMMAND (case-sensitive execution key)                                                                       |
 | KEY  DESCRIPTION                             USAGE               Notes:                                                        Format:?|
@@ -37,7 +37,7 @@
 | KEY  MEM_CACHE COMMANDS ( .txt files only )  USAGE               Notes:                                                         Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                       ?|
-|  L   Load .txt file into CB display          L1, Lhelp, Lr\testr [Load in display] 1.txt, help.txt, r\testr.txt [Ll: see txt list]   L?|
+|  L   Load .txt file into CB display          L1, Lhelp, Lr\testr [Load in display] 1.txt, help.txt, r\testr.txt [Ll: .txt file list] L?|
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last window        V?|
 |  C   make copy or make & rename copy         C1, Chelp new_name  duplicate names resolved with added number suffix                   C?|
 |  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace: 1.txt w/ selection, 2.txt w/ help.txt, clipboard w/ 3.txt  O?|

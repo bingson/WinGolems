@@ -14,6 +14,9 @@
     /*  SAMPLE CODE
         #space::  CB("~editor", C.lgreen)                                       ;editor: create command box that runs ~editor suffix CB keys
         ^!sc01a:: Send % (toggle := !toggle) ? "^k^9" : "^k^8"                  ;editor: fold/unfold all regions toggle
+        printscreen & tab::      AddSpaceBeforeComment(wdt)                     ;[FC] Add Space Before Comment (default)
+        printscreen & capslock:: AddSpaceBeforeComment(wdt), s("down")          ;[FC] Add Space Before Comment and move down 1 line (default)
+
     */
 
 #If WinActive("ahk_exe " exe["doc"])
