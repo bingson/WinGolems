@@ -1,6 +1,8 @@
 CACHE CONTENTS
 ------------------------
-1.txt       help.txt
-ALIAS.INI   sck.txt
-cc.txt      b\_hist.txt
+0.txt       cc.txt
+1.txt       help.txt
+2.txt       p.txt
+8.txt       sck.txt
+ALIAS.INI   b\_hist.txt
             

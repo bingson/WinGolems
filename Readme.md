@@ -29,7 +29,9 @@ The initial value provided by this repository comes from helping others reduce e
 <img src="assets\Screens\QuickStartHotkeys.png" width="1000">
 
 <br>
-At some point, 
+
+At some point, you run out of prime keyboard real estate and have to resort to  
+
 <br>
 <img src="assets\Screens\CB.png" width="600">
 
@@ -48,7 +50,7 @@ ________________________________________________________________________________
 |                                                     | ci     Edit WinGolems config.ini                    |  i   Windows Settings      |
 | The above can be adaped to call scripts written in  | kh     Open Key History (#KeyHistory > 0 required)  |  ap  Add Remove Programs   |
 | other languages such as python, VBA, C++, etc ...   | gl     Generate shortcut list from running scripts  |  a   Alarm Clock           |
-|                                                     | ls     Open last generated list of shortcuts        |  r   Open Run Dialog Box   |
+|                                                     | sl     see last generated list of shortcuts         |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| hs     Open log of user created hotstrings          |  x   Start Context Menu    |
 |-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
 | #Space  submit key                      win+spacebar| r~     Reload WinGolems                             |  e   desktop environments  |
@@ -57,7 +59,7 @@ ________________________________________________________________________________
 | !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |  rs~ Restart computer      |
 | !e      move & resize CB window to top left    alt+e| tt     toggle text navigation and selection hotkeys |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
-| FIRST CHARACTER INITIATED COMMAND: (upper-case first letter required to trigger execution)                                             |
+| FIRST CHARACTER INITIATED COMMAND: upper-case first letter is required to trigger execution                                            |
 | KEY  DESCRIPTION                             USAGE               Notes: "__" used to chain link commands that can be repeated   Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)finance,(i)mages     Q?|

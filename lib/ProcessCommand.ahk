@@ -35,7 +35,14 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "L":                                                           ; display file in command box
                 Load:         
                 tgt := f_path dir NameNoExt
-                if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) or (C_input = "l") {
+                if (C_input = "s") {
+                    NameNoExt := "HotKey_List"
+                    dir := "..\"
+                    CC("CB_last_display", dir NameNoExt)
+                    txt  := AccessCache(NameNoExt,dir, False)
+                    tgt := f_path dir NameNoExt
+
+                } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) or (C_input = "l") {
                     NameNoExt := "list"
                     CC("CB_last_display", dir NameNoExt)
                     txt := CreateCacheList("list")
