@@ -1,15 +1,13 @@
 <h1> WinGolems </h1>
 
-A great computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A tranformative interface is one that lets you solve problems that would be impossible to solve without. Because mastering an interface requires internalizing its component objects and operations, interfaces can introduce new elements of cognition and modes of thought. 
+A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A truly transformative interface is one that goes beyond automation by making it possible to solve problems that would be impossible to tackle otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. After going through a short tutorial below, new users can start building their own interface layers (no prior Autohotkey knowledge is assumed) using premade convenience functions that control various aspects of Windows OS.
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. After going through a short tutorial below, new users can start building their own interface layers (no prior Autohotkey knowledge is assumed) by modifying sample code in the quick start template.
 
-One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows.  
+One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code below illustrates this by showing how easy it is to create 3 shortcuts for opening/reactivating a web browser using WinGolems convenience functions. 
 
 ```ahk
-    ; the AHK code below illustrates how easy it is to create 3 shortcuts 
-    ; for opening/reactivating a web browser using WinGolems convenience functions
-
+                                    ; Open web browser by 
     :X:c~win::                      ; 1. typing "c~win" <space>
     #s:: ActivateApp("html_path")   ; 2. pressing "win + s" 
                                     ; 3. submitting "c" in a "~win" command box
@@ -18,12 +16,10 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 ## Quick Start Template
 
-Within this repository the code for the creation of interface elements (i.e., interface templates) is kept separate from the code that executes the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights a subset of WinGolems' convenience functions. For a more comprehensive reference template, please see the files in \Golems\TpKb which was written for Lenovo Trackpoint-based keyboards (my perferred input device). 
+Within this repository the code for the creation of interface elements (i.e., interface templates) is kept separate from the code that executes the desired task (i.e., function libraries). The user only needs to know the correct calling convention to use WinGolems convenience functions like ActivateApp(). Note: The quickstart template only highlights a subset of WinGolems' convenience functions. For a more comprehensive reference template, please see the files in \Golems\TpKb which was written for Lenovo Trackpoint-based keyboards. 
 
-The initial value provided by this repository will come from alleviating common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs with ctrl+tab vs ctrl+PgDn), users are forced to remember application specific information that could be standardized away. Another example is when software developers assign prime keyboard real-estate to uncommonly used actions for example, Windows key + F opens a feedback dialog in Windows OS.
+The initial value provided by this repository will come from smoothing out common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs with ctrl+tab vs ctrl+PgDn), users are forced to remember extraneous information to interact with their machine that could be standardized away. Another problem arises when developers reserve prime keyboard real-estate to less frequently used operations (e.g., Windows key + F is a shortcut for opening a feedback dialog in Windows OS). WinGolems was designed with the paradigm that the most frequently performed operations should be the easiest to execute. 
  
-WinGolems provides template examples of how to standardize and reengineer how one engages different applications. 
-
 "Operating systems and devices should mold to our needs, not the other way around."—[Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple)
 
 
@@ -43,7 +39,7 @@ The command box was initially conceived as an always on top .txt file viewer for
 <br>
 <img src="assets\Screens\CB.png" width="600">
 
-<details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
+## <details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
 <p>
 
 ```
@@ -125,7 +121,7 @@ function() {
 }
 ```
 
-Engineers have to work together in teams to build complex systems, whether software, hardware, cars, planes, or bridges. This complexity is a major source of engineering cost and errors. With the wrong engineering approach, every team member can end up needing to understand every other team member's work, which means the total effort requires to build a system of size n is proportional to n2! The solution to complexity is abstraction, also known as information hiding. Abstraction is simply the removal of unnecessary detail. The idea is that to design a part of a complex system, you must identify what about that part others must know in order to design their parts, and what details you can hide. The part others must know is the abstraction.
+The larger the customer base the more complex the business process, whether it's software, hardware, financial services, or cars. Growing complexity is a major source of engineering cost and errors. With the wrong engineering approach, every team member can end up needing to understand every other team member's work, which means the total effort requires to build a system of size n is proportional to n2! The solution to complexity is abstraction, also known as information hiding. Abstraction is simply the removal of unnecessary detail. The idea is that to design a part of a complex system, you must identify what about that part others must know in order to design their parts, and what details you can hide. The part others must know is the abstraction.
 
 
 In other words, create  
