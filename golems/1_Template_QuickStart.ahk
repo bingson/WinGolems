@@ -22,6 +22,7 @@
   #g::           ActivateWinID("g")                                             ;AA: Activate previously saved window ID
   #f::           ActivateWinID("f")                                             ;AA: Activate previously saved window ID
   
+ ; #q::           ActivateApp("C:\Everything\Everything.exe")                  ;AA: accepts normal file path
   #q::           ActivateApp("ppt_path")                                        ;AA: Activate Powerpoint
   #w::           ActivateApp("doc_path")                                        ;AA: Activate Word
   #e::           ActivateApp("xls_path")                                        ;AA: Activate Excel
@@ -34,6 +35,15 @@
 ; CONVENIENCE (ORANGE) _________________________________________________________
   
   #SC035::       search()                                                       ;C: google search selected text
+;   #SC035::       search()                                                       ;C: google search selected text
+; Case "t"   : search("thesaurus.com/browse/")                                 
+; Case "d"   : search("dictionary.com/browse/")  
+; Case "f"   : search("finviz.com/quote.ashx?t=") 
+; case "y"   : search("youtube.com/results?search_query=")
+; case "i"   : search("google.com/search?tbm=isch&q=")
+Case "w"   : search("en.wikipedia.org/w/index.php?search=") 
+Case "n"   : search("news.google.com/search?q=") 
+
   #sc028::                                                                      ;C: maximize window
   ^!space::      MaximizeWin()                                                  ;C: maximize window
   #SC027::       WinMinimize,A                                                  ;C: minimize window
@@ -83,16 +93,16 @@
   $+#2::                                                                        ;MF: overwrite 2.txt with selected text 
   $+#1::         OverwriteMemory()                                              ;MF: overwrite 1.txt with selected text 
 
-  !#0::                                                                         ;MF: add selected text to the bottom of 0.txt
-  !#9::                                                                         ;MF: add selected text to the bottom of 9.txt
-  !#8::                                                                         ;MF: add selected text to the bottom of 8.txt
-  !#7::                                                                         ;MF: add selected text to the bottom of 7.txt
-  !#6::                                                                         ;MF: add selected text to the bottom of 6.txt
-  !#5::                                                                         ;MF: add selected text to the bottom of 5.txt
-  !#4::                                                                         ;MF: add selected text to the bottom of 4.txt
-  !#3::                                                                         ;MF: add selected text to the bottom of 3.txt
-  !#2::                                                                         ;MF: add selected text to the bottom of 2.txt
-  !#1::          AddToMemory()                                                  ;MF: add selected text to the bottom of 1.txt
+  ^#0::                                                                         ;MF: add selected text to the bottom of 0.txt
+  ^#9::                                                                         ;MF: add selected text to the bottom of 9.txt
+  ^#8::                                                                         ;MF: add selected text to the bottom of 8.txt
+  ^#7::                                                                         ;MF: add selected text to the bottom of 7.txt
+  ^#6::                                                                         ;MF: add selected text to the bottom of 6.txt
+  ^#5::                                                                         ;MF: add selected text to the bottom of 5.txt
+  ^#4::                                                                         ;MF: add selected text to the bottom of 4.txt
+  ^#3::                                                                         ;MF: add selected text to the bottom of 3.txt
+  ^#2::                                                                         ;MF: add selected text to the bottom of 2.txt
+  ^#1::          AddToMemory()                                                  ;MF: add selected text to the bottom of 1.txt
 
   #0::                                                                          ;MF: paste contents of 0.txt 
   #9::                                                                          ;MF: paste contents of 9.txt   
@@ -116,8 +126,8 @@
   #o::           RemoveBlankLines()                                             ;T: remove blank lines in selected text
   !#space::      ReplaceAwithB(" ")                                             ;T: remove all spaces from selected text
   ^#space::      ReplaceAwithB()                                                ;T: replace multiple consecutive spaces w/ a single space in selected text
-  #j::           Sendinput {WheelDown 5}                                        ;NT: scroll wheel down                                               
-  #k::           Sendinput {WheelUp 5}                                          ;NT: scroll wheel Up           
+  #j::           Sendinput {WheelDown 2}                                        ;NT: scroll wheel down                                               
+  #k::           Sendinput {WheelUp 2}                                          ;NT: scroll wheel Up           
   ^!h::          sendinput {home}                                               ;NT: Home
   ^!l::          sendinput {end}                                                ;NT: End
   #u::           SelectWord()                                                   ;ST: select word at text cursor position

@@ -121,7 +121,7 @@
     global config_path, C
     WinID_%key% := WinExist("A")
     IniWrite, % WinID_%key%, %config_path%, %A_ComputerName%, WinID_%key%
-    ShowPopup("WinID " key " saved", C.lgreen, C.bgreen, "300", "60", "-1000", "16", "610")
+    PopUp("WinID " key " saved", C.lgreen, C.bgreen, "300", "60", "-1000", "16", "610")
     return
   }
  
@@ -163,11 +163,11 @@
     {
         Winset, Alwaysontop, ON , A
         if (!supress)
-            ShowPopup(Process_Name "`nalways on top: ON", C.lgreen, C.bgreen,"250","120", "-800")
+            PopUp(Process_Name "`nalways on top: ON", C.lgreen, C.bgreen,"250","120", "-800")
     } else {
         Winset, Alwaysontop, OFF , A    
         if (!supress) 
-            ShowPopup(Process_Name "`nalways on top: OFF", C.pink, C.red,"250","120","-800") 
+            PopUp(Process_Name "`nalways on top: OFF", C.pink, C.red,"250","120","-800") 
     }
     return
   }
@@ -224,7 +224,7 @@
         try {
             ActivateApp("sync_path")
 
-            ShowPopup("cloud sync initiated",C.lgreen,C.bgreen,"300", "75", "-3000")
+            PopUp("cloud sync initiated",C.lgreen,C.bgreen,"300", "75", "-3000")
             return
         } catch e {
             msgbox can't open cloud cloud sync app.
@@ -232,9 +232,9 @@
     } else {
         if WinExist("ahk_exe " exe_name){
             WinClose, ahk_exe %exe_name%
-            ShowPopup("closing cloud sync",C.pink,,,,"-3000")
+            PopUp("closing cloud sync",C.pink,,,,"-3000")
         } else {
-            ShowPopup("cloud sync not running",C.lpurple,C.purple,,,"-3000")
+            PopUp("cloud sync not running",C.lpurple,C.purple,,,"-3000")
         }
         return
     }
@@ -374,11 +374,11 @@
     return
   }          
 
-  RunOtherCB(C_input = "", Chr = "") {
+  RunOtherCB(C_input = "", Chr = "W") {
     C_1stchr := SubStr(C_input, 1, 1)
-    if (SubStr(C_input, 1, 1) = "~") 
+    if (SubStr(C_input, 1, 1) = ":") 
     {
-        CC("CB_" Chr "sfx", "~" SubStr(C_input, 2))
+        CC("CB_" Chr "sfx", SubStr(C_input, 2))
         Gui, 2: destroy
         return
     } else {
@@ -387,6 +387,8 @@
     }
     return
   }
+
+  
   
   ReplaceAlias(arr*) {
     static sect := ""
@@ -417,24 +419,22 @@
         } 
         catch 
         {
-            ShowPopUp("Sorry can't find function",C.lpurple,,,,-2000)
+            PopUp("Sorry can't find function",C.lpurple,,,,-2000)
         }
     }
     return
   }
 
+
   s(k = "down", n = 1) {                                                         ; function wrapper for send keystrokes command
     sleep 100
     switch k 
     {
-        case "enter"     : 
-            send % "{enter}"
-            return
+        case "enter"     : send % "{enter}"
         case "u", "up"   : send % "{ up "    n "}"
         case "d", "down" : send % "{ down "  n "}"
         case "l", "left" : send % "{ left "  n "}"
         case "r", "right": send % "{ right " n "}"
-        case "enter"     : send {enter}
         Default          : send % k
     }
     return
@@ -670,7 +670,7 @@
             FileDelete, %A_ScriptDir%\mem_cache\%mem_path%%key%.txt
         FileAppend, %input%, %A_ScriptDir%\mem_cache\%mem_path%%key%.txt
         if !supress
-            ShowPopup("Written to `n" key, C.lgreen)
+            PopUp("Written to `n" key, C.lgreen)
     }
     if (del_toggle = TRUE)
         send {del}
@@ -720,7 +720,7 @@
     slot            := substr(A_ThisHotkey, 0)
     new_text_to_add := trim(clip())
     FileAppend % "`n" . new_text_to_add, mem_cache\%slot%.txt           
-    ShowPopUp("added to bottom of`n" slot ".txt",C.lgreen)
+    PopUp("added to bottom of`n" slot ".txt",C.lgreen)
     If WinExist("ahk_id " CB_hwnd)
         UpdateGUI()
     ; cut := Instr(A_ThisHotkey, "!") ? True : False 
@@ -733,25 +733,20 @@
     global med, short, C
     ;ReleaseModifiers()
     WinID := WinExist("A") 
-    if (Instr(A_ThisHotkey, mprompt))
-    ; if (Instr(A_ThisHotkey, "#!LButton"))
-    {
+    
+    if (Instr(A_ThisHotkey, mprompt)) {
         Clicks(2)
-        ShowPopUp("PASTE WHICH SLOT #?",C.lpurple,"000000", "230", "75", "-5000", "14", "610")
+        PopUp("PASTE WHICH SLOT #?",C.lpurple,"000000", "230", "75", "-5000", "14", "610")
         input, mem_slot, L1 T5
         Gui, PopUp: Destroy
-    } 
-    else if Instr(A_ThisHotkey, mpaste) 
-    ; else if Instr(A_ThisHotkey, "^#LButton") 
-    {
+    } else if Instr(A_ThisHotkey, mpaste) {
         Clicks(2)
         mem_slot := "1"
-        ShowPopUp("M1 PASTED", C.lgreen, , "230", "75", "-600", "14", "610")
-    }
-    else 
-    {
+        PopUp("M1 PASTED", C.lgreen, , "230", "75", "-600", "14", "610")
+    } else {
         mem_slot := substr(A_ThisHotkey, 0)                                 ; store last key pressed in hotstring/hotkey as memory slot selection 
     }
+
     ActivateWin("ahk_id " WinID)
     AccessCache(mem_slot)
     if Instr(A_ThisHotkey, pasteOvr) {                               
@@ -860,7 +855,7 @@
   WriteToINI(section = "DESKTOP-T6USCO1", key = "cursor_follow", var = "") {
     global config_path, C
     var := clip()
-    ShowPopUp("config.ini updated",C.lgreen,,,,-2000)
+    PopUp("config.ini updated",C.lgreen,,,,-2000)
     IniWrite, %var%, %config_path%, %section%, %key%
     return
   }
@@ -925,7 +920,7 @@
         
         Gui, c: font, s10 w%lw%, %fnt%, Consolas
         
-        Gui, c: Add, Text, section xm w%lw%,word files
+        Gui, c: Add, Text, section xm w%lw%,word files -> MS Word (  
         Gui, c: Add, Edit, w%rw% ys vdoc_exe,% apps[1]         
         
         Gui, c: Add, Text, section xm w%lw%,excel files
@@ -991,7 +986,7 @@
     CC("sync_path"     , PATH[exe["sync"]])
     CC("editor_path"   , PATH[exe["editor"]])
     CC("starting_icon" , "lg.ico", "settings")
-    ShowPopup("Configuration complete`nYou are good to go!", C.lgreen, C.bgreen, "200", "60", "-1200", "15") 
+    PopUp("Configuration complete`nYou are good to go!", C.lgreen, C.bgreen, "200", "60", "-1200", "15") 
     sleep, med*4
     ClosePopup()
     return
@@ -1003,7 +998,7 @@
     PATH := {}
     for each, exe in APP
     {
-        ShowPopup("Searching for " exe,C.lblue,,, "60", "-10000", "15")
+        PopUp("Searching for " exe,C.lblue,,, "60", "-10000", "15")
         for each, dir in FOLDER
         {
             Loop Files, %dir%%exe%, R
@@ -1085,9 +1080,9 @@
     global C
     if !supress {
         if state
-            ShowPopup("Win+L Lock: ON",,C.bgreen,"200",, "-800")
+            PopUp("Win+L Lock: ON",,C.bgreen,"200",, "-800")
         else
-            ShowPopup("Win+L Lock: OFF", C.lpurple,,"200",, "-800")
+            PopUp("Win+L Lock: OFF", C.lpurple,,"200",, "-800")
     }
     return
   }
@@ -1482,9 +1477,9 @@
     IniWrite, % !state, %config_path%, %A_ComputerName%, %sect%
 
     if !state
-        ShowPopup( msg "True",C.lgreen,,"300","90", "-800")
+        PopUp( msg "True",C.lgreen,,"300","90", "-800")
     else if state
-        ShowPopup( msg "False",C.pink,,"300","90", "-800")
+        PopUp( msg "False",C.pink,,"300","90", "-800")
     return
   }
  

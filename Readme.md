@@ -8,7 +8,7 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 ```ahk
     ; the AHK code below illustrates how easy it is to create 3 shortcuts 
-    ; for opening/activating a web browser using WinGolems convenience functions
+    ; for opening/reactivating a web browser using WinGolems convenience functions
 
     :X:c~win::                      ; 1. typing "c~win" <space>
     #s:: ActivateApp("html_path")   ; 2. pressing "win + s" 
