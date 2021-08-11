@@ -18,9 +18,11 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 ## Quick Start Template
 
-Within this repository the AHK code for the creation of interface elements (i.e., interface templates) is kept separate from the code for the algorithms that carry out the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights only a small sample of WinGolems' convenience functions. For a more advanced reference template, please see the template files in \Golems\TpKb which was designed around Lenovo Trackpoint keyboards (my current setup). 
+Within this repository the code for the creation of interface elements (i.e., interface templates) is kept separate from the code that executes the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights a small subset of WinGolems' convenience functions. For a more advanced reference template, please see the template files in \Golems\TpKb which was designed around Lenovo Trackpoint keyboards (my current setup). 
 
-The initial value provided by this repository comes from reducing common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs: ctrl+tab vs ctrl+PgDn), it forces users to remember multiple shortcuts. WinGolems provides template examples of how to standardize and reengineer how one engages different applications. 
+The initial value provided by this repository comes from reducing common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs: ctrl+tab vs ctrl+PgDn), users are forced to remember multiple shortcuts that could be standardized away. Another example is   
+
+WinGolems provides template examples of how to standardize and reengineer how one engages different applications. 
 
 "Operating systems and devices should mold to our needs, not the other way around."—[Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple)
 
