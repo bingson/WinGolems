@@ -58,10 +58,8 @@
     send ^{PgDn}                                                                
     return
 
-  
-
   :X:tc~win::                                                                   ;C: Toggle capslocks = del key
-    CC("T_capslock_del","!")                                                    ; change config.ini by toggling entry for "T_text_opt"
+    CC("T_capslock_del","!")                                                    ; change config.ini by toggling entry for "T_capslock_del"
     ShowPopup("capslocks => delete: " GC("T_text_opt"))
     return
   
@@ -125,7 +123,7 @@
   #u::           SelectWord()                                                   ;ST: select word at text cursor position
 
   :X:tt~win::                                                                   ;ST|NT: toggle text navigation and selection supplemental hotkeys
-    CC("T_text_opt","!")
+    CC("T_text_opt","!")                                                        ; change config.ini by toggling entry for "T_text_opt"
     ShowPopup("Text selection & navigation hotkeys: " GC("T_text_opt"))
     return
 

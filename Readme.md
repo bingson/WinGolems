@@ -20,7 +20,9 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 Within this repository the AHK code for the creation of interface elements (i.e., interface templates) is kept separate from the code for the algorithms that carry out the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights only a small sample of WinGolems' convenience functions. For a more advanced reference template, please see the template files in \Golems\TpKb which was designed around Lenovo Trackpoint keyboards (my current setup). 
 
-The initial value provided by this repository comes from helping others reduce every day workflow frictions. For instance, when different applications have different shortcuts for the same function. E.g, switching tabs with ctrl+tab vs ctrl+PgUp. Or worse yet, when application developpers assign rarely used functions to prominent key combinations that could be put to better use (e.g., #i,#g,#f). WinGolem's provides examples of how to alleviate these issues and 
+The initial value provided by this repository comes from reducing common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs: ctrl+tab vs ctrl+PgDn), we are forced to adapt to uncoordinated OS design
+
+ to remember which software uses Or worse yet, when software developpers assign less used functions to prominent key combinations that could be put to better use (e.g., #i,#g,#f). WinGolem's provides examples of how to reengineer how one 
 
 > "Operating systems and devices should mold to our needs, not the other way around."—[Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple)
 
@@ -30,7 +32,7 @@ The initial value provided by this repository comes from helping others reduce e
 
 <br>
 
-At some point, you run out of prime keyboard real estate and have to resort to  
+The command box was initially conceived as an always on top .txt file viewer for the 0-9 memory keys. However, that it's use 
 
 <br>
 <img src="assets\Screens\CB.png" width="600">
@@ -50,7 +52,7 @@ ________________________________________________________________________________
 |                                                     | ci     Edit WinGolems config.ini                    |  i   Windows Settings      |
 | The above can be adaped to call scripts written in  | kh     Open Key History (#KeyHistory > 0 required)  |  ap  Add Remove Programs   |
 | other languages such as python, VBA, C++, etc ...   | gl     Generate shortcut list from running scripts  |  a   Alarm Clock           |
-|                                                     | sl     see last generated list of shortcuts         |  r   Open Run Dialog Box   |
+|                                                     | Ls     Open last generated list of shortcuts        |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| hs     Open log of user created hotstrings          |  x   Start Context Menu    |
 |-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
 | #Space  submit key                      win+spacebar| r~     Reload WinGolems                             |  e   desktop environments  |
@@ -59,12 +61,12 @@ ________________________________________________________________________________
 | !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |  rs~ Restart computer      |
 | !e      move & resize CB window to top left    alt+e| tt     toggle text navigation and selection hotkeys |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
-| FIRST CHARACTER INITIATED COMMAND: upper-case first letter is required to trigger execution                                            |
-| KEY  DESCRIPTION                             USAGE               Notes: "__" used to chain link commands that can be repeated   Format?|
+| FIRST CHARACTER INITIATED COMMAND: (upper-case first letter required to trigger execution)                                             |
+| KEY  DESCRIPTION                             USAGE               Notes: "__" used to link commands that can be repeated         Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)finance,(i)mages     Q?|
 |  T   Toggle CommandBox UI options            Td, Tm, Tt, Ts, Tw  mode:(d)isplay,(m)inimal; toggle:t)itlebar,(s)crollbar,(w)ord wrap  T?|
-|  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" equivalent to entering b in CB("~win")   W?|
+|  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
 |  W~  Change W command suffix reference       W~win, W~pdf        M|H|B behave the same as W to allow access to multiple CBs         W~?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|

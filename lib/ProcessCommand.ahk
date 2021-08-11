@@ -1,5 +1,5 @@
 ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
-    global config_path, File_DICT, Folder_DICT, long, med, TgtWinID, ghwnd, C
+    global config_path, File_DICT, Folder_DICT, long, med, tgt_hwnd, CB_hwnd, C
     FirstChar := SubStr(UserInput, 1 , 1)
     f_path := A_ScriptDir "\mem_cache\" 
 
@@ -21,7 +21,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 gosub, Load
                 return 1
             Case "A", "P":                                                      ; append|prepend selected text
-                ActivateWin("ahk_id " TgtWinID) 
+                ActivateWin("ahk_id " tgt_hwnd) 
                 text_to_add := "`n" . trim(clip())
                 if (FirstChar == "A") {
                     FileAppend, %text_to_add%, %f_path%%Dir%%NameNoExt%.txt    
@@ -55,6 +55,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 CC("CB_title", new_title_file)
                 UpdateGUI(txt, title, new_title_file)
                 return 1
+
             Case "O":                                                           ; overwrite file/clipboard
                 C_input := RegExReplace(C_input, "S) +", A_Space)
                 If (SubStr(C_input, 1 , 1) == ":") 
@@ -66,7 +67,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 else If !RegExMatch(C_input, " .+")
                 {                    
-                    ActivateWin("ahk_id " TgtWinID) 
+                    ActivateWin("ahk_id " tgt_hwnd) 
                     text_to_add := trim(clip())
                     tgt_path := f_path dir namenoext . "txt"
                     FileDelete, tgt_path
@@ -105,7 +106,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 return 1
             Case "V":                                                           ; paste file contents
-                ActivateWin("ahk_id" TgtWinID)
+                ActivateWin("ahk_id" tgt_hwnd)
                 AccessCache(namenoext, dir)
                 ShowPopUp(namenoext " pasted",C.lgreen,"000000", "230", "70", "-600", "14", "610")
                 return
@@ -193,7 +194,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         return
 
                     default:
-                        ActivateWin("ahk_id " TgtWinID)      
+                        ActivateWin("ahk_id " tgt_hwnd)      
                         vtext := clip()                       
                         arrN := StrSplit(C_input, "__")  
                         loop % arrN.MaxIndex()
@@ -207,7 +208,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }        
                 return
             Case "F":                                                           ; fill space with char
-                ActivateWin("ahk_id " TgtWinID)                             
+                ActivateWin("ahk_id " tgt_hwnd)                             
                 arr := StrSplit(C_input, ",")
                 FillChar(arr[2], arr[1], 0)
                 return 
@@ -227,7 +228,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         UpdateGUI()
                         return 1
                     default:
-                        ActivateWin("ahk_id" TgtWinID)
+                        ActivateWin("ahk_id" tgt_hwnd)
                         arrO := StrSplit(C_input, "__")
                         
                         loop % arrO.MaxIndex()
@@ -239,10 +240,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 return
             Case "J":                                                           ; select|goto rows below
                 if RegExMatch(c_input,"[a-ik-zA-IK-Z]")                         ; if there are any other letters of the alphabet in the input
-                    RunLabel(UserInput, suffix, TgtWinID)                       ; reject user input as valid Case "J" or "K" command
+                    RunLabel(UserInput, suffix, tgt_hwnd)                       ; reject user input as valid Case "J" or "K" command
                 else
                 {
-                    ActivateWin("ahk_id " . TgtWinID)
+                    ActivateWin("ahk_id " . tgt_hwnd)
                     if (FirstChar == "j")
                         UDSelect("down", "10", C_input, false)                  ; no selection just row movement
                     else
@@ -252,10 +253,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 return
             Case "K":                                                           ; select|goto rows above
                 if RegExMatch(c_input,"[a-jl-zA-JL-Z]")                         ; if there are any other letters of the alphabet in the input
-                    RunLabel(UserInput, suffix, TgtWinID)
+                    RunLabel(UserInput, suffix, tgt_hwnd)
                 else 
                 {
-                    ActivateWin("ahk_id " . TgtWinID)                           ; select|goto rows above
+                    ActivateWin("ahk_id " . tgt_hwnd)                           ; select|goto rows above
                     if (FirstChar == "k")
                         UDSelect("Up", "10", C_input, false)
                     else
@@ -324,7 +325,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
     } 
     Else 
     {
-        RunLabel(UserInput, suffix, TgtWinID)
+        RunLabel(UserInput, suffix, tgt_hwnd)
     }
     GUI 2: destroy
     return 1

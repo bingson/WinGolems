@@ -1,16 +1,19 @@
  CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand"
     , fnt = "Consolas", fsz = "13", fwt = "500", show_txt = "", title = "",  input_txt = "") {
+    
+    
+    global long, med, short, C, config_path, CB_Display := ""
+        , UserInput := "", tgt_hwnd := "", CB_hwnd := ""
+    
+    tgt_hwnd := WinExist() 
+    CC("TGT_hwnd",tgt_hwnd)                         ;(1a) store win ID of active application before calling GUI 
+    
     redrawGUI:
     Gui, 2: +LastFound
     Gui, 2: Destroy          
-    global long, med, short, C, config_path, CB_Display := ""
-        , UserInput := "", TgtWinID := "", ghwnd := ""
-    
-    TgtWinID := WinExist() , CC("CB_TGT_hwnd",TgtWinID)                         ;(1a) store win ID of active application before calling GUI 
-    
                                         
     CC("CBfsz",fsz), CC("CBfnt",fnt)
-    CC("CBw_color",w_color), CC("CBt_color",t_color), CC("CBsuffix", suffix)    ;(1b) save command box calling parameters
+    CC("CBw_color",w_color), CC("CBt_color",t_color), CC("CB_sfx", suffix)    ;(1b) save command box calling parameters
     
     MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when no saved position data found
@@ -80,8 +83,8 @@
     
     GuiControl, Focus, UserInput 
     Gui, 2: +LastFound 
-    ghwnd  := WinExist() 
-    CC("CB_hwnd", ghwnd)
+    CB_hwnd  := WinExist() 
+    CC("CB_hwnd", CB_hwnd)
 
     ; GuiControl, MoveDraw, CB_Display, %wdth%     
 
@@ -91,8 +94,8 @@
     Gui, 2: show, hide AutoSize,%title%
     Gui, Show, %CB_position% NoActivate
     GuiControl, 2: +HScroll +VScroll, CB_Display                                ; add scroll bars back without redrawing them to add scrolling without visible scroll bars
-    ; ActivateWin("ahk_id " TgtWinID)
-    WinWaitClose                                                                
+    ; ActivateWin("ahk_id " tgt_hwnd)
+    ; WinWaitClose                                                                
     return
     
     2GuiSize: 
@@ -105,7 +108,7 @@
         GuiControl, MoveDraw, UserInput, x%CtrXpos%
         AutoXYWH("y*", "UserInput")
         GuiControl, 2: -HScroll -VScroll, CB_Display
-        WinSet, Redraw,, ahk_id %ghwnd%
+        WinSet, Redraw,, ahk_id %CB_hwnd%
         Gui, 2: show
         GuiControl, 2: +HScroll +VScroll, CB_Display
         gosub, save_win_coord
@@ -143,7 +146,7 @@
         return
                                                             
     save_win_coord:
-        WinGetPos(ghwnd, x, y, w, h, 1)
+        WinGetPos(CB_hwnd, x, y, w, h, 1)
         CC("CB_position", "x" x " y" y " w" w " h" h)
         return
 

@@ -33,14 +33,14 @@
 ; WINDOW MANAGEMENT ____________________________________________________________
 
   MoveWin(Q = "TL", ha = 8, wa = 8) {
-    global config_path, ghwnd
+    global config_path, CB_hwnd
     static x, y, w, h
     WinRestore, A
     MI := StrSplit(GetMonInfo()," ")  
     x := MI[1] , y  := MI[2] , w := MI[3] , h  := MI[4]                         ; get monitor dimensions
     hw:= w//2  , qw := w//4  , hh:= h//2  , qh := h//4
 
-    if (winactive("ahk_id " ghwnd) and !GC("CB_Display"))
+    if (winactive("ahk_id " CB_hwnd) and !GC("CB_Display"))
         return
 
     switch Q
@@ -67,7 +67,7 @@
     }
     ; #if 
     
-    If (winactive("ahk_id " ghwnd))
+    If (winactive("ahk_id " CB_hwnd))
     {
         ; msgbox % "x" x " y"y " w"w " h"h
         GuiControl, 2: -HScroll -VScroll, CB_Display
@@ -383,7 +383,7 @@
         return
     } else {
         sfx := GC("CB_" Chr "sfx", "~win")  
-        RunLabel(C_input, sfx, TgtWinID)
+        RunLabel(C_input, sfx, tgt_hwnd)
     }
     return
   }
@@ -440,10 +440,9 @@
     return
   }
 
-  RunLabel(UserInput, suffix, tgt_winID) {
-    global med, TgtWinID
-    ; ActivateWin("ahk_id " TgtWinID)
-    ; sleep med
+  RunLabel(UserInput="", suffix = "", tgt_winID ="") {
+    suffix := suffix ? suffix : GC("CB_sfx")
+    ActivateWin("ahk_id " tgt_winID)
     Switch 
     {
         Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
@@ -457,24 +456,22 @@
             return
     }     
     Gosub, %UserInput% 
+    Gui, 2: +LastFound
     Gui, 2: destroy
-    return
   }
 
   CB( sfx = "~win", w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand") {
-    ;ReleaseModifiers()
-    global config_path
+    global config_path, CB_hwnd
     SetTitleMatchMode, 2
     DetectHiddenText, On
     
-    if WinExist("ahk_id " GC("CB_hwnd")) {
-        
-        WinActivate, % "ahk_id " GC("CB_hwnd")
+    if WinExist("ahk_id " CB_hwnd) {
+        WinActivate, % "ahk_id " CB_hwnd
         GUIFocusInput()
         return
+    } else {
+        CommandBox(sfx, w_color, t_color, ProcessMod) 
     }
-    
-    CommandBox(sfx, w_color, t_color, ProcessMod) 
     DetectHiddenText, off
     return
   }
@@ -599,8 +596,8 @@
   FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" ) {
     global UserInput := "", FBhwnd := ""
 
-    FB_TgtWinID := WinExist("A")                                                      ; store win ID of active application before calling GUI 
-    IniWrite, %FB_TgtWinID%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
+    FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
+    IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     winget, output, ProcessName, A    
     
     
@@ -730,13 +727,13 @@
   }
 
   AddToMemory(del_after_copy = "0"){
-    global C, ghwnd
+    global C, CB_hwnd
     ;ReleaseModifiers()
     slot            := substr(A_ThisHotkey, 0)
     new_text_to_add := trim(clip())
     FileAppend % "`n" . new_text_to_add, mem_cache\%slot%.txt           
     ShowPopUp("added to bottom of`n" slot ".txt",C.lgreen)
-    If WinExist("ahk_id " ghwnd)
+    If WinExist("ahk_id " CB_hwnd)
         UpdateGUI()
     ; cut := Instr(A_ThisHotkey, "!") ? True : False 
     if (cut = true)
@@ -1728,7 +1725,7 @@
     return
   }
 
-; VS Code_______________________________________________________________________
+; VS Code 
 
   FocusResults() {
     sleep 300
@@ -1742,7 +1739,7 @@
     send {tab}
     Clip(pfx clip() sfx)
     return
-  }                   
+  }                                                                             ;[ahk] surround selected text with block comment braces
 
 ; TEXT MANIPULATION ____________________________________________________________
 
@@ -2064,5 +2061,5 @@
     return
   } 
  
-; ______________________________________________________________________________
+; TEST _________________________________________________________________________
 
