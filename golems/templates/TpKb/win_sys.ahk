@@ -141,7 +141,7 @@
   
   return
  
-  :X:dpu~win:: clip("ShowPopUp(" clip() ",,,,-2000)")                           ; debugging ShowPopUp(selected)
+  :X:dpu~win:: clip("PopUp(" clip() ",,,,-2000)")                           ; debugging PopUp(selected)
   :X:~win~:: clip(":X:" clip() "~win:`:")                                       ; create hotstring key
   
   :X:chsw~win:: CreateHotstringSnippet("win_sys")                               ; create windows hotstring

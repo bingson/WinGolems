@@ -58,12 +58,12 @@
 
 ; CB keys assignment: AHK UTILITIES ____________________________________________  
 
-  :X:ec~win::   OpenFolder("mem_cache\")                                        ;ahk: open cache folder in file explorer
+  :X:oc~win::   OpenFolder("mem_cache\")                                        ;ahk: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;ahk: open key history
   :X:ws~win::   run, C:\Program Files\AutoHotkey\WindowSpy.ahk                  ;ahk: open windows spy
-  :X:ci~win::   EditFile("""" config_path """")                                 ;ahk: edit config.ini file
+  :X:ec~win::   EditFile("""" config_path """")                                 ;ahk: edit config.ini file
   :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")                     ;ahk: AHK beginner tutorial
-  :X:cf~win::   TglSetting("cursor_follow", "Cursor follows active window: ")   ;ahk: toggle mouse cursor follows active window
+  :X:tcf~win::   TglSetting("cursor_follow", "Cursor follows active window: ")  ;ahk: toggle mouse cursor follows active window
   ~+#left::                                                                     ;ahk: cursor follows active window when moving apps btn monitors (if turned on)
   ~!tab::       CursorFollowWin()                                               ;ahk: cursor follows active window when switch apps with alt+tab (if turned on)
   :X:clp~win::  WriteToINI(A_ComputerName, "CL_prfx")                           ;ahk: store selected text as label prefix
@@ -83,14 +83,13 @@
   
   :X:td~win::                                                                   ;[T] toggle developer optns
     CC("T_d","!")
-    ShowPopup("Developer options on: " GC("T_d"))
+    PopUp("Developer options on: " GC("T_d"))
     return
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
     printscreen & j::               Sendinput {WheelDown 5}                     ;m: scroll wheel down                                               
-    printscreen & k::               Sendinput {WheelUp 5}                       ;m: scroll wheel Up        
-    
+    printscreen & k::               Sendinput {WheelUp 5}                       ;m: scroll wheel Up    
       
     #z::                                                                           ;<TMA> Tabs Outliner and pinned webpages
       SetTitleMatchMode, 2
@@ -202,18 +201,18 @@
     :X:ca~coding::
                          send +^!p                                                 
                          send ^!k
-                         ShowPopUp("Clear bookmarks`nAdd bookmark",C.lgreen)
+                         PopUp("Clear bookmarks`nAdd bookmark",C.lgreen)
                          return
       
     :X:ab~coding::       
     :X:b~coding::       
                          send ^!k
-                         ShowPopUp("Add/remove bookmark",C.lgreen)
+                         PopUp("Add/remove bookmark",C.lgreen)
                          return
     cb~coding:
     F1 & k::                                                                      ;V: clear all bookmarks
                          send +^!p                                                 
-                         ShowPopUp("Clear bookmarks",C.lblue)
+                         PopUp("Clear bookmarks",C.lblue)
                          return
     +^g::                                                                         ;V: source control 
                           ;ReleaseModifiers()

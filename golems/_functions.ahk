@@ -1918,6 +1918,8 @@
   
   AddSpaceBeforeComment(length = "80", char = " ", lines = 1) {
     ; Add spaces between two strings so the second string starts at the length position
+    ReleaseModifiers()
+    BlockInput, ON
     Send {space}{left}+{end}                                                    ; fixes issue in vscode where ^x on empty selection will cut the whole line
     end_txt := TrimText(1, clip())
     send {del}
@@ -1929,6 +1931,7 @@
     new_line := beg_txt . mid_txt . end_txt
     clip(new_line)
     sendinput % "{left " . strlen(end_txt) . "}"
+    BlockInput, off
     return
   }
  

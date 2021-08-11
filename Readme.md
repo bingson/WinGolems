@@ -18,10 +18,10 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 ## Quick Start Template
 
-Within this repository the code for the creation of interface elements (i.e., interface templates) is kept separate from the code that executes the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights a small subset of WinGolems' convenience functions. For a more advanced reference template, please see the template files in \Golems\TpKb which was designed around Lenovo Trackpoint keyboards (my current setup). 
+Within this repository the code for the creation of interface elements (i.e., interface templates) is kept separate from the code that executes the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights a subset of WinGolems' convenience functions. For a more comprehensive reference template, please see the files in \Golems\TpKb which was written for Lenovo Trackpoint-based keyboards (my perferred input device). 
 
-The initial value provided by this repository comes from reducing common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs: ctrl+tab vs ctrl+PgDn), users are forced to remember multiple shortcuts that could be standardized away. Another example is   
-
+The initial value provided by this repository will come from alleviating common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs with ctrl+tab vs ctrl+PgDn), users are forced to remember application specific information that could be standardized away. Another example is when software developers assign prime keyboard real-estate to uncommonly used actions for example, Windows key + F opens a feedback dialog in Windows OS.
+ 
 WinGolems provides template examples of how to standardize and reengineer how one engages different applications. 
 
 "Operating systems and devices should mold to our needs, not the other way around."—[Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple)
@@ -47,25 +47,26 @@ The command box was initially conceived as an always on top .txt file viewer for
 <p>
 
 ```
+
 _________________________________________________________________________________________________________________________________________
-| CommandBox (CB) Creation:                           | KEY    WINGOLEMS UTILITIES, HELP, CONFIGURATION     | KEY  WINDOWS SELECTION     |
+| CommandBox (CB) Creation:                           | KEY    WINGOLEMS: UTILITIES, HELP, CONFIGURATION    | KEY  WINDOWS SELECTION     |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
-|     #space:: CB("~win")                             | lt|lf  Switch ON|OFF:  Win + L Locks Computer       |  d   Display               |
-|                                                     | ss|qs  Switch ON|OFF:  Cloud Sync                   |  n   Notifications         |
-| 2) Create a command key "a" to call any function:   | cf     [Toggle] mouse cursor follows active window  |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | tut    AHK Beginner Tutorial                        |  v   Sound                 |
-|                                                     | ci     Edit WinGolems config.ini                    |  i   Windows Settings      |
-| The above can be adaped to call scripts written in  | kh     Open Key History (#KeyHistory > 0 required)  |  ap  Add Remove Programs   |
-| other languages such as python, VBA, C++, etc ...   | gl     Generate shortcut list from running scripts  |  a   Alarm Clock           |
-|                                                     | Ls     Open last generated list of shortcuts        |  r   Open Run Dialog Box   |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| hs     Open log of user created hotstrings          |  x   Start Context Menu    |
-|-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| r~     Reload WinGolems                             |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| q~     Quit WinGolems                               |  h~  Hybernate computer    |
-| !r      reenter last submitted key             alt+r| ec     open cache folder in file explorer           |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode     alt+x| Ll     Load cache contents in GUI display           |  rs~ Restart computer      |
-| !e      move & resize CB window to top left    alt+e| tt     toggle text navigation and selection hotkeys |  sd~ Shut Down computer    |
+|     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
+|                                                     | oc     open cache folder in file explorer           |  n   Notifications         |
+| 2) Create a command key "a" to call any function:   | Ll     Load cache contents in GUI display           |  p   Presentation mode     |
+|     :X:a~win:: anyFunction()                        | ec     Edit WinGolems config.ini                    |  v   Sound                 |
+|                                                     | kh     Open Key History (#KeyHistory > 0 required)  |  i   Windows Settings      |
+| The above can be adaped to call scripts written in  | gl     Generate shortcut list from running scripts  |  ap  Add Remove Programs   |
+| other languages such as python, VBA, C++, etc ...   | Ls     Open last generated list of shortcuts        |  a   Alarm Clock           |
+|                                                     | hs     Open log of user created hotstrings          |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| ws     Open Window Spy                              |  x   Start Context Menu    |
+|-----------------------------------------------------| tcf    [Toggle] mouse cursor follows active window  |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| tt     [toggle] enhanced text nav/selection hotkeys |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| lt|lf  Switch ON|OFF:  Win + L Locks Computer       |  h~  Hybernate computer    |
+| !r      reenter last submitted key             alt+r| ss|qs  Switch ON|OFF:  Cloud Sync                   |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode     alt+x| r~     Reload WinGolems                             |  rs~ Restart computer      |
+| !e      move & resize CB window to top left    alt+e| q~     Quit WinGolems                               |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | UPPER-case first letter required to trigger the following commands                                                                     |
 |                                                                                                                                        |

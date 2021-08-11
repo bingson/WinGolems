@@ -1,5 +1,6 @@
 #IfWinActive
 ; The following interface layers are valid anywhere in Windows 10
+; note: Lwin should be pressed first if part of any hotkey combination
 
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
 
@@ -22,7 +23,7 @@
   #g::           ActivateWinID("g")                                             ;AA: Activate previously saved window ID
   #f::           ActivateWinID("f")                                             ;AA: Activate previously saved window ID
   
- ; #q::           ActivateApp("C:\Everything\Everything.exe")                  ;AA: accepts normal file path
+ ;#x::           ActivateApp("C:\Everything\Everything.exe")                    ;AA: accepts normal file path
   #q::           ActivateApp("ppt_path")                                        ;AA: Activate Powerpoint
   #w::           ActivateApp("doc_path")                                        ;AA: Activate Word
   #e::           ActivateApp("xls_path")                                        ;AA: Activate Excel
@@ -35,14 +36,8 @@
 ; CONVENIENCE (ORANGE) _________________________________________________________
   
   #SC035::       search()                                                       ;C: google search selected text
-;   #SC035::       search()                                                       ;C: google search selected text
-; Case "t"   : search("thesaurus.com/browse/")                                 
-; Case "d"   : search("dictionary.com/browse/")  
-; Case "f"   : search("finviz.com/quote.ashx?t=") 
-; case "y"   : search("youtube.com/results?search_query=")
-; case "i"   : search("google.com/search?tbm=isch&q=")
-Case "w"   : search("en.wikipedia.org/w/index.php?search=") 
-Case "n"   : search("news.google.com/search?q=") 
+               ; search("dictionary.com/browse/")  
+               ; search("en.wikipedia.org/w/index.php?search=") 
 
   #sc028::                                                                      ;C: maximize window
   ^!space::      MaximizeWin()                                                  ;C: maximize window
@@ -55,8 +50,8 @@ Case "n"   : search("news.google.com/search?q=")
   ^SC027::       Send {AppsKey}                                                 ;C: appkey press
   ^#w::          WinClose,A                                                     ;C: close active window 
   ^#q::          CloseClass()                                                   ;C: close all instances of the active program
-  *LWin::        Send {Blind}{LWin Down}                                        ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-  LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  *LWin::        Sendinput {Blind}{LWin Down}                                   ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  LWin Up::      Sendinput {Blind}{vk00}{LWin Up}                               ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
                                                                                 ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
 
   $^!j::         Sendinput ^{sc00D}                                             ;C: zoom in
@@ -70,7 +65,7 @@ Case "n"   : search("news.google.com/search?q=")
 
   :X:tc~win::                                                                   ;C: Toggle capslocks = del key
     CC("T_capslock_del","!")                                                    ; change config.ini by toggling entry for "T_capslock_del"
-    ShowPopup("capslocks => delete: " GC("T_text_opt"))
+    PopUp("capslocks => delete: " GC("T_text_opt"))
     return
   
   #IF GC("T_capslock_del",0)                                                    ; must be turned on by entering "tc" in CB("~win") or typing "tc~win" anywhere in windows
@@ -82,16 +77,16 @@ Case "n"   : search("news.google.com/search?q=")
   ; hotkey modifier keys (+#^) can be swapped around for the below hotkeys, 
   ; however the assignment must end in the numbers 0-9 for the memory system to work 
   
-  $+#0::                                                                        ;MF: overwrite 0.txt with selected text 
-  $+#9::                                                                        ;MF: overwrite 9.txt with selected text 
-  $+#8::                                                                        ;MF: overwrite 8.txt with selected text 
-  $+#7::                                                                        ;MF: overwrite 7.txt with selected text 
-  $+#6::                                                                        ;MF: overwrite 6.txt with selected text 
-  $+#5::                                                                        ;MF: overwrite 5.txt with selected text 
-  $+#4::                                                                        ;MF: overwrite 4.txt with selected text 
-  $+#3::                                                                        ;MF: overwrite 3.txt with selected text 
-  $+#2::                                                                        ;MF: overwrite 2.txt with selected text 
-  $+#1::         OverwriteMemory()                                              ;MF: overwrite 1.txt with selected text 
+  +#0::                                                                         ;MF: overwrite 0.txt with selected text 
+  +#9::                                                                         ;MF: overwrite 9.txt with selected text 
+  +#8::                                                                         ;MF: overwrite 8.txt with selected text 
+  +#7::                                                                         ;MF: overwrite 7.txt with selected text 
+  +#6::                                                                         ;MF: overwrite 6.txt with selected text 
+  +#5::                                                                         ;MF: overwrite 5.txt with selected text 
+  +#4::                                                                         ;MF: overwrite 4.txt with selected text 
+  +#3::                                                                         ;MF: overwrite 3.txt with selected text 
+  +#2::                                                                         ;MF: overwrite 2.txt with selected text 
+  +#1::          OverwriteMemory()                                              ;MF: overwrite 1.txt with selected text 
 
   ^#0::                                                                         ;MF: add selected text to the bottom of 0.txt
   ^#9::                                                                         ;MF: add selected text to the bottom of 9.txt
@@ -134,7 +129,7 @@ Case "n"   : search("news.google.com/search?q=")
 
   :X:tt~win::                                                                   ;ST|NT: toggle text navigation and selection supplemental hotkeys
     CC("T_text_opt","!")                                                        ; change config.ini by toggling entry for "T_text_opt"
-    ShowPopup("Text selection & navigation hotkeys: " GC("T_text_opt"))
+    PopUp("Text selection & navigation hotkeys: " GC("T_text_opt"))
     return
 
   
