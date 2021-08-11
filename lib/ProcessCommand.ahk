@@ -157,19 +157,19 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 return 1
             Case "R":                                                           ; replace string 
-                C_First2chr := SubStr(C_input, 1, 2)
+                C_2 := SubStr(C_input, 1, 2)
                 C3_Remainder := SubStr(C_input, 3)
                 IniRead, sep1, %config_path%, %A_ComputerName%, Rsep1 ,~
                 IniRead, sep2, %config_path%, %A_ComputerName%, Rsep2 ,__
-                switch C_First2chr
+                switch C_2
                 {
-                    case "1~":
+                    case "1:":
                         CC("Rsep1", C3_Remainder), UpdateGUI()
                         return 1
-                    case "2~":
+                    case "2:":
                         CC("Rsep2", C3_Remainder), UpdateGUI()
                         return 1
-                    Case "f~":
+                    Case "f:":
                         OuterArr := StrSplit(C3_Remainder, " ")
                         InnerArr := StrSplit(OuterArr[1], sep1)
                         SplitPath,% InnerArr[1], oFileName, oDir, oExtension, oNameNoExt                 ; msgbox % C_input "`n`nFileName: " FileName "`nDir: " Dir "`nExtension: " Extension "`nNameNoExt: " NameNoExt
@@ -267,7 +267,6 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "W","B","N","M":
                 RunOtherCB(C_input, FirstChar) 
             Case "Q":                                                           ; query selected text in chosen search engine
-                C_1stChr := SubStr(C_input, 1, 3)                               ; open cache folder in explorer and (case-insensitive) select files according to match string
                 switch C_input
                 {
                     Case "t"   : search("thesaurus.com/browse/")                                 
@@ -291,13 +290,31 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 sleep 400
                 SelectByRegEx(C_input)
                 return
+            Case "Z":
+                
+                if (C_input == "d") {
+                    CC("CBfnt", "Consolas"), CC("CBfsz", "13"), CC("CBfwt", "500")               
+                } else if RegExMatch(c_input,"[bfBF]:") {
+                    C_2 := SubStr(C_input, 1, 2)
+                    C3_Remainder := SubStr(C_input, 3)
+                    switch C_2
+                    {
+                        Case "b:"   : CC("CBfwt", C3_Remainder)  
+                        Case "f:"   : CC("CBfnt", C3_Remainder)  
+                        default : return 1
+                    }            
+                } else {
+                    CC("CBfsz",C_input)
+                }
+                return 2
             Case "T":
                 Switch C_input 
                 {
-                    case "scrollbars","s": CC("CB_ScrollBars", "!")
-                    case "title"     ,"t": CC("CB_Titlebar", "!")
+                    case "persistent","p": CC("CB_persistent", "!"), PopUp("persistent mode: " GC("CB_persistent"))
+                    case "scrollbars","s": CC("CB_ScrollBars", "!"), PopUp("Toggle scrollbars: " GC("CB_ScrollBars"))
+                    case "title"     ,"t": CC("CB_Titlebar", "!"), PopUp("Toggle titlebar: " GC("CB_Titlebar"))
                     case "wrap_text" ,"w": 
-                        CC("CB_Wrap", "!")
+                        CC("CB_Wrap", "!"), PopUp("Toggle text wrap: " GC("CB_Wrap"))
                         return 2
                     case "default"   ,"d": 
                         CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)

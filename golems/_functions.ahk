@@ -920,13 +920,13 @@
         
         Gui, c: font, s10 w%lw%, %fnt%, Consolas
         
-        Gui, c: Add, Text, section xm w%lw%,word files -> MS Word (  
+        Gui, c: Add, Text, section xm w%lw%,Word files -> MS Word (winword.exe)  
         Gui, c: Add, Edit, w%rw% ys vdoc_exe,% apps[1]         
         
-        Gui, c: Add, Text, section xm w%lw%,excel files
+        Gui, c: Add, Text, section xm w%lw%,Excel files -> MS Excel (excel.exe)
         Gui, c: Add, Edit, section w%rw% ys vxls_exe,% apps[2]
     
-        Gui, c: Add, Text, section xm w%lw%,powerpoint files
+         Gui, c: Add, Text, section xm w%lw%,powerpoint files -> MS Power
         Gui, c: Add, Edit, w%rw% ys vppt_exe,% apps[3]         
         
         Gui, c: Add, Text, section xm w%lw%,pdf viewer
