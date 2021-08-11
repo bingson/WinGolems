@@ -20,11 +20,15 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 Within this repository the AHK code for the creation of interface elements (i.e., interface templates) is kept separate from the code for the algorithms that carry out the desired task. The user only needs to know the correct calling convention to use WinGolems convenience functions such as ActivateApp(). Note: The quickstart template highlights only a small sample of WinGolems' convenience functions. For a more advanced reference template, please see the template files in \Golems\TpKb which was designed around Lenovo Trackpoint keyboards (my current setup). 
 
-The initial value provided by this repository comes from reducing common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs: ctrl+tab vs ctrl+PgDn), we are forced to adapt to uncoordinated OS design
+The initial value provided by this repository comes from reducing common workflow frictions. For instance, when different applications have different shortcuts for the same function (e.g., switching tabs: ctrl+tab vs ctrl+PgDn), it forces users to remember multiple shortcuts. WinGolems provides template examples of how to standardize and reengineer how one engages different applications. 
+
+"Operating systems and devices should mold to our needs, not the other way around."—[Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple)
+
+
+
+
 
  to remember which software uses Or worse yet, when software developpers assign less used functions to prominent key combinations that could be put to better use (e.g., #i,#g,#f). WinGolem's provides examples of how to reengineer how one 
-
-> "Operating systems and devices should mold to our needs, not the other way around."—[Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple)
 
 
 <center>

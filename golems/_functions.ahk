@@ -461,19 +461,7 @@
   }
 
   CB( sfx = "~win", w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand") {
-    global config_path, CB_hwnd
-    SetTitleMatchMode, 2
-    DetectHiddenText, On
-    
-    if WinExist("ahk_id " CB_hwnd) {
-        WinActivate, % "ahk_id " CB_hwnd
-        GUIFocusInput()
-        return
-    } else {
-        CommandBox(sfx, w_color, t_color, ProcessMod) 
-    }
-    DetectHiddenText, off
-    return
+    CommandBox(sfx, w_color, t_color, ProcessMod)
   }
 
   FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", title="", name_dict = "", grp=1, p*) {
