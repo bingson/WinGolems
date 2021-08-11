@@ -50,8 +50,8 @@
   ^SC027::       Send {AppsKey}                                                 ;C: appkey press
   ^#w::          WinClose,A                                                     ;C: close active window 
   ^#q::          CloseClass()                                                   ;C: close all instances of the active program
-  *LWin::        Sendinput {Blind}{LWin Down}                                   ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-  LWin Up::      Sendinput {Blind}{vk00}{LWin Up}                               ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  *LWin::        Send {Blind}{LWin Down}                                        ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
                                                                                 ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
 
   $^!j::         Sendinput ^{sc00D}                                             ;C: zoom in
@@ -65,7 +65,7 @@
 
   :X:tc~win::                                                                   ;C: Toggle capslocks = del key
     CC("T_capslock_del","!")                                                    ; change config.ini by toggling entry for "T_capslock_del"
-    PopUp("capslocks => delete: " GC("T_text_opt"))
+    PopUp("capslocks => delete: " GC("T_capslock_del"))
     return
   
   #IF GC("T_capslock_del",0)                                                    ; must be turned on by entering "tc" in CB("~win") or typing "tc~win" anywhere in windows
