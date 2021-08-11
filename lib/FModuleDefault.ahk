@@ -24,10 +24,10 @@ FModuleDefault(UserInput, FirstChar, title) {
             text_to_add := "`n" . trim(clip())
             if (FirstChar == "A") {
                 FileAppend, %text_to_add%, %f_path%%Dir%%NameNoExt%.txt    
-                ShowPopUp("added to bottom of`n" NameNoExt ,,"250",,,,,lgreen)  
+                PopUp("added to bottom of`n" NameNoExt ,,"250",,,,,lgreen)  
             } else {
                 FilePrepend(f_path Dir NameNoExt ".txt", text_to_add) 
-                ShowPopUp("added to top of`n" NameNoExt ,,"250",,,,,lgreen)
+                PopUp("added to top of`n" NameNoExt ,,"250",,,,,lgreen)
             }    
             sleep 800
             gosub, Load
@@ -83,12 +83,12 @@ FModuleDefault(UserInput, FirstChar, title) {
                 {
                     try {
                         Filecopy,% f_path . nDir . nNameNoExt . ".txt",% f_path . oDir . oNameNoExt . ".txt", 1
-                        ShowPopUp(oFileName . " overwritten with " . nFileName,green,,,-1000,,,lgreen)
+                        PopUp(oFileName . " overwritten with " . nFileName,green,,,-1000,,,lgreen)
                         sleep 800
                         txt  := AccessCache(oNameNoExt,dir, False)
                         new_title_file := oNameNoExt . ".txt" 
                     } catch {
-                        ShowPopUp("invalid path",green,,,-2000,,,lgreen)
+                        PopUp("invalid path",green,,,-2000,,,lgreen)
                         sleep 800
                         redrawGUI()
                     }
@@ -99,7 +99,7 @@ FModuleDefault(UserInput, FirstChar, title) {
         Case "V":                                                           ; paste file contents
             ActivateWindow("ahk_id" tgt_winID)
             AccessCache(namenoext, dir)
-            ShowPopUp(namenoext " pasted", "000000", "230", "70", "-600", "14", "610", lgreen)
+            PopUp(namenoext " pasted", "000000", "230", "70", "-600", "14", "610", lgreen)
             return
         Case "E":                                                           ; edit file
             if !C_input
@@ -115,13 +115,13 @@ FModuleDefault(UserInput, FirstChar, title) {
         Case "C":                                                           ; copy file
             If !RegExMatch(C_input, " ")
             {
-                ShowPopUp("DUPLICATE DETECTED!`nappending suffix to filename", purple,,,,,,lp )
+                PopUp("DUPLICATE DETECTED!`nappending suffix to filename", purple,,,,,,lp )
                 var := 1
                 Filecopy,%f_path%%C_input%.txt,%f_path%%Dir%%namenoext%_%var%.txt,0
                 exist = %ErrorLevel%                                        ; get the error level 0 = no errors
                 while exist > 0                                             ; what to do if there is an error like filename already exists
                 {
-                    ShowPopUp("DUPLICATE DETECTED!`nappending suffix to filename", purple,,,,,,lp )
+                    PopUp("DUPLICATE DETECTED!`nappending suffix to filename", purple,,,,,,lp )
                     ++var
                     Filecopy,%f_path%%Dir%%namenoext%.txt, %f_path%%Dir%%namenoext%_%var%.txt,0
                     exist = %ErrorLevel%
@@ -136,9 +136,9 @@ FModuleDefault(UserInput, FirstChar, title) {
                     odir := odir ? odir . "/" : ""
                     ndir := ndir ? ndir . "/" : ""
                     Filecopy,% f_path . oDir . oNameNoExt . ".txt",% f_path . nDir . nNameNoExt . ".txt", 1  ; 1 = overwrite 
-                    ShowPopUp(oFileName . " copied to " . nFileName,green,,,-2000,,,lgreen)
+                    PopUp(oFileName . " copied to " . nFileName,green,,,-2000,,,lgreen)
                 } catch {
-                    ShowPopUp("invalid file path",green,,,-2000,,,lgreen)
+                    PopUp("invalid file path",green,,,-2000,,,lgreen)
                 }
             }
             return 1

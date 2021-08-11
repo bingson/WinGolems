@@ -25,10 +25,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 text_to_add := "`n" . trim(clip())
                 if (FirstChar == "A") {
                     FileAppend, %text_to_add%, %f_path%%Dir%%NameNoExt%.txt    
-                    ShowPopUp("added to bottom of`n" NameNoExt ,C.lgreen)  
+                    PopUp("added to bottom of`n" NameNoExt ,C.lgreen)  
                 } else {
                     FilePrepend(f_path Dir NameNoExt ".txt", text_to_add) 
-                    ShowPopUp("added to top of`n" NameNoExt ,C.lgreen)
+                    PopUp("added to top of`n" NameNoExt ,C.lgreen)
                 }    
                 gosub, Load
                 return 1    
@@ -94,11 +94,11 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     {
                         try {
                             Filecopy,% f_path . nDir . nNameNoExt . ".txt",% f_path . oDir . oNameNoExt . ".txt", 1
-                            ShowPopUp(oFileName . " overwritten with " . nFileName,C.lgreen,C.bgreen,,,-1000)
+                            PopUp(oFileName . " overwritten with " . nFileName,C.lgreen,C.bgreen,,,-1000)
                             txt  := AccessCache(oNameNoExt,dir, False)
                             new_title_file := oNameNoExt . ".txt" 
                         } catch {
-                            ShowPopUp("invalid path",C.lgreen,C.bgreen,,,-2000)
+                            PopUp("invalid path",C.lgreen,C.bgreen,,,-2000)
                             UpdateGUI()
                         }
                     }
@@ -108,7 +108,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "V":                                                           ; paste file contents
                 ActivateWin("ahk_id" tgt_hwnd)
                 AccessCache(namenoext, dir)
-                ShowPopUp(namenoext " pasted",C.lgreen,"000000", "230", "70", "-600", "14", "610")
+                PopUp(namenoext " pasted",C.lgreen,"000000", "230", "70", "-600", "14", "610")
                 return
             Case "E":                                                           ; edit file
                 if !C_input
@@ -129,13 +129,13 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "C":                                                           ; copy file
                 If !RegExMatch(C_input, " ")
                 {
-                    ShowPopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
+                    PopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
                     var := 1
                     Filecopy,%f_path%%C_input%.txt,%f_path%%Dir%%namenoext%_%var%.txt,0
                     exist = %ErrorLevel%                                        ; get the error level 0 = no errors
                     while exist > 0                                             ; what to do if there is an error like filename already exists
                     {
-                        ShowPopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
+                        PopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
                         ++var
                         Filecopy,%f_path%%Dir%%namenoext%.txt, %f_path%%Dir%%namenoext%_%var%.txt,0
                         exist = %ErrorLevel%
@@ -150,9 +150,9 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         odir := odir ? odir . "/" : ""
                         ndir := ndir ? ndir . "/" : ""
                         Filecopy,% f_path . oDir . oNameNoExt . ".txt",% f_path . nDir . nNameNoExt . ".txt", 1  ; 1 = overwrite 
-                        ShowPopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
+                        PopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
                     } catch {
-                        ShowPopUp("invalid file path",C.lgreen,C.bgreen,,,-2000)
+                        PopUp("invalid file path",C.lgreen,C.bgreen,,,-2000)
                     }
                 }
                 return 1
