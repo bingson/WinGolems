@@ -54,8 +54,15 @@
   LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
                                                                                 ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
 
-  $^!j::         Sendinput ^{sc00D}                                             ;C: zoom in
-  $^!k::         Sendinput ^{sc00C}                                             ;C: zoom out
+  $^!j::         
+    send {Blind}
+    Sendinput ^{sc00D}                                             ;C: zoom in
+    return
+
+  $^!k::         
+    send {blind}
+    Sendinput ^{sc00C}                                             ;C: zoom out
+    return
                                                                                 
   !b::           send ^{PgUp}                                                   ;C: navigate to right tab
   !space::                                                                      ;C: navigate to left tab
@@ -155,8 +162,8 @@
     
     $+!l::       Sendinput +{Right}                                             ;ST: extend selection Right 1 character
     $+!h::       Sendinput +{Left}                                              ;ST: extend selection Left  1 character
-    +!j::        sendinput +{down}                                              ;ST: extend selection down  1 row
     +!k::        sendinput +{up}                                                ;ST: extend selection up    1 row
+    +!j::        sendinput +{down}                                              ;ST: extend selection down  1 row
     
   ; NAVIGATE TEXT ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
 
@@ -164,13 +171,13 @@
     #SC01A::     sendinput ^{end}                                               ;NT: Ctrl + End  (note: SC01A = "[" to see a SC code reference table type "Lsck" in a Command Box)
     $#h::        sendinput ^{Left}                                              ;NT: jump to next word = simulate ctrl+Left
     $#l::        sendinput ^{Right}                                             ;NT: jump to next word = simulate ctrl+Right
-    $!h::        sendinput {Left}                                               ;NT: Left
-    $!l::        sendinput {Right}                                              ;NT: Right
+    $!h::        send {Left}                                               ;NT: Left
+    $!l::        send {Right}                                              ;NT: Right
     *$#k::                                                                      ;NT: Up
-    *$!k::       sendinput {Up}                                                 ;NT: Up
+    *$!k::       send {Up}                                                 ;NT: Up
     *$#j::                                                                      ;NT: Down
-    *$!j::       sendinput {Down}                                               ;NT: Down
-  
+    *$!j::       send {Down}                                               ;NT: Down
+    
 ; CHANGE FOLDER IN FILELISTERS _________________________________________________
   
   SetTitleMatchMode, 2
@@ -178,13 +185,13 @@
   
   >+sc029::     ChangeFolder(A_ScriptDir)                                       ;CF: AHK folder
   >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                         ;CF: mem_cache
+  >+u::         ChangeFolder(UProfile)                                          ;CF: %UserProfile%
   
   /* SAMPLE CODE
 
      >+c::        ChangeFolder(hdrive)                                          ;CF: %Homedrive% (C:)
      >+o::        ChangeFolder(A_ProgramFiles)                                  ;CF: C:\Program Files
      >+!o::       ChangeFolder(PF_x86)                                          ;CF: C:\Program Files(x86)
-     >+u::        ChangeFolder(UProfile)                                        ;CF: %UserProfile%
      >+p::        ChangeFolder(UProfile "\Pictures\")                           ;CF: Pictures
      >+g::        ChangeFolder(UProfile "\Google Drive")                        ;CF: google drive
      >+j::        ChangeFolder(UProfile "\Downloads")                           ;CF: Downloads
