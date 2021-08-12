@@ -1,3 +1,14 @@
 *.bak
 debug.log
 **/.vscode/
+mem_cache/b/_hist.txt
+mem_cache/1.txt
+mem_cache/2.txt
+mem_cache/3.txt
+mem_cache/4.txt
+mem_cache/5.txt
+mem_cache/6.txt
+mem_cache/7.txt
+mem_cache/8.txt
+mem_cache/9.txt
+mem_cache/0.txt
