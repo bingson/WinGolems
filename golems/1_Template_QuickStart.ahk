@@ -167,10 +167,10 @@
     
   ; NAVIGATE TEXT ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
 
-    #p::         sendinput ^{home}                                              ;NT: Ctrl + Home
-    #SC01A::     sendinput ^{end}                                               ;NT: Ctrl + End  (note: SC01A = "[" to see a SC code reference table type "Lsck" in a Command Box)
-    $#h::        sendinput ^{Left}                                              ;NT: jump to next word = simulate ctrl+Left
-    $#l::        sendinput ^{Right}                                             ;NT: jump to next word = simulate ctrl+Right
+    #p::         send ^{home}                                              ;NT: Ctrl + Home
+    #SC01A::     send ^{end}                                               ;NT: Ctrl + End  (note: SC01A = "[" to see a SC code reference table type "Lsck" in a Command Box)
+    $#h::        send ^{Left}                                              ;NT: jump to next word = simulate ctrl+Left
+    $#l::        send ^{Right}                                             ;NT: jump to next word = simulate ctrl+Right
     $!h::        send {Left}                                               ;NT: Left
     $!l::        send {Right}                                              ;NT: Right
     *$#k::                                                                      ;NT: Up

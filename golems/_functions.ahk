@@ -909,36 +909,36 @@
     if (!FileExist(config_path) or path = "ERROR") {
         Gui, c: +LastFound
         Gui, c: Destroy          
-        Gui, c: New,,WinGolems Configuration
+        Gui, c: New,,WinGolems (-(-_(-_-)_-)-) Configuration
         Gui, c: +LastFound +OwnDialogs +Owner -DPIscale +Resize +AlwaysOnTop ; +E0x08000000 +Resize  +E0x00200 (border)
         Gui, c: Color,% C.bwhite
         
-        lw := 150, rw := 200
+        lw := 375, rw := 210
         Gui, c: font, s11 w%lw%, %fnt%, Consolas
         Gui, c: Add, Text,% "w" . (rw + lw) . " xm"
-            ,No system configuration detected. Please confirm/modify the following default application associations.`n
+            ,New system detected. Please confirm/modify the following WinGolems application associations.`n
         
         Gui, c: font, s10 w%lw%, %fnt%, Consolas
         
-        Gui, c: Add, Text, section xm w%lw%,Word files -> MS Word (winword.exe)  
+        Gui, c: Add, Text, section xm w%lw%,DOC files:`t`tMicrosoft Word  
         Gui, c: Add, Edit, w%rw% ys vdoc_exe,% apps[1]         
         
-        Gui, c: Add, Text, section xm w%lw%,Excel files -> MS Excel (excel.exe)
+        Gui, c: Add, Text, section xm w%lw%,XLS files:`t`tMicrosoft Excel
         Gui, c: Add, Edit, section w%rw% ys vxls_exe,% apps[2]
     
-         Gui, c: Add, Text, section xm w%lw%,powerpoint files -> MS Power
+         Gui, c: Add, Text, section xm w%lw%,PPT files:`t`tMicrosoft PowerPoint
         Gui, c: Add, Edit, w%rw% ys vppt_exe,% apps[3]         
         
-        Gui, c: Add, Text, section xm w%lw%,pdf viewer
+        Gui, c: Add, Text, section xm w%lw%,PDF files:`t`tAdobe Acrobat Reader DC
         Gui, c: Add, Edit, section w%rw% ys vpdf_exe,% apps[4]
         
-        Gui, c: Add, Text, section xm w%lw%,web browser
+        Gui, c: Add, Text, section xm w%lw%,HTML files:`t`tChrome Browser 
         Gui, c: Add, Edit, w%rw% ys vhtml_exe,% apps[5]         
         
-        Gui, c: Add, Text, section xm w%lw%,cloud backup
+        Gui, c: Add, Text, section xm w%lw%,Data backup:`t`tGoogle Backup & Sync
         Gui, c: Add, Edit, section w%rw% ys vsync_exe,% apps[6]
     
-        Gui, c: Add, Text, section xm w%lw%,default editor
+        Gui, c: Add, Text, section xm w%lw%,Default editor:`t`tVisual Studio Code
         Gui, c: Add, Edit, w%rw% ys veditor_exe,% apps[7]         
         
         Gui, c: Add, Text, section xm w%lw%,
@@ -1319,7 +1319,11 @@
         dirup%A_Index% := RegExReplace(A_ScriptDir, "(\\[^\\]+) {" A_Index "}$")
     return % dirup%n%
   }
- 
+  
+  AA(app_path = "", arguments = "", start_folder_toggle = False) {
+    ActivateApp(app_path,arguments,start_folder_toggle)
+  }
+
   ActivateApp(app_path = "", arguments = "", start_folder_toggle = False) {
     ; wrapper for ActivateOrOpen to process ini file path references
     ; and arguments

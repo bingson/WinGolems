@@ -88,6 +88,7 @@
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
+    #n::AA("editor_path")
     printscreen & j::               Sendinput {WheelDown 5}                     ;m: scroll wheel down                                               
     printscreen & k::               Sendinput {WheelUp 5}                       ;m: scroll wheel Up    
       
@@ -372,3 +373,50 @@
         ^r::Send {F2}
 
   
+  
+  
+  #IF GC("T_d",0) and winactive("ahk_group FileListers")
+   
+    $#enter::
+    $#space::  CommandBox("~FileExplorer", C.lyellow)
+    
+    :X:es~FileExplorer::
+       send !d
+       var := clip()
+       ActivateApp(UProfile "\Downloads\Programs\Everything\Everything.exe")
+       clip(var)
+       return
+    
+    $+!c::     clipboard := Explorer_GetSelection()                                ;FE: store file path(s) of selected file(s) in clipboard
+    ^s::       SelectByRegEx()                                                     ;FE: select files by regex
+    
+    !r::       Send {F2}                                                           ;FE: rename file
+    ^!c::      SendInput !dcmd{Enter}                                              ;FE: Open Command Prompt Here
+    ^!k::                                                                          ;FE: up one directory level
+    !b::       send !{left}                                                        ;FE: prev folder
+    !n::       send !{right}                                                       ;FE: forward folder
+    !u::       send !{up}                                                          ;FE: up one directory level
+    !p::       Send ^w                                                             ;FE: close file explorer window
+    
+    !SC027::   DetailedView()                                                      ;FE: view: detailed file info with resized columnsnmn       
+    ^h::       ToggleInvisible()                                                   ;FE: view: toggle hide/unhide invisible files
+    <^j::      SortByName()                                                        ;FE: view: sort by name
+    <^k::      SortByDate()                                                        ;FE: view: sort by date modified
+    >^j::      SortByType()                                                        ;FE: view: sort by type
+    >^k::      SortBySize()                                                        ;FE: view: sort by size
+    
+    ^u::       send !vg{up   4}{enter}                                             ;FE: groups: toggle groupby name/remove grouping
+    ^o::       Send !vg{down 2}{enter}                                             ;FE: groups: group by file type
+    ^i::       Send !vg{down 1}{enter}                                             ;FE: groups: group by date
+    
+    ^!sc035::  SaveMousPos("FE_cg", "0")
+    
+    !sc035::                                                                       ;FE: groups: group folding: Expand all 
+    ^sc035::   ExpandCollapseAllGroups()                                           ;FE: groups: group folding: Collapse all
+    
+    !z::       Send !vn{enter}                                                     ;FE: panes: toggle navigation pane
+    ^p::       Send {alt down}p{alt up}                                            ;FE: panes: toggle preview plane
+    !i::       ControlFocus, SysTreeView321, ahk_class CabinetWClass               ;FE: panes: move focus to navigation pane
+    !o::       ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                ;FE: panes: move focus to current folder pane 
+    
+    #IfWinActive    
