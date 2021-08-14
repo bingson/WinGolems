@@ -1,10 +1,30 @@
 #IfWinActive
-; The following interface layers are valid anywhere in Windows 10
-; note: Lwin should be pressed first if part of any hotkey combination
+; The following interface elements are valid anywhere in Windows 10
+
+; Command Box Keyboard shortcut
 
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
 
-  #F1::          Send #1                                                        ;AA: activate app 1 in task bar 
+  ^#r::          s("{blind}"), SaveWinID("r")                                   ;AA: Save window ID for subsequent activation w/ win + r
+  ^#t::          s("{blind}"), SaveWinID("t")                                   ;AA: Save window ID for subsequent activation w/ win + t
+  ^#g::          s("{blind}"), SaveWinID("g")                                   ;AA: Save window ID for subsequent activation w/ win + g
+  ^#f::          s("{blind}"), SaveWinID("f")                                   ;AA: Save window ID for subsequent activation w/ win + f
+  #r::           s("{blind}"), ActivateWinID("r")                               ;AA: Activate previously saved window ID
+  #t::           s("{blind}"), ActivateWinID("t")                               ;AA: Activate previously saved window ID
+  #g::           s("{blind}"), ActivateWinID("g")                               ;AA: Activate previously saved window ID
+  #f::           s("{blind}"), ActivateWinID("f")                               ;AA: Activate previously saved window ID
+  
+ ;#x::           ActivateApp("C:\Everything\Everything.exe")                    ;AA: e.g., accepts full file path
+  #q::           s("{blind}"), ActivateApp("ppt_path")                          ;AA: Activate Powerpoint
+  #w::           s("{blind}"), ActivateApp("doc_path")                          ;AA: Activate Word
+  #e::           s("{blind}"), ActivateApp("xls_path")                          ;AA: Activate Excel
+  #a::           s("{blind}"), ActivateApp("editor_path")                       ;AA: Activate default editor
+  #s::           s("{blind}"), ActivateApp("html_path")                         ;AA: Activate web browser
+  #d::           s("{blind}"), ActivateApp("pdf_path")                          ;AA: Activate pdf viewer
+  #b::           s("{blind}"), ActivateApp("explorer.exe")                      ;AA: Activate File explorer                                                                                   
+  #c::           s("{blind}"), ActivateCalc()                                   ;AA: Activate Calculator
+
+  #F1::          Send #1                                                        ;AA: activate app 1 in task bar (reassignment done to make space for memory system shortcuts)
   #F2::          Send #2                                                        ;AA: activate app 2 in task bar 
   #F3::          Send #3                                                        ;AA: activate app 3 in task bar 
   #F4::          Send #4                                                        ;AA: activate app 4 in task bar 
@@ -13,71 +33,39 @@
   #F7::          Send #7                                                        ;AA: activate app 7 in task bar 
   #F8::          Send #8                                                        ;AA: activate app 8 in task bar 
   #F9::          Send #9                                                        ;AA: activate app 9 in task bar 
-  
-  ^#r::          SaveWinID("r")                                                 ;AA: Save window ID for subsequent activation w/ win + r
-  ^#t::          SaveWinID("t")                                                 ;AA: Save window ID for subsequent activation w/ win + t
-  ^#g::          SaveWinID("g")                                                 ;AA: Save window ID for subsequent activation w/ win + g
-  ^#f::          SaveWinID("f")                                                 ;AA: Save window ID for subsequent activation w/ win + f
-  #r::           ActivateWinID("r")                                             ;AA: Activate previously saved window ID
-  #t::           ActivateWinID("t")                                             ;AA: Activate previously saved window ID
-  #g::           ActivateWinID("g")                                             ;AA: Activate previously saved window ID
-  #f::           ActivateWinID("f")                                             ;AA: Activate previously saved window ID
-  
- ;#x::           ActivateApp("C:\Everything\Everything.exe")                    ;AA: accepts normal file path
-  #q::           ActivateApp("ppt_path")                                        ;AA: Activate Powerpoint
-  #w::           ActivateApp("doc_path")                                        ;AA: Activate Word
-  #e::           ActivateApp("xls_path")                                        ;AA: Activate Excel
-  #a::           ActivateApp("editor_path")                                     ;AA: Activate default editor
-  #s::           ActivateApp("html_path")                                       ;AA: Activate web browser
-  #d::           ActivateApp("pdf_path")                                        ;AA: Activate pdf viewer
-  #b::           ActivateApp("explorer.exe")                                    ;AA: Activate File explorer                                                                                   
-  #c::           ActivateCalc()                                                 ;AA: Activate Calculator
  
 ; CONVENIENCE (ORANGE) _________________________________________________________
   
+  #space::       CB("~win")                                                     ;C: opens command box that runs ~win suffix CB keys
   #SC035::       search()                                                       ;C: google search selected text
-               ; search("dictionary.com/browse/")  
-               ; search("en.wikipedia.org/w/index.php?search=") 
-
   #sc028::                                                                      ;C: maximize window
-  ^!space::      MaximizeWin()                                                  ;C: maximize window
+  ^!space::      s("{blind}"), MaximizeWin()                                                   ;C: maximize window
   #SC027::       WinMinimize,A                                                  ;C: minimize window
   #del::         AlwaysOnTop(1)                                                 ;C: Always on top: ON
-  #ins::         AlwaysOnTop(0)                                                 ;C: Always on top: OFF
-  +#tab::        ActivatePrevInstance()                                         ;C: rotate through active program instances starting from oldest
-  #tab::         ActivateNextInstance()                                         ;C: rotate through active program instances starting from newest
+  #ins::         AlwaysOnTop(0)                                                 ;C: Always on top: OFF 
+  +!capslock::   s("{blind}"), ActivatePrevInstance()                           ;C: rotate through active program instances starting from oldest
+  !capslock::    s("{blind}"), ActivateNextInstance()                           ;C: rotate through active program instances starting from newest
   !SC027::       Send {esc}                                                     ;C: alternate esc key (alt + semicolon)
   ^SC027::       Send {AppsKey}                                                 ;C: appkey press
   ^#w::          WinClose,A                                                     ;C: close active window 
   ^#q::          CloseClass()                                                   ;C: close all instances of the active program
   *LWin::        Send {Blind}{LWin Down}                                        ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
   LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-                                                                                ; https://autohotkey.com/board/topic/29443-disable-opening-the-start-menu/
-
-  $^!j::         
-    send {Blind}
-    Sendinput ^{sc00D}                                             ;C: zoom in
-    return
-
-  $^!k::         
-    send {blind}
-    Sendinput ^{sc00C}                                             ;C: zoom out
-    return
+  ~>+#::         CursorJump("C")                                                ;C: move mouse cursor to center
+  !b::           send ^{PgUp}                                                   ;C: navigate to left tab
+  !space::       s("{blind}"), s("^{PgDn}")                                     ;C: navigate to right tab
+  $^!j::         s("{blind}"), s("^{sc00D}")                                    ;C: zoom in (simulate: ctrl + plus)
+  $^!k::         s("{blind}"), s("^{sc00C}")                                    ;C: zoom out (simulate: ctrl + minus)
                                                                                 
-  !b::           send ^{PgUp}                                                   ;C: navigate to right tab
-  !space::                                                                      ;C: navigate to left tab
-    send {Blind}                                                                ; fixes issue with alt key opening application menues
-    send ^{PgDn}                                                                
-    return
 
   :X:tc~win::                                                                   ;C: Toggle capslocks = del key
-    CC("T_capslock_del","!")                                                    ; change config.ini by toggling entry for "T_capslock_del"
-    PopUp("capslocks => delete: " GC("T_capslock_del"))
+    CC("T_capslock_del","!")                                                    ; Change Config (CC): toggle entry for "T_capslock_del"
+    PopUp("capslocks => delete: " GC("T_capslock_del"))                         ; PopUp: confirmation msg for configuration change; 
     return
   
-  #IF GC("T_capslock_del",0)                                                    ; must be turned on by entering "tc" in CB("~win") or typing "tc~win" anywhere in windows
+  #IF GC("T_capslock_del",0)                                                    ; following two lines are turned on by entering "tc" in CB("~win") or typing "tc~win" anywhere in windows
     capslock::del                                                               ;C: makes capslock key function as a delete key. (toggle capslock: alt + capslock)   
-    !capslock::CapsLock                                                         ;C: toggle capslock
+    #capslock::CapsLock                                                         ;C: toggle capslock
   #IF                                                                           ; removes context sensitivity for keys below
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
@@ -124,19 +112,27 @@
 
   #y::           % (t := !t) ? ConvertUpper() : ConvertLower()                  ;T: Toggle: change selected text to uppercase or lowercase  
   +#y::          % (t := !t) ? Capitalize1stLetter(,,0) : Capitalize1stLetter() ;T: Toggle: capitalize the first letter of all selected words (title case) or only the first word
-  #i::           ReplaceAwithB()                                                ;T: replace multiple consecutive spaces w/ one space in selected text
-  #o::           RemoveBlankLines()                                             ;T: remove blank lines in selected text
-  !#space::      ReplaceAwithB(" ")                                             ;T: remove all spaces from selected text
-  ^#space::      ReplaceAwithB()                                                ;T: replace multiple consecutive spaces w/ a single space in selected text
-  #j::           Sendinput {WheelDown 2}                                        ;NT: scroll wheel down                                               
-  #k::           Sendinput {WheelUp 2}                                          ;NT: scroll wheel Up           
-  ^!h::          sendinput {home}                                               ;NT: Home
-  ^!l::          sendinput {end}                                                ;NT: End
-  #u::           SelectWord()                                                   ;ST: select word at text cursor position
 
-  :X:tt~win::                                                                   ;ST|NT: toggle text navigation and selection supplemental hotkeys
-    CC("T_text_opt","!")                                                        ; change config.ini by toggling entry for "T_text_opt"
-    PopUp("Text selection & navigation hotkeys: " GC("T_text_opt"))
+  !#space::      ReplaceAwithB(" ")                                             ;T: remove all spaces starting from selected text
+  ^#space::      ReplaceAwithB()                                                ;T: replace multiple consecutive spaces w/  1 in selected text
+  !#enter::      RemoveBlankLines()                                             ;T: remove empty lines starting from selected text
+
+  *#i::          SaveMousPos("i",1)                                             ;MF: Left click and save mouse position
+  #p::           RecallMousePosClick("i")                                       ;MF: Move to saved mouse position and left click
+  #u::           Send ^{home}
+  #o::           Send ^{end}
+
+  #j::           Sendinput {WheelDown 2}                                        ;T: scroll wheel down                                               
+  #k::           Sendinput {WheelUp 2}                                          ;T: scroll wheel Up           
+  $#>!h::        Sendinput {Blind}{Wheelleft 6}                                 ;MF: scroll wheel left
+  $#>!l::        Sendinput {Blind}{WheelRight 6}                                ;MF: scroll wheel right
+
+  ^!h::          sendinput {home}                                               ;T: Home
+  ^!l::          sendinput {end}                                                ;T: End
+
+  :X:tt~win::    CC("T_text_opt","!"), PopUp("Text selection (TS) & navigation (TN) hotkeys: " GC("T_text_opt"))   ;ST|NT: toggle text navigation and selection supplemental hotkeys                                                               
+    
+    
     return
 
   
@@ -167,16 +163,14 @@
     
   ; NAVIGATE TEXT ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
 
-    #p::         send ^{home}                                              ;NT: Ctrl + Home
-    #SC01A::     send ^{end}                                               ;NT: Ctrl + End  (note: SC01A = "[" to see a SC code reference table type "Lsck" in a Command Box)
-    $#h::        send ^{Left}                                              ;NT: jump to next word = simulate ctrl+Left
-    $#l::        send ^{Right}                                             ;NT: jump to next word = simulate ctrl+Right
-    $!h::        send {Left}                                               ;NT: Left
-    $!l::        send {Right}                                              ;NT: Right
+    $#h::        send ^{Left}                                                   ;NT: jump to next word = simulate ctrl+Left
+    $#l::        send ^{Right}                                                  ;NT: jump to next word = simulate ctrl+Right
+    $!h::        send {Left}                                                    ;NT: Left
+    $!l::        send {Right}                                                   ;NT: Right
     *$#k::                                                                      ;NT: Up
-    *$!k::       send {Up}                                                 ;NT: Up
+    *$!k::       send {Up}                                                      ;NT: Up
     *$#j::                                                                      ;NT: Down
-    *$!j::       send {Down}                                               ;NT: Down
+    *$!j::       send {Down}                                                    ;NT: Down
     
 ; CHANGE FOLDER IN FILELISTERS _________________________________________________
   

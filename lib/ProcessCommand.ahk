@@ -35,14 +35,15 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "L":                                                           ; display file in command box
                 Load:         
                 tgt := f_path dir NameNoExt
-                if (C_input = "s") {
-                    NameNoExt := "HotKey_List"
-                    dir := "..\"
+                if (C_input = "s" or C_input = "c") {
+                    NameNoExt := (C_input = "s") ? ("HotKey_List") : ("config.ini")
+                    RegExMatch(config_path, ".*(?=config.ini)", cpth)                         ; get everything before the last title separator and store in v
+                    dir := (C_input = "s") ? ("..\") : cpth
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
-
-                } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) or (C_input = "l") {
+                } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) 
+                  or (C_input = "l") {
                     NameNoExt := "list"
                     CC("CB_last_display", dir NameNoExt)
                     txt := CreateCacheList("list")
@@ -52,8 +53,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     txt  := AccessCache(NameNoExt,dir, False)
                 }
                 new_title_file := dir . NameNoExt . RetrieveExt(tgt)
+                ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
                 CC("CB_title", new_title_file)
-                UpdateGUI(txt, title, new_title_file)
+                ; Msgbox % "`nnew_title_file: " . title
+                UpdateGUI(txt, new_title_file)
                 return 1
 
             Case "O":                                                           ; overwrite file/clipboard
@@ -102,7 +105,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                             UpdateGUI()
                         }
                     }
-                    UpdateGUI(txt, title, new_title_file)
+                    UpdateGUI(txt, new_title_file)
                 }
                 return 1
             Case "V":                                                           ; paste file contents

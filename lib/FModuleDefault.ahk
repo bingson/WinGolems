@@ -41,7 +41,7 @@ FModuleDefault(UserInput, FirstChar, title) {
                 txt  := AccessCache(NameNoExt,dir, False)
             }
             new_title_file := dir . NameNoExt . ".txt"
-            UpdateGUI(txt, title, new_title_file)
+            UpdateGUI(txt, new_title_file)
             sleep med
             return 1
         Case "O":                                                           ; overwrite file/clipboard
@@ -93,7 +93,7 @@ FModuleDefault(UserInput, FirstChar, title) {
                         redrawGUI()
                     }
                 }
-                UpdateGUI(txt, title, new_title_file)
+                UpdateGUI(txt, new_title_file)
             }
             return 1
         Case "V":                                                           ; paste file contents

@@ -1,24 +1,22 @@
 #IfWinActive
-  
-  #space:: CB("~win")                                                           ; opens command box that runs ~win suffix CB keys
 
 ; CB hotkey assignment _________________________________________________________; shared by all Command Boxes 
 
   #IF WinActive("ahk_id " ghwnd) or TitleTest("(-_-)")                          ; If command Box active
 
-  !q::          MoveWin("TL")                                                   ;mw: move CB window to top left
-  !e::          MoveWin("TR")                                                   ;mw: move CB window to top right
-  !z::          MoveWin("BL")                                                   ;mw: move CB window to bottom left
-  !c::          MoveWin("BR")                                                   ;mw: move CB window to bottom right
-  !w::          MoveWin("T")                                                    ;mw: move CB window to top half
-  !s::          MoveWin("B")                                                    ;mw: move CB window to bottom half
-  #left::                                                                       ;mw: move CB window to left half
-  !a::          MoveWin("L")                                                    ;mw: move CB window to left half
-  #right::                                                                      ;mw: move CB window to right half
-  !d::          MoveWin("R")                                                    ;mw: move CB window to right half
-  #space::      GUISubmit()                                                     ;mw: submit GUI input 
-  $!x::         ToggleDisplay()                                                 ;mw: toggle Command Box display/minimalist mode
-  !r::          GUIRecall()                                                     ;mw: reenter last command
+  !q::          MoveWin("TL")                                                   ;MW: move CB window to top left
+  !e::          MoveWin("TR")                                                   ;MW: move CB window to top right
+  !z::          MoveWin("BL")                                                   ;MW: move CB window to bottom left
+  !c::          MoveWin("BR")                                                   ;MW: move CB window to bottom right
+  !w::          MoveWin("T")                                                    ;MW: move CB window to top half
+  !s::          MoveWin("B")                                                    ;MW: move CB window to bottom half
+  #left::                                                                       ;MW: move CB window to left half
+  !a::          MoveWin("L")                                                    ;MW: move CB window to left half
+  #right::                                                                      ;MW: move CB window to right half
+  !d::          MoveWin("R")                                                    ;MW: move CB window to right half
+  #space::      GUISubmit()                                                     ;MW: submit GUI input 
+  $!x::         ToggleDisplay()                                                 ;MW: toggle Command Box display/minimalist mode
+  !r::          GUIRecall()                                                     ;MW: reenter last command
 
   #IF WinExist("ahk_id " ghwnd) and !WinActive("ahk_id " ghwnd)                 ; If command Box exists
   
@@ -29,55 +27,55 @@
 
 ; CB key assignment: System Commands ___________________________________________
 
-  :X:b~win::    BluetoothSettings()                                             ;sc: bluetooth settings
-  :X:d~win::    DisplaySettings()                                               ;sc: display settings
-  :X:n~win::    NotificationWindow()                                            ;sc: notification window
-  :X:v~win::    SoundSettings()                                                 ;sc: sound settings
-  :X:r~win::    RunProgWindow()                                                 ;sc: run program
-  :X:x~win::    StartContextMenu()                                              ;sc: context menu for the Start button
-  :X:k~win::    QuickConnectWindow()                                            ;sc: quick connect window
-  :X:i~win::    WindowsSettings()                                               ;sc: windows settings
-  :X:p~win::    PresentationDisplayMode()                                       ;sc: presentation display mode
-  :X:s~~win::   PowerOptions("sleep")                                           ;sc: enter sleep mode
-  :X:h~~win::   PowerOptions("hybernate")                                       ;sc: enter hybernate mode
-  :X:sd~~win::  PowerOptions("shutdown")                                        ;sc: shutdown + power down 
-  :X:rs~~win::  PowerOptions("restart")                                         ;sc: restart the computer
-  :X:a~win::    Run assets\win\Alarms & Clock.lnk                               ;sc: alarm clock
-  :X:m~win::    sendEmail()                                                     ;sc: send mail
-  :X:ce~~win::  CloseAllPrograms()                                              ;sc: close all open programs 
-  :X:ss~win::   CloudSync("ON")                                                 ;sc: turn on cloud sync 
-  :X:qs~win::   CloudSync("OFF")                                                ;sc: turn off cloud sync
-  :X:lt~win::   WinLLock(True)                                                  ;sc: turn on win+L locks computer
-  :X:lf~win::   WinLLock(False)                                                 ;sc: turn off win+L locks computer
-  :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;sc: open add remove programs 
-   #Lbutton::                                                                   ;sc: open start menu (alt: Ctrl+Esc)
-   $^#Enter::                                                                   ;sc: open start menu (alt: Ctrl+Esc)
-  :X:s~win::    send ^{esc}                                                     ;sc: open start menu (alt: Ctrl+Esc)
-  :X:mod~win::  MoveWindowToOtherDesktop()                                      ;sc: Move window to other desktop
-  :X:de~win::   send #{tab}                                                     ;sc: desktop environment overview
+  :X:b~win::    BluetoothSettings()                                             ;SC: bluetooth settings
+  :X:d~win::    DisplaySettings()                                               ;SC: display settings
+  :X:n~win::    NotificationWindow()                                            ;SC: notification window
+  :X:v~win::    SoundSettings()                                                 ;SC: sound settings
+  :X:r~win::    RunProgWindow()                                                 ;SC: run program
+  :X:x~win::    StartContextMenu()                                              ;SC: context menu for the Start button
+  :X:k~win::    QuickConnectWindow()                                            ;SC: quick connect window
+  :X:i~win::    WindowsSettings()                                               ;SC: windows settings
+  :X:p~win::    PresentationDisplayMode()                                       ;SC: presentation display mode
+  :X:s~~win::   PowerOptions("sleep")                                           ;SC: enter sleep mode
+  :X:h~~win::   PowerOptions("hybernate")                                       ;SC: enter hybernate mode
+  :X:sd~~win::  PowerOptions("shutdown")                                        ;SC: shutdown + power down 
+  :X:rs~~win::  PowerOptions("restart")                                         ;SC: restart the computer
+  :X:a~win::    Run assets\win\Alarms & Clock.lnk                               ;SC: alarm clock
+  :X:m~win::    sendEmail()                                                     ;SC: send mail
+  :X:ce~~win::  CloseAllPrograms()                                              ;SC: close all open programs 
+  :X:ss~win::   CloudSync("ON")                                                 ;SC: turn on cloud sync 
+  :X:qs~win::   CloudSync("OFF")                                                ;SC: turn off cloud sync
+  :X:lt~win::   WinLLock(True)                                                  ;SC: turn on win+L locks computer
+  :X:lf~win::   WinLLock(False)                                                 ;SC: turn off win+L locks computer
+  :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;SC: open add remove programs 
+   #Lbutton::                                                                   ;SC: open start menu (alt: Ctrl+Esc)
+   $^#Enter::                                                                   ;SC: open start menu (alt: Ctrl+Esc)
+  :X:s~win::    send ^{esc}                                                     ;SC: open start menu (alt: Ctrl+Esc)
+  :X:mod~win::  MoveWindowToOtherDesktop()                                      ;SC: Move window to other desktop
+  :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
 
 ; CB keys assignment: AHK UTILITIES ____________________________________________  
 
-  :X:oc~win::   OpenFolder("mem_cache\")                                        ;ahk: open cache folder in file explorer
-  :X:kh~win::   KeyHistory                                                      ;ahk: open key history
-  :X:ws~win::   run, C:\Program Files\AutoHotkey\WindowSpy.ahk                  ;ahk: open windows spy
-  :X:ec~win::   EditFile("""" config_path """")                                 ;ahk: edit config.ini file
-  :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")                     ;ahk: AHK beginner tutorial
-  :X:tcf~win::   TglSetting("cursor_follow", "Cursor follows active window: ")  ;ahk: toggle mouse cursor follows active window
-  ~+#left::                                                                     ;ahk: cursor follows active window when moving apps btn monitors (if turned on)
-  ~!tab::       CursorFollowWin()                                               ;ahk: cursor follows active window when switch apps with alt+tab (if turned on)
-  :X:clp~win::  WriteToINI(A_ComputerName, "CL_prfx")                           ;ahk: store selected text as label prefix
-  :X:cls~win::  WriteToINI(A_ComputerName, "CL_sffx")                           ;ahk: store selected text as label suffix
-  :X:cl~win::   CreateLabel("CL_prfx", "CL_sffx")                               ;ahk: create hotstring label with execution option
-  :X:!cl~win::  CreateLabel("!", "CL_sffx")                                     ;ahk: create normal label
+  :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
+  :X:kh~win::   KeyHistory                                                      ;AHK: open key history
+  :X:ws~win::   run, C:\Program Files\AutoHotkey\WindowSpy.ahk                  ;AHK: open windows spy
+  :X:ec~win::   EditFile("""" config_path """")                                 ;AHK: edit config.ini file
+  :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")                     ;AHK: AHK beginner tutorial
+  :X:tcf~win::   TglSetting("cursor_follow", "Cursor follows active window: ")  ;AHK: toggle mouse cursor follows active window
+  ~+#left::                                                                     ;AHK: cursor follows active window when moving apps btn monitors (if turned on)
+  ~!tab::       CursorFollowWin()                                               ;AHK: cursor follows active window when switch apps with alt+tab (if turned on)
+  :X:clp~win::  WriteToINI(A_ComputerName, "CL_prfx")                           ;AHK: store selected text as label prefix
+  :X:cls~win::  WriteToINI(A_ComputerName, "CL_sffx")                           ;AHK: store selected text as label suffix
+  :X:cl~win::   CreateLabel("CL_prfx", "CL_sffx")                               ;AHK: create hotstring label with execution option
+  :X:!cl~win::  CreateLabel("!", "CL_sffx")                                     ;AHK: create normal label
   
-  :X:gl~win::   GenerateHotkeyList()                                            ;ahk: generate a list of hotkeys in working directory.
+  :X:gl~win::   GenerateHotkeyList()                                            ;AHK: generate a list of hotkeys in working directory.
   
-  :X:q~~win::                                                                   ;ahk: quit ahk script
-  +^#q::        ExitApp                                                         ;ahk: quit ahk script
-  lshift & rshift::                                                             ;ahk: reload ahk script
-  rshift & lshift::                                                             ;ahk: reload ahk script
-  :X:r~~win::   Reload                                                          ;ahk: reload ahk script
+  :X:q~~win::                                                                   ;AHK: quit ahk script
+  +^#q::        ExitApp                                                         ;AHK: quit ahk script
+  lshift & rshift::                                                             ;AHK: reload ahk script
+  rshift & lshift::                                                             ;AHK: reload ahk script
+  :X:r~~win::   Reload                                                          ;AHK: reload ahk script
 
 ; developer options ____________________________________________________________
   
@@ -87,48 +85,13 @@
     return
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-  
+    printscreen & b:: activateapp("explorer.exe")
+    printscreen & SC035::       search()                                                       ;C: google search selected text
     #n::AA("editor_path")
-    printscreen & j::               Sendinput {WheelDown 5}                     ;m: scroll wheel down                                               
-    printscreen & k::               Sendinput {WheelUp 5}                       ;m: scroll wheel Up    
-      
-    #z::                                                                           ;<TMA> Tabs Outliner and pinned webpages
-      SetTitleMatchMode, 2
-      If WinExist("Tabs Outliner")                                                
-      || WinExist("My PTF")                                                       
-      || WinExist("Playlists")
-      || WinExist("Play Later")
-      || WinExist("All")
-      || WinExist("Player FM")
-      || WinExist("Track order")
-      || WinExist("Google Keep")
-      || WinExist("WebBroker")
-      ; || WinExist("Inbox")
-      ; || WinExist("gmail")
-      ; || WinExist("Twitter")
-      ; || WinExist("Inoreader")
-      {
-         ;  ReleaseModifiers("10")
-          WinActivate
-      }   
-      else 
-      {
-          ActivateApp("html_path")
-          sleep, long
-          Send ^n
-          sleep, med
-          send ^.                                                                ; chrome shortcut to activate tabsoutliner
-          sleep, med
-          Send ^w
-          sleep, med
-          Send w
-          sleep, med
-          Send {alt down}{sc033}{alt up}
-      }
-      CursorFollowWin()
-      return
-
-    
+    printscreen & j::               Sendinput {WheelDown 5}                     ;M: scroll wheel down                                               
+    printscreen & k::               Sendinput {WheelUp 5}                       ;M: scroll wheel Up    
+    ~lwin & ~rshift::               CursorJump("C")                             ;MF: move mouse cursor to center
+   
   #IF GC("T_d",0) and WinActive("ahk_exe " exe["editor"]) ;-- -- -- -- -- -- -- 
                            
     :X:c~~coding::       Send +^!g                                                ;V: git commit all
@@ -250,173 +213,4 @@
     
     !1::                                                                           
     !2::                                                                           
-    !3:: send % "^" . substr(A_ThisHotkey, 0)                                    ;v: activate editor group #
-
-  #IF GC("T_d",0) and WinActive("ahk_exe " exe["html"]) ;-- -- -- -- -- -- -- --
-  
-    ; CB / URLS ____________________________________________________________________
-         
-     $#enter::
-     printscreen & space::
-     #space:: CommandBox("~html", C.pink) ; "URL_TOC"              ;<JL> opens edit file jump list
-    
-     :X:sr~html:: loadurl("https://elevanth.org/blog/2021/06/21/regression-fire-and-dangerous-things-2-3/")
-     :X:gm>~win::
-     gm~html:
-     $!1::             LoadURL("mail.google.com")
-     i~html:
-     :X:i>~win::
-     $!2::             LoadURL("www.inoreader.com")
-     :X:t>~win::
-     t~html:
-     $!3::             LoadURL("twitter.com")
-     
-     
-     :X:u~html::     LoadURL("www.udemy.com/course/causal-data-science/")       
-     :X:sr~html::    LoadURL("www.youtube.com/playlist?list=PLDcUM9US4XdM9_N6XUUFrhghGJ4K25bFc")      
-     
-     :X:p~html::
-     :X:p>~win::
-     $!7::             LoadURL("getpocket.com/a/queue/")
-    
-     $+!8::            LoadURL("player.fm/player413982046/play-later")
-     :X:fm~html::
-     :X:pod~html::
-     $!8::             LoadURL("player.fm/player413982046/subs/all")
-         
-     $!0::             LoadURL("www.youtube.com/")
-     $!^0::            LoadURL("www.youtube.com/feed/subscriptions")
-     $+!0::            LoadURL("www.youtube.com/playlist?list=WL")
-     $+^0::            LoadURL("www.youtube.com/feed/history")
-     :X:v>~win::
-     :X:v~html::     LoadURL("main.dailyflix.one/")                                  ; !5 reserved for %%
-     :X:b>~win::
-     :X:b~html::     LoadURL("movies7.to/tv-series") 
-     :X:n~html::     LoadURL("netflix.com")
-     :X:pymc~html::  LoadURL("docs.pymc.io/notebooks/api_quickstart.html")      
-     :X:c~html::     LoadURL("https://coolors.co/generate")
-     :X:cw~html::    LoadURL("https://colorswall.com/palette/62609/")
-     :X:gc~html::    LoadURL("www.google.com/calendar")
-     :X:gk>~win::
-     :X:gk~html::    LoadURL("keep.google.com")
-     :X:gn~html::    LoadURL("news.google.com")
-     :X:f>~win::
-     :X:f~html::     LoadURL("ca.finance.yahoo.com/portfolio/pf_1/view/v1")
-     :X:w>~win::
-     :X:w~html::     LoadURL("www.accuweather.com/en/ca/kanata-lakes/k2l/weather-forecast/3385448")
-     :X:wb~html::    LoadURL("webbroker.td.com/waw/idp/login.htm?execution=e1s1")
-     :X:td~html::    LoadURL("authentication.td.com/uap-ui/index.html?consumer=easyweb&locale=en_CA#/login/easyweb-getting-started")
-     :X:ub~html::    LoadURL("chrome-extension://cjpalhdlnbpafiamejdnhcphjbkeiagm/dashboard.html#1p-filters.html")
-     :X:cal~html::   LoadURL("calendar.sharats.me/")
-     :X:tv~html::    LoadURL("www.tvguide.com/new-tonight/")
-     :X:wg~html::    LoadURL("github.com/bingson/wingolems")
-     
-     :X:ks~html::    ChromeConfig("chrome://extensions/shortcuts/")
-     xt~html:
-     :X:ext~html::   ChromeConfig("chrome://extensions/")
-     +^!r::                                                                      ; restart browser
-     :X:rs~html::    ChromeConfig("chrome://restart")
-     settings~html:
-     config~html:
-     :X:cfg~html::   ChromeConfig("chrome://settings")
-     handlers~html:
-     :X:hdlrs~html:: ChromeConfig("chrome://settings/handlers")
-    
-    ; CONVENIENCE / EXTENSIONS _____________________________________________________
-     #If WinActive("ahk_exe chrome.exe") 
-    
-     #If GetKeyState("shift", "P")
-        printscreen & n::
-     #If 
-     +#n::   CursorJump("B",,"-20"), CursorJump("L","20"), clicks(1)               ;[MF] click to open downloaded file
-     
-     :X:.~html:: send !{sc033}
-    
-     ;  $+!sc034:: send {sc01b 2}                                                   ?
-     $^space:: send {enter}   
-     
-     !pgup::                send ^r
-     :X:url~html:: send +!i
-     ~^w:: Send ^w                                                                  ; close tab
-     !p:: Send ^w                                                                   ; close tab
-     ^SC034::               send +^{SC034}                                          ; move tab to first position
-     ^SC033::               send +^{SC033}                                          ; move tab to last position
-     $!i::                  Send ^{Numpad1}                                         ; select 1st tab
-     $!o::                  Send ^{Numpad9}                                         ; select last tab
-     $+^!w::Send +^q                                                                ; save and close all browser windows
-    
-    ; GOOGLE DRIVE _________________________________________________________________
-        
-        $+!^1:: OpenGoogleDrive(1)
-        $+!^2:: OpenGoogleDrive(2)
-        $+!^3:: OpenGoogleDrive(3)
-        $+!^4:: OpenGoogleDrive(4)
-    
-    ; TABS OUTLINER ________________________________________________________________
-        SetTitleMatchMode, 2
-        #If WinActive("ahk_exe chrome`.exe") && TitleTest("Tabs Outliner")
-        
-        ; #If WinActive("Tabs Outliner") 
-        ; ## TABS OUTLINER SHORTCUTS
-        ; +^a:: Save and Close all open windows
-        ; +!w:: Save and Close current tab
-        ; +^w:: Save and Close current window
-        ; ^!Space = takes current tab in tree and makes a new tree
-        
-        $^SC035:: 
-        $!SC035:: Send {SC00D}   ;SC035 = /
-        
-        $^s::Send {backspace}
-        ; $enter::Send {space}
-        !n::
-        !r::
-        ^r::Send {F2}
-
-  
-  
-  
-  #IF GC("T_d",0) and winactive("ahk_group FileListers")
-   
-    $#enter::
-    $#space::  CommandBox("~FileExplorer", C.lyellow)
-    
-    :X:es~FileExplorer::
-       send !d
-       var := clip()
-       ActivateApp(UProfile "\Downloads\Programs\Everything\Everything.exe")
-       clip(var)
-       return
-    
-    $+!c::     clipboard := Explorer_GetSelection()                                ;FE: store file path(s) of selected file(s) in clipboard
-    ^s::       SelectByRegEx()                                                     ;FE: select files by regex
-    
-    !r::       Send {F2}                                                           ;FE: rename file
-    ^!c::      SendInput !dcmd{Enter}                                              ;FE: Open Command Prompt Here
-    ^!k::                                                                          ;FE: up one directory level
-    !b::       send !{left}                                                        ;FE: prev folder
-    !n::       send !{right}                                                       ;FE: forward folder
-    !u::       send !{up}                                                          ;FE: up one directory level
-    !p::       Send ^w                                                             ;FE: close file explorer window
-    
-    !SC027::   DetailedView()                                                      ;FE: view: detailed file info with resized columnsnmn       
-    ^h::       ToggleInvisible()                                                   ;FE: view: toggle hide/unhide invisible files
-    <^j::      SortByName()                                                        ;FE: view: sort by name
-    <^k::      SortByDate()                                                        ;FE: view: sort by date modified
-    >^j::      SortByType()                                                        ;FE: view: sort by type
-    >^k::      SortBySize()                                                        ;FE: view: sort by size
-    
-    ^u::       send !vg{up   4}{enter}                                             ;FE: groups: toggle groupby name/remove grouping
-    ^o::       Send !vg{down 2}{enter}                                             ;FE: groups: group by file type
-    ^i::       Send !vg{down 1}{enter}                                             ;FE: groups: group by date
-    
-    ^!sc035::  SaveMousPos("FE_cg", "0")
-    
-    !sc035::                                                                       ;FE: groups: group folding: Expand all 
-    ^sc035::   ExpandCollapseAllGroups()                                           ;FE: groups: group folding: Collapse all
-    
-    !z::       Send !vn{enter}                                                     ;FE: panes: toggle navigation pane
-    ^p::       Send {alt down}p{alt up}                                            ;FE: panes: toggle preview plane
-    !i::       ControlFocus, SysTreeView321, ahk_class CabinetWClass               ;FE: panes: move focus to navigation pane
-    !o::       ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                ;FE: panes: move focus to current folder pane 
-    
-    #IfWinActive    
+    !3:: send % "^" . substr(A_ThisHotkey, 0)   

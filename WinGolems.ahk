@@ -57,6 +57,20 @@
 #Include *i 1_Template_QuickStart.ahk
 #Include *i 2_Template_ApplicationSpecific.ahk
 
+#Include *i %A_ScriptDir%\..\Google Drive\secure
+#Include *i mm.ahk                                    
+#Include *i Bing.ahk
+
+#Include *i %A_ScriptDir%\..\ahk\golems\
+#Include *i office.ahk
+#Include *i obsidian.ahk     
+#Include *i chrome.ahk     
+#Include *i win_fileexplorer.ahk     
+
+
+
+
+
 /* #INCLUDE MECHANICS ********************************************************** 
  * Start.ahk:
  * include Return.ahk

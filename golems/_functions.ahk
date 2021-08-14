@@ -128,7 +128,9 @@
   ActivateWinID(key = "L") {
     global config_path
     IniRead, output, %config_path%, %A_ComputerName%, WinID_%key%
+    BlockInput, on
     ActivateWin("ahk_id" output), CursorFollowWin()
+    BlockInput, off
     return
   }
  
@@ -177,13 +179,14 @@
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
     WinGet,      n_instances, List,         ahk_class %ActiveClass%
-
+    BlockInput, on
     if (n_instances > 1)
     {
         WinSet, Bottom,, A
         WinActivate, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
     }
     CursorFollowWin()
+    blockinput,off
     return
   }
  
@@ -192,10 +195,12 @@
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
     WinGet,      n_instances, List,         ahk_class %ActiveClass%
-
-    if (n_instances > 1)
+    BlockInput, on
+    if (n_instances > 1) {
         WinActivateBottom, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
+    }        
     CursorFollowWin()
+    blockinput,off
     return
   }
  
@@ -442,7 +447,6 @@
 
   RunLabel(UserInput="", suffix = "", tgt_winID ="") {
     suffix := suffix ? suffix : GC("CB_sfx")
-    ActivateWin("ahk_id " tgt_winID)
     Switch 
     {
         Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
@@ -455,6 +459,7 @@
             Gui, 2: destroy
             return
     }     
+    ActivateWin("ahk_id " tgt_winID)
     Gosub, %UserInput% 
     Gui, 2: +LastFound
     Gui, 2: destroy
@@ -687,10 +692,15 @@
   }
 
   AccessCache(key, mem_path = "", paste = True) {
-    ; paste contents of mem folder txt file or assign to variable
+    ; paste contents of txt|ini file or assign to variable
     max_str_len := 0
-    input = %A_ScriptDir%\mem_cache\%mem_path%%key%
-    
+    if (SubStr(mem_path, 2, 1) = ":")                                           ; check if second character is ":" to test if absolute path given 
+        input = %mem_path%%key%
+    else if (SubStr(key, 2, 1) = ":")
+        input = %key%
+    else
+        input = %A_ScriptDir%\mem_cache\%mem_path%%key%
+
     if !RegExMatch(input,"(\.[a-zA-Z]{3})$")                                    ; check if there's a file extension
     {
         if FileExist(input ".txt") 
@@ -862,8 +872,8 @@
  
   CreateLabel(pfx = "", sfx ="", var = "") {
     var := !var ? clip() : var
-    pf := (pfx != "!") ? RetrieveINI(A_ComputerName, pfx) : ""
-    sf := RetrieveINI(A_ComputerName, sfx)
+    pf := (pfx != "!") ? GC("pfx",":X:") : ""
+    sf := GC(sfx,"~win")
     var := pf . var . sf . ":"
     var := !pf ? var : (var . ":")
     clip(var)
@@ -909,14 +919,14 @@
     if (!FileExist(config_path) or path = "ERROR") {
         Gui, c: +LastFound
         Gui, c: Destroy          
-        Gui, c: New,,WinGolems (-(-_(-_-)_-)-) Configuration
+        Gui, c: New,,% "   (-(-_(-_-)_-)-)   WinGolems Configuration"
         Gui, c: +LastFound +OwnDialogs +Owner -DPIscale +Resize +AlwaysOnTop ; +E0x08000000 +Resize  +E0x00200 (border)
         Gui, c: Color,% C.bwhite
         
         lw := 375, rw := 210
         Gui, c: font, s11 w%lw%, %fnt%, Consolas
         Gui, c: Add, Text,% "w" . (rw + lw) . " xm"
-            ,New system detected. Please confirm/modify the following WinGolems application associations.`n
+            ,New system detected. Please confirm/modify the following application associations before using WinGolems.`n
         
         Gui, c: font, s10 w%lw%, %fnt%, Consolas
         
@@ -935,7 +945,7 @@
         Gui, c: Add, Text, section xm w%lw%,HTML files:`t`tChrome Browser 
         Gui, c: Add, Edit, w%rw% ys vhtml_exe,% apps[5]         
         
-        Gui, c: Add, Text, section xm w%lw%,Data backup:`t`tGoogle Backup & Sync
+        Gui, c: Add, Text, section xm w%lw%,Data backup:`t`tGoogle Backup && Sync
         Gui, c: Add, Edit, section w%rw% ys vsync_exe,% apps[6]
     
         Gui, c: Add, Text, section xm w%lw%,Default editor:`t`tVisual Studio Code
@@ -1489,10 +1499,11 @@
  
   CursorFollowWin(Q = "center", offset_x = "0", offset_y = "100") {
     global config_path
-    sleep 100
+    BlockInput, on
     IniRead, state, %config_path%, %A_ComputerName%, cursor_follow, 0
     if state
         CursorJump(Q, offset_x, offset_y)
+    BlockInput, off
     return
   }
  
@@ -1508,7 +1519,7 @@
   CursorJump(Q = "center", offset_x = "0", offset_y = "0", ScreenDim = False) {
     ; move mouse cursor to the middle of active window
     global short
-    Sleep, short * 2
+    ; Sleep, short * 2
     CoordMode, Mouse, Screen
     if ScreenDim
         winTopL_x := 0, winTopL_y := 0, width := A_ScreenWidth, height := A_ScreenHeight
@@ -1712,7 +1723,7 @@
     return
   }
 
-; VS Code 
+; VS CODE ______________________________________________________________________
 
   FocusResults() {
     sleep 300
