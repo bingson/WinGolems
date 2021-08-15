@@ -20,7 +20,7 @@
   #d::           s("{blind}"), ActivateApp("pdf_path")                          ;AA: Activate pdf viewer
   #b::           s("{blind}"), ActivateApp("explorer.exe")                      ;AA: Activate File explorer                                                                                   
   #c::           s("{blind}"), ActivateCalc()                                   ;AA: Activate Calculator
- ; #x::         s("{blind}"), ActivateApp("C:\Everything\Everything.exe")      ;AA: e.g., accepts full file path
+ ; #x::         s("{blind}"), ActivateApp("C:\Everything\Everything.exe")       ;AA: e.g., accepts full file path
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; hotkey modifier keys (+#^) can be swapped around for the below hotkeys, 
@@ -68,8 +68,8 @@
   !#d::         DisplaySettings()                                               ;C: (system) display settings
   !#n::         NotificationWindow()                                            ;C: (system) notification window
   !#r::         RunProgWindow()                                                 ;C: (system) run program
-  !#p::         PresentationDisplayMode()                                       ;SC: presentation display mode
-  !#i::         WindowsSettings()                                               ;S: (system) windows settings
+  !#p::         PresentationDisplayMode()                                       ;C: presentation display mode
+  !#i::         WindowsSettings()                                               ;C: (system) windows settings
   
   ~lwin & ~rshift::CursorJump("C")                                              ;C: move mouse cursor to center of active application window
   #space::       CB("~win")                                                     ;C: opens command box that runs ~win suffix CB keys
