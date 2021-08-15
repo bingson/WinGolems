@@ -1,23 +1,22 @@
-
 _________________________________________________________________________________________________________________________________________
-| CommandBox (CB) Creation:                           | KEY    WINGOLEMS: UTILITIES, HELP, CONFIGURATION    | KEY  WINDOWS SELECTION     |
+| CommandBox (CB) Creation:                           | KEY    WINGOLEMS         ([T]oggle, [M]ode change ) | KEY  WINDOWS SELECTION     |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
-|                                                     | oc     open cache folder in file explorer           |  n   Notifications         |
-| 2) Create a command key "a" to call any function:   | Ll     Load cache contents in GUI display           |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | ec     Edit WinGolems config.ini                    |  v   Sound                 |
-|                                                     | kh     Open Key History (#KeyHistory > 0 required)  |  i   Windows Settings      |
-| The above can be adaped to call scripts written in  | gl     Generate shortcut list from running scripts  |  ap  Add Remove Programs   |
-| other languages such as python, VBA, C++, etc ...   | Ls     Open last generated list of shortcuts        |  a   Alarm Clock           |
-|                                                     | hs     Open log of user created hotstrings          |  r   Open Run Dialog Box   |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| ws     Open Window Spy                              |  x   Start Context Menu    |
-|-----------------------------------------------------| tcf    [T]oggle mouse cursor follows active window  |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| tt     [T]oggle enhanced text nav/selection hotkeys |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| lt|lf  [M]ode ON|OFF:  Win + L Locks Computer       |  h~  Hybernate computer    |
-| !r      reenter last submitted key             alt+r| ss|qs  [M]ode ON|OFF:  Cloud Sync                   |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode     alt+x| r~     Reload WinGolems                             |  rs~ Restart computer      |
-| !e      move & resize CB window to top left    alt+e| q~     Quit WinGolems                               |  sd~ Shut Down computer    |
+|                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
+| 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
+|     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
+|                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
+| The above can be adaped to call scripts written in  | tcf    [T] mouse cursor follows active window       |  ap  Add Remove Programs   |
+| other languages such as python, VBA, C++, etc ...   | tt     [T] enhanced text nav/selection hotkeys      |  a   Alarm Clock           |
+|                                                     | tc     [T] replace capslock w/ delete key           |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  x   Start Context Menu    |
+|-----------------------------------------------------| ss|qs  [M] ON|OFF:  Data Backup Application         |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| ws     Open Window Spy                              |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  h~  Hybernate computer    |
+| !r      reenter last submitted key             alt+r| r~     Reload WinGolems                             |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode     alt+x| q~     Quit WinGolems                               |  rs~ Restart computer      |
+| !e      move & resize CB window to top left    alt+e|                                                     |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | UPPER-case first letter required to trigger the following commands                                                                     |
 |                                                                                                                                        |
@@ -25,6 +24,7 @@ ________________________________________________________________________________
 |      --------------------------------------- ------------------- ----------------------------------------------------------------------|
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                       ?|
 |  L   Load .txt file into CB display          L1, Lhelp, Lr\testr Load in display => 1.txt, help.txt, r\testr.txt ("Ll" .txt list)    L?|
+|      Load special file shorcuts              Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
 |  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
@@ -52,3 +52,4 @@ ________________________________________________________________________________
 |  Z   Change display window appearance        Z13, Zf:courier, Zd change => font size: 13, font: courier, back to default     Z?:? or Z?|
 |                                                                                                                                        |
 |________________________________________________________________________________________________________________________________________|
+

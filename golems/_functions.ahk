@@ -1003,8 +1003,8 @@
   }
 
   FindAppPath(app*) {
-    global UProfile, PF_x86, C
-    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*"]
+    global UProfile, PF_x86, C, winpath
+    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*", winpath "\system32\*"]
     PATH := {}
     for each, exe in APP
     {
@@ -1338,6 +1338,9 @@
     ; wrapper for ActivateOrOpen to process ini file path references
     ; and arguments
     global config_path
+    if instr(A_ThisHotkey, "#")
+        KeyWait, LWin                                                           ; https://autohotkey.com/board/topic/5198-how-to-fix-a-stuck-win-key/
+
     if InStr(app_path , "_path")                                                ; "_path" string match indicates a config.ini path reference
     {
         IniRead, ini_app_path, %config_path%, %A_ComputerName%, %app_path%
@@ -1499,11 +1502,9 @@
  
   CursorFollowWin(Q = "center", offset_x = "0", offset_y = "100") {
     global config_path
-    BlockInput, on
     IniRead, state, %config_path%, %A_ComputerName%, cursor_follow, 0
     if state
         CursorJump(Q, offset_x, offset_y)
-    BlockInput, off
     return
   }
  
@@ -1519,7 +1520,7 @@
   CursorJump(Q = "center", offset_x = "0", offset_y = "0", ScreenDim = False) {
     ; move mouse cursor to the middle of active window
     global short
-    ; Sleep, short * 2
+    Sleep, short 
     CoordMode, Mouse, Screen
     if ScreenDim
         winTopL_x := 0, winTopL_y := 0, width := A_ScreenWidth, height := A_ScreenHeight

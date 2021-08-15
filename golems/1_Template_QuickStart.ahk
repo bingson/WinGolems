@@ -1,10 +1,8 @@
 #IfWinActive
 ; The following interface elements are valid anywhere in Windows 10
 
-; Command Box Keyboard shortcut
-
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
-
+ 
   ^#r::          s("{blind}"), SaveWinID("r")                                   ;AA: Save window ID for subsequent activation w/ win + r
   ^#t::          s("{blind}"), SaveWinID("t")                                   ;AA: Save window ID for subsequent activation w/ win + t
   ^#g::          s("{blind}"), SaveWinID("g")                                   ;AA: Save window ID for subsequent activation w/ win + g
@@ -14,7 +12,6 @@
   #g::           s("{blind}"), ActivateWinID("g")                               ;AA: Activate previously saved window ID
   #f::           s("{blind}"), ActivateWinID("f")                               ;AA: Activate previously saved window ID
   
- ;#x::           ActivateApp("C:\Everything\Everything.exe")                    ;AA: e.g., accepts full file path
   #q::           s("{blind}"), ActivateApp("ppt_path")                          ;AA: Activate Powerpoint
   #w::           s("{blind}"), ActivateApp("doc_path")                          ;AA: Activate Word
   #e::           s("{blind}"), ActivateApp("xls_path")                          ;AA: Activate Excel
@@ -23,50 +20,7 @@
   #d::           s("{blind}"), ActivateApp("pdf_path")                          ;AA: Activate pdf viewer
   #b::           s("{blind}"), ActivateApp("explorer.exe")                      ;AA: Activate File explorer                                                                                   
   #c::           s("{blind}"), ActivateCalc()                                   ;AA: Activate Calculator
-
-  #F1::          Send #1                                                        ;AA: activate app 1 in task bar (reassignment done to make space for memory system shortcuts)
-  #F2::          Send #2                                                        ;AA: activate app 2 in task bar 
-  #F3::          Send #3                                                        ;AA: activate app 3 in task bar 
-  #F4::          Send #4                                                        ;AA: activate app 4 in task bar 
-  #F5::          Send #5                                                        ;AA: activate app 5 in task bar 
-  #F6::          Send #6                                                        ;AA: activate app 6 in task bar 
-  #F7::          Send #7                                                        ;AA: activate app 7 in task bar 
-  #F8::          Send #8                                                        ;AA: activate app 8 in task bar 
-  #F9::          Send #9                                                        ;AA: activate app 9 in task bar 
- 
-; CONVENIENCE (ORANGE) _________________________________________________________
-  
-  #space::       CB("~win")                                                     ;C: opens command box that runs ~win suffix CB keys
-  #SC035::       search()                                                       ;C: google search selected text
-  #sc028::                                                                      ;C: maximize window
-  ^!space::      s("{blind}"), MaximizeWin()                                                   ;C: maximize window
-  #SC027::       WinMinimize,A                                                  ;C: minimize window
-  #del::         AlwaysOnTop(1)                                                 ;C: Always on top: ON
-  #ins::         AlwaysOnTop(0)                                                 ;C: Always on top: OFF 
-  +!capslock::   s("{blind}"), ActivatePrevInstance()                           ;C: rotate through active program instances starting from oldest
-  !capslock::    s("{blind}"), ActivateNextInstance()                           ;C: rotate through active program instances starting from newest
-  !SC027::       Send {esc}                                                     ;C: alternate esc key (alt + semicolon)
-  ^SC027::       Send {AppsKey}                                                 ;C: appkey press
-  ^#w::          WinClose,A                                                     ;C: close active window 
-  ^#q::          CloseClass()                                                   ;C: close all instances of the active program
-  *LWin::        Send {Blind}{LWin Down}                                        ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-  LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-  ~>+#::         CursorJump("C")                                                ;C: move mouse cursor to center
-  !b::           send ^{PgUp}                                                   ;C: navigate to left tab
-  !space::       s("{blind}"), s("^{PgDn}")                                     ;C: navigate to right tab
-  $^!j::         s("{blind}"), s("^{sc00D}")                                    ;C: zoom in (simulate: ctrl + plus)
-  $^!k::         s("{blind}"), s("^{sc00C}")                                    ;C: zoom out (simulate: ctrl + minus)
-                                                                                
-
-  :X:tc~win::                                                                   ;C: Toggle capslocks = del key
-    CC("T_capslock_del","!")                                                    ; Change Config (CC): toggle entry for "T_capslock_del"
-    PopUp("capslocks => delete: " GC("T_capslock_del"))                         ; PopUp: confirmation msg for configuration change; 
-    return
-  
-  #IF GC("T_capslock_del",0)                                                    ; following two lines are turned on by entering "tc" in CB("~win") or typing "tc~win" anywhere in windows
-    capslock::del                                                               ;C: makes capslock key function as a delete key. (toggle capslock: alt + capslock)   
-    #capslock::CapsLock                                                         ;C: toggle capslock
-  #IF                                                                           ; removes context sensitivity for keys below
+ ; #x::         s("{blind}"), ActivateApp("C:\Everything\Everything.exe")      ;AA: e.g., accepts full file path
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; hotkey modifier keys (+#^) can be swapped around for the below hotkeys, 
@@ -107,20 +61,68 @@
 
   ^#LButton::    RetrieveMemory("^#LButton")                                    ;MF: mouse: double click and paste contents of 1.txt at cursor position
   #!LButton::    RetrieveMemory(,"#!LButton")                                   ;MF: mouse: paste contents of single digit .txt file entered at prompt
+ 
+; CONVENIENCE (ORANGE) _________________________________________________________
+  
+  !#b::         BluetoothSettings()                                             ;C: (system) bluetooth settings
+  !#d::         DisplaySettings()                                               ;C: (system) display settings
+  !#n::         NotificationWindow()                                            ;C: (system) notification window
+  !#v::         SoundSettings()                                                 ;C: (system) sound settings
+  !#r::         RunProgWindow()                                                 ;C: (system) run program
+  ^#i::         WindowsSettings()                                               ;S: (system) windows settings
+  
+  ~lwin & ~rshift::CursorJump("C")                                              ;C: move mouse cursor to center of active application window
+  #space::       CB("~win")                                                     ;C: opens command box that runs ~win suffix CB keys
+  #SC035::       search()                                                       ;C: google search selected text
+  #sc028::                                                                      ;C: maximize window
+  ^!space::      s("{blind}"), MaximizeWin()                                    ;C: maximize window
+  #SC027::       WinMinimize,A                                                  ;C: minimize window
+  #del::         AlwaysOnTop(1)                                                 ;C: Always on top: ON
+  #ins::         AlwaysOnTop(0)                                                 ;C: Always on top: OFF 
+  +#capslock::                                                                  ;C: rotate through active program instances starting from oldest
+  !capslock::    s("{blind}"), ActivatePrevInstance()                           ;C: rotate through active program instances starting from oldest
+  +!capslock::                                                                  ;C: rotate through active program instances starting from newest
+  #capslock::    s("{blind}"), ActivateNextInstance()                           ;C: rotate through active program instances starting from newest
+  !SC027::       Send {esc}                                                     ;C: alternate esc key (alt + semicolon)
+  ^SC027::       Send {AppsKey}                                                 ;C: appkey press
+  ^#w::          WinClose,A                                                     ;C: close active window 
+  ^#q::          CloseClass()                                                   ;C: close all instances of the active program
+  *LWin::        Send {Blind}{LWin Down}                                        ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  ~>+#::         CursorJump("C")                                                ;C: move mouse cursor to center of application window
+  !sc034::       moveWinBtnMonitors()                                           ;C: move window btn monitors
+  !b::           send ^{PgUp}                                                   ;C: navigate to left tab
+  !space::       s("{blind}"), s("^{PgDn}")                                     ;C: navigate to right tab
+  $^!j::         s("{blind}"), s("^{sc00D}")                                    ;C: zoom in (simulate: ctrl + plus)
+  $^!k::         s("{blind}"), s("^{sc00C}")                                    ;C: zoom out (simulate: ctrl + minus)
+
+  :X:tc~win::                                                                   ;C: Toggle capslocks = del key
+    CC("T_capslock_del","!")                                                    ; Change Config (CC): toggle entry for "T_capslock_del"
+    PopUp("capslocks => delete: " GC("T_capslock_del"))                         ; PopUp: confirmation msg for configuration change; 
+    return
+  
+  #IF GC("T_capslock_del",0)                                                    ; following two lines are turned on by entering "tc" in CB("~win") or typing "tc~win" anywhere in windows
+    capslock::del                                                               ;C: makes capslock key function as a delete key. (toggle capslock: ctrl + capslock)   
+    ^capslock::Send {blind}{capslock}                                           ;C: toggle capslock
+  #IF                                                                           ; removes context sensitivity for keys below
 
 ; TEXT (PURPLE) ________________________________________________________________
 
   #y::           % (t := !t) ? ConvertUpper() : ConvertLower()                  ;T: Toggle: change selected text to uppercase or lowercase  
   +#y::          % (t := !t) ? Capitalize1stLetter(,,0) : Capitalize1stLetter() ;T: Toggle: capitalize the first letter of all selected words (title case) or only the first word
 
+  !Backspace::   SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;T: Delete current line of text
   !#space::      ReplaceAwithB(" ")                                             ;T: remove all spaces starting from selected text
   ^#space::      ReplaceAwithB()                                                ;T: replace multiple consecutive spaces w/  1 in selected text
   !#enter::      RemoveBlankLines()                                             ;T: remove empty lines starting from selected text
+  ^#Backspace::  ReplaceBackspaceWithSpaces()                                   ;T: Delete and replace selected text with blank spaces 
+  ^#v::          PasteOverwrite()                                               ;T: paste and overwrite the same number of spaces (aka. overtype paste)
+
 
   *#i::          SaveMousPos("i",1)                                             ;MF: Left click and save mouse position
   #p::           RecallMousePosClick("i")                                       ;MF: Move to saved mouse position and left click
-  #u::           Send ^{home}
-  #o::           Send ^{end}
+  #u::           Send ^{home}                                                   ;T: ctrl + home
+  #o::           Send ^{end}                                                    ;T: ctrl + end
 
   #j::           Sendinput {WheelDown 2}                                        ;T: scroll wheel down                                               
   #k::           Sendinput {WheelUp 2}                                          ;T: scroll wheel Up           
@@ -130,9 +132,9 @@
   ^!h::          sendinput {home}                                               ;T: Home
   ^!l::          sendinput {end}                                                ;T: End
 
-  :X:tt~win::    CC("T_text_opt","!"), PopUp("Text selection (TS) & navigation (TN) hotkeys: " GC("T_text_opt"))   ;ST|NT: toggle text navigation and selection supplemental hotkeys                                                               
-    
-    
+  :X:tt~win::    
+    CC("T_text_opt","!")
+    PopUp("Text selection (TS) & navigation (TN) hotkeys: " GC("T_text_opt"))   ;ST|NT: toggle text navigation and selection supplemental hotkeys                                                               
     return
 
   
@@ -180,20 +182,13 @@
   >+sc029::     ChangeFolder(A_ScriptDir)                                       ;CF: AHK folder
   >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                         ;CF: mem_cache
   >+u::         ChangeFolder(UProfile)                                          ;CF: %UserProfile%
+  >+j::         ChangeFolder(UProfile "\Downloads")                             ;CF: Downloads
+  >+o::         ChangeFolder(A_ProgramFiles)                                    ;CF: C:\Program Files
+  >+!o::        ChangeFolder(PF_x86)                                            ;CF: C:\Program Files(x86)
+  >+p::         ChangeFolder(UProfile "\Pictures\")                             ;CF: Pictures
+  >+d::         ChangeFolder(UProfile "\Documents")                             ;CF: Documents
+  >+c::         ChangeFolder(hdrive)                                            ;CF: %Homedrive% (C:)
   
-  /* SAMPLE CODE
-
-     >+c::        ChangeFolder(hdrive)                                          ;CF: %Homedrive% (C:)
-     >+o::        ChangeFolder(A_ProgramFiles)                                  ;CF: C:\Program Files
-     >+!o::       ChangeFolder(PF_x86)                                          ;CF: C:\Program Files(x86)
-     >+p::        ChangeFolder(UProfile "\Pictures\")                           ;CF: Pictures
-     >+g::        ChangeFolder(UProfile "\Google Drive")                        ;CF: google drive
-     >+j::        ChangeFolder(UProfile "\Downloads")                           ;CF: Downloads
-     >+d::        ChangeFolder(UProfile "\Documents")                           ;CF: Documents
-     >+r::        ChangeFolder("`:`:{645FF040-5081-101B-9F08-00AA002F954E}")    ;CF: Recycle bin (doesn't work for save as diag)
-     >+t::        ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")    ;CF: This PC / My Computer
- 
-  */
 
 #IfWinActive
 

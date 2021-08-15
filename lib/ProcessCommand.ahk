@@ -34,6 +34,13 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 return 1    
             Case "L":                                                           ; display file in command box
                 Load:         
+                if !GC("CB_Display") {
+                    CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
+                    MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
+                    d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
+                    CC("CB_position", d)
+                }
+                    
                 tgt := f_path dir NameNoExt
                 if (C_input = "s" or C_input = "c") {
                     NameNoExt := (C_input = "s") ? ("HotKey_List") : ("config.ini")

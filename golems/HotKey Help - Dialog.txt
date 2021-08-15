@@ -1,10 +1,3 @@
-SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-
- sc027 = {;:}    sc028 = {"'}    sc029 = {`~}     sc033 = {,<}      sc02b = {\|}
-
- sc034 = {.>}    sc035 = {/?}    sc00D = {=+}     sc00C = {-_} 
-
- sc01a or b = {[} or {]} 
 
 ==o====o====o====o====o== 1_TEMPLATE_QUICKSTART ==o====o====o====o====o====o
  Win+F1                  AA: activate app 1 in task bar (reassignment done to make space for memory system shortcuts)
@@ -55,8 +48,8 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Shift+Win+Capslock      C: rotate through active program instances starting from oldest
  Alt+Capslock            C: rotate through active program instances starting from oldest
  Ctrl+Capslock           C: toggle capslock
- Ctrl+Alt+J             C: zoom in (simulate: ctrl + plus)
- Ctrl+Alt+K             C: zoom out (simulate: ctrl + minus)
+ $Ctrl+Alt+J             C: zoom in (simulate: ctrl + plus)
+ $Ctrl+Alt+K             C: zoom out (simulate: ctrl + minus)
  Rightshift+C            CF: %Homedrive% (C:)
  Rightshift+U            CF: %UserProfile%
  Rightshift+Sc029        CF: AHK folder
@@ -100,31 +93,31 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Win+7                   MF: paste contents of 7.txt
  Win+8                   MF: paste contents of 8.txt
  Win+9                   MF: paste contents of 9.txt
- Win+Rightalt+H         MF: scroll wheel left
- Win+Rightalt+L         MF: scroll wheel right
- *Alt+J                 NT: Down
- *Win+J                 NT: Down
- Win+H                  NT: jump to next word = simulate ctrl+Left
- Win+L                  NT: jump to next word = simulate ctrl+Right
- Alt+H                  NT: Left
- Alt+L                  NT: Right
- *Alt+K                 NT: Up
- *Win+K                 NT: Up
+ $Win+Rightalt+H         MF: scroll wheel left
+ $Win+Rightalt+L         MF: scroll wheel right
+ *$Alt+J                 NT: Down
+ *$Win+J                 NT: Down
+ $Win+H                  NT: jump to next word = simulate ctrl+Left
+ $Win+L                  NT: jump to next word = simulate ctrl+Right
+ $Alt+H                  NT: Left
+ $Alt+L                  NT: Right
+ *$Alt+K                 NT: Up
+ *$Win+K                 NT: Up
  Shift+Alt+J             ST: extend selection down  1 row
- Shift+Alt+H            ST: extend selection Left  1 character
- Shift+Win+H            ST: extend selection Left  1 word
- Shift+Alt+L            ST: extend selection Right 1 character
- Shift+Win+L            ST: extend selection Right 1 word
+ $Shift+Alt+H            ST: extend selection Left  1 character
+ $Shift+Win+H            ST: extend selection Left  1 word
+ $Shift+Alt+L            ST: extend selection Right 1 character
+ $Shift+Win+L            ST: extend selection Right 1 word
  Shift+Alt+K             ST: extend selection up    1 row
- Ctrl+Win+K             ST: select all above
- Ctrl+Win+J             ST: select all below
- Shift+Alt+F            ST: select current line starting from begining of line
- Ctrl+Alt+F             ST: select line starting from end of line
- Ctrl+Win+H             ST: select to beginning of line
- Ctrl+Win+L             ST: select to end of line
- Shift+Ctrl+K           ST: select to line above
- Shift+Ctrl+J           ST: select to next line
- Alt+F                  ST: select word at text cursor position
+ $Ctrl+Win+K             ST: select all above
+ $Ctrl+Win+J             ST: select all below
+ $Shift+Alt+F            ST: select current line starting from begining of line
+ $Ctrl+Alt+F             ST: select line starting from end of line
+ $Ctrl+Win+H             ST: select to beginning of line
+ $Ctrl+Win+L             ST: select to end of line
+ $Shift+Ctrl+K           ST: select to line above
+ $Shift+Ctrl+J           ST: select to next line
+ $Alt+F                  ST: select word at text cursor position
  Win+O                   T: ctrl + end
  Win+U                   T: ctrl + home
  Ctrl+Win+Backspace      T: Delete and replace selected text with blank spaces
@@ -162,7 +155,7 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  <HS>  dag>              =           
  <HS>  &>                =  &nbsp; 
  <HS>  _>                = &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- *Sc056                 [WACS] french keyboard: holds down shift as long as SC056 (Left side '/') key is held down
+ *$Sc056                 [WACS] french keyboard: holds down shift as long as SC056 (Left side '/') key is held down
  Win+M                   AA: Obsidian
  Rightalt+G              CF: AHK golems
  Rightshift+4            CF: AHK_template
@@ -189,29 +182,29 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Shift+Win+X             Run, firefox.exe -private
 
 ==o====o====o====o====o====o== CHROME ==o====o====o====o====o====o====o====o
- Alt+0                  
- Alt+1                  
- Alt+2                  
- Alt+3                  
- Alt+7                  
- Alt+8                  
- Alt+Ctrl+0             
+ $Alt+0                  
+ $Alt+1                  
+ $Alt+2                  
+ $Alt+3                  
+ $Alt+7                  
+ $Alt+8                  
+ $Alt+Ctrl+0             
  Ctrl+R                  
  Alt+R                   
  Printscreen & Space     
- Ctrl+S                 
- Ctrl+Sc035             
- Ctrl+Space             
- Shift+Alt+0            
- Shift+Alt+8            
- Shift+Alt+Ctrl+1       
- Shift+Alt+Ctrl+2       
- Shift+Alt+Ctrl+3       
- Shift+Alt+Ctrl+4       
- Shift+Ctrl+0           
+ $Ctrl+S                 
+ $Ctrl+Sc035             
+ $Ctrl+Space             
+ $Shift+Alt+0            
+ $Shift+Alt+8            
+ $Shift+Alt+Ctrl+1       
+ $Shift+Alt+Ctrl+2       
+ $Shift+Alt+Ctrl+3       
+ $Shift+Alt+Ctrl+4       
+ $Shift+Ctrl+0           
  Alt+Pgup                
- Shift+Ctrl+M           
- Win+Enter              
+ $Shift+Ctrl+M           
+ $Win+Enter              
  Alt+N                   
  Printscreen & N         
  Win+Space               "URL_TOC"              ;<JL> opens edit file jump list
@@ -225,17 +218,17 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Ctrl+Sc034              move tab to first position
  Leftctrl+Sc033          move tab to last position
  Shift+Ctrl+Alt+R        restart browser
- Shift+Ctrl+Alt+W       save and close all browser windows
- Alt+Sc035              SC035 = /
- Alt+I                  select 1st tab
- Alt+O                  select last tab
+ $Shift+Ctrl+Alt+W       save and close all browser windows
+ $Alt+Sc035              SC035 = /
+ $Alt+I                  select 1st tab
+ $Alt+O                  select last tab
 
 ==o====o====o====o====o====o== OBSIDIAN ==o====o====o====o====o====o====o===
- Win+Space              
+ $Win+Space              
  Alt+B                   
  Shift+Alt+Z             
  Alt+M                   
- Win+Enter              
+ $Win+Enter              
  Shift+Ctrl+Alt+D        delete file
  Alt+E                   highlight text
  Alt+R                   rename file
@@ -256,9 +249,9 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Ctrl+K                  
  Ctrl+Pgdn               
  Rightshift+Space        
- Shift+Win+S            
- Win+Enter              
- Win+Space              
+ $Shift+Win+S            
+ $Win+Enter              
+ $Win+Space              
  Ctrl+Pgup               
  Ctrl+Sc028              
  Alt+B                   
@@ -266,8 +259,8 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Alt+B                   
  Alt+Space               
  Ctrl+Tab                
- ~Alt+B                 (HS) change file name and save
- ~Alt+M                 (HS) change file name and save
+ ~$Alt+B                 (HS) change file name and save
+ ~$Alt+M                 (HS) change file name and save
  Ctrl+Alt+I              < W> in_text_Figure
  Alt+S                   <ANKI> select color for font
  Alt+D                   <ANKI> underline and bold
@@ -279,35 +272,35 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Alt+Y                   <E> highlight cell yellow
  Shift+Ctrl+Sc028        <E> open vba editor
  Alt+W                   <E> resize_pic by img_width
- *Wheelup               <E> while holding shift using scroll wheel or trackpoint infinite scroll
- *Wheeldown             <E> while holding shift using scroll wheel or trackpoint infinite scroll
+ *$Wheelup               <E> while holding shift using scroll wheel or trackpoint infinite scroll
+ *$Wheeldown             <E> while holding shift using scroll wheel or trackpoint infinite scroll
  Ctrl+Alt+0              <w> add space above paragraph
  Ctrl+Alt+4              <W> ApplyHeading4
  Ctrl+Alt+5              <W> ApplyHeading5
- Alt+B                  <W> blue_text
- Ctrl+Shift+Sc027       <w> change keyboard shortcuts
+ $Alt+B                  <W> blue_text
+ $Ctrl+Shift+Sc027       <w> change keyboard shortcuts
  Printscreen & C         <W> change_font_AND_size
  Alt+Sc035               <w> collapse/expand headings
  Ctrl+Sc035              <w> collapse/expand headings
  Shift+Ctrl+2            <W> CollapseHeading2
  Shift+Ctrl+3            <W> CollapseHeading3
  Shift+Ctrl+4            <W> CollapseHeading4
- Shift+Ctrl+0           <W> CollapseHeadings
+ $Shift+Ctrl+0           <W> CollapseHeadings
  Ctrl+Sc034              <W> DocMap
  Ctrl+Alt+D              <w> duplicate above line
- Shift+Alt+0            <W> ExpandHeadings
+ $Shift+Alt+0            <W> ExpandHeadings
  Ctrl+G                  <W> g_highlight
- Alt+G                  <W> green_text
+ $Alt+G                  <W> green_text
  F1 & M                  <W> hide_statusbar
  Shift+Ctrl+I            <W> Insert_Figure
  Printscreen & F         <W> InsertFootnoteNow
- Alt+Shift+M            <w> math formula
+ $Alt+Shift+M            <w> math formula
  Alt+M                   <W> meta_text_color
  Shift+Alt+J             <W> MyZoomIn
  Shift+Alt+K             <W> MyZoomOut
  Ctrl+Alt+P              <W> Paste and eliminate line breaks and double spaces.
  Ctrl+R                  <W> r_highlight
- Alt+R                  <W> red_text
+ $Alt+R                  <W> red_text
  Shift+Ctrl+Alt+9        <w> remove space between paragraphs
  Alt+W                   <w> resize pictures
  Shift+Alt+W             <w> resize pictures shorter
@@ -316,13 +309,13 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Ctrl+Y                  <W> y_highlight
  Ctrl+9                  <w> zero_paragraph
  Ctrl+Alt+Z              [MF] Left click and save mouse position
- Alt+Z                  [MF] Move to saved mouse position and left click
- Alt+P                  [PDF] close tab
- Alt+Sc035              [PDF] goto index of open tabs
+ $Alt+Z                  [MF] Move to saved mouse position and left click
+ $Alt+P                  [PDF] close tab
+ $Alt+Sc035              [PDF] goto index of open tabs
  Leftalt+Space           [PDF] move to Right tab
  Rightalt+Space Up       [PDF] move to Right tab
- Alt+Sc034              [PDF] toggle menu bars (.)
- Ctrl+Sc034             [PDF] toogle bookmark menu
+ $Alt+Sc034              [PDF] toggle menu bars (.)
+ $Ctrl+Sc034             [PDF] toogle bookmark menu
  Ctrl+J                  [PDF] zoom in
  Ctrl+K                  [PDF] zoom out
  Rightalt+Space          [T] navigate to left tab
@@ -333,8 +326,8 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Rightshift+Space        Send {Space 4}
 
 ==o====o====o====o====o== WIN_FILEEXPLORER ==o====o====o====o====o====o====o
- Win+Enter              
- Win+Space              
+ $Win+Enter              
+ $Win+Space              
  Ctrl+Alt+Sc035          
  Alt+P                   FE: close file explorer window
  Alt+N                   FE: forward folder
@@ -351,7 +344,7 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Alt+B                   FE: prev folder
  Alt+R                   FE: rename file
  Ctrl+S                  FE: select files by regex
- Shift+Alt+C            FE: store file path(s) of selected file(s) in clipboard
+ $Shift+Alt+C            FE: store file path(s) of selected file(s) in clipboard
  Ctrl+Alt+K              FE: up one directory level
  Alt+U                   FE: up one directory level
  Alt+Sc027               FE: view: detailed file info with resized columnsnmn
