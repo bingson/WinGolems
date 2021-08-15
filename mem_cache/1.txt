@@ -1,8 +1,1 @@
-!#b::         BluetoothSettings()                                             ;SC: bluetooth settings
-!#d::         DisplaySettings()                                               ;SC: display settings
-
-!#n::         NotificationWindow()                                            ;SC: notification window
-
-!#v::         SoundSettings()                                                 ;SC: sound settings
-
-!#r::         RunProgWindow()                                                 ;SC: run program
+display 

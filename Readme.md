@@ -41,7 +41,7 @@ The command box was initially conceived as an always on top .txt file viewer for
 </tr>
 <tr>
     <td><center>minimal mode</center></td>
-    <td>display mode</td>
+    <td><center>display mode</center></td>
 </tr>
 </table>
 

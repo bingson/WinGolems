@@ -67,9 +67,9 @@
   !#b::         BluetoothSettings()                                             ;C: (system) bluetooth settings
   !#d::         DisplaySettings()                                               ;C: (system) display settings
   !#n::         NotificationWindow()                                            ;C: (system) notification window
-  !#v::         SoundSettings()                                                 ;C: (system) sound settings
   !#r::         RunProgWindow()                                                 ;C: (system) run program
-  ^#i::         WindowsSettings()                                               ;S: (system) windows settings
+  !#p::         PresentationDisplayMode()                                       ;SC: presentation display mode
+  !#i::         WindowsSettings()                                               ;S: (system) windows settings
   
   ~lwin & ~rshift::CursorJump("C")                                              ;C: move mouse cursor to center of active application window
   #space::       CB("~win")                                                     ;C: opens command box that runs ~win suffix CB keys
@@ -188,7 +188,7 @@
   >+p::         ChangeFolder(UProfile "\Pictures\")                             ;CF: Pictures
   >+d::         ChangeFolder(UProfile "\Documents")                             ;CF: Documents
   >+c::         ChangeFolder(hdrive)                                            ;CF: %Homedrive% (C:)
-  
+  >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")      ;CF: This PC / My Computer (file explorer only)
 
 #IfWinActive
 
