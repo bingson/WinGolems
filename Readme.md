@@ -18,7 +18,7 @@ The initial value provided by this repository will come from users modifying cod
  
 
 <center>
-<h2> Quick Start Template Shortcuts <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
+<h2> Quick Start Template Shortc <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
 <br>
 
 The command box was initially conceived as an always on top .txt file viewer for the 0-9 memory keys. However, that it's use 

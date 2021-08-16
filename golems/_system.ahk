@@ -67,7 +67,6 @@
 
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    
     printscreen & SC035::           search()                                    ;C: google search selected text
     #n::AA("editor_path")
     #e::send ^{home}
@@ -75,10 +74,12 @@
     PrintScreen & h::           sendinput ^{Left 4}
     PrintScreen & l::           sendinput ^{Right 4}
     PrintScreen & SC027::       WinMinimize,A                                   ;C: minimize window
-    printscreen & o::           SaveMousPos("o",1)                              ;MF: Left click and save mouse position
+    printscreen & i::           SaveMousPos("i",1)                              ;MF: Left click and save mouse position
+    *#r::                       SaveMousPos("r",1)                              ;C: Left click and save mouse position
+    *^#r::                      RecallMousePosClick("r")                        ;MF: Move to saved mouse position and left click
     printscreen & j::           Sendinput {Blind}{WheelDown 5}                  ;MF: scroll wheel down
     printscreen & k::           Sendinput {Blind}{WheelUp 5}                    ;MF: scroll wheel Up
-    printscreen & b::  ActivateApp("explorer.exe", "buffer_path", True)                   ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
+    printscreen & b::  ActivateApp("explorer.exe", "buffer_path", True)         ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
    
   #If GetKeyState("ralt", "P") and GC("T_d",0)
     PrintScreen & k::               CursorJump("T")                             ;MF: move mouse cursor to top edge

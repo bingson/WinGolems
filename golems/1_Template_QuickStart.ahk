@@ -98,8 +98,8 @@
   $#>!h::            Sendinput {Blind}{Wheelleft 6}                             ;N: scroll wheel left
   $#>!l::            Sendinput {Blind}{WheelRight 6}                            ;N: scroll wheel right
       
-  #u::               send ^{home}                                               ;N: Ctrl + Home
-  #i::               send ^{end}                                                ;N: Ctrl + end
+  #o::               send ^{home}                                               ;N: Ctrl + Home
+  #p::               send ^{end}                                                ;N: Ctrl + end
   ^!h::              sendinput {home}                                           ;N: Home
   ^!l::              sendinput {end}                                            ;N: End
     

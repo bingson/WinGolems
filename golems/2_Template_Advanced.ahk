@@ -28,6 +28,14 @@
 
 ; MOUSE (CURSOR) FUNCTIONS______________________________________________________
   ; mouse functions with keyboard shortcuts  
+  
+  #f::                            Clicks(2)                                     ;MF: 2 Left clicks (select word)
+  ^#f::                           Clicks(3)                                     ;MF: 3 Left clicks (select line)
+  *#i::                           SaveMousPos("i",1)                            ;MF: Left click and save mouse position
+  *^#i::                          RecallMousePosClick("i")                      ;MF: Move to saved mouse position and left click
+  !i::                            Click, middle                                 ;MF: mouse middle click
+  ; PrintScreen & sc028::                                                       ;MF: mouse Right click
+  ; #sc028::                      Click, Right                                  ;MF: mouse Right click
 
   ^!Lbutton::                     Clicks(2), s("^v")                            ;MF: click twice, paste clipboard
   +^Lbutton::                     Clicks(3), s("^v")                            ;MF: click thrice, paste clipboard
@@ -40,14 +48,6 @@
   
   $#>!h::                         Sendinput {Blind}{Wheelleft 6}                ;MF: scroll wheel left
   $#>!l::                         Sendinput {Blind}{WheelRight 6}               ;MF: scroll wheel right
-  
-  #f::                            Clicks(2)                                     ;MF: 2 Left clicks (select word)
-  ^#f::                           Clicks(3)                                     ;MF: 3 Left clicks (select line)
-  *#o::                           SaveMousPos("o",1)                            ;MF: Left click and save mouse position
-  *^#o::                          RecallMousePosClick("o")                      ;MF: Move to saved mouse position and left click
-  !o::                            Click, middle                                 ;MF: mouse middle click
-  ; PrintScreen & sc028::                                                       ;MF: mouse Right click
-  ; #sc028::                      Click, Right                                  ;MF: mouse Right click
   
   ~rctrl & ~lctrl::               CursorJump("TL")                              ;MF: move mouse cursor to TOP LEFT of active app
   ~lctrl & ~rctrl::               CursorJump("TR")                              ;MF: move mouse cursor to TOP RIGHT of active app
