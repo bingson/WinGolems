@@ -42,8 +42,8 @@
  
  !z::      Send !vn{enter}                                                      ;[FE] panes: toggle navigation pane
  ^p::      Send {alt down}p{alt up}                                             ;[FE] panes: toggle preview plane
- !i:: ControlFocus, SysTreeView321, ahk_class CabinetWClass                     ;[FE] panes: move focus to navigation pane
- !o:: ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                       ;[FE] panes: move focus to current folder pane 
+ ^space:: ControlFocus, SysTreeView321, ahk_class CabinetWClass                     ;[FE] panes: move focus to navigation pane
+ !space:: ControlFocus, DirectUIHWND2, ahk_class CabinetWClass                      ;[FE] panes: move focus to current folder pane 
  
  !h:: SendEvent {Left} ;[NT] Left
  !l:: SendEvent {Right} ;[NT] Right

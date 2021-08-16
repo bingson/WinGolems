@@ -3,23 +3,20 @@
 
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
  
-  ^#r::          s("{blind}"), SaveWinID("r")                                   ;AA: Save window ID for subsequent activation w/ win + r
-  ^#t::          s("{blind}"), SaveWinID("t")                                   ;AA: Save window ID for subsequent activation w/ win + t
-  ^#g::          s("{blind}"), SaveWinID("g")                                   ;AA: Save window ID for subsequent activation w/ win + g
-  ^#f::          s("{blind}"), SaveWinID("f")                                   ;AA: Save window ID for subsequent activation w/ win + f
-  #r::           s("{blind}"), ActivateWinID("r")                               ;AA: Activate previously saved window ID
-  #t::           s("{blind}"), ActivateWinID("t")                               ;AA: Activate previously saved window ID
-  #g::           s("{blind}"), ActivateWinID("g")                               ;AA: Activate previously saved window ID
-  #f::           s("{blind}"), ActivateWinID("f")                               ;AA: Activate previously saved window ID
-  
-  #q::           s("{blind}"), ActivateApp("ppt_path")                          ;AA: Activate Powerpoint
-  #w::           s("{blind}"), ActivateApp("doc_path")                          ;AA: Activate Word
-  #e::           s("{blind}"), ActivateApp("xls_path")                          ;AA: Activate Excel
-  #a::           s("{blind}"), ActivateApp("editor_path")                       ;AA: Activate default editor
-  #s::           s("{blind}"), ActivateApp("html_path")                         ;AA: Activate web browser
-  #d::           s("{blind}"), ActivateApp("pdf_path")                          ;AA: Activate pdf viewer
-  #b::           s("{blind}"), ActivateApp("explorer.exe")                      ;AA: Activate File explorer                                                                                   
-  #c::           s("{blind}"), ActivateCalc()                                   ;AA: Activate Calculator
+  ^#z::              s("{blind}"), SaveWinID("z")                               ;AA: Save window ID for subsequent activation w/ win + r
+  ^#x::              s("{blind}"), SaveWinID("x")                               ;AA: Save window ID for subsequent activation w/ win + t
+  ^#c::              s("{blind}"), SaveWinID("c")                               ;AA: Save window ID for subsequent activation w/ win + g
+  #z::               s("{blind}"), ActivateWinID("z")                           ;AA: Activate previously saved window ID
+  #x::               s("{blind}"), ActivateWinID("x")                           ;AA: Activate previously saved window ID
+  #c::               s("{blind}"), ActivateWinID("c")                           ;AA: Activate previously saved window ID
+     
+  #q::               s("{blind}"), ActivateApp("ppt_path")                      ;AA: Activate Powerpoint
+  #w::               s("{blind}"), ActivateApp("doc_path")                      ;AA: Activate Word
+  #e::               s("{blind}"), ActivateApp("xls_path")                      ;AA: Activate Excel
+  #a::               s("{blind}"), ActivateApp("editor_path")                   ;AA: Activate default editor
+  #s::               s("{blind}"), ActivateApp("html_path")                     ;AA: Activate web browser
+  #d::               s("{blind}"), ActivateApp("pdf_path")                      ;AA: Activate pdf viewer
+  #b::               s("{blind}"), ActivateApp("explorer.exe")                  ;AA: Activate File explorer                                                                                   
  ; #x::         s("{blind}"), ActivateApp("C:\Everything\Everything.exe")       ;AA: e.g., accepts full file path
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
@@ -35,7 +32,7 @@
   +#4::                                                                         ;MF: overwrite 4.txt with selected text 
   +#3::                                                                         ;MF: overwrite 3.txt with selected text 
   +#2::                                                                         ;MF: overwrite 2.txt with selected text 
-  +#1::          OverwriteMemory()                                              ;MF: overwrite 1.txt with selected text 
+  +#1::              OverwriteMemory()                                          ;MF: overwrite 1.txt with selected text 
 
   ^#0::                                                                         ;MF: add selected text to the bottom of 0.txt
   ^#9::                                                                         ;MF: add selected text to the bottom of 9.txt
@@ -46,7 +43,7 @@
   ^#4::                                                                         ;MF: add selected text to the bottom of 4.txt
   ^#3::                                                                         ;MF: add selected text to the bottom of 3.txt
   ^#2::                                                                         ;MF: add selected text to the bottom of 2.txt
-  ^#1::          AddToMemory()                                                  ;MF: add selected text to the bottom of 1.txt
+  ^#1::              AddToMemory()                                              ;MF: add selected text to the bottom of 1.txt
 
   #0::                                                                          ;MF: paste contents of 0.txt 
   #9::                                                                          ;MF: paste contents of 9.txt   
@@ -57,142 +54,80 @@
   #4::                                                                          ;MF: paste contents of 4.txt   
   #3::                                                                          ;MF: paste contents of 3.txt   
   #2::                                                                          ;MF: paste contents of 2.txt   
-  #1::           RetrieveMemory()                                               ;MF: paste contents of 1.txt  
-
-  ^#LButton::    RetrieveMemory("^#LButton")                                    ;MF: mouse: double click and paste contents of 1.txt at cursor position
-  #!LButton::    RetrieveMemory(,"#!LButton")                                   ;MF: mouse: paste contents of single digit .txt file entered at prompt
+  #1::               RetrieveMemory()                                           ;MF: paste contents of 1.txt
+    
+  ^#LButton::        RetrieveMemory("^#LButton")                                ;MF: mouse: double click and paste contents of 1.txt at cursor position
+  #!LButton::        RetrieveMemory(,"#!LButton")                               ;MF: mouse: paste contents of single digit .txt file entered at prompt
  
 ; CONVENIENCE (ORANGE) _________________________________________________________
   
-  !#b::         BluetoothSettings()                                             ;C: (system) bluetooth settings
-  !#d::         DisplaySettings()                                               ;C: (system) display settings
-  !#n::         NotificationWindow()                                            ;C: (system) notification window
-  !#r::         RunProgWindow()                                                 ;C: (system) run program
-  !#p::         PresentationDisplayMode()                                       ;C: presentation display mode
-  !#i::         WindowsSettings()                                               ;C: (system) windows settings
-  
-  ~lwin & ~rshift::CursorJump("C")                                              ;C: move mouse cursor to center of active application window
-  #space::       CB("~win")                                                     ;C: opens command box that runs ~win suffix CB keys
-  #SC035::       search()                                                       ;C: google search selected text
+  #space::           CB("~win")                                                 ;C: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
+  #SC035::           search()                                                   ;C: google search selected text
   #sc028::                                                                      ;C: maximize window
-  ^!space::      s("{blind}"), MaximizeWin()                                    ;C: maximize window
-  #SC027::       WinMinimize,A                                                  ;C: minimize window
-  #del::         AlwaysOnTop(1)                                                 ;C: Always on top: ON
-  #ins::         AlwaysOnTop(0)                                                 ;C: Always on top: OFF 
+  ^!space::          s("{blind}"), MaximizeWin()                                ;C: maximize window
+  #SC027::           WinMinimize,A                                              ;C: minimize window
+  #del::             AlwaysOnTop(1)                                             ;C: Always on top: ON
+  #ins::             AlwaysOnTop(0)                                             ;C: Always on top: OFF 
   +#capslock::                                                                  ;C: rotate through active program instances starting from oldest
-  !capslock::    s("{blind}"), ActivatePrevInstance()                           ;C: rotate through active program instances starting from oldest
+  !capslock::        s("{blind}"), ActivatePrevInstance()                       ;C: rotate through active program instances starting from oldest
   +!capslock::                                                                  ;C: rotate through active program instances starting from newest
-  #capslock::    s("{blind}"), ActivateNextInstance()                           ;C: rotate through active program instances starting from newest
-  !SC027::       Send {esc}                                                     ;C: alternate esc key (alt + semicolon)
-  ^SC027::       Send {AppsKey}                                                 ;C: appkey press
-  ^#w::          WinClose,A                                                     ;C: close active window 
-  ^#q::          CloseClass()                                                   ;C: close all instances of the active program
-  *LWin::        Send {Blind}{LWin Down}                                        ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-  LWin Up::      Send {Blind}{vk00}{LWin Up}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-  ~>+#::         CursorJump("C")                                                ;C: move mouse cursor to center of application window
-  !sc034::       moveWinBtnMonitors()                                           ;C: move window btn monitors
-  !b::           send ^{PgUp}                                                   ;C: navigate to left tab
-  !space::       s("{blind}"), s("^{PgDn}")                                     ;C: navigate to right tab
-  $^!j::         s("{blind}"), s("^{sc00D}")                                    ;C: zoom in (simulate: ctrl + plus)
-  $^!k::         s("{blind}"), s("^{sc00C}")                                    ;C: zoom out (simulate: ctrl + minus)
+  #capslock::        s("{blind}"), ActivateNextInstance()                       ;C: rotate through active program instances starting from newest
+  !SC027::           Send {esc}                                                 ;C: simulate esc key (alt + semicolon)
+  ^SC027::           Send {AppsKey}                                             ;C: simulate appkey 
+  ^#w::              WinClose,A                                                 ;C: close active window 
+  ^#q::              CloseClass()                                               ;C: close all instances of the active program
+  *LWin::            Send {Blind}{LWin Down}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  ~lwin & ~rshift::  CursorJump("C")                                            ;C: move mouse cursor to center of active application window
+  !sc034::           moveWinBtnMonitors()                                       ;C: move window btn monitors
+  $^!j::             s("{blind}"), s("^{sc00D}")                                ;C: zoom in (simulate: ctrl + plus)
+  $^!k::             s("{blind}"), s("^{sc00C}")                                ;C: zoom out (simulate: ctrl + minus)
 
-  :X:tc~win::                                                                   ;C: Toggle capslocks = del key
-    CC("T_capslock_del","!")                                                    ; Change Config (CC): toggle entry for "T_capslock_del"
-    PopUp("capslocks => delete: " GC("T_capslock_del"))                         ; PopUp: confirmation msg for configuration change; 
-    return
+                                                                                ; reassign less used windows system shortcuts
+  !#b::              BluetoothSettings()                                        ;C: system: bluetooth settings 
+  !#d::              DisplaySettings()                                          ;C: system: display settings
+  !#n::              NotificationWindow()                                       ;C: system: notification window
+  !#r::              RunProgWindow()                                            ;C: system: run program
+  !#p::              PresentationDisplayMode()                                  ;C: system: presentation display mode
+  !#i::              WindowsSettings()                                          ;C: system: windows settings
+
+; NAVIGATION (PURPLE) __________________________________________________________
+
+  #j::               Sendinput {WheelDown 2}                                    ;N: scroll wheel down                                               
+  #k::               Sendinput {WheelUp 2}                                      ;N: scroll wheel Up           
+  $#>!h::            Sendinput {Blind}{Wheelleft 6}                             ;N: scroll wheel left
+  $#>!l::            Sendinput {Blind}{WheelRight 6}                            ;N: scroll wheel right
+      
+  #u::               send ^{home}                                               ;N: Ctrl + Home
+  #i::               send ^{end}                                                ;N: Ctrl + end
+  ^!h::              sendinput {home}                                           ;N: Home
+  ^!l::              sendinput {end}                                            ;N: End
+    
+  !b::               send ^{PgUp}                                               ;N: universal navigate to left tab
+  !space::           s("{blind}"), s("^{PgDn}")                                 ;N: universal navigate to right tab
+
+; CB hotkeys ___________________________________________________________________; shared by all Command Boxes 
+
+  #IF WinActive("ahk_id " CB_hwnd)                                              ; If command Box active
   
-  #IF GC("T_capslock_del",0)                                                    ; following two lines are turned on by entering "tc" in CB("~win") or typing "tc~win" anywhere in windows
-    capslock::del                                                               ;C: makes capslock key function as a delete key. (toggle capslock: ctrl + capslock)   
-    ^capslock::Send {blind}{capslock}                                           ;C: toggle capslock
-  #IF                                                                           ; removes context sensitivity for keys below
-
-; TEXT (PURPLE) ________________________________________________________________
-
-  #y::           % (t := !t) ? ConvertUpper() : ConvertLower()                  ;T: Toggle: change selected text to uppercase or lowercase  
-  +#y::          % (t := !t) ? Capitalize1stLetter(,,0) : Capitalize1stLetter() ;T: Toggle: capitalize the first letter of all selected words (title case) or only the first word
-
-  !Backspace::   SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;T: Delete current line of text
-  !#space::      ReplaceAwithB(" ")                                             ;T: remove all spaces starting from selected text
-  ^#space::      ReplaceAwithB()                                                ;T: replace multiple consecutive spaces w/  1 in selected text
-  !#enter::      RemoveBlankLines()                                             ;T: remove empty lines starting from selected text
-  ^#Backspace::  ReplaceBackspaceWithSpaces()                                   ;T: Delete and replace selected text with blank spaces 
-  ^#v::          PasteOverwrite()                                               ;T: paste and overwrite the same number of spaces (aka. overtype paste)
-
-
-  *#i::          SaveMousPos("i",1)                                             ;MF: Left click and save mouse position
-  #p::           RecallMousePosClick("i")                                       ;MF: Move to saved mouse position and left click
-  #u::           Send ^{home}                                                   ;T: ctrl + home
-  #o::           Send ^{end}                                                    ;T: ctrl + end
-
-  #j::           Sendinput {WheelDown 2}                                        ;T: scroll wheel down                                               
-  #k::           Sendinput {WheelUp 2}                                          ;T: scroll wheel Up           
-  $#>!h::        Sendinput {Blind}{Wheelleft 6}                                 ;MF: scroll wheel left
-  $#>!l::        Sendinput {Blind}{WheelRight 6}                                ;MF: scroll wheel right
-
-  ^!h::          sendinput {home}                                               ;T: Home
-  ^!l::          sendinput {end}                                                ;T: End
-
-  :X:tt~win::    
-    CC("T_text_opt","!")
-    PopUp("Text selection (TS) & navigation (TN) hotkeys: " GC("T_text_opt"))   ;ST|NT: toggle text navigation and selection supplemental hotkeys                                                               
-    return
-
+  !q::               MoveWin("TL")                                              ;CB: move CB window to top left
+  !e::               MoveWin("TR")                                              ;CB: move CB window to top right
+  !z::               MoveWin("BL")                                              ;CB: move CB window to bottom left
+  !c::               MoveWin("BR")                                              ;CB: move CB window to bottom right
+  !w::               MoveWin("T")                                               ;CB: move CB window to top half
+  !s::               MoveWin("B")                                               ;CB: move CB window to bottom half
+  #left::                                                                       ;CB: move CB window to left half
+  !a::               MoveWin("L")                                               ;CB: move CB window to left half
+  #right::                                                                      ;CB: move CB window to right half
+  !d::               MoveWin("R")                                               ;CB: move CB window to right half
+  #space::           GUISubmit()                                                ;CB: submit GUI input 
+  $!x::              ToggleDisplay()                                            ;CB: toggle Command Box display/minimalist mode
+  !r::               GUIRecall()                                                ;CB: reenter last command
   
- ; TEXT SELECTION AND NAVIGATION -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --; must be turned on by entering "tt" in CB("~win") or typing "tt~win" anywhere in windows
-   #IF GC("T_text_opt",0)                                                       ; get config.ini value for T_text_opt, default to false (0) if no value found.
-                             
-   ; SELECT TEXT ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
- 
-    $!f::        SelectWord()                                                   ;ST: select word at text cursor position
-    $+!f::       SelectLine()                                                   ;ST: select current line starting from begining of line
-    $^!f::       Sendinput {end}+{home}                                         ;ST: select line starting from end of line
-    
-    $^#h::       sendinput +{Home}                                              ;ST: select to beginning of line
-    $^#l::       sendinput +{End}                                               ;ST: select to end of line
-    $+^j::       Sendinput +{down}                                              ;ST: select to next line
-    $+^k::       Sendinput +{up}                                                ;ST: select to line above
-    
-    $^#j::       sendinput ^+{end}                                              ;ST: select all below
-    $^#k::       sendinput ^+{home}                                             ;ST: select all above
-    
-    $+#h::       Sendinput +^{Left}                                             ;ST: extend selection Left  1 word
-    $+#l::       Sendinput +^{Right}                                            ;ST: extend selection Right 1 word
-    
-    $+!l::       Sendinput +{Right}                                             ;ST: extend selection Right 1 character
-    $+!h::       Sendinput +{Left}                                              ;ST: extend selection Left  1 character
-    +!k::        sendinput +{up}                                                ;ST: extend selection up    1 row
-    +!j::        sendinput +{down}                                              ;ST: extend selection down  1 row
-    
-  ; NAVIGATE TEXT ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
-
-    $#h::        send ^{Left}                                                   ;NT: jump to next word = simulate ctrl+Left
-    $#l::        send ^{Right}                                                  ;NT: jump to next word = simulate ctrl+Right
-    $!h::        send {Left}                                                    ;NT: Left
-    $!l::        send {Right}                                                   ;NT: Right
-    *$#k::                                                                      ;NT: Up
-    *$!k::       send {Up}                                                      ;NT: Up
-    *$#j::                                                                      ;NT: Down
-    *$!j::       send {Down}                                                    ;NT: Down
-    
-; CHANGE FOLDER IN FILELISTERS _________________________________________________
+  #IF WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)             ; If command Box exists
   
-  SetTitleMatchMode, 2
-  #IfWinActive ahk_group FileListers                                            ; ChangeFolders works in file explorer and open file + save as dialogue boxes
+  $<^space::                                                                    ;CB: activate CB if exists and move focus to inputbox
+  $>^space::         ActivateWin("ahk_id " CB_hwnd)                             ;CB: activate CB if exists and move focus to inputbox
   
-  >+sc029::     ChangeFolder(A_ScriptDir)                                       ;CF: AHK folder
-  >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                         ;CF: mem_cache
-  >+u::         ChangeFolder(UProfile)                                          ;CF: %UserProfile%
-  >+j::         ChangeFolder(UProfile "\Downloads")                             ;CF: Downloads
-  >+o::         ChangeFolder(A_ProgramFiles)                                    ;CF: C:\Program Files
-  >+!o::        ChangeFolder(PF_x86)                                            ;CF: C:\Program Files(x86)
-  >+p::         ChangeFolder(UProfile "\Pictures\")                             ;CF: Pictures
-  >+d::         ChangeFolder(UProfile "\Documents")                             ;CF: Documents
-  >+c::         ChangeFolder(hdrive)                                            ;CF: %Homedrive% (C:)
-  >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")      ;CF: This PC / My Computer (file explorer only)
-
-#IfWinActive
-
+  #IF                                                                           ; end context specific assignments
   
-
-
-

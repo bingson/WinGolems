@@ -29,6 +29,7 @@
     config_path := A_ScriptDir "\config.ini"
     
     SetTrayIcon(A_ScriptDir "\assets\Aikawns\W\gold.ico")                       ; set static icon color: black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
+    gosub, AutoExecution_test 
     
     ; uncomment to disable WIN+L key for locking screen upon WinGolems startup  ; requires registry write premission, end & L hotkey toggles this as well
     ; WinLLock(False, True)                                                     ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage.
@@ -55,7 +56,9 @@
 #Include _functions.ahk
 #Include _system.ahk
 #Include *i 1_Template_QuickStart.ahk
-#Include *i 2_Template_ApplicationSpecific.ahk
+#Include *i 2_Template_Advanced.ahk
+#Include *i 3_Template_ApplicationSpecific.ahk
+#Include *i Test.ahk
 
 #Include *i %A_ScriptDir%\..\Google Drive\secure
 #Include *i mm.ahk                                    
@@ -65,7 +68,6 @@
 #Include *i office.ahk
 #Include *i obsidian.ahk     
 #Include *i chrome.ahk     
-#Include *i win_fileexplorer.ahk     
 
 
 

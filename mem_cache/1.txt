@@ -1,1 +1,1 @@
-display 
+GC("Rsep1", "~")

@@ -5,17 +5,17 @@ ________________________________________________________________________________
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
+|     :X:a~win:: anyFunction()                        | Ls     see hotkey list ("gl" to update hotkey list) |  v   Sound                 |
 |                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
 | The above can be adaped to call scripts written in  | tcf    [T] mouse cursor follows active window       |  ap  Add Remove Programs   |
-| other languages such as python, VBA, C++, etc ...   | tt     [T] enhanced text nav/selection hotkeys      |  a   Alarm Clock           |
-|                                                     | tc     [T] replace capslock w/ delete key           |  r   Open Run Dialog Box   |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  x   Start Context Menu    |
-|-----------------------------------------------------| ss|qs  [M] ON|OFF:  Data Backup Application         |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| ws     Open Window Spy                              |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  h~  Hybernate computer    |
-| !r      reenter last submitted key             alt+r| r~     Reload WinGolems                             |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode     alt+x| q~     Quit WinGolems                               |  rs~ Restart computer      |
+| other languages such as python, VBA, C++, etc ...   | ta     [T] advanced hotkeys                         |  a   Alarm Clock           |
+|                                                     | lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| ss|qs  [M] ON|OFF:  Data Backup Application         |  x   Start Context Menu    |
+|-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| r~     Reload WinGolems                             |  h~  Hybernate computer    |
+| !r      reenter last submitted key             alt+r| q~     Quit WinGolems                               |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode     alt+x|                                                     |  rs~ Restart computer      |
 | !e      move & resize CB window to top left    alt+e|                                                     |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | UPPER-case first letter required to trigger the following commands                                                                     |

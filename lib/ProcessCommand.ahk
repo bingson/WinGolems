@@ -169,8 +169,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "R":                                                           ; replace string 
                 C_2 := SubStr(C_input, 1, 2)
                 C3_Remainder := SubStr(C_input, 3)
-                IniRead, sep1, %config_path%, %A_ComputerName%, Rsep1 ,~
-                IniRead, sep2, %config_path%, %A_ComputerName%, Rsep2 ,__
+                sep1 := GC("Rsep1", "~")
+                sep2 := GC("Rsep2", "__")
                 switch C_2
                 {
                     case "1:":
@@ -192,7 +192,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         ptxt := AccessCache(pNameNoExt,pDir, False)
                         ptxt := StrReplace(ptxt, "`n")
                         ptxt := StrReplace(ptxt, "`r")
-                        pArr := StrSplit(ptxt, "__")
+                        pArr := StrSplit(ptxt, GC("Rsep2", "__"))
                         ntxt := otxt
                         loop % pArr.MaxIndex()
                         {
@@ -206,10 +206,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     default:
                         ActivateWin("ahk_id " tgt_hwnd)      
                         vtext := clip()                       
-                        arrN := StrSplit(C_input, "__")  
+                        arrN := StrSplit(C_input, GC("Rsep2", "__"))  
                         loop % arrN.MaxIndex()
                         {
-                            AB := StrSplit(arrN[A_index], "~")
+                            AB := StrSplit(arrN[A_index], GC("Rsep1", "~"))
                             vtext := ReplaceAwithB(AB[1], AB[2],vtext,0,0)
                         }
                         clip(vtext)   

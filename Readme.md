@@ -1,6 +1,4 @@
-<h1> WinGolems </h1>
-
-A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A truly transformative interface is one that goes beyond automation by making it possible to solve problems that would be impossible to tackle otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
+A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A truly transformative interface is one that goes beyond automation by giving user the ability to solve problems that would be impossible to tackle otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
 WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. After going through a short tutorial below, new users will be able to start building their own interface layers by modifying sample code in the quick start template  (no prior Autohotkey knowledge is assumed).
 
@@ -16,19 +14,11 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 ## Quick Start Template
 
-Within this repository the code for the creation of interface elements (i.e., interface templates) is kept separate from the code that executes the desired task (i.e., function libraries). The user only needs to know the correct calling convention to use WinGolems convenience functions like ActivateApp(). Note: The quickstart template only highlights a subset of WinGolems' convenience functions. For a more comprehensive reference template, please see the files in \Golems\TpKb which was written for Lenovo Trackpoint-based keyboards. 
-
-The initial value provided by this repository will come from users leveraging various 'golems' to alleviate workflow frictions. For example, when different applications have different shortcuts for the same operation (e.g., switching tabs with ctrl+tab vs ctrl+PgDn), users are forced to remember unecessary information that could be standardized away. A general problem arises when software developers assign prime keyboard realestate to infrequently used functions (e.g., Windows key + F is a shortcut for opening a feedback dialog in Windows OS). Common sense suggests that the most frequently performed operations should be the easiest to execute; the Windows key + F keyboard combination should be reassigned to a more frequently executed task. WinGolems gives users the power to reengineer application design decisions to suit their hardware and particular preferences. As Satya Nadella says, "Operating systems and devices should mold to our needs, not the other way around."—[Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple)
-
-
-
-
-
- to remember which software uses Or worse yet, when software developpers assign less used functions to prominent key combinations that could be put to better use (e.g., #i,#g,#f). WinGolem's provides examples of how to reengineer how one 
-
+The initial value provided by this repository will come from users modifying code examples from the quick start template to alleviate workflow frictions. For example, when different applications have different shortcuts for the same operation (e.g., switching tabs using ctrl+tab vs ctrl+PgDn), users must remember application-specific information that could be standardized away. A larger issue arises when software developers reserve prime keyboard real estate to less useful operations. It makes no sense that the homerow keyboard combination of Windows key + F  opens the feedback reporting dialog in Windows, when common sense dictates that the most frequently performed operations should take the least effort to execute. As Satya Nadella proclaimed in recent [remarks on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." And it is in this spirit that WinGolems was conceived, as a toolbox that gives users the power to reengineer application interface decisions to better suit their needs. Within this repository the code for the creation of interface elements (i.e., interface templates) are kept in separate files from the code used to execute the underyling task (i.e., function libraries). To use most of WinGolems capabilities, a new user only needs to understand how to modify the shortcut code above and the particular calling convention for each convenience function (see: Quick Start Template for documented examples). 
+ 
 
 <center>
-<img src="assets\Screens\QuickStartHotkeys.png" width="1000">
+<h2> Quick Start Template Hotkeys <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
 <br>
 
 The command box was initially conceived as an always on top .txt file viewer for the 0-9 memory keys. However, that it's use 
@@ -57,17 +47,17 @@ ________________________________________________________________________________
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
+|     :X:a~win:: anyFunction()                        | Ls     see hotkey list ("gl" to update hotkey list) |  v   Sound                 |
 |                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
 | The above can be adaped to call scripts written in  | tcf    [T] mouse cursor follows active window       |  ap  Add Remove Programs   |
-| other languages such as python, VBA, C++, etc ...   | tt     [T] enhanced text nav/selection hotkeys      |  a   Alarm Clock           |
-|                                                     | tc     [T] replace capslock w/ delete key           |  r   Open Run Dialog Box   |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  x   Start Context Menu    |
-|-----------------------------------------------------| ss|qs  [M] ON|OFF:  Data Backup Application         |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| ws     Open Window Spy                              |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  h~  Hybernate computer    |
-| !r      reenter last submitted key             alt+r| r~     Reload WinGolems                             |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode     alt+x| q~     Quit WinGolems                               |  rs~ Restart computer      |
+| other languages such as python, VBA, C++, etc ...   | ta     [T] advanced hotkeys                         |  a   Alarm Clock           |
+|                                                     | lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| ss|qs  [M] ON|OFF:  Data Backup Application         |  x   Start Context Menu    |
+|-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| r~     Reload WinGolems                             |  h~  Hybernate computer    |
+| !r      reenter last submitted key             alt+r| q~     Quit WinGolems                               |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode     alt+x|                                                     |  rs~ Restart computer      |
 | !e      move & resize CB window to top left    alt+e|                                                     |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | UPPER-case first letter required to trigger the following commands                                                                     |
@@ -76,7 +66,7 @@ ________________________________________________________________________________
 |      --------------------------------------- ------------------- ----------------------------------------------------------------------|
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                       ?|
 |  L   Load .txt file into CB display          L1, Lhelp, Lr\testr Load in display => 1.txt, help.txt, r\testr.txt ("Ll" .txt list)    L?|
-|      Load special file shorcuts              Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
+|      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
 |  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
