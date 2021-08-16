@@ -67,6 +67,8 @@
 
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    #f::                            Clicks(2)                                   ;MF: 2 Left clicks (select word)
+    ^#f::                           Clicks(3)                                   ;MF: 3 Left clicks (select line)
     printscreen & SC035::           search()                                    ;C: google search selected text
     #n::AA("editor_path")
     #e::send ^{home}

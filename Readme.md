@@ -1,6 +1,7 @@
 A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A truly transformative interface is one that goes beyond automation by giving user the ability to solve problems that would be impossible to tackle otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. After going through a short tutorial below, new users will be able to start building their own interface layers by modifying sample code in the quick start template  (no prior Autohotkey knowledge is assumed).
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. After going through a short tutorial below, new users will be able to start building their own interface layers by modifying sample code in the quick start template  (no prior Autohotkey knowledge is assumed). Before investing any time into AHK, the quick start template below can be run as an executable.
+
 
 One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code below illustrates this by showing how easy it is to create 3 shortcuts for opening/reactivating a web browser using WinGolems convenience functions. 
 
@@ -14,14 +15,28 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 
 ## Quick Start Template
 
-The initial value provided by this repository will come from users modifying code examples from the quick start template to alleviate workflow frictions. For example, when different applications have different shortcuts for the same operation (e.g., switching tabs using ctrl+tab vs ctrl+PgDn), users must remember application-specific information that could be standardized away. A larger issue arises when software developers reserve prime keyboard real estate to less useful operations. It makes no sense that the homerow keyboard combination of Windows key + F  opens the feedback reporting dialog in Windows, when common sense dictates that the most frequently performed operations should take the least effort to execute. As Satya Nadella proclaimed in recent [remarks on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." And it is in this spirit that WinGolems was conceived, as a toolbox that gives users the power to reengineer application interface decisions to better suit their needs. Within this repository the code for the creation of interface elements (i.e., interface templates) are kept in separate files from the code used to execute the underyling task (i.e., function libraries). To use most of WinGolems capabilities, a new user only needs to understand how to modify the shortcut code above and the particular calling convention for each convenience function (see: Quick Start Template for documented examples). 
- 
+The initial value provided by this repository will come from users adapting code from the quick start template to alleviate workflow frictions. For example, when different applications have different shortcuts for the same operation (e.g., switching tabs using ctrl+tab vs ctrl+PgDn), users must remember application-specific information that could be standardized away. Adding on to that example, what if your laptop keyboard has hard to reach PgUp/PgDn placement? A related issue arises when software developers reserve prime keyboard real estate for less useful operations. It makes no sense that the home row keyboard combination Win + F opens the feedback reporting dialog in Windows. Common sense dictates that the most frequently performed operations should be the easiest to execute and vice versa. 
+I couldn't agree more with Satya Nadella's recent remarks on [Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit WinGolems provides premade AHK functions for re-engineering Windows application interfaces to better suit ones hardware and ergonomic preferences.  
+
+No knowledge of programming or AHK is necessary to use the quick start template below. <br>
+Simply run "WinGolems.exe" with administrative privileges
+<br><img src="assets\Screens\wingolems_exe.png" width="500">
 
 <center>
-<h2> Quick Start Template Shortc <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
+<h2> Quick Start Template Keyboard Shortcuts <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
 <br>
+</center>
 
-The command box was initially conceived as an always on top .txt file viewer for the 0-9 memory keys. However, that it's use 
+Click here for a full 
+
+
+
+
+Within the WinGolems folder the code for the creation of interface elements (i.e., interface templates) is kept in separate files from the code used to execute the underyling task (i.e., function libraries). 
+
+
+most of WinGolem's convenience functions, a new user only needs to understand how to modify code samples in quick start interface template, which requires only going through  https://www.autohotkey.com/docs/Tutorial.htm#s2
+
 
 <br>
 <table>

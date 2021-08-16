@@ -6,9 +6,11 @@
   ^#z::              s("{blind}"), SaveWinID("z")                               ;AA: Save window ID for subsequent activation w/ win + r
   ^#x::              s("{blind}"), SaveWinID("x")                               ;AA: Save window ID for subsequent activation w/ win + t
   ^#c::              s("{blind}"), SaveWinID("c")                               ;AA: Save window ID for subsequent activation w/ win + g
+  ^#f::              s("{blind}"), SaveWinID("f")                               ;AA: Save window ID for subsequent activation w/ win + g
   #z::               s("{blind}"), ActivateWinID("z")                           ;AA: Activate previously saved window ID
   #x::               s("{blind}"), ActivateWinID("x")                           ;AA: Activate previously saved window ID
   #c::               s("{blind}"), ActivateWinID("c")                           ;AA: Activate previously saved window ID
+  #f::               s("{blind}"), ActivateWinID("f")                           ;AA: Activate previously saved window ID
      
   #q::               s("{blind}"), ActivateApp("ppt_path")                      ;AA: Activate Powerpoint
   #w::               s("{blind}"), ActivateApp("doc_path")                      ;AA: Activate Word
@@ -16,12 +18,15 @@
   #a::               s("{blind}"), ActivateApp("editor_path")                   ;AA: Activate default editor
   #s::               s("{blind}"), ActivateApp("html_path")                     ;AA: Activate web browser
   #d::               s("{blind}"), ActivateApp("pdf_path")                      ;AA: Activate pdf viewer
-  #b::               s("{blind}"), ActivateApp("explorer.exe")                  ;AA: Activate File explorer                                                                                   
- ; #x::         s("{blind}"), ActivateApp("C:\Everything\Everything.exe")       ;AA: e.g., accepts full file path
+  #b::               s("{blind}"), ActivateApp("explorer.exe")                  ;AA: Activate File explorer         
+  
+  /* SAMPLE CODE                                                                          
+  #x::         s("{blind}"), ActivateApp("C:\Everything\Everything.exe")        ;AA: e.g., accepts full file path
+  */
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
-  ; hotkey modifier keys (+#^) can be swapped around for the below hotkeys, 
-  ; however the assignment must end in the numbers 0-9 for the memory system to work 
+  ; hotkey modifier keys (+#^) can be swapped around for the below memory function hotkeys, 
+  ; however the assignment must end in the numbers 0-9 
   
   +#0::                                                                         ;MF: overwrite 0.txt with selected text 
   +#9::                                                                         ;MF: overwrite 9.txt with selected text 
@@ -93,8 +98,8 @@
 
 ; NAVIGATION (PURPLE) __________________________________________________________
 
-  #j::               Sendinput {WheelDown 2}                                    ;N: scroll wheel down                                               
-  #k::               Sendinput {WheelUp 2}                                      ;N: scroll wheel Up           
+  #j::               Sendinput {Blind}{WheelDown 2}                                    ;N: scroll wheel down                                               
+  #k::               Sendinput {Blind}{WheelUp 2}                                      ;N: scroll wheel Up           
   $#>!h::            Sendinput {Blind}{Wheelleft 6}                             ;N: scroll wheel left
   $#>!l::            Sendinput {Blind}{WheelRight 6}                            ;N: scroll wheel right
       

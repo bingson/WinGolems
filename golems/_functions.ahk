@@ -24,6 +24,22 @@
        , "dgrey"       : "525252"
        , "onyx"        : "353839" }
 
+ MoveWin_DICT := { "F" : "Maximize"
+                 , "a" : "LeftHalf"        
+                 , "d" : "RightHalf"       
+                 , "dd": "RightHalfsmall"       
+                 , "w" : "TopHalf"         
+                 , "ww": "TopHalfSmall"
+                 , "ss": "BottomHalfSmall"
+                 , "s" : "BottomHalf"      
+                 , "q" : "TopLeft"         
+                 , "e" : "TopRight"        
+                 , "z" : "BottomLeft"      
+                 , "c" : "BottomRight"     
+                 , "qq": "TopLeftSmall"    
+                 , "zz": "BottomLeftSmall" 
+                 , "ee": "TopRightSmall"   
+                 , "cc": "BottomRightSmall" }
 
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; reference group for file explorer and save as dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW
@@ -195,12 +211,14 @@
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
     WinGet,      n_instances, List,         ahk_class %ActiveClass%
+    SetStoreCapsLockMode, Off
     BlockInput, on
     if (n_instances > 1) {
         WinActivateBottom, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
     }        
     CursorFollowWin()
     blockinput,off
+    SetStoreCapsLockMode, on
     return
   }
  
@@ -1003,8 +1021,8 @@
   }
 
   FindAppPath(app*) {
-    global UProfile, PF_x86, C, winpath
-    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*", winpath "\system32\*"]
+    global UProfile, PF_x86, C
+    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*"]
     PATH := {}
     for each, exe in APP
     {
@@ -1338,9 +1356,6 @@
     ; wrapper for ActivateOrOpen to process ini file path references
     ; and arguments
     global config_path
-    if instr(A_ThisHotkey, "#")
-        KeyWait, LWin                                                           ; https://autohotkey.com/board/topic/5198-how-to-fix-a-stuck-win-key/
-
     if InStr(app_path , "_path")                                                ; "_path" string match indicates a config.ini path reference
     {
         IniRead, ini_app_path, %config_path%, %A_ComputerName%, %app_path%
@@ -1500,11 +1515,13 @@
     return
   }
  
-  CursorFollowWin(Q = "center", offset_x = "0", offset_y = "100") {
+  CursorFollowWin(Q = "center", offset_x = "100", offset_y = "100") {
     global config_path
+    BlockInput, on
     IniRead, state, %config_path%, %A_ComputerName%, cursor_follow, 0
     if state
         CursorJump(Q, offset_x, offset_y)
+    BlockInput, off
     return
   }
  
@@ -1520,7 +1537,7 @@
   CursorJump(Q = "center", offset_x = "0", offset_y = "0", ScreenDim = False) {
     ; move mouse cursor to the middle of active window
     global short
-    Sleep, short 
+    ; Sleep, short * 2
     CoordMode, Mouse, Screen
     if ScreenDim
         winTopL_x := 0, winTopL_y := 0, width := A_ScreenWidth, height := A_ScreenHeight
