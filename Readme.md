@@ -1,3 +1,9 @@
+<style>
+H1{color:Blue !important;}
+H2{color:DarkOrange !important;}
+</style>
+
+
 <p align="center">
   <img src="assets\Screens\WGLc.png" width="300">
 </p>
@@ -5,23 +11,24 @@
 
 A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A transformative interface goes beyond automation by giving its user the ability to solve problems that would be impossible to solve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. Before investing any time into learning AHK, new users can first try out many of WinGolems' key features by running the quick start template below using the included executable (no knowledge of AHK or software installation required). 
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. Before investing any time into learning AHK, new users can first try out many of WinGolems' features by running the quick start template below using the included executable (no knowledge of AHK or software installation required). 
 
 The initial value provided by this repository will come from users adapting the code from the quick start template to alleviate common workflow frictions. 
 
-<h3> <font color = '#ffa404'>Example use cases:</font> </h3>
+## Example use cases:
 
 - When different applications have different shortcuts for the same operation, users must remember application-specific information that could otherwise be standardized away—e.g., switching tabs with `ctrl + tab` versus `ctrl + PgDn`. 
 
-- When ones hardware setup doesn't play well with default application shortcuts—e.g., to actuate ` ctrl + PgDn `  on my laptop's condensed keyboard requires that I move my right hand off of home row. 
+- When ones hardware setup doesn't play well with default application shortcuts, users should be able to change those defaults—e.g., to actuate ` ctrl + PgDn `  on my laptop's condensed keyboard requires that I move my right hand off of home row. 
 
-- When software developers pre-assign prime keyboard real estate to less used operations, their making choices anathema to user-centered design. Common sense dictates that the most frequently performed operations are the easiest to execute and vice versa. E.g., the ` Win + F ` combination opens the feedback reporting dialog in Windows that almost nobody uses on a daily basis.
+- When software developers pre-assign prime keyboard real estate to less used operations, their making decisions that are anathema to user-centered design. Common sense dictates that the most frequently performed operations are the easiest to execute and vice versa. E.g., the ` Win + F ` combination opens the feedback reporting dialog in Windows that almost nobody uses on a daily basis.
 
  As Satya Nadella's proclaimed in his [recent on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit a users needs (i.e., particular hardware setup and ergonomic preferences).  
 
-## <font color = '#ffa404'>Quick Start Template</font>
 
-To modify the quick start template, AutoHotkey must be installed. Within the WinGolems folder code for the creation of interface layers (i.e., interface templates) is kept in separate files from the code used to execute the desired task (i.e., function libraries). To reduce the AHK or programming knowledge necessary to use WinGolems, template files are limited to code that assigns hotstrings and hotkeys (keyboard shortcuts) to WinGolem function calls or AHK code that doesn't exceed 1 line. 
+## Quick Start Template:
+
+The quick start template has working code examples that illustrate how to create interface layers and connect them to WinGolems' function library. To modify the quick start template, AutoHotkey must be installed. Within the WinGolems folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to execute the desired task (i.e., function libraries). To reduce the AHK or programming knowledge to use WinGolems convenience functions, new users will only need to understand how to modify template files which are limited to code that assigns hotstrings and hotkeys (keyboard shortcuts) to function calls (or AHK code that doesn't exceed 1 line). 
 
 ```ahk
                                           ; Open or reactivate a web browser by 
@@ -30,17 +37,21 @@ To modify the quick start template, AutoHotkey must be installed. Within the Win
                                           ; (3) entering "c" in a CommandBox("~win")
 ```
 One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating a web browser window through the WinGolems function ActivateApp(). After going through a short tutorial below, new users will be able to adapt the quick start template to their particular workflow.
+
 <table>
-<tr><td>
-<center>
-<h3> Starting Keyboard Shortcuts <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
-</center>
+<tr>
+    <td>
+        <center>
+        <h3> Starting Keyboard Shortcuts </h3><br> 
+        <img src="assets\Screens\QuickStartHotkeys.png" width="1000"> 
+        </center>
+    </td>
+</tr>
 
-</td></tr>
-
-<tr><td>
-
-<details><summary><font color = 'orange'><b>Click to see full List of Quick Start Hotkeys</b></font></summary>
+<tr>
+    <td>
+        <details><summary><font color = 'orange'><b>Click to see full List of Quick Start Hotkeys</b></font></summary>
+        <p>
 
 ```
 SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -229,14 +240,14 @@ Advanced shortcuts below must be turned on by typing "ta~win" anywhere in window
  Alt+F                   ST: select word at text cursor position
 
 ```
-</p>
-</details>
-</td>
-</tr>
-</table>
 
-<br>
-<table>
+        </p>
+        </details>
+    </td>
+</tr>
+<tr>
+    <td><h3> Command Box </h3><br></td>
+</tr>
 <tr>
     <td><img src="assets\Screens\minimal.png" width="600"> </td>
     <td><img src="assets\Screens\Display.png" width="600"> </td>

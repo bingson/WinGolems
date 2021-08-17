@@ -5,6 +5,7 @@
   C := { "lgreen"      : "CEDFBF"
        , "lblue"       : "BED7D6"
        , "lyellow"     : "FCE28A"
+       , "dyellow"     : "FFA404"
        , "lpurple"     : "CDC9D9"
        , "black"       : "000000"
        , "white"       : "FFFFFF"
