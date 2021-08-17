@@ -16,12 +16,12 @@ The initial value provided by this repository will come from users adapting the 
 
 - When ones hardware setup doesn't play well with default application shortcuts, users should be able to change those defaults—e.g., to actuate ` ctrl + PgDn `  on my laptop's condensed keyboard requires that I move my right hand off of home row. 
 
-- When software developers pre-assign prime keyboard real estate to less used operations, their making decisions that are anathema to user-centered design. Common sense dictates that the most frequently performed operations are the easiest to execute and vice versa. E.g., the ` Win + F ` combination opens the feedback reporting dialog in Windows that almost nobody uses on a daily basis.
+- When software developers pre-assign prime keyboard real estate to less used operations, their making decisions that are anathema to user-centered design. Common sense dictates that the most frequently performed operations are the easiest to execute and vice versa. E.g., the ` Win + F ` combination opens the rarely used feedback reporting dialog in Windows.
 
  As Satya Nadella's proclaimed in his [recent on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit a users needs (i.e., particular hardware setup and ergonomic preferences).  
 
 
-### Quick Start Template:
+## Quick Start Template:
 
 The quick start template has working code examples that illustrate how to create interface layers and connect them to WinGolems' function library. To modify the quick start template, AutoHotkey must be installed. Within the WinGolems folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to execute the desired task (i.e., function libraries). To reduce the AHK or programming knowledge to use WinGolems convenience functions, new users will only need to understand how to modify template files which are limited to code that assigns hotstrings and hotkeys (keyboard shortcuts) to function calls (or AHK code that doesn't exceed 1 line). 
 
@@ -33,7 +33,7 @@ The quick start template has working code examples that illustrate how to create
 ```
 One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating a web browser window through the WinGolems function ActivateApp(). After going through a short tutorial below, new users will be able to adapt the quick start template to their particular workflow.
 
-<h3> Starting Keyboard Shortcuts </h3><br> 
+<h3> Starting Keyboard Shortcuts: </h3>
 <table>
 <tr>
     <td>
