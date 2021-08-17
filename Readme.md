@@ -21,9 +21,7 @@ Example use cases:
  As Satya Nadella's proclaimed in his [recent on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit a users needs (i.e., hardware setup and ergonomic preferences).  
 
 ## Quick Start Template
-<table>
-<tr>
-<td>
+
 To modify the quick start template, AutoHotkey must be installed. Within this repository the code for the creation of interface layers (i.e., interface templates) is kept in separate files from the code used to execute the desired task (i.e., function libraries). To reduce the AHK knowledge necessary to use WinGolems, template files are limited to code that assigns hotstrings or keyboard shortcuts (aka. hotkeys) to WinGolem function calls or very short AHK code (1 line). 
 
 ```ahk
@@ -32,9 +30,9 @@ To modify the quick start template, AutoHotkey must be installed. Within this re
     :X:c~win:: ActivateApp("html_path")   ; (2) typing "c~win" <space> anywhere in windows (hotstring)
                                           ; (3) entering "c" in a CommandBox("~win")
 ```
-One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening or reactivating a web browser window through the WinGolems function ActivateApp(). After going through a short tutorial below, new users will be able to adapt the quick start template to their particular workflow.
+One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating a web browser window through the WinGolems function ActivateApp(). After going through a short tutorial below, new users will be able to adapt the quick start template to their particular workflow.
 <center>
-<h2> Starting Hotkeys <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
+<h3> Starting Keyboard Shortcuts <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
 </center>
 
 <details><summary><font color = 'orange'><b>Click to see full List of Quick Start Hotkeys</b></font></summary>
@@ -242,8 +240,9 @@ Advanced shortcuts below must be turned on by typing "ta~win" anywhere in window
 </tr>
 
 <tr>
-    <td><center>minimal mode toggle: alt + x  </center></td>
-    <td><center>display mode toggle: alt + x  </center></td>
+    <td style="text-align:center">minimal mode (toggle with alt + x) </td>
+    <td style="text-align:center">display mode (toggle with alt + x) </td>
+    
 </tr>
 </table>
 
