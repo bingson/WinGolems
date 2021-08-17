@@ -104,7 +104,7 @@
     $^PgUp::             send +^!9                                              ; indent 1 space to right
  
                            
-    :X:c~~coding::       Send +^!g                                              ;V: git commit all
+    :X:g~coding::        Send +^!g                                              ;V: git commit all
     :X:m>:: clip("msgbox % ")
     printscreen & tab::      AddSpaceBeforeComment("80")                        ;v: Add Space Before Comment (default)
     printscreen & capslock:: AddSpaceBeforeComment("80"), s("down")             ;v: Add Space Before Comment and move down 1 line (default)
