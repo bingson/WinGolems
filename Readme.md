@@ -1,5 +1,6 @@
-<div style="text-align:center"><img src="assets\Screens\WGLc.png" width="300"></div>
-
+<p align="center">
+  <img src="assets\Screens\WGLc.png" width="300">
+</p>
 
 
 A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A transformative interface goes beyond convenience by giving its user the ability to solve problems that would be impossible to solve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
