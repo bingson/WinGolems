@@ -48,8 +48,6 @@
   
   :X:q~~win::                                                                   ;AHK: quit ahk script
   +^#q::        ExitApp                                                         ;AHK: quit ahk script
-  lshift & rshift::                                                             ;AHK: reload ahk script
-  rshift & lshift::                                                             ;AHK: reload ahk script
   :X:r~~win::   Reload                                                          ;AHK: reload ahk script
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up

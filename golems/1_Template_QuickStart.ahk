@@ -81,23 +81,25 @@
   ^SC027::           Send {AppsKey}                                             ;C: simulate appkey 
   ^#w::              WinClose,A                                                 ;C: close active window 
   ^#q::              CloseClass()                                               ;C: close all instances of the active program
-  *LWin::            Send {Blind}{LWin Down}                                    ;C: start: makes windows key inert so it can act as a modifier key 
-  LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;C: start: makes windows key inert so it can act as a modifier key
-  #Lbutton::                                                                    ;C: start: open start menu (alt: Ctrl+Esc)
-  $^#Enter::         send ^{esc}                                                ;C: start: open start menu (alt: Ctrl+Esc)
+  *LWin::            Send {Blind}{LWin Down}                                    ;C:start: makes windows key inert so it can act as a modifier key 
+  LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;C:start: makes windows key inert so it can act as a modifier key
+  #Lbutton::                                                                    ;C:start: open start menu (alt: Ctrl+Esc)
+  $^#Enter::         send ^{esc}                                                ;C:start: open start menu (alt: Ctrl+Esc)
   ~lwin & ~rshift::  CursorJump("C")                                            ;C: move mouse cursor to center of active application window
   !sc034::           moveWinBtnMonitors()                                       ;C: move window btn monitors
   $^!j::             s("{blind}"), s("^{sc00D}")                                ;C: zoom in (simulate: ctrl + plus)
   $^!k::             s("{blind}"), s("^{sc00C}")                                ;C: zoom out (simulate: ctrl + minus)
   !Backspace:: SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;C: Delete current line of text
 
-                                                                                
-  !#b::              BluetoothSettings()                                        ;C: system: bluetooth settings (reassign less used windows system shortcuts)
-  !#d::              DisplaySettings()                                          ;C: system: display settings
-  !#n::              NotificationWindow()                                       ;C: system: notification window
-  !#r::              RunProgWindow()                                            ;C: system: run program
-  !#p::              PresentationDisplayMode()                                  ;C: system: presentation display mode
-  !#i::              WindowsSettings()                                          ;C: system: windows settings
+  lshift & rshift::                                                             ;C:AHK: reload WinGolems (if hotkeys stop working)
+  rshift & lshift::                                                             ;C:AHK: reload WinGolems
+
+  !#b::              BluetoothSettings()                                        ;C:system: bluetooth settings (reassign less used windows system shortcuts)
+  !#d::              DisplaySettings()                                          ;C:system: display settings
+  !#n::              NotificationWindow()                                       ;C:system: notification window
+  !#r::              RunProgWindow()                                            ;C:system: run program
+  !#p::              PresentationDisplayMode()                                  ;C:system: presentation display mode
+  !#i::              WindowsSettings()                                          ;C:system: windows settings
 
 ; NAVIGATION (PURPLE) __________________________________________________________
 

@@ -16,16 +16,16 @@
     clip(CurrentDateTime)
     return 
   
-  +!sc00C::                       Send, {ASC 0150}                              ;C: dash: en (–)
-  !sc00C::                        Send, {ASC 0151}                              ;C: dash: em (—)
-  capslock::                      del                                           ;C: cl: makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
-  ^capslock::                     Send {blind}{capslock}                        ;C: cl: toggle capslock
+  +!sc00C::                       Send, {ASC 0150}                              ;C:dash: en (–)
+  !sc00C::                        Send, {ASC 0151}                              ;C:dash: em (—)
+  capslock::                      del                                           ;C:cl: makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
+  ^capslock::                     Send {blind}{capslock}                        ;C:cl: toggle capslock
   ^#Backspace::                   ReplaceBackspaceWithSpaces()                  ;C: Delete and replace selected text with blank spaces 
   ^#v::                           PasteOverwrite()                              ;C: paste and overwrite the same number of spaces (aka. overtype paste)
-  +^u::                           ConvertUpper()                                ;C: capitalization: capitalize selected text
-  +!u::                           ConvertLower()                                ;C: capitalization: convert selected text to lower case
-  ^!u::                           Capitalize1stLetter()                         ;C: capitalization: First letter capitalized
-  ^!+u::                          Capitalize1stLetter(,,0)                      ;C: capitalization: Every First Letter Capitalized
+  +^u::                           ConvertUpper()                                ;C:case: capitalize selected text
+  +!u::                           ConvertLower()                                ;C:case: convert selected text to lower case
+  ^!u::                           Capitalize1stLetter()                         ;C:case: First letter capitalized
+  ^!+u::                          Capitalize1stLetter(,,0)                      ;C:case: Every First Letter Capitalized
   !#space::                       ReplaceAwithB(" ")                            ;C: remove all spaces from selected text
   ^#space::                       ReplaceAwithB()                               ;C: replace multiple consecutive spaces w/ one space in selected text
   !#enter::                       RemoveBlankLines()                            ;C: remove empty lines starting from selected text
@@ -117,23 +117,24 @@
   >+c::         ChangeFolder(hdrive)                                            ;CF: %Homedrive% (C:)
   >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")      ;CF: This PC / My Computer (file explorer only)
 
-  !z::          Send !vn{enter}                                                 ;FE panes: toggle navigation pane
-  ^p::          Send {alt down}p{alt up}                                        ;FE panes: toggle preview plane
-  <!space::     ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FE panes: move focus to navigation pane
-  >!space::     ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FE panes: move focus to current folder pane
-  ^o::          Send !vg{down 2}{enter}                                         ;FE groups: group by file type
-  ^i::          Send !vg{down 1}{enter}                                         ;FE groups: group by date
-  <^j::         SortByName()                                                    ;FE view: sort by name
-  <^k::         SortByDate()                                                    ;FE view: sort by date modified
-  >^j::         SortByType()                                                    ;FE view: sort by type
-  >^k::         SortBySize()                                                    ;FE view: sort by size
-  !SC027::      DetailedView()                                                  ;FE view: detailed file info with resized columnsnmn       
-  ^h::          ToggleInvisible()                                               ;FE view: toggle hide/unhide invisible files
+  !z::          Send !vn{enter}                                                 ;FE:panes: toggle navigation pane
+  ^p::          Send {alt down}p{alt up}                                        ;FE:panes: toggle preview plane
+  <!space::     ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FE:panes: move focus to navigation pane
+  >!space::     ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FE:panes: move focus to current folder pane
+  ^o::          Send !vg{down 2}{enter}                                         ;FE:groups: group by file type
+  ^i::          Send !vg{down 1}{enter}                                         ;FE:groups: group by date
+  <^j::         SortByName()                                                    ;FE:view: sort by name
+  <^k::         SortByDate()                                                    ;FE:view: sort by date modified
+  >^j::         SortByType()                                                    ;FE:view: sort by type
+  >^k::         SortBySize()                                                    ;FE:view: sort by size
+  !SC027::      DetailedView()                                                  ;FE:view: detailed file info with resized columnsnmn       
+  ^h::          ToggleInvisible()                                               ;FE:view: toggle hide/unhide invisible files
   $+!c::        clipboard := Explorer_GetSelection()                            ;FE: store file path(s) of selected file(s) in clipboard
   ^s::          SelectByRegEx()                                                 ;FE: select files by regex
 
 #IfWinActive
 
-
+; COMMAND BOX __________________________________________________________________
+#IF WinActive("ahk_id " CB_hwnd)                                              ; If command Box active
 
 
