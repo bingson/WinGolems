@@ -1,8 +1,3 @@
-<style>
-H1{color:Blue !important;}
-H2{color:DarkOrange !important;}
-</style>
-
 
 <p align="center">
   <img src="assets\Screens\WGLc.png" width="300">
@@ -15,7 +10,7 @@ WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I
 
 The initial value provided by this repository will come from users adapting the code from the quick start template to alleviate common workflow frictions. 
 
-## Example use cases:
+### Example use cases:
 
 - When different applications have different shortcuts for the same operation, users must remember application-specific information that could otherwise be standardized away—e.g., switching tabs with `ctrl + tab` versus `ctrl + PgDn`. 
 
@@ -26,7 +21,7 @@ The initial value provided by this repository will come from users adapting the 
  As Satya Nadella's proclaimed in his [recent on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit a users needs (i.e., particular hardware setup and ergonomic preferences).  
 
 
-## Quick Start Template:
+### Quick Start Template:
 
 The quick start template has working code examples that illustrate how to create interface layers and connect them to WinGolems' function library. To modify the quick start template, AutoHotkey must be installed. Within the WinGolems folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to execute the desired task (i.e., function libraries). To reduce the AHK or programming knowledge to use WinGolems convenience functions, new users will only need to understand how to modify template files which are limited to code that assigns hotstrings and hotkeys (keyboard shortcuts) to function calls (or AHK code that doesn't exceed 1 line). 
 
@@ -245,6 +240,8 @@ Advanced shortcuts below must be turned on by typing "ta~win" anywhere in window
         </details>
     </td>
 </tr>
+</table>
+<table>
 <tr>
     <td><h3> Command Box </h3><br></td>
 </tr>
@@ -254,9 +251,8 @@ Advanced shortcuts below must be turned on by typing "ta~win" anywhere in window
 </tr>
 
 <tr>
-    <td style="text-align:center">minimal mode (toggle with alt + x) </td>
-    <td style="text-align:center">display mode (toggle with alt + x) </td>
-    
+    <td style="text-align:center">minimal mode </td>
+    <td style="text-align:center">display mode </td>
 </tr>
 </table>
 
