@@ -36,10 +36,8 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
 <table>
 <tr>
     <td>
-        <center>
         <h3> Starting Keyboard Shortcuts </h3><br> 
         <img src="assets\Screens\QuickStartHotkeys.png" width="1000"> 
-        </center>
     </td>
 </tr>
 
@@ -241,10 +239,9 @@ Advanced shortcuts below must be turned on by typing "ta~win" anywhere in window
     </td>
 </tr>
 </table>
+
+<h3> Command Box </h3><br></td>
 <table>
-<tr>
-    <td><h3> Command Box </h3><br></td>
-</tr>
 <tr>
     <td><img src="assets\Screens\minimal.png" width="600"> </td>
     <td><img src="assets\Screens\Display.png" width="600"> </td>
