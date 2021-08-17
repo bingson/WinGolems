@@ -410,8 +410,6 @@
     }
     return
   }
-
-  
   
   ReplaceAlias(arr*) {
     static sect := ""
@@ -447,7 +445,6 @@
     }
     return
   }
-
 
   s(k = "down", n = 1) {                                                         ; function wrapper for send keystrokes command
     sleep 100
@@ -1731,6 +1728,7 @@
         MsgBox, something went wrong, check if you have permission to run macros 
         return
     }
+    return
   }
  
   command(tgt, opt = "") {

@@ -2,7 +2,7 @@
 
 ; #v:: msgbox % winpath "\system32"
 
-; CB key assignment: System Commands ___________________________________________
+; CB SYSTEM COMMANDS ___________________________________________________________
   :X:b~win::    BluetoothSettings()                                             ;SC: bluetooth settings
   :X:d~win::    DisplaySettings()                                               ;SC: display settings
   :X:n~win::    NotificationWindow()                                            ;SC: notification window
@@ -24,13 +24,11 @@
   :X:lt~win::   WinLLock(True)                                                  ;SC: turn on win+L locks computer
   :X:lf~win::   WinLLock(False)                                                 ;SC: turn off win+L locks computer
   :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;SC: open add remove programs 
-  #Lbutton::                                                                    ;SC: open start menu (alt: Ctrl+Esc)
-  $^#Enter::                                                                    ;SC: open start menu (alt: Ctrl+Esc)
   :X:s~win::    send ^{esc}                                                     ;SC: open start menu (alt: Ctrl+Esc)
   :X:mod~win::  MoveWindowToOtherDesktop()                                      ;SC: Move window to other desktop
   :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
 
-; CB keys assignment: AHK UTILITIES ____________________________________________  
+; CB AHK UTILITIES _____________________________________________________________
 
   :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;AHK: open key history
@@ -56,7 +54,7 @@
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up
 
-; developer options ____________________________________________________________
+; DEVELOPER OPTIONS ____________________________________________________________
 
   :X:td~win::                                                                   ;[T] toggle developer optns
     CC("T_d","!")
@@ -65,29 +63,43 @@
     PopUp("Developer options on: " GC("T_d"))
     return
 
+  
+  #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                              ; If command Box active
+    printscreen & space::           GUISubmit()                                 ;CB: submit GUI input
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #f::                            Clicks(2)                                   ;MF: 2 Left clicks (select word)
     ^#f::                           Clicks(3)                                   ;MF: 3 Left clicks (select line)
-    printscreen & SC035::           search()                                    ;C: google search selected text
-    #n::AA("editor_path")
-    #e::send ^{home}
-    #+e::send ^{end}
-    PrintScreen & h::           sendinput ^{Left 4}
-    PrintScreen & l::           sendinput ^{Right 4}
-    PrintScreen & SC027::       WinMinimize,A                                   ;C: minimize window
-    printscreen & i::           SaveMousPos("i",1)                              ;MF: Left click and save mouse position
-    *#r::                       SaveMousPos("r",1)                              ;C: Left click and save mouse position
-    *^#r::                      RecallMousePosClick("r")                        ;MF: Move to saved mouse position and left click
-    printscreen & j::           Sendinput {Blind}{WheelDown 5}                  ;MF: scroll wheel down
-    printscreen & k::           Sendinput {Blind}{WheelUp 5}                    ;MF: scroll wheel Up
-    printscreen & b::  ActivateApp("explorer.exe", "buffer_path", True)         ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
-   
+    #n::AA("editor_path")    
+    #e::send ^{home}    
+    #+e::send ^{end}    
+    *#r::                           SaveMousPos("r",1)                          ;C: Left click and save mouse position
+    *^#r::                          RecallMousePosClick("r")                    ;MF: Move to saved mouse position and left click
+
   #If GetKeyState("ralt", "P") and GC("T_d",0)
     PrintScreen & k::               CursorJump("T")                             ;MF: move mouse cursor to top edge
     PrintScreen & j::               CursorJump("B",,"-20")                      ;MF: move mouse cursor to bottom edge
     PrintScreen & h::               CursorJump("L","20")                        ;MF: move mouse cursor to Left edge
     PrintScreen & l::               CursorJump("R","-40")                       ;MF: move mouse cursor to Right edge
+
+   
+  #If GetKeyState("PrintScreen", "P") and GC("T_d",0)
+    ralt & k::                      CursorJump("T")                             ;MF: move mouse cursor to top edge
+    ralt & j::                      CursorJump("B",,"-20")                      ;MF: move mouse cursor to bottom edge
+    ralt & h::                      CursorJump("L","20")                        ;MF: move mouse cursor to Left edge
+    ralt & l::                      CursorJump("R","-40")                       ;MF: move mouse cursor to Right edge
+    SC035::                         search()                                    ;C: google search selected text
+    o::                             send ^{home}
+    p::                             send ^{end}
+    sc028::                         Click, Right                                ;MF: mouse Right click
+    h::                             sendinput ^{Left 4}
+    l::                             sendinput ^{Right 4}
+    SC027::                         WinMinimize,A                               ;C: minimize window
+    i::                             SaveMousPos("i",1)                          ;MF: Left click and save mouse position
+    j::                             Sendinput {Blind}{WheelDown 5}              ;MF: scroll wheel down
+    k::                             Sendinput {Blind}{WheelUp 5}                ;MF: scroll wheel Up
+    b::  ActivateApp("explorer.exe", "buffer_path", True)                       ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
+
 
   #IF GC("T_d",0) and WinActive("ahk_exe " exe["editor"]) ;-- -- -- -- -- -- -- 
     $^PgDn::             send +^!0                                              ; indent 1 space to left
@@ -106,8 +118,7 @@
     :X:L2~coding::       AddBorder("80", "-- ")                                 ;v: Add lvl 2 Border (default)
     :X:L3~coding::       AddBorder("80", "... ")                                ;v: Add lvl 3 Border (default)  
 
-    $+#space::                                                                  ; CB("~coding", lgreen)
-    ~*$#enter::
+    printscreen & space::
     #space::             CB("~coding", C.lgreen)                                ; CB("~coding", lgreen)
     
     $+^sc028::           FocusResults()                                         ; move focus to search results

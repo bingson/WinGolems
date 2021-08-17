@@ -5,8 +5,3 @@ AutoExecution_test:
 return ;________________________________________________________________________
 #IfWinActive
 
-
-; test code here
-
-#T:: msgbox, hello world
-

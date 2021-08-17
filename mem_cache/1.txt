@@ -1,1 +1,4 @@
-GC("Rsep1", "~")
+
+#IF WinActive("ahk_id " CB_hwnd)                                              ; If command Box active
+
+  #space::           GUISubmit()                                                ;CB: submit GUI input 

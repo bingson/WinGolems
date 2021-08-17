@@ -52,4 +52,9 @@
         #space::  CB("~pdf", C.lpurple)                                         ;pdf: opens command box that runs ~pdf suffix CB keys
     */
 
+/*  SAMPLE CODE: (mode switch) creates interface layer active only if there's a Command Box open, but not active 
+    #If WinActive("ahk_exe " exe["editor"]) and WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)
+    #If WinActive("ahk_exe " exe["editor"]) and WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd) and (GC("CB_sfx") == "~markdown")
+*/
+
 #If

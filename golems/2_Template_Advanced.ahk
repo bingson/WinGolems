@@ -4,15 +4,22 @@
 
   :X:ta~win::    
     CC("T_adv_opt","!")
-    PopUp("Advanced shortcuts: " GC("T_adv_opt"))                               ;Toggle: advanced hotkeys (2_Template_Advanced.ahk)
+    PopUp("Advanced shortcuts: " GC("T_adv_opt"))                               ;T: advanced hotkeys ON|OFF
     return
 
 ; CONVENIENCE___________________________________________________________________
 
-  #IF GC("T_adv_opt",0)                                                         ; if T_adv_opt = 1 advanced hotkeys are active, if not value for T_adv_opt, default = 0
+  #IF GC("T_adv_opt",0)                                                         ; if T_adv_opt = 1 advanced hotkeys are active, if no value for T_adv_opt, default = 0
+
+  :*:date*::                                                                    ;C: output current date
+    FormatTime, CurrentDateTime,, MMMM dd, yyyy
+    clip(CurrentDateTime)
+    return 
   
-  capslock::del                                                                 ;C: makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
-  ^capslock::                     Send {blind}{capslock}                        ;C: toggle capslock
+  +!sc00C::                       Send, {ASC 0150}                              ;C: dash: en (–)
+  !sc00C::                        Send, {ASC 0151}                              ;C: dash: em (—)
+  capslock::                      del                                           ;C: cl: makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
+  ^capslock::                     Send {blind}{capslock}                        ;C: cl: toggle capslock
   ^#Backspace::                   ReplaceBackspaceWithSpaces()                  ;C: Delete and replace selected text with blank spaces 
   ^#v::                           PasteOverwrite()                              ;C: paste and overwrite the same number of spaces (aka. overtype paste)
   +^u::                           ConvertUpper()                                ;C: capitalization: capitalize selected text
@@ -23,7 +30,6 @@
   ^#space::                       ReplaceAwithB()                               ;C: replace multiple consecutive spaces w/ one space in selected text
   !#enter::                       RemoveBlankLines()                            ;C: remove empty lines starting from selected text
   ^#sc027::                       Send {lwin down}d{lwin up}                    ;C: show desktop
-  !Backspace:: SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;C: Delete current line of text
   !sc033::     FunctionBox("MoveWin", MoveWin_DICT,C.bwhite,,MoveWin_DICT,0)    ;C: Move window to preset locations
 
 

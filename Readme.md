@@ -1,41 +1,234 @@
-A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A truly transformative interface is one that goes beyond automation by giving user the ability to solve problems that would be impossible to tackle otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
+A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A transformative interface goes beyond convenience by giving its user the ability to solve problems that would be impossible to solve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. After going through a short tutorial below, new users will be able to start building their own interface layers by modifying sample code in the quick start template  (no prior Autohotkey knowledge is assumed). Before investing any time into AHK, the quick start template below can be run as an executable.
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. Before investing time into learning AHK, new users can first try out some of these convenience functions through the quick start template below using the included executable file (no knowledge of AHK or software installation required). 
 
+The initial value provided by this repository will come from users adapting the code from the quick start template to alleviate common workflow frictions. 
 
-One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code below illustrates this by showing how easy it is to create 3 shortcuts for opening/reactivating a web browser using WinGolems convenience functions. 
+Example use cases:
+
+- When different applications have different shortcuts for the same operation (e.g., switching tabs using ctrl+tab vs ctrl+PgDn), users must remember application-specific information that could otherwise be standardized away. 
+
+- When ones hardware configuration doesn't play well with default application shortcuts—e.g., ctrl + PgUp and ctrl + PgDn combinations on my laptop keyboard are less convenient because I have to move one of my hands off of home row. 
+
+- When software developers assign prime keyboard real estate for less used operations, those choices are anathema to user-centered design. Common sense dictates that the most frequently performed operations are the easiest to execute and vice versa. E.g., Win + F opens the feedback reporting dialog in Windows by default.
+
+ As Satya Nadella's proclaimed in his [recent Windows 11 remarks](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit ones needs (i.e., hardware setup and ergonomic preferences).  
+
+To modify the quick start template, AutoHotkey must be installed. Within this repository the code for the creation of interface layers (i.e., interface templates) is kept in separate files from the code used to execute the desired task (i.e., function libraries). To reduce the AHK knowledge necessary to use WinGolems, template files are limited to code that assigns hotstrings or keyboard shortcuts (aka. hotkeys) to WinGolem function calls or AHK code that does not exceed 1 line. 
 
 ```ahk
-                                    ; Open web browser by 
-    :X:c~win::                      ; 1. typing "c~win" <space>
-    #s:: ActivateApp("html_path")   ; 2. pressing "win + s" 
-                                    ; 3. submitting "c" in a "~win" command box
-                                
+                                          ; Open or reactivate a web browser by 
+    #s::                                  ; (1) pressing "win + s" 
+    :X:c~win:: ActivateApp("html_path")   ; (2) typing "c~win" <space> anywhere in windows (hotstring)
+                                          ; (3) entering "c" in a CommandBox("~win")
 ```
+One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening or reactivating a web browser window through the WinGolems function ActivateApp(). After going through a short tutorial below, new users will be able to adapt the quick start template to their workflow.
+
 
 ## Quick Start Template
-
-The initial value provided by this repository will come from users adapting code from the quick start template to alleviate workflow frictions. For example, when different applications have different shortcuts for the same operation (e.g., switching tabs using ctrl+tab vs ctrl+PgDn), users must remember application-specific information that could be standardized away. Adding on to that example, what if your laptop keyboard has hard to reach PgUp/PgDn placement? A related issue arises when software developers reserve prime keyboard real estate for less useful operations. It makes no sense that the home row keyboard combination Win + F opens the feedback reporting dialog in Windows. Common sense dictates that the most frequently performed operations should be the easiest to execute and vice versa. 
-I couldn't agree more with Satya Nadella's recent remarks on [Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit WinGolems provides premade AHK functions for re-engineering Windows application interfaces to better suit ones hardware and ergonomic preferences.  
-
-No knowledge of programming or AHK is necessary to use the quick start template below. <br>
-Simply run "WinGolems.exe" with administrative privileges
-<br><img src="assets\Screens\wingolems_exe.png" width="500">
-
+<table>
+<tr>
+<td>
 <center>
-<h2> Quick Start Template Keyboard Shortcuts <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
-<br>
+<h2> Quick Start Template Highlights <br><img src="assets\Screens\QuickStartHotkeys.png" width="1000"> </h2>
 </center>
 
-Click here for a full 
 
+<details><summary><font color = 'orange'><b>Click to see full List of Quick Start Hotkeys</b></font></summary>
+<br>
 
+```
+SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
+ sc027 = {;:}    sc028 = {"'}    sc029 = {`~}     sc033 = {,<}      sc02b = {\|}
 
-Within the WinGolems folder the code for the creation of interface elements (i.e., interface templates) is kept in separate files from the code used to execute the underyling task (i.e., function libraries). 
+ sc034 = {.>}    sc035 = {/?}    sc00D = {=+}     sc00C = {-_} 
 
+ sc01a or b = {[} or {]} 
 
-most of WinGolem's convenience functions, a new user only needs to understand how to modify code samples in quick start interface template, which requires only going through  https://www.autohotkey.com/docs/Tutorial.htm#s2
+==o====o====o====o====o== 1_TEMPLATE_QUICKSTART ==o====o====o====o====o====o
+ Win+A                   AA: Activate Default Editor
+ Win+W                   AA: Activate Word
+ Win+E                   AA: Activate Excel
+ Win+B                   AA: Activate File Explorer
+ Win+D                   AA: Activate PDF Viewer
+ Win+Q                   AA: Activate PowerPoint
+ Win+S                   AA: Activate Web Browser
+ Win+F                   AA: Activate previously saved window ID
+ Win+X                   AA: Activate previously saved window ID
+ Win+Z                   AA: Activate previously saved window ID
+ Win+C                   AA: Activate previously saved window ID
+ Ctrl+Win+F              AA: Save window ID for subsequent activation 
+ Ctrl+Win+C              AA: Save window ID for subsequent activation 
+ Ctrl+Win+Z              AA: Save window ID for subsequent activation 
+ Ctrl+Win+X              AA: Save window ID for subsequent activation 
+ Ctrl+Win+W              C: close active window
+ Ctrl+Win+Q              C: close all instances of the active program
+ Alt+Backspace           C: Delete current line of text
+ Win+Sc035               C: google search selected text
+ Win+Sc028               C: maximize window
+ Ctrl+Alt+Space          C: maximize window
+ Win+Sc027               C: minimize window
+ Alt+Sc034               C: move window btn monitors
+ Win+Space               C: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
+ Lwin Up                 C: start: makes windows key inert so it can act as a modifier key
+ *Lwin                   C: start: makes windows key inert so it can act as a modifier key
+ Ctrl+Win+Enter          C: start: open start menu (alt: Ctrl+Esc)
+ Win+Lbutton             C: start: open start menu (alt: Ctrl+Esc)
+ Win+Capslock            C: rotate through active program instances starting from newest
+ Shift+Alt+Capslock      C: rotate through active program instances starting from newest
+ Shift+Win+Capslock      C: rotate through active program instances starting from oldest
+ Alt+Capslock            C: rotate through active program instances starting from oldest
+ Ctrl+Sc027              C: simulate appkey
+ Alt+Sc027               C: simulate esc key (alt + semicolon)
+ Alt+Win+B               C: system: bluetooth settings (reassign less used windows system shortcuts)
+ Alt+Win+D               C: system: display settings
+ Alt+Win+N               C: system: notification window
+ Alt+Win+P               C: system: presentation display mode
+ Alt+Win+R               C: system: run program
+ Alt+Win+I               C: system: windows settings
+ Win+Ins                 C: Window always on top: OFF
+ Win+Del                 C: Window always on top: ON
+ Ctrl+Alt+J              C: zoom in (simulate: ctrl + plus)
+ Ctrl+Alt+K              C: zoom out (simulate: ctrl + minus)
+ Leftctrl+Space          CB: activate CB if exists and move focus to inputbox
+ Rightctrl+Space         CB: activate CB if exists and move focus to inputbox
+ Alt+S                   CB: move CB window to bottom half
+ Alt+Z                   CB: move CB window to bottom left
+ Alt+C                   CB: move CB window to bottom right
+ Alt+A                   CB: move CB window to left half
+ Win+Left                CB: move CB window to left half
+ Alt+D                   CB: move CB window to right half
+ Win+Right               CB: move CB window to right half
+ Alt+W                   CB: move CB window to top half
+ Alt+Q                   CB: move CB window to top left
+ Alt+E                   CB: move CB window to top right
+ Alt+R                   CB: reenter last command
+ Win+Space               CB: submit GUI input
+ Alt+X                   CB: toggle Command Box display|minimalist mode
+ Ctrl+Win+0              MF: add selected text to the bottom of 0.txt
+ Ctrl+Win+1              MF: add selected text to the bottom of 1.txt
+ Ctrl+Win+2              MF: add selected text to the bottom of 2.txt
+ Ctrl+Win+3              MF: add selected text to the bottom of 3.txt
+ Ctrl+Win+4              MF: add selected text to the bottom of 4.txt
+ Ctrl+Win+5              MF: add selected text to the bottom of 5.txt
+ Ctrl+Win+6              MF: add selected text to the bottom of 6.txt
+ Ctrl+Win+7              MF: add selected text to the bottom of 7.txt
+ Ctrl+Win+8              MF: add selected text to the bottom of 8.txt
+ Ctrl+Win+9              MF: add selected text to the bottom of 9.txt
+ Ctrl+Win+Lbutton        MF: mouse: double click and paste contents of 1.txt at cursor position
+ Win+Alt+Lbutton         MF: mouse: paste contents of single digit .txt file entered at prompt
+ Shift+Win+0             MF: overwrite 0.txt with selected text
+ Shift+Win+1             MF: overwrite 1.txt with selected text
+ Shift+Win+2             MF: overwrite 2.txt with selected text
+ Shift+Win+3             MF: overwrite 3.txt with selected text
+ Shift+Win+4             MF: overwrite 4.txt with selected text
+ Shift+Win+5             MF: overwrite 5.txt with selected text
+ Shift+Win+6             MF: overwrite 6.txt with selected text
+ Shift+Win+7             MF: overwrite 7.txt with selected text
+ Shift+Win+8             MF: overwrite 8.txt with selected text
+ Shift+Win+9             MF: overwrite 9.txt with selected text
+ Win+0                   MF: paste contents of 0.txt
+ Win+1                   MF: paste contents of 1.txt
+ Win+2                   MF: paste contents of 2.txt
+ Win+3                   MF: paste contents of 3.txt
+ Win+4                   MF: paste contents of 4.txt
+ Win+5                   MF: paste contents of 5.txt
+ Win+6                   MF: paste contents of 6.txt
+ Win+7                   MF: paste contents of 7.txt
+ Win+8                   MF: paste contents of 8.txt
+ Win+9                   MF: paste contents of 9.txt
+ Win+P                   N: Ctrl + end
+ Win+O                   N: Ctrl + Home
+ Ctrl+Alt+L              N: End
+ Ctrl+Alt+H              N: Home
+ Win+J                   N: scroll wheel down
+ Win+Rightalt+H          N: scroll wheel left
+ Win+Rightalt+L          N: scroll wheel right
+ Win+K                   N: scroll wheel Up
+ Alt+B                   N: universal navigate to left tab
+ Alt+Space               N: universal navigate to right tab
+
+==o====o====o====o====o== 2_TEMPLATE_ADVANCED ==o====o====o====o====o====o== 
+Advanced shortcuts below must be turned on by typing "ta~win" anywhere in windows.
+
+ Shift+Ctrl+U            C: capitalization: capitalize selected text
+ Shift+Alt+U             C: capitalization: convert selected text to lower case
+ Ctrl+Alt+Shift+U        C: capitalization: Every First Letter Capitalized
+ Ctrl+Alt+U              C: capitalization: First letter capitalized
+ Ctrl+Win+Backspace      C: Delete and replace selected text with blank spaces
+ Capslock                C: cl: makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
+ Ctrl+Capslock           C: cl: toggle capslock
+ Alt+Sc033               C: Move window to preset locations
+ <HS>  date*             C: output current date
+ Ctrl+Win+V              C: paste and overwrite the same number of spaces (aka. overtype paste)
+ Alt+Win+Space           C: remove all spaces from selected text
+ Alt+Win+Enter           C: remove empty lines starting from selected text
+ Ctrl+Win+Space          C: replace multiple consecutive spaces w/ one space in selected text
+ Ctrl+Win+Sc027          C: show desktop
+ Ctrl+I                  FE groups: group by date
+ Ctrl+O                  FE groups: group by file type
+ Rightalt+Space          FE panes: move focus to current folder pane
+ Leftalt+Space           FE panes: move focus to navigation pane
+ Alt+Z                   FE panes: toggle navigation pane
+ Ctrl+P                  FE panes: toggle preview plane
+ Alt+Sc027               FE view: detailed file info with resized columnsnmn
+ Leftctrl+K              FE view: sort by date modified
+ Leftctrl+J              FE view: sort by name
+ Rightctrl+K             FE view: sort by size
+ Rightctrl+J             FE view: sort by type
+ Ctrl+H                  FE view: toggle hide/unhide invisible files
+ Ctrl+S                  FE: select files by regex
+ Shift+Alt+C             FE: store file path(s) of selected file(s) in clipboard
+ Shift+Ctrl+Lbutton      MF: click thrice, paste clipboard
+ Ctrl+Alt+Lbutton        MF: click twice, paste clipboard
+ *Win+I                  MF: Left click and save mouse position
+ Alt+I                   MF: mouse middle click
+ Printscreen & Sc028     MF: mouse Right click
+ Win+Sc028               MF: mouse Right click
+ Alt+Win+J               MF: move mouse cursor to bottom edge
+ Ralt & Lalt             MF: move mouse cursor to BOTTOM LEFT of active app
+ Lalt & Ralt             MF: move mouse cursor to BOTTOM RIGHT of active app
+ Alt+Win+H               MF: move mouse cursor to Left edge
+ Alt+Win+L               MF: move mouse cursor to Right edge
+ Alt+Win+K               MF: move mouse cursor to top edge
+ *Ctrl+Win+I             MF: Move to saved mouse position and left click
+ Win+J                   MF: scroll wheel down
+ Win+Rightalt+H          MF: scroll wheel left
+ Win+Rightalt+L          MF: scroll wheel right
+ Win+K                   MF: scroll wheel Up
+ Ctrl+Alt+J              MF: zoom in
+ Ctrl+Alt+K              MF: zoom out
+ *Alt+J                  NT: Down
+ Win+H                   NT: jump to next word; simulate ctrl+Left
+ Win+L                   NT: jump to next word; simulate ctrl+Right (must disable win+L lock key combo with "lf~win") 
+ Alt+H                   NT: Left
+ Alt+L                   NT: Right
+ *Alt+K                  NT: Up
+ Shift+Alt+J             ST: extend selection down  1 row
+ Shift+Win+J             ST: extend selection down  1 row
+ Shift+Alt+H             ST: extend selection Left  1 character
+ Shift+Win+H             ST: extend selection Left  1 word
+ Shift+Alt+L             ST: extend selection Right 1 character
+ Shift+Win+L             ST: extend selection Right 1 word
+ Shift+Win+K             ST: extend selection up    1 row
+ Shift+Alt+K             ST: extend selection up    1 row
+ Ctrl+Win+K              ST: select all above
+ Ctrl+Win+J              ST: select all below
+ Shift+Alt+F             ST: select current line starting from begining of line
+ Ctrl+Alt+F              ST: select line starting from end of line
+ Ctrl+Win+H              ST: select to beginning of line
+ Ctrl+Win+L              ST: select to end of line
+ Shift+Ctrl+K            ST: select to line above
+ Shift+Ctrl+J            ST: select to next line
+ Alt+F                   ST: select word at text cursor position
+
+```
+</p>
+</details>
+
+</tr>
+</td>
 
 
 <br>
@@ -51,7 +244,7 @@ most of WinGolem's convenience functions, a new user only needs to understand ho
 </table>
 
 
-## <details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
+<details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
 <p>
 
 ```
@@ -318,3 +511,5 @@ The overarching goal of this project was reduce
  
 
 
+<center><img src="assets\Screens\wingolems_exe.png" width="400"></center>
+modify code samples in quick start interface template  https://www.autohotkey.com/docs/Tutorial.htm#s2

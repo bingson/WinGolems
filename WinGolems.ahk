@@ -1,23 +1,23 @@
 
 ; INITIALIZATION (start of auto-execution section) _____________________________
   ; SCRIPT CONFIG -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-   ; explained: https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
-   SetWorkingDir %A_ScriptDir%#MaxHotkeysPerInterval 99000000
-   SetBatchLines -1
-   ListLines Off                                                                ; ListLines/KeyHistory are used to log keys for debugging
-   #KeyHistory 0                                                                ; higher number for debugging
-   #UseHook
-   #InstallKeybdHook                                                            ; The keyboard hook monitors keystrokes for the purpose of activating hotstrings and any keyboard hotkeys
-   #InstallMouseHook                                                            ; The mouse hook monitors mouse clicks for the purpose of activating mouse hotkeys and facilitating hotstrings.
-   #Singleinstance Force                                                        ; only one instance of this script can be active
-   Process, Priority, , A
-   SetKeyDelay, 10, 10
-   SetMouseDelay, 10                                                            ; mouse click commands become less reliable at lower settings
-   SetDefaultMouseSpeed, 0
-   SetWinDelay, 10
-   SetControlDelay, 20
-   SendMode Event
-
+    ; explained: https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
+    SetWorkingDir %A_ScriptDir%#MaxHotkeysPerInterval 99000000
+    SetBatchLines -1
+    ListLines Off                                                               ; ListLines/KeyHistory are used to log keys for debugging
+    #KeyHistory 0                                                               ; change to a higher number for debugging
+    #UseHook
+    #InstallKeybdHook                                                           ; The keyboard hook monitors keystrokes for the purpose of activating hotstrings and any keyboard hotkeys
+    #InstallMouseHook                                                           ; The mouse hook monitors mouse clicks for the purpose of activating mouse hotkeys and facilitating hotstrings.
+    #Singleinstance Force                                                       ; only one instance of this script can be active
+    Process, Priority, , A
+    SetKeyDelay, 10, 10
+    SetMouseDelay, 10                                                           ; mouse click commands become less reliable at lower settings
+    SetDefaultMouseSpeed, 0
+    SetWinDelay, 10
+    SetControlDelay, 20
+    SendMode Event
+ 
   ; GLOBAL VARIABLES -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
     #NoEnv                                                                      ; prevents empty variables from being looked up as potential environment variables
@@ -58,7 +58,7 @@
 #Include *i 1_Template_QuickStart.ahk
 #Include *i 2_Template_Advanced.ahk
 #Include *i 3_Template_ApplicationSpecific.ahk
-#Include *i Test.ahk
+#Include *i Test.ahk                                                            ;j test new code here
 
 #Include *i %A_ScriptDir%\..\Google Drive\secure
 #Include *i mm.ahk                                    
@@ -68,10 +68,6 @@
 #Include *i office.ahk
 #Include *i obsidian.ahk     
 #Include *i chrome.ahk     
-
-
-
-
 
 /* #INCLUDE MECHANICS ********************************************************** 
  * Start.ahk:

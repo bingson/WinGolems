@@ -3,10 +3,10 @@
 
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
  
-  ^#z::              s("{blind}"), SaveWinID("z")                               ;AA: Save window ID for subsequent activation w/ win + r
-  ^#x::              s("{blind}"), SaveWinID("x")                               ;AA: Save window ID for subsequent activation w/ win + t
-  ^#c::              s("{blind}"), SaveWinID("c")                               ;AA: Save window ID for subsequent activation w/ win + g
-  ^#f::              s("{blind}"), SaveWinID("f")                               ;AA: Save window ID for subsequent activation w/ win + g
+  ^#z::              s("{blind}"), SaveWinID("z")                               ;AA: Save window ID for subsequent activation 
+  ^#x::              s("{blind}"), SaveWinID("x")                               ;AA: Save window ID for subsequent activation 
+  ^#c::              s("{blind}"), SaveWinID("c")                               ;AA: Save window ID for subsequent activation 
+  ^#f::              s("{blind}"), SaveWinID("f")                               ;AA: Save window ID for subsequent activation 
   #z::               s("{blind}"), ActivateWinID("z")                           ;AA: Activate previously saved window ID
   #x::               s("{blind}"), ActivateWinID("x")                           ;AA: Activate previously saved window ID
   #c::               s("{blind}"), ActivateWinID("c")                           ;AA: Activate previously saved window ID
@@ -25,8 +25,9 @@
   */
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
-  ; hotkey modifier keys (+#^) can be swapped around for the below memory function hotkeys, 
-  ; however the assignment must end in the numbers 0-9 
+  ; modifier keys (+#^) can be swapped around to change the key combinations
+  ; to call the below memory function but must always end in the numbers 0-9 
+  
   
   +#0::                                                                         ;MF: overwrite 0.txt with selected text 
   +#9::                                                                         ;MF: overwrite 9.txt with selected text 
@@ -66,30 +67,32 @@
  
 ; CONVENIENCE (ORANGE) _________________________________________________________
   
-  #space::           CB("~win")                                                 ;C: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
   #SC035::           search()                                                   ;C: google search selected text
   #sc028::                                                                      ;C: maximize window
   ^!space::          s("{blind}"), MaximizeWin()                                ;C: maximize window
   #SC027::           WinMinimize,A                                              ;C: minimize window
-  #del::             AlwaysOnTop(1)                                             ;C: Always on top: ON
-  #ins::             AlwaysOnTop(0)                                             ;C: Always on top: OFF 
-  +#capslock::                                                                  ;C: rotate through active program instances starting from oldest
-  !capslock::        s("{blind}"), ActivatePrevInstance()                       ;C: rotate through active program instances starting from oldest
-  +!capslock::                                                                  ;C: rotate through active program instances starting from newest
-  #capslock::        s("{blind}"), ActivateNextInstance()                       ;C: rotate through active program instances starting from newest
+  #del::             AlwaysOnTop(1)                                             ;C: Window always on top: ON
+  #ins::             AlwaysOnTop(0)                                             ;C: Window always on top: OFF 
+  +#capslock::                                                                  ;C: rotate through application instances starting from oldest
+  !capslock::        s("{blind}"), ActivatePrevInstance()                       ;C: rotate through application instances starting from oldest
+  +!capslock::                                                                  ;C: rotate through application instances starting from newest
+  #capslock::        s("{blind}"), ActivateNextInstance()                       ;C: rotate through application instances starting from newest
   !SC027::           Send {esc}                                                 ;C: simulate esc key (alt + semicolon)
   ^SC027::           Send {AppsKey}                                             ;C: simulate appkey 
   ^#w::              WinClose,A                                                 ;C: close active window 
   ^#q::              CloseClass()                                               ;C: close all instances of the active program
-  *LWin::            Send {Blind}{LWin Down}                                    ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-  LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  *LWin::            Send {Blind}{LWin Down}                                    ;C: start: makes windows key inert so it can act as a modifier key 
+  LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;C: start: makes windows key inert so it can act as a modifier key
+  #Lbutton::                                                                    ;C: start: open start menu (alt: Ctrl+Esc)
+  $^#Enter::         send ^{esc}                                                ;C: start: open start menu (alt: Ctrl+Esc)
   ~lwin & ~rshift::  CursorJump("C")                                            ;C: move mouse cursor to center of active application window
   !sc034::           moveWinBtnMonitors()                                       ;C: move window btn monitors
   $^!j::             s("{blind}"), s("^{sc00D}")                                ;C: zoom in (simulate: ctrl + plus)
   $^!k::             s("{blind}"), s("^{sc00C}")                                ;C: zoom out (simulate: ctrl + minus)
+  !Backspace:: SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;C: Delete current line of text
 
-                                                                                ; reassign less used windows system shortcuts
-  !#b::              BluetoothSettings()                                        ;C: system: bluetooth settings 
+                                                                                
+  !#b::              BluetoothSettings()                                        ;C: system: bluetooth settings (reassign less used windows system shortcuts)
   !#d::              DisplaySettings()                                          ;C: system: display settings
   !#n::              NotificationWindow()                                       ;C: system: notification window
   !#r::              RunProgWindow()                                            ;C: system: run program
@@ -98,8 +101,8 @@
 
 ; NAVIGATION (PURPLE) __________________________________________________________
 
-  #j::               Sendinput {Blind}{WheelDown 2}                                    ;N: scroll wheel down                                               
-  #k::               Sendinput {Blind}{WheelUp 2}                                      ;N: scroll wheel Up           
+  #j::               Sendinput {Blind}{WheelDown 2}                             ;N: scroll wheel down
+  #k::               Sendinput {Blind}{WheelUp 2}                               ;N: scroll wheel Up
   $#>!h::            Sendinput {Blind}{Wheelleft 6}                             ;N: scroll wheel left
   $#>!l::            Sendinput {Blind}{WheelRight 6}                            ;N: scroll wheel right
       
@@ -111,7 +114,9 @@
   !b::               send ^{PgUp}                                               ;N: universal navigate to left tab
   !space::           s("{blind}"), s("^{PgDn}")                                 ;N: universal navigate to right tab
 
-; CB hotkeys ___________________________________________________________________; shared by all Command Boxes 
+; COMMAND BOX ___________________________________________________________________; shared by all Command Boxes 
+
+  #space::           CB("~win")                                                 ;C: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
 
   #IF WinActive("ahk_id " CB_hwnd)                                              ; If command Box active
   
@@ -126,10 +131,10 @@
   #right::                                                                      ;CB: move CB window to right half
   !d::               MoveWin("R")                                               ;CB: move CB window to right half
   #space::           GUISubmit()                                                ;CB: submit GUI input 
-  $!x::              ToggleDisplay()                                            ;CB: toggle Command Box display/minimalist mode
+  $!x::              ToggleDisplay()                                            ;CB: toggle Command Box display|minimalist mode
   !r::               GUIRecall()                                                ;CB: reenter last command
   
-  #IF WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)             ; If command Box exists
+  #IF WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)             ; If command Box exists but not active
   
   $<^space::                                                                    ;CB: activate CB if exists and move focus to inputbox
   $>^space::         ActivateWin("ahk_id " CB_hwnd)                             ;CB: activate CB if exists and move focus to inputbox
