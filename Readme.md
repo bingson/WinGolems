@@ -33,10 +33,10 @@ The quick start template has working code examples that illustrate how to create
 ```
 One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating a web browser window through the WinGolems function ActivateApp(). After going through a short tutorial below, new users will be able to adapt the quick start template to their particular workflow.
 
+<h3> Starting Keyboard Shortcuts </h3><br> 
 <table>
 <tr>
     <td>
-        <h3> Starting Keyboard Shortcuts </h3><br> 
         <img src="assets\Screens\QuickStartHotkeys.png" width="1000"> 
     </td>
 </tr>
