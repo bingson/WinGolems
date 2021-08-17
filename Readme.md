@@ -10,7 +10,7 @@ WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I
 
 The initial value provided by this repository will come from users adapting the code from the quick start template to alleviate common workflow frictions. 
 
-### Example use cases:
+##### Example use cases:
 
 - When different applications have different shortcuts for the same operation, users must remember application-specific information that could otherwise be standardized away—e.g., switching tabs with `ctrl + tab` versus `ctrl + PgDn`. 
 
@@ -21,7 +21,7 @@ The initial value provided by this repository will come from users adapting the 
  As Satya Nadella's proclaimed in his [recent on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit a users needs (i.e., particular hardware setup and ergonomic preferences).  
 
 
-## Quick Start Template:
+## Quick Start Template Overview:
 
 The quick start template has working code examples that illustrate how to create interface layers and connect them to WinGolems' function library. To modify the quick start template, AutoHotkey must be installed. Within the WinGolems folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to execute the desired task (i.e., function libraries). To reduce the AHK or programming knowledge to use WinGolems convenience functions, new users will only need to understand how to modify template files which are limited to code that assigns hotstrings and hotkeys (keyboard shortcuts) to function calls (or AHK code that doesn't exceed 1 line). 
 
@@ -31,15 +31,17 @@ The quick start template has working code examples that illustrate how to create
     :X:c~win:: ActivateApp("html_path")   ; (2) typing "c~win" <space> anywhere in windows (hotstring)
                                           ; (3) entering "c" in a CommandBox("~win")
 ```
-One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating a web browser window through the WinGolems function ActivateApp(). After going through a short tutorial below, new users will be able to adapt the quick start template to their particular workflow.
+One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating a web browser window through the WinGolems function ActivateApp(). 
 
-<h3> Starting Keyboard Shortcuts: </h3>
+<h3> Quick Start Keyboard Shortcuts: </h3>
 <table>
 <tr>
     <td>
         <img src="assets\Screens\QuickStartHotkeys.png" width="1000"> 
     </td>
 </tr>
+
+Reading through the short section on [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2) for the AHK beginner tutorial (around 10 minutes) is all a new user needs to know to modify interface layers in the quick start template.
 
 <tr>
     <td>
@@ -240,7 +242,14 @@ Advanced shortcuts below must be turned on by typing "ta~win" anywhere in window
 </tr>
 </table>
 
-<h3> Command Box </h3><br></td>
+<h3> Command Box </h3>
+
+The command box was initially created as part of the memory system. 
+
+started off as an always-on-top text file viewer to 
+
+At some point, you run out of easily accessible keyboard shortcut combinations  
+
 <table>
 <tr>
     <td><img src="assets\Screens\minimal.png" width="600"> </td>
@@ -433,7 +442,6 @@ The code for the quick start interface template below is provided.
 
 ## GETTING STARTED
 
-  
 ### 1. &nbsp; Install Dependencies
  <ul>
    <li>
@@ -512,7 +520,10 @@ pdf_path
 ## Usage
 
 The overarching goal of this project was reduce 
- 
+## Tutorial Section
+
+
+
 ## Help
 
 * Open <a href="https://github.com/bingson/WinGolems/blob/master/HotKey_List.txt" title="title">HotKey_List.txt</a> for a list of hotkeys 
