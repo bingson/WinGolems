@@ -1,8 +1,6 @@
-<center>
+<div style="text-align:center"><img src="assets\Screens\WGLc.png" width="300"></div>
 
-<img src="assets\Screens\WGLc.png" width="300">
 
-</center> 
 
 A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A transformative interface goes beyond convenience by giving its user the ability to solve problems that would be impossible to solve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
@@ -239,11 +237,12 @@ Advanced shortcuts below must be turned on by typing "ta~win" anywhere in window
 <table>
 <tr>
     <td><img src="assets\Screens\minimal.png" width="600"> </td>
-    <td><img src="assets\Screens\display.png" width="600"> </td>
+    <td><img src="assets\Screens\Display.png" width="600"> </td>
 </tr>
+
 <tr>
-    <td><center>minimal mode: "tm~win" </center></td>
-    <td><center>display mode: "tm~win" </center></td>
+    <td><center>minimal mode toggle: alt + x  </center></td>
+    <td><center>display mode toggle: alt + x  </center></td>
 </tr>
 </table>
 
