@@ -12,13 +12,13 @@
   #c::               s("{blind}"), ActivateWinID("c")                           ;ActvateApp: Activate previously saved window ID
   #f::               s("{blind}"), ActivateWinID("f")                           ;ActvateApp: Activate previously saved window ID
      
-  #q::               s("{blind}"), ActivateApp("ppt_path")                      ;ActvateApp: Activate Powerpoint
-  #w::               s("{blind}"), ActivateApp("doc_path")                      ;ActvateApp: Activate Word
-  #e::               s("{blind}"), ActivateApp("xls_path")                      ;ActvateApp: Activate Excel
-  #a::               s("{blind}"), ActivateApp("editor_path")                   ;ActvateApp: Activate default editor
-  #s::               s("{blind}"), ActivateApp("html_path")                     ;ActvateApp: Activate web browser
-  #d::               s("{blind}"), ActivateApp("pdf_path")                      ;ActvateApp: Activate pdf viewer
-  #b::               s("{blind}"), ActivateApp("explorer.exe")                  ;ActvateApp: Activate File explorer         
+  #q::               s("{blind}"), ActivateApp("ppt_path")                      ;ActvateApp:1 Activate Powerpoint
+  #w::               s("{blind}"), ActivateApp("doc_path")                      ;ActvateApp:1 Activate Word
+  #e::               s("{blind}"), ActivateApp("xls_path")                      ;ActvateApp:1 Activate Excel
+  #a::               s("{blind}"), ActivateApp("editor_path")                   ;ActvateApp:1 Activate default editor
+  #s::               s("{blind}"), ActivateApp("html_path")                     ;ActvateApp:1 Activate web browser
+  #d::               s("{blind}"), ActivateApp("pdf_path")                      ;ActvateApp:1 Activate pdf viewer
+  #b::               s("{blind}"), ActivateApp("explorer.exe")                  ;ActvateApp:1 Activate File explorer         
   
   /* SAMPLE CODE                                                                          
   #x::         s("{blind}"), ActivateApp("Convenience:\Everything\Everything.exe")        ;ActvateApp: e.g., accepts full file path

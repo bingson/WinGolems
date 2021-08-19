@@ -7,23 +7,23 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  sc01a or b = {[} or {]} 
 
 ==o====o====o====o====o== 1_TEMPLATE_QUICKSTART ==o====o====o====o====o====o
- Win+A                   ActvateApp: Activate default editor
- Win+E                   ActvateApp: Activate Excel
- Win+B                   ActvateApp: Activate File explorer
- Win+D                   ActvateApp: Activate pdf viewer
- Win+Q                   ActvateApp: Activate Powerpoint
+ Win+X                   ActvateApp: Activate previously saved window ID
+ Win+C                   ActvateApp: Activate previously saved window ID
  Win+F                   ActvateApp: Activate previously saved window ID
  Win+Z                   ActvateApp: Activate previously saved window ID
- Win+C                   ActvateApp: Activate previously saved window ID
- Win+X                   ActvateApp: Activate previously saved window ID
- Win+S                   ActvateApp: Activate web browser
- Win+W                   ActvateApp: Activate Word
  Ctrl+Win+C              ActvateApp: Save window ID for subsequent activation
  Ctrl+Win+Z              ActvateApp: Save window ID for subsequent activation
- Ctrl+Win+F              ActvateApp: Save window ID for subsequent activation
  Ctrl+Win+X              ActvateApp: Save window ID for subsequent activation
- Rightctrl+Space         CommandBox: activate CB if exists and move focus to inputbox
- Leftctrl+Space          CommandBox: activate CB if exists and move focus to inputbox
+ Ctrl+Win+F              ActvateApp: Save window ID for subsequent activation
+ Win+A                   ActvateApp:1 Activate default editor
+ Win+E                   ActvateApp:1 Activate Excel
+ Win+B                   ActvateApp:1 Activate File explorer
+ Win+D                   ActvateApp:1 Activate pdf viewer
+ Win+Q                   ActvateApp:1 Activate Powerpoint
+ Win+S                   ActvateApp:1 Activate web browser
+ Win+W                   ActvateApp:1 Activate Word
+ Rightctrl+Space        CommandBox: activate CB if exists and move focus to inputbox
+ Leftctrl+Space         CommandBox: activate CB if exists and move focus to inputbox
  Alt+S                   CommandBox: move CB window to bottom half
  Alt+Z                   CommandBox: move CB window to bottom left
  Alt+C                   CommandBox: move CB window to bottom right
@@ -36,7 +36,7 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Alt+E                   CommandBox: move CB window to top right
  Alt+R                   CommandBox: reenter last command
  Win+Space               CommandBox: submit GUI input
- Alt+X                   CommandBox: toggle Command Box display|minimalist mode
+ Alt+X                  CommandBox: toggle Command Box display|minimalist mode
  Ctrl+Win+W              Convenience: close active window
  Ctrl+Win+Q              Convenience: close all instances of the active program
  Alt+Backspace           Convenience: Delete current line of text
@@ -56,11 +56,11 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Alt+Sc027               Convenience: simulate esc key (alt + semicolon)
  Win+Ins                 Convenience: Window always on top: OFF
  Win+Del                 Convenience: Window always on top: ON
- Ctrl+Alt+J              Convenience: zoom in (simulate: ctrl + plus)
- Ctrl+Alt+K              Convenience: zoom out (simulate: ctrl + minus)
+ Ctrl+Alt+J             Convenience: zoom in (simulate: ctrl + plus)
+ Ctrl+Alt+K             Convenience: zoom out (simulate: ctrl + minus)
  *Lwin                   Convenience:1 makes windows key inert so it can act as a modifier key
  Lwin Up                 Convenience:1 makes windows key inert so it can act as a modifier key
- Ctrl+Win+Enter          Convenience:1 open start menu (alt: Ctrl+Esc)
+ Ctrl+Win+Enter         Convenience:1 open start menu (alt: Ctrl+Esc)
  Win+Lbutton             Convenience:1 open start menu (alt: Ctrl+Esc)
  Alt+Win+B               Convenience:2 bluetooth settings (reassign less used windows sys shortcuts)
  Alt+Win+D               Convenience:2 display settings
@@ -105,15 +105,13 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  Ctrl+Alt+L              Navigation: End
  Ctrl+Alt+H              Navigation: Home
  Win+J                   Navigation: scroll wheel down
- Win+Rightalt+H          Navigation: scroll wheel left
- Win+Rightalt+L          Navigation: scroll wheel right
+ Win+Rightalt+H         Navigation: scroll wheel left
+ Win+Rightalt+L         Navigation: scroll wheel right
  Win+K                   Navigation: scroll wheel Up
  Alt+B                   Navigation: universal navigate to left tab
  Alt+Space               Navigation: universal navigate to right tab
 
 ==o====o====o====o====o== 2_TEMPLATE_ADVANCED ==o====o====o====o====o====o==
-Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
-
  Rightshift+C            ChgFolder: %Homedrive% (C:)
  Rightshift+U            ChgFolder: %UserProfile%
  Rightshift+Sc029        ChgFolder: AHK folder
@@ -158,7 +156,7 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
  Ctrl+P                  FileExplorer: toggle preview plane
  Alt+Sc027               FileExplorer:1 detailed file info with resized columnsnmn
  Ctrl+S                  FileExplorer:1 select files by regex
- Shift+Alt+C             FileExplorer:1 store file path(s) of selected file(s) in clipboard
+ Shift+Alt+C            FileExplorer:1 store file path(s) of selected file(s) in clipboard
  Ctrl+H                  FileExplorer:1 toggle hide/unhide invisible files
  Shift+Ctrl+Lbutton      MouseFn: click thrice, paste clipboard
  Ctrl+Alt+Lbutton        MouseFn: click twice, paste clipboard
@@ -166,42 +164,42 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
  Alt+I                   MouseFn: mouse middle click
  Printscreen & Sc028     MouseFn: mouse Right click
  Win+Sc028               MouseFn: mouse Right click
- Alt+Win+J               MouseFn: move mouse cursor to bottom edge
+ Alt+Win+J              MouseFn: move mouse cursor to bottom edge
  Ralt & Lalt             MouseFn: move mouse cursor to BOTTOM LEFT of active app
  Lalt & Ralt             MouseFn: move mouse cursor to BOTTOM RIGHT of active app
- Alt+Win+H               MouseFn: move mouse cursor to Left edge
- Alt+Win+L               MouseFn: move mouse cursor to Right edge
- Alt+Win+K               MouseFn: move mouse cursor to top edge
+ Alt+Win+H              MouseFn: move mouse cursor to Left edge
+ Alt+Win+L              MouseFn: move mouse cursor to Right edge
+ Alt+Win+K              MouseFn: move mouse cursor to top edge
  *Ctrl+Win+I             MouseFn: Move to saved mouse position and left click
  Win+J                   MouseFn: scroll wheel down
- Win+Rightalt+H          MouseFn: scroll wheel left
- Win+Rightalt+L          MouseFn: scroll wheel right
+ Win+Rightalt+H         MouseFn: scroll wheel left
+ Win+Rightalt+L         MouseFn: scroll wheel right
  Win+K                   MouseFn: scroll wheel Up
- Ctrl+Alt+J              MouseFn: zoom in
- Ctrl+Alt+K              MouseFn: zoom out
- *Alt+J                  NavigateText: Down
- Win+H                   NavigateText: jump to next word; simulate ctrl+Left
- Win+L                   NavigateText: jump to next word; simulate ctrl+Right (must first disable win+L lock key combo with CB key "lf")
- Alt+H                   NavigateText: Left
- Alt+L                   NavigateText: Right
- *Alt+K                  NavigateText: Up
+ Ctrl+Alt+J             MouseFn: zoom in
+ Ctrl+Alt+K             MouseFn: zoom out
+ Win+H                  NavigateText: jump to next word; simulate ctrl+Left
+ Win+L                  NavigateText: jump to next word; simulate ctrl+Right (must first disable win+L lock key combo with CB key "lf")
+ *Alt+J                 NavigateText:| Down
+ Alt+H                  NavigateText:| Left
+ Alt+L                  NavigateText:| Right
+ *Alt+K                 NavigateText:| Up
  Shift+Alt+J             SelectText: extend selection down  1 row
- Shift+Win+J             SelectText: extend selection down  1 row
- Shift+Alt+H             SelectText: extend selection Left  1 character
- Shift+Win+H             SelectText: extend selection Left  1 word
- Shift+Alt+L             SelectText: extend selection Right 1 character
- Shift+Win+L             SelectText: extend selection Right 1 word
+ Shift+Win+J            SelectText: extend selection down  1 row
+ Shift+Alt+H            SelectText: extend selection Left  1 character
+ Shift+Win+H            SelectText: extend selection Left  1 word
+ Shift+Alt+L            SelectText: extend selection Right 1 character
+ Shift+Win+L            SelectText: extend selection Right 1 word
  Shift+Alt+K             SelectText: extend selection up    1 row
- Shift+Win+K             SelectText: extend selection up    1 row
- Ctrl+Win+K              SelectText: select all above
- Ctrl+Win+J              SelectText: select all below
- Shift+Alt+F             SelectText: select current line starting from begining of line
- Ctrl+Alt+F              SelectText: select line starting from end of line
- Ctrl+Win+H              SelectText: select to beginning of line
- Ctrl+Win+L              SelectText: select to end of line
- Shift+Ctrl+K            SelectText: select to line above
- Shift+Ctrl+J            SelectText: select to next line
- Alt+F                   SelectText: select word at text cursor position
+ Shift+Win+K            SelectText: extend selection up    1 row
+ Ctrl+Win+K             SelectText: select all above
+ Ctrl+Win+J             SelectText: select all below
+ Shift+Alt+F            SelectText: select current line starting from begining of line
+ Ctrl+Alt+F             SelectText: select line starting from end of line
+ Ctrl+Win+H             SelectText: select to beginning of line
+ Ctrl+Win+L             SelectText: select to end of line
+ Shift+Ctrl+K           SelectText: select to line above
+ Shift+Ctrl+J           SelectText: select to next line
+ Alt+F                  SelectText: select word at text cursor position
 
 ==o====o====o====o====o====o====o== BING ==o====o====o====o====o====o====o==
  Sc056 & L               

@@ -70,36 +70,40 @@
 
   ; SELECT TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
-  $!f::         SelectWord()                                                     ;SelectText: select word at text cursor position
-  $+!f::        SelectLine()                                                     ;SelectText: select current line starting from begining of line
-  $^!f::        Sendinput {end}+{home}                                           ;SelectText: select line starting from end of line
+  $!f::         SelectWord()                                                    ;SelectText: select word at text cursor position
+  $+!f::        SelectLine()                                                    ;SelectText: select current line starting from begining of line
+  $^!f::        Sendinput {end}+{home}                                          ;SelectText: select line starting from end of line
    
-  $^#h::        sendinput +{Home}                                                ;SelectText: select to beginning of line
-  $^#l::        sendinput +{End}                                                 ;SelectText: select to end of line
-  $+^j::        Sendinput +{down}                                                ;SelectText: select to next line
-  $+^k::        Sendinput +{up}                                                  ;SelectText: select to line above
+  $^#h::        sendinput +{Home}                                               ;SelectText: select to beginning of line
+  $^#l::        sendinput +{End}                                                ;SelectText: select to end of line
+  $+^j::        Sendinput +{down}                                               ;SelectText: select to next line
+  $+^k::        Sendinput +{up}                                                 ;SelectText: select to line above
    
-  $^#j::        sendinput ^+{end}                                                ;SelectText: select all below
-  $^#k::        sendinput ^+{home}                                               ;SelectText: select all above
+  $^#j::        sendinput ^+{end}                                               ;SelectText: select all below
+  $^#k::        sendinput ^+{home}                                              ;SelectText: select all above
    
-  $+#h::        Sendinput +^{Left}                                               ;SelectText: extend selection Left  1 word
-  $+#l::        Sendinput +^{Right}                                              ;SelectText: extend selection Right 1 word
+  $+#h::        Sendinput +^{Left}                                              ;SelectText: extend selection Left  1 word
+  $+#l::        Sendinput +^{Right}                                             ;SelectText: extend selection Right 1 word
+  $+#!h::       Sendinput +^{Left 2}                                            ;SelectText: extend selection Left  2 words
+  $+#!l::       Sendinput +^{Right 2}                                           ;SelectText: extend selection Right 2 words
+  $+^#h::       Sendinput +^{Left 3}                                            ;SelectText: extend selection Left  3 words
+  $+^#l::       Sendinput +^{Right 3}                                           ;SelectText: extend selection Right 3 words
    
-  $+!l::        Sendinput +{Right}                                               ;SelectText: extend selection Right 1 character
-  $+!h::        Sendinput +{Left}                                                ;SelectText: extend selection Left  1 character
-  $+#k::                                                                         ;SelectText: extend selection up    1 row
-  +!k::         sendinput +{up}                                                  ;SelectText: extend selection up    1 row
-  $+#j::                                                                         ;SelectText: extend selection down  1 row
-  +!j::         sendinput +{down}                                                ;SelectText: extend selection down  1 row
+  $+!l::        Sendinput +{Right}                                              ;SelectText: extend selection Right 1 character
+  $+!h::        Sendinput +{Left}                                               ;SelectText: extend selection Left  1 character
+  $+#k::                                                                        ;SelectText: extend selection up    1 row
+  +!k::         sendinput +{up}                                                 ;SelectText: extend selection up    1 row
+  $+#j::                                                                        ;SelectText: extend selection down  1 row
+  +!j::         sendinput +{down}                                               ;SelectText: extend selection down  1 row
   
   ; NAVIGATE TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
   $#h::         send ^{Left}                                                    ;NavigateText: jump to next word; simulate ctrl+Left
   $#l::         send ^{Right}                                                   ;NavigateText: jump to next word; simulate ctrl+Right (must first disable win+L lock key combo with CB key "lf")
-  $!h::         send {Left}                                                     ;NavigateText: Left
-  $!l::         send {Right}                                                    ;NavigateText: Right
-  *$!k::        send {Up}                                                       ;NavigateText: Up
-  *$!j::        send {Down}                                                     ;NavigateText: Down
+  $!h::         send {Left}                                                     ;NavigateText:| Left
+  $!l::         send {Right}                                                    ;NavigateText:| Right
+  *$!k::        send {Up}                                                       ;NavigateText:| Up
+  *$!j::        send {Down}                                                     ;NavigateText:| Down
 
 ; FILE EXPLORER HOTKEYS & FOLDER BOOKMARKS _____________________________________
 
