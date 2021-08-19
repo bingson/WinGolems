@@ -99,7 +99,7 @@
   ; NAVIGATE TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
   $#h::         send ^{Left}                                                    ;NavigateText: jump to next word; simulate ctrl+Left
-  $#l::         send ^{Right}                                                   ;NavigateText: jump to next word; simulate ctrl+Right (must first disable win+L lock key combo with CB key "lf")
+  $#l::         send ^{Right}                                                   ;NavigateText: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
   $!h::         send {Left}                                                     ;NavigateText:| Left
   $!l::         send {Right}                                                    ;NavigateText:| Right
   *$!k::        send {Up}                                                       ;NavigateText:| Up
