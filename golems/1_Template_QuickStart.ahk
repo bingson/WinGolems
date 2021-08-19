@@ -12,7 +12,7 @@
   #c::               s("{blind}"), ActivateWinID("c")                           ;ActvateApp: Activate previously saved window ID
   #f::               s("{blind}"), ActivateWinID("f")                           ;ActvateApp: Activate previously saved window ID
      
-  #q::               s("{blind}"), ActivateApp("ppt_path")                      ;ActvateApp:1 Activate Powerpoint
+  #q::               s("{blind}"), ActivateApp("ppt_path")                      ;ActvateApp:1 Activate PowerPoint
   #w::               s("{blind}"), ActivateApp("doc_path")                      ;ActvateApp:1 Activate Word
   #e::               s("{blind}"), ActivateApp("xls_path")                      ;ActvateApp:1 Activate Excel
   #a::               s("{blind}"), ActivateApp("editor_path")                   ;ActvateApp:1 Activate default editor
