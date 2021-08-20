@@ -10,7 +10,7 @@ WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I
 
 The initial value provided by this repository will come from users adapting the code from the quick start template to alleviate common workflow frictions. 
 
-##### Example use cases:
+#### Example use cases:
 
 - When different applications have different shortcuts for the same operation, users must remember application-specific information that could otherwise be standardized away—e.g., switching tabs with `ctrl + tab` versus `ctrl + PgDn`. 
 
@@ -18,7 +18,7 @@ The initial value provided by this repository will come from users adapting the 
 
 - When software developers pre-assign prime keyboard real estate to less used operations, their making decisions that are anathema to user-centered design. Common sense dictates that the most frequently performed operations are the easiest to execute and vice versa. E.g., the ` Win + F ` combination opens the rarely used feedback reporting dialog in Windows.
 
- As Satya Nadella's proclaimed in his [recent on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit a users needs (i.e., particular hardware setup and ergonomic preferences).  
+ Satya Nadella's proclaimed in his [recent remarks on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit a users needs (i.e., particular hardware setup and ergonomic preferences).  
 
 
 ## Quick Start Template Overview:
@@ -41,7 +41,7 @@ One of the key strengths of AHK is it's powerful and parsimonious syntax for cre
     </td>
 </tr>
 
-Reading through the short section on [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2) for the AHK beginner tutorial (around 10 minutes) is all a new user needs to know to modify interface layers in the quick start template.
+Reading through the short section on [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2) for the AHK beginner tutorial is all a new user needs to know to begin modifying interface layers in the quick start template. 
 
 <tr>
     <td>
@@ -263,11 +263,13 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
 </tr>
 </table>
 
-<h3> Command Box </h3>
+<h3> Command Box (CB)</h3>
 
+Memory System
 The command box was initially created as part of a txt file based memory system. 
 
 that started off as an always-on-top text file viewer to 
+
 
 At some point, you run out of easily accessible keyboard shortcut combinations  
 
