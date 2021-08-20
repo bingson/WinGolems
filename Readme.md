@@ -6,47 +6,45 @@
 
 A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A transformative interface goes beyond automation by giving its user the ability to solve problems that would be impossible to solve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. Before investing any time into learning AHK, new users can first try out many of WinGolems' features by running the quick start template below using the included executable (no knowledge of AHK or software installation required). 
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. Before investing any time into learning AHK, new users can first try out many of WinGolems' features by [running the quick start template below using the included executable]() (no knowledge of AHK or software installation required). 
 
 The initial value provided by this repository will come from users adapting the code from the quick start template to alleviate common workflow frictions. 
 
-#### Example use cases:
+Example use cases: 
 
-- When different applications have different shortcuts for the same operation, users must remember application-specific information that could otherwise be standardized away—e.g., switching tabs with `ctrl + tab` versus `ctrl + PgDn`. 
+- When multiple applications have different shortcuts for the same operation, users must remember unnecessary application-specific information that could be standardized away: e.g., switching tabs with `ctrl + tab` versus `ctrl + PgDn`. 
 
-- When ones hardware setup doesn't play well with default application shortcuts, users should be able to change those defaults—e.g., to actuate ` ctrl + PgDn `  on my laptop's condensed keyboard requires that I move my right hand off of home row. 
+- When ones keyboard layout doesn't work well with default application shortcuts: e.g., to actuate the ` ctrl + PgDn ` combination using my laptop's condensed keyboard layout requires that I move my right hand away from home row.
 
-- When software developers pre-assign prime keyboard real estate to less used operations, their making decisions that are anathema to user-centered design. Common sense dictates that the most frequently performed operations are the easiest to execute and vice versa. E.g., the ` Win + F ` combination opens the rarely used feedback reporting dialog in Windows.
+- When software developers pre-assign convenient keyboard shortcut combinations to less used operations: e.g., the ` Win + F ` combination opens the rarely used feedback reporting dialog in Windows. Common sense dictates that the most frequently performed operations should be the easiest to execute and vice versa for the less used ones. 
 
- Satya Nadella's proclaimed in his [recent remarks on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple), "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems provides a toolbox for re-engineering Windows application interfaces to better suit a users needs (i.e., particular hardware setup and ergonomic preferences).  
+Satya Nadella's proclaimed in his [recent remarks on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple) that "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems gives users a toolbox for re-engineering application interfaces they work with to better suit their needs.
 
 
 ## Quick Start Template Overview:
 
-The quick start template has working code examples that illustrate how to create interface layers and connect them to WinGolems' function library. To modify the quick start template, AutoHotkey must be installed. Within the WinGolems folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to execute the desired task (i.e., function libraries). To reduce the AHK or programming knowledge to use WinGolems convenience functions, new users will only need to understand how to modify template files which are limited to code that assigns hotstrings and hotkeys (keyboard shortcuts) to function calls (or AHK code that doesn't exceed 1 line). 
+The quick start template has working code examples that illustrate how to create interface layers and connect them to functions that address common workflow frictions. To modify the quick start template, AutoHotkey installation is required. Within the WinGolems folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to carry out the underlying task (i.e., function libraries). 
+
+To reduce the AHK or programming knowledge necessary to use WinGolems convenience functions, new users will only need to understand how to modify template files which are restricted to code that assigns hotstrings/hotkeys and the calling convention for different functions (or AHK code that doesn't exceed 1 line). Reading through the short section on [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2) from the AHK beginner tutorial is all that's required to understand how to modify the quick start template. 
 
 ```ahk
-                                          ; Open or reactivate a web browser by 
-    #s::                                  ; (1) pressing "win + s" 
-    :X:c~win:: ActivateApp("html_path")   ; (2) typing "c~win" <space> anywhere in windows (hotstring)
-                                          ; (3) entering "c" in a CommandBox("~win")
+                                      ; Open or reactivate a web browser by 
+#s::                                  ; 1) pressing "win + s"                                  <- hotkey
+:X:c~win:: ActivateApp("html_path")   ; 2) typing "c~win" <space> anywhere in windows          <- hotstring
+                                      ; 3) entering "c" in a Command Box with a "~win" suffix              
 ```
-One of the key strengths of AHK is it's powerful and parsimonious syntax for creating different interface layers in Windows. The AHK code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating a web browser window through the WinGolems function ActivateApp(). 
+One of the key strengths of AHK is it's powerful and parsimonious syntax for creating app-specific and system wide hotstrings and hotkeys. The sample template code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating your systems web browser through the WinGolems function ActivateApp(). 
 
-<h3> Quick Start Keyboard Shortcuts: </h3>
+### Quick Start Hotkeys (Keyboard Shortcuts): 
+
 <table>
-<tr>
-    <td>
-        <img src="assets\Screens\QuickStartHotkeys.png" width="1000"> 
-    </td>
-</tr>
+<tr><td>
+    <img src="assets\Screens\QuickStartHotkeys.png" width = "700"> 
+    <!-- <img src="assets\Screens\QuickStartHotkeys.png" width="1000">  -->
+</td></tr>
 
-Reading through the short section on [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2) for the AHK beginner tutorial is all a new user needs to know to begin modifying interface layers in the quick start template. 
-
-<tr>
-    <td>
-        <details><summary><font color = 'orange'><b>Click to see full List of Quick Start Hotkeys</b></font></summary>
-        <p>
+<tr><td>
+<details><summary><font color = 'orange'><b>Click to see list of Quick Start Hotkeys</b></font></summary><p>
 
 ```
 
@@ -231,12 +229,12 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
  Win+K                   MouseFn: scroll wheel Up
  Ctrl+Alt+J              MouseFn: zoom in
  Ctrl+Alt+K              MouseFn: zoom out
- *Alt+J                  NavigateText: Down
  Win+H                   NavigateText: jump to next word; simulate ctrl+Left
- Win+L                   NavigateText: jump to next word; simulate ctrl+Right (must first disable win+L lock key combo with CB key "lf")
- Alt+H                   NavigateText: Left
- Alt+L                   NavigateText: Right
- *Alt+K                  NavigateText: Up
+ Win+L                   NavigateText: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
+ *Alt+J                  NavigateText:| Down
+ Alt+H                   NavigateText:| Left
+ Alt+L                   NavigateText:| Right
+ *Alt+K                  NavigateText:| Up
  Shift+Alt+J             SelectText: extend selection down  1 row
  Shift+Win+J             SelectText: extend selection down  1 row
  Shift+Alt+H             SelectText: extend selection Left  1 character
@@ -256,34 +254,52 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
  Alt+F                   SelectText: select word at text cursor position
 
 ```
+</p></details>
+</td></tr></table>
 
-</p>
-</details>
-</td>
-</tr>
-</table>
+### Command Box (CB):
 
-<h3> Command Box (CB)</h3>
+The command is a keyboard driven graphical user interface that accepts user inputs.  
+
+
+
+The command box largely mitigates that problem  frees the user from the modifier keys allows the user to 
+
+
+
+The command box is a keyboard-driven graphical user interface 
+
+| DISPLAY MODE | MINIMALIST MODE |
+| :-: | :-: |
+| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\minimal.png" width="500"> |
+> press ` ALT + X ` to switch between modes
+
+
+* **Text file viewer**: Display any .txt or .ini file in the CB display window. 
+
+* text manipulation commo 
+
+
+
 
 Memory System
-The command box was initially created as part of a txt file based memory system. 
+
+
+
+I initially created the command box as an always-on-top display window for WinGolems
+
+The command box was initially created as part of a memory system. 
 
 that started off as an always-on-top text file viewer to 
 
 
 At some point, you run out of easily accessible keyboard shortcut combinations  
 
-<table>
-<tr>
-    <td><img src="assets\Screens\Display.png" width="600"> </td>
-    <td><img src="assets\Screens\minimal.png" width="600"> </td>
-</tr>
+<p align="center">
 
-<tr>
-    <td style="text-align:center">display mode </td>
-    <td style="text-align:center">minimal mode </td>
-</tr>
-</table>
+
+
+</p>
 
 
 <details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
@@ -297,17 +313,17 @@ ________________________________________________________________________________
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | Ls     see hotkey list ("gl" to update hotkey list) |  v   Sound                 |
+|     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
 |                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
 | The above can be adaped to call scripts written in  | tcf    [T] mouse cursor follows active window       |  ap  Add Remove Programs   |
-| other languages such as python, VBA, C++, etc ...   | ta     [T] advanced hotkeys                         |  a   Alarm Clock           |
-|                                                     | lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  r   Open Run Dialog Box   |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| ss|qs  [M] ON|OFF:  Data Backup Application         |  x   Start Context Menu    |
-|-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| r~     Reload WinGolems                             |  h~  Hybernate computer    |
-| !r      reenter last submitted key             alt+r| q~     Quit WinGolems                               |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode     alt+x|                                                     |  rs~ Restart computer      |
+| other languages such as python, VBA, C++, etc ...   | tt     [T] enhanced text nav/selection hotkeys      |  a   Alarm Clock           |
+|                                                     | tc     [T] replace capslock w/ delete key           |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  x   Start Context Menu    |
+|-----------------------------------------------------| ss|qs  [M] ON|OFF:  Data Backup Application         |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| ws     Open Window Spy                              |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  h~  Hybernate computer    |
+| !r      reenter last submitted key             alt+r| r~     Reload WinGolems                             |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode     alt+x| q~     Quit WinGolems                               |  rs~ Restart computer      |
 | !e      move & resize CB window to top left    alt+e|                                                     |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | UPPER-case first letter required to trigger the following commands                                                                     |
@@ -334,8 +350,8 @@ ________________________________________________________________________________
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
 |  G   Run any function                        GMoveWin,TopLeft    fmt: fn1_name,fn1_params__fn2name,fn2params          G?,?__?,? or G?,?|
-| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       makes Gmw,tl behave same as GMoveWin,TopLeft (dict: "Lalias")   G?:?~?|
-|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini in /mem_cache/ folder   |
+| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
+|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
 |      GUI BEHAVIOR & APPEARANCE                                                                                                         |
 |      --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
@@ -346,6 +362,16 @@ ________________________________________________________________________________
 |________________________________________________________________________________________________________________________________________|
 
 ```
+
+
+### Memory System:
+
+? = numbers 0 to 9
+
+shift + win + ?: Save selected text 
+win + ?: 
+ctrl + win + ?:
+
 
 </p>
 </details>
