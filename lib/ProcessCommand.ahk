@@ -67,12 +67,19 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 return 1
 
             Case "O":                                                           ; overwrite file/clipboard
-                C_input := RegExReplace(C_input, "S) +", A_Space)
-                If (SubStr(C_input, 1 , 1) == ":") 
+                C_input := RegExReplace(C_input, "S) +", A_Space)               ; if C_input starts in ":" overwrite clipboard with file contents
+                If (SubStr(C_input, 1 , 1) == ":") j
                 {
                     C_input := trim(SubStr(C_input, 2))
                     SplitPath, C_input, , Dir, , NameNoExt 
                     clipboard := AccessCache(NameNoExt,dir, False)
+                    return 1
+                }
+                else If (SubStr(C_input, 0) == ":")                             ; if C_input ends in ":" overwrite file with clipboard contents
+                {
+                    NameNoExt := rtrim(C_input, ":")
+                    dir := (InStr(dir, ":")) ? "" : dir
+                    WriteToCache(namenoext,,dir,clipboard)   
                     return 1
                 }
                 else If !RegExMatch(C_input, " .+")
@@ -169,8 +176,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "R":                                                           ; replace string 
                 C_2 := SubStr(C_input, 1, 2)
                 C3_Remainder := SubStr(C_input, 3)
-                sep1 := GC("Rsep1", "~")
-                sep2 := GC("Rsep2", "__")
+                IniRead, sep1, %config_path%, %A_ComputerName%, Rsep1 ,~
+                IniRead, sep2, %config_path%, %A_ComputerName%, Rsep2 ,__
                 switch C_2
                 {
                     case "1:":
@@ -288,7 +295,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     Case "n"   : search("news.google.com/search?q=") 
                     Case "a"   : search("autohotkey.com/docs/search.htm?q=", "&m=2")
                     Case "so"  : search("stackoverflow.com/search?q=") 
-                    Case "io"  : search("investopedia.com/search?q=") 
+                    Case "id","fd": search("investopedia.com/search?q=") 
                     Case "twt" : search("twitter.com/search?q=")
                        default : return
                 }            
