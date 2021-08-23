@@ -5,6 +5,7 @@
   C := { "lgreen"      : "CEDFBF"
        , "lblue"       : "BED7D6"
        , "lyellow"     : "FCE28A"
+       , "dyellow"     : "FFA404"
        , "lpurple"     : "CDC9D9"
        , "black"       : "000000"
        , "white"       : "FFFFFF"
@@ -410,8 +411,6 @@
     }
     return
   }
-
-  
   
   ReplaceAlias(arr*) {
     static sect := ""
@@ -447,7 +446,6 @@
     }
     return
   }
-
 
   s(k = "down", n = 1) {                                                         ; function wrapper for send keystrokes command
     sleep 100
@@ -1515,6 +1513,10 @@
     return
   }
  
+  CFW(Q = "center", offset_x = "100", offset_y = "100") {
+    CursorFollowWin(Q, offset_x, offset_y) 
+  }      
+
   CursorFollowWin(Q = "center", offset_x = "100", offset_y = "100") {
     global config_path
     BlockInput, on
@@ -1731,6 +1733,7 @@
         MsgBox, something went wrong, check if you have permission to run macros 
         return
     }
+    return
   }
  
   command(tgt, opt = "") {
