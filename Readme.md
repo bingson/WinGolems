@@ -6,7 +6,7 @@
 
 A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A transformative interface goes beyond automation by giving its user the ability to solve problems that would be impossible to solve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. Before investing any time into learning AHK, new users can first try out many of WinGolems' features by [running the quick start template below using the included executable]() (no knowledge of AHK or software installation required). 
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. Before investing any time into learning AHK, new users can try out many of WinGolems' features by [running the quick start template below using the included executable]() (no knowledge of AHK or software installation required). 
 
 The initial value provided by this repository will come from users adapting the code from the quick start template to alleviate common workflow frictions. 
 
@@ -18,14 +18,13 @@ Example use cases:
 
 - When software developers pre-assign convenient keyboard shortcut combinations to less used operations: e.g., the ` Win + F ` combination opens the rarely used feedback reporting dialog in Windows. Common sense dictates that the most frequently performed operations should be the easiest to execute and vice versa for the less used ones. 
 
-Satya Nadella's proclaimed in his [recent remarks on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple) that "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems gives users a toolbox for re-engineering application interfaces they work with to better suit their needs.
-
+In his [recent remarks on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple) Satya Nadella said that "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems gives users a toolbox for re-engineering application interfaces to better suit their needs. In addition to reprogramming application shortcuts, WinGolems also augments the Windows experience by through a Command Box (CB), a keyboard-driven graphical user interface with it's own command line syntax from running pre-made augmentation functions. The CB can be used to add new features and interface layers to existing applications. 
 
 ## Quick Start Template Overview:
 
 The quick start template has working code examples that illustrate how to create interface layers and connect them to functions that address common workflow frictions. To modify the quick start template, AutoHotkey installation is required. Within the WinGolems folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to carry out the underlying task (i.e., function libraries). 
 
-To reduce the AHK or programming knowledge necessary to use WinGolems convenience functions, new users will only need to understand how to modify template files which are restricted to code that assigns hotstrings/hotkeys and the calling convention for different functions (or AHK code that doesn't exceed 1 line). Reading through the short section on [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2) from the AHK beginner tutorial is all that's required to understand how to modify the quick start template. 
+To reduce the AHK or programming knowledge necessary to use WinGolems convenience functions, new users will only need to understand how to modify template files which are restricted to code that associates hotstrings/hotkeys and different convenience functions (or AHK code that doesn't exceed 1 line). Reading through the short section on [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2) from the AHK beginner tutorial is all that's required to understand how to modify the quick start template. 
 
 ```ahk
                                       ; Open or reactivate a web browser by 
@@ -33,7 +32,7 @@ To reduce the AHK or programming knowledge necessary to use WinGolems convenienc
 :X:c~win:: ActivateApp("html_path")   ; 2) typing "c~win" <space> anywhere in windows          <- hotstring
                                       ; 3) entering "c" in a Command Box with a "~win" suffix              
 ```
-One of the key strengths of AHK is it's powerful and parsimonious syntax for creating app-specific and system wide hotstrings and hotkeys. The sample template code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating your systems web browser through the WinGolems function ActivateApp(). 
+One of the key strengths of AHK is it's powerful and parsimonious syntax for creating application-specific and system-wide hotstrings and hotkeys. The sample template code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating your web browser by calling the function ActivateApp(). 
 
 ### Quick Start Hotkeys (Keyboard Shortcuts): 
 
@@ -57,21 +56,21 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  sc01a or b = {[} or {]} 
 
 ==o====o====o====o====o== 1_TEMPLATE_QUICKSTART ==o====o====o====o====o====o
- Win+A                   ActvateApp: Activate default editor
- Win+E                   ActvateApp: Activate Excel
- Win+B                   ActvateApp: Activate File explorer
- Win+D                   ActvateApp: Activate pdf viewer
- Win+Q                   ActvateApp: Activate Powerpoint
+ Win+X                   ActvateApp: Activate previously saved window ID
+ Win+C                   ActvateApp: Activate previously saved window ID
  Win+F                   ActvateApp: Activate previously saved window ID
  Win+Z                   ActvateApp: Activate previously saved window ID
- Win+C                   ActvateApp: Activate previously saved window ID
- Win+X                   ActvateApp: Activate previously saved window ID
- Win+S                   ActvateApp: Activate web browser
- Win+W                   ActvateApp: Activate Word
  Ctrl+Win+C              ActvateApp: Save window ID for subsequent activation
  Ctrl+Win+Z              ActvateApp: Save window ID for subsequent activation
- Ctrl+Win+F              ActvateApp: Save window ID for subsequent activation
  Ctrl+Win+X              ActvateApp: Save window ID for subsequent activation
+ Ctrl+Win+F              ActvateApp: Save window ID for subsequent activation
+ Win+A                   ActvateApp:1 Activate default editor
+ Win+E                   ActvateApp:1 Activate Excel
+ Win+B                   ActvateApp:1 Activate File explorer
+ Win+D                   ActvateApp:1 Activate pdf viewer
+ Win+Q                   ActvateApp:1 Activate PowerPoint
+ Win+S                   ActvateApp:1 Activate web browser
+ Win+W                   ActvateApp:1 Activate Word
  Rightctrl+Space         CommandBox: activate CB if exists and move focus to inputbox
  Leftctrl+Space          CommandBox: activate CB if exists and move focus to inputbox
  Alt+S                   CommandBox: move CB window to bottom half
@@ -206,7 +205,7 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
  Rightctrl+J             FileExplorer: sort by type
  Alt+Z                   FileExplorer: toggle navigation pane
  Ctrl+P                  FileExplorer: toggle preview plane
- Alt+Sc027               FileExplorer:1 detailed file info with resized columnsnmn
+ Alt+Sc027               FileExplorer:1 detailed file info with resized columns
  Ctrl+S                  FileExplorer:1 select files by regex
  Shift+Alt+C             FileExplorer:1 store file path(s) of selected file(s) in clipboard
  Ctrl+H                  FileExplorer:1 toggle hide/unhide invisible files
@@ -256,10 +255,31 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
 ```
 </p></details>
 </td></tr></table>
-
+ 
 ### Command Box (CB):
 
-The command is a keyboard driven graphical user interface that accepts user inputs.  
+
+| DISPLAY MODE | MINIMALIST MODE |
+| :-: | :-: |
+| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\minimal.png" width="500"> |
+<p align="center">
+switch between modes: ALT + X
+</p>
+
+The CB is a keyboard driven graphical user interface that adds several capabilities:
++ text display window with integrated clipboard manager (aka. memory system).
++ ability to call 
+
+
+Some sample use case
++ code prototyping
++ cognitive enhancement
+  memory files
++ abtraction 
+
+
+
+
 
 
 
@@ -269,16 +289,13 @@ The command box largely mitigates that problem  frees the user from the modifier
 
 The command box is a keyboard-driven graphical user interface 
 
-| DISPLAY MODE | MINIMALIST MODE |
-| :-: | :-: |
-| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\minimal.png" width="500"> |
-> press ` ALT + X ` to switch between modes
-
 
 * **Text file viewer**: Display any .txt or .ini file in the CB display window. 
 
 * text manipulation commo 
 
+
+* 
 
 
 
@@ -580,6 +597,12 @@ The overarching goal of this project was reduce
 * [AHK Beginner Tutorial](https://www.autohotkey.com/docs/Tutorial.htm) 
  
 
-
+ 
 <center><img src="assets\Screens\wingolems_exe.png" width="400"></center>
 modify code samples in quick start interface template  https://www.autohotkey.com/docs/Tutorial.htm#s2
+
+## Known Bugs
+1. Sometimes the CB window will show up as just a title bar in the top left corner. 
+    * Temporary fix: ` alt + x ` 
+
+2. Sometimes the CB text display window doesn't fill out the window. 

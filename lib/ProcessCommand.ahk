@@ -295,6 +295,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     Case "n"   : search("news.google.com/search?q=") 
                     Case "a"   : search("autohotkey.com/docs/search.htm?q=", "&m=2")
                     Case "so"  : search("stackoverflow.com/search?q=") 
+                    Case "bv"  : search("https://www.bing.com/videos/search?q=") 
                     Case "id","fd": search("investopedia.com/search?q=") 
                     Case "twt" : search("twitter.com/search?q=")
                        default : return

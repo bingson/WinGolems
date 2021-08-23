@@ -73,6 +73,7 @@
     #+e::send ^{end}    
     *#r::                           SaveMousPos("r",1)                          ;C: Left click and save mouse position
     *^#r::                          RecallMousePosClick("r")                    ;MF: Move to saved mouse position and left click
+    alt & PgUp::                  s("{blind}"), s("{F11}")                    ;MAW: full screen {F11}
 
   #If GetKeyState("ralt", "P") and GC("T_d",0)
     PrintScreen & k::               CursorJump("T")                             ;MF: move mouse cursor to top edge

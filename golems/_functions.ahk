@@ -450,13 +450,9 @@
 
 
   s(k = "down", n = 1) {                                                         ; function wrapper for send keystrokes command
-    global med, long, short
     sleep 100
     switch k 
     {
-        case "med"       : sleep, med
-        case "long"      : sleep, long
-        case "short"     : sleep, short
         case "enter"     : send % "{enter}"
         case "u", "up"   : send % "{ up "    n "}"
         case "d", "down" : send % "{ down "  n "}"
@@ -667,8 +663,6 @@
     For dest, ref in arr_KV_swapped
     {
         dest := Trim(AddSpaceBtnCaseChange(dest, 0))
-        dest := ReplaceAwithB("- ", "-",dest,0)
-        dest := ReplaceAwithB("_ ","_",dest,0)
         if groups {
             prefix := substr(dest, 1, 3)
             if (prefix <> prev_prefix and prev_prefix and prefix) {             ; adds blank line between changes in selection group prefix 
@@ -1737,7 +1731,6 @@
         MsgBox, something went wrong, check if you have permission to run macros 
         return
     }
-    return
   }
  
   command(tgt, opt = "") {

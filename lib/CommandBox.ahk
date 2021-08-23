@@ -17,9 +17,7 @@
     suffix  := GC("CB_sfx")            , tgt_hwnd := GC("TGT_hwnd")             ; config.ini used to preserve/change CB parameter information between redraws
     fnt     := GC("CBfnt", "Consolas") , fsz := GC("CBfsz", "13") , fwt := GC("CBfwt", "500")               
     w_color := GC("CBw_color")         , t_color := GC("CBt_color")    
-    
 
-    
     MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when no saved position data found
     CB_position := GC("CB_position", d), display := GC("CB_Display", 1)         
