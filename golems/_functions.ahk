@@ -1020,7 +1020,7 @@
 
   FindAppPath(app*) {
     global UProfile, PF_x86, C
-    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*"]
+    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*",UProfile "\AppData\Local\*"]
     PATH := {}
     for each, exe in APP
     {

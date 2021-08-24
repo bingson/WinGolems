@@ -8,7 +8,7 @@
     tgt_hwnd := WinExist() 
 
     CC("CB_sfx", suffix)    , CC("TGT_hwnd",tgt_hwnd) 
-    CC("CBw_color",w_color) , CC("CBt_color",t_color)                           ;(1) save command box calling parameters
+    CC("CBw_color",w_color) , CC("CBt_color",t_color)                           ;(1) save/store command box calling parameters in config.ini
     
     redrawGUI:
     Gui, 2: +LastFound
