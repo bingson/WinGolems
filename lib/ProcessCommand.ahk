@@ -82,7 +82,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     WriteToCache(namenoext,,dir,clipboard)   
                     return 1
                 }
-                else If !RegExMatch(C_input, " .+")
+                else If !RegExMatch(C_input, " .+")                             ; if there's a second file name
                 {                    
                     ActivateWin("ahk_id " tgt_hwnd) 
                     text_to_add := trim(clip())
@@ -172,6 +172,15 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         PopUp("invalid file path",C.lgreen,C.bgreen,,,-2000)
                     }
                 }
+                return 1
+            Case "D":
+                if (extension) {
+                    FileDelete,% f_path . Dir . NameNoExt . "." . extension
+                } else {
+                    FileDelete,% f_path . Dir . NameNoExt . ".txt"
+                }
+                C_input := "l"
+                gosub, Load
                 return 1
             Case "R":                                                           ; replace string 
                 C_2 := SubStr(C_input, 1, 2)
@@ -283,22 +292,38 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 return
             Case "W","B","N","M":
                 RunOtherCB(C_input, FirstChar) 
-            Case "Q":                                                           ; query selected text in chosen search engine
-                switch C_input
+            Case "Q":                                                           ; query selected text in chosen search engine msft
+                
+                if (InStr(C_input, ":")) {                                      ; if search string is entered manually into CB
+                    dPos := InStr(C_input, ":")
+                    case := substr(C_input, 1, dPos-1)
+                    strng := substr(C_input, dPos+1)
+                }
+                else                                                            ; get search string from selected text
                 {
-                    Case "t"   : search("thesaurus.com/browse/")                                 
-                    Case "d"   : search("dictionary.com/browse/")  
-                    Case "f"   : search("finviz.com/quote.ashx?t=") 
-                    case "y"   : search("youtube.com/results?search_query=")
-                    case "i"   : search("google.com/search?tbm=isch&q=")
-                    Case "w"   : search("en.wikipedia.org/w/index.php?search=") 
-                    Case "n"   : search("news.google.com/search?q=") 
-                    Case "a"   : search("autohotkey.com/docs/search.htm?q=", "&m=2")
-                    Case "so"  : search("stackoverflow.com/search?q=") 
-                    Case "bv"  : search("https://www.bing.com/videos/search?q=") 
-                    Case "id","fd": search("investopedia.com/search?q=") 
-                    Case "twt" : search("twitter.com/search?q=")
-                       default : return
+                    case := C_input
+                    strng := ""
+                }
+                switch case
+                {
+                    Case "t"       : search("thesaurus.com/browse/", strng)                                 
+                    Case "d"       : search("dictionary.com/browse/", strng)  
+                    Case "f"       : search("finviz.com/quote.ashx?t=", strng) 
+                    Case "yf"      : search("https://ca.finance.yahoo.com/quote/", strng) 
+                    case "y"       : search("youtube.com/results?search_query=", strng)
+                    case "i"       : search("google.com/search?tbm=isch&q=", strng)
+                    Case "w"       : search("en.wikipedia.org/w/index.php?search=", strng) 
+                    Case "n"       : search("news.google.com/search?q=", strng) 
+                    Case "a"       : search("autohotkey.com/docs/search.htm?q=", strng, "&m=2")
+                    Case "ae"      : search("https://www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20210825091515&SearchText=", strng)
+                    Case "so"      : search("stackoverflow.com/search?q=", strng) 
+                    Case "bv"      : search("https://www.bing.com/videos/search?q=", strng) 
+                    Case "imdb"    : search("https://www.imdb.com/find?q=", strng) 
+                    Case "id","fd" : search("investopedia.com/search?q=", strng) 
+                    Case "az","amz": search("https://www.amazon.ca/s?k=", strng) 
+                    Case "twt"     : search("twitter.com/search?q=", strng)
+                    default : 
+                        search(, strng)                                         ; defaults to google search
                 }            
 
                 return

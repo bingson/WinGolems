@@ -661,6 +661,8 @@
     For dest, ref in arr_KV_swapped
     {
         dest := Trim(AddSpaceBtnCaseChange(dest, 0))
+        dest := ReplaceAwithB("- ","-",dest,0)
+        dest := ReplaceAwithB("_ ","_",dest,0)
         if groups {
             prefix := substr(dest, 1, 3)
             if (prefix <> prev_prefix and prev_prefix and prefix) {             ; adds blank line between changes in selection group prefix 
@@ -952,7 +954,7 @@
         Gui, c: Add, Text, section xm w%lw%,XLS files:`t`tMicrosoft Excel
         Gui, c: Add, Edit, section w%rw% ys vxls_exe,% apps[2]
     
-         Gui, c: Add, Text, section xm w%lw%,PPT files:`t`tMicrosoft PowerPoint
+        Gui, c: Add, Text, section xm w%lw%,PPT files:`t`tMicrosoft PowerPoint
         Gui, c: Add, Edit, w%rw% ys vppt_exe,% apps[3]         
         
         Gui, c: Add, Text, section xm w%lw%,PDF files:`t`tAdobe Acrobat Reader DC
@@ -1020,7 +1022,7 @@
 
   FindAppPath(app*) {
     global UProfile, PF_x86, C
-    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*",UProfile "\AppData\Local\*"]
+    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*",UProfile "\AppData\Local\*",winpath "\system32\*" ]
     PATH := {}
     for each, exe in APP
     {
@@ -1621,9 +1623,12 @@
     return
   }
  
-  Search(prefix = "google.com/search?q=", suffix = "") {
+  Search(prefix = "google.com/search?q=", var = "", suffix = "") {
     global short, med
-    url := prefix . """" clip() """" . suffix
+
+    var := (!var ? clip() : var)
+
+    url := prefix . """" var """" . suffix
     sleep med
     loadURL(url)
     CursorFollowWin()

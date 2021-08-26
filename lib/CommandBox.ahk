@@ -9,24 +9,30 @@
 
     CC("CB_sfx", suffix)    , CC("TGT_hwnd",tgt_hwnd) 
     CC("CBw_color",w_color) , CC("CBt_color",t_color)                           ;(1) save/store command box calling parameters in config.ini
-    
+                                                                                ; config.ini used to preserve/change CB parameter information between redraws
     redrawGUI:
     Gui, 2: +LastFound
     Gui, 2: Destroy          
     
-    suffix  := GC("CB_sfx")            , tgt_hwnd := GC("TGT_hwnd")             ; config.ini used to preserve/change CB parameter information between redraws
-    fnt     := GC("CBfnt", "Consolas") , fsz := GC("CBfsz", "13") , fwt := GC("CBfwt", "500")               
+    suffix  := GC("CB_sfx")            , tgt_hwnd := GC("TGT_hwnd")             
     w_color := GC("CBw_color")         , t_color := GC("CBt_color")    
+    fnt     := GC("CBfnt", "Consolas") , fsz := GC("CBfsz", "13") 
+    fwt     := GC("CBfwt", "500")               
 
     MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
-    d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when no saved position data found
-    CB_position := GC("CB_position", d), display := GC("CB_Display", 1)         
-    title_state  := GC("CB_Titlebar", 1), ldspl   := GC("CB_last_display")
-    wrap_txt := GC("CB_Wrap", 0)
-
-    wdth := StrSplit(CB_position, " ")[3]
+    d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when saved position data is not valid
+    CB_position := GC("CB_position", d)
+    WP := StrSplit(CB_position, " ")
+    if (WP[4] = 0)                                                              ; check if monitor dimensions valid
+        CB_position := d
+    wdth := WP[3]
     IBwidth := 400
     CC("CB_InputBox_width", IBwidth)
+
+    display  := GC("CB_Display",1) , title_state := GC("CB_Titlebar",1)         ;(2a) get other CB window data
+    wrap_txt := GC("CB_Wrap",0)    , ldspl       := GC("CB_last_display")
+
+        
                                                                                
     UserInput := ""
     winget, output, ProcessName, A                                              ;(3) build title bar                                     
@@ -39,7 +45,7 @@
     title := CB_Title_ID title_text suffix l (ndspl ? ndspl : ldspl) 
     CC("CBtitle",title)
 
-    Gui, 2: New ;,,%title%                                                      ;(4) GUI options
+    Gui, 2: New ;,,%title%                                                      ;(4) set GUI options
     Gui, 2: +LastFound +OwnDialogs +Owner -DPIscale +E0x00200 +Resize +AlwaysOnTop ; +E0x08000000 +Resize  
     Gui, 2: Color, %w_color%
     Gui, font, c%t_color% s%fsz% w%fwt%, %fnt%
@@ -151,6 +157,8 @@
                                                             
     save_win_coord:
         WinGetPos(CB_hwnd, x, y, w, h, 1)
+        if (x = 0 and y = 0 and h = 0)
+            msgbox, WinGetPos(CB_hwnd, x, y, w, h, 1) wrong
         CC("CB_position", "x" x " y" y " w" w " h" h)
         return
 

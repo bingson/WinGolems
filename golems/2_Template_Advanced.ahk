@@ -32,7 +32,6 @@
   ^#sc027::                       Send {lwin down}d{lwin up}                    ;Convenience: show desktop
   !sc033::     FunctionBox("MoveWin", MoveWin_DICT,C.bwhite,,MoveWin_DICT,0)    ;Convenience: Move window to preset locations
 
-
 ; MOUSE (CURSOR) FUNCTIONS______________________________________________________
   ; mouse functions with keyboard shortcuts  
   
