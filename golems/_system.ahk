@@ -29,7 +29,7 @@
   :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
 
 ; CB AHK UTILITIES _____________________________________________________________
-
+  :X:wg~win::   LoadURL("https://github.com/bingson/wingolems")                 ;AHK: Load WinGolems GitHub Page
   :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;AHK: open key history
   :X:ws~win::   run, C:\Program Files\AutoHotkey\WindowSpy.ahk                  ;AHK: open windows spy

@@ -116,7 +116,7 @@
   !b::               send ^{PgUp}                                               ;Navigation: universal navigate to left tab
   !space::           s("{blind}"), s("^{PgDn}")                                 ;Navigation: universal navigate to right tab
 
-; COMMAND BOX ___________________________________________________________________; shared by all Command Boxes 
+; COMMAND BOX __________________________________________________________________; shared by all Command Boxes 
 
   #space::           CB("~win")                                                 ;Convenience: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
 
@@ -138,7 +138,7 @@
   
   #IF WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)             ; If command Box exists but not active
   
-  $<^space::                                                                    ;CommandBox: activate CB if exists and move focus to inputbox
+  $<^space::                                                                    ;CommandBox: activate CB if exists and move focus to inputbox 
   $>^space::         ActivateWin("ahk_id " CB_hwnd)                             ;CommandBox: activate CB if exists and move focus to inputbox
   
   #IF                                                                           ; end context specific assignments
