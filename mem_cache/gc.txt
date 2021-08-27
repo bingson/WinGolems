@@ -1,0 +1,34 @@
+# overwrite remote branch with local
+git push origin master 
+git push origin development
+git push -f origin development
+
+# overwrite local branch with remote
+git fetch --all
+git reset --hard origin/development
+git reset --hard origin/master
+
+# cancel rebase/merge
+git rebase --abort
+git merge --abort
+
+# overwrite development branch with master
+git checkout development
+git reset --hard master
+
+# create new git branch with current changes
+git checkout -b NewBranchName
+
+# overwrite one development branch with another
+git checkout development
+git tag old-development-branch
+git reset --hard RevertMonDim
+
+# To change the last commit, you can simply commit again, using the --amend flag:
+git commit --amend -m "fixed GUI edit resize problem"
+# To modify existing, unpushed commit message
+git commit --amend -m "improved 1st time configuration GUI"
+
+# restore deleted file
+git log --diff-filter=D --summary        # to get all the commits which have deleted files and the files deleted;
+git checkout $commit~1 path/to/file.ext  # to restore the deleted file
