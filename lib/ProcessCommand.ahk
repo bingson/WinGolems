@@ -295,8 +295,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "Q":                                                           ; query selected text in chosen search engine msft
                 
                 if (InStr(C_input, ":")) {                                      ; if search string is entered manually into CB
-                    dPos := InStr(C_input, ":")
-                    case := substr(C_input, 1, dPos-1)
+                    dPos  := InStr(C_input, ":")
+                    case  := substr(C_input, 1, dPos-1)
                     strng := substr(C_input, dPos+1)
                 }
                 else                                                            ; get search string from selected text
@@ -306,22 +306,23 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 switch case
                 {
-                    Case "t"       : search("thesaurus.com/browse/", strng)                                 
-                    Case "d"       : search("dictionary.com/browse/", strng)  
-                    Case "f"       : search("finviz.com/quote.ashx?t=", strng) 
-                    Case "yf"      : search("https://ca.finance.yahoo.com/quote/", strng) 
-                    case "y"       : search("youtube.com/results?search_query=", strng)
-                    case "i"       : search("google.com/search?tbm=isch&q=", strng)
+                    Case "t"       : search("www.thesaurus.com/browse/", strng)                                 
+                    Case "d"       : search("www.dictionary.com/browse/", strng)  
+                    Case "f"       : search("www.finviz.com/quote.ashx?t=", strng) 
+                    Case "yf"      : search("ca.finance.yahoo.com/quote/", strng) 
+                    case "y"       : search("www.youtube.com/results?search_query=", strng)
+                    case "i"       : search("www.google.com/search?tbm=isch&q=", strng)
                     Case "w"       : search("en.wikipedia.org/w/index.php?search=", strng) 
                     Case "n"       : search("news.google.com/search?q=", strng) 
-                    Case "a"       : search("autohotkey.com/docs/search.htm?q=", strng, "&m=2")
-                    Case "ae"      : search("https://www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20210825091515&SearchText=", strng)
-                    Case "so"      : search("stackoverflow.com/search?q=", strng) 
-                    Case "bv"      : search("https://www.bing.com/videos/search?q=", strng) 
-                    Case "imdb"    : search("https://www.imdb.com/find?q=", strng) 
-                    Case "id","fd" : search("investopedia.com/search?q=", strng) 
-                    Case "az","amz": search("https://www.amazon.ca/s?k=", strng) 
-                    Case "twt"     : search("twitter.com/search?q=", strng)
+                    Case "a"       : search("www.autohotkey.com/docs/search.htm?q=", strng, "&m=2")
+                    Case "ae"      : search("www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20210825091515&SearchText=", strng)
+                    Case "e","ebay": search("www.ebay.ca/sch/", strng)
+                    Case "so"      : search("www.stackoverflow.com/search?q=", strng) 
+                    Case "bv"      : search("www.bing.com/videos/search?q=", strng) 
+                    Case "imdb"    : search("www.imdb.com/find?q=", strng) 
+                    Case "id","fd" : search("www.investopedia.com/search?q=", strng) 
+                    Case "az","amz": search("www.amazon.ca/s?k=", strng) 
+                    Case "twt"     : search("www.twitter.com/search?q=", strng)
                     default : 
                         search(, strng)                                         ; defaults to google search
                 }            

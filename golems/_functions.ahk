@@ -912,7 +912,7 @@
   }
  
   TimeCode() {
-    ; time ahk code                                                             ; https://www.autohotkey.com/boards/viewtopic.php?t=45263
+    ; time ahk code                                                             ; https://www.AutoHotkey.com/boards/viewtopic.php?t=45263
     Global StartTimer
 
     If (StartTimer != "")
@@ -1021,7 +1021,7 @@
   }
 
   FindAppPath(app*) {
-    global UProfile, PF_x86, C
+    global UProfile, PF_x86, C, winpath
     FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*",UProfile "\AppData\Local\*",winpath "\system32\*" ]
     PATH := {}
     for each, exe in APP
@@ -1210,7 +1210,7 @@
 ; FILE AND FOLDER RELATED ______________________________________________________
  
   Explorer_GetSelection() {
-    ; Get path of selected files/folders                                        ; https://www.autohotkey.com/boards/viewtopic.php?style=17&t=60403
+    ; Get path of selected files/folders                                        ; https://www.AutoHotkey.com/boards/viewtopic.php?style=17&t=60403
     WinGetClass, winClass, % "ahk_id" . hWnd := WinExist("A")
     if !(winClass ~="Progman|WorkerW|(Cabinet|Explore)WClass")
         Return
@@ -1330,7 +1330,7 @@
   }
  
   NavRun(Path) {
-    ; change file explorer current folder path                                  ; https://autohotkey.com/board/topic/102127-navigating-explorer-directories/
+    ; change file explorer current folder path                                  ; https://AutoHotkey.com/board/topic/102127-navigating-explorer-directories/
     try{
         if (-1 != objIE := GetActiveExplorer())
             objIE.Navigate(Path)
@@ -1488,7 +1488,7 @@
     return
   }
   
-  RecallMousePosClick(key = "A", n = "1", lrm = "left", rtn_mouse = True) {
+  RecallMousePosClick(key = "A", n = "1", lrm = "left", rtn_mouse = False) {
     global config_path
     CoordMode, Mouse, Screen
     MouseGetPos, StartX, StartY
@@ -1789,7 +1789,7 @@
  
   Join(s,p*) {
     ; s = separator, p*= string array to join
-    ; Function to Join strings python style                                     ; https://www.autohotkey.com/boards/viewtopic.php?t=7124
+    ; Function to Join strings python style                                     ; https://www.AutoHotkey.com/boards/viewtopic.php?t=7124
     static _:="".base.Join:=Func("Join")
     for k,v in p
     {

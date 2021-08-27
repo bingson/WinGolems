@@ -66,6 +66,7 @@
 
 #Include *i %A_ScriptDir%\..\ahk\golems\
 #Include *i office.ahk
+#Include *i coding_environments.ahk
 #Include *i obsidian.ahk     
 #Include *i chrome.ahk     
 

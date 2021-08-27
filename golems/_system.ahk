@@ -62,8 +62,6 @@
     return
 
   
-  #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                              ; If command Box active
-    printscreen & space::           GUISubmit()                                 ;CB: submit GUI input
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #f::                            Clicks(2)                                   ;MF: 2 Left clicks (select word)
@@ -71,18 +69,30 @@
     #n::AA("editor_path")    
     #e::send ^{home}    
     #+e::send ^{end}    
-    *#r::                           SaveMousPos("r",1)                          ;C: Left click and save mouse position
-    *^#r::                          RecallMousePosClick("r")                    ;MF: Move to saved mouse position and left click
     ralt & down::                   s("{blind}"), s("{F11}")                    ;Convenience: full screen {F11}
 
+  #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                              ; If command Box active
+    printscreen & space::           GUISubmit()                                 ;CB: submit GUI input
   #If GetKeyState("ralt", "P") and GC("T_d",0)
     PrintScreen & k::               CursorJump("T")                             ;MF: move mouse cursor to top edge
     PrintScreen & j::               CursorJump("B",,"-20")                      ;MF: move mouse cursor to bottom edge
     PrintScreen & h::               CursorJump("L","20")                        ;MF: move mouse cursor to Left edge
     PrintScreen & l::               CursorJump("R","-40")                       ;MF: move mouse cursor to Right edge
-
    
   #If GetKeyState("PrintScreen", "P") and GC("T_d",0)
+    alt & q::       SaveWinID("Q")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & q
+    alt & w::       SaveWinID("W")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & q
+    alt & a::       SaveWinID("A")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & a
+    alt & s::       SaveWinID("S")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & s
+    alt & z::       SaveWinID("Z")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & z
+    alt & x::       SaveWinID("X")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & x
+    q::             ActivateWinID("Q")                                             ;SAW: activate saved Window ID
+    w::             ActivateWinID("W")                                             ;SAW: activate saved Window ID
+    a::             ActivateWinID("A")                                             ;SAW: activate saved Window ID
+    s::             ActivateWinID("S")                                             ;SAW: activate saved Window ID
+    z::             ActivateWinID("Z")                                             ;SAW: activate saved Window ID
+    x::             ActivateWinID("X")                                             ;SAW: activate saved Window ID
+   
     ralt & k::                      CursorJump("T")                             ;MF: move mouse cursor to top edge
     ralt & j::                      CursorJump("B",,"-20")                      ;MF: move mouse cursor to bottom edge
     ralt & h::                      CursorJump("L","20")                        ;MF: move mouse cursor to Left edge
@@ -100,7 +110,8 @@
     b::  ActivateApp("explorer.exe", "buffer_path", True)                       ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
 
 
-  #IF GC("T_d",0) and WinActive("ahk_exe " exe["editor"]) ;-- -- -- -- -- -- -- 
+  /* 
+    #IF GC("T_d",0) and WinActive("ahk_exe " exe["editor"]) ;-- -- -- -- -- -- -- 
     $^PgDn::             send +^!0                                              ; indent 1 space to left
     $^PgUp::             send +^!9                                              ; indent 1 space to right
  
@@ -223,4 +234,4 @@
     !1::                                                                           
     !2::                                                                           
     !3:: send % "^" . substr(A_ThisHotkey, 0)   
-
+ */

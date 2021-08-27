@@ -157,9 +157,13 @@
                                                             
     save_win_coord:
         WinGetPos(CB_hwnd, x, y, w, h, 1)
-        if (x = 0 and y = 0 and h = 0)
-            msgbox, WinGetPos(CB_hwnd, x, y, w, h, 1) wrong
-        CC("CB_position", "x" x " y" y " w" w " h" h)
+        if (h > 0) 
+            CC("CB_position", "x" x " y" y " w" w " h" h)
+        else {
+            MI := StrSplit(GetMonInfo()," ")                                    ; get monitor dimensions
+            d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2
+            CC("CB_position", d)
+        } 
         return
 
 

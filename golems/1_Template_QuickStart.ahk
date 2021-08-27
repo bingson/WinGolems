@@ -3,21 +3,29 @@
 
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
  
-  ^#z::              s("{blind}"), SaveWinID("z")                               ;ActvateApp: Save window ID for subsequent activation 
-  ^#x::              s("{blind}"), SaveWinID("x")                               ;ActvateApp: Save window ID for subsequent activation 
-  ^#c::              s("{blind}"), SaveWinID("c")                               ;ActvateApp: Save window ID for subsequent activation 
-  ^#f::              s("{blind}"), SaveWinID("f")                               ;ActvateApp: Save window ID for subsequent activation 
-  #z::               s("{blind}"), ActivateWinID("z")                           ;ActvateApp: Activate previously saved window ID
-  #x::               s("{blind}"), ActivateWinID("x")                           ;ActvateApp: Activate previously saved window ID
-  #c::               s("{blind}"), ActivateWinID("c")                           ;ActvateApp: Activate previously saved window ID
-  #f::               s("{blind}"), ActivateWinID("f")                           ;ActvateApp: Activate previously saved window ID
+  +#F1::              s("{blind}"), SaveWinID("F1")                             ;ActvateApp: Save window ID for subsequent activation 
+  +#F2::              s("{blind}"), SaveWinID("F2")                             ;ActvateApp: Save window ID for subsequent activation 
+  +#F3::              s("{blind}"), SaveWinID("F3")                             ;ActvateApp: Save window ID for subsequent activation 
+  +#F4::              s("{blind}"), SaveWinID("F4")                             ;ActvateApp: Save window ID for subsequent activation 
+  +#F5::              s("{blind}"), SaveWinID("F5")                             ;ActvateApp: Save window ID for subsequent activation 
+  +#F6::              s("{blind}"), SaveWinID("F6")                             ;ActvateApp: Save window ID for subsequent activation 
+  +#F7::              s("{blind}"), SaveWinID("F7")                             ;ActvateApp: Save window ID for subsequent activation 
+  +#F8::              s("{blind}"), SaveWinID("F8")                             ;ActvateApp: Save window ID for subsequent activation 
+  #F1::               s("{blind}"), ActivateWinID("F1")                         ;ActvateApp: Activate previously saved window ID
+  #F2::               s("{blind}"), ActivateWinID("F2")                         ;ActvateApp: Activate previously saved window ID
+  #F3::               s("{blind}"), ActivateWinID("F3")                         ;ActvateApp: Activate previously saved window ID
+  #F4::               s("{blind}"), ActivateWinID("F4")                         ;ActvateApp: Activate previously saved window ID
+  #F5::               s("{blind}"), ActivateWinID("F5")                         ;ActvateApp: Activate previously saved window ID
+  #F6::               s("{blind}"), ActivateWinID("F6")                         ;ActvateApp: Activate previously saved window ID
+  #F7::               s("{blind}"), ActivateWinID("F7")                         ;ActvateApp: Activate previously saved window ID
+  #F8::               s("{blind}"), ActivateWinID("F8")                         ;ActvateApp: Activate previously saved window ID
      
-  #q::               s("{blind}"), ActivateApp("ppt_path")                      ;ActvateApp:1 Activate PowerPoint
+  #q::               s("{blind}"), ActivateApp("xls_path")                      ;ActvateApp:1 Activate Excel
   #w::               s("{blind}"), ActivateApp("doc_path")                      ;ActvateApp:1 Activate Word
-  #e::               s("{blind}"), ActivateApp("xls_path")                      ;ActvateApp:1 Activate Excel
-  #a::               s("{blind}"), ActivateApp("editor_path")                   ;ActvateApp:1 Activate default editor
+  #a::               s("{blind}"), ActivateApp("pdf_path")                      ;ActvateApp:1 Activate pdf viewer
   #s::               s("{blind}"), ActivateApp("html_path")                     ;ActvateApp:1 Activate web browser
-  #d::               s("{blind}"), ActivateApp("pdf_path")                      ;ActvateApp:1 Activate pdf viewer
+  #z::               s("{blind}"), ActivateApp("editor_path")                   ;ActvateApp:1 Activate default editor
+  #x::               s("{blind}"), ActivateApp("ppt_path")                      ;ActvateApp:1 Activate PowerPoint
   #b::               s("{blind}"), ActivateApp("explorer.exe")                  ;ActvateApp:1 Activate File explorer         
   
   /* SAMPLE CODE                                                                          
@@ -86,7 +94,7 @@
   #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
   $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
   ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
-  !sc034::           moveWinBtnMonitors()                                       ;Convenience: move window btn monitors
+  !sc034::           moveWinBtnMonitors(), CFW()                                ;Convenience: move window btn monitors, cursor follows active windows
   $^!j::             s("{blind}"), s("^{sc00D}")                                ;Convenience: zoom in (simulate: ctrl + plus)
   $^!k::             s("{blind}"), s("^{sc00C}")                                ;Convenience: zoom out (simulate: ctrl + minus)
   !Backspace:: SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;Convenience: Delete current line of text

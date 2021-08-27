@@ -1,5 +1,3 @@
-
-
 ; TOGGLE WINGOLEMS OPTIONS _____________________________________________________
 
   :X:ta~win::    
@@ -10,7 +8,7 @@
 ; CONVENIENCE___________________________________________________________________
 
   #IF GC("T_adv_opt",0)                                                         ; if T_adv_opt = 1 advanced hotkeys are active, if no value for T_adv_opt, default = 0
-
+  ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")      ;Convenience: duplicate line
   :*:date*::                                                                    ;Convenience: output current date
     FormatTime, CurrentDateTime,, MMMM dd, yyyy
     clip(CurrentDateTime)
@@ -35,7 +33,8 @@
 ; MOUSE (CURSOR) FUNCTIONS______________________________________________________
   ; mouse functions with keyboard shortcuts  
   
-  
+  *#d::                           SaveMousPos("r",1)                            ;C: Left click and save mouse position
+  *^#d::                          RecallMousePosClick("r")                      ;MF: Move to saved mouse position and left click
   *#i::                           SaveMousPos("i",1)                            ;MouseFn: Left click and save mouse position
   *^#i::                          RecallMousePosClick("i")                      ;MouseFn: Move to saved mouse position and left click
   !i::                            Click, middle                                 ;MouseFn: mouse middle click
@@ -120,6 +119,9 @@
   >+c::         ChangeFolder(hdrive)                                            ;ChgFolder: %Homedrive% (C:)
   >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")      ;ChgFolder: This PC / My Computer (file explorer only)
 
+  !b::          send !{left}                                                    ;FileExplorer: prev folder
+  !n::          send !{right}                                                   ;FileExplorer: forward folder
+  !u::          send !{up}                                                      ;FileExplorer: up one directory level
   !z::          Send !vn{enter}                                                 ;FileExplorer: toggle navigation pane
   ^p::          Send {alt down}p{alt up}                                        ;FileExplorer: toggle preview plane
   <!space::     ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FileExplorer: move focus to navigation pane
@@ -136,14 +138,14 @@
   ^s::          SelectByRegEx()                                                 ;FileExplorer:1 select files by regex
 
 ; COMMAND BOX __________________________________________________________________
-#IF WinActive("ahk_id " CB_hwnd) and GC("T_adv_opt",0)                          ; If command Box active
-+!a::     MoveWin("LS")                                                         ;CommandBox: move CB window to left side small
-+!d::     MoveWin("RS")                                                         ;CommandBox: move CB window to right side small
-+!w::     MoveWin("TS")                                                         ;CommandBox: move CB window to top half small
-+!s::     MoveWin("BS")                                                         ;CommandBox: move CB window to bottom half small
-+!q::     MoveWin("L1")                                                         ;CommandBox: move CB window to top left small
-+!e::     MoveWin("R1")                                                         ;CommandBox: move CB window to top right small
-+!z::     MoveWin("L4")                                                         ;CommandBox: move CB window to bottom left small
-+!c::     MoveWin("R4")                                                         ;CommandBox: move CB window to bottom right small
+  #IF WinActive("ahk_id " CB_hwnd) and GC("T_adv_opt",0)                        ; If command Box active
+  +!a::     MoveWin("LS")                                                       ;CommandBox: move CB window to left side small
+  +!d::     MoveWin("RS")                                                       ;CommandBox: move CB window to right side small
+  +!w::     MoveWin("TS")                                                       ;CommandBox: move CB window to top half small
+  +!s::     MoveWin("BS")                                                       ;CommandBox: move CB window to bottom half small
+  +!q::     MoveWin("L1")                                                       ;CommandBox: move CB window to top left small
+  +!e::     MoveWin("R1")                                                       ;CommandBox: move CB window to top right small
+  +!z::     MoveWin("L4")                                                       ;CommandBox: move CB window to bottom left small
+  +!c::     MoveWin("R4")                                                       ;CommandBox: move CB window to bottom right small
 
-#If
+  #If

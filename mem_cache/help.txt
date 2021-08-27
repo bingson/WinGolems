@@ -1,36 +1,37 @@
-_________________________________________________________________________________________________________________________________________
+ _________________________________________________________________________________________________________________________________________
 | CommandBox (CB) Creation:                           | KEY    WINGOLEMS         ([T]oggle, [M]ode change ) | KEY  WINDOWS SELECTION     |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | Ls     see hotkey list ("gl" to update hotkey list) |  v   Sound                 |
+|     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
 |                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
 | The above can be adaped to call scripts written in  | tcf    [T] mouse cursor follows active window       |  ap  Add Remove Programs   |
-| other languages such as python, VBA, C++, etc ...   | ta     [T] advanced hotkeys                         |  a   Alarm Clock           |
-|                                                     | lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  r   Open Run Dialog Box   |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| ss|qs  [M] ON|OFF:  Data Backup Application         |  x   Start Context Menu    |
-|-----------------------------------------------------| ws     Open Window Spy                              |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| r~     Reload WinGolems                             |  h~  Hybernate computer    |
-| !r      reenter last submitted key             alt+r| q~     Quit WinGolems                               |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode     alt+x|                                                     |  rs~ Restart computer      |
+| other languages such as python, VBA, C++, etc ...   | tt     [T] enhanced text nav/selection hotkeys      |  a   Alarm Clock           |
+|                                                     | tc     [T] replace capslock w/ delete key           |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  x   Start Context Menu    |
+|-----------------------------------------------------| ss|qs  [M] ON|OFF:  Data Backup Application         |  s   Start Menu            |
+| #Space  submit key                      win+spacebar| ws     Open Window Spy                              |  e   desktop environments  |
+| ^Space  move focus CB input box        ctrl+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  h~  Hybernate computer    |
+| !r      reenter last submitted key             alt+r| r~     Reload WinGolems                             |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode     alt+x| q~     Quit WinGolems                               |  rs~ Restart computer      |
 | !e      move & resize CB window to top left    alt+e|                                                     |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | UPPER-case first letter required to trigger the following commands                                                                     |
 |                                                                                                                                        |
-|      TEXT MANIPULATION & MEMORY SYSTEM       USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
-|      --------------------------------------- ------------------- ----------------------------------------------------------------------|
-| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                       ?|
-|  L   Load .txt file into CB display          L1, Lhelp, Lr\testr Load in display => 1.txt, help.txt, r\testr.txt ("Ll" .txt list)    L?|
+| KEY  TEXT MANIPULATION & MEMORY SYSTEM       USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
+|  L   Load .txt file into CB display          L1, Lr\testr        Load in display => 1.txt, r\testr.txt ("Ll" .txt list)              L?|
 |      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
 |  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
-|  E   Edit file in default editor             E1, Etest, Er\testr edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
-| A|P  Append|Prepend selected text to file    A1, Atest, Ar\testr add selected text to bottom of => 1.txt, test.txt, r\testr.txt    A|P?|
+|  E   Edit file in default editor             E1, Er\testr        edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
+| A|P  Append|Prepend selected text to file    A1, Ar\testr        add selected text to bottom of => 1.txt, r\testr.txt           A or P?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
+|  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
 | R?:  Change replacement separators (1|2)     R1:%; R2:~>         Changes the above replacement separators to % and ~>              R?:?|
 | Rf:  Modify file w/ saved replace't pattern  Rf:1~p n            modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
@@ -39,13 +40,14 @@ ________________________________________________________________________________
 | KEY  CONVENIENCE                                                                                                                       |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
+|  Q:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
-|  G   Run any function                        GMoveWin,TopLeft    fmt: fn1_name,fn1_params__fn2name,fn2params          G?,?__?,? or G?,?|
-| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       makes Gmw,tl behave same as GMoveWin,TopLeft (dict: "Lalias")   G?:?~?|
-|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini in /mem_cache/ folder   |
-|      GUI BEHAVIOR & APPEARANCE                                                                                                         |
-|      --------------------------------------- ------------------- ----------------------------------------------------------------------|
+|  G   Run any function                        GMoveWin,TopLeft    fmt: fnName1,fnParams1__fnName2,fnParams2            G?,?__?,? or G?,?|
+| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
+|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
+| KEY  GUI BEHAVIOR & APPEARANCE                                                                                                         |
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
 |  T   Toggle CommandBox UI options            Td, Tm, Tp, Tt, Ts  [M]:(d)isplay,(m)inimal,(p)ersistent;[T]:(t)itle,(s)crollbar,(W)rap T?|
