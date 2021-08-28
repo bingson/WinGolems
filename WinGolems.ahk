@@ -2,6 +2,8 @@
 ; INITIALIZATION (start of auto-execution section) _____________________________
   ; SCRIPT CONFIG -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ; explained: https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
+                                                                                ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
+    #MenuMaskKey vkFF                                                           ; vkFF is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed
     SetWorkingDir %A_ScriptDir%#MaxHotkeysPerInterval 99000000
     SetBatchLines -1
     ListLines Off                                                               ; ListLines/KeyHistory are used to log keys for debugging

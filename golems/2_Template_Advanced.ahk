@@ -1,38 +1,20 @@
+#IF
 ; TOGGLE WINGOLEMS OPTIONS _____________________________________________________
 
-  :X:ta~win::    
-    CC("T_adv_opt","!")
-    PopUp("Advanced shortcuts: " GC("T_adv_opt"))                               ;Toggle: advanced hotkeys ON|OFF
-    return
+  :X:ta~win:: CC("T_adv","!"), PopUp("Advanced shortcuts: " GC("T_adv"))        ;Toggle: advanced hotkeys ON|OFF
 
 ; CONVENIENCE___________________________________________________________________
 
-  #IF GC("T_adv_opt",0)                                                         ; if T_adv_opt = 1 advanced hotkeys are active, if no value for T_adv_opt, default = 0
-  ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")      ;Convenience: duplicate line
-  :*:date*::                                                                    ;Convenience: output current date
-    FormatTime, CurrentDateTime,, MMMM dd, yyyy
-    clip(CurrentDateTime)
-    return 
+  #IF GC("T_adv",0)                                                             ; if T_adv_opt = 1 advanced hotkeys are active, if no value for T_adv_opt, default = 0
   
-  +!sc00C::                       Send, {ASC 0150}                              ;Convenience: en dash (–)
-  !sc00C::                        Send, {ASC 0151}                              ;Convenience: em dash (—)
   capslock::                      del                                           ;Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
   ^capslock::                     Send {blind}{capslock}                        ;Convenience:1 toggle capslock
-  ^#Backspace::                   ReplaceBackspaceWithSpaces()                  ;Convenience: Delete and replace selected text with blank spaces 
-  ^#v::                           PasteOverwrite()                              ;Convenience: Paste and overwrite the same number of spaces (aka. overtype paste)
-  +^u::                           ConvertUpper()                                ;Convenience:2 capitalize selected text
-  +!u::                           ConvertLower()                                ;Convenience:2 convert selected text to lower case
-  ^!u::                           Capitalize1stLetter()                         ;Convenience:2 First letter capitalized
-  ^!+u::                          Capitalize1stLetter(,,0)                      ;Convenience:2 Every First Letter Capitalized
-  !#space::                       ReplaceAwithB(" ")                            ;Convenience: remove all spaces from selected text
-  ^#space::                       ReplaceAwithB()                               ;Convenience: replace multiple consecutive spaces w/ one space in selected text
-  !#enter::                       RemoveBlankLines()                            ;Convenience: remove empty lines starting from selected text
-  ^#sc027::                       Send {lwin down}d{lwin up}                    ;Convenience: show desktop
   !sc033::     FunctionBox("MoveWin", MoveWin_DICT,C.bwhite,,MoveWin_DICT,0)    ;Convenience: Move window to preset locations
+  
 
 ; MOUSE (CURSOR) FUNCTIONS______________________________________________________
   ; mouse functions with keyboard shortcuts  
-  
+
   *#d::                           SaveMousPos("r",1)                            ;C: Left click and save mouse position
   *^#d::                          RecallMousePosClick("r")                      ;MF: Move to saved mouse position and left click
   *#i::                           SaveMousPos("i",1)                            ;MouseFn: Left click and save mouse position
@@ -64,8 +46,30 @@
   $!#l::                          CursorJump("R","-40")                         ;MouseFn: move mouse cursor to Right edge
       
 
-; TEXT SELECTION AND NAVIGATION ________________________________________________
+; TEXT FUNCTIONS _______________________________________________________________
 
+  ; MANIPULATE TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  +!sc00C::                       Send, {ASC 0150}                              ;ManipulateText: en dash (–)
+  !sc00C::                        Send, {ASC 0151}                              ;ManipulateText: em dash (—)
+  ^#Backspace::                   ReplaceBackspaceWithSpaces()                  ;ManipulateText:1 Delete and replace selected text with blank spaces 
+  !v::                            PasteWithoutBreaks()                          ;ManipulateText:1 replace multiple paragraph breaks w/ 1 break in selected text
+  +!v::                           PasteWithoutBreaks(True)                      ;ManipulateText:1 replace multiple paragraph breaks with space (remove paragraphs breaks)
+  ^#v::                           PasteOverwrite()                              ;ManipulateText:1 Paste and overwrite the same number of spaces (aka. overtype paste)
+  +^u::                           ConvertUpper()                                ;ManipulateText:2 capitalize selected text
+  +!u::                           ConvertLower()                                ;ManipulateText:2 convert selected text to lower case
+  ^!u::                           Capitalize1stLetter()                         ;ManipulateText:2 First letter capitalized
+  ^!+u::                          Capitalize1stLetter(,,0)                      ;ManipulateText:2 Every First Letter Capitalized
+  !#space::                       s("{blind}"), ReplaceAwithB(" ")              ;ManipulateText: remove all spaces from selected text
+  ^#space::                       s("{blind}"), ReplaceAwithB()                 ;ManipulateText: replace multiple consecutive spaces w/ one space in selected text
+  !#enter::                       s("{blind}"), RemoveBlankLines()              ;ManipulateText: remove empty lines starting from selected text
+  ^#sc027::                       Send {lwin down}d{lwin up}                    ;ManipulateText: show desktop
+  
+  
+  #IF GC("T_adv",0) and !WinActive("ahk_exe " exe["editor"])                    ; exclude when using editor app (replace with native app duplicate line function)
+  ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")      ;textManipulate: duplicate line
+
+  #IF GC("T_adv",0)                                                             ; if T_adv_opt = 1 advanced hotkeys are active, if no value for T_adv_opt, default = 0
+  
   ; SELECT TEXT-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
   $!f::         SelectWord()                                                    ;SelectText: select word at text cursor position
@@ -148,4 +152,4 @@
   +!z::     MoveWin("L4")                                                       ;CommandBox: move CB window to bottom left small
   +!c::     MoveWin("R4")                                                       ;CommandBox: move CB window to bottom right small
 
-  #If
+#IF

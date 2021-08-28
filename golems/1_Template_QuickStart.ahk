@@ -1,6 +1,5 @@
-#IfWinActive
+#IF
 ; The following interface elements are valid anywhere in Windows 10
-
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
  
   +#F1::              s("{blind}"), SaveWinID("F1")                             ;ActvateApp: Save window ID for subsequent activation 
@@ -89,8 +88,9 @@
   ^SC027::           Send {AppsKey}                                             ;Convenience: simulate appkey 
   ^#w::              WinClose,A                                                 ;Convenience: close active window 
   ^#q::              CloseClass()                                               ;Convenience: close all instances of the active program
-  *LWin::            Send {Blind}{LWin Down}                                    ;Convenience:1 makes windows key inert so it can act as a modifier key 
-  LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;Convenience:1 makes windows key inert so it can act as a modifier key
+  ;   *LWin::            Send {Blind}{LWin Down}                                    ;Convenience:1 makes windows key inert so it can act as a modifier key 
+  ;   LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;Convenience:1 makes windows key inert so it can act as a modifier key
+  ~LWin::Send {Blind}{vkE8}                                                     ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
   #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
   $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
   ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
@@ -149,5 +149,5 @@
   $<^space::                                                                    ;CommandBox: activate CB if exists and move focus to inputbox 
   $>^space::         ActivateWin("ahk_id " CB_hwnd)                             ;CommandBox: activate CB if exists and move focus to inputbox
   
-  #IF                                                                           ; end context specific assignments
+#IF                                                                             ; end context dependent assignments
   

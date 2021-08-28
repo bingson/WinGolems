@@ -51,7 +51,7 @@
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
 |  T   Toggle CommandBox UI options            Td, Tm, Tp, Tt, Ts  [M]:(d)isplay,(m)inimal,(p)ersistent;[T]:(t)itle,(s)crollbar,(W)rap T?|
-|  Z   Change display window appearance        Z13, Zf:courier, Zd change => font size: 13, font: courier, back to default     Z?:? or Z?|
+|  Z   Change display window appearance        Z13, Zf:courier, Zd change => font size: 13, font: courier, revert to default   Z?:? or Z?|
 |                                                                                                                                        |
 |________________________________________________________________________________________________________________________________________|
 

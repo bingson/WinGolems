@@ -1,4 +1,6 @@
+lwin & rctrl::          ActivateWinID("Rctrl")                                 ;SAW: activate saved Window ID
+ralt::          ActivateWinID("Lctrl")                                         ;SAW: activate saved Window ID
+ rctrl::         ActivateWinID("Rctrl")                                         ;SAW: activate saved Window ID
 
-#IF WinActive("ahk_id " CB_hwnd)                                              ; If command Box active
-
-  #space::           GUISubmit()                                                ;CB: submit GUI input 
+alt & lctrl::   SaveWinID("Lctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
+ alt & rctrl::   SaveWinID("Rctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 

@@ -1,1 +1,1 @@
-gl~    Update keyboard shortcut list for changes
++!^

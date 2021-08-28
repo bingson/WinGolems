@@ -1,7 +1,4 @@
-#IfWinActive
-
-; #v:: msgbox % winpath "\system32"
-
+#IF
 ; CB SYSTEM COMMANDS ___________________________________________________________
   :X:b~win::    BluetoothSettings()                                             ;SC: bluetooth settings
   :X:d~win::    DisplaySettings()                                               ;SC: display settings
@@ -39,10 +36,10 @@
   ~+#left::                                                                     ;AHK: cursor follows active window when moving apps btn monitors (if turned on)
   ~+#right::                                                                    ;AHK: cursor follows active window when moving apps btn monitors (if turned on)
   ~!tab::       CursorFollowWin()                                               ;AHK: cursor follows active window when switch apps with alt+tab (if turned on)
-  :X:clp~win::  WriteToINI(A_ComputerName, "CL_prfx")                           ;AHK: store selected text as label prefix
-  :X:cls~win::  WriteToINI(A_ComputerName, "CL_sffx")                           ;AHK: store selected text as label suffix
-  :X:cl~win::   CreateLabel("CL_prfx", "CL_sffx")                               ;AHK: create hotstring label with execution option
-  :X:!cl~win::  CreateLabel("!", "CL_sffx")                                     ;AHK: create normal label
+  :X:clp~win::  WriteToINI(A_ComputerName, "CL_pfx")                            ;AHK: store selected text as label prefix
+  :X:cls~win::  WriteToINI(A_ComputerName, "CL_sfx")                            ;AHK: store selected text as label suffix
+  :X:cl~win::   CreateLabel("CL_pfx", "CL_sfx")                                 ;AHK: create hotstring label with execution option
+  :X:!cl~win::  CreateLabel("!", "CL_sfx")                                      ;AHK: create normal label
   
   :X:gl~win::   GenerateHotkeyList()                                            ;AHK: generate a list of hotkeys in working directory.
   
@@ -64,6 +61,12 @@
   
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    :*:date*::                                                                    ;Convenience: output current date
+        FormatTime, CurrentDateTime,, MMMM dd, yyyy
+        clip(CurrentDateTime)
+        return 
+
+    lwin & rctrl::                  ActivateWinID("Rctrl")                      ;SAW: activate saved Window ID
     #f::                            Clicks(2)                                   ;MF: 2 Left clicks (select word)
     ^#f::                           Clicks(3)                                   ;MF: 3 Left clicks (select line)
     #n::AA("editor_path")    
@@ -80,6 +83,12 @@
     PrintScreen & l::               CursorJump("R","-40")                       ;MF: move mouse cursor to Right edge
    
   #If GetKeyState("PrintScreen", "P") and GC("T_d",0)
+  
+    ralt::          ActivateWinID("Lctrl")                                         ;SAW: activate saved Window ID
+    rctrl::         ActivateWinID("Rctrl")                                         ;SAW: activate saved Window ID
+
+    alt & lctrl::   SaveWinID("Lctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
+    alt & rctrl::   SaveWinID("Rctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
     alt & q::       SaveWinID("Q")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & q
     alt & w::       SaveWinID("W")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & q
     alt & a::       SaveWinID("A")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & a
@@ -110,6 +119,7 @@
     b::  ActivateApp("explorer.exe", "buffer_path", True)                       ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
 
 
+#IF
   /* 
     #IF GC("T_d",0) and WinActive("ahk_exe " exe["editor"]) ;-- -- -- -- -- -- -- 
     $^PgDn::             send +^!0                                              ; indent 1 space to left
@@ -153,7 +163,7 @@
     
     +!Right::            send !t                                                ;V: move to group 1
     +!Left::             send +!1                                               ;V: move to group 2
-    >^m::                send ^c                                                ;V: toggle tab moves focus
+    >^m::                send ^c                                                ;V: right handed copy
     <^m::                send ^m                                                ;V: toggle tab moves focus
     +^!o::               send +^u                                               ;V: toggle output window
     !d::                 send +^k                                               ;V: delete line

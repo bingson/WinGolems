@@ -14,7 +14,6 @@
   #!sc028::     ReplaceAwithB("""")                                             ;[TM] replace " " (double quotation marks) with spaces in selected text
   !#space::     ReplaceAwithB(" ")                                              ;[TM] remove all spaces starting from selected text
   ^#space::     ReplaceAwithB()                                                 ;[TM] replace multiple consecutive spaces w/  1 in selected text
-  #backspace::  ReplaceAwithB("+"), ReplaceAwithB(",")                          ;[TM] replace "+" or "," with " " in selected text
   #!sc00C::     ReplaceAwithB("_", " ")                                         ;[TM] replace "_" with " " in selected text
   ^#sc00C::     ReplaceAwithB(" ", "_")                                         ;[TM] replace " " with "_" in selected text
   #!SC034::     ReplaceAwithB(".", " ")                                         ;[TM] replace "." with " " in selected text;

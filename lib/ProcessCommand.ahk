@@ -1,5 +1,5 @@
 ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
-    global config_path, File_DICT, Folder_DICT, long, med, tgt_hwnd, CB_hwnd, C
+    global config_path, File_DICT, Folder_DICT, long, med, short, tgt_hwnd, CB_hwnd, C
     FirstChar := SubStr(UserInput, 1 , 1)
     f_path := A_ScriptDir "\mem_cache\" 
 
@@ -8,8 +8,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
         C_input := SubStr(UserInput, 2)                                         ; everything after the first character
         SplitPath, C_input, FileName, Dir, Extension, NameNoExt                 ; msgbox % C_input "`n`nFileName: " FileName "`nDir: " Dir "`nExtension: " Extension "`nNameNoExt: " NameNoExt
         dir := dir ? dir . "\" : ""
-        Switch FirstChar
-        {
+        Switch FirstChar                                                        ; free: h,i,u,x,y
+        { 
             Case 1,2,3,4,5,6,7,8,9,0:
                 NameNoExt := FirstChar
                 C_input := FirstChar
@@ -123,7 +123,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 return 1
             Case "V":                                                           ; paste file contents
-                ActivateWin("ahk_id" tgt_hwnd)
+                sleep, short
+                ActivateWin("ahk_id"  tgt_hwnd)
                 AccessCache(namenoext, dir)
                 PopUp(namenoext " pasted",C.lgreen,"000000", "230", "70", "-600", "14", "610")
                 return
@@ -173,7 +174,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     }
                 }
                 return 1
-            Case "D":
+            Case "D":                                                           ; delete file
                 if (extension) {
                     FileDelete,% f_path . Dir . NameNoExt . "." . extension
                 } else {
@@ -233,7 +234,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
 
                 }        
                 return
-            Case "F":                                                           ; fill space with char
+            Case "F":                                                           ; fill space with char 
+                sleep, short
                 ActivateWin("ahk_id " tgt_hwnd)                             
                 arr := StrSplit(C_input, ",")
                 FillChar(arr[2], arr[1], 0)
@@ -291,6 +293,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 GUI 2: destroy
                 return
             Case "W","B","N","M":
+                
                 RunOtherCB(C_input, FirstChar) 
             Case "Q":                                                           ; query selected text in chosen search engine msft
                 
@@ -333,6 +336,15 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 ActivateApp("explorer.exe", A_ScriptDir "\mem_cache\", False)
                 sleep 400
                 SelectByRegEx(C_input)
+                return
+            Case "Y":
+                if (SubStr(C_input, 1, 2) = "s:") {
+                    C3_Remainder := SubStr(C_input, 3)
+                    CC("CL_sfx", C3_Remainder)
+                } else if (SubStr(C_input, 1, 2) = "p:") {
+                    C3_Remainder := SubStr(C_input, 3)
+                    CC("CL_pfx", C3_Remainder)
+                }
                 return
             Case "Z":
                 

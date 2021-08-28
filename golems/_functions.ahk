@@ -1725,13 +1725,14 @@
     }
 
   }
-  
+
   RunMSWordMacro(MacroName) { ; for AHK_L
     ; Retrieves a running object that has been registered with OLE.
     ; an inter-process communication mechanism. 
     ; Based on a subset of Component Object Model (COM) that 
     ; was intended for use by scripting languages
     try {
+        ; WinActivate % "ahk_id " DllCall("GetDesktopWindow","ptr")             ; https://www.autohotkey.com/boards/viewtopic.php?t=16081&p=81604
         oWord := ComObjActive("Word.Application")
         oWord.Run(MacroName)
     } catch e {
