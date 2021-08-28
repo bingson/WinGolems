@@ -27,7 +27,8 @@
     */
 
 #If WinActive("ahk_exe " exe["doc"])
-    
+
+
     /*  SAMPLE CODE
         #space::   CB("~doc", C.rblue, C.lblue)                                 ;doc: opens command box that runs ~doc suffix CB keys
     */

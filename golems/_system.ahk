@@ -57,7 +57,6 @@
     CC("hypersnap_path","C:\Users\bings\Downloads\Programs\HyperSnap 7\HprSnap7.exe")
     PopUp("Developer options on: " GC("T_d"))
     return
-
   
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -73,6 +72,10 @@
     #e::send ^{home}    
     #+e::send ^{end}    
     ralt & down::                   s("{blind}"), s("{F11}")                    ;Convenience: full screen {F11}
+
+  #IF !WinActive("ahk_exe " exe["editor"]) and GC("T_d",0)                              ; If command Box active
+
+  ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")      ;Convenience: duplicate line
 
   #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                              ; If command Box active
     printscreen & space::           GUISubmit()                                 ;CB: submit GUI input

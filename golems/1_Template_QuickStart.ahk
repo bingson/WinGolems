@@ -95,8 +95,8 @@
   $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
   ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
   !sc034::           moveWinBtnMonitors(), CFW()                                ;Convenience: move window btn monitors, cursor follows active windows
-  $^!j::             s("{blind}"), s("^{sc00D}")                                ;Convenience: zoom in (simulate: ctrl + plus)
-  $^!k::             s("{blind}"), s("^{sc00C}")                                ;Convenience: zoom out (simulate: ctrl + minus)
+;   ^!j::             s("{blind}"), s("^{sc00D}")                                ;Convenience: zoom in (simulate: ctrl + plus)
+;   ^!k::             s("{blind}"), s("^{sc00C}")                                ;Convenience: zoom out (simulate: ctrl + minus)
   !Backspace:: SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;Convenience: Delete current line of text
 
   lshift & rshift::                                                             ;Convenience: reload WinGolems (update running script for changes, fixes sticky keys)
