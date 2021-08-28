@@ -25,23 +25,6 @@
        , "dgrey"       : "525252"
        , "onyx"        : "353839" }
 
- MoveWin_DICT := { "F" : "Maximize"
-                 , "a" : "LeftHalf"        
-                 , "d" : "RightHalf"       
-                 , "dd": "RightHalfsmall"       
-                 , "w" : "TopHalf"         
-                 , "ww": "TopHalfSmall"
-                 , "ss": "BottomHalfSmall"
-                 , "s" : "BottomHalf"      
-                 , "q" : "TopLeft"         
-                 , "e" : "TopRight"        
-                 , "z" : "BottomLeft"      
-                 , "c" : "BottomRight"     
-                 , "qq": "TopLeftSmall"    
-                 , "zz": "BottomLeftSmall" 
-                 , "ee": "TopRightSmall"   
-                 , "cc": "BottomRightSmall" }
-
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; reference group for file explorer and save as dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW
   GroupAdd, FileListers, ahk_class #32770, ShellView
@@ -373,23 +356,9 @@
     if (taps > 1)
         WinMinimize,A
   }
+  
  
-  FileJumpList(isHold, taps, state) {
-    global File_DICT
-    % (taps > 1) ? FunctionBox("EditFile", File_DICT, "EDIT FILE") : ""
-  }
- 
-  FolderJumpList(isHold, taps, state){
-    global Folder_DICT, ActivateExplorer
-    % (taps > 1) ? FunctionBox(ActivateExplorer, Folder_DICT, "OPEN FOLDER") : ""
-  }
- 
-  WinJumpList(isHold, taps, state){
-    global Command_DICT, Command_TOC
-    % (taps > 1) ? FunctionBox(, Command_DICT, "RUN SYS COMMAND", Command_TOC) : ""
-  }
- 
-; COMMAND BOX / JUMPLISTS ______________________________________________________
+; COMMAND BOX __________________________________________________________________
   
   ToggleDisplay(){
     % (GC("CB_Display") = 1) ? (GUIFocusInput(), clip("Tm"))
@@ -602,6 +571,55 @@
     return cache_file
   }
 
+; FUNCTION BOX _________________________________________________________________
+  
+  FunctionBox(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", optn = "", grps = 0, title="", p*) {
+ 
+    ; FunctionBox() opens an input box offering choices based on input_dict array, 
+    ;
+    ; func: calls a function that accepts values from the input array
+    ;       the value of input_dict will be treated as a parameter to that function. 
+    ;
+    ; optn: "i" => applies special formatting to input dictionary for TOC generation
+    ;              
+    ;              
+
+    global UserInput, med, config_path
+    
+    sleep ,med                                                                  ; short wait to delete hotstring
+    ; name_dict := (optn = "i") ? input_dict : optn                               
+    TOC := (name_dict) ? BuildTOC(name_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
+    default_title := (!title) ? AddSpaceBtnCaseChange(func, 0) : title
+    default_title .= "  (-_-)  "                                                ; l := "    |    " 
+    winget, output, ProcessName, A    
+    ; title_app := Capitalize1stLetter(output,0, True)
+    ; default_title := title_app "  " default_title
+    
+    ; IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
+    FB_tgt_hwnd := WinExist("A")                                                  ; store win ID of active application before calling GUI 
+    
+    FunctionBoxGUI(TOC, default_title, w_color, t_color) 
+    
+    ; Iniread, tgt_winID, %config_path%, %A_ComputerName%, FB_tgt_hwnd
+    ActivateWin("ahk_id " FB_tgt_hwnd)
+    UserInput := trim(UserInput)
+    if (func and input_dict[UserInput]) {
+        if !(p.MaxIndex() > 0) 
+            %func%(input_dict[UserInput])
+        else 
+            %func%(input_dict[UserInput], p*)
+    } else if (!func and input_dict[UserInput]) {
+        try 
+        { 
+            command := input_dict[UserInput]
+            %command%.call()
+        }
+    } else if UserInput                                                         
+        FunctionBox(func, input_dict, w_color, t_color, optn, grps, title, p*)
+    else
+    return
+  }
+
   FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" ) {
     global UserInput := "", FBhwnd := ""
 
@@ -642,7 +660,7 @@
        return
   }
  
-  BuildTOC(arr = "", groups = False) {
+  BuildTOC(arr = "", optn = "" , grps = 0) {
     ; buils a table of contents string created from a dictionary input array.
     ; alt_arr tells function that 
     arr_KV_swapped := {}                                                        ; key value swapped version of input array
@@ -660,16 +678,19 @@
     TOC := "Key`tSelection`n-----`t" line "`r"
     For dest, ref in arr_KV_swapped
     {
-        dest := Trim(AddSpaceBtnCaseChange(dest, 0))
         dest := ReplaceAwithB("- ","-",dest,0)
         dest := ReplaceAwithB("_ ","_",dest,0)
-        if groups {
+        dest := (optn = "s") ? Trim(AddSpaceBtnCaseChange(dest, 0)) : dest
+        
+        if grps {
             prefix := substr(dest, 1, 3)
             if (prefix <> prev_prefix and prev_prefix and prefix) {             ; adds blank line between changes in selection group prefix 
                 TOC .= "`n" 
             }
             prev_prefix := prefix
         }
+
+
 
         TOC .= (TOC <> "" ? "`n" : "") ref "`t" trim(dest, """")
     }
@@ -715,7 +736,7 @@
     if (SubStr(mem_path, 2, 1) = ":")                                           ; check if second character is ":" to test if absolute path given 
         input = %mem_path%%key%
     else if (SubStr(key, 2, 1) = ":")
-        input = %key%
+        input = %key%                                                           ; check if memory key is actually a path to a file, instead of just the file
     else
         input = %A_ScriptDir%\mem_cache\%mem_path%%key%
 
@@ -1939,15 +1960,15 @@
     return result
   }
  
-  FillChar(length = "80", char = " ", selected = True, out = false) {
+  FillChar(length = "80", char = " ", selected = True, out = false, buffer = 0) {
     ; Function to create borders and blank spaces of fixed length 
     try {
         var := (selected) ? rtrim(clip()) : ""
         num_char    := (StrLen(char) < length) 
                      ? (length - StrLen(var))/StrLen(char) 
-                     : StrLen(char) 
-        string_char := RepeatString(char, num_char)
-        output      := var . string_char
+                     : StrLen(char)
+        string_char := RepeatString(char, num_char - buffer)                             ; -1 to account for 1 space after the heading string
+        output      := var . ((buffer) ? A_space : "") . string_char
         output      := substr(output, 1, length)
         sleep 200
         if out
@@ -1985,7 +2006,7 @@
         send {space}
     Send {home}
     Send {home}{shift down}{end}{shift up}
-    FillChar(length, char)
+    FillChar(length, char,,,1)
     return
   }
  

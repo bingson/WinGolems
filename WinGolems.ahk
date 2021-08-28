@@ -52,19 +52,22 @@
     
     ConfigureWinGolems(config_path, apps *)
 
-; LOAD AHK GOLEMS ______________________________________________________________ ***end of auto-execution section***
+; LOAD AHK SCRIPTS (GOLEMS) ____________________________________________________ 
 
-#Include %A_ScriptDir%\golems
-#Include _functions.ahk
+#Include %A_ScriptDir%\golems\
+#Include _functions.ahk                                                         ; ***end of auto-execution section***
 #Include _system.ahk
+
+
+#Include %A_ScriptDir%\golems\
 #Include *i 1_Template_QuickStart.ahk
 #Include *i 2_Template_Advanced.ahk
 #Include *i 3_Template_ApplicationSpecific.ahk
-#Include *i Test.ahk                                                            ;j test new code here
+#Include *i Test.ahk                                                            ; test new code here
 
-#Include *i %A_ScriptDir%\..\Google Drive\secure
-#Include *i mm.ahk                                    
+#Include *i %A_ScriptDir%\..\Google Drive\secure\
 #Include *i Bing.ahk
+#Include *i mm.ahk                                    
 
 #Include *i %A_ScriptDir%\..\ahk\golems\
 #Include *i office.ahk

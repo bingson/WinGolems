@@ -9,8 +9,6 @@
   
   capslock::                      del                                           ;Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
   ^capslock::                     Send {blind}{capslock}                        ;Convenience:1 toggle capslock
-  !sc033::     FunctionBox("MoveWin", MoveWin_DICT,C.bwhite,,MoveWin_DICT,0)    ;Convenience: Move window to preset locations
-  
 
 ; MOUSE (CURSOR) FUNCTIONS______________________________________________________
   ; mouse functions with keyboard shortcuts  
@@ -132,6 +130,7 @@
   >!space::     ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FileExplorer: move focus to current folder pane
   ^o::          Send !vg{down 2}{enter}                                         ;FileExplorer: group by file type
   ^i::          Send !vg{down 1}{enter}                                         ;FileExplorer: group by date
+  $!r::         Send {F2}                                                       ;FileExplorer: rename file
   <^j::         SortByName()                                                    ;FileExplorer: sort by name
   <^k::         SortByDate()                                                    ;FileExplorer: sort by date modified
   >^j::         SortByType()                                                    ;FileExplorer: sort by type
@@ -141,6 +140,45 @@
   $+!c::        clipboard := Explorer_GetSelection()                            ;FileExplorer:1 store file path(s) of selected file(s) in clipboard
   ^s::          SelectByRegEx()                                                 ;FileExplorer:1 select files by regex
 
+
+; FUNCTION BOX _________________________________________________________________
+  ; opens a window that gives the user a menu of parameter choices for running a single function
+
+  #IF GC("T_adv",0)
+                                                                          
+  ^#b:: Files   := { "f" : "\golems\_functions.ahk"                             ;FunctionBox: edit file
+                   , "s" : A_ScriptDir "\golems\_system.ahk"     
+                   , "a" : A_ScriptDir "\golems\1_Template_QuickStart.ahk"  
+                   , "b" : A_ScriptDir "\golems\2_Template_Advanced.ahk"  
+                   , "c" : A_ScriptDir "\golems\3_Template_ApplicationSpecific.ahk"  
+                   , "x" : A_ScriptDir "\assets\tutorial\example.xlsx"
+                   , "d" : A_ScriptDir "\assets\tutorial\example.docx"
+                   , "p" : A_ScriptDir "\assets\tutorial\example.pptx"
+                   , "i" : """" config_path """" }, FunctionBox("EditFile", Files, C.lblue)     
+
+                                                                           
+  +#b:: Folders := { "m"  : A_ScriptDir "\mem_cache"                            ;FunctionBox: open folder
+                   , "j"  : UProfile "\Downloads"
+                   , "md" : UProfile "\Documents"
+                   , "w"  : A_ScriptDir }, FunctionBox("OpenFolder", Folders, C.lbrown)
+  
+  !sc033:: q := { "f" : "Maximize"                                              ;FunctionBox: resize & move window
+                , "a" : "LeftHalf"        
+                , "d" : "RightHalf"       
+                , "dd": "RightHalfsmall"       
+                , "w" : "TopHalf"         
+                , "ww": "TopHalfSmall"
+                , "ss": "BottomHalfSmall"
+                , "s" : "BottomHalf"      
+                , "q" : "TopLeft"         
+                , "e" : "TopRight"        
+                , "z" : "BottomLeft"      
+                , "c" : "BottomRight"     
+                , "qq": "TopLeftSmall"    
+                , "zz": "BottomLeftSmall" 
+                , "ee": "TopRightSmall"   
+                , "cc": "BottomRightSmall" }, FunctionBox("MoveWin", q,C.bwhite,,"s") ; "s" optn adds a space between case changes for TOC      
+                
 ; COMMAND BOX __________________________________________________________________
   #IF WinActive("ahk_id " CB_hwnd) and GC("T_adv_opt",0)                        ; If command Box active
   +!a::     MoveWin("LS")                                                       ;CommandBox: move CB window to left side small
