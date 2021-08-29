@@ -6,7 +6,7 @@
 ; CONVENIENCE___________________________________________________________________
 
   #IF GC("T_adv",0)                                                             ; if T_adv_opt = 1 advanced hotkeys are active, if no value for T_adv_opt, default = 0
-  
+  +capslock::                     backspace                                     ;Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
   capslock::                      del                                           ;Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
   ^capslock::                     Send {blind}{capslock}                        ;Convenience:1 toggle capslock
   !sc033::     FunctionBox("MoveWin", MoveWin_DICT,C.bwhite,,MoveWin_DICT,0)    ;Convenience: Move window to preset locations

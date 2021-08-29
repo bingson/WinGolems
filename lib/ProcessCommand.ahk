@@ -374,18 +374,18 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         return 2
                     case "default"   ,"d": 
                         CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
-                        MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
-                        d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
-                        CC("CB_position", d)
+                        , MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
+                        , d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
+                        , CC("CB_position", d)
                     case "minimized" ,"m": 
                         CC("CB_Titlebar",0), CC("CB_Display",0)
-                        IBw := GC("CB_InputBox_width")
-                        MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
-                        cX := (MI[3] - IBw) // 2
-                        bY := MI[4] - 25
-                        mw := IBw + 4
-                        mh := 40 
-                        CC("CB_position","x" cX " y" bY " w" mw " h" mh)
+                        , IBw := GC("CB_InputBox_width")
+                        , MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
+                        , cX := (MI[3] - IBw) // 2
+                        , bY := MI[4] - 25
+                        , mw := IBw + 4
+                        , mh := 40 
+                        , CC("CB_position","x" cX " y" bY " w" mw " h" mh)
                     default:
                 }
                 UpdateGUI()

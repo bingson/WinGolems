@@ -25,6 +25,11 @@
   :X:mod~win::  MoveWindowToOtherDesktop()                                      ;SC: Move window to other desktop
   :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
 
+  :X:tm~win::                                                                   ;MAW: open task manager with hotstring combines with max + cursor follows task manager window
+    send +^{esc}  
+  ~+^esc::                TskMgrExt()                                           ;MAW: maximize + mouse cursor follows window after task manager opens
+
+
 ; CB AHK UTILITIES _____________________________________________________________
   :X:wg~win::   LoadURL("https://github.com/bingson/wingolems")                 ;AHK: Load WinGolems GitHub Page
   :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer

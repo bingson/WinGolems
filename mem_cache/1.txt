@@ -1,6 +1,1 @@
-lwin & rctrl::          ActivateWinID("Rctrl")                                 ;SAW: activate saved Window ID
-ralt::          ActivateWinID("Lctrl")                                         ;SAW: activate saved Window ID
- rctrl::         ActivateWinID("Rctrl")                                         ;SAW: activate saved Window ID
-
-alt & lctrl::   SaveWinID("Lctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
- alt & rctrl::   SaveWinID("Rctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
+Dr. Wai-Sun Chan

@@ -1,6 +1,1 @@
-
- ralt::          ActivateWinID("Lctrl")                                         ;SAW: activate saved Window ID
- rctrl::         ActivateWinID("Rctrl")                                         ;SAW: activate saved Window ID
-
- alt & lctrl::   SaveWinID("Lctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
- alt & rctrl::   SaveWinID("Rctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
+https://vjav.tube/videos/394249/h0930-ori1381-1/?promo=31134
