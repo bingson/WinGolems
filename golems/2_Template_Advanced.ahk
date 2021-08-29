@@ -145,8 +145,12 @@
   ; opens a window that gives the user a menu of parameter choices for running a single function
 
   #IF GC("T_adv",0)
+
+;   FB() {
+    
+;   }
                                                                           
-  ^#b:: Files   := { "f" : "\golems\_functions.ahk"                             ;FunctionBox: edit file
+  ^#b:: Files   := { "f" : A_ScriptDir "\golems\_functions.ahk"                 ;FunctionBox: edit file
                    , "s" : A_ScriptDir "\golems\_system.ahk"     
                    , "a" : A_ScriptDir "\golems\1_Template_QuickStart.ahk"  
                    , "b" : A_ScriptDir "\golems\2_Template_Advanced.ahk"  
@@ -154,30 +158,32 @@
                    , "x" : A_ScriptDir "\assets\tutorial\example.xlsx"
                    , "d" : A_ScriptDir "\assets\tutorial\example.docx"
                    , "p" : A_ScriptDir "\assets\tutorial\example.pptx"
-                   , "i" : """" config_path """" }, FunctionBox("EditFile", Files, C.lblue)     
+                   , "i" : """" config_path """" }
+                   , FunctionBox("EditFile", Files, C.lblue)     
 
-                                                                           
   +#b:: Folders := { "m"  : A_ScriptDir "\mem_cache"                            ;FunctionBox: open folder
                    , "j"  : UProfile "\Downloads"
                    , "md" : UProfile "\Documents"
-                   , "w"  : A_ScriptDir }, FunctionBox("OpenFolder", Folders, C.lbrown)
+                   , "w"  : A_ScriptDir }
+                   , FunctionBox("OpenFolder", Folders, C.lbrown)
   
-  !sc033:: q := { "f" : "Maximize"                                              ;FunctionBox: resize & move window
-                , "a" : "LeftHalf"        
-                , "d" : "RightHalf"       
-                , "dd": "RightHalfsmall"       
-                , "w" : "TopHalf"         
-                , "ww": "TopHalfSmall"
-                , "ss": "BottomHalfSmall"
-                , "s" : "BottomHalf"      
-                , "q" : "TopLeft"         
-                , "e" : "TopRight"        
-                , "z" : "BottomLeft"      
-                , "c" : "BottomRight"     
-                , "qq": "TopLeftSmall"    
-                , "zz": "BottomLeftSmall" 
-                , "ee": "TopRightSmall"   
-                , "cc": "BottomRightSmall" }, FunctionBox("MoveWin", q,C.bwhite,,"s") ; "s" optn adds a space between case changes for TOC      
+  !sc033::    q := { "f" : "Maximize"                                           ;FunctionBox: resize & move window
+                   , "a" : "LeftHalf"     
+                   , "d" : "RightHalf"       
+                   , "dd": "RightHalfsmall"       
+                   , "w" : "TopHalf"         
+                   , "ww": "TopHalfSmall"
+                   , "ss": "BottomHalfSmall"
+                   , "s" : "BottomHalf"      
+                   , "q" : "TopLeft"         
+                   , "e" : "TopRight"        
+                   , "z" : "BottomLeft"      
+                   , "c" : "BottomRight"     
+                   , "qq": "TopLeftSmall"    
+                   , "zz": "BottomLeftSmall" 
+                   , "ee": "TopRightSmall"   
+                   , "cc": "BottomRightSmall" }
+                   , FunctionBox("MoveWin", q,C.bwhite,,"s") ; "s" optn adds a space between case changes for TOC      
                 
 ; COMMAND BOX __________________________________________________________________
   #IF WinActive("ahk_id " CB_hwnd) and GC("T_adv_opt",0)                        ; If command Box active

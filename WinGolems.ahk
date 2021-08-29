@@ -58,7 +58,6 @@
 #Include _functions.ahk                                                         ; ***end of auto-execution section***
 #Include _system.ahk
 
-
 #Include %A_ScriptDir%\golems\
 #Include *i 1_Template_QuickStart.ahk
 #Include *i 2_Template_Advanced.ahk
