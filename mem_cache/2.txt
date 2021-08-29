@@ -1,1 +1,1 @@
-"w"  : A_ScriptDir
+              ef~win:                                                                       ;CB: opens open folder jumplist

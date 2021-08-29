@@ -80,7 +80,6 @@
     
   }
  
- 
   MaximizeWin(){
     WinMaximize,A 
   }
@@ -174,7 +173,7 @@
     return
   }
  
-  ActivatePrevInstance() {
+  1ActivatePrevInstance() {
     ; activate newest instance of active program if multiple instances exist
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
@@ -2112,3 +2111,25 @@
  
 ; TEST _________________________________________________________________________
 
+  ActivatePrevInstance() {
+    ; !^`:: ; Last window
+    WinGetClass, ActiveClass, A
+    WinGet, WinClassCount, Count, ahk_class %ActiveClass%
+    IF WinClassCount = 1
+        Return
+    Else
+    WinGet, List, List, % "ahk_class " ActiveClass
+    Loop, % List
+    {
+        index := List - A_Index + 1
+        WinGet, State, MinMax, % "ahk_id " List%index%
+        if (State <> -1)
+        {
+            WinID := List%index%
+            break
+        }
+    }
+    WinActivate, % "ahk_id " WinID
+    return
+  }
+ 
