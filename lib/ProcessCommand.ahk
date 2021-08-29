@@ -241,16 +241,21 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 FillChar(arr[2], arr[1], 0)
                 return 
             Case "G":                                                           ; run function (broken right now)
+                
                 C_First2chr := SubStr(C_input, 1, 2) 
                 C3_Remainder := SubStr(C_input, 3)
-                switch C_First2chr
+
+                switch 
                 {   
-                    case "f~":
+                    case SubStr(C_input, 1 , 1) == ":":
+                        msgbox % 2
+                        return 1
+                    case C_First2chr == "f:":                                                  ; create function name alias
                         arr := StrSplit(C3_Remainder, "~")
                         IniWrite,% arr[2], %f_path%ALIAS.ini, function,% arr[1]
                         UpdateGUI()
                         return 1
-                    case "p~":
+                    case C_First2chr == "p:":                                                  ; create parameter alias
                         arr := StrSplit(C3_Remainder, "~")
                         IniWrite,% arr[2], %f_path%ALIAS.ini, parameter,% arr[1]
                         UpdateGUI()

@@ -91,7 +91,8 @@
     PrintScreen & l::               CursorJump("R","-40")                       ;MF: move mouse cursor to Right edge
    
   #If GetKeyState("PrintScreen", "P") and GC("T_d",0)
-  
+
+    !r:: RunProgWindow()                                                          ; run programs alternate shortcut
     ralt::          ActivateWinID("Lctrl")                                         ;SAW: activate saved Window ID
     rctrl::         ActivateWinID("Rctrl")                                         ;SAW: activate saved Window ID
 
