@@ -17,7 +17,7 @@
   *^#d::                          RecallMousePosClick("r")                      ;MF: Move to saved mouse position and left click
   *#i::                           SaveMousPos("i",1)                            ;MouseFn: Left click and save mouse position
   *^#i::                          RecallMousePosClick("i")                      ;MouseFn: Move to saved mouse position and left click
-  !i::                            Click, middle                                 ;MouseFn: mouse middle click
+  #o::                            Click, middle                                 ;MouseFn: mouse middle click
   PrintScreen & sc028::                                                         ;MouseFn: mouse Right click
   #sc028::                        Click, Right                                  ;MouseFn: mouse Right click
 
@@ -61,6 +61,23 @@
   ^#space::                       s("{blind}"), ReplaceAwithB()                 ;ManipulateText: replace multiple consecutive spaces w/ one space in selected text
   !#enter::                       s("{blind}"), RemoveBlankLines()              ;ManipulateText: remove empty lines starting from selected text
   ^#sc027::                       Send {lwin down}d{lwin up}                    ;ManipulateText: show desktop
+
+  
+  +!9::                                                                         ;TB: enclose selected text with ( )
+  !9::                             Clip("(" Clip() ")")                         ;TB: enclose selected text with ( )
+  $+!SC01A::                       Clip("{" Clip() "}")                         ;TB: enclose selected text with { }
+  !SC01A::                         Clip("[" Clip() "]")                         ;TB: enclose selected text with [ ]
+  ^SC028::                         Clip("'" Clip() "'")                         ;TB: enclose selected text with ' '
+  +!SC028::                        Clip("""" Clip() """")                       ;TB: enclose selected text with " "
+  !5::
+  <+>!n::                          Clip("%" Clip() "%")                         ;TB: enclose selected text with % %
+  !4::
+  <+>!m::                          Clip("$" Clip() "$")                         ;TB: enclose selected text with $ $
+  !sc029::                         Clip("`` " Clip() " ``")                     ;TB: enclose selected text with $ $
+  +!sc029::                        Clip("`````` " Clip() " ``````")             ;TB: enclose selected text with $ $
+  +!sc027::                        send {{}                                     ;TB: open curly braces
+  ^!sc027::                        send {}}                                     ;TB: close curly braces
+
   
   
   #IF GC("T_adv",0) and !WinActive("ahk_exe " exe["editor"])                    ; exclude when using editor app (replace with native app duplicate line function)
@@ -100,10 +117,10 @@
   
   $#h::         send ^{Left}                                                    ;NavigateText: jump to next word; simulate ctrl+Left
   $#l::         send ^{Right}                                                   ;NavigateText: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
-  $!h::         send {Left}                                                     ;NavigateText:| Left
-  $!l::         send {Right}                                                    ;NavigateText:| Right
-  *$!k::        send {Up}                                                       ;NavigateText:| Up
-  *$!j::        send {Down}                                                     ;NavigateText:| Down
+  $!h::         sendinput {Left}                                                     ;NavigateText:| Left
+  $!l::         sendinput {Right}                                                    ;NavigateText:| Right
+  *$!k::        sendinput {Up}                                                       ;NavigateText:| Up
+  *$!j::        sendinput {Down}                                                     ;NavigateText:| Down
 
 ; FILE EXPLORER HOTKEYS & FOLDER BOOKMARKS _____________________________________
 
@@ -121,6 +138,7 @@
   >+c::         ChangeFolder(hdrive)                                            ;ChgFolder: %Homedrive% (C:)
   >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")      ;ChgFolder: This PC / My Computer (file explorer only)
 
+  
   !b::          send !{left}                                                    ;FileExplorer: prev folder
   !n::          send !{right}                                                   ;FileExplorer: forward folder
   !u::          send !{up}                                                      ;FileExplorer: up one directory level

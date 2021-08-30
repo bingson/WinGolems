@@ -1,0 +1,2 @@
+  ;   *LWin::            Send {Blind}{LWin Down}                                    ;Convenience:1 makes windows key inert so it can act as a modifier key 
+  ;   LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;Convenience:1 makes windows key inert so it can act as a modifier key

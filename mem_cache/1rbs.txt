@@ -1,0 +1,22 @@
+/*
+======================================================
+Find RecycleBin Size
+======================================================
+*/
+
+SizeRecycleBin:
+{
+Gui, 6: Submit, NoHide
+VarSetCapacity(SHQRB,20)
+NumPut(20,SHQRB)
+DllCall("shell32\SHQueryRecycleBinA","STR","C:\Windows","UINT",&SHQRB)
+RecycleBinSize := NumGet(SHQRB,4,Int64) " Bytes - " Round(NumGet(SHQRB,4,"Int64")/1024/1024,0)
+   If (NumGet(SHQRB,4,Int64) > 0)
+      GuiControl, 6:Text, v_EmptyRecycleBin, RecycleBin (%RecycleBinSize% MB)
+   Else
+      GuiControl, 6:Text, v_EmptyRecycleBin, RecycleBin (Clean)
+}
+Return
+https://autohotkey.com/board/topic/66147-solved-get-recyclebin-sizepath/
+https://www.autohotkey.com/boards/viewtopic.php?f=5&t=3463&p=17525#p17525
+https://autohotkey.com/board/topic/68054-recycle-bin-status/

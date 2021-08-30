@@ -53,7 +53,17 @@
   :X:r~~win::   Reload                                                          ;AHK: reload ahk script
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up
+; Experimental _________________________________________________________________
+  
+   /*  
+    ; *!sc029:: 
+    ; *!capslock:: RunLabel("ChgInstance", "~win", WinExist())
+    ; *!sc3a:: RunLabel("ChgInstance", "~win", WinExist())
+    ; *!sc029:: ChgInstance("capslock") 
 
+    */ 
+   
+ 
 ; DEVELOPER OPTIONS ____________________________________________________________
 
   :X:td~win::                                                                   ;[T] toggle developer optns

@@ -6,7 +6,7 @@
     #MenuMaskKey vkFF                                                           ; vkFF is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed
     SetWorkingDir %A_ScriptDir%#MaxHotkeysPerInterval 99000000
     SetBatchLines -1
-    ListLines Off                                                               ; ListLines/KeyHistory are used to log keys for debugging
+    ListLines On ;Off                                                           ; ListLines/KeyHistory are used to log keys for debugging
     #KeyHistory 100                                                             ; change to a higher number for debugging
     #UseHook
     #InstallKeybdHook                                                           ; The keyboard hook monitors keystrokes for the purpose of activating hotstrings and any keyboard hotkeys

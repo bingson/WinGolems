@@ -26,6 +26,7 @@
   #z::               s("{blind}"), ActivateApp("editor_path")                   ;ActvateApp:1 Activate default editor
   #x::               s("{blind}"), ActivateApp("ppt_path")                      ;ActvateApp:1 Activate PowerPoint
   #b::               s("{blind}"), ActivateApp("explorer.exe")                  ;ActvateApp:1 Activate File explorer         
+  #t::               s("{blind}"), ActivateApp("cmd.exe")                       ;ActvateApp:1 Activate command window         
   
   /* SAMPLE CODE                                                                          
   #x::         s("{blind}"), ActivateApp("Convenience:\Everything\Everything.exe")        ;ActvateApp: e.g., accepts full file path
@@ -80,17 +81,12 @@
   #SC027::           WinMinimize,A                                              ;Convenience: minimize window
   #del::             AlwaysOnTop(1)                                             ;Convenience: Window always on top: ON
   #ins::             AlwaysOnTop(0)                                             ;Convenience: Window always on top: OFF 
-  +#capslock::                                                                  ;Convenience: rotate through application instances starting from oldest
-  !capslock::        s("{blind}"), ActivatePrevInstance()                       ;Convenience: rotate through application instances starting from oldest
-  +!capslock::                                                                  ;Convenience: rotate through application instances starting from newest
-  #capslock::        s("{blind}"), ActivateNextInstance()                       ;Convenience: rotate through application instances starting from newest
+  *!capslock::       ChgInstance()                                              ;Convenience: rotate through application instances with thumbnail preview (+!capslock for other direction)
   !SC027::           Send {esc}                                                 ;Convenience: simulate esc key (alt + semicolon)
   ^SC027::           Send {AppsKey}                                             ;Convenience: simulate appkey 
   ^#w::              WinClose,A                                                 ;Convenience: close active window 
   ^#q::              CloseClass()                                               ;Convenience: close all instances of the active program
-  ;   *LWin::            Send {Blind}{LWin Down}                                    ;Convenience:1 makes windows key inert so it can act as a modifier key 
-  ;   LWin Up::          Send {Blind}{vk00}{LWin Up}                                ;Convenience:1 makes windows key inert so it can act as a modifier key
-  ~LWin::Send {Blind}{vkE8}                                                     ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
+  ~LWin::            Send {Blind}{vkE8}                                         ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
   #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
   $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
   ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
@@ -114,8 +110,8 @@
   $#>!h::            Sendinput {Blind}{Wheelleft 6}                             ;Navigation: scroll wheel left
   $#>!l::            Sendinput {Blind}{WheelRight 6}                            ;Navigation: scroll wheel right
       
-  #o::               send ^{home}                                               ;Navigation: Ctrl + Home
-  #p::               send ^{end}                                                ;Navigation: Ctrl + end
+  #u::               send ^{home}                                               ;Navigation: Ctrl + Home
+  #y::               send ^{end}                                                ;Navigation: Ctrl + end
   ^!h::              sendinput {home}                                           ;Navigation: Home
   ^!l::              sendinput {end}                                            ;Navigation: End
     

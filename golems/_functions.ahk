@@ -173,7 +173,7 @@
     return
   }
  
-  1ActivatePrevInstance() {
+  ActivatePrevInstance() {
     ; activate newest instance of active program if multiple instances exist
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
@@ -188,7 +188,7 @@
     blockinput,off
     return
   }
- 
+  
   ActivateNextInstance() {
     ; activate oldest instance of active program if multiple instances exist
     WinGetClass, ActiveClass, A
@@ -204,6 +204,7 @@
     SetStoreCapsLockMode, on
     return
   }
+  
  
 ; SYSTEM APPS __________________________________________________________________
  
@@ -2109,27 +2110,135 @@
     return
   } 
  
-; TEST _________________________________________________________________________
-
-  ActivatePrevInstance() {
-    ; !^`:: ; Last window
-    WinGetClass, ActiveClass, A
-    WinGet, WinClassCount, Count, ahk_class %ActiveClass%
-    IF WinClassCount = 1
-        Return
-    Else
-    WinGet, List, List, % "ahk_class " ActiveClass
-    Loop, % List
-    {
-        index := List - A_Index + 1
-        WinGet, State, MinMax, % "ahk_id " List%index%
-        if (State <> -1)
-        {
-            WinID := List%index%
-            break
-        }
-    }
-    WinActivate, % "ahk_id " WinID
+; SWITCH INSTANCES OF CURRENT APP ______________________________________________
+    
+  ChgInstance( switch = "capslock") {
+    global tabkey := switch
+    gosub, chgInstance~win
     return
   }
- 
+
+
+  
+  return
+
+  ChgInstance~win:                                                            ; https://superuser.com/questions/435602/shortcut-in-windows-7-to-switch-between-same-applications-windows-like-cmd
+
+  WS_EX_TOOLWINDOW = 0x80
+  WS_EX_APPWINDOW = 0x40000
+  tw := []
+  aw := []
+
+  WinGet, processName, ProcessName, A
+
+  DetectHiddenWindows, Off
+  AltTab_window_list(1)
+
+  Loop, %AltTab_ID_List_0%
+  {
+     wid := AltTab_ID_List_%A_Index%
+     WinGet, processName2, ProcessName, ahk_id %wid%
+
+     if (processName2 != processName)
+     {
+        WinGet, exStyle2, ExStyle, ahk_id %wid%
+
+        if (!(exStyle2 & WS_EX_TOOLWINDOW))
+        {
+           tw.InsertAt(0, wid)
+           WinSet, ExStyle, ^0x80, ahk_id %wid%
+        }
+
+        if ((exStyle2 & WS_EX_APPWINDOW))
+        {
+           aw.InsertAt(0, wid)
+           WinSet, ExStyle, ^0x40000, ahk_id %wid%
+        }
+     }
+  }
+
+  Send {Alt Down}{Tab} ; Bring up switcher immediately
+
+;   KeyWait, sc029, T.25  ; Go to next window; wait .25s before looping
+  ; KeyWait, ``, T.25  ; Go to next window; wait .25s before looping
+  KeyWait, %tabkey%, T.25  ; Go to next window; wait .25s before looping
+  if (Errorlevel == 0)
+  {
+      While ( GetKeyState( "alt","P" ) )
+     {
+      ;   KeyWait, ``, D T.25
+        ; KeyWait, sc029, D T.25
+        KeyWait,%tabkey%, D T.25  ; Go to next window; wait .25s before looping
+        if (Errorlevel == 0)
+        {
+           if (GetKeyState( "Shift","P" ))
+           {
+              Send {Alt Down}{Shift Down}{Tab}
+              Sleep, 200
+           }
+           else
+           {
+              Send {Alt Down}{Tab}
+              Sleep, 200
+           }
+        }
+     }
+  }
+
+  Send {Alt Up} ; Close switcher on hotkey release
+
+  for index, wid in tw
+  {
+     WinSet, ExStyle, ^0x80, ahk_id %wid%
+  }
+
+  for index, wid in aw
+  {
+     WinSet, ExStyle, ^0x40000, ahk_id %wid%
+  }
+
+  return
+
+    
+  AltTab_window_list(excludeToolWindows)
+  {
+     global
+     WS_EX_CONTROLPARENT =0x10000
+     WS_EX_APPWINDOW =0x40000
+     WS_EX_TOOLWINDOW =0x80
+     WS_DISABLED =0x8000000
+     WS_POPUP =0x80000000
+     AltTab_ID_List_ =0
+     WinGet, Window_List, List,,, Program Manager ; Gather a list of running programs
+     id_list =
+     Loop, %Window_List%
+     {
+        wid := Window_List%A_Index%
+        WinGetTitle, wid_Title, ahk_id %wid%
+        WinGet, Style, Style, ahk_id %wid%
+  
+        If ((Style & WS_DISABLED) or ! (wid_Title)) ; skip unimportant windows
+           Continue
+  
+        WinGet, es, ExStyle, ahk_id %wid%
+        Parent := Decimal_to_Hex( DllCall( "GetParent", "uint", wid ) )
+        WinGetClass, Win_Class, ahk_id %wid%
+        WinGet, Style_parent, Style, ahk_id %Parent%
+  
+        If ((excludeToolWindows & (es & WS_EX_TOOLWINDOW))
+           or ((es & ws_ex_controlparent) and ! (Style & WS_POPUP) and !(Win_Class ="#32770") and ! (es & WS_EX_APPWINDOW)) ; pspad child window excluded
+           or ((Style & WS_POPUP) and (Parent) and ((Style_parent & WS_DISABLED) =0))) ; notepad find window excluded ; note - some windows result in blank value so must test for zero instead of using NOT operator!
+           continue
+        AltTab_ID_List_ ++
+        AltTab_ID_List_%AltTab_ID_List_% :=wid
+     }  
+     AltTab_ID_List_0 := AltTab_ID_List_
+  }
+  
+  Decimal_to_Hex(var)
+  {
+    SetFormat, integer, hex
+    var += 0
+    SetFormat, integer, d
+    return var
+  }

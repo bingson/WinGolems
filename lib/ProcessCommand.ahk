@@ -22,6 +22,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 return 1
             Case "A", "P":                                                      ; append|prepend selected text
                 ActivateWin("ahk_id " tgt_hwnd) 
+                sleep, short
                 text_to_add := "`n" . trim(clip())
                 if (FirstChar == "A") {
                     FileAppend, %text_to_add%, %f_path%%Dir%%NameNoExt%.txt    
@@ -42,6 +43,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                     
                 tgt := f_path dir NameNoExt
+
+
                 if (C_input = "s" or C_input = "c") {
                     NameNoExt := (C_input = "s") ? ("HotKey_List") : ("config.ini")
                     RegExMatch(config_path, ".*(?=config.ini)", cpth)                         ; get everything before the last title separator and store in v
@@ -49,6 +52,16 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
+                } else if (C_input = ":") {
+                    
+                    try {
+                        txt := Clipboard
+                        NameNoExt := "Clipboard Contents", dir := ""
+                    } catch e {
+                        PopUp("Sorry this window only displays text strings, image and other multimedia support is being worked on", , ,, , drtn = "-2000") 
+                        return 1
+                    }
+
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) 
                   or (C_input = "l") {
                     NameNoExt := "list"
@@ -59,10 +72,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                 }
-                new_title_file := dir . NameNoExt . RetrieveExt(tgt)
-                ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
+                new_title_file := dir . NameNoExt . RetrieveExt(tgt)            ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
                 CC("CB_title", new_title_file)
-                ; Msgbox % "`nnew_title_file: " . title
                 UpdateGUI(txt, new_title_file)
                 return 1
 
