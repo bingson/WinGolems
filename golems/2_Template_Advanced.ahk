@@ -10,7 +10,7 @@
   capslock::                      del                                           ;Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
   ^capslock::                     Send {blind}{capslock}                        ;Convenience:1 toggle capslock
 
-; MOUSE (CURSOR) FUNCTIONS______________________________________________________
+; MOUSE FUNCTIONS ______________________________________________________________
   ; mouse functions with keyboard shortcuts  
 
   *#d::                           SaveMousPos("r",1)                            ;C: Left click and save mouse position
