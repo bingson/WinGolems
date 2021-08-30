@@ -19,14 +19,14 @@
   #F7::               s("{blind}"), ActivateWinID("F7")                         ;ActvateApp: Activate previously saved window ID
   #F8::               s("{blind}"), ActivateWinID("F8")                         ;ActvateApp: Activate previously saved window ID
      
-  #q::               s("{blind}"), ActivateApp("xls_path")                      ;ActvateApp:1 Activate Excel
-  #w::               s("{blind}"), ActivateApp("doc_path")                      ;ActvateApp:1 Activate Word
-  #a::               s("{blind}"), ActivateApp("pdf_path")                      ;ActvateApp:1 Activate pdf viewer
-  #s::               s("{blind}"), ActivateApp("html_path")                     ;ActvateApp:1 Activate web browser
-  #z::               s("{blind}"), ActivateApp("editor_path")                   ;ActvateApp:1 Activate default editor
-  #x::               s("{blind}"), ActivateApp("ppt_path")                      ;ActvateApp:1 Activate PowerPoint
-  #b::               s("{blind}"), ActivateApp("explorer.exe")                  ;ActvateApp:1 Activate File explorer         
-  #t::               s("{blind}"), ActivateApp("cmd.exe")                       ;ActvateApp:1 Activate command window         
+  #q::                s("{blind}"), ActivateApp("xls_path")                     ;ActvateApp:1 Activate Excel
+  #w::                s("{blind}"), ActivateApp("doc_path")                     ;ActvateApp:1 Activate Word
+  #a::                s("{blind}"), ActivateApp("pdf_path")                     ;ActvateApp:1 Activate pdf viewer
+  #s::                s("{blind}"), ActivateApp("html_path")                    ;ActvateApp:1 Activate web browser
+  #z::                s("{blind}"), ActivateApp("editor_path")                  ;ActvateApp:1 Activate default editor
+  #x::                s("{blind}"), ActivateApp("ppt_path")                     ;ActvateApp:1 Activate PowerPoint
+  #b::                s("{blind}"), ActivateApp("explorer.exe")                 ;ActvateApp:1 Activate File explorer         
+  #t::                s("{blind}"), ActivateApp("cmd.exe")                      ;ActvateApp:1 Activate command window         
   
   /* SAMPLE CODE                                                                          
   #x::         s("{blind}"), ActivateApp("Convenience:\Everything\Everything.exe")        ;ActvateApp: e.g., accepts full file path
@@ -87,8 +87,8 @@
   
   !SC027::           Send {esc}                                                 ;Convenience: simulate esc key (alt + semicolon)
   ^SC027::           Send {AppsKey}                                             ;Convenience: simulate appkey 
-  ^#w::              WinClose,A                                                 ;Convenience: close active window 
-  ^#q::              CloseClass()                                               ;Convenience: close all instances of the active program
+  #sc029::           WinClose,A                                                 ;Convenience: close active window 
+  +#sc029::          CloseClass()                                               ;Convenience: close all instances of the active program
   ~LWin::            Send {Blind}{vkE8}                                         ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
   #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
   $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
