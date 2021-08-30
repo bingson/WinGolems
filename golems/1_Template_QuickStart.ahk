@@ -87,8 +87,8 @@
   
   !SC027::           Send {esc}                                                 ;Convenience: simulate esc key (alt + semicolon)
   ^SC027::           Send {AppsKey}                                             ;Convenience: simulate appkey 
-  #sc029::           WinClose,A                                                 ;Convenience: close active window 
-  +#sc029::          CloseClass()                                               ;Convenience: close all instances of the active program
+  #esc::             WinClose,A                                                 ;Convenience: close active window 
+  +#esc::            CloseClass()                                               ;Convenience: close all instances of the active program
   ~LWin::            Send {Blind}{vkE8}                                         ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
   #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
   $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
