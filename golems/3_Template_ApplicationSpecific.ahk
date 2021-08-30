@@ -1,7 +1,7 @@
 #IF
 
-  ; Context Specific shortcut template. The shortcuts below are valid only if the 
-  ; associated application is active or the key is entered in a matching command box.
+  ; Context Specific shortcut template: The shortcuts below are valid only if the 
+  ; WinActive condition is met.
 
   /*  SAMPLE CODE: (mode switch) create interface layer active only if there's a Command Box open, but not active 
       #If WinActive("ahk_exe " exe["editor"]) and WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)

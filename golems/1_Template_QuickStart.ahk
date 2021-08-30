@@ -92,6 +92,7 @@
   ~LWin::            Send {Blind}{vkE8}                                         ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
   #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
   $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
+  ~ralt & ~rshift:: 
   ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
   !sc034::           moveWinBtnMonitors(), CFW()                                ;Convenience: move window btn monitors, cursor follows active windows
   !Backspace:: SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;Convenience: Delete current line of text
