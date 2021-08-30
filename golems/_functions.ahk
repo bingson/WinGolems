@@ -578,7 +578,7 @@
 
 ; FUNCTION BOX _________________________________________________________________
   
-  FunctionBox(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", optn = "", grps = 0, title="", p*) {
+  FunctionBox(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", optn = "", grps = 0,toc_dict="", title="", p*) {
  
     ; FunctionBox() opens an input box offering choices based on input_dict array, 
     ;
@@ -587,13 +587,13 @@
     ;
     ; optn: "i" => applies special formatting to input dictionary for TOC generation
     ;              
-    ;              
+    ;   
 
     global UserInput, med, config_path
     
     sleep ,med                                                                  ; short wait to delete hotstring
-    ; name_dict := (optn = "i") ? input_dict : optn                               
-    TOC := (name_dict) ? BuildTOC(name_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
+    
+    TOC := (toc_dict) ? BuildTOC(toc_dict, "t", grps) : BuildTOC(input_dict, optn, grps)
     default_title := (!title) ? AddSpaceBtnCaseChange(func, 0) : title
     default_title .= "  (-_-)  "                                                ; l := "    |    " 
     winget, output, ProcessName, A    
@@ -620,7 +620,7 @@
             %command%.call()
         }
     } else if UserInput                                                         
-        FunctionBox(func, input_dict, w_color, t_color, optn, grps, title, p*)
+        FunctionBox(func, input_dict, w_color, t_color, optn, grps, toc_dict, title, p*)
     else
     return
   }
@@ -688,7 +688,7 @@
         dest := (optn = "s") ? Trim(AddSpaceBtnCaseChange(dest, 0)) : dest
         
         if grps {
-            prefix := substr(dest, 1, 3)
+            prefix := substr(dest, 1, 1)
             if (prefix <> prev_prefix and prev_prefix and prefix) {             ; adds blank line between changes in selection group prefix 
                 TOC .= "`n" 
             }

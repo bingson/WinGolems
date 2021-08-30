@@ -53,16 +53,6 @@
   :X:r~~win::   Reload                                                          ;AHK: reload ahk script
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up
-; Experimental _________________________________________________________________
-  
-   /*  
-    ; *!sc029:: 
-    ; *!capslock:: RunLabel("ChgInstance", "~win", WinExist())
-    ; *!sc3a:: RunLabel("ChgInstance", "~win", WinExist())
-    ; *!sc029:: ChgInstance("capslock") 
-
-    */ 
-   
  
 ; DEVELOPER OPTIONS ____________________________________________________________
 
@@ -75,6 +65,9 @@
   
 
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    ^#w::             WinClose,A                                                 ;Convenience: close active window 
+    ^#q::             CloseClass()                                               ;Convenience: close all instances of the active program
+
     :*:date*::                                                                    ;Convenience: output current date
         FormatTime, CurrentDateTime,, MMMM dd, yyyy
         clip(CurrentDateTime)

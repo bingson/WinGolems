@@ -28,10 +28,6 @@
   #b::                s("{blind}"), ActivateApp("explorer.exe")                 ;ActvateApp:1 Activate File explorer         
   #t::                s("{blind}"), ActivateApp("cmd.exe")                      ;ActvateApp:1 Activate command window         
   
-  /* SAMPLE CODE                                                                          
-  #x::         s("{blind}"), ActivateApp("Convenience:\Everything\Everything.exe")        ;ActvateApp: e.g., accepts full file path
-  */
-
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; modifier keys (+#^) can be swapped around to change the key combinations
   ; to call the below memory function but must always end in the numbers 0-9 
@@ -92,7 +88,7 @@
   ~LWin::            Send {Blind}{vkE8}                                         ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
   #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
   $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
-  ~ralt & ~rshift:: 
+  ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
   ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
   !sc034::           moveWinBtnMonitors(), CFW()                                ;Convenience: move window btn monitors, cursor follows active windows
   !Backspace:: SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;Convenience: Delete current line of text
