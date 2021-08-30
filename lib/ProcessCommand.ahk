@@ -41,9 +41,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
                     CC("CB_position", d)
                 }
-                    
                 tgt := f_path dir NameNoExt
-
 
                 if (C_input = "s" or C_input = "c") {
                     NameNoExt := (C_input = "s") ? ("HotKey_List") : ("config.ini")
@@ -195,10 +193,9 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 gosub, Load
                 return 1
             Case "R":                                                           ; replace string 
-                C_2 := SubStr(C_input, 1, 2)
-                C3_Remainder := SubStr(C_input, 3)
-                IniRead, sep1, %config_path%, %A_ComputerName%, Rsep1 ,~
-                IniRead, sep2, %config_path%, %A_ComputerName%, Rsep2 ,__
+                C_2          := SubStr(C_input, 1, 2) , sep1 := GC("Rsep1","~")
+                C3_Remainder := SubStr(C_input, 3)    , sep2 := GC("Rsep2","__") 
+                        
                 switch C_2
                 {
                     case "1:":
@@ -396,7 +393,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     case "minimized" ,"m": 
                         CC("CB_Titlebar",0), CC("CB_Display",0)
                         , IBw := GC("CB_InputBox_width")
-                        , MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
+                        , MI := StrSplit(GetMonInfo()," ")                                
                         , cX := (MI[3] - IBw) // 2
                         , bY := MI[4] - 25
                         , mw := IBw + 4

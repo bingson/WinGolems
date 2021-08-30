@@ -166,24 +166,25 @@
 
   e~win:                                                                        
   ^#b:: Files   := { "f" : A_ScriptDir "\golems\_functions.ahk"                 ;FunctionBox: edit file
-                   , "s" : A_ScriptDir "\golems\_system.ahk"     
-                   , "a" : A_ScriptDir "\golems\1_Template_QuickStart.ahk"  
-                   , "b" : A_ScriptDir "\golems\2_Template_Advanced.ahk"  
+                   , "s" : A_ScriptDir "\golems\_system.ahk"                    ; for the construction of the GUI menu
+                   , "a" : A_ScriptDir "\golems\1_Template_QuickStart.ahk"      ; all strings before the last "\" is ommitted
+                   , "b" : A_ScriptDir "\golems\2_Template_Advanced.ahk"        ; to show only the destination file or folder
                    , "c" : A_ScriptDir "\golems\3_Template_ApplicationSpecific.ahk"  
                    , "t" : A_ScriptDir "\golems\test.ahk"  
                    , "x" : A_ScriptDir "\assets\tutorial\example.xlsx"
                    , "d" : A_ScriptDir "\assets\tutorial\example.docx"
                    , "p" : A_ScriptDir "\assets\tutorial\example.pptx"
                    , "i" : """" config_path """" }
-                   , FunctionBox("EditFile", Files, C.lblue)     
+      , FunctionBox("EditFile", Files, C.lblue)     
+
   ef~win:                                                                       
   +#b:: Folders := { "m"  : A_ScriptDir "\mem_cache"                            ;FunctionBox: open folder
                    , "j"  : UProfile "\Downloads"
                    , "md" : UProfile "\Documents"
                    , "w"  : A_ScriptDir }
-                   , FunctionBox("OpenFolder", Folders, C.lbrown)
-  
-  !sc033::    q := { "f" : "0Maximize"                                           ;FunctionBox: resize & move window
+      , FunctionBox("OpenFolder", Folders, C.lbrown)
+    
+  !sc033:: dest := { "f" : "0Maximize"                                          ;FunctionBox: resize & move window
                    , "q" : "1TopLeft"         
                    , "e" : "1TopRight"        
                    , "z" : "2BottomLeft"      
@@ -204,7 +205,7 @@
                    , "ed": "R2TopMidRightSmall"    
                    , "cd": "R3BottomMidRightSmall"    
                    , "cc": "R4BottomRightSmall" }
-                   , FunctionBox("MoveWin", q,C.bwhite,,"s") ; "s" optn adds a space between case changes for TOC      
+            , FunctionBox("MoveWin", dest, C.bwhite,, "s")                      ; "s" optn adds a space between case changes for GUI menu
                 
 ; COMMAND BOX __________________________________________________________________
   #IF WinActive("ahk_id " CB_hwnd) and GC("T_adv_opt",0)                        ; If command Box active
