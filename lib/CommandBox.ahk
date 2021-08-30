@@ -1,7 +1,8 @@
  CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand"
             , fwt = "500", show_txt = "", title = "",  input_txt = "") {
-    
-    
+    CoordMode, Mouse, Screen
+    MouseGetPos, StartX, StartY
+
     global long, med, short, C, config_path, CB_Display := ""
         , UserInput := "", tgt_hwnd := "", CB_hwnd := ""
     
@@ -102,9 +103,13 @@
 
     Gui, 2: show, hide AutoSize,%title%
     Gui, Show, %CB_position% NoActivate
+    ; CC("cursor_follow", CFW_state)
     GuiControl, 2: +HScroll +VScroll, CB_Display                                ; add scroll bars back without redrawing them to add scrolling without visible scroll bars
     ; ActivateWin("ahk_id " tgt_hwnd)
     ; WinWaitClose                                                                
+    ; BlockInput, MouseMoveOff
+    MouseMove, StartX, StartY
+
     return
     
     2GuiSize: 

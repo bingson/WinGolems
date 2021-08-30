@@ -183,22 +183,27 @@
                    , "w"  : A_ScriptDir }
                    , FunctionBox("OpenFolder", Folders, C.lbrown)
   
-  !sc033::    q := { "f" : "Maximize"                                           ;FunctionBox: resize & move window
-                   , "a" : "LeftHalf"     
-                   , "d" : "RightHalf"       
-                   , "dd": "RightHalfsmall"       
-                   , "w" : "TopHalf"         
-                   , "ww": "TopHalfSmall"
-                   , "ss": "BottomHalfSmall"
-                   , "s" : "BottomHalf"      
-                   , "q" : "TopLeft"         
-                   , "e" : "TopRight"        
-                   , "z" : "BottomLeft"      
-                   , "c" : "BottomRight"     
-                   , "qq": "TopLeftSmall"    
-                   , "zz": "BottomLeftSmall" 
-                   , "ee": "TopRightSmall"   
-                   , "cc": "BottomRightSmall" }
+  !sc033::    q := { "f" : "0Maximize"                                           ;FunctionBox: resize & move window
+                   , "q" : "1TopLeft"         
+                   , "e" : "1TopRight"        
+                   , "z" : "2BottomLeft"      
+                   , "c" : "2BottomRight"     
+                   , "a" : "3LeftHalf"     
+                   , "d" : "3RightHalf"       
+                   , "w" : "4TopHalf"         
+                   , "s" : "4BottomHalf"      
+                   , "dd": "5RightHalfSmall"       
+                   , "aa": "5LeftHalfSmall"       
+                   , "ww": "6TopHalfSmall"
+                   , "ss": "6BottomHalfSmall"
+                   , "qq": "L1TopLeftSmall"    
+                   , "qa": "L2TopMidLeftSmall"    
+                   , "za": "L3BottomMidLeftSmall"    
+                   , "zz": "L4BottomLeftSmall" 
+                   , "ee": "R1TopRightSmall"   
+                   , "ed": "R2TopMidRightSmall"    
+                   , "cd": "R3BottomMidRightSmall"    
+                   , "cc": "R4BottomRightSmall" }
                    , FunctionBox("MoveWin", q,C.bwhite,,"s") ; "s" optn adds a space between case changes for TOC      
                 
 ; COMMAND BOX __________________________________________________________________

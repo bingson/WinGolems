@@ -79,7 +79,12 @@
         FormatTime, CurrentDateTime,, MMMM dd, yyyy
         clip(CurrentDateTime)
         return 
+    ; ~printscreen::            Send {Blind}{vkE8}
 
+      *printscreen::            Send {Blind}{LWin Down}                                    ;Convenience:1 makes windows key inert so it can act as a modifier key 
+      printscreen Up::          Send {Blind}{vk00}{LWin Up}                                ;Convenience:1 makes windows key inert so it can act as a modifier key
+
+    
     lwin & rctrl::                  ActivateWinID("Rctrl")                      ;SAW: activate saved Window ID
     #f::                            Clicks(2)                                   ;MF: 2 Left clicks (select word)
     ^#f::                           Clicks(3)                                   ;MF: 3 Left clicks (select line)

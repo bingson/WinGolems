@@ -45,23 +45,27 @@
 
     switch Q
     {
-        case "F" ,"Maximize"        : x := x      , y := y       , w := w  , h := h                   
-        case "L" ,"LeftHalf"        : x := x      , y := y       , w := hw , h := h     
-        case "R" ,"RightHalf"       : x := x+hw   , y := y       , w := hw , h := h     
-        case "LS","LeftHalfSmall"   : x := x      , y := y       , w := qw , h := h     
-        case "RS","RightHalfSmall"  : x := x+3*qw , y := y       , w := qw , h := h     
-        case "T" ,"TopHalf"         : x := x      , y := y       , w := w  , h := hh    
-        case "TS","TopHalfSmall"    : x := x      , y := y       , w := w  , h := qh    
-        case "B" ,"BottomHalf"      : x := x      , y := y+hh    , w := w  , h := hh    
-        case "BS","BottomHalfSmall" : x := x      , y := y+hh+qh , w := w  , h := qh    
-        case "TL","TopLeft"         : x := x      , y := y       , w := hw , h := hh    
-        case "TR","TopRight"        : x := x+hw   , y := y       , w := hw , h := hh    
-        case "BL","BottomLeft"      : x := x      , y := y+hh    , w := hw , h := hh    
-        case "BR","BottomRight"     : x := x+hw   , y := y+hh    , w := hw , h := hh    
-        case "L1","TopLeftSmall"    : x := x      , y := y       , w := hw , h := qh    
-        case "L4","BottomLeftSmall" : x := x      , y := y+3*qh  , w := hw , h := qh    
-        case "R1","TopRightSmall"   : x := x+hw   , y := y       , w := hw , h := qh    
-        case "R4","BottomRightSmall": x := x+hw   , y := y+3*qh  , w := hw , h := qh    
+        case "F" ,"0Maximize"             : x := x      , y := y       , w := w  , h := h                   
+        case "TL","1TopLeft"              : x := x      , y := y       , w := hw , h := hh    
+        case "TR","1TopRight"             : x := x+hw   , y := y       , w := hw , h := hh    
+        case "BL","2BottomLeft"           : x := x      , y := y+hh    , w := hw , h := hh    
+        case "BR","2BottomRight"          : x := x+hw   , y := y+hh    , w := hw , h := hh    
+        case "L" ,"3LeftHalf"             : x := x      , y := y       , w := hw , h := h     
+        case "R" ,"3RightHalf"            : x := x+hw   , y := y       , w := hw , h := h     
+        case "T" ,"4TopHalf"              : x := x      , y := y       , w := w  , h := hh    
+        case "B" ,"4BottomHalf"           : x := x      , y := y+hh    , w := w  , h := hh    
+        case "LS","5LeftHalfSmall"        : x := x      , y := y       , w := qw , h := h     
+        case "RS","5RightHalfSmall"       : x := x+3*qw , y := y       , w := qw , h := h     
+        case "TS","6TopHalfSmall"         : x := x      , y := y       , w := w  , h := qh    
+        case "BS","6BottomHalfSmall"      : x := x      , y := y+hh+qh , w := w  , h := qh    
+        case "L1","L1TopLeftSmall"        : x := x      , y := y       , w := hw , h := qh    
+        case "L2","L2TopMidLeftSmall"     : x := x      , y := y+qh    , w := hw , h := qh    
+        case "L3","L3BottomMidLeftSmall"  : x := x      , y := y+hh    , w := hw , h := qh    
+        case "L4","L4BottomLeftSmall"     : x := x      , y := y+3*qh  , w := hw , h := qh    
+        case "R1","R1TopRightSmall"       : x := x+hw   , y := y       , w := hw , h := qh    
+        case "R2","R2TopMidRightSmall"    : x := x+hw   , y := y+qh    , w := hw , h := qh    
+        case "R3","R3BottomMidRightSmall" : x := x+hw   , y := y+hh    , w := hw , h := qh    
+        case "R4","R4BottomRightSmall"    : x := x+hw   , y := y+3*qh  , w := hw , h := qh    
         default:                                                              
             return
     }
@@ -416,7 +420,7 @@
     return
   }
 
-  s(k = "down", n = 1) {                                                         ; function wrapper for send keystrokes command
+  s(k = "down", n = 1, sleep = "" ) {                                                         ; function wrapper for send keystrokes command
     sleep 100
     switch k 
     {
@@ -427,6 +431,8 @@
         case "r", "right": send % "{ right " n "}"
         Default          : send % k
     }
+    if sleep 
+        sleep, %sleep%
     return
   }
 

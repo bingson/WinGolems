@@ -73,7 +73,7 @@
   ^#LButton::        RetrieveMemory("^#LButton")                                ;Memory:| double click and paste contents of 1.txt at cursor position
   #!LButton::        RetrieveMemory(,"#!LButton")                               ;Memory:| paste contents of single digit .txt file entered at prompt
  
-; CONVENIENCE (ORANGE) _________________________________________________________
+; CONVENIENCE (ORANGE) _________________________________________________________https://xhamster.com/videos/april-part-4-3443348
   
   #SC035::           search()                                                   ;Convenience: google search selected text
   #sc028::                                                                      ;Convenience: maximize window
@@ -81,7 +81,10 @@
   #SC027::           WinMinimize,A                                              ;Convenience: minimize window
   #del::             AlwaysOnTop(1)                                             ;Convenience: Window always on top: ON
   #ins::             AlwaysOnTop(0)                                             ;Convenience: Window always on top: OFF 
-  *!capslock::       ChgInstance()                                              ;Convenience: rotate through application instances with thumbnail preview (+!capslock for other direction)
+  *!capslock::       ChgInstance()                                              ;Convenience: go through application instances with thumbnails(+!capslock for other direction)
+  +#capslock::       s("{blind}"), ActivatePrevInstance()                       ;Convenience: rotate through app instances starting from most recent (no thumbnails, faster)
+  #capslock::        s("{blind}"), ActivateNextInstance()                       ;Convenience: rotate through app instances starting from oldest (no thumbnail previews)
+  
   !SC027::           Send {esc}                                                 ;Convenience: simulate esc key (alt + semicolon)
   ^SC027::           Send {AppsKey}                                             ;Convenience: simulate appkey 
   ^#w::              WinClose,A                                                 ;Convenience: close active window 

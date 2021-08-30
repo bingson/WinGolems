@@ -1,1 +1,0 @@
-win_img_path=Z:\buffer\win_img
