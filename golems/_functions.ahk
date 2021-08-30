@@ -2118,8 +2118,6 @@
     return
   }
 
-
-  
   return
 
   ChgInstance~win:                                                            ; https://superuser.com/questions/435602/shortcut-in-windows-7-to-switch-between-same-applications-windows-like-cmd
