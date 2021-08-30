@@ -420,8 +420,7 @@
     return
   }
 
-  s(k = "down", n = 1, sleep = "" ) {                                                         ; function wrapper for send keystrokes command
-    sleep 100
+  s(k = "down", n = 1, sleep = "100" ) {                                                         ; function wrapper for send keystrokes command
     switch k 
     {
         case "enter"     : send % "{enter}"
@@ -815,6 +814,10 @@
 
 ; AHK UTILITIES ________________________________________________________________
 
+  PU(msg, w_color = "F6F7F1", ctn = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi") {
+    PopUp( msg, w_color, ctn , wn, hn, drtn, fsz, fwt, fnt) 
+  }
+
 
   CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
     global config_path
@@ -1196,7 +1199,6 @@
     return 0
   }
 
-  
   getWinDim() {
     global config_path
     SysGet, monitorsCount, 80
@@ -2116,17 +2118,17 @@
     return
   } 
  
-; SWITCH INSTANCES OF CURRENT APP ______________________________________________
+; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW__________________________________ end of auto execution
     
-  ChgInstance( switch = "capslock") {
+  ChgInstance(switch = "capslock") {
     global tabkey := switch
     gosub, chgInstance~win
     return
   }
 
-  return
+  return ; END OF AUTOEXECUTION ... ... ... ... ... ... ... ... ... ... ... ...
 
-  ChgInstance~win:                                                            ; https://superuser.com/questions/435602/shortcut-in-windows-7-to-switch-between-same-applications-windows-like-cmd
+  ChgInstance~win:                                                              ; https://superuser.com/questions/435602/shortcut-in-windows-7-to-switch-between-same-applications-windows-like-cmd
 
   WS_EX_TOOLWINDOW = 0x80
   WS_EX_APPWINDOW = 0x40000
@@ -2163,7 +2165,7 @@
 
   Send {Alt Down}{Tab} ; Bring up switcher immediately
 
-;   KeyWait, sc029, T.25  ; Go to next window; wait .25s before looping
+  ; KeyWait, sc029, T.25  ; Go to next window; wait .25s before looping         
   ; KeyWait, ``, T.25  ; Go to next window; wait .25s before looping
   KeyWait, %tabkey%, T.25  ; Go to next window; wait .25s before looping
   if (Errorlevel == 0)
