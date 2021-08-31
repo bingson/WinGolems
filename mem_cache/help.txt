@@ -24,14 +24,14 @@
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
 |  L   Load .txt file into CB display          L1, Lr\testr, L:    Load in display => 1.txt, r\testr.txt ("Ll" .txt list), clipboard   L?|
-|      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
+|      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => (c)config.ini, (l)hotkey list, .txt file names           |
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
 |  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
 |  E   Edit file in default editor             E1, Er\testr        edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
 | A|P  Append|Prepend selected text to file    A1, Ar\testr        add selected text to bottom of => 1.txt, r\testr.txt           A or P?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
-|  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
+|  D   Delete file                             D1, Db\_hist.txt    file extension optional for .txt files: Db\_hist.txt = Db\_hist     D?|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
 | R?:  Change replacement separators (1|2)     R1:%; R2:~>         Changes the above replacement separators to % and ~>              R?:?|
 | Rf:  Modify file w/ saved replace't pattern  Rf:1~p n            modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|

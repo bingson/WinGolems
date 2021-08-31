@@ -8,17 +8,17 @@
     
     tgt_hwnd := WinExist() 
 
-    CC("CB_sfx", suffix)    , CC("TGT_hwnd",tgt_hwnd) 
-    CC("CBw_color",w_color) , CC("CBt_color",t_color)                           ;(1) save/store command box calling parameters in config.ini
+    CC("CB_sfx", suffix)      , CC("TGT_hwnd",tgt_hwnd) 
+    , CC("CBw_color",w_color) , CC("CBt_color",t_color)                         ;(1) save/store command box calling parameters in config.ini
                                                                                 ; config.ini used to preserve/change CB parameter information between redraws
     redrawGUI:
     Gui, 2: +LastFound
     Gui, 2: Destroy          
     
-    suffix  := GC("CB_sfx")            , tgt_hwnd := GC("TGT_hwnd")             
-    w_color := GC("CBw_color")         , t_color := GC("CBt_color")    
-    fnt     := GC("CBfnt", "Consolas") , fsz := GC("CBfsz", "13") 
-    fwt     := GC("CBfwt", "500")               
+    suffix  := GC("CB_sfx")              , tgt_hwnd := GC("TGT_hwnd")             
+    , w_color := GC("CBw_color")         , t_color := GC("CBt_color")    
+    , fnt     := GC("CBfnt", "Consolas") , fsz := GC("CBfsz", "13") 
+    , fwt     := GC("CBfwt", "500")               
 
     MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when saved position data is not valid
@@ -31,7 +31,7 @@
     CC("CB_InputBox_width", IBwidth)
 
     display  := GC("CB_Display",1) , title_state := GC("CB_Titlebar",1)         ;(2a) get other CB window data
-    wrap_txt := GC("CB_Wrap",0)    , ldspl       := GC("CB_last_display")
+    , wrap_txt := GC("CB_Wrap",0)  , ldspl       := GC("CB_last_display")
 
         
                                                                                
@@ -41,10 +41,10 @@
     CB_Title_ID := s "(-(-_(-_-)_-)-)" s "COMMAND BOX" l                      
     
     title_text := Capitalize1stLetter(output,0, 0)
-    ldspl .= RetrieveExt(A_ScriptDir "\mem_cache\" ldspl)  
-    ndspl := GC("CB_title")
-    title := CB_Title_ID title_text suffix l (ndspl ? ndspl : ldspl) 
-    CC("CBtitle",title)
+    , ldspl .= RetrieveExt(A_ScriptDir "\mem_cache\" ldspl)  
+    , ndspl := GC("CB_title")
+    , title := CB_Title_ID title_text suffix l (ndspl ? ndspl : ldspl) 
+    , CC("CBtitle",title)
 
     Gui, 2: New ;,,%title%                                                      ;(4) set GUI options
     Gui, 2: +LastFound +OwnDialogs +Owner -DPIscale +E0x00200 +Resize +AlwaysOnTop ; +E0x08000000 +Resize  
@@ -93,8 +93,7 @@
     
     GuiControl, Focus, UserInput 
     Gui, 2: +LastFound 
-    CB_hwnd  := WinExist() 
-    CC("CB_hwnd", CB_hwnd)
+    CB_hwnd  := WinExist(), CC("CB_hwnd", CB_hwnd)
 
     ; GuiControl, MoveDraw, CB_Display, %wdth%     
 
@@ -103,11 +102,7 @@
 
     Gui, 2: show, hide AutoSize,%title%
     Gui, Show, %CB_position% NoActivate
-    ; CC("cursor_follow", CFW_state)
     GuiControl, 2: +HScroll +VScroll, CB_Display                                ; add scroll bars back without redrawing them to add scrolling without visible scroll bars
-    ; ActivateWin("ahk_id " tgt_hwnd)
-    ; WinWaitClose                                                                
-    ; BlockInput, MouseMoveOff
     MouseMove, StartX, StartY
 
     return
@@ -116,8 +111,7 @@
         
         If A_EventInfo = 1                                                      ; window has been minimized.  No action needed.
             Return
-        ; sleep 100
-        AutoXYWH("wh", "CB_Display")
+        AutoXYWH("w*h", "CB_Display")
         CtrXpos := (A_GuiWidth - GC("CB_InputBox_width")) // 2
         GuiControl, MoveDraw, UserInput, x%CtrXpos%
         AutoXYWH("y*", "UserInput")

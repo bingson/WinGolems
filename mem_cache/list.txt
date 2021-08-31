@@ -4,6 +4,7 @@ CACHE CONTENTS
 1.txt                           help.txt
 1ChgInstance.txt                key3.txt
 1rbs.txt                        p.txt
-ALIAS.INI                       sck.txt
-cc.txt                          ahk\troubleshooting_options.txt
+3.txt                           sck.txt
+ALIAS.INI                       ahk\troubleshooting_options.txt
+cc.txt                          b\_hist.txt
                                 

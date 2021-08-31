@@ -2,31 +2,30 @@
 ; The following interface elements are valid anywhere in Windows 10
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
  
-  +#F1::              s("{blind}"), SaveWinID("F1")                             ;ActvateApp: Save window ID for subsequent activation 
-  +#F2::              s("{blind}"), SaveWinID("F2")                             ;ActvateApp: Save window ID for subsequent activation 
-  +#F3::              s("{blind}"), SaveWinID("F3")                             ;ActvateApp: Save window ID for subsequent activation 
-  +#F4::              s("{blind}"), SaveWinID("F4")                             ;ActvateApp: Save window ID for subsequent activation 
-  +#F5::              s("{blind}"), SaveWinID("F5")                             ;ActvateApp: Save window ID for subsequent activation 
-  +#F6::              s("{blind}"), SaveWinID("F6")                             ;ActvateApp: Save window ID for subsequent activation 
-  +#F7::              s("{blind}"), SaveWinID("F7")                             ;ActvateApp: Save window ID for subsequent activation 
-  +#F8::              s("{blind}"), SaveWinID("F8")                             ;ActvateApp: Save window ID for subsequent activation 
-  #F1::               s("{blind}"), ActivateWinID("F1")                         ;ActvateApp: Activate previously saved window ID
-  #F2::               s("{blind}"), ActivateWinID("F2")                         ;ActvateApp: Activate previously saved window ID
-  #F3::               s("{blind}"), ActivateWinID("F3")                         ;ActvateApp: Activate previously saved window ID
-  #F4::               s("{blind}"), ActivateWinID("F4")                         ;ActvateApp: Activate previously saved window ID
-  #F5::               s("{blind}"), ActivateWinID("F5")                         ;ActvateApp: Activate previously saved window ID
-  #F6::               s("{blind}"), ActivateWinID("F6")                         ;ActvateApp: Activate previously saved window ID
-  #F7::               s("{blind}"), ActivateWinID("F7")                         ;ActvateApp: Activate previously saved window ID
-  #F8::               s("{blind}"), ActivateWinID("F8")                         ;ActvateApp: Activate previously saved window ID
-     
-  #q::                s("{blind}"), ActivateApp("xls_path")                     ;ActvateApp:1 Activate Excel
-  #w::                s("{blind}"), ActivateApp("doc_path")                     ;ActvateApp:1 Activate Word
-  #a::                s("{blind}"), ActivateApp("pdf_path")                     ;ActvateApp:1 Activate pdf viewer
-  #s::                s("{blind}"), ActivateApp("html_path")                    ;ActvateApp:1 Activate web browser
-  #z::                s("{blind}"), ActivateApp("editor_path")                  ;ActvateApp:1 Activate default editor
-  #x::                s("{blind}"), ActivateApp("ppt_path")                     ;ActvateApp:1 Activate PowerPoint
-  #b::                s("{blind}"), ActivateApp("explorer.exe")                 ;ActvateApp:1 Activate File explorer         
-  #t::                s("{blind}"), ActivateApp("cmd.exe")                      ;ActvateApp:1 Activate command window         
+  +#F1::              SaveWinID("F1")                                           ;ActvateApp: Save window ID for subsequent activation 
+  +#F2::              SaveWinID("F2")                                           ;ActvateApp: Save window ID for subsequent activation 
+  +#F3::              SaveWinID("F3")                                           ;ActvateApp: Save window ID for subsequent activation 
+  +#F4::              SaveWinID("F4")                                           ;ActvateApp: Save window ID for subsequent activation 
+  +#F5::              SaveWinID("F5")                                           ;ActvateApp: Save window ID for subsequent activation 
+  +#F6::              SaveWinID("F6")                                           ;ActvateApp: Save window ID for subsequent activation 
+  +#F7::              SaveWinID("F7")                                           ;ActvateApp: Save window ID for subsequent activation 
+  +#F8::              SaveWinID("F8")                                           ;ActvateApp: Save window ID for subsequent activation 
+  #F1::               ActivateWinID("F1")                                       ;ActvateApp: Activate previously saved window ID
+  #F2::               ActivateWinID("F2")                                       ;ActvateApp: Activate previously saved window ID
+  #F3::               ActivateWinID("F3")                                       ;ActvateApp: Activate previously saved window ID
+  #F4::               ActivateWinID("F4")                                       ;ActvateApp: Activate previously saved window ID
+  #F5::               ActivateWinID("F5")                                       ;ActvateApp: Activate previously saved window ID
+  #F6::               ActivateWinID("F6")                                       ;ActvateApp: Activate previously saved window ID
+  #F7::               ActivateWinID("F7")                                       ;ActvateApp: Activate previously saved window ID
+  #F8::               ActivateWinID("F8")                                       ;ActvateApp: Activate previously saved window ID
+  #q::                ActivateApp("xls_path")                                   ;ActvateApp:1 Activate Excel
+  #w::                ActivateApp("doc_path")                                   ;ActvateApp:1 Activate Word
+  #a::                ActivateApp("pdf_path")                                   ;ActvateApp:1 Activate pdf viewer
+  #s::                ActivateApp("html_path")                                  ;ActvateApp:1 Activate web browser
+  #z::                ActivateApp("editor_path")                                ;ActvateApp:1 Activate default editor
+  #x::                ActivateApp("ppt_path")                                   ;ActvateApp:1 Activate PowerPoint
+  #b::                ActivateApp("explorer.exe")                               ;ActvateApp:1 Activate File explorer         
+  #t::                ActivateApp("cmd.exe")                                    ;ActvateApp:1 Activate command window         
   
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; modifier keys (+#^) can be swapped around to change the key combinations
@@ -138,10 +137,9 @@
   $!x::              ToggleDisplay()                                            ;CommandBox: toggle Command Box display|minimalist mode
   !r::               GUIRecall()                                                ;CommandBox: reenter last command
   
-  #IF WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)             ; If command Box exists but not active
+  #IF WinExist("ahk_id " CB_hwnd) ;and !WinActive("ahk_id " CB_hwnd)             ; If command Box exists but not active
   
   $<^space::                                                                    ;CommandBox: activate CB if exists and move focus to inputbox 
-  $>^space::         ActivateWin("ahk_id " CB_hwnd)                             ;CommandBox: activate CB if exists and move focus to inputbox
+  $>^space::         ActivateWin("ahk_id " CB_hwnd), GUIFocusInput()            ;CommandBox: activate CB if exists and move focus to inputbox
   
-#IF                                                                             ; end context dependent assignments
-  
+#IF                                                                             ; end context dependent assignments  
