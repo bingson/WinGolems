@@ -4,7 +4,8 @@
     ; explained: https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
                                                                                 ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
     #MenuMaskKey vkFF                                                           ; vkFF is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed
-    SetWorkingDir %A_ScriptDir%#MaxHotkeysPerInterval 99000000
+    SetWorkingDir %A_ScriptDir%
+    #MaxHotkeysPerInterval 99000000
     ; SetBatchLines -1
     SetBatchLines, 20ms
     ListLines Off ;On                                                           ; ListLines/KeyHistory are used to log lines of code and keys for debugging
@@ -32,7 +33,6 @@
     config_path := A_ScriptDir "\config.ini"
     
     SetTrayIcon(A_ScriptDir "\assets\Aikawns\W\gold.ico")                       ; set static icon color: black, blue, dg (dark green), gold, grey, lg (light green), orange, pink, red, violet
-    gosub, AutoExecution_test 
     
     ; uncomment to disable WIN+L key for locking screen upon WinGolems startup  ; requires registry write premission, end & L hotkey toggles this as well
     ; WinLLock(False, True)                                                     ; False = disables windows lockscreen key hook; frees WIN+L key combo for ahk usage.
@@ -63,7 +63,6 @@
 #Include *i 1_Template_QuickStart.ahk
 #Include *i 2_Template_Advanced.ahk
 #Include *i 3_Template_ApplicationSpecific.ahk
-#Include *i Test.ahk                                                            ; test new code here
 
 #Include *i %A_ScriptDir%\..\Google Drive\secure\
 #Include *i Bing.ahk

@@ -22,6 +22,7 @@
   :X:lf~win::   WinLLock(False)                                                 ;SC: turn off win+L locks computer
   :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;SC: open add remove programs 
   :X:s~win::    send ^{esc}                                                     ;SC: open start menu (alt: Ctrl+Esc)
+  >+>!o::
   :X:mod~win::  MoveWindowToOtherDesktop()                                      ;SC: Move window to other desktop
   :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
 

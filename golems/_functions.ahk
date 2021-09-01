@@ -28,6 +28,11 @@
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; reference group for file explorer and save as dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW
   GroupAdd, FileListers, ahk_class #32770, ShellView
+
+  GroupAdd, browsers, ahk_exe vivaldi.exe
+  GroupAdd, browsers, ahk_exe chrome.exe 
+  GroupAdd, browsers, ahk_exe msedge.exe 
+  GroupAdd, browsers, ahk_exe firefox.exe
         
 
 ; WINDOW MANAGEMENT ____________________________________________________________
@@ -420,21 +425,6 @@
     return
   }
 
-  s(k = "down", n = 1, sleep = "100" ) {                                                         ; function wrapper for send keystrokes command
-    switch k 
-    {
-        case "enter"     : send % "{enter}"
-        case "u", "up"   : send % "{ up "    n "}"
-        case "d", "down" : send % "{ down "  n "}"
-        case "l", "left" : send % "{ left "  n "}"
-        case "r", "right": send % "{ right " n "}"
-        Default          : send % k
-    }
-    if sleep 
-        sleep, %sleep%
-    return
-  }
-
   RunLabel(UserInput="", suffix = "", tgt_winID ="") {
     suffix := suffix ? suffix : GC("CB_sfx")
     Switch 
@@ -459,19 +449,9 @@
     CommandBox(sfx, w_color, t_color, ProcessMod)
   }
 
-  FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", title="", name_dict = "", grp=1, p*) {
+  FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", name_dict = "", grps = 0, title="", p*) {
     ;ReleaseModifiers()
-    global config_path, FBhwnd
-    SetTitleMatchMode, 2
-    ; IniRead, output, %config_path%, %A_ComputerName%, CB_hwnd
-    DetectHiddenText, On
-    if WinExist("ahk_id " . FBhwnd) 
-        WinActivate, % "ahk_id " . FBhwnd
-    else
-        FunctionBox(func, input_dict, w_color, t_color, title, name_dict, grp, p*) 
-    DetectHiddenText, off
-    
-    return
+    FunctionBox(func, input_dict, w_color, t_color, name_dict, grps, title, p*) 
   }
 
   CreateCacheList(name = "cc") {
@@ -688,7 +668,7 @@
         dest := (optn = "s") ? Trim(AddSpaceBtnCaseChange(dest, 0)) : dest
         
         if grps {
-            prefix := substr(dest, 1, 1)
+            prefix := substr(dest, 1, 2)
             if (prefix <> prev_prefix and prev_prefix and prefix) {             ; adds blank line between changes in selection group prefix 
                 TOC .= "`n" 
             }
@@ -813,6 +793,23 @@
   } 
 
 ; AHK UTILITIES ________________________________________________________________
+
+  s(k = "down", n = 1, sleep = "100" ) {                                        
+    ; function wrapper to chain line commands using the comma operator
+    ; also contains shorter aliases for frequently performed operations
+    switch k 
+    {
+        case "enter"     : send % "{enter}"
+        case "u", "up"   : send % "{ up "    n "}"
+        case "d", "down" : send % "{ down "  n "}"
+        case "l", "left" : send % "{ left "  n "}"
+        case "r", "right": send % "{ right " n "}"
+        Default          : send % k
+    }
+    if sleep 
+        sleep, %sleep%
+    return
+  }
 
   PU(msg, w_color = "F6F7F1", ctn = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi") {
     PopUp( msg, w_color, ctn , wn, hn, drtn, fsz, fwt, fnt) 
@@ -1150,7 +1147,7 @@
     ; then opens that .txt in the default editor (config.ini)
     ;ReleaseModifiers()
     global long, med
-    run %A_ScriptDir%\golems\Hotkey_Help.ahk                                    ; Run modified version of original script
+    run %A_ScriptDir%\golems\tools\Hotkey_Help.ahk                              ; Run modified version of original script
     sleep, long * 2
     DetectHiddenWindows On                                                      ; Allows a script's hidden main window to be detected.
     SetTitleMatchMode 2
@@ -1549,12 +1546,10 @@
   }      
 
   CursorFollowWin(Q = "center", offset_x = "100", offset_y = "100") {
-    global config_path
-    BlockInput, on
-    IniRead, state, %config_path%, %A_ComputerName%, cursor_follow, 0
-    if state
+    global config_path, short
+    sleep, short
+    if GC("cursor_follow",0)
         CursorJump(Q, offset_x, offset_y)
-    BlockInput, off
     return
   }
  
@@ -1611,12 +1606,12 @@
   }
 
 
-; CHROME _______________________________________________________________________
+; BROWSERS _______________________________________________________________________
  
-  ChromeConfig(tgt) {    
+  CFG(tgt) { 
     send ^l
     clip(tgt)
-    send {enter}
+    send !{enter}
     return
   }
  
@@ -1646,17 +1641,23 @@
   
   LoadURL(URL) {
     ; Browser path used to load urls dependent on computer
-    global config_path
-    IniRead, output, %config_path%, %A_ComputerName%, html_path
+    global config_path, PF_x86
+    winget, Pname, ProcessName, A 
+    switch Pname
+    {
+        case "vivaldi.exe": output := GC("vivaldi_path")
+        case "chrome.exe" : output := GC("chrome_path")
+        case "msedge.exe" : output := GC("edge_path")
+        case "firefox.exe": output := GC("firefox_path")
+        default: output := GC("html_path")
+    }
     Run, %output% %URL%
     return
   }
  
   Search(prefix = "google.com/search?q=", var = "", suffix = "") {
     global short, med
-
     var := (!var ? clip() : var)
-
     url := prefix . """" var """" . suffix
     sleep med
     loadURL(url)
@@ -1796,6 +1797,10 @@
   }                                                                             ;[ahk] surround selected text with block comment braces
 
 ; TEXT MANIPULATION ____________________________________________________________
+
+  delLine() {
+    SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right}            ;Convenience: Delete current line of text
+  }
 
   PasteClipboardAtMouseCursor() {
     Clicks(2)
@@ -2118,7 +2123,7 @@
     return
   } 
  
-; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW__________________________________ end of auto execution
+; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW _________________________________
     
   ChgInstance(switch = "capslock") {
     global tabkey := switch
@@ -2144,7 +2149,7 @@
   {
      wid := AltTab_ID_List_%A_Index%
      WinGet, processName2, ProcessName, ahk_id %wid%
-
+     
      if (processName2 != processName)
      {
         WinGet, exStyle2, ExStyle, ahk_id %wid%
@@ -2220,12 +2225,13 @@
      Loop, %Window_List%
      {
         wid := Window_List%A_Index%
+        winget, ProcName, ProcessName, ahk_id %wid%
+
         WinGetTitle, wid_Title, ahk_id %wid%
         WinGet, Style, Style, ahk_id %wid%
-  
-        If ((Style & WS_DISABLED) or ! (wid_Title)) ; skip unimportant windows
+        If ((Style & WS_DISABLED) or !(wid_Title))  ; skip unimportant windows
            Continue
-  
+        
         WinGet, es, ExStyle, ahk_id %wid%
         Parent := Decimal_to_Hex( DllCall( "GetParent", "uint", wid ) )
         WinGetClass, Win_Class, ahk_id %wid%
@@ -2235,10 +2241,13 @@
            or ((es & ws_ex_controlparent) and ! (Style & WS_POPUP) and !(Win_Class ="#32770") and ! (es & WS_EX_APPWINDOW)) ; pspad child window excluded
            or ((Style & WS_POPUP) and (Parent) and ((Style_parent & WS_DISABLED) =0))) ; notepad find window excluded ; note - some windows result in blank value so must test for zero instead of using NOT operator!
            continue
+
         AltTab_ID_List_ ++
         AltTab_ID_List_%AltTab_ID_List_% :=wid
      }  
+     
      AltTab_ID_List_0 := AltTab_ID_List_
+   
   }
   
   Decimal_to_Hex(var)
@@ -2248,3 +2257,4 @@
     SetFormat, integer, d
     return var
   }
+

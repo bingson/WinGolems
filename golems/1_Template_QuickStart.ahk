@@ -18,19 +18,66 @@
   #F6::               ActivateWinID("F6")                                       ;ActvateApp: Activate previously saved window ID
   #F7::               ActivateWinID("F7")                                       ;ActvateApp: Activate previously saved window ID
   #F8::               ActivateWinID("F8")                                       ;ActvateApp: Activate previously saved window ID
-  #q::                ActivateApp("xls_path")                                   ;ActvateApp:1 Activate Excel
-  #w::                ActivateApp("doc_path")                                   ;ActvateApp:1 Activate Word
-  #a::                ActivateApp("pdf_path")                                   ;ActvateApp:1 Activate pdf viewer
-  #s::                ActivateApp("html_path")                                  ;ActvateApp:1 Activate web browser
-  #z::                ActivateApp("editor_path")                                ;ActvateApp:1 Activate default editor
-  #x::                ActivateApp("ppt_path")                                   ;ActvateApp:1 Activate PowerPoint
-  #b::                ActivateApp("explorer.exe")                               ;ActvateApp:1 Activate File explorer         
-  #t::                ActivateApp("cmd.exe")                                    ;ActvateApp:1 Activate command window         
+  #q::                AA("xls_path")                                            ;ActvateApp:1 Activate Excel
+  #w::                AA("doc_path")                                            ;ActvateApp:1 Activate Word
+  #a::                AA("pdf_path")                                            ;ActvateApp:1 Activate pdf viewer
+  #s::                AA("html_path")                                           ;ActvateApp:1 Activate web browser
+  #z::                AA("editor_path")                                         ;ActvateApp:1 Activate default editor
+  #x::                AA("ppt_path")                                            ;ActvateApp:1 Activate PowerPoint
+  #b::                AA("explorer.exe")                                        ;ActvateApp:1 Activate File explorer         
+  #t::                AA("cmd.exe")                                             ;ActvateApp:1 Activate command window         
   
+; CONVENIENCE (ORANGE) _________________________________________________________
+  
+  #SC035::           search()                                                   ;Convenience: google search selected text
+  #sc028::                                                                      ;Convenience: maximize window
+  ^!space::          s("{blind}"), MaximizeWin()                                ;Convenience: maximize window
+  #SC027::           WinMinimize,A                                              ;Convenience: minimize window
+  #del::             AlwaysOnTop(1)                                             ;Convenience: Window always on top: ON
+  #ins::             AlwaysOnTop(0)                                             ;Convenience: Window always on top: OFF 
+  *!capslock::       ChgInstance()                                              ;Convenience: go through application instances with thumbnails(+!capslock for other direction)
+  +#capslock::       s("{blind}"), ActivatePrevInstance()                       ;Convenience: rotate through app instances starting from most recent (no thumbnails, faster)
+  #capslock::        s("{blind}"), ActivateNextInstance()                       ;Convenience: rotate through app instances starting from oldest (no thumbnail previews)
+  
+  !SC027::           Send {esc}                                                 ;Convenience: simulate esc key (alt + semicolon)
+  ^SC027::           Send {AppsKey}                                             ;Convenience: simulate appkey 
+  #esc::             WinClose,A                                                 ;Convenience: close active window 
+  +#esc::            CloseClass()                                               ;Convenience: close all instances of the active program
+  ~LWin::            Send {Blind}{vkE8}                                         ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
+  #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
+  $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
+  ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
+  ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
+  !sc034::           moveWinBtnMonitors(), CFW()                                ;Convenience: move window btn monitors, cursor follows active windows
+  !Backspace::       delLine()
+  lshift & rshift::                                                             ;Convenience: reload WinGolems (update running script for changes, fixes sticky keys)
+  rshift & lshift::  reload                                                     ;Convenience: reload WinGolems
+
+  !#b::              BluetoothSettings()                                        ;Convenience:2 bluetooth settings (reassign less used windows sys shortcuts)
+  !#d::              DisplaySettings()                                          ;Convenience:2 display settings
+  !#n::              NotificationWindow()                                       ;Convenience:2 notification window
+  !#r::              RunProgWindow()                                            ;Convenience:2 run program
+  !#p::              PresentationDisplayMode()                                  ;Convenience:2 presentation display mode
+  !#i::              WindowsSettings()                                          ;Convenience:2 windows settings
+
+; NAVIGATION (PURPLE) __________________________________________________________
+
+  #j::               Sendinput {Blind}{WheelDown 2}                             ;Navigation: scroll wheel down
+  #k::               Sendinput {Blind}{WheelUp 2}                               ;Navigation: scroll wheel Up
+  $#>!h::            Sendinput {Blind}{Wheelleft 6}                             ;Navigation: scroll wheel left
+  $#>!l::            Sendinput {Blind}{WheelRight 6}                            ;Navigation: scroll wheel right
+      
+  #u::               send ^{home}                                               ;Navigation: Ctrl + Home
+  #y::               send ^{end}                                                ;Navigation: Ctrl + end
+  ^!h::              sendinput {home}                                           ;Navigation: Home
+  ^!l::              sendinput {end}                                            ;Navigation: End
+    
+  !b::               send ^{PgUp}                                               ;Navigation: navigate to left tab
+  !space::           s("{blind}"), s("^{PgDn}")                                 ;Navigation: navigate to right tab
+
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
   ; modifier keys (+#^) can be swapped around to change the key combinations
   ; to call the below memory function but must always end in the numbers 0-9 
-  
   
   +#0::                                                                         ;Memory: overwrite 0.txt with selected text 
   +#9::                                                                         ;Memory: overwrite 9.txt with selected text 
@@ -66,56 +113,7 @@
   #1::               RetrieveMemory()                                           ;Memory: paste contents of 1.txt
     
   ^#LButton::        RetrieveMemory("^#LButton")                                ;Memory:| double click and paste contents of 1.txt at cursor position
-  #!LButton::        RetrieveMemory(,"#!LButton")                               ;Memory:| paste contents of single digit .txt file entered at prompt
- 
-; CONVENIENCE (ORANGE) _________________________________________________________https://xhamster.com/videos/april-part-4-3443348
-  
-  #SC035::           search()                                                   ;Convenience: google search selected text
-  #sc028::                                                                      ;Convenience: maximize window
-  ^!space::          s("{blind}"), MaximizeWin()                                ;Convenience: maximize window
-  #SC027::           WinMinimize,A                                              ;Convenience: minimize window
-  #del::             AlwaysOnTop(1)                                             ;Convenience: Window always on top: ON
-  #ins::             AlwaysOnTop(0)                                             ;Convenience: Window always on top: OFF 
-  *!capslock::       ChgInstance()                                              ;Convenience: go through application instances with thumbnails(+!capslock for other direction)
-  +#capslock::       s("{blind}"), ActivatePrevInstance()                       ;Convenience: rotate through app instances starting from most recent (no thumbnails, faster)
-  #capslock::        s("{blind}"), ActivateNextInstance()                       ;Convenience: rotate through app instances starting from oldest (no thumbnail previews)
-  
-  !SC027::           Send {esc}                                                 ;Convenience: simulate esc key (alt + semicolon)
-  ^SC027::           Send {AppsKey}                                             ;Convenience: simulate appkey 
-  #esc::             WinClose,A                                                 ;Convenience: close active window 
-  +#esc::            CloseClass()                                               ;Convenience: close all instances of the active program
-  ~LWin::            Send {Blind}{vkE8}                                         ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
-  #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
-  $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
-  ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
-  ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
-  !sc034::           moveWinBtnMonitors(), CFW()                                ;Convenience: move window btn monitors, cursor follows active windows
-  !Backspace:: SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right} ;Convenience: Delete current line of text
-
-  lshift & rshift::                                                             ;Convenience: reload WinGolems (update running script for changes, fixes sticky keys)
-  rshift & lshift::  reload                                                     ;Convenience: reload WinGolems
-
-  !#b::              BluetoothSettings()                                        ;Convenience:2 bluetooth settings (reassign less used windows sys shortcuts)
-  !#d::              DisplaySettings()                                          ;Convenience:2 display settings
-  !#n::              NotificationWindow()                                       ;Convenience:2 notification window
-  !#r::              RunProgWindow()                                            ;Convenience:2 run program
-  !#p::              PresentationDisplayMode()                                  ;Convenience:2 presentation display mode
-  !#i::              WindowsSettings()                                          ;Convenience:2 windows settings
-
-; NAVIGATION (PURPLE) __________________________________________________________
-
-  #j::               Sendinput {Blind}{WheelDown 2}                             ;Navigation: scroll wheel down
-  #k::               Sendinput {Blind}{WheelUp 2}                               ;Navigation: scroll wheel Up
-  $#>!h::            Sendinput {Blind}{Wheelleft 6}                             ;Navigation: scroll wheel left
-  $#>!l::            Sendinput {Blind}{WheelRight 6}                            ;Navigation: scroll wheel right
-      
-  #u::               send ^{home}                                               ;Navigation: Ctrl + Home
-  #y::               send ^{end}                                                ;Navigation: Ctrl + end
-  ^!h::              sendinput {home}                                           ;Navigation: Home
-  ^!l::              sendinput {end}                                            ;Navigation: End
-    
-  !b::               send ^{PgUp}                                               ;Navigation: universal navigate to left tab
-  !space::           s("{blind}"), s("^{PgDn}")                                 ;Navigation: universal navigate to right tab
+  #!LButton::        RetrieveMemory(,"#!LButton")                               ;Memory:| double click and paste contents of number entered at prompt
 
 ; COMMAND BOX __________________________________________________________________; shared by all Command Boxes 
 
