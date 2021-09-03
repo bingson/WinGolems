@@ -9,19 +9,15 @@
   +capslock::            backspace                                              ;Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
   capslock::             del                                                    ;Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
   ^capslock::            Send {blind}{capslock}                                 ;Convenience:1 toggle capslock
+  >^esc::                EditFile("golems\1_Template_QuickStart.ahk")           ;Convenience: open quickstart template
+  >^F1::                 EditFile("golems\2_Template_Advanced.ahk")             ;Convenience: open advanced template 
+  >^F2::                 EditFile("golems\3_Template_ApplicationSpecific.ahk")  ;Convenience: open app-specific template 
+
 
 ; MOUSE FUNCTIONS ______________________________________________________________
   ; mouse functions with keyboard shortcuts  
-
-  *#d::                  SaveMousPos("r",1)                                     ;C: Left click and save mouse position
-  *^#d::                 RecallMousePosClick("r")                               ;MF: Move to saved mouse position and left click
-  *#i::                  SaveMousPos("i",1)                                     ;MouseFn: Left click and save mouse position
-  *^#i::                 RecallMousePosClick("i")                               ;MouseFn: Move to saved mouse position and left click
-  #o::                   Click, middle                                          ;MouseFn: mouse middle click
-  PrintScreen & sc028::                                                         ;MouseFn: mouse Right click
-  #sc028::               Click, Right                                           ;MouseFn: mouse Right click
-  ^!Lbutton::            Clicks(2), s("^v")                                     ;MouseFn: click twice, paste clipboard
-  +^Lbutton::            Clicks(3), s("^v")                                     ;MouseFn: click thrice, paste clipboard
+  
+  ; mouse functions with 
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in
   $^!k::                 Sendinput ^{sc00C}                                     ;MouseFn: zoom out
   #j::                   Sendinput {Blind}{WheelDown 2}                         ;MouseFn: scroll wheel down
@@ -63,7 +59,10 @@
   >!m::                  Clip("$" Clip() "$")                                   ;ManipulateText: enclose selected text with $ $
   !sc029::               Clip("`` " Clip() " ``")                               ;ManipulateText: enclose selected text with ` `
   +!sc029::              Clip("`````` " Clip() " ``````")                       ;ManipulateText: enclose selected text with ``` ```
-  #backspace::           send ^{backspace}
+  #backspace::           send ^{backspace}                                      ;ManipulateText: backspace delete word
+  ^!sc027::              send {{}                                               ;ManipulateText: left bracket
+  ^!sc028::              send {}}                                               ;ManipulateText: right bracket
+
 
   
   #IF GC("T_adv",0) and !WinActive("ahk_exe " exe["editor"])                    ; exclude when using editor app (replace with native app duplicate line function)
@@ -110,21 +109,18 @@
   SetTitleMatchMode, 2
   #If WinActive("ahk_group FileListers") and GC("T_adv",0)                      ; applies to ListView windows like file explorer and save as dialogue boxes
   
-  >+sc029::     ChangeFolder(A_ScriptDir)                                       ;ChgFolder: AHK folder
-  >+m::         ChangeFolder(A_ScriptDir "\mem_cache\")                         ;ChgFolder: mem_cache
-  >+u::         ChangeFolder(UProfile)                                          ;ChgFolder: %UserProfile%
-  >+j::         ChangeFolder(UProfile "\Downloads")                             ;ChgFolder: Downloads
-  >+o::         ChangeFolder(A_ProgramFiles)                                    ;ChgFolder: C:\Program Files
-  >+!o::        ChangeFolder(PF_x86)                                            ;ChgFolder: C:\Program Files(x86)
-  >+p::         ChangeFolder(UProfile "\Pictures\")                             ;ChgFolder: Pictures
-  >+d::         ChangeFolder(UProfile "\Documents")                             ;ChgFolder: Documents
-  >+c::         ChangeFolder(hdrive)                                            ;ChgFolder: %Homedrive% (C:)
-  >+r::         ChangeFolder("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()   ;CF: Recycle bin (doesn't work for save as diag)
-  >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()   ;CF: This PC / My Computer
+  >+sc029::     CF(A_ScriptDir)                                                 ;ChgFolder: AHK folder
+  >+m::         CF(A_ScriptDir "\mem_cache\")                                   ;ChgFolder: mem_cache
+  >+u::         CF(UProfile)                                                    ;ChgFolder: %UserProfile%
+  >+j::         CF(UProfile "\Downloads")                                       ;ChgFolder: Downloads
+  >+o::         CF(A_ProgramFiles)                                              ;ChgFolder: C:\Program Files
+  >+!o::        CF(PF_x86)                                                      ;ChgFolder: C:\Program Files(x86)
+  >+p::         CF(UProfile "\Pictures\")                                       ;ChgFolder: Pictures
+  >+d::         CF(UProfile "\Documents")                                       ;ChgFolder: Documents
+  >+c::         CF(hdrive)                                                      ;ChgFolder: %Homedrive% (C:)
+  >+r::         CF("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()         ;ChgFolder: Recycle bin (doesn't work for save as diag)
+  >+t::         CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()         ;ChgFolder: This PC / My Computer
  
-  ;   >+t::         ChangeFolder("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}")      ;ChgFolder: This PC / My Computer (file explorer only)
-  ;   >+r::         ChangeFolder("`:`:{645ff040-5081-101b-9f08-00aa002f954e}")      ;ChgFolder: Recycle Bin (file explorer only)
-  
   !i::          send !{up}                                                      ;FileExplorer: up one directory level
   !u::          send !{left}                                                    ;FileExplorer: prev folder
   !o::          send !{right}                                                   ;FileExplorer: forward folder
@@ -132,6 +128,7 @@
   ^p::          Send {alt down}p{alt up}                                        ;FileExplorer: toggle preview plane
   <!space::     ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FileExplorer: move focus to navigation pane
   >!space::     ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FileExplorer: move focus to current folder pane
+  ^u::          send !vg{up   4}{enter}                                         ;FileExplorer: group by name|remove grouping toggle
   ^o::          Send !vg{down 2}{enter}                                         ;FileExplorer: group by file type
   ^i::          Send !vg{down 1}{enter}                                         ;FileExplorer: group by date
   $!r::         Send {F2}                                                       ;FileExplorer: rename file
@@ -143,7 +140,6 @@
   ^h::          ToggleInvisible()                                               ;FileExplorer:1 toggle hide/unhide invisible files
   $+!c::        clipboard := Explorer_GetSelection()                            ;FileExplorer:1 store file path(s) of selected file(s) in clipboard
   ^s::          SelectByRegEx()                                                 ;FileExplorer:1 select files by regex
-
 
 ; FUNCTION BOX _________________________________________________________________
   ; Purpose: opens a window that gives the user a menu of parameter choices for calling a single function

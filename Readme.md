@@ -1,30 +1,161 @@
 
-<p align="center">
-  <img src="assets\Screens\WGLc.png" width="300">
-</p>
+<p align="center"><img src="assets\Screens\WGLc.png" width="300"></p>
 
+WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from the AHK community over the years to create different interface layers to automate and augment how I use Windows. Before investing any time into learning AHK, prospective users can try out a premade keyboard shortcut interface layer by [by running the included executable]() included with the source code (no software installation or knowledge of AHK required). 
+
+
+
+>Operating systems and devices should mold to our needs, not the other way around. - [Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple) 
+
+As an aspiration 
+
+In the spirit of the above quote, WinGolems gives users tools to reengineer how they interact with Windows computers. The initial value provided by this repository will come from new users adapting code examples from the tutorial template to alleviate common workflow frictions with minimal AHK knowledge. The frequently performed operations should be the easiest to execute and vice versa
+
+convenient keyboard shortcuts to less useful operations, WinGolems shows users how to reprogram those shortcuts. 
+
+
+
+As they become more familiar with AHK, users will be able to leverage more of WinGolems'function library to build new capabilities and features into the windows application they use, creating cognitive artifacts to reduce the effort it takes to transform ideas into output. 
+
+
+ [Satya Nadella said during his recent Windows 11 presentation]"operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems offers tools to reengineer the windows man machine interface 
+reshaping
+
+WinGolems was 
+reifies this idea by giving users tools for re-engineering  
+
+how they translate thought into actions.
+
+**Example workflow frictions solved by AHK or WinGolems:** 
+
+- 
+
+WinGolems templates show users how to standardize these shortcuts among programs, minimizing application-specific information a user has to remember.
+- When ones keyboard layout makes it awkward to actuate default application shortcuts, it should be easy to reassign those shortcuts
+- When  developers assign desirable keyboard shortcuts to less useful operations, you should be able to reassign those shortcuts: e.g., the ` Win + F ` combination opens the rarely used feedback reporting dialog in Windows. 
+- When    
+
+Common sense dictates that the most frequently performed operations should be the easiest to execute and vice versa. The quick start template shows how to reprogram the above shortcuts as well as create new ones. Beyond changing application shortcuts, WinGolems also has Windows enhancement features such as the Command Box (CB) and integrated memory system commands. The CB is a keyboard-driven GUI with it's own command-line interface that can be used to manipulate application windows and call scripts written in other programming languages. The integrated memory system describes a collection of functions and commands used to modify clipboard contents and text files located in the ``` \mem_cache ``` folder. Please see [Quick Start Template Overview](#quick-start-template-overview) for a more comprehensive overview.
+
+
+  
+----
+## Contents
+
+1. [Getting Started](#getting-started)
+    1. [Install Dependencies](#dependencies)
+    2. [Download WinGolems](#download)
+    3. [Run WinGolems](#run)
+    4. [Configure WinGolems](#cfg)
+2. [Quick Start Template Overview](#quick-start-template-overview)
+    1. [Keyboard Shortcuts](#ks)
+    2. [Command Box](#cb)
+3. [AHK resources](#ahk)
+4. [Roadmap](#roadmap)
+See the open issues for a list of proposed features (and known issues).
+
+
+----
+
+## 1. Getting Started <a name="getting-started"></a>
+
+### i. &nbsp; Install Dependencies <a name="dependencies"></a>
+ <ul>
+   <li>
+     <p>  <b>Required:</b> </p>
+     <p>  – &nbsp; Windows 10/11
+     <br> – &nbsp; <a href="https://www.AutoHotkey.com/docs/Tutorial.htm#s11">AutoHotkey</a> version 1.1.33.09.
+   </li>
+   <li>
+     <p>  <b>Recommended Editor:</b> </p>
+     <p>  Any code editor that supports indentation-based code folding and AutoHotkey syntax highlighting.
+     <p>  – &nbsp; <a href="https://code.visualstudio.com/">Visual Studio Code</a> editor with the following extension IDs 
+     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-AutoHotkey
+     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
+     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
+     
+   </li>
+ </ul>
+ 
+ <br>
+
+
+### ii. &nbsp; Download WinGolems <a name="download"></a>
+
+ <ul>
+   <li>
+     <p><b> Option 1: download zip file</b></p>
+     <p> Download WinGolems as a zip file from the following url and <a href="https://www.7-zip.org/">unzip</a> in a location of your choosing (e.g., windows user folder). 
+
+``` 
+https://github.com/bingson/WinGolems/archive/refs/heads/master.zip
+```
+
+   </li>
+   <li>
+     <p><b> Option 2: run GIT command </b></p>
+     <p>    This option requires the installation of <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git</a> and is recommended if you want to push contributions to the project as well as periodically update your local repo with new versions via git pull. To download this project through git, run the command
+
+``` 
+git clone https://github.com/bingson/WinGolems.git 
+```
+
+   </li>
+ </ul>
+
+<br>
+
+
+### iii. &nbsp; Run WinGolems <a name="run"></a>
+
+<p> After downloading and unzipping the WinGolems project folder, navigate to that folder in file explorer, then
+
+ <ul>
+    <li>
+     <p><b> Option 1: run WinGolems.exe as administrator </b></p>
+     This option lets users try out the Quick Start Template without having to install AHK. The executable must be recompiled to reflect any template changes, which requires AHK installation.
+     <p><img src="assets\Screens\wingolems_exe.png" width="400"></p>
+     <br>
+   </li>
+
+   <li>
+     <p><b> Option 2: run WinGolems.ahk as administrator </b></p>
+     This option lets users make changes to the script and see changes reflected immediately by reloading the script. No executable necessary.
+     <p><img src="assets\Screens\run_master.png" width="400" alt="run_master.png" title="run_master.png" /></p>
+   </li>
+ </ul>
+<br>
+
+Note: By default, UAC protects "elevated" programs (that is, programs which are running as admin) from being automated by non-elevated programs, since that would allow them to bypass security restrictions. Running as administrator is required for AHK to work on certain Microsoft application windows (e.g, MS office apps, task manager window). If the user does not have the rights to run programs as administrator, please visit this link for some [workarounds](https://www.autohotkey.com/docs/FAQ.htm#uac).
+
+### iv. &nbsp; Configure WinGolems <a name="cfg"></a>
+<ul>
+   <li>
+     <p><b> Configure WinGolems </b></p>
+     
+   If WinGolems does not detect any configuration settings for the current computer, it will prompt the user  
+   <p><img src="assets\Screens\cfg.png" width="500" alt="run_master.png" title="run_master.png" /></p>
+
+     WinGolems will search through both 32 bit and 64 bit program file folders for executable paths used to launch specific apps and modify associated file types. To change these app references, open <code>config.ini</code> in a text editor and update the file path values for the following variables.  
+
+``` 
+html_path
+doc_path
+xls_path
+ppt_path
+pdf_path
+```
+
+</li>
+<ul>
+
+## 2. Quick Start Template Overview: <a name="quick-start-template-overview"></a> 
 
 A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A transformative interface goes beyond automation by giving its user the ability to solve problems that would be impossible to solve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
 
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from others over the years to automate and augment how I interact with my computer. Before investing any time into learning AHK, new users can try out many of WinGolems' features by [running the quick start template below using the included executable]() (no knowledge of AHK or software installation required). 
+The quick start template is a collection of code examples that show how to create interface layers: i.e., assigning hotstrings/hotkeys to particular WinGolems functions. Within the `\Golems` folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to carry out the desired task (i.e., function library files). To modify the quick start template, AutoHotkey installation is required.
 
-The initial value provided by this repository will come from users adapting the code from the quick start template to alleviate common workflow frictions. 
-
-Example use cases: 
-
-- When multiple applications have different shortcuts for the same operation, users must remember unnecessary application-specific information that could be standardized away: e.g., switching tabs with `ctrl + tab` versus `ctrl + PgDn`. 
-
-- When ones keyboard layout doesn't work well with default application shortcuts: e.g., to actuate the ` ctrl + PgDn ` combination using my laptop's condensed keyboard layout requires that I move my right hand away from home row.
-
-- When software developers pre-assign convenient keyboard shortcut combinations to less used operations: e.g., the ` Win + F ` combination opens the rarely used feedback reporting dialog in Windows. Common sense dictates that the most frequently performed operations should be the easiest to execute and vice versa for the less used ones. 
-
-In his [recent remarks on Windows 11](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple) Satya Nadella said that "operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems gives users a toolbox for re-engineering application interfaces to better suit their needs. In addition to reprogramming application shortcuts, WinGolems also augments the Windows experience by through a Command Box (CB), a keyboard-driven graphical user interface with it's own command line syntax from running pre-made augmentation functions. The CB can be used to add new features and interface layers to existing applications. 
-
-## Quick Start Template Overview:
-
-The quick start template has working code examples that illustrate how to create interface layers and connect them to functions that address common workflow frictions. To modify the quick start template, AutoHotkey installation is required. Within the WinGolems folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to carry out the underlying task (i.e., function libraries). 
-
-To reduce the AHK or programming knowledge necessary to use WinGolems convenience functions, new users will only need to understand how to modify template files which are restricted to code that associates hotstrings/hotkeys and different convenience functions (or AHK code that doesn't exceed 1 line). Reading through the short section on [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2) from the AHK beginner tutorial is all that's required to understand how to modify the quick start template. 
+To reduce the AHK or programming knowledge necessary to use WinGolems, new users will only need to understand how to modify template files, which can be learned by reading through Section 2 [Hotkeys & Hotstrings](https://www.AutoHotkey.com/docs/Tutorial.htm#s2) of the AHK beginner tutorial (~10 min).  
 
 ```ahk
                                       ; Open or reactivate a web browser by 
@@ -32,18 +163,12 @@ To reduce the AHK or programming knowledge necessary to use WinGolems convenienc
 :X:c~win:: ActivateApp("html_path")   ; 2) typing "c~win" <space> anywhere in windows          <- hotstring
                                       ; 3) entering "c" in a Command Box with a "~win" suffix              
 ```
-One of the key strengths of AHK is it's powerful and parsimonious syntax for creating application-specific and system-wide hotstrings and hotkeys. The sample template code above illustrates this by showing how easy it is to create three shortcuts for opening/reactivating your web browser by calling the function ActivateApp(). 
+One of the key strengths of AHK is it's powerful and parsimonious syntax for creating application-specific and system-wide hotstrings and hotkeys. The sample code above illustrates how to create three shortcuts for opening/reactivating a web browser by calling the function ActivateApp(). 
 
-### Quick Start Hotkeys (Keyboard Shortcuts): 
+### Keyboard Shortcuts: <a name="ks"></a>
 
-<table>
-<tr><td>
-    <img src="assets\Screens\QuickStartHotkeys.png" width = "700"> 
-    <!-- <img src="assets\Screens\QuickStartHotkeys.png" width="1000">  -->
-</td></tr>
-
-<tr><td>
-<details><summary><font color = 'orange'><b>Click to see list of Quick Start Hotkeys</b></font></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b>Click here to see a list of all quick start template Hotkeys</b></summary>
+<p>
 
 ```
 
@@ -52,7 +177,7 @@ SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  sc027 = {;:}    sc028 = {"'}    sc029 = {`~}     sc033 = {,<}      sc02b = {\|}
 
  sc034 = {.>}    sc035 = {/?}    sc00D = {=+}     sc00C = {-_} 
-
+      
  sc01a or b = {[} or {]} 
 
 ==o====o====o====o====o== 1_TEMPLATE_QUICKSTART ==o====o====o====o====o====o
@@ -253,77 +378,25 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
  Alt+F                   SelectText: select word at text cursor position
 
 ```
+
 </p></details>
-</td></tr></table>
- 
-### Command Box (CB):
-
-
-| DISPLAY MODE | MINIMALIST MODE |
-| :-: | :-: |
-| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\minimal.png" width="500"> |
-<p align="center">
-switch between modes: ALT + X
-</p>
-
-The CB is a keyboard driven graphical user interface that adds several capabilities:
-+ text display window with integrated clipboard manager (aka. memory system).
-+ ability to call 
-
-
-Some sample use case
-+ code prototyping
-+ cognitive enhancement
-  memory files
-+ abtraction 
 
 
 
 
 
-
-
-The command box largely mitigates that problem  frees the user from the modifier keys allows the user to 
-
-
-
-The command box is a keyboard-driven graphical user interface 
-
-
-* **Text file viewer**: Display any .txt or .ini file in the CB display window. 
-
-* text manipulation commo 
-
-
-* 
+<img src="assets\Screens\QuickStartHotkeys.png" width = "1000"> 
 
 
 
-Memory System
+### Command Box: <a name="cb"></a>
 
-
-
-I initially created the command box as an always-on-top display window for WinGolems
-
-The command box was initially created as part of a memory system. 
-
-that started off as an always-on-top text file viewer to 
-
-
-At some point, you run out of easily accessible keyboard shortcut combinations  
-
-<p align="center">
-
-
-
-</p>
-
-
-<details><summary><font color = 'orange'><b>Click to see Command Box cheat sheet</b></font></summary>
-<p>
+<details>
+    <summary>&nbsp;ℹ️&nbsp;<b>Click here to see the default Command Box cheat sheet</b></summary>
+    <p>
 
 ```
-_________________________________________________________________________________________________________________________________________
+ _________________________________________________________________________________________________________________________________________
 | CommandBox (CB) Creation:                           | KEY    WINGOLEMS         ([T]oggle, [M]ode change ) | KEY  WINDOWS SELECTION     |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
@@ -343,11 +416,11 @@ ________________________________________________________________________________
 | !x      toggle GUI minimal or display mode     alt+x| q~     Quit WinGolems                               |  rs~ Restart computer      |
 | !e      move & resize CB window to top left    alt+e|                                                     |  sd~ Shut Down computer    |
 |_____________________________________________________|_____________________________________________________|____________________________|
-| UPPER-case first letter required to trigger the following commands                                                                     |
+| UPPERcase first letter required to trigger the following commands                                                                      |
 |                                                                                                                                        |
-|      TEXT MANIPULATION & MEMORY SYSTEM       USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
-|      --------------------------------------- ------------------- ----------------------------------------------------------------------|
-| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                       ?|
+| KEY  TEXT MANIPULATION & MEMORY SYSTEM       USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
 |  L   Load .txt file into CB display          L1, Lhelp, Lr\testr Load in display => 1.txt, help.txt, r\testr.txt ("Ll" .txt list)    L?|
 |      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
@@ -356,6 +429,7 @@ ________________________________________________________________________________
 |  E   Edit file in default editor             E1, Etest, Er\testr edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
 | A|P  Append|Prepend selected text to file    A1, Atest, Ar\testr add selected text to bottom of => 1.txt, test.txt, r\testr.txt    A|P?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
+|  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
 | R?:  Change replacement separators (1|2)     R1:%; R2:~>         Changes the above replacement separators to % and ~>              R?:?|
 | Rf:  Modify file w/ saved replace't pattern  Rf:1~p n            modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
@@ -364,13 +438,14 @@ ________________________________________________________________________________
 | KEY  CONVENIENCE                                                                                                                       |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
+|  Q:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
 |  G   Run any function                        GMoveWin,TopLeft    fmt: fn1_name,fn1_params__fn2name,fn2params          G?,?__?,? or G?,?|
 | G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
 |                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
-|      GUI BEHAVIOR & APPEARANCE                                                                                                         |
-|      --------------------------------------- ------------------- ----------------------------------------------------------------------|
+| KEY  GUI BEHAVIOR & APPEARANCE                                                                                                         |
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
 |  T   Toggle CommandBox UI options            Td, Tm, Tp, Tt, Ts  [M]:(d)isplay,(m)inimal,(p)ersistent;[T]:(t)itle,(s)crollbar,(W)rap T?|
@@ -378,230 +453,56 @@ ________________________________________________________________________________
 |                                                                                                                                        |
 |________________________________________________________________________________________________________________________________________|
 
+
 ```
-
-
-### Memory System:
-
-? = numbers 0 to 9
-
-shift + win + ?: Save selected text 
-win + ?: 
-ctrl + win + ?:
-
 
 </p>
 </details>
-</center>
 
-After creating different interfaces elements, the next step is to connect that interface to functions that do something useful. 
+| DISPLAY MODE | MINIMALIST MODE |
+| :-: | :-: |
+| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\minimal.png" width="500"> |
+<p align="center">
+Press ALT + X to switch between modes
+</p>
 
-Before writing any new functions, I suggest searching the following AHK community forums to find relevant discussions and pre-maid scripts that can be adapted to suit your needs. Over a third of \' function library was modified from AHK community scripts.
+The CB is an entirely keyboard-driven graphical user interface (GUI) designed to augment the windows experience by adding new functionality to existing applications. 
 
-- https://www.autohotkey.com/boards/
-- https://www.reddit.com/r/AutoHotkey/
+Key Features:
++ see the contents of any .txt file in an always-on-top display window;
++ create additional keyboard shortcut layers valid only when a particular CB is open;
++ access a variety of convenience and augmentation functions ("?" for cheat sheet) 
++ AHK users can also swap in their own command box input processing module to create their own command-line syntax for parametizing and calling functions 
 
-Moving beyond automation and quality of life features, WinGolems can be used as a toolkit for building building layers of abstraction. 
+```ahk 
 
-
-#F https://superuser.com/questions/1251384/how-to-disable-windows-10-feedback-hub
-
-
-
-By abstraction we simply mean the removal of unnecessary detail when trying to accomplish tasks. One useful way of doing this with autohotkey is the clip().
-```ahk
-function() {
-    var := clip()
-    
-}
+; "ProcessCommand" is an example user input processing module that can be swapped with other ones . 
+; open lib\ProcessCommand.ahk
+CB("~win", C.lblue, C.dblue , "ProcessCommand")   
 ```
-
-The larger the customer base the more complex the business process, whether it's software, hardware, financial services, or cars. Growing complexity is a major source of engineering cost and errors. With the wrong engineering approach, every team member can end up needing to understand every other team member's work, which means the total effort requires to build a system of size n is proportional to n2! The solution to complexity is abstraction, also known as information hiding. Abstraction is simply the removal of unnecessary detail. The idea is that to design a part of a complex system, you must identify what about that part others must know in order to design their parts, and what details you can hide. The part others must know is the abstraction.
-
-
-In other words, create  
-
-The bigger idea is to strip away focus on ideas of greater
-
-process of removing physical, spatial, or temporal details or attributes in the study of objects or systems to focus attention on details of greater importance;[3] it is similar in nature to the process of generalization;
-
-
-('(~_(^_^(-_-)o_o)_*)")
-
-doing this is by using the Clip() 
-<!-- with WinGolems is through progromatically accessing  -->
-One of the primary use cases I use WinGolems, is as a 
-I often create WinGolems scripts 
-The command box was conceived out of a desire to augment my memory and 
-
-
-
-But beyond creating more convenient Windows shortcuts, WinGolem's also contains modules to facilitate the cognitive outsourcing of complex tasks by 
-
-The WinGolems also contains functions that allow the user to access and modify the Window's clipboard.  
-- 
-
-For example, the creation of .txt file copies of clipboard contents that can be retrieved through 
-
-
-
-
-walk new users through modifying the above interface
-
-, including how to use the WinGolem's memory system and execute user-created function through the command input box. 
-
-for programatically  accessing and modifying 
-
-use functions to facilitate the cognitive outsourcing of complex tasks. 
-
-
-The command WinGolems also includes a variety of modules to facilitate the cognitive outsourcing of tasks. For example, 
-
-
-
-
-(no prior AHK knowledge assumed) 
-
-New users are encouraged to modify this template to better suit their needs. 
-
-
-
-[[readme_snippet]]
-but only represents a small preview of the capabilities of the WinGolems function library.  
-
-
-
-In terms of  sdf
-
-
-Within this readme, I will walk through the assignment of shortcuts in the quick start template below to illusjtrate how to adapt WinGolems to your own needs.   
-
-
-
-
-features such as the assignment of keyboard shortcuts and hotstrings in the usage section below.  
-the quick start template shown below in the usage section. 
-
-
-In the usage section I will walk through the quick start template below to show how 
-
-
-
-The creation of interface features such as the assignment of keyboard shortcuts and hotstrings is separated from the function libraries that execute the desired task (aka. cognitive outsourcing model).  
-
-As the optimal 
-
-The code for the quick start interface template below is provided.
-**text**
->>text<<
-%text%
-
-
-
-  
-----
-## CONTENTS 
-
-* [Getting Started](##Getting-Started)
-* [Help](##Help)
-----
-
-## GETTING STARTED
-
-### 1. &nbsp; Install Dependencies
- <ul>
-   <li>
-     <p>  <b>Required:</b> </p>
-     <p>  – &nbsp; Windows 10 (tested on Home Version 20H2 OS build 19042.985)
-     <p>  - &nbsp; Windows 10 (tested on Home Version 20H2 OS build 19042.985)
-     <br> – &nbsp; <a href="https://www.autohotkey.com/docs/Tutorial.htm#s11">Autohotkey</a> version 1.1.33.09.
-   </li>
-   <li>
-     <p>  <b>Recommended:</b> </p>
-     <p> Any code editor that supports indentation-based code folding and autohotkey syntax highlighting. 
-     <p>  – &nbsp; <a href="https://code.visualstudio.com/">Visual Studio Code</a> editor with the following extension IDs 
-     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-autohotkey
-     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
-     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
-     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; bladnman.auto-align
-   </li>
- </ul>
- 
- <br>
-
-
-### 2. &nbsp; Install WinGolems 
-
- <ul>
-   <li>
-     <p><b> Option 1: Download zip file</b></p>
-     <p> Download WinGolems as a zip file from the following url and <a href="https://www.7-zip.org/">unzip</a> to the same drive Windows 10 and program files are installed.
-
-``` 
-https://github.com/bingson/WinGolems/archive/refs/heads/master.zip
-```
-
-   </li>
-   <li>
-     <p><b> Option 2: GIT </b></p>
-     <p>    This option requires the installation of <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git</a> and is recommended if you want to make contributions to the project as well as periodically update your local repo with new versions via git pull. To download this project through git, run command
-
-``` 
-git clone https://github.com/bingson/WinGolems.git 
-```
-
-   </li>
- </ul>
-
 <br>
 
-
-### 3. &nbsp; Run and configure WinGolems
-
-
- <ul>
-   <li>
-     <p><b> Run WinGolems.ahk as administrator </b></p>
-     <p> After you have installed Autohotkey and unzipped the WinGolems project folder, open the WinGolems project folder using file explorer and run WinGolems.ahk as administrator using the right-click context menu. 
-     <p><img src="assets\Screens\run_master.png" alt="run_master.png" title="run_master.png" /></p>
-   </li>
-   <li>
-     <p><b> Configure WinGolems </b></p>
-     <p> Upon first run, a new settings file will be created. WinGolems will search through both 32 bit and 64 bit program file folders for executable paths used to launch specific apps and modify associated file types. To change these app references, open <code>config.ini</code> in a text editor and update the file path values for the following variables.  
-
-``` 
-html_path
-doc_path
-xls_path
-ppt_path
-pdf_path
-```
-
-   </li>
- </ul>
-<br>
+Use Cases:
 
 
 
-## Usage
 
-The overarching goal of this project was reduce 
-## Tutorial Section
-
-
-
-## Help
+## 3. AHK Resources <a name="ahk"></a>
+https://www.autohotkey.com/docs/KeyList.htm
+https://www.autohotkey.com/boards/viewtopic.php?f=5&t=1411 ; comma 
+https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413 ; How to optimize the speed of a script as much as possible.
 
 * Open <a href="https://github.com/bingson/WinGolems/blob/master/HotKey_List.txt" title="title">HotKey_List.txt</a> for a list of hotkeys 
 
-* [AHK Beginner Tutorial](https://www.autohotkey.com/docs/Tutorial.htm) 
- 
-
+* [AHK Beginner Tutorial](https://www.AutoHotkey.com/docs/Tutorial.htm) 
  
 <center><img src="assets\Screens\wingolems_exe.png" width="400"></center>
-modify code samples in quick start interface template  https://www.autohotkey.com/docs/Tutorial.htm#s2
+modify code samples in quick start interface template  https://www.AutoHotkey.com/docs/Tutorial.htm#s2
 
-## Known Bugs
+## 4. Roadmap <a name="roadmap"></a>
+See the open issues for a list of proposed features (and known issues).
+
+
 1. Sometimes the CB window will show up as just a title bar in the top left corner. 
     * Temporary fix: ` alt + x ` 
 

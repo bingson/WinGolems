@@ -12,10 +12,11 @@ SelectWord() {
     ClipWait, 0.4
     charLeft := Clipboard
 
-    if (charLeft == "") {                                                       ; a non editable area
+    if (charLeft == "") {       
+        global short                                                ; a non editable area
         CoordMode, Mouse, Screen
         MouseGetPos, X_1, Y_1, ID_1, Control_1 
-        sleep 100
+        sleep, short
         X_1 += 3                                                                ; shift cursor a bit to prevent dblclick from selecting the whole line
         Try DllCall("SetCursorPos", int, %X_1%, int, %Y_1%)                     ; changed from MouseMove, %X_1%, %Y_1%  (original)
         Click 2                                                                 ; bing: works better with multi-monitor configurations and word 2019

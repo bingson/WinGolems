@@ -22,13 +22,11 @@
   :X:lf~win::   WinLLock(False)                                                 ;SC: turn off win+L locks computer
   :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;SC: open add remove programs 
   :X:s~win::    send ^{esc}                                                     ;SC: open start menu (alt: Ctrl+Esc)
-  >+>!o::
-  :X:mod~win::  MoveWindowToOtherDesktop()                                      ;SC: Move window to other desktop
   :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
 
   :X:tm~win::                                                                   ;MAW: open task manager with hotstring combines with max + cursor follows task manager window
-    send +^{esc}  
-  ~+^esc::                TskMgrExt()                                           ;MAW: maximize + mouse cursor follows window after task manager opens
+                send +^{esc}                                                    ;     TskMgrExt() will be executed after
+  ~+^esc::      TskMgrExt()                                                     ;MAW: maximize + mouse cursor follows window after task manager opens
 
 
 ; CB AHK UTILITIES _____________________________________________________________
@@ -57,209 +55,85 @@
  
 ; DEVELOPER OPTIONS ____________________________________________________________
 
-  :X:td~win::                                                                   ;[T] toggle developer optns
-    CC("T_d","!")
-    CC("buffer_path","Z:\buffer")
-    CC("hypersnap_path","C:\Users\bings\Downloads\Programs\HyperSnap 7\HprSnap7.exe")
-    PopUp("Developer options on: " GC("T_d"))
-    return
+  :X:td~win:: CC("T_d","!"), PU("Developer options on: " GC("T_d"))                                                                  ;[T] toggle developer optns
   
-
   #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    ^#w::             WinClose,A                                                 ;Convenience: close active window 
-    ^#q::             CloseClass()                                               ;Convenience: close all instances of the active program
-
-    :*:date*::                                                                    ;Convenience: output current date
-        FormatTime, CurrentDateTime,, MMMM dd, yyyy
-        clip(CurrentDateTime)
-        return 
-    ; ~printscreen::            Send {Blind}{vkE8}
-
-      *printscreen::            Send {Blind}{LWin Down}                                    ;Convenience:1 makes windows key inert so it can act as a modifier key 
-      printscreen Up::          Send {Blind}{vk00}{LWin Up}                                ;Convenience:1 makes windows key inert so it can act as a modifier key
-
-    
-    lwin & rctrl::                  ActivateWinID("Rctrl")                      ;SAW: activate saved Window ID
-    #f::                            Clicks(2)                                   ;MF: 2 Left clicks (select word)
-    ^#f::                           Clicks(3)                                   ;MF: 3 Left clicks (select line)
-    #n::AA("editor_path")    
-    #e::send ^{home}    
-    #+e::send ^{end}    
-    ralt & down::                   s("{blind}"), s("{F11}")                    ;Convenience: full screen {F11}
-
-  #IF !WinActive("ahk_exe " exe["editor"]) and GC("T_d",0)                              ; If command Box active
-
-  ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")      ;Convenience: duplicate line
-
+    *#d::                           SaveMousPos("r",1)                          ;MouseFn: Left click and save mouse position
+    *^#d::                          RecallMousePosClick("r")                    ;MouseFn: Move to saved mouse position and left click
+    *#i::                           SaveMousPos("i",1)                          ;MouseFn: Left click and save mouse position
+    *^#i::                          RecallMousePosClick("i")                    ;MouseFn: Move to saved mouse position and left click
+    #o::                            Click, middle                               ;MouseFn: mouse middle click
+    PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
+    #sc028::                        Click, Right                                ;MouseFn: mouse Right click
+    ^!Lbutton::                     Clicks(2), s("^v")                          ;MouseFn: click twice, paste clipboard
+    +^Lbutton::                     Clicks(3), s("^v")                          ;MouseFn: click thrice, paste clipboard
+    >+esc::                         EditFile("golems\_system.ahk")              ;Convenience: open _system.ahk
+    ^#w::                           WinClose,A                                  ;Convenience: close active window
+    ^#q::                           CloseClass()                                ;Convenience: close all instances of the active program
+    *printscreen::                  Send {Blind}{LWin Down}                     ;Convenience:1 makes windows key inert so it can act as a modifier key
+    printscreen Up::                Send {Blind}{vk00}{LWin Up}                 ;Convenience:1 makes windows key inert so it can act as a modifier key
+    lwin & rctrl::                  ActivateWinID("Rctrl")                      ;ActvateApp: activate saved Window ID
+    #f::                            Clicks(2)                                   ;MouseFunctions: 2 Left clicks (select word)
+    ^#f::                           Clicks(3)                                   ;MouseFunctions: 3 Left clicks (select line)
+    #n::                            AA("editor_path")                           ;Convenience: 
+    #e::                            send ^{home}    
+    #+e::                           send ^{end}    
+    ralt & right::                  s("{blind}"), s("{F11}")                    ;Convenience: full screen {F11}
+    >+>!o::
+    :X:mod~win::  MoveWindowToOtherDesktop()                                    ;SC: Move window to other desktop
+  #IF !WinActive("ahk_exe " exe["editor"]) and GC("T_d",0) ; -- -- -- -- -- -- -; EDITOR ACTIVE
+    ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")    ;Convenience: duplicate line
   #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                              ; If command Box active
-    printscreen & space::           GUISubmit()                                 ;CB: submit GUI input
+    printscreen & space::           GUISubmit()                                 ;CB: submit user input
   #If GetKeyState("ralt", "P") and GC("T_d",0)
-    PrintScreen & k::               CursorJump("T")                             ;MF: move mouse cursor to top edge
-    PrintScreen & j::               CursorJump("B",,"-20")                      ;MF: move mouse cursor to bottom edge
-    PrintScreen & h::               CursorJump("L","20")                        ;MF: move mouse cursor to Left edge
-    PrintScreen & l::               CursorJump("R","-40")                       ;MF: move mouse cursor to Right edge
-   
+    PrintScreen & k::               CursorJump("T")                             ;MouseFunctions: move mouse cursor to top edge
+    PrintScreen & j::               CursorJump("B",,"-20")                      ;MouseFunctions: move mouse cursor to bottom edge
+    PrintScreen & h::               CursorJump("L","20")                        ;MouseFunctions: move mouse cursor to Left edge
+    PrintScreen & l::               CursorJump("R","-40")                       ;MouseFunctions: move mouse cursor to Right edge
+  #If GC("T_d",0)
+    printscreen & 0::                                                           ;Memory (+rshift): add selected text to the bottom of 0.txt (press rshift before ralt => no cursor centering)
+    printscreen & 9::                                                           ;Memory (+rshift): add selected text to the bottom of 9.txt
+    printscreen & 8::                                                           ;Memory (+rshift): add selected text to the bottom of 8.txt
+    printscreen & 7::                                                           ;Memory (+rshift): add selected text to the bottom of 7.txt
+    printscreen & 6::                                                           ;Memory (+rshift): add selected text to the bottom of 6.txt
+    printscreen & 5::                                                           ;Memory (+rshift): add selected text to the bottom of 5.txt
+    printscreen & 4::                                                           ;Memory (+rshift): add selected text to the bottom of 4.txt
+    printscreen & 3::                                                           ;Memory (+rshift): add selected text to the bottom of 3.txt
+    printscreen & 2::                                                           ;Memory (+rshift): add selected text to the bottom of 2.txt
+    printscreen & 1::                      AddToMemory()                        ;Memory (+rshift): add selected text to the bottom of 1.txt
   #If GetKeyState("PrintScreen", "P") and GC("T_d",0)
-
-    !r:: RunProgWindow()                                                          ; run programs alternate shortcut
-    ralt::          ActivateWinID("Lctrl")                                         ;SAW: activate saved Window ID
-    rctrl::         ActivateWinID("Rctrl")                                         ;SAW: activate saved Window ID
-
-    alt & lctrl::   SaveWinID("Lctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
-    alt & rctrl::   SaveWinID("Rctrl")                                             ;SAW: (+ Alt) Save window ID for later activation 
-    alt & q::       SaveWinID("Q")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & q
-    alt & w::       SaveWinID("W")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & q
-    alt & a::       SaveWinID("A")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & a
-    alt & s::       SaveWinID("S")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & s
-    alt & z::       SaveWinID("Z")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & z
-    alt & x::       SaveWinID("X")                                                 ;SAW: (+ Alt) Save window ID for later activation w/ alt & x
-    q::             ActivateWinID("Q")                                             ;SAW: activate saved Window ID
-    w::             ActivateWinID("W")                                             ;SAW: activate saved Window ID
-    a::             ActivateWinID("A")                                             ;SAW: activate saved Window ID
-    s::             ActivateWinID("S")                                             ;SAW: activate saved Window ID
-    z::             ActivateWinID("Z")                                             ;SAW: activate saved Window ID
-    x::             ActivateWinID("X")                                             ;SAW: activate saved Window ID
-   
-    ralt & k::                      CursorJump("T")                             ;MF: move mouse cursor to top edge
-    ralt & j::                      CursorJump("B",,"-20")                      ;MF: move mouse cursor to bottom edge
-    ralt & h::                      CursorJump("L","20")                        ;MF: move mouse cursor to Left edge
-    ralt & l::                      CursorJump("R","-40")                       ;MF: move mouse cursor to Right edge
-    SC035::                         search()                                    ;C: google search selected text
-    o::                             send ^{home}
-    p::                             send ^{end}
-    sc028::                         Click, Right                                ;MF: mouse Right click
-    h::                             sendinput ^{Left 4}
-    l::                             sendinput ^{Right 4}
-    SC027::                         WinMinimize,A                               ;C: minimize window
-    i::                             SaveMousPos("i",1)                          ;MF: Left click and save mouse position
-    j::                             Sendinput {Blind}{WheelDown 5}              ;MF: scroll wheel down
-    k::                             Sendinput {Blind}{WheelUp 5}                ;MF: scroll wheel Up
-    b::  ActivateApp("explorer.exe", "buffer_path", True)                       ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
-
-
+    lctrl::                                                                     ;ActvateApp: activate saved Window ID
+    ralt::                          ActivateWinID("Lctrl")                      ;ActvateApp: activate saved Window ID
+    rctrl::                         ActivateWinID("Rctrl")                      ;ActvateApp: activate saved Window ID
+    alt & lctrl::                   SaveWinID("Lctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
+    alt & rctrl::                   SaveWinID("Rctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
+    alt & q::                       SaveWinID("Q")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
+    alt & w::                       SaveWinID("W")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
+    alt & a::                       SaveWinID("A")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & a
+    alt & s::                       SaveWinID("S")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & s
+    alt & z::                       SaveWinID("Z")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & z
+    alt & x::                       SaveWinID("X")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & x
+    q::                             ActivateWinID("Q")                          ;ActvateApp: activate saved Window ID
+    w::                             ActivateWinID("W")                          ;ActvateApp: activate saved Window ID
+    a::                             ActivateWinID("A")                          ;ActvateApp: activate saved Window ID
+    s::                             ActivateWinID("S")                          ;ActvateApp: activate saved Window ID
+    z::                             ActivateWinID("Z")                          ;ActvateApp: activate saved Window ID
+    x::                             ActivateWinID("X")                          ;ActvateApp: activate saved Window ID
+    ralt & k::                      CursorJump("T")                             ;MouseFunctions: move mouse cursor to top edge
+    ralt & j::                      CursorJump("B",,"-20")                      ;MouseFunctions: move mouse cursor to bottom edge
+    ralt & h::                      CursorJump("L","20")                        ;MouseFunctions: move mouse cursor to Left edge
+    ralt & l::                      CursorJump("R","-40")                       ;MouseFunctions: move mouse cursor to Right edge
+    sc028::                         Click, Right                                ;MouseFunctions: mouse Right click
+    !r::                            RunProgWindow()                             ;convenience: run programs alternate shortcut
+    SC035::                         search()                                    ;Convenience: google search selected text
+    o::                             send ^{home}                                ;Convenience: ctrl+home
+    p::                             send ^{end}                                 ;Convenience: ctrl+end
+    SC027::                         WinMinimize,A                               ;Convenience: minimize window
+    h::                             sendinput ^{Left 4}                         ;TextNavigation: jump left 4 words (ctrl+left x 4)
+    l::                             sendinput ^{Right 4}                        ;TextNavigation: jump right 4 words (ctrl+right x 4)
+    i::                             SaveMousPos("i",1)                          ;MouseFunctions: Left click and save mouse position
+    j::                             Sendinput {Blind}{WheelDown 5}              ;MouseFunctions: scroll wheel down
+    k::                             Sendinput {Blind}{WheelUp 5}                ;MouseFunctions: scroll wheel Up
+    b::                             AA("explorer.exe", "buffer_path", True)     ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)
 #IF
-  /* 
-    #IF GC("T_d",0) and WinActive("ahk_exe " exe["editor"]) ;-- -- -- -- -- -- -- 
-    $^PgDn::             send +^!0                                              ; indent 1 space to left
-    $^PgUp::             send +^!9                                              ; indent 1 space to right
- 
-                           
-    :X:g~coding::        Send +^!g                                              ;V: git commit all
-    :X:m>:: clip("msgbox % ")
-    printscreen & tab::      AddSpaceBeforeComment("80")                        ;v: Add Space Before Comment (default)
-    printscreen & capslock:: AddSpaceBeforeComment("80"), s("down")             ;v: Add Space Before Comment and move down 1 line (default)
-    
-    :X:it~coding::       send ^!+{F11}{4}{enter}                                ;v: indent using tabs
-    :X:is~coding::       send ^!+{F12}{4}{enter}                                ;v: indent using spaces
-    
-    :X:L1~coding::       AddBorder("80", "_"  )                                 ;v: Add lvl 1 Border (default)
-    :X:L2~coding::       AddBorder("80", "-- ")                                 ;v: Add lvl 2 Border (default)
-    :X:L3~coding::       AddBorder("80", "... ")                                ;v: Add lvl 3 Border (default)  
-
-    printscreen & space::
-    #space::             CB("~coding", C.lgreen)                                ; CB("~coding", lgreen)
-    
-    $+^sc028::           FocusResults()                                         ; move focus to search results
-    :X:sa~coding::       Send +^!s                                              ; save as
-    $^+sc027::           send +!^c                                              ; collapse search results
-    $<+Space::                                                                  ; indent 1 space to left
-       send +{right}
-       send +{space}{left}
-       return
-    $>+Space::           Send ^!+i                                              ; indent 1 space to right
-    
-    :X:cfg~coding::      send {F9}                                              ;V: settings.json
-    ^tab::               Send % (toggle := !toggle) ? "^1" : "^2"               ;V: fold/unfold all regions toggle
-    !s::                 send ^{F3}                                             ;V: move to next instance of selected text 
-    +^y::                +^u                                                    ;V: output console
-    +^!r::               send {F2}                                              ;V: rename (F2)
-    
-    +>!j::
-    +!^j::               send +!^{down}                                         ;V: create multicursor instance below
-    +>!k::
-    +!^k::               send +!^{up}                                           ;V: create multicursor instance above
-    
-    +!Right::            send !t                                                ;V: move to group 1
-    +!Left::             send +!1                                               ;V: move to group 2
-    >^m::                send ^c                                                ;V: right handed copy
-    <^m::                send ^m                                                ;V: toggle tab moves focus
-    +^!o::               send +^u                                               ;V: toggle output window
-    !d::                 send +^k                                               ;V: delete line
-    ^!d::                send +!{down}                                          ;V: duplicate line
-    +^d::                send +^l                                               ;V: Select all occurrences of current selection
-    ^!sc01a::            Send % (toggle := !toggle) ? "^k^9" : "^k^8"           ;V: fold/unfold all regions toggle
-    >^f::                                                                       ;NAV: search all files in folder
-    :X:f~coding::        send +^f                                               ;NAV: search all files in folder
-    :X:h~coding::                                                               ;NAV: search & replace all files in folder (+subdirectories)
-    +^!f::               Send +^h                                               ;NAV: search & replace all files in folder
-    $>!f::                                                                      ;V: move focus to search results
-                         send +^f
-                         sleep med
-                         send ^{down 3}
-                         return  
-
-    ^!sc035::            Send % (toggle := !toggle) ? "^k^0" : "^k^j"           ;V: fold/unfold all code toggle
-    ^q::                 Send ^{sc035}                                          ;V: toggle comment
-    ^sc035::             send +^{[}                                             ;V: fold current code level
-    !sc035::             send +^{]}                                             ;V: unfold current code level
-    +^sc035::            send ^k^[                                              ;V: fold recursively 
-    +!sc035::            send ^k^]                                              ;V: unfold recursively
-    >+^enter::           send ^kz                                               ;V: zen mode
-    !p::                 send ^w                                                ;V: close tab
-    !g::                 send +!{Right}                                         ;V: select all text in between brackets
-    :X:c~~coding::       Send +^!g                                              ;V: git commit all
-   
-    :X:nb~coding::
-    :X:ca~coding::
-                         send +^!p                                                 
-                         send ^!k
-                         PopUp("Clear bookmarks`nAdd bookmark",C.lgreen)
-                         return
-      
-    :X:ab~coding::       
-    :X:b~coding::       
-                         send ^!k
-                         PopUp("Add/remove bookmark",C.lgreen)
-                         return
-    cb~coding:
-    F1 & k::                                                                    ;V: clear all bookmarks
-                         send +^!p                                                 
-                         PopUp("Clear bookmarks",C.lblue)
-                         return
-    +^g::                                                                       ;V: source control 
-                          ;ReleaseModifiers()
-                         send +^g
-                         send g
-                         return
-   
-    +!0::                                                                       ;V: fold code to level 0
-    +!1::                                                                       ;V: fold code to level 1
-    +!2::                                                                       ;V: fold code to level 2
-    +!3::                                                                       ;V: fold code to level 3
-    +!4::                                                                       ;V: fold code to level 4
-    +!5::                                                                       ;V: fold code to level 5
-    +!6::                                                                       ;V: fold code to level 6
-    codefolding() {
-       send ^k
-       send {ctrl down}
-       send % substr(A_ThisHotkey, 0)                                              
-       send {ctrl up}
-       return
-    }
-   
-    ; swap ^ for !
-    ^1::                                                                           
-    ^2::                                                                           
-    ^3::                                                                           
-    ^4::                                                                           
-    ^5::                                                                           
-    ^6::                                                                           
-    ^7::                                                                           
-    ^8::                                                                           
-    ^9::                                                                           
-    ^0:: send % "!" . substr(A_ThisHotkey, 0)                                   ;v: activate tab # 
-    
-    !1::                                                                           
-    !2::                                                                           
-    !3:: send % "^" . substr(A_ThisHotkey, 0)   
- */
+  

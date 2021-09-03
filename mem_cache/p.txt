@@ -1,8 +1,0 @@
-  $+#1::         OverwriteMemory()                                              ;[M] overwrite 1.txt with selected text 
-
-  !#0::                                                                         ;[M] add selected text to the bottom of 0.txt
-  !#9::                                                                         ;[M] add selected text to the bottom of 9.txt
-  !#8::                                                                         ;[M] add selected text to the bottom of 8.txt
-  !#7::                                                                         ;[M] add selected text to the bottom of 7.txt
-  !#6::                                                                         ;[M] add selected text to the bottom of 6.txt
-  !#5::                                  

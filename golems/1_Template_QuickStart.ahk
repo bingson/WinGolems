@@ -2,22 +2,22 @@
 ; The following interface elements are valid anywhere in Windows 10
 ; ACTIVATE APPLICATION (GREEN)__________________________________________________
  
-  +#F1::              SaveWinID("F1")                                           ;ActvateApp: Save window ID for subsequent activation 
-  +#F2::              SaveWinID("F2")                                           ;ActvateApp: Save window ID for subsequent activation 
-  +#F3::              SaveWinID("F3")                                           ;ActvateApp: Save window ID for subsequent activation 
-  +#F4::              SaveWinID("F4")                                           ;ActvateApp: Save window ID for subsequent activation 
-  +#F5::              SaveWinID("F5")                                           ;ActvateApp: Save window ID for subsequent activation 
-  +#F6::              SaveWinID("F6")                                           ;ActvateApp: Save window ID for subsequent activation 
-  +#F7::              SaveWinID("F7")                                           ;ActvateApp: Save window ID for subsequent activation 
-  +#F8::              SaveWinID("F8")                                           ;ActvateApp: Save window ID for subsequent activation 
-  #F1::               ActivateWinID("F1")                                       ;ActvateApp: Activate previously saved window ID
-  #F2::               ActivateWinID("F2")                                       ;ActvateApp: Activate previously saved window ID
-  #F3::               ActivateWinID("F3")                                       ;ActvateApp: Activate previously saved window ID
-  #F4::               ActivateWinID("F4")                                       ;ActvateApp: Activate previously saved window ID
-  #F5::               ActivateWinID("F5")                                       ;ActvateApp: Activate previously saved window ID
-  #F6::               ActivateWinID("F6")                                       ;ActvateApp: Activate previously saved window ID
-  #F7::               ActivateWinID("F7")                                       ;ActvateApp: Activate previously saved window ID
-  #F8::               ActivateWinID("F8")                                       ;ActvateApp: Activate previously saved window ID
+  +#F1::              SaveWinID("F1")                                           ;ActvateApp: Save window ID
+  +#F2::              SaveWinID("F2")                                           ;ActvateApp: Save window ID
+  +#F3::              SaveWinID("F3")                                           ;ActvateApp: Save window ID
+  +#F4::              SaveWinID("F4")                                           ;ActvateApp: Save window ID
+  +#F5::              SaveWinID("F5")                                           ;ActvateApp: Save window ID
+  +#F6::              SaveWinID("F6")                                           ;ActvateApp: Save window ID
+  +#F7::              SaveWinID("F7")                                           ;ActvateApp: Save window ID
+  +#F8::              SaveWinID("F8")                                           ;ActvateApp: Save window ID
+  #F1::               ActivateWinID("F1")                                       ;ActvateApp: Activate saved window ID
+  #F2::               ActivateWinID("F2")                                       ;ActvateApp: Activate saved window ID
+  #F3::               ActivateWinID("F3")                                       ;ActvateApp: Activate saved window ID
+  #F4::               ActivateWinID("F4")                                       ;ActvateApp: Activate saved window ID
+  #F5::               ActivateWinID("F5")                                       ;ActvateApp: Activate saved window ID
+  #F6::               ActivateWinID("F6")                                       ;ActvateApp: Activate saved window ID
+  #F7::               ActivateWinID("F7")                                       ;ActvateApp: Activate saved window ID
+  #F8::               ActivateWinID("F8")                                       ;ActvateApp: Activate saved window ID
   #q::                AA("xls_path")                                            ;ActvateApp:1 Activate Excel
   #w::                AA("doc_path")                                            ;ActvateApp:1 Activate Word
   #a::                AA("pdf_path")                                            ;ActvateApp:1 Activate pdf viewer
@@ -25,40 +25,38 @@
   #z::                AA("editor_path")                                         ;ActvateApp:1 Activate default editor
   #x::                AA("ppt_path")                                            ;ActvateApp:1 Activate PowerPoint
   #b::                AA("explorer.exe")                                        ;ActvateApp:1 Activate File explorer         
-  #t::                AA("cmd.exe")                                             ;ActvateApp:1 Activate command window         
+  #t::                AA("cmd.exe")                                             ;ActvateApp:1 Activate command window        
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
   
-  #SC035::           search()                                                   ;Convenience: google search selected text
+  #SC035::            search()                                                  ;Convenience: google search selected text
   #sc028::                                                                      ;Convenience: maximize window
-  ^!space::          s("{blind}"), MaximizeWin()                                ;Convenience: maximize window
-  #SC027::           WinMinimize,A                                              ;Convenience: minimize window
-  #del::             AlwaysOnTop(1)                                             ;Convenience: Window always on top: ON
-  #ins::             AlwaysOnTop(0)                                             ;Convenience: Window always on top: OFF 
-  *!capslock::       ChgInstance()                                              ;Convenience: go through application instances with thumbnails(+!capslock for other direction)
-  +#capslock::       s("{blind}"), ActivatePrevInstance()                       ;Convenience: rotate through app instances starting from most recent (no thumbnails, faster)
-  #capslock::        s("{blind}"), ActivateNextInstance()                       ;Convenience: rotate through app instances starting from oldest (no thumbnail previews)
-  
-  !SC027::           Send {esc}                                                 ;Convenience: simulate esc key (alt + semicolon)
-  ^SC027::           Send {AppsKey}                                             ;Convenience: simulate appkey 
-  #esc::             WinClose,A                                                 ;Convenience: close active window 
-  +#esc::            CloseClass()                                               ;Convenience: close all instances of the active program
-  ~LWin::            Send {Blind}{vkE8}                                         ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
+  ^!space::           s("{blind}"), MaximizeWin()                               ;Convenience: maximize window
+  #SC027::            WinMinimize,A                                             ;Convenience: minimize window
+  #del::              AlwaysOnTop(1)                                            ;Convenience: Window always on top: ON
+  #ins::              AlwaysOnTop(0)                                            ;Convenience: Window always on top: OFF
+  *!capslock up::     ChgInstance()                                             ;Convenience: go through application instances with thumbnails(+!capslock for other direction)
+  +#capslock up::     s("{blind}"), ActivatePrevInstance()                      ;Convenience: rotate through app instances starting from most recent (no thumbnails, faster)
+  #capslock up::      s("{blind}"), ActivateNextInstance()                      ;Convenience: rotate through app instances starting from oldest (no thumbnail previews)
+  !SC027::            Send {esc}                                                ;Convenience: simulate esc key (alt + semicolon)
+  ^SC027::            Send {AppsKey}                                            ;Convenience: simulate appkey
+  #esc::              WinClose,A                                                ;Convenience: close active window
+  +#esc::             CloseClass()                                              ;Convenience: close all instances of the active program
+  ~LWin::             Send {Blind}{vkE8}                                        ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
   #Lbutton::                                                                    ;Convenience:1 open start menu (alt: Ctrl+Esc)
-  $^#Enter::         send ^{esc}                                                ;Convenience:1 open start menu (alt: Ctrl+Esc)
+  $^#Enter::          send ^{esc}                                               ;Convenience:1 open start menu 
   ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
-  ~lwin & ~rshift::  CursorJump("C")                                            ;Convenience: move mouse cursor to center of active application window
-  !sc034::           moveWinBtnMonitors(), CFW()                                ;Convenience: move window btn monitors, cursor follows active windows
-  !Backspace::       delLine()
+  ~lwin & ~rshift::   CursorJump("C")                                           ;Convenience: move mouse cursor to center of active application window
+  !sc034::            moveWinBtnMonitors(), CFW()                               ;Convenience: move window btn monitors, cursor follows active windows
+  !Backspace::        delLine()                                                 ;Convenience: delete current line of text
   lshift & rshift::                                                             ;Convenience: reload WinGolems (update running script for changes, fixes sticky keys)
-  rshift & lshift::  reload                                                     ;Convenience: reload WinGolems
-
-  !#b::              BluetoothSettings()                                        ;Convenience:2 bluetooth settings (reassign less used windows sys shortcuts)
-  !#d::              DisplaySettings()                                          ;Convenience:2 display settings
-  !#n::              NotificationWindow()                                       ;Convenience:2 notification window
-  !#r::              RunProgWindow()                                            ;Convenience:2 run program
-  !#p::              PresentationDisplayMode()                                  ;Convenience:2 presentation display mode
-  !#i::              WindowsSettings()                                          ;Convenience:2 windows settings
+  rshift & lshift::   reload                                                    ;Convenience: reload WinGolems 
+  !#b::               BluetoothSettings()                                       ;Convenience:2 bluetooth settings (reassign less used windows sys shortcuts)
+  !#d::               DisplaySettings()                                         ;Convenience:2 display settings
+  !#n::               NotificationWindow()                                      ;Convenience:2 notification window
+  !#r::               RunProgWindow()                                           ;Convenience:2 run program
+  !#p::               PresentationDisplayMode()                                 ;Convenience:2 presentation display mode
+  !#i::               WindowsSettings()                                         ;Convenience:2 windows settings
 
 ; NAVIGATION (PURPLE) __________________________________________________________
 
@@ -76,8 +74,9 @@
   !space::           s("{blind}"), s("^{PgDn}")                                 ;Navigation: navigate to right tab
 
 ; MEMORY FUNCTIONS (BLUE)_______________________________________________________
-  ; modifier keys (+#^) can be swapped around to change the key combinations
-  ; to call the below memory function but must always end in the numbers 0-9 
+  ; modifier keys (+#^) can be swapped around to change the key combinations 
+  ; that call the below memory function but must always end in the numbers 0-9. 
+  ; The function uses the last key pressed to identify which memory file to operate on.
   
   +#0::                                                                         ;Memory: overwrite 0.txt with selected text 
   +#9::                                                                         ;Memory: overwrite 9.txt with selected text 
@@ -89,7 +88,7 @@
   +#3::                                                                         ;Memory: overwrite 3.txt with selected text 
   +#2::                                                                         ;Memory: overwrite 2.txt with selected text 
   +#1::              OverwriteMemory()                                          ;Memory: overwrite 1.txt with selected text 
-
+  
   ^#0::                                                                         ;Memory: add selected text to the bottom of 0.txt
   ^#9::                                                                         ;Memory: add selected text to the bottom of 9.txt
   ^#8::                                                                         ;Memory: add selected text to the bottom of 8.txt
@@ -117,7 +116,7 @@
 
 ; COMMAND BOX __________________________________________________________________; shared by all Command Boxes 
 
-  #space::           CB("~win")                                                 ;Convenience: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
+  #space::           CB("~win")                                                ;Convenience: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
 
   #IF WinActive("ahk_id " CB_hwnd)                                              ; If command Box active
   
@@ -135,7 +134,7 @@
   $!x::              ToggleDisplay()                                            ;CommandBox: toggle Command Box display|minimalist mode
   !r::               GUIRecall()                                                ;CommandBox: reenter last command
   
-  #IF WinExist("ahk_id " CB_hwnd) ;and !WinActive("ahk_id " CB_hwnd)             ; If command Box exists but not active
+  #IF WinExist("ahk_id " CB_hwnd) ;and !WinActive("ahk_id " CB_hwnd)            ; If command Box exists but not active
   
   $<^space::                                                                    ;CommandBox: activate CB if exists and move focus to inputbox 
   $>^space::         ActivateWin("ahk_id " CB_hwnd), GUIFocusInput()            ;CommandBox: activate CB if exists and move focus to inputbox

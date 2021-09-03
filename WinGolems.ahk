@@ -2,9 +2,10 @@
 ; INITIALIZATION (start of auto-execution section) _____________________________
   ; SCRIPT CONFIG -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ; explained: https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
-                                                                                ; https://www.autohotkey.com/docs/commands/_MenuMaskKey.htm
-    #MenuMaskKey vkFF                                                           ; vkFF is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed
+    
     SetWorkingDir %A_ScriptDir%
+    #MenuMaskKey vkFF                                                           ; vkFF is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed
+    
     #MaxHotkeysPerInterval 99000000
     ; SetBatchLines -1
     SetBatchLines, 20ms
@@ -15,7 +16,8 @@
     #InstallMouseHook                                                           ; The mouse hook monitors mouse clicks for the purpose of activating mouse hotkeys and facilitating hotstrings.
     #Singleinstance Force                                                       ; only one instance of this script can be active
     Process, Priority, , A
-    SetKeyDelay, 10, 10
+    SetKeyDelay, 0, 50
+    ; SetKeyDelay, 10, 10
     SetMouseDelay, 10                                                           ; mouse click commands become less reliable at lower settings
     SetDefaultMouseSpeed, 0
     SetWinDelay, 10
@@ -41,7 +43,7 @@
     ; only executed if no config.ini detected
     ; change the following default application associations.
     ; To generate a new configuration file reflecting changes in app associations,
-    ; delete config.ini and reload/rerun wingolems.ahk
+    ; delete config.ini and reload WinGolems.ahk
     
     apps := [ "winword.exe"         ; Word          -> docm,doc,docx,dotx,dotm
             , "excel.exe"           ; Excel         -> xlsx,xlsm,xltx,xltm
@@ -70,7 +72,7 @@
 
 #Include *i %A_ScriptDir%\..\ahk\golems\
 #Include *i office.ahk
-#Include *i coding_environments.ahk
+#Include *i coding.ahk
 #Include *i obsidian.ahk     
 #Include *i chrome.ahk     
 

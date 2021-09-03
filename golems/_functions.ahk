@@ -1,6 +1,6 @@
 ; GLOBAL VARIABLES _____________________________________________________________
   
-  short := 100, med := 300, long := 900
+  short := 150, med := 300, long := 900
 
   C := { "lgreen"      : "CEDFBF"
        , "lblue"       : "BED7D6"
@@ -749,8 +749,12 @@
   }
 
   AddToMemory(del_after_copy = "0"){
-    global C, CB_hwnd
-    ;ReleaseModifiers()
+    global C, CB_hwnd, short
+    ; CoordMode, Mouse, Screen
+    BlockInput, On
+    ; send {Blind}
+    ; ReleaseModifiers()
+    MouseGetPos, StartX, StartY
     slot            := substr(A_ThisHotkey, 0)
     new_text_to_add := trim(clip())
     FileAppend % "`n" . new_text_to_add, mem_cache\%slot%.txt           
@@ -760,6 +764,9 @@
     ; cut := Instr(A_ThisHotkey, "!") ? True : False 
     if (cut = true)
        send {del}
+    BlockInput, Off
+    MouseMove, StartX, StartY
+    ; send {Blind}
     return
   } 
 
@@ -793,10 +800,14 @@
   } 
 
 ; AHK UTILITIES ________________________________________________________________
+  
+  CF(path, sys_dependent = False) {                                             
+    ChangeFolder(path, sys_dependent)
+  }
 
   s(k = "down", n = 1, sleep = "100" ) {                                        
     ; function wrapper to chain line commands using the comma operator
-    ; also contains shorter aliases for frequently performed operations
+    ; also contains shorter aliases for frequently performed send operations
     switch k 
     {
         case "enter"     : send % "{enter}"
@@ -814,7 +825,6 @@
   PU(msg, w_color = "F6F7F1", ctn = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi") {
     PopUp( msg, w_color, ctn , wn, hn, drtn, fsz, fwt, fnt) 
   }
-
 
   CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
     global config_path
@@ -1151,10 +1161,10 @@
     sleep, long * 2
     DetectHiddenWindows On                                                      ; Allows a script's hidden main window to be detected.
     SetTitleMatchMode 2
-    WinClose %A_ScriptDir%\golems\Hotkey_Help.ahk
-    Orig_File = %A_WorkingDir%\golems\HotKey Help - Dialog.txt
+    WinClose %A_ScriptDir%\golems\tools\Hotkey_Help.ahk
+    Orig_File = %A_WorkingDir%\golems\tools\HotKey Help - Dialog.txt
     TF_Replace(Orig_File, "$", "")
-    Updated = %A_WorkingDir%\golems\HotKey Help - Dialog_copy.txt
+    Updated = %A_WorkingDir%\golems\tools\HotKey Help - Dialog_copy.txt
     New_Location = %A_WorkingDir%\HotKey_List.txt
     FileMove, %Updated% , %New_Location%, 1
     SC_key_txt := AccessCache("sck",,False)
@@ -1318,9 +1328,7 @@
     ; this function instantiates a hotkey for changing the current folder
     ; in file explorer or windows "save as" type dialogue boxes
     if (sys_dependent = TRUE) {
-        global config_path
-        IniRead, true_path, %config_path%, %A_ComputerName%, %path%
-        path := true_path
+        path := GC(path, "")
     }
     try
     {
@@ -1547,7 +1555,7 @@
 
   CursorFollowWin(Q = "center", offset_x = "100", offset_y = "100") {
     global config_path, short
-    sleep, short
+    sleep, med
     if GC("cursor_follow",0)
         CursorJump(Q, offset_x, offset_y)
     return
@@ -1645,16 +1653,16 @@
     winget, Pname, ProcessName, A 
     switch Pname
     {
-        case "vivaldi.exe": output := GC("vivaldi_path")
-        case "chrome.exe" : output := GC("chrome_path")
-        case "msedge.exe" : output := GC("edge_path")
-        case "firefox.exe": output := GC("firefox_path")
+        case "vivaldi.exe": output := GC("vivaldi_path","html_path")
+        case "chrome.exe" : output := GC("chrome_path", "html_path")
+        case "msedge.exe" : output := GC("edge_path", "html_path")
+        case "firefox.exe": output := GC("firefox_path", "html_path")
         default: output := GC("html_path")
     }
     Run, %output% %URL%
     return
   }
- 
+
   Search(prefix = "google.com/search?q=", var = "", suffix = "") {
     global short, med
     var := (!var ? clip() : var)
@@ -1840,7 +1848,7 @@
   FormatCode() {
     ; Adds formatting for math operators and code syntax
     var := clip()
-    If !var                                             ; selects text to the left of cursor (if no text selected)
+    If !var                                                                     ; selects text to the left of cursor (if no text selected)
     {    
         send +{home}
         var := clip()
@@ -1980,7 +1988,7 @@
         num_char    := (StrLen(char) < length) 
                      ? (length - StrLen(var))/StrLen(char) 
                      : StrLen(char)
-        string_char := RepeatString(char, num_char - buffer)                             ; -1 to account for 1 space after the heading string
+        string_char := RepeatString(char, num_char - buffer)                    ; -1 to account for 1 space after the heading string
         output      := var . ((buffer) ? A_space : "") . string_char
         output      := substr(output, 1, length)
         sleep 200
@@ -2113,7 +2121,7 @@
     cl := clip()
     LR:=RegExReplace( cl, "<.*?>","`r`n" )
     stringreplace,lr,lr,|`r`n,,all
-    Loop                                        ;- remove empty lines
+    Loop                                                                        ; remove empty lines
     {
         StringReplace,lr,lr, `r`n`r`n, , UseErrorLevel
         if ErrorLevel = 0
@@ -2179,7 +2187,7 @@
      {
       ;   KeyWait, ``, D T.25
         ; KeyWait, sc029, D T.25
-        KeyWait,%tabkey%, D T.25  ; Go to next window; wait .25s before looping
+        KeyWait,%tabkey%, D T.25                                                ; Go to next window; wait .25s before looping
         if (Errorlevel == 0)
         {
            if (GetKeyState( "Shift","P" ))
@@ -2196,7 +2204,7 @@
      }
   }
 
-  Send {Alt Up} ; Close switcher on hotkey release
+  Send {Alt Up}                                                                 ; Close switcher on hotkey release
 
   for index, wid in tw
   {
@@ -2220,7 +2228,7 @@
      WS_DISABLED =0x8000000
      WS_POPUP =0x80000000
      AltTab_ID_List_ =0
-     WinGet, Window_List, List,,, Program Manager ; Gather a list of running programs
+     WinGet, Window_List, List,,, Program Manager                               ; Gather a list of running programs
      id_list =
      Loop, %Window_List%
      {
@@ -2229,7 +2237,7 @@
 
         WinGetTitle, wid_Title, ahk_id %wid%
         WinGet, Style, Style, ahk_id %wid%
-        If ((Style & WS_DISABLED) or !(wid_Title))  ; skip unimportant windows
+        If ((Style & WS_DISABLED) or !(wid_Title))                              ; skip unimportant windows
            Continue
         
         WinGet, es, ExStyle, ahk_id %wid%
