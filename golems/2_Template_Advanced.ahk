@@ -121,8 +121,8 @@
   >+r::         CF("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()         ;ChgFolder: Recycle bin (doesn't work for save as diag)
   >+t::         CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()         ;ChgFolder: This PC / My Computer
  
-  !i::          send !{up}                                                      ;FileExplorer: up one directory level
-  !u::          send !{left}                                                    ;FileExplorer: prev folder
+  !u::          send !{up}                                                      ;FileExplorer: up one folder level  
+  !i::          send !{left}                                                    ;FileExplorer: prev folder
   !o::          send !{right}                                                   ;FileExplorer: forward folder
   !z::          Send !vn{enter}                                                 ;FileExplorer: toggle navigation pane
   ^p::          Send {alt down}p{alt up}                                        ;FileExplorer: toggle preview plane

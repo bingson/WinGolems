@@ -1653,12 +1653,13 @@
     winget, Pname, ProcessName, A 
     switch Pname
     {
-        case "vivaldi.exe": output := GC("vivaldi_path","html_path")
-        case "chrome.exe" : output := GC("chrome_path", "html_path")
-        case "msedge.exe" : output := GC("edge_path", "html_path")
-        case "firefox.exe": output := GC("firefox_path", "html_path")
+        case "vivaldi.exe": output := GC("vivaldi_path")
+        case "chrome.exe" : output := GC("chrome_path")
+        case "msedge.exe" : output := GC("edge_path")
+        case "firefox.exe": output := GC("firefox_path")
         default: output := GC("html_path")
     }
+    output := output ? output : GC("html_path")
     Run, %output% %URL%
     return
   }

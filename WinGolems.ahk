@@ -16,8 +16,7 @@
     #InstallMouseHook                                                           ; The mouse hook monitors mouse clicks for the purpose of activating mouse hotkeys and facilitating hotstrings.
     #Singleinstance Force                                                       ; only one instance of this script can be active
     Process, Priority, , A
-    SetKeyDelay, 0, 50
-    ; SetKeyDelay, 10, 10
+    SetKeyDelay, 10, 50
     SetMouseDelay, 10                                                           ; mouse click commands become less reliable at lower settings
     SetDefaultMouseSpeed, 0
     SetWinDelay, 10
@@ -67,7 +66,7 @@
 #Include *i 3_Template_ApplicationSpecific.ahk
 
 #Include *i %A_ScriptDir%\..\Google Drive\secure\
-#Include *i Bing.ahk
+#Include *i bh.ahk
 #Include *i mm.ahk                                    
 
 #Include *i %A_ScriptDir%\..\ahk\golems\

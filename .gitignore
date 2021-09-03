@@ -1,6 +1,7 @@
 *.bak
 debug.log
 **/.vscode/
+config.ini
 mem_cache/b/_hist.txt
 mem_cache/1.txt
 mem_cache/2.txt
