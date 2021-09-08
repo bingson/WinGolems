@@ -309,11 +309,6 @@ Developer mode keys: #u, #y, #d, ^#d, #i, ^#i, #o, #n, #f, ^#f
 
 </p></details>
 
-
-
-<hr>
-
-
 ### i. Keyboard Shortcuts: <a name="ks"></a>
 
 Note: Under WinGolems, the Windows key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
