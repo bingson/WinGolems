@@ -102,7 +102,7 @@ WinGolems is under constant development. I created this repository to give back 
 
 ### ii. &nbsp; Download WinGolems <a name="download"></a>
 
- <ul>
+<ul>
    <li>
      <p><b> Option 1: download zip file</b></p>
      <p> Download WinGolems as a zip file from the following url and <a href="https://www.7-zip.org/">unzip</a> to a location of your choosing (e.g., windows user folder). 
@@ -121,7 +121,7 @@ git clone https://github.com/bingson/WinGolems.git
 ```
 
    </li>
- </ul>
+</ul>
 
 <br>
 
@@ -175,9 +175,6 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 </li></ul>
 
 ## 2. Tutorial Template <a name="tutorial-overview"></a> 
-
-<ul>
-<li>
 
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
 
@@ -316,8 +313,8 @@ Developer mode keys: #u, #y, #d, ^#d, #i, ^#i, #o, #n, #f, ^#f
 </p></details>
 </li>
 
-<li>
-### Keyboard Shortcuts <a name="ks"></a>
+<ol>
+<li> Keyboard Shortcuts <a name="ks"></a>
 
 Note: Under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
 
@@ -598,8 +595,7 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
 
 </li>
 
-<li>
-### ii. Command Box Commands <a name="cb"></a>
+<li> ii. Command Box Commands <a name="cb"></a>
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>Command Box System Commands </b></summary><p>
 
