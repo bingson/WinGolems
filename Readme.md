@@ -309,7 +309,7 @@ Developer mode keys: #u, #y, #d, ^#d, #i, ^#i, #o, #n, #f, ^#f
 
 </p></details>
 
-### i. Keyboard Shortcuts: <a name="ks"></a>
+### i. Keyboard Shortcuts <a name="ks"></a>
 
 Note: Under WinGolems, the Windows key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
 
@@ -588,7 +588,7 @@ Note: Under WinGolems, the Windows key functions as a modifier key and will not 
 </p></details>
 
 
-### ii. Command Box: <a name="cb"></a>
+### ii. Command Box Commands <a name="cb"></a>
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>Command Box System Commands </b></summary><p>
 
