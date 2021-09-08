@@ -93,9 +93,8 @@ WinGolems is under constant development. I created this repository to give back 
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; janjoerke.align-by-regex
-     
    </li>
- </ul>
+ </ol>
  
  <br>
 
@@ -175,8 +174,8 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 </li></ul>
 
 ## 2. Tutorial Template <a name="tutorial-overview"></a> 
-
-### <ol> <b>Instructions</b>
+<OL>
+### <li> <b>Instructions</b>
 
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
 
@@ -675,6 +674,7 @@ ________________________________________________________________________________
 </p></details>
 
 </li>
+
 </ol>
 
 <br>
