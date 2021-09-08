@@ -247,23 +247,23 @@ Note: If text is highlighted in the default editor app, entering Qa in a CB will
 <details><summary>&nbsp;📕&nbsp;<b> Creating Command Box keys and Special Commands </b></summary><p>
 
 ```ahk 
-  ; Command Box keys can be hotstrings or labels with a unique suffix appended e.g., "~win", "~coding", etc.
-  ; the 'X' option lets a hotstring execute a command or expression instead of sending replacement text   
-  
+; Command Box keys can be hotstrings or labels with a unique suffix appended e.g., "~win", "~coding", etc.
+; the 'X' option lets a hotstring execute a command or expression instead of sending replacement text   
 
-  :X:wg~win::   LoadURL("https://github.com/bingson/wingolems")    ; Load WinGolems GitHub Page
-  :X:oc~win::   OpenFolder("mem_cache\")                           ; open cache folder in file explorer
-  :X:kh~win::   KeyHistory                                         ; open key history
-  :X:ws~win::   WindowSpy()                                        ; open windows spy
-  :X:ec~win::   EditFile("""" config_path """")                    ; edit config.ini file
-  :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")        ; AHK beginner tutorial
-  :X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")   ; toggle mouse cursor follows window
+
+:X:wg~win::   LoadURL("https://github.com/bingson/wingolems")    ; Load WinGolems GitHub Page
+:X:oc~win::   OpenFolder("mem_cache\")                           ; open cache folder in file explorer
+:X:kh~win::   KeyHistory                                         ; open key history
+:X:ws~win::   WindowSpy()                                        ; open windows spy
+:X:ec~win::   EditFile("""" config_path """")                    ; edit config.ini file
+:X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")        ; AHK beginner tutorial
+:X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")   ; toggle mouse cursor follows window
 ```
 
 ```ahk 
- ; Command keys are just AHK labels executed with a GoSub 
+; Command keys are just AHK labels executed with a GoSub 
  
- RunLabel(UserInput="", suffix = "", tgt_winID ="") {
+RunLabel(UserInput="", suffix = "", tgt_winID ="") {
     suffix := suffix ? suffix : GC("CB_sfx")
     Switch 
     {
@@ -281,7 +281,7 @@ Note: If text is highlighted in the default editor app, entering Qa in a CB will
     Gosub, %UserInput% 
     Gui, 2: +LastFound
     Gui, 2: destroy
-  }
+}
 
 ```
 
