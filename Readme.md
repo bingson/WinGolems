@@ -167,7 +167,7 @@ To turn on UI options and other tutorial interface layers, open a CommandBox wit
 |<code>tt </code>   |Toggle text manipulation interface layers                                               |     
 |<code>tf </code>   |Toggle file management interface layers                                                 |     
 |<code>td </code>   |Toggle developer mode (+ trackpoint interface, extra shortcuts)                         |
-|<code>lt</code> &#124; <code>lf</code>  |Turn ON&#124;OFF  `Win + L` locks Computer <br>(conflicts with B_text_manipulation.ahk template)|
+|<code>lt</code> &#124; <code>lf</code>  |Turn ON&#124;OFF  `Win + L` locks Computer <br>(allows reassignment through WinGolems templates)|
 | | |     
 
 <details><summary>&nbsp;📕&nbsp;<b> Recommended reading </b></summary><p>
