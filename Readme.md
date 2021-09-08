@@ -45,8 +45,7 @@ Beyond adding new keyboard shortcuts, WinGolems also gives users access to the C
 
     - Users can swap in their own command-line processor module to create their own specialized syntax for dynamically parameterizing and calling functions.
 
-
-
+<br>
 
 | DISPLAY MODE | MINIMALIST MODE |
 | :-: | :-: |
@@ -55,7 +54,7 @@ Beyond adding new keyboard shortcuts, WinGolems also gives users access to the C
 Press ALT + X to switch between modes
 </p>
 
-
+<br>
 
 See [Tutorial Template](#tutorial-overview) for a more complete list of template shortcuts and Command Box features.
 
