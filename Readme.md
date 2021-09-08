@@ -176,6 +176,9 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 
 ## 2. Tutorial Template <a name="tutorial-overview"></a> 
 
+<ul>
+<li>
+
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
 
 To turn on UI options and other tutorial interface layers, open a CommandBox with `win + enter` or `win + spacebar` and submit one of the following keys. 
@@ -311,6 +314,7 @@ Developer mode keys: #u, #y, #d, ^#d, #i, ^#i, #o, #n, #f, ^#f
 ```
 
 </p></details>
+</li></ul>
 
 ### i. Keyboard Shortcuts <a name="ks"></a>
 
@@ -589,6 +593,7 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
 ```
 
 </p></details>
+
 
 
 ### ii. Command Box Commands <a name="cb"></a>
