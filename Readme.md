@@ -4,12 +4,12 @@
 WinGolems comprises a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from the tutorial template to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
 <br><br>
 
-Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on as off as users familiarize themselves with the new features of each template. 
+Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the new features of each template. 
 <br><br>
 
 <p align="center"><img src="assets\Screens\QuickStartHotkeys.png" width = "800">  </p>
 
-For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands. 
+For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
 
 ```ahk
 
@@ -53,7 +53,7 @@ Press ALT + X to switch between modes
 
 
 
-See [Tutorial Template Overview](#tutorial-overview) for a more complete list of template shortcuts and Command Box features.
+See [Tutorial Template](#tutorial-overview) for a more complete list of template shortcuts and Command Box features.
 
 WinGolems is under constant development. I created this repository to give back to the AHK community, as over a 1/3 of WinGolems' code base comes from code adapted from AHK forums and stack overflow posts. It is my hope that others might find this repository useful enough to want to invest some time into improving WinGolems by pushing contributions back through git.  
   
@@ -65,7 +65,7 @@ WinGolems is under constant development. I created this repository to give back 
     2. [Download WinGolems](#download)
     3. [Run WinGolems](#run)
     4. [Configure WinGolems](#cfg)
-2. [Tutorial Template Overview](#tutorial-overview)
+2. [Tutorial Template](#tutorial-overview)
     1. [Keyboard Shortcuts](#ks)
     2. [Command Box](#cb)
 3. [AHK resources](#ahk)
@@ -171,7 +171,7 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
    
 </li></ul>
 
-## 2. Tutorial Template: <a name="tutorial-overview"></a> 
+## 2. Tutorial Template <a name="tutorial-overview"></a> 
 
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
 
@@ -261,7 +261,7 @@ Note: If text is highlighted in the default editor app, entering Qa in a CB will
 ```
 
 ```ahk 
-; Command keys are just AHK labels executed with a GoSub 
+; Command keys are just labels executed with a GoSub 
  
 RunLabel(UserInput="", suffix = "", tgt_winID ="") {
     suffix := suffix ? suffix : GC("CB_sfx")
