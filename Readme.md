@@ -257,7 +257,7 @@ Note: If text is highlighted in the default editor app, entering Qa in a CB will
   :X:ws~win::   WindowSpy()                                        ; open windows spy
   :X:ec~win::   EditFile("""" config_path """")                    ; edit config.ini file
   :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")        ; AHK beginner tutorial
-  :X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")   ; toggle mouse cursor follows active window
+  :X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")   ; toggle mouse cursor follows window
 ```
 
 ```ahk 
