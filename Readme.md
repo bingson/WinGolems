@@ -9,7 +9,10 @@ Before investing any time into learning AHK, prospective users can try out the t
 
 <p align="center"><img src="assets\Screens\QuickStartHotkeys.png" width = "800">  </p>
 
+<br> 
+
 For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
+<br> 
 
 ```ahk
 
