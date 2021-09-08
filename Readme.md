@@ -169,6 +169,7 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 </ul>
 
 <br><br>
+----
 
 ## 2. Tutorial Templates <a name="tutorial-overview"></a> 
 
@@ -681,7 +682,7 @@ ________________________________________________________________________________
 
 <br>
 
-
+----
 
 ## 3. Roadmap <a name="roadmap"></a>
 
