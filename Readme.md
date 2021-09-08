@@ -174,7 +174,9 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 </li></ul>
 
 ## 2. Tutorial Template <a name="tutorial-overview"></a> 
+
 <OL>
+
 ### <li> <b>Instructions</b>
 
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
