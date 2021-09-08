@@ -1,7 +1,7 @@
 
 <p align="center"><img src="assets\Screens\WGLc.png" width="300"></p>
 
-WinGolems comprises a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from the tutorial template to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
+WinGolems comprises a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
 <br><br>
 
 Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the new features of each template. 
@@ -56,30 +56,29 @@ Press ALT + X to switch between modes
 
 <br>
 
-See [Tutorial Template](#tutorial-overview) for a more complete list of template shortcuts and Command Box features.
+See [Tutorial Templates](#tutorial-overview) for a more complete list of template shortcuts and Command Box features.
 
 WinGolems is under constant development. I created this repository to give back to the AHK community, as over a 1/3 of WinGolems' code base comes from code adapted from AHK forums and stack overflow posts. It is my hope that others might find this repository useful enough to want to invest some time into improving WinGolems by pushing contributions back through git.  
   
 ----
 ## Contents
 
-1. [Getting Started](#getting-started)
-    1. [Install Dependencies](#dependencies)
-    2. [Download WinGolems](#download)
-    3. [Run WinGolems](#run)
-    4. [Configure WinGolems](#cfg)
-2. [Tutorial Template](#tutorial-overview)
-    1. [Keyboard Shortcuts](#ks)
-    2. [Command Box](#cb)
-3. [AHK resources](#ahk)
-4. [Roadmap](#roadmap)
+1. [Getting Started](#getting-started) <br>
+    1. [Install Dependencies](#dependencies) <br>
+    2. [Download WinGolems](#download) <br>
+    3. [Run WinGolems](#run) <br>
+    4. [Configure WinGolems](#cfg) <br>
+2. [Tutorial Templates](#tutorial-overview) <br>
+    1. [Keyboard Shortcuts](#ks) <br>
+    2. [Command Box](#cb) <br>
+3. [Roadmap](#roadmap)
 
 ----
 
 ## 1. Getting Started <a name="getting-started"></a>
 
-### i. &nbsp; Install Dependencies <a name="dependencies"></a>
- <ol>
+### I. &nbsp; Install Dependencies <a name="dependencies"></a>
+ <ul>
    <li>
      <p>  <b>Required:</b> </p>
      <p>  – &nbsp; Windows 10/11
@@ -94,12 +93,12 @@ WinGolems is under constant development. I created this repository to give back 
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; janjoerke.align-by-regex
    </li>
- </ol>
+ </ul>
  
  <br>
 
 
-### ii. &nbsp; Download WinGolems <a name="download"></a>
+### II. &nbsp; Download WinGolems <a name="download"></a>
 
 <ul>
    <li>
@@ -125,59 +124,55 @@ git clone https://github.com/bingson/WinGolems.git
 <br>
 
 
-### iii. &nbsp; Run WinGolems <a name="run"></a>
+### III. &nbsp; Run WinGolems <a name="run"></a>
 
-<p> After downloading and unzipping the WinGolems project folder, navigate to that folder in file explorer and choose one of two options using the right-click context menu.
-
- <ul>
-    <li>
-     <p><b> Option 1: run WinGolems.exe as administrator </b></p>
+<ul>
+    <p> After downloading and unzipping the WinGolems project folder, navigate to that folder in file explorer and choose one of two options using the right-click context menu.
+    <li><b> Option 1: run WinGolems.exe as administrator </b></p>
      This option lets users try out the Quick Start Template without having to install AHK. If any changes are made to the ahk file, the executable must be recompiled, which requires AHK installation.
      <p><img src="assets\Screens\wingolems_exe.png" width="400"></p>
-     <br>
+
    </li>
 
    <li>
      <p><b> Option 2: run WinGolems.ahk as administrator </b></p>
      This option requires AHK installation and lets users make changes and run the script immediately without needing to create a compiled executable. 
      <p><img src="assets\Screens\run_master.png" width="400" alt="run_master.png" title="run_master.png" /></p>
-   </li>
- </ul>
+   
+   </li> 
+    <p> Note: By default, UAC protects "elevated" programs (that is, programs which are running as admin) from being automated by non-elevated programs, since that would allow them to bypass security restrictions. Running as    administrator is required for AHK to work on Microsoft application windows (e.g, MS office apps, task manager window). If the user does not have the rights to run programs as administrator, please visit <a href="https://www.autohotkey.com/docs/FAQ.htm#uac"> this link </a> for some workarounds.
+
+</ul>
+
 <br>
 
-Note: By default, UAC protects "elevated" programs (that is, programs which are running as admin) from being automated by non-elevated programs, since that would allow them to bypass security restrictions. Running as administrator is required for AHK to work on certain Microsoft application windows (e.g, MS office apps, task manager window). If the user does not have the rights to run programs as administrator, please visit this link for some [workarounds](https://www.autohotkey.com/docs/FAQ.htm#uac).
+### IV. &nbsp; Configure WinGolems <a name="cfg"></a>
+<ul>
+   If WinGolems does not detect any configuration settings for the current computer, it will prompt the user to create a new system profile. <br><br>
+   <p align="center"><img src="assets\Screens\cfg.png" width="500" alt="run_master.png" title="run_master.png" /></p>
 
-### iv. &nbsp; Configure WinGolems <a name="cfg"></a>
-<ul><li>
-   <p><b> Configure WinGolems </b></p>
-     
-   If WinGolems does not detect any configuration settings for the current computer, it will prompt the user to create a new system profile. 
-   <p><img src="assets\Screens\cfg.png" width="500" alt="run_master.png" title="run_master.png" /></p>
+   The following applications have been tested with WinGolems:
 
-   The following applications have been tested with WinGolems
-   
-* MS Office files: 
-    * MS Office 2013, 2016, and 2019 (exe filenames don't change)
-   
-* PDF files: 
-    * Adobe Acrobat Reader DC (**acrord32.exe**), PDF*XChange Editor (**PDFXEdit.exe**)
+File type|Application |
+|:--|:--|
+|Office&nbsp;files | MS Office 2013, 2016, and 2019 (exe filenames don't change)|
+|PDF files| Adobe Acrobat Reader DC (**acrord32.exe**), PDF-XChange Editor (**PDFXEdit.exe**)|
+|HTML files| MS Edge (**msedge.exe**), Vivaldi (**vivaldi.exe**), Chrome (**chrome.exe**), Firefox (**firefox.exe**)|
+|Editor| VS Code (**code.exe**), Notepad++ (**notepad++.exe**), Notepad (**notepad.exe**)|
 
-* HTML files: 
-    * Microsoft Edge (**msedge.exe**), Vivaldi (**vivaldi.exe**), Chrome (**chrome.exe**), Firefox (**firefox.exe**)
-
-* Editor: 
-    * VS Code (**code.exe**), Notepad++ (**notepad++.exe**), Notepad (**notepad.exe**)
+<br>
 
 To fix/change WinGolems application associations, go to the WinGolems folder and open the <code>config.ini</code> file in a text editor and update the file path values for the following variables.  
-<p><img src="assets\Screens\cfg_manual.png" width="500" alt="cfg_manual.png" title="cfg_manual.png" /></p>
-   
-</li></ul>
 
-## 2. Tutorial Template <a name="tutorial-overview"></a> 
+<img src="assets\Screens\cfg_manual.png" width="740" alt="cfg_manual.png" title="cfg_manual.png" />
+   
+</ul>
+
+<br><br>
+
+## 2. Tutorial Templates <a name="tutorial-overview"></a> 
 
 <OL>
-
-### <li> <b>Instructions</b>
 
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
 
@@ -226,26 +221,30 @@ Note: If text is highlighted in the default editor app, entering `Qa` in a CB wi
 
 </p></details>
 
-<details><summary>&nbsp;📕&nbsp;<b> Loading multiple ahk scripts </b></summary><p>
+<details><summary>&nbsp;📕&nbsp;<b> Loading ahk scripts and file structure </b></summary><p>
 
-`WinGolems.ahk` is the master script that controls all others. To change which scripts get loaded by WinGolems modify the following section in `WinGolems.ahk`. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. All tutorial template files are located in the `WinGolems\golems` folder. Although it's possible to run multiple AHK scripts concurrently, it's always better to combine multiple scripts together with include statements and run one script. 
+`WinGolems.ahk` is the master script that controls all others. To change which scripts get loaded by WinGolems modify the following section in `WinGolems.ahk`. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. 
+
+All Tutorial Templates files are located in the `WinGolems\golems` folder. WinGolems function code in located in the `WinGolems\lib` folder as well as the `_functions.ahk` file (in the golems folder).
+Although it's possible to run multiple AHK scripts concurrently, it is always better to combine multiple scripts together with include statements and run one script. 
 
 [See: Combining Multiple Scripts (#Include)](https://www.autohotkey.com/docs/commands/_Include.htm)
 
 ``` ahk
 
-; LOAD AHK SCRIPTS (GOLEMS) ____________________________________________________ 
+; LOAD AHK SCRIPTS (GOLEMS) __________________________________________
 
 #Include %A_ScriptDir%\golems\             
-#Include _functions.ahk                    ; system files don't modify                                     
+#Include _functions.ahk                    ; system files don't modify
 #Include _system.ahk                       ;
 #Include _CB.ahk                           ;
 
-#Include *i A_Quick_Start.ahk              ; tutorial templates
-#Include *i B_Text_Manipulation.ahk        ;
-#Include *i C_File_Management.ahk          ; 
-#Include *i D_App_Examples.ahk             ;
-#Include *i Test.ahk                       ;                                     
+                                           ; TUTORIAL TEMPLATES
+#Include *i A_Quick_Start.ahk              ; base template
+#Include *i B_Text_Manipulation.ahk        ; text manipulation template
+#Include *i C_File_Management.ahk          ; file management template
+#Include *i D_App_Examples.ahk             ; application dependent code examples
+#Include *i Test.ahk                       ; test code here
 
 ```
 </p></details>
@@ -253,17 +252,17 @@ Note: If text is highlighted in the default editor app, entering `Qa` in a CB wi
 <details><summary>&nbsp;📕&nbsp;<b> Creating Command Box keys and Special Commands </b></summary><p>
 
 ```ahk 
-; Command Box keys can be hotstrings or labels with a unique suffix appended e.g., "~win", "~coding", etc.
-; the 'X' option lets a hotstring execute a command or expression instead of sending replacement text   
+; CB keys are hotstrings or labels with a unique suffix appended e.g., "~win", "~coding", etc.
+; the 'X' option lets a hotstring execute a command/expression instead of sending replacement text   
 
 
 :X:wg~win::   LoadURL("https://github.com/bingson/wingolems")    ; Load WinGolems GitHub Page
-:X:oc~win::   OpenFolder("mem_cache\")                           ; open cache folder in file explorer
+:X:oc~win::   OpenFolder("mem_cache\")                           ; open mem folder in file explorer
 :X:kh~win::   KeyHistory                                         ; open key history
 :X:ws~win::   WindowSpy()                                        ; open windows spy
 :X:ec~win::   EditFile("""" config_path """")                    ; edit config.ini file
 :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")        ; AHK beginner tutorial
-:X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")   ; toggle mouse cursor follows window
+:X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")   ; toggle cursor follows window
 ```
 
 ```ahk 
@@ -293,9 +292,9 @@ RunLabel(UserInput="", suffix = "", tgt_winID ="") {
 
 ```ahk 
 
-; "ProcessCommand" is a sample command-line processor module that can be replaced with a user created one. 
-; CB( command_suffix, window_color, text_color, ProcessorModule) 
-; see WinGolems\lib\ProcessCommand.ahk for sample code
+; Calling Convention: CB( command_suffix, window_color, text_color, ProcessorModule) 
+; "ProcessCommand" is a sample command-line processor module that can be replaced 
+; with a user created one. See WinGolems\lib\ProcessCommand.ahk for sample code
 
 #enter:: CB("~win",  C.lblue, C.dblue , "ProcessCommand")                   
 
@@ -307,19 +306,21 @@ RunLabel(UserInput="", suffix = "", tgt_winID ="") {
 
 The developer mode is a hidden interface template found in the _system.ahk file that contains features designed for Lenovo Trackpoint keyboards. In short, the developer mode adds additional shortcuts by transforming  PrintScreen into a modifier key and introduces mouse click functions designed to work with TrackPoint pointing devices.
 
-The developer interface does not make sense for non-TrackPoint keyboard users, leaving free keys they should reassign. 
+The developer interface does not make sense for non-TrackPoint keyboard users, leaving free keys that should be reassigned. 
 
 ``` ahk
 Developer mode keys: #u, #y, #d, ^#d, #i, ^#i, #o, #n, #f, ^#f
 ```
 
 </p></details>
-</li>
 
+<br>
 
-### <li> Keyboard Shortcuts <a name="ks"></a>
+### I. &nbsp; Keyboard Shortcuts <a name="ks"></a>
 
 Note: Under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
+
+
 
 <details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></summary><p>
 
@@ -595,12 +596,12 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
 
 </p></details>
 
+<br>
 
-</li>
+### II. &nbsp; Command Box </b><a name="cb"></a>
 
-### <li> <b>Command Box Commands </b><a name="cb"></a>
 
-<details><summary>&nbsp;ℹ️&nbsp;<b>Command Box System Commands </b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b>System Commands </b></summary><p>
 
 ``` 
  _________________________________________________________________________________________________________________________________________
@@ -629,7 +630,7 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
 ```
 </p></details>
 
-<details><summary>&nbsp;ℹ️&nbsp;<b>UPPERCASE first letter initiated commands</b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b>Uppercase first letter initiated commands</b></summary><p>
 
 ```
 _________________________________________________________________________________________________________________________________________
@@ -675,7 +676,6 @@ ________________________________________________________________________________
 
 </p></details>
 
-</li>
 
 </ol>
 
