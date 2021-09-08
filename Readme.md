@@ -624,7 +624,7 @@ Note: Under WinGolems, the Windows key functions as a modifier key and will not 
 ```
 </p></details>
 
-<details><summary>&nbsp;ℹ️&nbsp;<b>UPPER-CASE first letter initiated commands</b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b>UPPERCASE first letter initiated commands</b></summary><p>
 
 ```
 _________________________________________________________________________________________________________________________________________
