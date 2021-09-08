@@ -1,8 +1,9 @@
  CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand"
             , fwt = "500", show_txt = "", title = "",  input_txt = "") {
     CoordMode, Mouse, Screen
+    BlockInput, MouseMove
+    settimer, BlockInputTimeOut,-300
     MouseGetPos, StartX, StartY
-
     global long, med, short, C, config_path, CB_Display := ""
         , UserInput := "", tgt_hwnd := "", CB_hwnd := ""
     
@@ -15,9 +16,9 @@
     Gui, 2: +LastFound
     Gui, 2: Destroy          
     
-    suffix  := GC("CB_sfx")            , tgt_hwnd := GC("TGT_hwnd")             
-    w_color := GC("CBw_color")         , t_color := GC("CBt_color")    
-    fnt     := GC("CBfnt", "Consolas") , fsz := GC("CBfsz", "13") 
+    suffix  := GC("CB_sfx")            , tgt_hwnd := GC("TGT_hwnd")
+    w_color := GC("CBw_color")         , t_color  := GC("CBt_color")
+    fnt     := GC("CBfnt", "Consolas") , fsz      := GC("CBfsz", "10")
     fwt     := GC("CBfwt", "500")               
 
     MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
@@ -35,10 +36,11 @@
 
                                                                                
     UserInput := ""
-    winget, Process_Name, ProcessName, A                                              ;(3) build title bar                                     
+    winget, Process_Name, ProcessName, A                                        ;(3) build title bar
     CC("CB_tgtExe", Process_Name)
-    l := "    |    ", s := FillChar("4", " ", 0, 1)                                               
-    CB_Title_ID := s "(-(-_(-_-)_-)-)" s "COMMAND BOX" l                      
+    l := "    |    ", s := "  "                                                 ; FillChar("2", " ", 0, 1)                                               
+    FormatTime, MyTime,, hh:mm tt               
+    CB_Title_ID := s MyTime l                                                   ; CB_Title_ID2 := s "(-(-_(-_-)_-)-)" s "COMMAND BOX" l       
     
     title_text := Capitalize1stLetter(Process_Name,0, 0)
     ldspl .= RetrieveExt(A_ScriptDir "\mem_cache\" ldspl)  
@@ -47,7 +49,7 @@
     CC("CBtitle",title)
 
     Gui, 2: New ;,,%title%                                                      ;(4) set GUI options
-    Gui, 2: +LastFound +OwnDialogs +Owner +E0x00200 -DPIscale +AlwaysOnTop ; +E0x08000000 +Resize  
+    Gui, 2: +LastFound +OwnDialogs +Owner +E0x00200 -DPIscale +AlwaysOnTop +Resize     ; +E0x08000000 +Resize  
     Gui, 2: Color, %w_color%
     Gui, font, c%t_color% s%fsz% w%fwt%, %fnt%
     
@@ -91,8 +93,10 @@
     Gui, 2: Add, Edit, x%CtrX% w%IBwidth% r1 vUserInput, %input_txt% 
     Gui, 2: Add, Button, Default Hidden x0 y0 gEnter_Button                     ; Gui, 2: Add, Button, ys h35 x+5 w80 Default gEnter_Button, Enter ;
     
-    GuiControl, Focus, UserInput 
-    Gui, 2: +LastFound 
+    if (!GC("CB_appActive", 0))
+        GuiControl, Focus, UserInput 
+
+    Gui, 2: +LastFound
     CB_hwnd  := WinExist() 
     CC("CB_hwnd", CB_hwnd)
 
@@ -100,16 +104,19 @@
 
     if !GC("CB_ScrollBars", 0)
         GuiControl, 2: -HScroll -VScroll, CB_Display                            ; remove scrollbars before the GUI draw command
-
+    
     Gui, 2: show, hide AutoSize,%title%
-    Gui, Show, %CB_position% NoActivate
-    ; CC("cursor_follow", CFW_state)
+    if GC("CB_appActive", 0)
+        Gui, Show, %CB_position% NoActivate
+    else    
+        Gui, Show, %CB_position% Restore
     GuiControl, 2: +HScroll +VScroll, CB_Display                                ; add scroll bars back without redrawing them to add scrolling without visible scroll bars
     ; ActivateWin("ahk_id " tgt_hwnd)
-    ; WinWaitClose                                                                
-    ; BlockInput, MouseMoveOff
+    ; WinWaitClose                                      
+    if GC("CB_appActive", 0) 
+        ActivateWin("ahk_id " tgt_hwnd) 
     MouseMove, StartX, StartY
-
+    BlockInput, MouseMoveOff
     return
     
     2GuiSize: 
@@ -117,7 +124,7 @@
         If A_EventInfo = 1                                                      ; window has been minimized.  No action needed.
             Return
         ; sleep 100
-        AutoXYWH("wh*", "CB_Display")
+        AutoXYWH("w*h", "CB_Display")
         CtrXpos := (A_GuiWidth - GC("CB_InputBox_width")) // 2
         GuiControl, MoveDraw, UserInput, x%CtrXpos%
         AutoXYWH("y*", "UserInput")

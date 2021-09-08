@@ -5,8 +5,9 @@
   C := { "lgreen"      : "CEDFBF"
        , "lblue"       : "BED7D6"
        , "lyellow"     : "FCE28A"
-       , "dyellow"     : "FFA404"
        , "lpurple"     : "CDC9D9"
+       , "dyellow"     : "FFA404"
+       , "dgreen"     : "013220"
        , "black"       : "000000"
        , "white"       : "FFFFFF"
        , "red"         : "FF0000"
@@ -99,12 +100,19 @@
     return
   }
  
-  MoveWindowToOtherDesktop(n = "2") {                                            ; https://github.com/FuPeiJiang/VD.ahk
+  WinToDesktop(n = "2") {                                                   ; https://github.com/FuPeiJiang/VD.ahk
     vd_init()
     wintitleOfActiveWindow:="ahk_id " WinActive("A")
-    VD_sendToDesktop(wintitleOfActiveWindow,n,0,0)                               ; VD_sendToDesktop(wintitle,whichDesktop, followYourWindow := false, activate := true)
+    VD_sendToDesktop(wintitleOfActiveWindow,n,0,0)                              ; VD_sendToDesktop(wintitle,whichDesktop, followYourWindow := false, activate := true)
     return 
   }
+
+  GotoDesktop(n = "2") {                                                        ; https://github.com/FuPeiJiang/VD.ahk
+    vd_init()
+    VD_goToDesktop(n)
+    return 
+  }
+
   
   TitleTest(tab_name="MISC.txt", exact = False) {
     ; checks if tab_name occurs somewhere in the window title
@@ -136,9 +144,10 @@
   ActivateWinID(key = "L") {
     global config_path
     IniRead, output, %config_path%, %A_ComputerName%, WinID_%key%
-    BlockInput, on
+    BlockInput, Mousemove
+    settimer, BlockInputTimeOut,-600
     ActivateWin("ahk_id" output), CursorFollowWin()
-    BlockInput, off
+    BlockInput, MousemoveOff
     return
   }
  
@@ -187,14 +196,15 @@
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
     WinGet,      n_instances, List,         ahk_class %ActiveClass%
-    BlockInput, on
+    BlockInput, Mousemove
+    settimer, BlockInputTimeOut,-600
     if (n_instances > 1)
     {
         WinSet, Bottom,, A
         WinActivate, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
     }
     CursorFollowWin()
-    blockinput,off
+    BlockInput, MousemoveOff
     return
   }
   
@@ -204,12 +214,13 @@
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
     WinGet,      n_instances, List,         ahk_class %ActiveClass%
     SetStoreCapsLockMode, Off
-    BlockInput, on
+    BlockInput, MouseMove
+    settimer, BlockInputTimeOut,-600
     if (n_instances > 1) {
         WinActivateBottom, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
     }        
     CursorFollowWin()
-    blockinput,off
+    BlockInput, MouseMoveOff
     SetStoreCapsLockMode, on
     return
   }
@@ -291,15 +302,26 @@
   }
 
   DisplaySettings() {
+    global med
     Run explorer.exe ms-settings:display
+    sleep med
+    CFW()
+
   }
  
   BluetoothSettings() {
+    global med
     Run explorer.exe ms-settings:bluetooth
+    sleep med
+    CFW()
   }
  
   SoundSettings() {
+    global med
     Run explorer.exe %A_WinDir%\system32\mmsys.cpl
+    sleep med
+    CFW()
+
   }
  
   OpenHotStringLog() {
@@ -323,11 +345,17 @@
   }
  
   WindowsSettings() {
+    global med
     Send {lwin down}i{lwin up}
+    sleep med
+    CFW()
   }
  
   PresentationDisplayMode() {
+    global med
     Send {lwin down}p{lwin up}
+    sleep, med
+    CFW()
   }
  
   KeyHistory() {
@@ -339,8 +367,16 @@
   }
  
   Windowspy() {
-    run, golems\WindowSpy.ahk
+    try {
+        run, golems\tools\WindowSpy.ahk
+    } catch e {
+        SplitPath, A_AhkPath, , Dir, , 
+        run, % dir "\WindowSpy.ahk"                  ;AHK: open windows spy
+    }
+    return
   }
+
+  
   
   ExitAHK() {
     ExitApp
@@ -453,7 +489,7 @@
     ;ReleaseModifiers()
     FunctionBox(func, input_dict, w_color, t_color, name_dict, grps, title, p*) 
   }
-
+  
   CreateCacheList(name = "cc") {
     Global strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
     Global strDir  := A_ScriptDir . "\mem_cache\"
@@ -750,8 +786,9 @@
 
   AddToMemory(del_after_copy = "0"){
     global C, CB_hwnd, short
-    ; CoordMode, Mouse, Screen
-    BlockInput, On
+    CoordMode, Mouse, Screen
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     ; send {Blind}
     ; ReleaseModifiers()
     MouseGetPos, StartX, StartY
@@ -764,13 +801,13 @@
     ; cut := Instr(A_ThisHotkey, "!") ? True : False 
     if (cut = true)
        send {del}
-    BlockInput, Off
     MouseMove, StartX, StartY
+    BlockInput, Off
     ; send {Blind}
     return
   } 
 
-  RetrieveMemory(mpaste = "^#LButton", mprompt="#!LButton", pasteOvr="printscreen") {
+  RetrieveMemory(mpaste = "^#LButton", mprompt="#!LButton", pasteOvr="PrintScreen") {
     global med, short, C
     ;ReleaseModifiers()
     WinID := WinExist("A") 
@@ -789,6 +826,7 @@
     }
 
     ActivateWin("ahk_id " WinID)
+    ; PU(A_ThisHotkey,,,,, -2000)
     AccessCache(mem_slot)
     if Instr(A_ThisHotkey, pasteOvr) {                               
         del_char := strlen(AccessCache(mem_slot, ,False))
@@ -800,6 +838,8 @@
   } 
 
 ; AHK UTILITIES ________________________________________________________________
+  
+  
   
   CF(path, sys_dependent = False) {                                             
     ChangeFolder(path, sys_dependent)
@@ -825,7 +865,7 @@
   PU(msg, w_color = "F6F7F1", ctn = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi") {
     PopUp( msg, w_color, ctn , wn, hn, drtn, fsz, fwt, fnt) 
   }
-
+  
   CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
     global config_path
     section := sect ? sect : A_ComputerName
@@ -843,6 +883,14 @@
     global config_path
     IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
     return % val
+  }
+
+  BlockInputTimeOut() {
+    SetTimer,, Off
+    BlockInput, MouseMoveOff
+    BlockInput, default
+    BlockInput, Off
+    Return
   }
 
   MsgBoxVar(mb = True) {
@@ -917,7 +965,7 @@
     return % x " " y " " w " " h
   }
 
-  WriteToINI(section = "DESKTOP-T6USCO1", key = "cursor_follow", var = "") {
+  WriteToINI(section = "DESKTOP-T6USCO1", key = "T_CF", var = "") {
     global config_path, C
     var := clip()
     PopUp("config.ini updated",C.lgreen,,,,-2000)
@@ -968,7 +1016,7 @@
 
   ConfigureWinGolems(config_path = "", apps*) {
     global C, exe := {}
-    static doc_exe, xls_exe, ppt_exe, pdf_exe, html_exe, sync_exe, editor_exe
+    static doc_exe, xls_exe, ppt_exe, pdf_exe, html_exe, editor_exe
 
     path := RetrieveINI(A_ComputerName, "editor_path")
     if (!FileExist(config_path) or path = "ERROR") {
@@ -978,7 +1026,7 @@
         Gui, c: +LastFound +OwnDialogs +Owner -DPIscale +Resize +AlwaysOnTop ; +E0x08000000 +Resize  +E0x00200 (border)
         Gui, c: Color,% C.bwhite
         
-        lw := 375, rw := 210
+        lw := 500, rw := 210
         Gui, c: font, s11 w%lw%, %fnt%, Consolas
         Gui, c: Add, Text,% "w" . (rw + lw) . " xm"
             ,New system detected. Please confirm/modify the following application associations before using WinGolems.`n
@@ -999,12 +1047,9 @@
         
         Gui, c: Add, Text, section xm w%lw%,HTML files:`t`tChrome Browser 
         Gui, c: Add, Edit, w%rw% ys vhtml_exe,% apps[5]         
-        
-        Gui, c: Add, Text, section xm w%lw%,Data backup:`t`tGoogle Backup && Sync
-        Gui, c: Add, Edit, section w%rw% ys vsync_exe,% apps[6]
     
         Gui, c: Add, Text, section xm w%lw%,Default editor:`t`tVisual Studio Code
-        Gui, c: Add, Edit, w%rw% ys veditor_exe,% apps[7]         
+        Gui, c: Add, Edit, w%rw% ys veditor_exe,% apps[6]         
         
         Gui, c: Add, Text, section xm w%lw%,
         Gui, c: Add, Button, w%rw% ys Default gSubmit_Button, submit                   ; Gui, c: Add, Button, ys h35 x+5 w80 Default gEnter_Button, Enter ;
@@ -1019,7 +1064,6 @@
             exe["ppt"] := ppt_exe
             exe["pdf"] := pdf_exe
             exe["html"] := html_exe
-            exe["sync"] := sync_exe
             exe["editor"] := editor_exe
             CreateConfigINI(exe*)
             return
@@ -1029,7 +1073,7 @@
   }
 
   CreateEXEDict() {
-    apps := ["doc","xls","ppt","pdf","html","sync","editor"]
+    apps := ["doc","xls","ppt","pdf","html","editor"]
     global exe := {}
     loop % apps.MaxIndex()
     {
@@ -1048,7 +1092,6 @@
     CC("ppt_path"      , PATH[exe["ppt"]])
     CC("pdf_path"      , PATH[exe["pdf"]])
     CC("html_path"     , PATH[exe["html"]])
-    CC("sync_path"     , PATH[exe["sync"]])
     CC("editor_path"   , PATH[exe["editor"]])
     CC("starting_icon" , "lg.ico", "settings")
     PopUp("Configuration complete`nYou are good to go!", C.lgreen, C.bgreen, "200", "60", "-1200", "15") 
@@ -1123,6 +1166,7 @@
   }
  
   getMousePos() {
+    CoordMode, Mouse, Screen
     MouseGetPos, xpos, ypos
     xy := "x" xpos " y" ypos
     ToolTip %xy%
@@ -1243,7 +1287,7 @@
 
   }
 
-; FILE AND FOLDER RELATED ______________________________________________________
+; FILE AND FOLDER ______________________________________________________________
  
   Explorer_GetSelection() {
     ; Get path of selected files/folders                                        ; https://www.AutoHotkey.com/boards/viewtopic.php?style=17&t=60403
@@ -1485,8 +1529,7 @@
         }
         else
         {
-            IniRead, prog_path, %config_path%, %A_ComputerName%, %app_path%
-            RunAsUser(prog_path, file_path, A_ScriptDir)
+            RunAsUser(GC(app_path), file_path, A_ScriptDir)
         }
         return
     }
@@ -1496,8 +1539,18 @@
     }
     return
   }
+
+  EF(file_path = "master.ahk", app_path = "editor_path") {
+    EditFile(file_path,app_path)
+    return
+  }
  
   OpenFolder(folder_path = "") {
+    RunAsUser("explorer.exe", folder_path, A_ScriptDir)
+    return
+  }
+
+  OF(folder_path = "") {
     RunAsUser("explorer.exe", folder_path, A_ScriptDir)
     return
   }
@@ -1508,6 +1561,59 @@
     FileAppend % atext . "`n" . filecontent, % filename
   }
  
+; YOUTUBE-DL (Python Script Wrapper) ___________________________________________
+  
+  URLvidDL(path="") {
+    global short, med
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1000
+    send !d
+    url := clip()
+    sleep med
+    if (SubStr(url, 1,4) = "http") {
+        code := "youtube-dl " """" url """" 
+        Run cmd /K "cd /d " %path% 
+        sleep med
+        clip(code)
+        send {enter}
+        sleep short
+        WinMinimize,A
+    } else 
+        PU("invalid url: " clipboard,,,,,-1000)
+    BlockInput, Off
+    return
+  }
+  
+  ClickVidDL(path=""){
+    global short, med, CB_hwnd
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1000
+    Click, Right
+    sleep, med * 2
+    winget, Pname, ProcessName, A 
+    app := WinExist("ahk_id " CB_hwnd) ? GC("CB_tgtExe") : Pname
+    switch app {
+        case "msedge.exe" : send % "{down " GC("click_DL", 4) "}{enter}"
+        case "chrome.exe" : send e
+        case "vivaldi.exe": send e
+        default:            send e
+    }
+    sleep med 
+    if (SubStr(clipboard, 1,4) = "http") {
+        code := "youtube-dl " """" clipboard """" 
+        Run cmd /K "cd /d " %path% 
+        sleep med * 2
+        clip(code)
+        send {enter}
+        sleep short
+      WinMinimize,A
+    } else 
+        PU("invalid url: " clipboard,,,,,-800)
+    BlockInput, Off
+    return
+
+  }
+    
 
 ; MOUSE FUNCTIONS ______________________________________________________________
  
@@ -1536,7 +1642,7 @@
     return
   }
  
-  TglSetting(sect = "cursor_follow", msg = "Cursor Follow Active Window: ") {
+  TglCFG(sect = "T_CF", msg = "Cursor Follow Active Window: ") {
     global config_path, C
 
     IniRead,  state,    %config_path%, %A_ComputerName%, %sect%, 0
@@ -1554,9 +1660,9 @@
   }      
 
   CursorFollowWin(Q = "center", offset_x = "100", offset_y = "100") {
-    global config_path, short
+    global config_path, short, med
     sleep, med
-    if GC("cursor_follow",0)
+    if GC("T_CF",0)
         CursorJump(Q, offset_x, offset_y)
     return
   }
@@ -1564,9 +1670,10 @@
   Clicks(num = 2, lrm = "left") {
     ; temporarily blocks mouse movement for more consistent doubleclick to select word
     ;ReleaseModifiers()
-    BlockInput, MouseMove
+    BlockInput, On
+    settimer, BlockInputTimeOut,-600
     click, %num% %lrm%
-    BlockInput, MouseMoveOff
+    BlockInput, off
     return
   }
  
@@ -1614,7 +1721,7 @@
   }
 
 
-; BROWSERS _______________________________________________________________________
+; BROWSERS _____________________________________________________________________
  
   CFG(tgt) { 
     send ^l
@@ -1659,7 +1766,7 @@
         case "firefox.exe": output := GC("firefox_path")
         default: output := GC("html_path")
     }
-    output := output ? output : GC("html_path")
+    output := (output = "ERROR") ? GC("html_path") : output
     Run, %output% %URL%
     return
   }
@@ -1885,6 +1992,8 @@
  
   RemoveBlankLines(reselect=False) {
     ; Removes blank lines within a block of selected text
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     vText := clip()
     if !ErrorLevel
     {
@@ -1892,6 +2001,7 @@
         vText := RegExReplace(vText, "\R+\R", "`r`n")
         clip(vText)
     }
+    BlockInput, Off
     return
   }
   
@@ -1913,30 +2023,37 @@
   ConvertUpper(var = "", paste = True) {
     ; Convert selected text to uppercase
     ;ReleaseModifiers()
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     var := !var ? clip() : var
     StringReplace, var, var, `r`n, `n, All
     StringUpper, var, var
     if !paste
         return %var%
     clip(var, True)
+    BlockInput, Off
     return
   }
  
   ConvertLower(var = "", paste = True) {
     ; Convert selected text to lowercase
     ;ReleaseModifiers()
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     var := !var ? clip() : var
     StringReplace, var, var, `r`n, `n, All
     StringLower, var, var
     if !paste
         return %var%
     clip(var, True)
+    BlockInput, Off
     return
   }
  
   EveryCapitalize1stLetter(var = "", paste = True, other_letters_lowercase = True) {
     ; Every first letter of selected text is capitalized
-    
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     var := (!var ? clip() : var)
     if (other_letters_lowercase = False)
         var := RegExReplace(var, "(\b[a-z])", "$U1")
@@ -1947,12 +2064,15 @@
     if !paste
         return %var%
     clip(var, True)
+    BlockInput, Off
     return
   }
  
   Capitalize1stLetter(var = "", paste = True, firstWord = True, LowerCaseOthers = True) {
     ; Capitalize just first letter of selected text
     ;ReleaseModifiers()
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     var := (!var ? clip() : var)
     StringReplace, var, var, `r`n, `n, All
     if firstWord 
@@ -1969,6 +2089,7 @@
     if !paste
         return %var%
     clip(var, True)
+    BlockInput, Off
     return
   }
  
@@ -1985,6 +2106,8 @@
   FillChar(length = "80", char = " ", selected = True, out = false, buffer = 0) {
     ; Function to create borders and blank spaces of fixed length 
     try {
+        BlockInput, on
+        settimer, BlockInputTimeOut,-600
         var := (selected) ? rtrim(clip()) : ""
         num_char    := (StrLen(char) < length) 
                      ? (length - StrLen(var))/StrLen(char) 
@@ -1997,6 +2120,7 @@
             return % output
         else
             clip(output)
+        BlockInput, Off
     }
     return
   }
@@ -2004,7 +2128,8 @@
   AddSpaceBeforeComment(length = "80", char = " ", lines = 1) {
     ; Add spaces between two strings so the second string starts at the length position
     ReleaseModifiers()
-    BlockInput, ON
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     Send {space}{left}+{end}                                                    ; fixes issue in vscode where ^x on empty selection will cut the whole line
     end_txt := TrimText(1, clip())
     send {del}
@@ -2016,7 +2141,7 @@
     new_line := beg_txt . mid_txt . end_txt
     clip(new_line)
     sendinput % "{left " . strlen(end_txt) . "}"
-    BlockInput, off
+    BlockInput, Off
     return
   }
  
@@ -2090,35 +2215,45 @@
   }
  
   ReplaceBackspaceWithSpaces() {
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     var := clip()
     clip(RepeatString(" ", strlen(var)))
+    BlockInput, Off
     return
   }
  
   PasteOverwrite() {
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     char_count := strlen(clipboard)
     send ^v
     sendinput {del %char_count%}
+    BlockInput, Off
     return
   }
  
   ReplaceAwithB(A = "", B = "", var = "", paste = True, select = True, regex = false) {
     ;ReleaseModifiers()
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     var := (!var ? clip() : var)
     var := RegExReplace(var, "S) +", A_Space)
     if regex
         var := RegExReplace(var, A, B)
     else 
         var := StrReplace(var, A, B)
-
     if !paste
         return %var%
     clip(var, select)
+    BlockInput, Off
     return
   }
  
   removeHtmlTags() {
     ; remove html tags from selected text
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
     cl := clip()
     LR:=RegExReplace( cl, "<.*?>","`r`n" )
     stringreplace,lr,lr,|`r`n,,all
@@ -2129,6 +2264,7 @@
             break
     }
     clip(lr)
+    BlockInput, Off
     return
   } 
  

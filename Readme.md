@@ -1,43 +1,61 @@
 
 <p align="center"><img src="assets\Screens\WGLc.png" width="300"></p>
 
-WinGolems embodies a collection of AutoHotkey (AHK) modules and templates that I have written or adapted from the AHK community over the years to create different interface layers to automate and augment how I use Windows. Before investing any time into learning AHK, prospective users can try out a premade keyboard shortcut interface layer by [by running the included executable]() included with the source code (no software installation or knowledge of AHK required). 
+WinGolems comprises a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from the tutorial template to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
+<br><br>
+
+Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on as off as users familiarize themselves with the new features of each template. 
+<br><br>
+
+<p align="center"><img src="assets\Screens\QuickStartHotkeys.png" width = "800">  </p>
+
+For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands. 
+
+```ahk
+
+; MODIFIER SYMBOL LEGEND
+; # = Windows Key
+; ! = Alt Key
+; ^ = Ctrl Key
+
+#s::       ActivateApp("C:\browser_path")    ; open or reactivate a web browser window with 'win + s' 
+^!space::  WinMaximize,A                     ; maximize active window with 'ctrl + alt + spacebar'    
+
+```
+
+<br> 
+
+Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box (CB), a keyboard-driven text-based user interface that was originally conceived to alleviate the following issues:
+
+ * a lack of keyboard real-estate/mental bandwidth for assigning/remembering less frequently used operations (daily vs hourly);
+    
+    - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember keyboard shortcuts.
+    
+    - The CB can also be used to create interface layers active only when a particular CB is open, letting the user recycle convenient keyboard shortcuts.
+ 
+ * having to repeatedly go back and forth between two application windows to copy and paste multiple sections of text in a specific order;
+
+    - The CB provides text manipulation and file saving functions that allow users to append and prepend text to the clipboard in any order, reducing the need to switch back and forth between windows.
+ 
+ * a limited ability to dynamically pass parameters to a called function using keyboard shortcuts alone.
+
+    - Users can swap in their own command-line processor module to create their own specialized syntax for dynamically parameterizing and calling functions.
 
 
 
->Operating systems and devices should mold to our needs, not the other way around. - [Satya Nadella](https://www.theverge.com/2021/6/24/22549007/microsoft-windows-11-satya-nadella-remarks-apple) 
 
-As an aspiration 
-
-In the spirit of the above quote, WinGolems gives users tools to reengineer how they interact with Windows computers. The initial value provided by this repository will come from new users adapting code examples from the tutorial template to alleviate common workflow frictions with minimal AHK knowledge. The frequently performed operations should be the easiest to execute and vice versa
-
-convenient keyboard shortcuts to less useful operations, WinGolems shows users how to reprogram those shortcuts. 
-
-
-
-As they become more familiar with AHK, users will be able to leverage more of WinGolems'function library to build new capabilities and features into the windows application they use, creating cognitive artifacts to reduce the effort it takes to transform ideas into output. 
+| DISPLAY MODE | MINIMALIST MODE |
+| :-: | :-: |
+| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\minimal.png" width="500"> |
+<p align="center">
+Press ALT + X to switch between modes
+</p>
 
 
- [Satya Nadella said during his recent Windows 11 presentation]"operating systems and devices should mold to our needs, not the other way around." In this spirit, WinGolems offers tools to reengineer the windows man machine interface 
-reshaping
 
-WinGolems was 
-reifies this idea by giving users tools for re-engineering  
+See [Tutorial Template Overview](#tutorial-overview) for a more complete list of template shortcuts and Command Box features.
 
-how they translate thought into actions.
-
-**Example workflow frictions solved by AHK or WinGolems:** 
-
-- 
-
-WinGolems templates show users how to standardize these shortcuts among programs, minimizing application-specific information a user has to remember.
-- When ones keyboard layout makes it awkward to actuate default application shortcuts, it should be easy to reassign those shortcuts
-- When  developers assign desirable keyboard shortcuts to less useful operations, you should be able to reassign those shortcuts: e.g., the ` Win + F ` combination opens the rarely used feedback reporting dialog in Windows. 
-- When    
-
-Common sense dictates that the most frequently performed operations should be the easiest to execute and vice versa. The quick start template shows how to reprogram the above shortcuts as well as create new ones. Beyond changing application shortcuts, WinGolems also has Windows enhancement features such as the Command Box (CB) and integrated memory system commands. The CB is a keyboard-driven GUI with it's own command-line interface that can be used to manipulate application windows and call scripts written in other programming languages. The integrated memory system describes a collection of functions and commands used to modify clipboard contents and text files located in the ``` \mem_cache ``` folder. Please see [Quick Start Template Overview](#quick-start-template-overview) for a more comprehensive overview.
-
-
+WinGolems is under constant development. I created this repository to give back to the AHK community, as over a 1/3 of WinGolems' code base comes from code adapted from AHK forums and stack overflow posts. It is my hope that others might find this repository useful enough to want to invest some time into improving WinGolems by pushing contributions back through git.  
   
 ----
 ## Contents
@@ -47,13 +65,11 @@ Common sense dictates that the most frequently performed operations should be th
     2. [Download WinGolems](#download)
     3. [Run WinGolems](#run)
     4. [Configure WinGolems](#cfg)
-2. [Quick Start Template Overview](#quick-start-template-overview)
+2. [Tutorial Template Overview](#tutorial-overview)
     1. [Keyboard Shortcuts](#ks)
     2. [Command Box](#cb)
 3. [AHK resources](#ahk)
 4. [Roadmap](#roadmap)
-See the open issues for a list of proposed features (and known issues).
-
 
 ----
 
@@ -68,11 +84,12 @@ See the open issues for a list of proposed features (and known issues).
    </li>
    <li>
      <p>  <b>Recommended Editor:</b> </p>
-     <p>  Any code editor that supports indentation-based code folding and AutoHotkey syntax highlighting.
+     <p>  A code editor that supports indentation-based code folding and AutoHotkey syntax highlighting.
      <p>  – &nbsp; <a href="https://code.visualstudio.com/">Visual Studio Code</a> editor with the following extension IDs 
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-AutoHotkey
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
+     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; janjoerke.align-by-regex
      
    </li>
  </ul>
@@ -85,9 +102,9 @@ See the open issues for a list of proposed features (and known issues).
  <ul>
    <li>
      <p><b> Option 1: download zip file</b></p>
-     <p> Download WinGolems as a zip file from the following url and <a href="https://www.7-zip.org/">unzip</a> in a location of your choosing (e.g., windows user folder). 
+     <p> Download WinGolems as a zip file from the following url and <a href="https://www.7-zip.org/">unzip</a> to a location of your choosing (e.g., windows user folder). 
 
-``` 
+```
 https://github.com/bingson/WinGolems/archive/refs/heads/master.zip
 ```
 
@@ -108,19 +125,19 @@ git clone https://github.com/bingson/WinGolems.git
 
 ### iii. &nbsp; Run WinGolems <a name="run"></a>
 
-<p> After downloading and unzipping the WinGolems project folder, navigate to that folder in file explorer, then
+<p> After downloading and unzipping the WinGolems project folder, navigate to that folder in file explorer and choose one of two options using the right-click context menu.
 
  <ul>
     <li>
      <p><b> Option 1: run WinGolems.exe as administrator </b></p>
-     This option lets users try out the Quick Start Template without having to install AHK. The executable must be recompiled to reflect any template changes, which requires AHK installation.
+     This option lets users try out the Quick Start Template without having to install AHK. If any changes are made to the ahk file, the executable must be recompiled, which requires AHK installation.
      <p><img src="assets\Screens\wingolems_exe.png" width="400"></p>
      <br>
    </li>
 
    <li>
      <p><b> Option 2: run WinGolems.ahk as administrator </b></p>
-     This option lets users make changes to the script and see changes reflected immediately by reloading the script. No executable necessary.
+     This option requires AHK installation and lets users make changes and run the script immediately without needing to create a compiled executable. 
      <p><img src="assets\Screens\run_master.png" width="400" alt="run_master.png" title="run_master.png" /></p>
    </li>
  </ul>
@@ -129,253 +146,525 @@ git clone https://github.com/bingson/WinGolems.git
 Note: By default, UAC protects "elevated" programs (that is, programs which are running as admin) from being automated by non-elevated programs, since that would allow them to bypass security restrictions. Running as administrator is required for AHK to work on certain Microsoft application windows (e.g, MS office apps, task manager window). If the user does not have the rights to run programs as administrator, please visit this link for some [workarounds](https://www.autohotkey.com/docs/FAQ.htm#uac).
 
 ### iv. &nbsp; Configure WinGolems <a name="cfg"></a>
-<ul>
-   <li>
-     <p><b> Configure WinGolems </b></p>
+<ul><li>
+   <p><b> Configure WinGolems </b></p>
      
-   If WinGolems does not detect any configuration settings for the current computer, it will prompt the user  
+   If WinGolems does not detect any configuration settings for the current computer, it will prompt the user to create a new system profile. 
    <p><img src="assets\Screens\cfg.png" width="500" alt="run_master.png" title="run_master.png" /></p>
 
-     WinGolems will search through both 32 bit and 64 bit program file folders for executable paths used to launch specific apps and modify associated file types. To change these app references, open <code>config.ini</code> in a text editor and update the file path values for the following variables.  
+   The following applications have been tested with WinGolems
+   
+* MS Office files: 
+    * MS Office 2013, 2016, and 2019 (exe filenames don't change)
+   
+* PDF files: 
+    * Adobe Acrobat Reader DC (**acrord32.exe**), PDF*XChange Editor (**PDFXEdit.exe**)
 
-``` 
-html_path
-doc_path
-xls_path
-ppt_path
-pdf_path
+* HTML files: 
+    * Microsoft Edge (**msedge.exe**), Vivaldi (**vivaldi.exe**), Chrome (**chrome.exe**), Firefox (**firefox.exe**)
+
+* Editor: 
+    * VS Code (**code.exe**), Notepad++ (**notepad++.exe**), Notepad (**notepad.exe**)
+
+To fix/change WinGolems application associations, go to the WinGolems folder and open the <code>config.ini</code> file in a text editor and update the file path values for the following variables.  
+<p><img src="assets\Screens\cfg_manual.png" width="500" alt="run_master.png" title="run_master.png" /></p>
+   
+</li></ul>
+
+## 2. Tutorial Template: <a name="tutorial-overview"></a> 
+
+To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
+
+To turn on UI options and other tutorial interface layers, open a CommandBox with `win + enter` or `win + spacebar` and submit one of the following keys. 
+
+|KEY   |WinGolems Option|           
+|:-----|:----------------------------------------------------------------------------------------------------|
+|<code>tcf</code>   |Toggle mouse cursor follows active window when switching applications                   |     
+|<code>tt </code>   |Toggle text manipulation interface layers                                               |     
+|<code>tf </code>   |Toggle file management interface layers                                                 |     
+|<code>td </code>   |Toggle developer mode (+ trackpoint interface, extra shortcuts)                         |
+|<code>lt</code> &#124; <code>lf</code>  |Turn ON&#124;OFF  `Win + L` locks Computer <br>(conflicts with B_text_manipulation.ahk template)|
+| | |     
+
+<details><summary>&nbsp;📕&nbsp;<b> Recommended reading </b></summary><p>
+
+Note: If text is highlighted in the default editor app, entering Qa in a CB will query and load the corresponding webpage in the AHK documentation, if a match is returned. A search string can also be manually entered into the CB with the colon operator: e.g., Qa:blind, Qa:sendinput, etc. 
+
+1.  [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2)
+    * [Keys and their mysterious symbols](https://www.autohotkey.com/docs/Tutorial.htm#s21)
+    * [Window specific hotkeys/hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s22)
+    * [Multiple hotkeys/hotstrings per file](https://www.autohotkey.com/docs/Tutorial.htm#s23)
+    * [Examples](https://www.autohotkey.com/docs/Tutorial.htm#s24)
+2.  [Sending Keystrokes](https://www.autohotkey.com/docs/Tutorial.htm#s3)
+3.  [Commands vs. Functions()](https://www.autohotkey.com/docs/Tutorial.htm#s5)
+    * [Code blocks](https://www.autohotkey.com/docs/Tutorial.htm#s51)
+4.  [Variables](https://www.autohotkey.com/docs/Tutorial.htm#s6)
+    * [When to use percents](https://www.autohotkey.com/docs/Tutorial.htm#s61)
+    * [Examples](https://www.autohotkey.com/docs/Tutorial.htm#s63)
+5.  [Objects](https://www.autohotkey.com/docs/Tutorial.htm#s7)
+    * [Creating Objects](https://www.autohotkey.com/docs/Tutorial.htm#s71)
+    * [Using Objects](https://www.autohotkey.com/docs/Tutorial.htm#s72)
+6.  Misc.
+    * [Send commands](https://www.autohotkey.com/docs/commands/Send.htm)
+    * [Optimizing the speed of a script](https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413&sid=a3fa467747d78cedad4ca780b4e08dbb)
+    * [Square Brackets Notation (documentation)](https://www.autohotkey.com/docs/Tutorial.htm#s81)
+    * [Code Indentation](https://www.autohotkey.com/docs/Tutorial.htm#s84)
+    * [Combining Multiple Scripts (#Include)](https://www.autohotkey.com/docs/commands/_Include.htm) 
+    * [List of Keys](https://www.autohotkey.com/docs/KeyList.htm)
+    * [Send and Retrieve Text using the Clipboard](https://www.autohotkey.com/boards/viewtopic.php?f=6&t=62156)
+    * [Comma character and its context, command, sub-expressions](https://www.autohotkey.com/boards/viewtopic.php?f=5&t=1411)
+    * [Jeeswg's RegEx tutorial (RegExMatch, RegExReplace)](https://www.autohotkey.com/boards/viewtopic.php?f=7&t=28031)
+    * [Libraries of Functions: Standard Library and User Library](https://www.autohotkey.com/docs/Functions.htm#lib)
+    * [GoSub command](https://www.autohotkey.com/docs/commands/Gosub.htm)
+
+
+</p></details>
+
+<details><summary>&nbsp;📕&nbsp;<b> Loading multiple ahk scripts </b></summary><p>
+
+`WinGolems.ahk` is the master script that controls all others. To change which scripts get loaded by WinGolems modify the following section in `WinGolems.ahk`. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. All tutorial template files are located in the `WinGolems\golems` folder. Although it's possible to run multiple AHK scripts concurrently, it's always better to combine multiple scripts together with include statements and run one script. 
+
+[See: Combining Multiple Scripts (#Include)](https://www.autohotkey.com/docs/commands/_Include.htm)
+
+``` ahk
+
+; LOAD AHK SCRIPTS (GOLEMS) ____________________________________________________ 
+
+#Include %A_ScriptDir%\golems\             
+#Include _functions.ahk                    ; system files don't modify                                     
+#Include _system.ahk                       ;
+#Include _CB.ahk                           ;
+
+#Include *i A_Quick_Start.ahk              ; tutorial templates
+#Include *i B_Text_Manipulation.ahk        ;
+#Include *i C_File_Management.ahk          ; 
+#Include *i D_App_Examples.ahk             ;
+#Include *i Test.ahk                       ;                                     
+
+```
+</p></details>
+
+<details><summary>&nbsp;📕&nbsp;<b> Creating Command Box keys and Special Commands </b></summary><p>
+
+```ahk 
+  ; Command Box keys can be hotstrings or labels with a unique suffix appended e.g., "~win", "~coding", etc.
+  ; the 'X' option lets a hotstring execute a command or expression instead of sending replacement text   
+  
+
+  :X:wg~win::   LoadURL("https://github.com/bingson/wingolems")    ; Load WinGolems GitHub Page
+  :X:oc~win::   OpenFolder("mem_cache\")                           ; open cache folder in file explorer
+  :X:kh~win::   KeyHistory                                         ; open key history
+  :X:ws~win::   WindowSpy()                                        ; open windows spy
+  :X:ec~win::   EditFile("""" config_path """")                    ; edit config.ini file
+  :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")        ; AHK beginner tutorial
+  :X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")   ; toggle mouse cursor follows active window
 ```
 
-</li>
-<ul>
+```ahk 
+ ; Command keys are just AHK labels executed with a GoSub 
+ 
+ RunLabel(UserInput="", suffix = "", tgt_winID ="") {
+    suffix := suffix ? suffix : GC("CB_sfx")
+    Switch 
+    {
+        Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
+        Case IsLabel(":X:" . UserInput . suffix): UserInput := ":X:" . UserInput . suffix
+        Case IsLabel(":*:" . UserInput . suffix): UserInput := ":*:" . UserInput . suffix
+        Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
+        Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
+        Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
+        Default:
+            Gui, 2: destroy
+            return
+    }     
+    ActivateWin("ahk_id " tgt_winID)
+    Gosub, %UserInput% 
+    Gui, 2: +LastFound
+    Gui, 2: destroy
+  }
 
-## 2. Quick Start Template Overview: <a name="quick-start-template-overview"></a> 
-
-A good computer interface makes it easier to complete frequent tasks and automate redundant processes, saving both time and mental resources. A transformative interface goes beyond automation by giving its user the ability to solve problems that would be impossible to solve otherwise. Because mastering an interface requires internalizing its component objects and operations, interface designers have the ability to introduce new elements of cognition and modes of thought.
-
-The quick start template is a collection of code examples that show how to create interface layers: i.e., assigning hotstrings/hotkeys to particular WinGolems functions. Within the `\Golems` folder, code for the creation of interface layers (i.e., interface templates) are kept in separate files from the code used to carry out the desired task (i.e., function library files). To modify the quick start template, AutoHotkey installation is required.
-
-To reduce the AHK or programming knowledge necessary to use WinGolems, new users will only need to understand how to modify template files, which can be learned by reading through Section 2 [Hotkeys & Hotstrings](https://www.AutoHotkey.com/docs/Tutorial.htm#s2) of the AHK beginner tutorial (~10 min).  
-
-```ahk
-                                      ; Open or reactivate a web browser by 
-#s::                                  ; 1) pressing "win + s"                                  <- hotkey
-:X:c~win:: ActivateApp("html_path")   ; 2) typing "c~win" <space> anywhere in windows          <- hotstring
-                                      ; 3) entering "c" in a Command Box with a "~win" suffix              
 ```
-One of the key strengths of AHK is it's powerful and parsimonious syntax for creating application-specific and system-wide hotstrings and hotkeys. The sample code above illustrates how to create three shortcuts for opening/reactivating a web browser by calling the function ActivateApp(). 
 
-### Keyboard Shortcuts: <a name="ks"></a>
+```ahk 
 
-<details><summary>&nbsp;ℹ️&nbsp;<b>Click here to see a list of all quick start template Hotkeys</b></summary>
-<p>
+; "ProcessCommand" is a sample command-line processor module that can be replaced with a user created one. 
+; CB( command_suffix, window_color, text_color, ProcessorModule) 
+; see WinGolems\lib\ProcessCommand.ahk for sample code
+
+#enter:: CB("~win",  C.lblue, C.dblue , "ProcessCommand")                   
 
 ```
 
-SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+</p></details>
 
- sc027 = {;:}    sc028 = {"'}    sc029 = {`~}     sc033 = {,<}      sc02b = {\|}
+<details><summary>&nbsp;📕&nbsp;<b> Developer mode </b></summary><p>
 
- sc034 = {.>}    sc035 = {/?}    sc00D = {=+}     sc00C = {-_} 
-      
- sc01a or b = {[} or {]} 
+The developer mode is a hidden interface template found in the _system.ahk file that contains features designed for Lenovo Trackpoint keyboards. In short, the developer mode adds additional shortcuts by transforming  PrintScreen into a modifier key and introduces mouse click functions designed to work with TrackPoint pointing devices.
 
-==o====o====o====o====o== 1_TEMPLATE_QUICKSTART ==o====o====o====o====o====o
- Win+X                   ActvateApp: Activate previously saved window ID
- Win+C                   ActvateApp: Activate previously saved window ID
- Win+F                   ActvateApp: Activate previously saved window ID
- Win+Z                   ActvateApp: Activate previously saved window ID
- Ctrl+Win+C              ActvateApp: Save window ID for subsequent activation
- Ctrl+Win+Z              ActvateApp: Save window ID for subsequent activation
- Ctrl+Win+X              ActvateApp: Save window ID for subsequent activation
- Ctrl+Win+F              ActvateApp: Save window ID for subsequent activation
- Win+A                   ActvateApp:1 Activate default editor
- Win+E                   ActvateApp:1 Activate Excel
- Win+B                   ActvateApp:1 Activate File explorer
- Win+D                   ActvateApp:1 Activate pdf viewer
- Win+Q                   ActvateApp:1 Activate PowerPoint
- Win+S                   ActvateApp:1 Activate web browser
- Win+W                   ActvateApp:1 Activate Word
- Rightctrl+Space         CommandBox: activate CB if exists and move focus to inputbox
- Leftctrl+Space          CommandBox: activate CB if exists and move focus to inputbox
- Alt+S                   CommandBox: move CB window to bottom half
- Alt+Z                   CommandBox: move CB window to bottom left
- Alt+C                   CommandBox: move CB window to bottom right
- Win+Left                CommandBox: move CB window to left half
- Alt+A                   CommandBox: move CB window to left half
- Alt+D                   CommandBox: move CB window to right half
- Win+Right               CommandBox: move CB window to right half
- Alt+W                   CommandBox: move CB window to top half
- Alt+Q                   CommandBox: move CB window to top left
- Alt+E                   CommandBox: move CB window to top right
- Alt+R                   CommandBox: reenter last command
- Win+Space               CommandBox: submit GUI input
- Alt+X                   CommandBox: toggle Command Box display|minimalist mode
- Ctrl+Win+W              Convenience: close active window
- Ctrl+Win+Q              Convenience: close all instances of the active program
- Alt+Backspace           Convenience: Delete current line of text
+The developer interface does not make sense for non-TrackPoint keyboard users, leaving free keys they should reassign. 
+
+``` ahk
+Developer mode keys: #u, #y, #d, ^#d, #i, ^#i, #o, #n, #f, ^#f
+```
+
+</p></details>
+
+
+
+<hr>
+
+
+### i. Keyboard Shortcuts: <a name="ks"></a>
+
+Note: Under WinGolems, the Windows key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
+
+<details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></summary><p>
+
+```
+==o====o====o====o====o====o== A_QUICK_START ==o====o====o====o====o====o===
+ Win+F2                  Apps: Activate saved window ID
+ Win+F4                  Apps: Activate saved window ID
+ Win+F5                  Apps: Activate saved window ID
+ Win+F6                  Apps: Activate saved window ID
+ Win+F7                  Apps: Activate saved window ID
+ Win+F1                  Apps: Activate saved window ID
+ Win+F8                  Apps: Activate saved window ID
+ Win+F3                  Apps: Activate saved window ID
+ Ctrl+Alt+F6             Apps: Save window ID
+ Ctrl+Alt+F5             Apps: Save window ID
+ Ctrl+Alt+F4             Apps: Save window ID
+ Ctrl+Alt+F3             Apps: Save window ID
+ Ctrl+Alt+F2             Apps: Save window ID
+ Ctrl+Alt+F8             Apps: Save window ID
+ Ctrl+Alt+F7             Apps: Save window ID
+ Ctrl+Alt+F1             Apps: Save window ID
+ Win+C                   Apps| Activate Calculator
+ Win+T                   Apps| Activate Command window
+ Win+Z                   Apps| Activate default editor
+ Win+Q                   Apps| Activate Excel
+ Win+B                   Apps| Activate File Explorer
+ Win+A                   Apps| Activate pdf viewer
+ Win+X                   Apps| Activate PowerPoint
+ Win+S                   Apps| Activate web browser
+ Win+W                   Apps| Activate Word
+ Win+Space               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Win+Enter               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Alt+Backspace           Convenience: delete current line of text
  Win+Sc035               Convenience: google search selected text
- Win+Sc028               Convenience: maximize window
- Ctrl+Alt+Space          Convenience: maximize window
- Win+Sc027               Convenience: minimize window
- Alt+Sc034               Convenience: move window btn monitors
- Win+Space               Convenience: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
+ Ctrl+Win+Enter          Convenience: open start menu
+ Win+Lbutton             Convenience: open start menu (alt: Ctrl+Esc)
  Rshift & Lshift         Convenience: reload WinGolems
  Lshift & Rshift         Convenience: reload WinGolems (update running script for changes, fixes sticky keys)
- Shift+Alt+Capslock      Convenience: rotate through application instances starting from newest
- Win+Capslock            Convenience: rotate through application instances starting from newest
- Shift+Win+Capslock      Convenience: rotate through application instances starting from oldest
- Alt+Capslock            Convenience: rotate through application instances starting from oldest
  Ctrl+Sc027              Convenience: simulate appkey
  Alt+Sc027               Convenience: simulate esc key (alt + semicolon)
- Win+Ins                 Convenience: Window always on top: OFF
- Win+Del                 Convenience: Window always on top: ON
- Ctrl+Alt+J              Convenience: zoom in (simulate: ctrl + plus)
- Ctrl+Alt+K              Convenience: zoom out (simulate: ctrl + minus)
- *Lwin                   Convenience:1 makes windows key inert so it can act as a modifier key
- Lwin Up                 Convenience:1 makes windows key inert so it can act as a modifier key
- Ctrl+Win+Enter          Convenience:1 open start menu (alt: Ctrl+Esc)
- Win+Lbutton             Convenience:1 open start menu (alt: Ctrl+Esc)
- Alt+Win+B               Convenience:2 bluetooth settings (reassign less used windows sys shortcuts)
- Alt+Win+D               Convenience:2 display settings
- Alt+Win+N               Convenience:2 notification window
- Alt+Win+P               Convenience:2 presentation display mode
- Alt+Win+R               Convenience:2 run program
- Alt+Win+I               Convenience:2 windows settings
- Ctrl+Win+0              Memory: add selected text to the bottom of 0.txt
- Ctrl+Win+1              Memory: add selected text to the bottom of 1.txt
- Ctrl+Win+2              Memory: add selected text to the bottom of 2.txt
- Ctrl+Win+3              Memory: add selected text to the bottom of 3.txt
- Ctrl+Win+4              Memory: add selected text to the bottom of 4.txt
- Ctrl+Win+5              Memory: add selected text to the bottom of 5.txt
- Ctrl+Win+6              Memory: add selected text to the bottom of 6.txt
- Ctrl+Win+7              Memory: add selected text to the bottom of 7.txt
- Ctrl+Win+8              Memory: add selected text to the bottom of 8.txt
- Ctrl+Win+9              Memory: add selected text to the bottom of 9.txt
- Shift+Win+0             Memory: overwrite 0.txt with selected text
- Shift+Win+1             Memory: overwrite 1.txt with selected text
- Shift+Win+2             Memory: overwrite 2.txt with selected text
- Shift+Win+3             Memory: overwrite 3.txt with selected text
- Shift+Win+4             Memory: overwrite 4.txt with selected text
- Shift+Win+5             Memory: overwrite 5.txt with selected text
- Shift+Win+6             Memory: overwrite 6.txt with selected text
- Shift+Win+7             Memory: overwrite 7.txt with selected text
- Shift+Win+8             Memory: overwrite 8.txt with selected text
- Shift+Win+9             Memory: overwrite 9.txt with selected text
- Win+0                   Memory: paste contents of 0.txt
- Win+1                   Memory: paste contents of 1.txt
- Win+2                   Memory: paste contents of 2.txt
- Win+3                   Memory: paste contents of 3.txt
- Win+4                   Memory: paste contents of 4.txt
- Win+5                   Memory: paste contents of 5.txt
- Win+6                   Memory: paste contents of 6.txt
- Win+7                   Memory: paste contents of 7.txt
- Win+8                   Memory: paste contents of 8.txt
- Win+9                   Memory: paste contents of 9.txt
- Ctrl+Win+Lbutton        Memory:| double click and paste contents of 1.txt at cursor position
- Win+Alt+Lbutton         Memory:| paste contents of single digit .txt file entered at prompt
- Win+P                   Navigation: Ctrl + end
- Win+O                   Navigation: Ctrl + Home
+ Win+Esc                 Convenience: toggle all hotkeys ON|OFF except for this one
+ Shift+Win+0             Mem: add selected text to the bottom of 0.txt
+ Shift+Win+1             Mem: add selected text to the bottom of 1.txt
+ Shift+Win+2             Mem: add selected text to the bottom of 2.txt
+ Shift+Win+3             Mem: add selected text to the bottom of 3.txt
+ Shift+Win+4             Mem: add selected text to the bottom of 4.txt
+ Shift+Win+5             Mem: add selected text to the bottom of 5.txt
+ Shift+Win+6             Mem: add selected text to the bottom of 6.txt
+ Shift+Win+7             Mem: add selected text to the bottom of 7.txt
+ Shift+Win+8             Mem: add selected text to the bottom of 8.txt
+ Shift+Win+9             Mem: add selected text to the bottom of 9.txt
+ Ctrl+Win+Lbutton        Mem: double click and paste contents of 1.txt at cursor position
+ Win+Alt+Lbutton         Mem: double click and paste contents of number entered at prompt
+ Ctrl+Alt+0              Mem: overwrite 0.txt with selected text
+ Ctrl+Alt+1              Mem: overwrite 1.txt with selected text
+ Ctrl+Alt+2              Mem: overwrite 2.txt with selected text
+ Ctrl+Alt+3              Mem: overwrite 3.txt with selected text
+ Ctrl+Alt+4              Mem: overwrite 4.txt with selected text
+ Ctrl+Alt+5              Mem: overwrite 5.txt with selected text
+ Ctrl+Alt+6              Mem: overwrite 6.txt with selected text
+ Ctrl+Alt+7              Mem: overwrite 7.txt with selected text
+ Ctrl+Alt+8              Mem: overwrite 8.txt with selected text
+ Ctrl+Alt+9              Mem: overwrite 9.txt with selected text
+ Win+0                   Mem: paste contents of 0.txt
+ Win+1                   Mem: paste contents of 1.txt
+ Win+2                   Mem: paste contents of 2.txt
+ Win+3                   Mem: paste contents of 3.txt
+ Win+4                   Mem: paste contents of 4.txt
+ Win+5                   Mem: paste contents of 5.txt
+ Win+6                   Mem: paste contents of 6.txt
+ Win+7                   Mem: paste contents of 7.txt
+ Win+8                   Mem: paste contents of 8.txt
+ Win+9                   Mem: paste contents of 9.txt
+ Win+Y                   Navigation: Ctrl + end
+ Win+U                   Navigation: Ctrl + Home
  Ctrl+Alt+L              Navigation: End
  Ctrl+Alt+H              Navigation: Home
- Win+J                   Navigation: scroll wheel down
- Win+Rightalt+H          Navigation: scroll wheel left
- Win+Rightalt+L          Navigation: scroll wheel right
- Win+K                   Navigation: scroll wheel Up
- Alt+B                   Navigation: universal navigate to left tab
- Alt+Space               Navigation: universal navigate to right tab
+ Win+J                   Navigation: mouse scroll down 2 lines
+ Win+K                   Navigation: mouse scroll down 2 lines
+ Rightalt+Win+K          Navigation: mouse scroll down 6 lines
+ Rightalt+Win+J          Navigation: mouse scroll down 6 lines
+ Win+Rightalt+H          Navigation: mouse scroll left
+ Win+Rightalt+L          Navigation: mouse scroll right
+ Alt+B                   Navigation: navigate to left tab
+ Alt+Space               Navigation: navigate to right tab
+ Shift+Win+Q             WindowMgmt: close active window
+ Alt+Win+Q               WindowMgmt: close all instances of the active program
+ Ctrl+Alt+Space          WindowMgmt: maximize window
+ Win+Sc028               WindowMgmt: maximize window
+ Win+Sc027               WindowMgmt: minimize window
+ Alt+Sc034               WindowMgmt: move window btn monitors, cursor follows active windows
+ Shift+Win+Capslock      WindowMgmt: rotate through app instances from most recent
+ Win+Capslock            WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+ *Alt+Capslock           WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction)
+ Win+Ins                 WindowMgmt: Window always on top: OFF
+ Win+Del                 WindowMgmt: Window always on top: ON
+ Alt+Win+B               WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
+ Alt+Win+D               WinSetting: display settings
+ Alt+Win+N               WinSetting: notification window
+ Alt+Win+P               WinSetting: presentation display mode
+ Alt+Win+R               WinSetting: run program
+ Alt+Win+I               WinSetting: windows settings
 
-==o====o====o====o====o== 2_TEMPLATE_ADVANCED ==o====o====o====o====o====o==
-Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
+```
 
- Rightshift+C            ChgFolder: %Homedrive% (C:)
- Rightshift+U            ChgFolder: %UserProfile%
- Rightshift+Sc029        ChgFolder: AHK folder
- Rightshift+O            ChgFolder: C:\Program Files
- Rightshift+Alt+O        ChgFolder: C:\Program Files(x86)
- Rightshift+D            ChgFolder: Documents
- Rightshift+J            ChgFolder: Downloads
- Rightshift+M            ChgFolder: mem_cache
- Rightshift+P            ChgFolder: Pictures
- Rightshift+T            ChgFolder: This PC / My Computer (file explorer only)
- Shift+Alt+S             CommandBox: move CB window to bottom half small
- Shift+Alt+Z             CommandBox: move CB window to bottom left small
- Shift+Alt+C             CommandBox: move CB window to bottom right small
- Shift+Alt+A             CommandBox: move CB window to left side small
- Shift+Alt+D             CommandBox: move CB window to right side small
- Shift+Alt+W             CommandBox: move CB window to top half small
- Shift+Alt+Q             CommandBox: move CB window to top left small
- Shift+Alt+E             CommandBox: move CB window to top right small
- Ctrl+Win+Backspace      Convenience: Delete and replace selected text with blank spaces
- Alt+Sc033               Convenience: Move window to preset locations
- <HS>  date*             Convenience: output current date
- Ctrl+Win+V              Convenience: Paste and overwrite the same number of spaces (aka. overtype paste)
- Alt+Win+Space           Convenience: remove all spaces from selected text
- Alt+Win+Enter           Convenience: remove empty lines starting from selected text
- Ctrl+Win+Space          Convenience: replace multiple consecutive spaces w/ one space in selected text
+</p></details>
+
+
+<details><summary>&nbsp;ℹ️&nbsp;<b> (B) Text Manipulation </b></summary><p>
+
+```
+==o====o====o====o====o== B_TEXT_MANIPULATION ==o====o====o====o====o====o==
+
+ Alt+Win+Space           Convenience! remove all spaces from selected text
+ Alt+Win+Enter           Convenience! remove empty lines starting from selected text
+ Ctrl+Win+Space          Convenience! replace multiple consecutive spaces w/ one space in selected text
+ Shift+Ctrl+U            Convenience* capitalize selected text
+ Shift+Alt+U             Convenience* make selected text to lower case
+ Win+Backspace           Convenience: ^backspace (delete word from last character)
+ Shift+Capslock          Convenience: backspace (toggle capslock: ctrl + capslock)
+ Capslock                Convenience: delete (toggle capslock: ctrl + capslock)
+ Ctrl+Alt+D              Convenience: duplicate current line
+ Shift+Alt+Sc028         Convenience: enclose selected text with " "
+ Rightalt+M              Convenience: enclose selected text with  
+ Rightalt+N              Convenience: enclose selected text with % %
+ Ctrl+Sc028              Convenience: enclose selected text with ' '
+ Shift+Alt+9             Convenience: enclose selected text with ( )
+ Alt+Sc029               Convenience: enclose selected text with ` `
+ Shift+Alt+Sc029         Convenience: enclose selected text with ``` ```
+ Ctrl+Alt+Sc027          Convenience: left bracket
+ Ctrl+Alt+Sc028          Convenience: right bracket
  Ctrl+Win+Sc027          Convenience: show desktop
- Capslock                Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
- Ctrl+Capslock           Convenience:1 toggle capslock
- Shift+Ctrl+U            Convenience:2 capitalize selected text
- Shift+Alt+U             Convenience:2 convert selected text to lower case
- Ctrl+Alt+Shift+U        Convenience:2 Every First Letter Capitalized
- Ctrl+Alt+U              Convenience:2 First letter capitalized
- Ctrl+I                  FileExplorer: group by date
- Ctrl+O                  FileExplorer: group by file type
- Rightalt+Space          FileExplorer: move focus to current folder pane
- Leftalt+Space           FileExplorer: move focus to navigation pane
- Leftctrl+K              FileExplorer: sort by date modified
- Leftctrl+J              FileExplorer: sort by name
- Rightctrl+K             FileExplorer: sort by size
- Rightctrl+J             FileExplorer: sort by type
- Alt+Z                   FileExplorer: toggle navigation pane
- Ctrl+P                  FileExplorer: toggle preview plane
- Alt+Sc027               FileExplorer:1 detailed file info with resized columns
- Ctrl+S                  FileExplorer:1 select files by regex
- Shift+Alt+C             FileExplorer:1 store file path(s) of selected file(s) in clipboard
- Ctrl+H                  FileExplorer:1 toggle hide/unhide invisible files
- Shift+Ctrl+Lbutton      MouseFn: click thrice, paste clipboard
- Ctrl+Alt+Lbutton        MouseFn: click twice, paste clipboard
- *Win+I                  MouseFn: Left click and save mouse position
- Alt+I                   MouseFn: mouse middle click
- Printscreen & Sc028     MouseFn: mouse Right click
- Win+Sc028               MouseFn: mouse Right click
+ Ctrl+Capslock           Convenience: toggle capslock
+ Ctrl+Alt+Shift+U        Convenience; Every First Letter Capitalized
+ Ctrl+Alt+U              Convenience; First letter capitalized
+ Ctrl+Win+Backspace      Convenience| Delete and replace selected text with blank spaces
+ Ctrl+Win+V              Convenience| Paste and overwrite the same number of spaces (aka. overtype paste)
+ Alt+V                   Convenience| replace multiple paragraph breaks w/ 1 break in selected text
+ Shift+Alt+V             Convenience| replace multiple paragraph breaks with space (remove paragraphs breaks)
  Alt+Win+J               MouseFn: move mouse cursor to bottom edge
  Ralt & Lalt             MouseFn: move mouse cursor to BOTTOM LEFT of active app
  Lalt & Ralt             MouseFn: move mouse cursor to BOTTOM RIGHT of active app
  Alt+Win+H               MouseFn: move mouse cursor to Left edge
  Alt+Win+L               MouseFn: move mouse cursor to Right edge
  Alt+Win+K               MouseFn: move mouse cursor to top edge
- *Ctrl+Win+I             MouseFn: Move to saved mouse position and left click
- Win+J                   MouseFn: scroll wheel down
- Win+Rightalt+H          MouseFn: scroll wheel left
- Win+Rightalt+L          MouseFn: scroll wheel right
- Win+K                   MouseFn: scroll wheel Up
  Ctrl+Alt+J              MouseFn: zoom in
  Ctrl+Alt+K              MouseFn: zoom out
- Win+H                   NavigateText: jump to next word; simulate ctrl+Left
- Win+L                   NavigateText: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
- *Alt+J                  NavigateText:| Down
- Alt+H                   NavigateText:| Left
- Alt+L                   NavigateText:| Right
- *Alt+K                  NavigateText:| Up
- Shift+Alt+J             SelectText: extend selection down  1 row
- Shift+Win+J             SelectText: extend selection down  1 row
- Shift+Alt+H             SelectText: extend selection Left  1 character
- Shift+Win+H             SelectText: extend selection Left  1 word
- Shift+Alt+L             SelectText: extend selection Right 1 character
- Shift+Win+L             SelectText: extend selection Right 1 word
- Shift+Alt+K             SelectText: extend selection up    1 row
- Shift+Win+K             SelectText: extend selection up    1 row
- Ctrl+Win+K              SelectText: select all above
- Ctrl+Win+J              SelectText: select all below
- Shift+Alt+F             SelectText: select current line starting from begining of line
- Ctrl+Alt+F              SelectText: select line starting from end of line
- Ctrl+Win+H              SelectText: select to beginning of line
- Ctrl+Win+L              SelectText: select to end of line
- Shift+Ctrl+K            SelectText: select to line above
- Shift+Ctrl+J            SelectText: select to next line
- Alt+F                   SelectText: select word at text cursor position
+ Win+H                   Navigation: jump to next word; simulate ctrl+Left
+ Win+L                   Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
+ *Alt+J                  Navigation| Down
+ Alt+H                   Navigation| Left
+ Alt+L                   Navigation| Right
+ *Alt+K                  Navigation| Up
+ Shift+Alt+J             Selection: extend selection down  1 row
+ Shift+Win+J             Selection: extend selection down  1 row
+ Shift+Alt+H             Selection: extend selection Left  1 character
+ Shift+Win+H             Selection: extend selection Left  1 word
+ Shift+Win+Alt+H         Selection: extend selection Left  2 words
+ Shift+Ctrl+Win+H        Selection: extend selection Left  3 words
+ Shift+Alt+L             Selection: extend selection Right 1 character
+ Shift+Win+L             Selection: extend selection Right 1 word
+ Shift+Win+Alt+L         Selection: extend selection Right 2 words
+ Shift+Ctrl+Win+L        Selection: extend selection Right 3 words
+ Shift+Win+K             Selection: extend selection up    1 row
+ Shift+Alt+K             Selection: extend selection up    1 row
+ Ctrl+Win+K              Selection: select all above
+ Ctrl+Win+J              Selection: select all below
+ Shift+Alt+F             Selection: select current line starting from begining of line
+ Ctrl+Alt+F              Selection: select line starting from end of line
+ Ctrl+Win+H              Selection: select to beginning of line
+ Ctrl+Win+L              Selection: select to end of line
+ Shift+Ctrl+K            Selection: select to line above
+ Shift+Ctrl+J            Selection: select to next line
+ Alt+F                   Selection: select word at text cursor position
+
+```
+
+</p></details>
+
+<details><summary>&nbsp;ℹ️&nbsp;<b> (C) File Management </b></summary><p>
+
+```
+==o====o====o====o====o== C_FILE_MANAGEMENT ==o====o====o====o====o====o====
+ Rightshift+C            ChangeFolder: %Homedrive% (C:)
+ Rightshift+U            ChangeFolder: %UserProfile%
+ Rightshift+O            ChangeFolder: C:\Program Files
+ Rightshift+Alt+O        ChangeFolder: C:\Program Files(x86)
+ Rightshift+D            ChangeFolder: Documents
+ Rightshift+J            ChangeFolder: Downloads
+ Rightshift+M            ChangeFolder: mem_cache
+ Rightshift+P            ChangeFolder: Pictures
+ Rightshift+R            ChangeFolder: Recycle bin (doesn't work for save as diag)
+ Rightshift+T            ChangeFolder: This PC / My Computer
+ Rightshift+Sc029        ChangeFolder: WinGolems folder
+ Rightctrl+Esc           EditFile: A_QuickStart.ahk
+ Rightctrl+F1            EditFile: B_Text_Navigation.ahk
+ Rightctrl+F2            EditFile: C_File_Navigation.ahk
+ Rightctrl+F3            EditFile: D_App_Dependent.ahk
+ Alt+O                   FileExplorer: forward folder
+ Ctrl+I                  FileExplorer: group by date
+ Ctrl+O                  FileExplorer: group by file type
+ Ctrl+U                  FileExplorer: group by name|remove grouping toggle
+ Alt+Space               FileExplorer: move focus to current folder pane
+ Alt+B                   FileExplorer: move focus to navigation pane
+ Alt+I                   FileExplorer: prev folder
+ Alt+R                   FileExplorer: rename file
+ Leftctrl+K              FileExplorer: sort by date modified
+ Leftctrl+J              FileExplorer: sort by name
+ Rightctrl+K             FileExplorer: sort by size
+ Rightctrl+J             FileExplorer: sort by type
+ Alt+Z                   FileExplorer: toggle navigation pane
+ Ctrl+P                  FileExplorer: toggle preview plane
+ Alt+U                   FileExplorer: up one folder level
+ Alt+Sc027               FileExplorer| detailed file info with resized columnsnmn
+ Ctrl+S                  FileExplorer| select all files matching regex pattern
+ Shift+Alt+C             FileExplorer| store file path(s) of selected file(s) in clipboard
+ Ctrl+H                  FileExplorer| toggle hide/unhide invisible files
+ Shift+Win+B             FunctionBox: edit file
+ Ctrl+Win+B              FunctionBox: open folder
+ Rightalt+Esc            OpenFolder: mem_cache (.txt memory folder)
+ Rightalt+F2             OpenFolder: WinGolems (.txt memory folder)
+ Rightalt+F1             OpenFolder: WinGolems (.txt memory folder)
+
+```
+
+</p></details>
+
+<details><summary>&nbsp;ℹ️&nbsp;<b> Command Box </b></summary><p>
+
+``` 
+==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
+ Alt+S                   CB: move CB window to bottom half
+ Shift+Alt+S             CB: move CB window to bottom half small
+ Alt+Z                   CB: move CB window to bottom left
+ Shift+Alt+Z             CB: move CB window to bottom left small
+ Alt+C                   CB: move CB window to bottom right
+ Shift+Alt+C             CB: move CB window to bottom right small
+ Win+Left                CB: move CB window to left half
+ Alt+A                   CB: move CB window to left half
+ Shift+Alt+A             CB: move CB window to left side small
+ Alt+D                   CB: move CB window to right half
+ Win+Right               CB: move CB window to right half
+ Shift+Alt+D             CB: move CB window to right side small
+ Alt+W                   CB: move CB window to top half
+ Shift+Alt+W             CB: move CB window to top half small
+ Alt+Q                   CB: move CB window to top left
+ Shift+Alt+Q             CB: move CB window to top left small
+ Alt+E                   CB: move CB window to top right
+ Shift+Alt+E             CB: move CB window to top right small
+ Leftctrl+Space          CB| activate already open CB and move focus to inputbox
+ Rightctrl+Space         CB| activate already open CB and move focus to inputbox
+ Alt+R                   CB| reenter last command
+ Alt+Space               CB| submit GUI input
+ Win+Space               CB| submit GUI input
+ Alt+X                   CB| toggle Command Box display|minimalist mode
+
+```
+
+</p></details>
+
+<details><summary>&nbsp;ℹ️&nbsp;<b> SC Key Reference </b></summary><p>
+
+```
+ _______________________________________________________________________________
+| SC KEY REFERENCE                                                              |
+| ------------------------------------------------------------------------------|
+| SC029 ` ~     SC00D = +      SC00C - _                                        |
+| SC01A [ {     SC01b ] }      SC02b \ |                                        |
+| SC027 ; :     SC028 " '                                                       |
+| SC033 , <     SC034 . >      SC035 / ?                                        |
+| ______________________________________________________________________________|
+```
+
+</p></details>
+
+
+### ii. Command Box: <a name="cb"></a>
+
+<details><summary>&nbsp;ℹ️&nbsp;<b>Command Box System Commands </b></summary><p>
+
+``` 
+ _________________________________________________________________________________________________________________________________________
+| CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND                            | KEY  WINDOWS COMMAND       |
+|-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
+| 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
+|     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
+|                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
+| 2) Create a command key "a" to call anyFunction():  | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
+|     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
+|                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
+| The above can be adaped to call scripts written in  | ws     Open Window Spy                              |  ap  Add Remove Programs   |
+| other languages such as python, VBA, C++, etc ...   | kh     Open Key History (#KeyHistory > 0 required)  |  a   Alarm Clock           |
+|                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
+|-----------------------------------------------------|                                                     |  s   Start Menu            |
+| #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  e   desktop environments  |
+| !Space  submit key                                  | ------ -------------------------------------------- |  h~  Hybernate computer    |
+| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  ce~ Close All Programs    |
+| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  rs~ Restart computer      |
+| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  sd~ Shut Down computer    |
+| !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |                            |
+|                                                     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
+|_____________________________________________________|_____________________________________________________|____________________________|
+
+```
+</p></details>
+
+<details><summary>&nbsp;ℹ️&nbsp;<b>UPPER-CASE first letter initiated commands</b></summary><p>
+
+```
+_________________________________________________________________________________________________________________________________________
+| KEY  TEXT MANIPULATION & MEMORY SYSTEM       USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
+|  L   Load .txt file into CB display          L1, Lr\testr        Load in display => 1.txt, r\testr.txt ("Ll" .txt list)              L?|
+|      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
+|  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
+|  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
+|  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
+|  E   Edit file in default editor             E1, Er\testr        edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
+| A|P  Append|Prepend selected text to file    A1, Ar\testr        add selected text to bottom of => 1.txt, r\testr.txt           A or P?|
+|  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
+|  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
+|  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
+| R?:  Change replacement separators (1|2)     R1:%; R2:~>         Changes the above replacement separators to % and ~>              R?:?|
+| Rf:  Modify file w/ saved replace't pattern  Rf:1~p n            modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
+|      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
+|________________________________________________________________________________________________________________________________________|
+_________________________________________________________________________________________________________________________________________
+| KEY  CONVENIENCE                             USAGE EXAMPLE                                                                             |
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+|  Q?   Query selected text in search engine   Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
+|  Q?:  Query submitted text                   Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
+| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
+| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
+|  G   Run any function                        GMoveWin,TopLeft    fmt: fnName1,fnParams1__fnName2,fnParams2            G?,?__?,? or G?,?|
+| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
+|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
+|________________________________________________________________________________________________________________________________________|
+_________________________________________________________________________________________________________________________________________
+| KEY  GUI BEHAVIOR & APPEARANCE                                                                                                         |
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+|  W   Run a different CB key suffix           Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
+|  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
+|  T   CommandBox window options               Td, Tm, Tp,         (d)isplay mode, (m)inimalist mode, (p)ersistent: CB stays open,     T?|
+|                                              Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
+|  Z   Change text display options             Z11, Zf:courier, Zd change => font size: 11, font: courier, reset to default    Z?:? or Z?|
+|________________________________________________________________________________________________________________________________________|
 
 ```
 
@@ -383,127 +672,14 @@ Advanced shortcuts below must be turned on by typing "ta" in CB(~win).
 
 
 
-
-
-<img src="assets\Screens\QuickStartHotkeys.png" width = "1000"> 
-
-
-
-### Command Box: <a name="cb"></a>
-
-<details>
-    <summary>&nbsp;ℹ️&nbsp;<b>Click here to see the default Command Box cheat sheet</b></summary>
-    <p>
-
-```
- _________________________________________________________________________________________________________________________________________
-| CommandBox (CB) Creation:                           | KEY    WINGOLEMS         ([T]oggle, [M]ode change ) | KEY  WINDOWS SELECTION     |
-|-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
-| 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
-|     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
-|                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
-| 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
-|                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
-| The above can be adaped to call scripts written in  | tcf    [T] mouse cursor follows active window       |  ap  Add Remove Programs   |
-| other languages such as python, VBA, C++, etc ...   | tt     [T] enhanced text nav/selection hotkeys      |  a   Alarm Clock           |
-|                                                     | tc     [T] replace capslock w/ delete key           |  r   Open Run Dialog Box   |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  x   Start Context Menu    |
-|-----------------------------------------------------| ss|qs  [M] ON|OFF:  Data Backup Application         |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| ws     Open Window Spy                              |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  h~  Hybernate computer    |
-| !r      reenter last submitted key             alt+r| r~     Reload WinGolems                             |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode     alt+x| q~     Quit WinGolems                               |  rs~ Restart computer      |
-| !e      move & resize CB window to top left    alt+e|                                                     |  sd~ Shut Down computer    |
-|_____________________________________________________|_____________________________________________________|____________________________|
-| UPPERcase first letter required to trigger the following commands                                                                      |
-|                                                                                                                                        |
-| KEY  TEXT MANIPULATION & MEMORY SYSTEM       USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
-|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
-|  L   Load .txt file into CB display          L1, Lhelp, Lr\testr Load in display => 1.txt, help.txt, r\testr.txt ("Ll" .txt list)    L?|
-|      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
-|  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
-|  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
-|  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
-|  E   Edit file in default editor             E1, Etest, Er\testr edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
-| A|P  Append|Prepend selected text to file    A1, Atest, Ar\testr add selected text to bottom of => 1.txt, test.txt, r\testr.txt    A|P?|
-|  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
-|  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
-|  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
-| R?:  Change replacement separators (1|2)     R1:%; R2:~>         Changes the above replacement separators to % and ~>              R?:?|
-| Rf:  Modify file w/ saved replace't pattern  Rf:1~p n            modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
-|      pattern file fmt: no R at beginning     ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
-|                                                                                                                                        |
-| KEY  CONVENIENCE                                                                                                                       |
-|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
-|  Q:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
-| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
-| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
-|  G   Run any function                        GMoveWin,TopLeft    fmt: fn1_name,fn1_params__fn2name,fn2params          G?,?__?,? or G?,?|
-| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
-|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
-| KEY  GUI BEHAVIOR & APPEARANCE                                                                                                         |
-|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
-|  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
-|  T   Toggle CommandBox UI options            Td, Tm, Tp, Tt, Ts  [M]:(d)isplay,(m)inimal,(p)ersistent;[T]:(t)itle,(s)crollbar,(W)rap T?|
-|  Z   Change display window appearance        Z13, Zf:courier, Zd change => font size: 13, font: courier, back to default     Z?:? or Z?|
-|                                                                                                                                        |
-|________________________________________________________________________________________________________________________________________|
-
-
-```
-
-</p>
-</details>
-
-| DISPLAY MODE | MINIMALIST MODE |
-| :-: | :-: |
-| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\minimal.png" width="500"> |
-<p align="center">
-Press ALT + X to switch between modes
-</p>
-
-The CB is an entirely keyboard-driven graphical user interface (GUI) designed to augment the windows experience by adding new functionality to existing applications. 
-
-Key Features:
-+ see the contents of any .txt file in an always-on-top display window;
-+ create additional keyboard shortcut layers valid only when a particular CB is open;
-+ access a variety of convenience and augmentation functions ("?" for cheat sheet) 
-+ AHK users can also swap in their own command box input processing module to create their own command-line syntax for parametizing and calling functions 
-
-```ahk 
-
-; "ProcessCommand" is an example user input processing module that can be swapped with other ones . 
-; open lib\ProcessCommand.ahk
-CB("~win", C.lblue, C.dblue , "ProcessCommand")   
-```
 <br>
 
-Use Cases:
 
 
+## 3. Roadmap <a name="roadmap"></a>
 
+Current development priorities:
 
-## 3. AHK Resources <a name="ahk"></a>
-https://www.autohotkey.com/docs/KeyList.htm
-https://www.autohotkey.com/boards/viewtopic.php?f=5&t=1411 ; comma 
-https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413 ; How to optimize the speed of a script as much as possible.
-
-* Open <a href="https://github.com/bingson/WinGolems/blob/master/HotKey_List.txt" title="title">HotKey_List.txt</a> for a list of hotkeys 
-
-* [AHK Beginner Tutorial](https://www.AutoHotkey.com/docs/Tutorial.htm) 
- 
-<center><img src="assets\Screens\wingolems_exe.png" width="400"></center>
-modify code samples in quick start interface template  https://www.AutoHotkey.com/docs/Tutorial.htm#s2
-
-## 4. Roadmap <a name="roadmap"></a>
-See the open issues for a list of proposed features (and known issues).
-
-
-1. Sometimes the CB window will show up as just a title bar in the top left corner. 
-    * Temporary fix: ` alt + x ` 
-
-2. Sometimes the CB text display window doesn't fill out the window. 
+1. add search box for finding text/highlighting text in the CB display window.
+2. save/recall CB GUI profiles by command suffix.
+3. show images in CB display window.

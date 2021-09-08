@@ -37,7 +37,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 Load:         
                 if !GC("CB_Display") {
                     CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
-                    MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
+                    MI := StrSplit(GetMonInfo()," ")                            ; get monitor dimensions
                     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
                     CC("CB_position", d)
                 }
@@ -45,7 +45,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
 
                 if (C_input = "s" or C_input = "c") {
                     NameNoExt := (C_input = "s") ? ("HotKey_List") : ("config.ini")
-                    RegExMatch(config_path, ".*(?=config.ini)", cpth)                         ; get everything before the last title separator and store in v
+                    RegExMatch(config_path, ".*(?=config.ini)", cpth)           ; get everything before the last title separator and store in v
                     dir := (C_input = "s") ? ("..\") : cpth
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
@@ -56,7 +56,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         txt := Clipboard
                         NameNoExt := "Clipboard Contents", dir := ""
                     } catch e {
-                        PopUp("Sorry this window only displays text strings, image and other multimedia support is being worked on", , ,, , drtn = "-2000") 
+                        PopUp("Sorry the CB only displays text strings", , ,, , drtn = "-2000") 
                         return 1
                     }
 
@@ -76,8 +76,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 return 1
 
             Case "O":                                                           ; overwrite file/clipboard
-                C_input := RegExReplace(C_input, "S) +", A_Space)               ; if C_input starts in ":" overwrite clipboard with file contents
-                If (SubStr(C_input, 1 , 1) == ":") j
+                C_input := RegExReplace(C_input, "S) +", A_Space)               
+                If (SubStr(C_input, 1 , 1) == ":")                              ; if C_input starts in ":" overwrite clipboard with file contents
                 {
                     C_input := trim(SubStr(C_input, 2))
                     SplitPath, C_input, , Dir, , NameNoExt 
@@ -91,8 +91,9 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     WriteToCache(namenoext,,dir,clipboard)   
                     return 1
                 }
-                else If !RegExMatch(C_input, " .+")                             ; if there's a second file name
-                {                    
+                else If !RegExMatch(C_input, " .+")                             ; if there's no second file name, overwrite with selected text
+                { 
+                    
                     ActivateWin("ahk_id " tgt_hwnd) 
                     text_to_add := trim(clip())
                     tgt_path := f_path dir namenoext . "txt"
@@ -109,14 +110,14 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     WriteToCache(namenoext,, dir)   
                     gosub, Load
                     return 1 
-                } else {
+
+                } else {                                                        ; remaining case must be two filenames given, w/ 2nd overwriting the 1st 
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[1], oFileName, oDir, oExtension, oNameNoExt 
                     SplitPath,% arr[2], nFileName, nDir, nExtension, nNameNoExt 
                     odir := odir ? odir . "/" : ""
                     ndir := ndir ? ndir . "/" : ""
-
-                    if FileExist(f_path odir oNameNoExt ".txt") and FileExist(f_path ndir nNameNoExt ".txt")
+                    if FileExist(f_path ndir nNameNoExt ".txt")
                     {
                         try {
                             Filecopy,% f_path . nDir . nNameNoExt . ".txt",% f_path . oDir . oNameNoExt . ".txt", 1
@@ -144,7 +145,6 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     FunctionBox("OpenFolder", Folder_DICT, lblue)
                 else    
                 {
-                    ; input = %A_ScriptDir%\mem_cache\%mem_path%%key%
                     input := f_path Dir FileName
                     if FileExist(input ".txt") 
                         input .= ".txt"
@@ -176,7 +176,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         SplitPath,% arr[2], nFileName, nDir, nExtension, nNameNoExt 
                         odir := odir ? odir . "/" : ""
                         ndir := ndir ? ndir . "/" : ""
-                        Filecopy,% f_path . oDir . oNameNoExt . ".txt",% f_path . nDir . nNameNoExt . ".txt", 1  ; 1 = overwrite 
+                        Filecopy,% f_path . oDir . oNameNoExt . ".txt",% f_path . nDir . nNameNoExt . ".txt", 1    ; 1 = overwrite 
                         PopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
                     } catch {
                         PopUp("invalid file path",C.lgreen,C.bgreen,,,-2000)
@@ -207,7 +207,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     Case "f:":
                         OuterArr := StrSplit(C3_Remainder, " ")
                         InnerArr := StrSplit(OuterArr[1], sep1)
-                        SplitPath,% InnerArr[1], oFileName, oDir, oExtension, oNameNoExt                 ; msgbox % C_input "`n`nFileName: " FileName "`nDir: " Dir "`nExtension: " Extension "`nNameNoExt: " NameNoExt
+                        SplitPath,% InnerArr[1], oFileName, oDir, oExtension, oNameNoExt
                         SplitPath,% InnerArr[2], pFileName, pDir, pExtension, pNameNoExt
                         SplitPath,% OuterArr[2], nFileName, nDir, nExtension, nNameNoExt
                         odir := odir ? odir . "/" : ""
@@ -258,12 +258,12 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     case SubStr(C_input, 1 , 1) == ":":
                         msgbox % 2
                         return 1
-                    case C_First2chr == "f:":                                                  ; create function name alias
+                    case C_First2chr == "f:":                                   ; create function name alias
                         arr := StrSplit(C3_Remainder, "~")
                         IniWrite,% arr[2], %f_path%ALIAS.ini, function,% arr[1]
                         UpdateGUI()
                         return 1
-                    case C_First2chr == "p:":                                                  ; create parameter alias
+                    case C_First2chr == "p:":                                   ; create parameter alias
                         arr := StrSplit(C3_Remainder, "~")
                         IniWrite,% arr[2], %f_path%ALIAS.ini, parameter,% arr[1]
                         UpdateGUI()
@@ -310,7 +310,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 RunOtherCB(C_input, FirstChar) 
             Case "Q":                                                           ; query selected text in chosen search engine msft
                 
-                if (InStr(C_input, ":")) {                                      ; if search string is entered manually into CB
+                if (InStr(C_input, ":")) {                                      ; get search string from command box if semi colon detected
                     dPos  := InStr(C_input, ":")
                     case  := substr(C_input, 1, dPos-1)
                     strng := substr(C_input, dPos+1)
@@ -335,7 +335,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     Case "e","ebay": search("www.ebay.ca/sch/", strng)
                     Case "so"      : search("www.stackoverflow.com/search?q=", strng) 
                     Case "bv"      : search("www.bing.com/videos/search?q=", strng) 
-                    Case "imdb"    : search("www.imdb.com/find?q=", strng) 
+                    Case "imdb"    : search("www.imdb.com/find?q=", strng) r
                     Case "id","fd" : search("www.investopedia.com/search?q=", strng) 
                     Case "az","amz": search("www.amazon.ca/s?k=", strng) 
                     Case "twt"     : search("www.twitter.com/search?q=", strng)
@@ -374,24 +374,26 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     }            
                 } else {
                     CC("CBfsz",C_input)
+                    reload
                 }
                 return 2
             Case "T":
                 Switch C_input 
                 {
-                    case "persistent","p": CC("CB_persistent", "!"), PopUp("persistent mode: " GC("CB_persistent"))
-                    case "scrollbars","s": CC("CB_ScrollBars", "!"), PopUp("Toggle scrollbars: " GC("CB_ScrollBars"))
-                    case "title"     ,"t": CC("CB_Titlebar", "!"), PopUp("Toggle titlebar: " GC("CB_Titlebar"))
+                    case "persistent","p": TglCFG("CB_persistent", "Toggle persistent mode: ")
+                    case "scrollbars","s": TglCFG("CB_ScrollBars", "Toggle scrollbars: ")
+                    case "title"     ,"t": TglCFG("CB_Titlebar"  , "Toggle titlebar: ")
+                    case "focus"     ,"a": TglCFG("CB_appActive" , "Toggle application focus: ")
                     case "wrap_text" ,"w": 
-                        CC("CB_Wrap", "!"), PopUp("Toggle text wrap: " GC("CB_Wrap"))
+                        TglCFG("CB_Wrap", "Toggle text wrap: ")
                         return 2
                     case "default"   ,"d": 
-                        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
-                        , MI := StrSplit(GetMonInfo()," ")                                ; get monitor dimensions
+                        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0)
+                        , MI := StrSplit(GetMonInfo()," ")                              
                         , d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
                         , CC("CB_position", d)
                     case "minimized" ,"m": 
-                        CC("CB_Titlebar",0), CC("CB_Display",0)
+                        CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0) 
                         , IBw := GC("CB_InputBox_width")
                         , MI := StrSplit(GetMonInfo()," ")                                
                         , cX := (MI[3] - IBw) // 2

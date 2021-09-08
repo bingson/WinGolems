@@ -1,5 +1,5 @@
  _________________________________________________________________________________________________________________________________________
-| CommandBox (CB) Creation:                           | KEY    WINGOLEMS         ([T]oggle, [M]ode change ) | KEY  WINDOWS SELECTION     |
+| CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND       |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
@@ -7,40 +7,42 @@
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
 |     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
 |                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
-| The above can be adaped to call scripts written in  | tcf    [T] mouse cursor follows active window       |  ap  Add Remove Programs   |
-| other languages such as python, VBA, C++, etc ...   | tt     [T] enhanced text nav/selection hotkeys      |  a   Alarm Clock           |
-|                                                     | tc     [T] replace capslock w/ delete key           |  r   Open Run Dialog Box   |
-| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| lt|lf  [M] ON|OFF:  Win + L Locks Computer          |  x   Start Context Menu    |
-|-----------------------------------------------------| ss|qs  [M] ON|OFF:  Data Backup Application         |  s   Start Menu            |
-| #Space  submit key                      win+spacebar| ws     Open Window Spy                              |  e   desktop environments  |
-| ^Space  move focus CB input box        ctrl+spacebar| kh     Open Key History (#KeyHistory > 0 required)  |  h~  Hybernate computer    |
-| !r      reenter last submitted key             alt+r| r~     Reload WinGolems                             |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode     alt+x| q~     Quit WinGolems                               |  rs~ Restart computer      |
-| !e      move & resize CB window to top left    alt+e|                                                     |  sd~ Shut Down computer    |
+| The above can be adaped to call scripts written in  | ws     Open Window Spy                              |  ap  Add Remove Programs   |
+| other languages such as python, VBA, C++, etc ...   | kh     Open Key History (#KeyHistory > 0 required)  |  a   Alarm Clock           |
+|                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
+| CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
+|-----------------------------------------------------|                                                     |  s   Start Menu            |
+| #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  e   desktop environments  |
+| !Space  submit key                                  | ------ -------------------------------------------- |  h~  Hybernate computer    |
+| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  ce~ Close All Programs    |
+| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  rs~ Restart computer      |
+| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  sd~ Shut Down computer    |
+| !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |                            |
+|                                                     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | UPPER-case first letter required to trigger the following commands                                                                     |
 |                                                                                                                                        |
 | KEY  TEXT MANIPULATION & MEMORY SYSTEM       USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
-|  L   Load .txt file into CB display          L1, Lr\testr, L:    Load in display => 1.txt, r\testr.txt ("Ll" .txt list), clipboard   L?|
-|      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => (c)config.ini, (l)hotkey list, .txt file names           |
+|  L   Load .txt file into CB display          L1, Lr\testr        Load in display => 1.txt, r\testr.txt ("Ll" .txt list)              L?|
+|      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
 |  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
 |  E   Edit file in default editor             E1, Er\testr        edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
 | A|P  Append|Prepend selected text to file    A1, Ar\testr        add selected text to bottom of => 1.txt, r\testr.txt           A or P?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
-|  D   Delete file                             D1, Db\_hist.txt    file extension optional for .txt files: Db\_hist.txt = Db\_hist     D?|
+|  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
 | R?:  Change replacement separators (1|2)     R1:%; R2:~>         Changes the above replacement separators to % and ~>              R?:?|
 | Rf:  Modify file w/ saved replace't pattern  Rf:1~p n            modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
-|      pattern file fmt: no R at beginning     ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
+|      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
 |                                                                                                                                        |
 | KEY  CONVENIENCE                                                                                                                       |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  Q   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
-|  Q:  Query submitted text                    Qa:blind            (so)stack overflow,(a)hk documentation,(af)AHK forums,(y)outube   Q?:?|
+|  Q?   Query selected text in search engine   Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
+|  Q?:  Query submitted text                   Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
 |  G   Run any function                        GMoveWin,TopLeft    fmt: fnName1,fnParams1__fnName2,fnParams2            G?,?__?,? or G?,?|
@@ -50,9 +52,8 @@
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
-|  T   Toggle CommandBox UI options            Td, Tm, Tp, Tt, Ts  [M]:(d)isplay,(m)inimal,(p)ersistent;[T]:(t)itle,(s)crollbar,(W)rap T?|
-|  Z   Change display window appearance        Z13, Zf:courier, Zd change => font size: 13, font: courier, revert to default   Z?:? or Z?|
-|                                                                                                                                        |
+|  T   CommandBox UI options                   Td, Tm, Tp,         (d)isplay mode, (m)inimalist mode, (p)ersistent: CB stays open,     T?|
+|                                              Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
+|  Z   Change display window appearance        Z11, Zf:courier, Zd change => font size: 11, font: courier, reset to default    Z?:? or Z?|
 |________________________________________________________________________________________________________________________________________|
 
-T

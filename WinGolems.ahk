@@ -4,8 +4,7 @@
     ; explained: https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
     
     SetWorkingDir %A_ScriptDir%
-    #MenuMaskKey vkFF                                                           ; vkFF is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed
-    
+    #MenuMaskKey vk07                                                           ; vk07 is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed https://www.autohotkey.com/boards/viewtopic.php?t=29595
     #MaxHotkeysPerInterval 99000000
     ; SetBatchLines -1
     SetBatchLines, 20ms
@@ -49,7 +48,6 @@
             , "powerpnt.exe"        ; PowerPoint    -> ppt,pptx,pptm
             , "acrord32.exe"        ; Adobe Acrobat -> pdf
             , "chrome.exe"          ; Chrome        -> html, urls, ipynb
-            , "googledrivesync.exe" ; Google Drive  -> backup program
             , "code.exe" ]          ; VS Code       -> IDE + editor of last resort
     
     ConfigureWinGolems(config_path, apps *)
@@ -59,21 +57,26 @@
 #Include %A_ScriptDir%\golems\
 #Include _functions.ahk                                                         ; ***end of auto-execution section***
 #Include _system.ahk
+#Include _CB.ahk
 
 #Include %A_ScriptDir%\golems\
-#Include *i 1_Template_QuickStart.ahk
-#Include *i 2_Template_Advanced.ahk
-#Include *i 3_Template_ApplicationSpecific.ahk
+#Include *i A_Quick_Start.ahk
+#Include *i B_Text_Manipulation.ahk
+#Include *i C_File_Management.ahk
+#Include *i D_App_Examples.ahk
+#Include *i Test.ahk                                                            
 
-#Include *i %A_ScriptDir%\..\Google Drive\secure\
-#Include *i bh.ahk
-#Include *i mm.ahk                                    
+/* sample code for including other ahk scripts
+    #Include *i %A_ScriptDir%\..\Google Drive\secure\
+    #Include *i bh.ahk
+    #Include *i mm.ahk                                    
 
-#Include *i %A_ScriptDir%\..\ahk\golems\
-#Include *i office.ahk
-#Include *i coding.ahk
-#Include *i obsidian.ahk     
-#Include *i chrome.ahk     
+    #Include *i %A_ScriptDir%\..\ahk\golems\
+    #Include *i office.ahk
+    #Include *i coding.ahk
+    #Include *i obsidian.ahk     
+    #Include *i chrome.ahk     
+*/
 
 /* #INCLUDE MECHANICS ********************************************************** 
  * Start.ahk:

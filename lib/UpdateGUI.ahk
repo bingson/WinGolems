@@ -30,6 +30,8 @@ UpdateGUI(new_txt = "" , new_title_file = "") {
     } else if (display) {
         if (new_txt) {
             GuiControl, 2:, CB_Display, %new_txt%
+            GuiControl, MoveDraw, CB_Display
+            AutoXYWH("w*h", "CB_Display")
         } 
         else {
             txt :=  AccessCache(ldspl,, 0)

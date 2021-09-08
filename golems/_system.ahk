@@ -1,4 +1,10 @@
 #IF
+; LWIN MODIFIER KEY ____________________________________________________________
+  
+  ~LWin::       Send {Blind}{vk07}                                              ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
+  *LWin::       Send {Blind}{LWin Down}                                         ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+  LWin Up::     Send {Blind}{vk07}{LWin Up}                                     ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+
 ; CB SYSTEM COMMANDS ___________________________________________________________
   :X:b~win::    BluetoothSettings()                                             ;SC: bluetooth settings
   :X:d~win::    DisplaySettings()                                               ;SC: display settings
@@ -30,13 +36,14 @@
 
 
 ; CB AHK UTILITIES _____________________________________________________________
+
   :X:wg~win::   LoadURL("https://github.com/bingson/wingolems")                 ;AHK: Load WinGolems GitHub Page
   :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;AHK: open key history
-  :X:ws~win::   run, C:\Program Files\AutoHotkey\WindowSpy.ahk                  ;AHK: open windows spy
+  :X:ws~win::   WindowSpy()
   :X:ec~win::   EditFile("""" config_path """")                                 ;AHK: edit config.ini file
   :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")                     ;AHK: AHK beginner tutorial
-  :X:tcf~win::  TglSetting("cursor_follow", "Cursor follows active window: ")   ;AHK: toggle mouse cursor follows active window
+  :X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")                ;AHK: toggle mouse cursor follows active window
   ~+#left::                                                                     ;AHK: cursor follows active window when moving apps btn monitors (if turned on)
   ~+#right::                                                                    ;AHK: cursor follows active window when moving apps btn monitors (if turned on)
   ~!tab::       CursorFollowWin()                                               ;AHK: cursor follows active window when switch apps with alt+tab (if turned on)
@@ -55,53 +62,82 @@
  
 ; DEVELOPER OPTIONS ____________________________________________________________
 
-  :X:td~win:: CC("T_d","!"), PU("Developer options on: " GC("T_d"))                                                                  ;[T] toggle developer optns
+  :X:td~win:: TglCFG("T_d","Developer options: ")                               ;[T] toggle developer optns
   
-  #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    *#d::                           SaveMousPos("r",1)                          ;MouseFn: Left click and save mouse position
-    *^#d::                          RecallMousePosClick("r")                    ;MouseFn: Move to saved mouse position and left click
-    *#i::                           SaveMousPos("i",1)                          ;MouseFn: Left click and save mouse position
-    *^#i::                          RecallMousePosClick("i")                    ;MouseFn: Move to saved mouse position and left click
-    #o::                            Click, middle                               ;MouseFn: mouse middle click
+  #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+    :X:ta~win::            CC("T_TM",1),CC("T_FM",1),CC("T_CF",1),CC("T_d",1)   ;turn on all interface layers and UI options 
+                           ,PU("Advanced Mode: ON")   
+
+    printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
+    *printscreen::         Send {Blind}{vk07}                                   ;Convenience| makes printscreen key inert so it can be used as a modifier key
+    :X:pscrn~win::         Send {PrintScreen}                                   ;windows 10 printscreen command
+    *#d::                  SaveMousPos("r",1)                                   ;MouseFn: Left click and save mouse position
+    *^#d::                 RecallMousePosClick("r")                             ;MouseFn: Move to saved mouse position and left click
+    *#i::                  SaveMousPos("i",1)                                   ;MouseFn: Left click and save mouse position
+    *^#i::                 RecallMousePosClick("i")                             ;MouseFn: Move to saved mouse position and left click
+    #o::                   Click, middle                                        ;MouseFn: mouse middle click
     PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
-    #sc028::                        Click, Right                                ;MouseFn: mouse Right click
-    ^!Lbutton::                     Clicks(2), s("^v")                          ;MouseFn: click twice, paste clipboard
-    +^Lbutton::                     Clicks(3), s("^v")                          ;MouseFn: click thrice, paste clipboard
-    >+esc::                         EditFile("golems\_system.ahk")              ;Convenience: open _system.ahk
-    ^#w::                           WinClose,A                                  ;Convenience: close active window
-    ^#q::                           CloseClass()                                ;Convenience: close all instances of the active program
-    *printscreen::                  Send {Blind}{LWin Down}                     ;Convenience:1 makes windows key inert so it can act as a modifier key
-    printscreen Up::                Send {Blind}{vk00}{LWin Up}                 ;Convenience:1 makes windows key inert so it can act as a modifier key
-    lwin & rctrl::                  ActivateWinID("Rctrl")                      ;ActvateApp: activate saved Window ID
-    #f::                            Clicks(2)                                   ;MouseFunctions: 2 Left clicks (select word)
-    ^#f::                           Clicks(3)                                   ;MouseFunctions: 3 Left clicks (select line)
-    #n::                            AA("editor_path")                           ;Convenience: 
-    #e::                            send ^{home}    
-    #+e::                           send ^{end}    
-    ralt & right::                  s("{blind}"), s("{F11}")                    ;Convenience: full screen {F11}
-    >+>!o::
-    :X:mod~win::  MoveWindowToOtherDesktop()                                    ;SC: Move window to other desktop
-  #IF !WinActive("ahk_exe " exe["editor"]) and GC("T_d",0) ; -- -- -- -- -- -- -; EDITOR ACTIVE
+    #sc028::               Click, Right                                         ;MouseFn: mouse Right click
+    #f::                   Clicks(2)                                            ;MouseFn: 2 Left clicks (select word)
+    ^#f::                  Clicks(3)                                            ;MouseFn: 3 Left clicks (select line)
+    >+esc::                EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
+    lwin & rctrl::         ActivateWinID("Rctrl")                               ;ActvateApp: activate saved Window ID
+    #n::                   AA("editor_path")                                    ;ActivateApp: Editor
+    ralt & right::         s("{blind}"), s("{F11}")                             ;Convenience: full screen {F11}
+    >+>!o::                % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")  ;SC: Move Window to other desktop (between desktops 1 and 2)
+    >!sc028::               GotoDesktop("1")                                     ;SC: Switch to desktop 1
+    ^!enter::              % (t := !t) ? GotoDesktop("2") : GotoDesktop("1")    ;SC: Switch between desktop 1 and 2
+    
+    PrintScreen & 0::                                                           ;Memory: paste overwrite 0.txt at current cursor position
+    PrintScreen & 9::                                                           ;Memory: paste overwrite 9.txt at current cursor position
+    PrintScreen & 8::                                                           ;Memory: paste overwrite 8.txt at current cursor position
+    PrintScreen & 7::                                                           ;Memory: paste overwrite 7.txt at current cursor position
+    PrintScreen & 6::                                                           ;Memory: paste overwrite 6.txt at current cursor position
+    PrintScreen & 5::                                                           ;Memory: paste overwrite 5.txt at current cursor position
+    PrintScreen & 4::                                                           ;Memory: paste overwrite 4.txt at current cursor position
+    PrintScreen & 3::                                                           ;Memory: paste overwrite 3.txt at current cursor position
+    PrintScreen & 2::                                                           ;Memory: paste overwrite 2.txt at current cursor position
+    PrintScreen & 1::      RetrieveMemory(,,"PrintScreen")                      ;Memory: paste overwrite 1.txt at current cursor position
+
+
+    !sc033::    q := { "f" : "0Maximize"                                        ;FunctionBox: resize & move window
+                     , "q" : "1TopLeft"         
+                     , "e" : "1TopRight"        
+                     , "z" : "2BottomLeft"      
+                     , "c" : "2BottomRight"     
+                     , "a" : "3LeftHalf"     
+                     , "d" : "3RightHalf"       
+                     , "w" : "4TopHalf"         
+                     , "s" : "4BottomHalf"      
+                     , "dd": "5RightHalfSmall"       
+                     , "aa": "5LeftHalfSmall"       
+                     , "ww": "6TopHalfSmall"
+                     , "ss": "6BottomHalfSmall"
+                     , "qq": "L1TopLeftSmall"    
+                     , "qa": "L2TopMidLeftSmall"    
+                     , "za": "L3BottomMidLeftSmall"    
+                     , "zz": "L4BottomLeftSmall" 
+                     , "ee": "R1TopRightSmall"   
+                     , "ed": "R2TopMidRightSmall"    
+                     , "cd": "R3BottomMidRightSmall"    
+                     , "cc": "R4BottomRightSmall" }, FB("MoveWin", q, C.bwhite,, "s")   ; "s" optn adds a space between case changes for GUI menu
+
+    
+    
+  #IF GC("T_d",0) and !WinActive("ahk_exe " exe["editor"]) ; -- -- -- -- -- -- -; When editor not active
     ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")    ;Convenience: duplicate line
-  #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                              ; If command Box active
+    ralt & down::     s("{blind}"), s("{F11}")                                  ;Convenience: full screen {F11}
+
+  #IF GC("T_d",0) and WinActive("ahk_id " CB_hwnd) ; -- -- -- -- -- -- -- -- -- ; If command Box active
     printscreen & space::           GUISubmit()                                 ;CB: submit user input
-  #If GetKeyState("ralt", "P") and GC("T_d",0)
-    PrintScreen & k::               CursorJump("T")                             ;MouseFunctions: move mouse cursor to top edge
-    PrintScreen & j::               CursorJump("B",,"-20")                      ;MouseFunctions: move mouse cursor to bottom edge
-    PrintScreen & h::               CursorJump("L","20")                        ;MouseFunctions: move mouse cursor to Left edge
-    PrintScreen & l::               CursorJump("R","-40")                       ;MouseFunctions: move mouse cursor to Right edge
-  #If GC("T_d",0)
-    printscreen & 0::                                                           ;Memory (+rshift): add selected text to the bottom of 0.txt (press rshift before ralt => no cursor centering)
-    printscreen & 9::                                                           ;Memory (+rshift): add selected text to the bottom of 9.txt
-    printscreen & 8::                                                           ;Memory (+rshift): add selected text to the bottom of 8.txt
-    printscreen & 7::                                                           ;Memory (+rshift): add selected text to the bottom of 7.txt
-    printscreen & 6::                                                           ;Memory (+rshift): add selected text to the bottom of 6.txt
-    printscreen & 5::                                                           ;Memory (+rshift): add selected text to the bottom of 5.txt
-    printscreen & 4::                                                           ;Memory (+rshift): add selected text to the bottom of 4.txt
-    printscreen & 3::                                                           ;Memory (+rshift): add selected text to the bottom of 3.txt
-    printscreen & 2::                                                           ;Memory (+rshift): add selected text to the bottom of 2.txt
-    printscreen & 1::                      AddToMemory()                        ;Memory (+rshift): add selected text to the bottom of 1.txt
-  #If GetKeyState("PrintScreen", "P") and GC("T_d",0)
+    
+  #If GC("T_d",0) and GetKeyState("PrintScreen", "P") ; -- -- -- -- -- -- -- -- ; convert printscreen to another modifier key
+    $!k::                           CursorJump("T")                             ;MouseFn: move mouse cursor to top edge
+    $!j::                           CursorJump("B",,"-20")                      ;MouseFn: move mouse cursor to bottom edge
+    $!h::                           CursorJump("L","20")                        ;MouseFn: move mouse cursor to Left edge
+    $!l::                           CursorJump("R","-40")                       ;MouseFn: move mouse cursor to Right edge
+    p::                             WinClose,A                                  ;Convenience: close active window
     lctrl::                                                                     ;ActvateApp: activate saved Window ID
     ralt::                          ActivateWinID("Lctrl")                      ;ActvateApp: activate saved Window ID
     rctrl::                         ActivateWinID("Rctrl")                      ;ActvateApp: activate saved Window ID
@@ -126,8 +162,6 @@
     sc028::                         Click, Right                                ;MouseFunctions: mouse Right click
     !r::                            RunProgWindow()                             ;convenience: run programs alternate shortcut
     SC035::                         search()                                    ;Convenience: google search selected text
-    o::                             send ^{home}                                ;Convenience: ctrl+home
-    p::                             send ^{end}                                 ;Convenience: ctrl+end
     SC027::                         WinMinimize,A                               ;Convenience: minimize window
     h::                             sendinput ^{Left 4}                         ;TextNavigation: jump left 4 words (ctrl+left x 4)
     l::                             sendinput ^{Right 4}                        ;TextNavigation: jump right 4 words (ctrl+right x 4)
