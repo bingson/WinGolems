@@ -79,7 +79,7 @@ WinGolems is under constant development. I created this repository to give back 
 ## 1. Getting Started <a name="getting-started"></a>
 
 ### i. &nbsp; Install Dependencies <a name="dependencies"></a>
- <ul>
+ <ol>
    <li>
      <p>  <b>Required:</b> </p>
      <p>  – &nbsp; Windows 10/11
@@ -314,9 +314,10 @@ Developer mode keys: #u, #y, #d, ^#d, #i, ^#i, #o, #n, #f, ^#f
 ```
 
 </p></details>
-</li></ul>
+</li>
 
-### i. Keyboard Shortcuts <a name="ks"></a>
+<li>
+### Keyboard Shortcuts <a name="ks"></a>
 
 Note: Under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
 
@@ -595,7 +596,9 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
 </p></details>
 
 
+</li>
 
+<li>
 ### ii. Command Box Commands <a name="cb"></a>
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>Command Box System Commands </b></summary><p>
@@ -673,7 +676,8 @@ ________________________________________________________________________________
 
 </p></details>
 
-
+</li>
+</ol>
 
 <br>
 
