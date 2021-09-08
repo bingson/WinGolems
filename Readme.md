@@ -167,7 +167,7 @@ Note: By default, UAC protects "elevated" programs (that is, programs which are 
     * VS Code (**code.exe**), Notepad++ (**notepad++.exe**), Notepad (**notepad.exe**)
 
 To fix/change WinGolems application associations, go to the WinGolems folder and open the <code>config.ini</code> file in a text editor and update the file path values for the following variables.  
-<p><img src="assets\Screens\cfg_manual.png" width="500" alt="run_master.png" title="run_master.png" /></p>
+<p><img src="assets\Screens\cfg_manual.png" width="500" alt="cfg_manual.png" title="cfg_manual.png" /></p>
    
 </li></ul>
 
