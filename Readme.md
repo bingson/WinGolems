@@ -170,7 +170,6 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 
 <br><br>
 ----
-
 ## 2. Tutorial Templates <a name="tutorial-overview"></a> 
 
 <OL>
@@ -683,7 +682,6 @@ ________________________________________________________________________________
 <br>
 
 ----
-
 ## 3. Roadmap <a name="roadmap"></a>
 
 Current development priorities:
@@ -691,3 +689,4 @@ Current development priorities:
 1. add search box for finding text/highlighting text in the CB display window.
 2. save/recall CB GUI profiles by command suffix.
 3. show images in CB display window.
+----
