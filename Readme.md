@@ -202,6 +202,7 @@ Note: If text is highlighted in the default editor app, entering `Qa` in a CB wi
     * [GoSub command](https://www.autohotkey.com/docs/commands/Gosub.htm)
 
 
+<br>
 </p></details>
 
 <details><summary>&nbsp;📕&nbsp;<b> Loading AHK scripts </b></summary><p>
@@ -227,7 +228,7 @@ Note: If text is highlighted in the default editor app, entering `Qa` in a CB wi
 #Include *i Test.ahk                       ; test code here
 
 ```
-</p></details>
+<br></p></details>
 
 <details><summary>&nbsp;📕&nbsp;<b> File locations and code organization </b></summary><p>
 
@@ -251,7 +252,7 @@ For convenience, the code for the creation of interface layers is abstracted awa
 - Functions are located in the `WinGolems\lib` folder as well as the `_functions.ahk` file in the `WinGolems\golems` folder. 
 - Memory system files are located in the `WinGolems\mem_cache` folder
 
-</p></details>
+<br></p></details>
 
 <details><summary>&nbsp;📕&nbsp;<b> Creating CB keys and special commands </b></summary><p>
 
@@ -304,7 +305,7 @@ RunLabel(UserInput="", suffix = "", tgt_winID ="") {
 
 ```
 
-</p></details>
+<br></p></details>
 
 <details><summary>&nbsp;📕&nbsp;<b> Developer mode </b></summary><p>
 
@@ -316,7 +317,7 @@ The developer interface does not make sense for non-TrackPoint keyboard users, l
 Developer mode keys: #u, #y, #d, ^#d, #i, ^#i, #o, #n, #f, ^#f
 ```
 
-</p></details>
+<br></p></details>
 
 <br>
 
