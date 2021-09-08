@@ -188,7 +188,7 @@ To turn on UI options and other tutorial interface layers, open a CommandBox wit
 
 <details><summary>&nbsp;📕&nbsp;<b> Recommended reading </b></summary><p>
 
-Note: If text is highlighted in the default editor app, entering Qa in a CB will query and load the corresponding webpage in the AHK documentation, if a match is returned. A search string can also be manually entered into the CB with the colon operator: e.g., Qa:blind, Qa:sendinput, etc. 
+Note: If text is highlighted in the default editor app, entering `Qa` in a CB will query and load the corresponding webpage in the AHK documentation, if a match is returned. A search string can also be manually entered into the CB with the colon operator: e.g., `Qa:blind`, `Qa:sendinput`, etc. 
 
 1.  [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2)
     * [Keys and their mysterious symbols](https://www.autohotkey.com/docs/Tutorial.htm#s21)
