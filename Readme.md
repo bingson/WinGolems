@@ -11,24 +11,6 @@ Before investing any time into learning AHK, prospective users can try out the t
 
 <br> 
 
-For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
-
-<br> 
-
-```ahk
-
-; MODIFIER SYMBOL LEGEND
-; # = Windows Key
-; ! = Alt Key
-; ^ = Ctrl Key
-
-#s::       ActivateApp("C:\browser_path")    ; open or reactivate a web browser window with 'win + s' 
-^!space::  WinMaximize,A                     ; maximize active window with 'ctrl + alt + spacebar'    
-
-```
-
-<br> 
-
 Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box (CB), a keyboard-driven text-based user interface that was originally conceived to alleviate the following issues:
 
  * a lack of keyboard real-estate/mental bandwidth for assigning/remembering less frequently used operations (daily vs hourly);
@@ -222,12 +204,9 @@ Note: If text is highlighted in the default editor app, entering `Qa` in a CB wi
 
 </p></details>
 
-<details><summary>&nbsp;📕&nbsp;<b> Loading ahk scripts and file structure </b></summary><p>
+<details><summary>&nbsp;📕&nbsp;<b> Loading AHK scripts </b></summary><p>
 
-`WinGolems.ahk` is the master script that controls all others. To change which scripts get loaded by WinGolems modify the following section in `WinGolems.ahk`. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. 
-
-All Tutorial Templates files are located in the `WinGolems\golems` folder. WinGolems function code in located in the `WinGolems\lib` folder as well as the `_functions.ahk` file (in the golems folder).
-Although it's possible to run multiple AHK scripts concurrently, it is always better to combine multiple scripts together with include statements and run one script. 
+`WinGolems.ahk` is the master script that controls all others. To change which scripts get loaded by WinGolems modify the following section in `WinGolems.ahk`. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. Although it's possible to run multiple AHK scripts concurrently, it is always better to combine multiple scripts together with include statements and run one script. 
 
 [See: Combining Multiple Scripts (#Include)](https://www.autohotkey.com/docs/commands/_Include.htm)
 
@@ -250,7 +229,31 @@ Although it's possible to run multiple AHK scripts concurrently, it is always be
 ```
 </p></details>
 
-<details><summary>&nbsp;📕&nbsp;<b> Creating Command Box keys and Special Commands </b></summary><p>
+<details><summary>&nbsp;📕&nbsp;<b> File locations and code organization </b></summary><p>
+
+For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
+
+<br> 
+
+```ahk
+
+; MODIFIER SYMBOL LEGEND
+; # = Windows Key
+; ! = Alt Key
+; ^ = Ctrl Key
+
+#s::       ActivateApp("C:\browser_path")    ; open or reactivate a web browser window with 'win + s' 
+^!space::  WinMaximize,A                     ; maximize active window with 'ctrl + alt + spacebar'    
+
+```
+
+- All tutorial template files are located in the `WinGolems\golems` folder. 
+- Functions are located in the `WinGolems\lib` folder as well as the `_functions.ahk` file in the `WinGolems\golems` folder. 
+- Memory system files are located in the `WinGolems\mem_cache` folder
+
+</p></details>
+
+<details><summary>&nbsp;📕&nbsp;<b> Creating CB keys and special commands </b></summary><p>
 
 ```ahk 
 ; CB keys are hotstrings or labels with a unique suffix appended e.g., "~win", "~coding", etc.
