@@ -484,11 +484,9 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
  Shift+Alt+H             Selection: extend selection Left  1 character
  Shift+Win+H             Selection: extend selection Left  1 word
  Shift+Win+Alt+H         Selection: extend selection Left  2 words
- Shift+Ctrl+Win+H        Selection: extend selection Left  3 words
  Shift+Alt+L             Selection: extend selection Right 1 character
  Shift+Win+L             Selection: extend selection Right 1 word
  Shift+Win+Alt+L         Selection: extend selection Right 2 words
- Shift+Ctrl+Win+L        Selection: extend selection Right 3 words
  Shift+Win+K             Selection: extend selection up    1 row
  Shift+Alt+K             Selection: extend selection up    1 row
  Ctrl+Win+K              Selection: select all above
