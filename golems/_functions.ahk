@@ -608,8 +608,10 @@
     global UserInput, med, config_path
     
     sleep ,med                                                                  ; short wait to delete hotstring
+    BlockInput, MouseMove
+    settimer, BlockInputTimeOut,-300
     
-    TOC := (toc_dict) ? BuildTOC(toc_dict, "t", grps) : BuildTOC(input_dict, optn, grps)
+    TOC := (toc_dict) ? BuildTOC(toc_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
     default_title := (!title) ? AddSpaceBtnCaseChange(func, 0) : title
     default_title .= "  (-_-)  "                                                ; l := "    |    " 
     winget, output, ProcessName, A    
@@ -620,7 +622,7 @@
     FB_tgt_hwnd := WinExist("A")                                                  ; store win ID of active application before calling GUI 
     
     FunctionBoxGUI(TOC, default_title, w_color, t_color) 
-    
+    BlockInput, MouseMoveOff
     ; Iniread, tgt_winID, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     ActivateWin("ahk_id " FB_tgt_hwnd)
     UserInput := trim(UserInput)
@@ -642,12 +644,11 @@
   }
 
   FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" ) {
-    global UserInput := "", FBhwnd := ""
+    global UserInput := "", FB_hwnd := ""
 
     FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
     IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     winget, output, ProcessName, A    
-    
     
     Gui, +LastFound 
     Gui, Destroy
@@ -660,7 +661,7 @@
     Gui, font,s8 , calibri
     Gui, fb: add, text, xs yp+30, case insensitive
     Gui, fb: +LastFound +OwnDialogs +AlwaysOnTop
-    FBhwnd  := WinExist()
+    FB_hwnd  := WinExist()
     GetGUIWinCoords(GUI_X, GUI_Y)
     Gui, Color, %w_color%
     Gui, fb: Show, % "x" GUI_X " y" GUI_Y,                                          ; Show gui at center of current screen
@@ -684,40 +685,47 @@
   BuildTOC(arr = "", optn = "" , grps = 0) {
     ; buils a table of contents string created from a dictionary input array.
     ; alt_arr tells function that 
+    ; otpn :
+    ;      r = reverse (sort order by value instead of key)
+    ;      s = space between case changes for value
     arr_KV_swapped := {}                                                        ; key value swapped version of input array
     max_str_len := 0
     arr := alt_arr ? alt_arr : arr
-
+    TOC := ""
     for key, val in arr                                                         ; this loop cleans dictionary values and creates a key:value swapped
     {                                                                           ; version of the array (to display TOC sorted by value instead of key)
         RegExMatch(val, "[^\\]+$", selection)
         selection := ReplaceAwithB(,,selection, False)                          ; replace consecutive bank spaces with 1 space
-        arr_KV_swapped[selection] := key
+        selection := ReplaceAwithB("- ","-",selection,0)
+        selection := ReplaceAwithB("_ ","_",selection,0) 
+        selection := (optn = "s") ? Trim(AddSpaceBtnCaseChange(selection, 0)) : selection 
+        if (optn = "r")
+            arr_KV_swapped[selection] := key
+        else             
+            TOC .= (TOC <> "" ? "`n" : "") key "`t" trim(selection, """") 
         max_str_len := max(max_str_len, strlen(key . selection))
     }
+
     line := RepeatString("-", max_str_len * 1.35)
-    TOC := "Key`tSelection`n-----`t" line "`r"
-    For dest, ref in arr_KV_swapped
-    {
-        dest := ReplaceAwithB("- ","-",dest,0)
-        dest := ReplaceAwithB("_ ","_",dest,0)
-        dest := (optn = "s") ? Trim(AddSpaceBtnCaseChange(dest, 0)) : dest
-        
-        if grps {
-            prefix := substr(dest, 1, 2)
-            if (prefix <> prev_prefix and prev_prefix and prefix) {             ; adds blank line between changes in selection group prefix 
-                TOC .= "`n" 
+    TOC := (optn != "r") ? ("Key`tSelection`n-----`t" line "`r" . TOC) : ("Key`tSelection`n-----`t" line "`r")
+
+    if (optn = "r") {                                                           ; optn for value ordered dictionary
+        For dest, ref in arr_KV_swapped
+        {
+            
+            if grps {
+                prefix := substr(dest, 1, 2)
+                if (prefix <> prev_prefix and prev_prefix and prefix) {         ; adds blank line between changes in selection group prefix
+                    TOC .= "`n" 
+                }
+                prev_prefix := prefix
             }
-            prev_prefix := prefix
+            TOC .= (TOC <> "" ? "`n" : "") ref "`t" trim(dest, """")
         }
-
-
-
-        TOC .= (TOC <> "" ? "`n" : "") ref "`t" trim(dest, """")
     }
-    
     return TOC
   }
+
  
 ; MEM_CACHE / MEMORY SYSTEM ____________________________________________________
 
@@ -1288,7 +1296,31 @@
   }
 
 ; FILE AND FOLDER ______________________________________________________________
- 
+  
+  savePath(key = "") {
+    path := Explorer_GetSelection()
+    CC(key, path)
+    PU(key ": " path "`nSAVED",C.lgreen,,,,-1200)   
+    return               
+  }
+
+  OpenPath(path = "") {
+    SplitPath, path, FileName, Dir, Extension, NameNoExt
+    if (path = "ERROR") {
+        PU("No saved path found")
+        return
+    }
+    try {
+        if Extension
+            EditFile(path)
+        else 
+            OpenFolder(path)
+    } catch e {
+        PU("Invalid path")
+    }
+    return
+  }
+
   Explorer_GetSelection() {
     ; Get path of selected files/folders                                        ; https://www.AutoHotkey.com/boards/viewtopic.php?style=17&t=60403
     WinGetClass, winClass, % "ahk_id" . hWnd := WinExist("A")
