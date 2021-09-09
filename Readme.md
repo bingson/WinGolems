@@ -13,7 +13,7 @@ Before investing any time into learning AHK, prospective users can try out the t
 
 Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box (CB), a keyboard-driven text-based user interface that was originally conceived to alleviate the following issues:
 
- * a lack of keyboard real-estate/mental bandwidth for assigning/remembering less frequently used operations (daily vs hourly);
+ * a lack of keyboard real-estate/mental bandwidth for assigning/remembering less frequently used operations;
     
     - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember keyboard shortcuts.
     
