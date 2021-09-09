@@ -17,7 +17,6 @@
   !#space::              ReplaceAwithB(" ")                                     ;Convenience! remove all spaces from selected text
   ^#space::              ReplaceAwithB()                                        ;Convenience! replace multiple consecutive spaces w/ one space in selected text
   !#enter::              RemoveBlankLines()                                     ;Convenience! remove empty lines starting from selected text
-  ^#sc027::              Send {lwin down}d{lwin up}                             ;Convenience: show desktop
   +!9::                  Clip("(" Clip() ")")                                   ;Convenience: enclose selected text with ( )
   $+!SC01A::             Clip("{" Clip() "}")                                   ;Convenience: enclose selected text with { }
   !SC01A::               Clip("[" Clip() "]")                                   ;Convenience: enclose selected text with [ ]
@@ -68,7 +67,10 @@
   *$!j::                 sendinput {Down}                                       ;Navigation| Down
 
 ; MOUSE FUNCTION _______________________________________________________________
-
+  *#d::                  SaveMousPos("r",1)                                     ;MouseFn: Left click and save mouse position
+  *^#d::                 RecallMousePosClick("r", 0)                            ;MouseFn: return to saved mouse position (change 0 to number of clicks) 
+  #f::                   Clicks(2)                                              ;MouseFn: 2 Left clicks (select word)
+  ^#f::                  Clicks(3)                                              ;MouseFn: 3 Left clicks (select line)
   ^!Lbutton::            Clicks(2), s("^v")                                     ;MouseFn: click twice, paste clipboard
   +^Lbutton::            Clicks(3), s("^v")                                     ;MouseFn: click thrice, paste clipboard
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in

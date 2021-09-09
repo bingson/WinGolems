@@ -110,13 +110,14 @@
         Gui, Show, %CB_position% NoActivate
     else    
         Gui, Show, %CB_position% Restore
+    
+    MouseMove, StartX, StartY
+    BlockInput, MouseMoveOff
     GuiControl, 2: +HScroll +VScroll, CB_Display                                ; add scroll bars back without redrawing them to add scrolling without visible scroll bars
     ; ActivateWin("ahk_id " tgt_hwnd)
     ; WinWaitClose                                      
     if GC("CB_appActive", 0) 
         ActivateWin("ahk_id " tgt_hwnd) 
-    MouseMove, StartX, StartY
-    BlockInput, MouseMoveOff
     return
     
     2GuiSize: 

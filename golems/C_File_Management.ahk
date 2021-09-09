@@ -3,7 +3,7 @@
   ; ChangeFolder() shortcuts are valid in file explorer and other listview type windows (e.g., save as diaglogue boxes)
 
   SetTitleMatchMode, 2
-  #If WinActive("ahk_group FileListers") and GC("T_FM",0)                       ; below only applies to ListView windows like file explorer and save as dialogue boxes if T_FM = 1
+  #If WinActive("ahk_group FileListers") and GC("T_FM",0) ; -- -- -- -- -- -- -- below only applies to ListView windows like file explorer and save as dialogue boxes if T_FM = 1
   
   >+sc029::     CF(A_ScriptDir)                                                 ;ChangeFolder: WinGolems folder
   >+m::         CF(A_ScriptDir "\mem_cache")                                    ;ChangeFolder: mem_cache
@@ -36,32 +36,32 @@
   ^h::          ToggleInvisible()                                               ;FileExplorer| toggle hide/unhide invisible files
   $+!c::        clipboard := Explorer_GetSelection()                            ;FileExplorer| store file path(s) of selected file(s) in clipboard
   ^s::          SelectByRegEx()                                                 ;FileExplorer| select all files matching regex pattern 
-  +^esc::       savePath("cESC_path")                                           ;FileExplorer; save file or folder path for ^esc
-  +^F1::        savePath("cF1_path")                                            ;FileExplorer; save file or folder path for ^F1                                   
-  +^F2::        savePath("cF2_path")                                            ;FileExplorer; save file or folder path for ^F2                                   
-  +^F3::        savePath("cF3_path")                                            ;FileExplorer; save file or folder path for ^F3                                   
-  +^F4::        savePath("cF4_path")                                            ;FileExplorer; save file or folder path for ^F4
-  +^F5::        savePath("cF5_path")                                            ;FileExplorer; save file or folder path for ^F5
-  +^F6::        savePath("cF6_path")                                            ;FileExplorer; save file or folder path for ^F6
-  +^F7::        savePath("cF7_path")                                            ;FileExplorer; save file or folder path for ^F7
-  +^F8::        savePath("cF8_path")                                            ;FileExplorer; save file or folder path for ^F8
+  +^esc::       savePath("cESC_path")                                           ;FileExplorer; save file|folder path for ^esc
+  +^F1::        savePath("cF1_path")                                            ;FileExplorer; save file|folder path for ^F1                                   
+  +^F2::        savePath("cF2_path")                                            ;FileExplorer; save file|folder path for ^F2                                   
+  +^F3::        savePath("cF3_path")                                            ;FileExplorer; save file|folder path for ^F3                                   
+  +^F4::        savePath("cF4_path")                                            ;FileExplorer; save file|folder path for ^F4
+  +^F5::        savePath("cF5_path")                                            ;FileExplorer; save file|folder path for ^F5
+  +^F6::        savePath("cF6_path")                                            ;FileExplorer; save file|folder path for ^F6
+  +^F7::        savePath("cF7_path")                                            ;FileExplorer; save file|folder path for ^F7
+  +^F8::        savePath("cF8_path")                                            ;FileExplorer; save file|folder path for ^F8
 
 
 ; OPEN FILE|FOLDER PATH ________________________________________________________
-  ; works on full file paths to all MS office files (xls, doc, ppt, etc.)
+  ; works on full file paths for all MS office files (xls, doc, ppt, etc.)
 
-  #IF GC("T_FM",0)                                                              ;lines below are valid anywhere in windows if "T_FM" variable in config.ini = 1
+  #IF GC("T_FM",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --;lines below are valid anywhere in windows if "T_FM" variable in config.ini = 1
   
                                                                                 ; GC = (G)et (C)onfig.ini("var_name", "value returned if none found") 
-  ^esc::       OpenPath(GC("cesc_path", "golems\A_Quick_Start.ahk"))            ;OpenPath: open saved file or folder path from +^esc    
-  ^F1::        OpenPath(GC("cF1_path" , "golems\B_Text_Manipulation.ahk"))      ;OpenPath: open saved file or folder path from +^F1    
-  ^F2::        OpenPath(GC("cF2_path" , "golems\C_File_Management.ahk"))        ;OpenPath: open saved file or folder path from +^F2    
-  ^F3::        OpenPath(GC("cF3_path" , "golems\D_App_Examples.ahk"))           ;OpenPath: open saved file or folder path from +^F3    
-  ^F4::        OpenPath(GC("cF4_path" , "mem_cache"))                           ;OpenPath: open saved file or folder path from +^F4   
-  ^F5::        OpenPath(GC("cF5_path" , A_ScriptDir))                           ;OpenPath: open saved file or folder path from +^F5   
-  ^F6::        OpenPath(GC("cF6_path" , "golems"))                              ;OpenPath: open saved file or folder path from +^F6   
-  ^F7::        OpenPath(GC("cF7_path" , UProfile "\Documents"))                 ;OpenPath: open saved file or folder path from +^F7    
-  ^F8::        OpenPath(GC("cF8_path" , UProfile "\Downloads"))                 ;OpenPath: open saved file or folder path from +^F8   
+  ^esc::       OpenPath(GC("cesc_path", "golems\A_Quick_Start.ahk"))            ;OpenPath: open saved file|folder path from +^esc    
+  ^F1::        OpenPath(GC("cF1_path" , "golems\B_Text_Manipulation.ahk"))      ;OpenPath: open saved file|folder path from +^F1    
+  ^F2::        OpenPath(GC("cF2_path" , "golems\C_File_Management.ahk"))        ;OpenPath: open saved file|folder path from +^F2    
+  ^F3::        OpenPath(GC("cF3_path" , "golems\D_App_Examples.ahk"))           ;OpenPath: open saved file|folder path from +^F3    
+  ^F4::        OpenPath(GC("cF4_path" , "mem_cache"))                           ;OpenPath: open saved file|folder path from +^F4   
+  ^F5::        OpenPath(GC("cF5_path" , A_ScriptDir))                           ;OpenPath: open saved file|folder path from +^F5   
+  ^F6::        OpenPath(GC("cF6_path" , "golems"))                              ;OpenPath: open saved file|folder path from +^F6   
+  ^F7::        OpenPath(GC("cF7_path" , UProfile "\Documents"))                 ;OpenPath: open saved file|folder path from +^F7    
+  ^F8::        OpenPath(GC("cF8_path" , UProfile "\Downloads"))                 ;OpenPath: open saved file|folder path from +^F8   
 
 ; FUNCTION BOX _________________________________________________________________
   ; Purpose: opens a window that gives the user a menu of parameter choices for calling a function
@@ -69,7 +69,7 @@
   ; The comma operator is usually faster than writing separate expressions https://www.autohotkey.com/docs/Variables.htm#comma
 
 
-   +#b::                                                                        ;FB: OpenPath menu for cESC-cF7 saved paths  
+   #SC033::                                                                     ;FB: Menu for cESC-cF8 saved paths
     send {blind}
     t := { "esc" : GC("cESC_path", "golems\A_Quick_Start.ahk")      
           ,"f1" : GC("cF1_path" , "golems\B_Text_Manipulation.ahk")
@@ -83,5 +83,8 @@
     FB("OpenPath", t)
     return
 
+  #IF WinExist("ahk_id " FB_hwnd)                                               ;Function Box must exist for the below two lines to be valid
+    $<^space::                                                                  ;FB: activate already open Function Box and move focus to inputbox
+    $>^space::         ActivateWin("ahk_id " FB_hwnd)                           ;FB: activate already open Function Box and move focus to inputbox
     
 #IF

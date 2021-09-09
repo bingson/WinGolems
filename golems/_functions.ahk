@@ -531,7 +531,9 @@
   GUISubmit() {
     global short, med, long
     ; BlockInput, on
-    GuiControl,2: Focus, UserInput
+    Gui +LastFound
+    GuiControl, Focus, UserInput
+    ; GuiControl,2: Focus, UserInput
     Send {enter}
     ; BlockInput, off
     ; ReleaseModifiers()
@@ -541,6 +543,7 @@
   GUIRecall() {
     global short, med, long, config_path
     OutputVar := GC("last_user_input")
+    Gui +LastFound
     GuiControl,2: Focus, UserInput
     sendinput {home}+{end}
     clip(OutputVar)
@@ -608,8 +611,6 @@
     global UserInput, med, config_path
     
     sleep ,med                                                                  ; short wait to delete hotstring
-    BlockInput, MouseMove
-    settimer, BlockInputTimeOut,-300
     
     TOC := (toc_dict) ? BuildTOC(toc_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
     default_title := (!title) ? AddSpaceBtnCaseChange(func, 0) : title
@@ -622,7 +623,6 @@
     FB_tgt_hwnd := WinExist("A")                                                  ; store win ID of active application before calling GUI 
     
     FunctionBoxGUI(TOC, default_title, w_color, t_color) 
-    BlockInput, MouseMoveOff
     ; Iniread, tgt_winID, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     ActivateWin("ahk_id " FB_tgt_hwnd)
     UserInput := trim(UserInput)
@@ -646,6 +646,8 @@
   FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" ) {
     global UserInput := "", FB_hwnd := ""
 
+    BlockInput, mousemove
+    settimer, BlockInputTimeOut,-300
     FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
     IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     winget, output, ProcessName, A    
@@ -660,11 +662,12 @@
     ; Gui, fb: Add, Button, W60 X+5 gButtonCancel, Cancel
     Gui, font,s8 , calibri
     Gui, fb: add, text, xs yp+30, case insensitive
-    Gui, fb: +LastFound +OwnDialogs +AlwaysOnTop
+    Gui, fb: +LastFound +OwnDialogs +AlwaysOnTop +Owner
     FB_hwnd  := WinExist()
     GetGUIWinCoords(GUI_X, GUI_Y)
     Gui, Color, %w_color%
     Gui, fb: Show, % "x" GUI_X " y" GUI_Y,                                          ; Show gui at center of current screen
+    BlockInput, mousemoveOff
     ; Gui, +LastFound
     WinWaitClose                                                                ; WinSet, Transparent , 255, ahk_id %CB_Hwnd%
     return
@@ -698,8 +701,8 @@
         selection := ReplaceAwithB(,,selection, False)                          ; replace consecutive bank spaces with 1 space
         selection := ReplaceAwithB("- ","-",selection,0)
         selection := ReplaceAwithB("_ ","_",selection,0) 
-        selection := (optn = "s") ? Trim(AddSpaceBtnCaseChange(selection, 0)) : selection 
-        if (optn = "r")
+        selection := InStr(optn, "s") ? Trim(AddSpaceBtnCaseChange(selection, 0)) : selection 
+        if InStr(optn , "r")                                                    ; (optn = "r") ;InStr(optn , "r")
             arr_KV_swapped[selection] := key
         else             
             TOC .= (TOC <> "" ? "`n" : "") key "`t" trim(selection, """") 
@@ -707,9 +710,9 @@
     }
 
     line := RepeatString("-", max_str_len * 1.35)
-    TOC := (optn != "r") ? ("Key`tSelection`n-----`t" line "`r" . TOC) : ("Key`tSelection`n-----`t" line "`r")
+    TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r" . TOC) : ("Key`tSelection`n-----`t" line "`r")
 
-    if (optn = "r") {                                                           ; optn for value ordered dictionary
+    if InStr(optn , "r") {                                                           ; optn for value ordered dictionary
         For dest, ref in arr_KV_swapped
         {
             

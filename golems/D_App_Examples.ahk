@@ -8,14 +8,6 @@
       #If WinActive("ahk_exe " exe["editor"]) and WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd) and (GC("CB_sfx") == "~markdown")
   */
   
-  /*  SAMPLE CODE: DESKTOP FUNCTIONS 
-    >+>!o::                % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")  ;SC: Move Window to other desktop (between desktops 1 and 2)
-    >!sc028::                                                                   ;SC: Switch between desktop 1 and 2
-    <!sc027::              % (t := !t) ? GotoDesktop("2") : GotoDesktop("1")    ;SC: Switch between desktop 1 and 2
-
-
-
-  */
 
 #If WinActive("ahk_exe " exe["html"])                                           
     

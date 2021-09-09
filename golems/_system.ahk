@@ -72,22 +72,15 @@
     printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
     *printscreen::         Send {Blind}{vk07}                                   ;Convenience| makes printscreen key inert so it can be used as a modifier key
     :X:pscrn~win::         Send {PrintScreen}                                   ;windows 10 printscreen command
-    *#d::                  SaveMousPos("r",1)                                   ;MouseFn: Left click and save mouse position
-    *^#d::                 RecallMousePosClick("r")                             ;MouseFn: Move to saved mouse position and left click
     *#i::                  SaveMousPos("i",1)                                   ;MouseFn: Left click and save mouse position
     *^#i::                 RecallMousePosClick("i")                             ;MouseFn: Move to saved mouse position and left click
     #o::                   Click, middle                                        ;MouseFn: mouse middle click
     PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
     #sc028::               Click, Right                                         ;MouseFn: mouse Right click
-    #f::                   Clicks(2)                                            ;MouseFn: 2 Left clicks (select word)
-    ^#f::                  Clicks(3)                                            ;MouseFn: 3 Left clicks (select line)
     >+esc::                EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
     lwin & rctrl::         ActivateWinID("Rctrl")                               ;ActvateApp: activate saved Window ID
     #n::                   AA("editor_path")                                    ;ActivateApp: Editor
     ralt & right::         s("{blind}"), s("{F11}")                             ;Convenience: full screen {F11}
-    >+>!o::                % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")  ;SC: Move Window to other desktop (between desktops 1 and 2)
-    >!sc028::               GotoDesktop("1")                                     ;SC: Switch to desktop 1
-    ^!enter::              % (t := !t) ? GotoDesktop("2") : GotoDesktop("1")    ;SC: Switch between desktop 1 and 2
     
     PrintScreen & 0::                                                           ;Memory: paste overwrite 0.txt at current cursor position
     PrintScreen & 9::                                                           ;Memory: paste overwrite 9.txt at current cursor position
@@ -120,10 +113,10 @@
                      , "zz": "L4BottomLeftSmall" 
                      , "ee": "R1TopRightSmall"   
                      , "ed": "R2TopMidRightSmall"    
-                     , "cd": "R3BottomMidRightSmall"    
-                     , "cc": "R4BottomRightSmall" }, FB("MoveWin", q, C.bwhite,, "s")   ; "s" optn adds a space between case changes for GUI menu
-
-    
+                     , "cd": "R3BottomMidRightSmall"                                     ; "r" optn sorts menu order by value instead of by key (default)  
+                     , "cc": "R4BottomRightSmall" }, FB("MoveWin", q, C.bwhite,, "rs")   ; "s" optn adds a space between case changes for GUI menu
+                                                                                              
+                                                                                  
     
   #IF GC("T_d",0) and !WinActive("ahk_exe " exe["editor"]) ; -- -- -- -- -- -- -; When editor not active
     ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")    ;Convenience: duplicate line
