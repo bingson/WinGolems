@@ -520,10 +520,7 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
  Rightshift+R            ChangeFolder: Recycle bin (doesn't work for save as diag)
  Rightshift+T            ChangeFolder: This PC / My Computer
  Rightshift+Sc029        ChangeFolder: WinGolems folder
- Rightctrl+Esc           EditFile: A_QuickStart.ahk
- Rightctrl+F1            EditFile: B_Text_Navigation.ahk
- Rightctrl+F2            EditFile: C_File_Navigation.ahk
- Rightctrl+F3            EditFile: D_App_Dependent.ahk
+ Shift+Win+B             FB: OpenPath cESC-cF7 saved paths
  Alt+O                   FileExplorer: forward folder
  Ctrl+I                  FileExplorer: group by date
  Ctrl+O                  FileExplorer: group by file type
@@ -539,15 +536,28 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
  Alt+Z                   FileExplorer: toggle navigation pane
  Ctrl+P                  FileExplorer: toggle preview plane
  Alt+U                   FileExplorer: up one folder level
+ Shift+Ctrl+Esc          FileExplorer; save file or folder path for ^esc
+ Shift+Ctrl+F1           FileExplorer; save file or folder path for ^F1
+ Shift+Ctrl+F2           FileExplorer; save file or folder path for ^F2
+ Shift+Ctrl+F3           FileExplorer; save file or folder path for ^F3
+ Shift+Ctrl+F4           FileExplorer; save file or folder path for ^F4
+ Shift+Ctrl+F5           FileExplorer; save file or folder path for ^F5
+ Shift+Ctrl+F6           FileExplorer; save file or folder path for ^F6
+ Shift+Ctrl+F7           FileExplorer; save file or folder path for ^F7
+ Shift+Ctrl+F8           FileExplorer; save file or folder path for ^F8
  Alt+Sc027               FileExplorer| detailed file info with resized columnsnmn
  Ctrl+S                  FileExplorer| select all files matching regex pattern
  Shift+Alt+C             FileExplorer| store file path(s) of selected file(s) in clipboard
  Ctrl+H                  FileExplorer| toggle hide/unhide invisible files
- Shift+Win+B             FunctionBox: edit file
- Ctrl+Win+B              FunctionBox: open folder
- Rightalt+Esc            OpenFolder: mem_cache (.txt memory folder)
- Rightalt+F2             OpenFolder: WinGolems (.txt memory folder)
- Rightalt+F1             OpenFolder: WinGolems (.txt memory folder)
+ Rightctrl+Esc           OpenPath: open saved file or folder path from +^esc
+ Rightctrl+F1            OpenPath: open saved file or folder path from +^F1
+ Rightctrl+F2            OpenPath: open saved file or folder path from +^F2
+ Rightctrl+F3            OpenPath: open saved file or folder path from +^F3
+ Rightctrl+F4            OpenPath: open saved file or folder path from +^F4
+ Rightctrl+F5            OpenPath: open saved file or folder path from +^F5
+ Rightctrl+F6            OpenPath: open saved file or folder path from +^F6
+ Rightctrl+F7            OpenPath: open saved file or folder path from +^F7
+ Rightctrl+F8            OpenPath: open saved file or folder path from +^F8
 
 ```
 
