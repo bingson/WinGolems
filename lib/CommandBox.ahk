@@ -25,8 +25,8 @@
     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when saved position data is not valid
     CB_position := GC("CB_position", d)
     WP := StrSplit(CB_position, " ")
-    if (WP[4] = 0)                                                              ; check if monitor dimensions valid
-        CB_position := d
+    if (WP[4] < 10)                                                              ; check if monitor dimensions valid
+       CB_position := d
     wdth := WP[3]
     IBwidth := 400
     CC("CB_InputBox_width", IBwidth)
