@@ -140,10 +140,10 @@
   #!LButton::        RetrieveMemory(,"#!LButton")                               ;Mem: double click and paste contents of number entered at prompt
 
 ; COMMAND BOX __________________________________________________________________                             
-  #enter::                                                                      ;CB: opens command box that runs ~win suffix CB keys; enter "?" for help
-  #space::           CB("~win")                                                 ;CB: opens command box that runs ~win suffix CB keys; enter "?" for help
-  :X:tt~win::        TglCFG("T_TM","Text_Manipulation: ")                       ;CB: Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows
-  :X:tf~win::        TglCFG("T_FM","File_Management: ")                         ;CB: Toggle File_Navigation template ON|OFF
+  #enter::                                                                      ;CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
+  #space::           CB("~win")                                                 ;CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
+  :X:tt~win::        TglCFG("T_TM","Text_Manipulation: ")                       ;CommandBox: Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows
+  :X:tf~win::        TglCFG("T_FM","File_Management: ")                         ;CommandBox: Toggle File_Navigation template ON|OFF
 
 
 #IF

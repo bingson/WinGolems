@@ -29,10 +29,16 @@
   :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;SC: open add remove programs 
   :X:s~win::    send ^{esc}                                                     ;SC: open start menu (alt: Ctrl+Esc)
   :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
+  ~#left::
+  ~#right::
+  ~+#left::                                                                     ;SC: cursor follows active window when moving apps btn monitors (if turned on)
+  ~+#right::                                                                    ;SC: cursor follows active window when moving apps btn monitors (if turned on)
+  ~!tab::       CursorFollowWin()                                               ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
 
-  :X:tm~win::                                                                   ;MAW: open task manager with hotstring combines with max + cursor follows task manager window
+
+  :X:tm~win::                                                                   ;SC: open task manager with hotstring combines with max + cursor follows task manager window
                 send +^{esc}                                                    ;     TskMgrExt() will be executed after
-  ~+^esc::      TskMgrExt()                                                     ;MAW: maximize + mouse cursor follows window after task manager opens
+  ~+^esc::      TskMgrExt()                                                     ;SC: maximize + mouse cursor follows window after task manager opens
 
 
 ; CB AHK UTILITIES _____________________________________________________________
@@ -44,9 +50,6 @@
   :X:ec~win::   EditFile("""" config_path """")                                 ;AHK: edit config.ini file
   :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")                     ;AHK: AHK beginner tutorial
   :X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")                ;AHK: toggle mouse cursor follows active window
-  ~+#left::                                                                     ;AHK: cursor follows active window when moving apps btn monitors (if turned on)
-  ~+#right::                                                                    ;AHK: cursor follows active window when moving apps btn monitors (if turned on)
-  ~!tab::       CursorFollowWin()                                               ;AHK: cursor follows active window when switch apps with alt+tab (if turned on)
   :X:clp~win::  WriteToINI(A_ComputerName, "CL_pfx")                            ;AHK: store selected text as label prefix
   :X:cls~win::  WriteToINI(A_ComputerName, "CL_sfx")                            ;AHK: store selected text as label suffix
   :X:cl~win::   CreateLabel("CL_pfx", "CL_sfx")                                 ;AHK: create hotstring label with execution option

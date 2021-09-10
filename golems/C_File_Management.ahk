@@ -71,7 +71,7 @@
 
    #SC033::                                                                     ;FB: Menu for cESC-cF8 saved paths
     send {blind}
-    t := { "esc" : GC("cESC_path", "golems\A_Quick_Start.ahk")      
+    t := { "esc": GC("cESC_path", "golems\A_Quick_Start.ahk")      
           ,"f1" : GC("cF1_path" , "golems\B_Text_Manipulation.ahk")
           ,"f2" : GC("cF2_path" , "golems\C_File_Management.ahk")  
           ,"f3" : GC("cF3_path" , "golems\D_App_Examples.ahk")     

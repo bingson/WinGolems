@@ -4,7 +4,7 @@
 WinGolems comprises a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
 <br><br>
 
-Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the new features of each template. 
+Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the features of each template. 
 <br><br>
 
 <p align="center"><img src="assets\Screens\QuickStartHotkeys.png" width = "800">  </p>
@@ -17,7 +17,7 @@ Beyond adding new keyboard shortcuts, WinGolems also gives users access to the C
     
     - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember keyboard shortcuts.
     
-    - The CB can also be used to create interface layers active only when a particular CB is open, letting the user recycle convenient keyboard shortcuts.
+    - The CB can also be used to create interface layers active only when a particular CB is open.
  
  * having to repeatedly go back and forth between two application windows to copy and paste multiple sections of text in a specific order;
 
@@ -40,7 +40,7 @@ Press ALT + X to switch between modes
 
 See [Tutorial Templates](#tutorial-overview) for a more complete list of template shortcuts and Command Box features.
 
-WinGolems is under constant development because it is something that I use daily. I created this repository to give back to the AHK community, as much of WinGolems' code base comes from code adapted from AHK forums and stack overflow posts. It is my hope that others might find this repository useful enough to want to invest some time into improving WinGolems by pushing contributions back through git.  
+As something that I use daily, WinGolems is under constant development. I created this repository to give back to the AHK community, as much of WinGolems' code base comes from code adapted from AHK forums and stack overflow posts. It is my hope that others might find this repository useful enough to want to invest some time into improving WinGolems by pushing contributions back through git.  
   
 ----
 ## Contents
@@ -166,7 +166,7 @@ To turn on UI options and other tutorial interface layers, open a CommandBox wit
 |<code>tcf</code>   |Toggle mouse cursor follows active window when switching applications                   |     
 |<code>tt </code>   |Toggle text manipulation interface layers                                               |     
 |<code>tf </code>   |Toggle file management interface layers                                                 |     
-|<code>td </code>   |Toggle developer mode (+ trackpoint interface, extra shortcuts)                         |
+|<code>td </code>   |Toggle developer mode (trackpoint interface layer + extra shortcuts)                    |
 |<code>lt</code> &#124; <code>lf</code>  |Turn ON&#124;OFF  `Win + L` locks Computer <br>(allows reassignment through WinGolems templates)|
 | | |     
 
@@ -307,7 +307,7 @@ RunLabel(UserInput="", suffix = "", tgt_winID ="") {
 
 <details><summary>&nbsp;📕&nbsp;<b> Developer mode free keys</b></summary><p>
 
-The developer mode is a hidden interface template found in the _system.ahk file. The developer mode adds additional shortcuts that leverage the unique keyboard layout of Lenovo Trackpoint Keyboards (as shown in the base interface layer image above). In short, it adds additional shortcuts by transforming the PrintScreen key into another modifier key and mouse click functions designed to work with the TrackPoint nub.
+The developer mode is a hidden interface template found in the _system.ahk file. The developer mode adds an interface layer that leverages the unique keyboard layout of Lenovo Trackpoint Keyboards (as shown in the keyboard layout image in the intro). In short, it adds shortcuts by transforming the PrintScreen key into another modifier key as ell as mouse click functions designed to work with the TrackPoint nub.
 
 Turning on the developer interface does not make sense for non-TrackPoint keyboard layouts, leaving free keys that should be reassigned. 
 
@@ -624,7 +624,7 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
 <details><summary>&nbsp;ℹ️&nbsp;<b>System Commands </b></summary><p>
 
 ``` 
- _________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________
 | CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND       |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
@@ -653,12 +653,26 @@ Note: Under WinGolems, the `win` key functions as a modifier key and will not br
 <details><summary>&nbsp;ℹ️&nbsp;<b>Uppercase first letter initiated commands</b></summary><p>
 
 ```
-_________________________________________________________________________________________________________________________________________
-| KEY  TEXT MANIPULATION & MEMORY SYSTEM       USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
+__________________________________________________________________________________________________________________________________________
+| KEY  CONVENIENCE                             USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated                |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
+|  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
+| R?:  Change replacement separators (1|2)     R1~:%; R2~:~>       Changes replacement separators to % and ~> from ~ and __         R?~:?|
+| Q?   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
+| Q?:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
+| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
+| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
+|  G   Run any function                        GMoveWin,TopLeft    fmt: fnName1,fnParams1__fnName2,fnParams2            G?,?__?,? or G?,?|
+| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
+|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
+|________________________________________________________________________________________________________________________________________|
+
+__________________________________________________________________________________________________________________________________________
+| KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM  USAGE EXAMPLE                                                                      Format?|
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  L   Load .txt file into CB display          L1, Lr\testr        Load in display => 1.txt, r\testr.txt ("Ll" .txt list)              L?|
-|      Load file shorcut keys                  Lc, Ls, Ll, ?       Load in display => config.ini, hotkey list, .txt file names           |
+|      Load file shorcut keys                  Lc, Ls, Ll          Load in display => config.ini, hotkey list, mem_cache folder contents |
+| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
 |  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
@@ -666,32 +680,19 @@ ________________________________________________________________________________
 | A|P  Append|Prepend selected text to file    A1, Ar\testr        add selected text to bottom of => 1.txt, r\testr.txt           A or P?|
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
 |  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
-|  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
-| R?:  Change replacement separators (1|2)     R1:%; R2:~>         Changes the above replacement separators to % and ~>              R?:?|
-| Rf:  Modify file w/ saved replace't pattern  Rf:1~p n            modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
-|      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in patten .txt file            ?~?__?~?|
-|________________________________________________________________________________________________________________________________________|
-_________________________________________________________________________________________________________________________________________
-| KEY  CONVENIENCE                             USAGE EXAMPLE                                                                             |
-|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  Q?   Query selected text in search engine   Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
-|  Q?:  Query submitted text                   Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
-| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
-| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
-|  G   Run any function                        GMoveWin,TopLeft    fmt: fnName1,fnParams1__fnName2,fnParams2            G?,?__?,? or G?,?|
-| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
-|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
-|________________________________________________________________________________________________________________________________________|
-_________________________________________________________________________________________________________________________________________
-| KEY  GUI BEHAVIOR & APPEARANCE                                                                                                         |
-|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  W   Run a different CB key suffix           Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
-|  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
-|  T   CommandBox window options               Td, Tm, Tp,         (d)isplay mode, (m)inimalist mode, (p)ersistent: CB stays open,     T?|
-|                                              Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
-|  Z   Change text display options             Z11, Zf:courier, Zd change => font size: 11, font: courier, reset to default    Z?:? or Z?|
+| Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
+|      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in pattern .txt file           ?~?__?~?|
 |________________________________________________________________________________________________________________________________________|
 
+__________________________________________________________________________________________________________________________________________
+| KEY  GUI BEHAVIOR & APPEARANCE               USAGE EXAMPLE                                                                             |
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+|  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
+|  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
+|  Z   Change display window appearance        Z11, Zf:arial, Zd   change => font size: 11, font: courier, reset to default    Z?:? or Z?|
+|  T   CommandBox UI options                   Td, Tm, Tp,         (d)isplay mode, (m)inimalist mode, (p)ersistent: CB stays open,     T?|
+|                                              Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
+|________________________________________________________________________________________________________________________________________|
 ```
 
 </p></details>

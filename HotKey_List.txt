@@ -1,376 +1,263 @@
-SC KEY REFERENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+ _______________________________________________________________________________
+| SC KEY REFERENCE                                                              |
+| ------------------------------------------------------------------------------|
+| SC029 ` ~     SC00D = +      SC00C - _                                        |
+| SC01A [ {     SC01b ] }      SC02b \ |                                        |
+| SC027 ; :     SC028 " '                                                       |
+| SC033 , <     SC034 . >      SC035 / ?                                        |
+| ______________________________________________________________________________|
 
- sc027 = {;:}    sc028 = {"'}    sc029 = {`~}     sc033 = {,<}      sc02b = {\|}
+==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
+ Alt+S                   CB: move CB window to bottom half
+ Shift+Alt+S             CB: move CB window to bottom half small
+ Alt+Z                   CB: move CB window to bottom left
+ Shift+Alt+Z             CB: move CB window to bottom left small
+ Alt+C                   CB: move CB window to bottom right
+ Shift+Alt+C             CB: move CB window to bottom right small
+ Win+Left                CB: move CB window to left half
+ Alt+A                   CB: move CB window to left half
+ Shift+Alt+A             CB: move CB window to left side small
+ Alt+D                   CB: move CB window to right half
+ Win+Right               CB: move CB window to right half
+ Shift+Alt+D             CB: move CB window to right side small
+ Alt+W                   CB: move CB window to top half
+ Shift+Alt+W             CB: move CB window to top half small
+ Alt+Q                   CB: move CB window to top left
+ Shift+Alt+Q             CB: move CB window to top left small
+ Alt+E                   CB: move CB window to top right
+ Shift+Alt+E             CB: move CB window to top right small
+ Leftctrl+Space         CB| activate already open CB and move focus to inputbox
+ Rightctrl+Space        CB| activate already open CB and move focus to inputbox
+ Alt+R                   CB| reenter last command
+ Alt+Space               CB| submit GUI input
+ Win+Space               CB| submit GUI input
+ Alt+X                  CB| toggle Command Box display|minimalist mode
 
- sc034 = {.>}    sc035 = {/?}    sc00D = {=+}     sc00C = {-_} 
-
- sc01a or b = {[} or {]} 
-
-==o====o====o====o====o== 1_TEMPLATE_QUICKSTART ==o====o====o====o====o====o
- Win+X                   ActvateApp: Activate previously saved window ID
- Win+C                   ActvateApp: Activate previously saved window ID
- Win+F                   ActvateApp: Activate previously saved window ID
- Win+Z                   ActvateApp: Activate previously saved window ID
- Ctrl+Win+C              ActvateApp: Save window ID for subsequent activation
- Ctrl+Win+Z              ActvateApp: Save window ID for subsequent activation
- Ctrl+Win+X              ActvateApp: Save window ID for subsequent activation
- Ctrl+Win+F              ActvateApp: Save window ID for subsequent activation
- Win+A                   ActvateApp:1 Activate default editor
- Win+E                   ActvateApp:1 Activate Excel
- Win+B                   ActvateApp:1 Activate File explorer
- Win+D                   ActvateApp:1 Activate pdf viewer
- Win+Q                   ActvateApp:1 Activate Powerpoint
- Win+S                   ActvateApp:1 Activate web browser
- Win+W                   ActvateApp:1 Activate Word
- Rightctrl+Space        CommandBox: activate CB if exists and move focus to inputbox
- Leftctrl+Space         CommandBox: activate CB if exists and move focus to inputbox
- Alt+S                   CommandBox: move CB window to bottom half
- Alt+Z                   CommandBox: move CB window to bottom left
- Alt+C                   CommandBox: move CB window to bottom right
- Win+Left                CommandBox: move CB window to left half
- Alt+A                   CommandBox: move CB window to left half
- Alt+D                   CommandBox: move CB window to right half
- Win+Right               CommandBox: move CB window to right half
- Alt+W                   CommandBox: move CB window to top half
- Alt+Q                   CommandBox: move CB window to top left
- Alt+E                   CommandBox: move CB window to top right
- Alt+R                   CommandBox: reenter last command
- Win+Space               CommandBox: submit GUI input
- Alt+X                  CommandBox: toggle Command Box display|minimalist mode
- Ctrl+Win+W              Convenience: close active window
- Ctrl+Win+Q              Convenience: close all instances of the active program
- Alt+Backspace           Convenience: Delete current line of text
+==o====o====o====o====o====o== A_QUICK_START ==o====o====o====o====o====o===
+ Win+F1                  Apps: Activate saved F1 window
+ Win+F2                  Apps: Activate saved F2 window
+ Win+F3                  Apps: Activate saved F3 window
+ Win+F4                  Apps: Activate saved F4 window
+ Win+F5                  Apps: Activate saved F5 window
+ Win+F6                  Apps: Activate saved F6 window
+ Win+F7                  Apps: Activate saved F7 window
+ Win+F8                  Apps: Activate saved F8 window
+ Ctrl+Alt+F1             Apps: Save window for win+F1 activation
+ Ctrl+Alt+F2             Apps: Save window for win+F2 activation
+ Ctrl+Alt+F3             Apps: Save window for win+F3 activation
+ Ctrl+Alt+F4             Apps: Save window for win+F4 activation
+ Ctrl+Alt+F5             Apps: Save window for win+F5 activation
+ Ctrl+Alt+F6             Apps: Save window for win+F6 activation
+ Ctrl+Alt+F7             Apps: Save window for win+F7 activation
+ Ctrl+Alt+F8             Apps: Save window for win+F8 activation
+ Win+C                   Apps| Activate Calculator
+ Win+T                   Apps| Activate Command window
+ Win+Z                   Apps| Activate default editor
+ Win+Q                   Apps| Activate Excel
+ Win+B                   Apps| Activate File Explorer
+ Win+A                   Apps| Activate pdf viewer
+ Win+X                   Apps| Activate PowerPoint
+ Win+S                   Apps| Activate web browser
+ Win+W                   Apps| Activate Word
+ Win+Space               CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Win+Enter               CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Alt+Backspace           Convenience: delete current line of text
  Win+Sc035               Convenience: google search selected text
- Win+Sc028               Convenience: maximize window
- Ctrl+Alt+Space          Convenience: maximize window
- Win+Sc027               Convenience: minimize window
- Alt+Sc034               Convenience: move window btn monitors
- Win+Space               Convenience: opens command box that runs ~win suffix CB keys; "?" for cheat sheet
- Rshift & Lshift         Convenience: reload WinGolems
- Lshift & Rshift         Convenience: reload WinGolems (update running script for changes, fixes sticky keys)
- Shift+Alt+Capslock      Convenience: rotate through application instances starting from newest
- Win+Capslock            Convenience: rotate through application instances starting from newest
- Shift+Win+Capslock      Convenience: rotate through application instances starting from oldest
- Alt+Capslock            Convenience: rotate through application instances starting from oldest
- Ctrl+Sc027              Convenience: simulate appkey
- Alt+Sc027               Convenience: simulate esc key (alt + semicolon)
- Win+Ins                 Convenience: Window always on top: OFF
- Win+Del                 Convenience: Window always on top: ON
- Ctrl+Alt+J             Convenience: zoom in (simulate: ctrl + plus)
- Ctrl+Alt+K             Convenience: zoom out (simulate: ctrl + minus)
- *Lwin                   Convenience:1 makes windows key inert so it can act as a modifier key
- Lwin Up                 Convenience:1 makes windows key inert so it can act as a modifier key
- Ctrl+Win+Enter         Convenience:1 open start menu (alt: Ctrl+Esc)
- Win+Lbutton             Convenience:1 open start menu (alt: Ctrl+Esc)
- Alt+Win+B               Convenience:2 bluetooth settings (reassign less used windows sys shortcuts)
- Alt+Win+D               Convenience:2 display settings
- Alt+Win+N               Convenience:2 notification window
- Alt+Win+P               Convenience:2 presentation display mode
- Alt+Win+R               Convenience:2 run program
- Alt+Win+I               Convenience:2 windows settings
- Ctrl+Win+0              Memory: add selected text to the bottom of 0.txt
- Ctrl+Win+1              Memory: add selected text to the bottom of 1.txt
- Ctrl+Win+2              Memory: add selected text to the bottom of 2.txt
- Ctrl+Win+3              Memory: add selected text to the bottom of 3.txt
- Ctrl+Win+4              Memory: add selected text to the bottom of 4.txt
- Ctrl+Win+5              Memory: add selected text to the bottom of 5.txt
- Ctrl+Win+6              Memory: add selected text to the bottom of 6.txt
- Ctrl+Win+7              Memory: add selected text to the bottom of 7.txt
- Ctrl+Win+8              Memory: add selected text to the bottom of 8.txt
- Ctrl+Win+9              Memory: add selected text to the bottom of 9.txt
- Shift+Win+0             Memory: overwrite 0.txt with selected text
- Shift+Win+1             Memory: overwrite 1.txt with selected text
- Shift+Win+2             Memory: overwrite 2.txt with selected text
- Shift+Win+3             Memory: overwrite 3.txt with selected text
- Shift+Win+4             Memory: overwrite 4.txt with selected text
- Shift+Win+5             Memory: overwrite 5.txt with selected text
- Shift+Win+6             Memory: overwrite 6.txt with selected text
- Shift+Win+7             Memory: overwrite 7.txt with selected text
- Shift+Win+8             Memory: overwrite 8.txt with selected text
- Shift+Win+9             Memory: overwrite 9.txt with selected text
- Win+0                   Memory: paste contents of 0.txt
- Win+1                   Memory: paste contents of 1.txt
- Win+2                   Memory: paste contents of 2.txt
- Win+3                   Memory: paste contents of 3.txt
- Win+4                   Memory: paste contents of 4.txt
- Win+5                   Memory: paste contents of 5.txt
- Win+6                   Memory: paste contents of 6.txt
- Win+7                   Memory: paste contents of 7.txt
- Win+8                   Memory: paste contents of 8.txt
- Win+9                   Memory: paste contents of 9.txt
- Ctrl+Win+Lbutton        Memory:| double click and paste contents of 1.txt at cursor position
- Win+Alt+Lbutton         Memory:| paste contents of single digit .txt file entered at prompt
- Win+P                   Navigation: Ctrl + end
- Win+O                   Navigation: Ctrl + Home
+ Shift+Win+0             Mem: add selected text to the bottom of 0.txt
+ Shift+Win+1             Mem: add selected text to the bottom of 1.txt
+ Shift+Win+2             Mem: add selected text to the bottom of 2.txt
+ Shift+Win+3             Mem: add selected text to the bottom of 3.txt
+ Shift+Win+4             Mem: add selected text to the bottom of 4.txt
+ Shift+Win+5             Mem: add selected text to the bottom of 5.txt
+ Shift+Win+6             Mem: add selected text to the bottom of 6.txt
+ Shift+Win+7             Mem: add selected text to the bottom of 7.txt
+ Shift+Win+8             Mem: add selected text to the bottom of 8.txt
+ Shift+Win+9             Mem: add selected text to the bottom of 9.txt
+ Ctrl+Win+Lbutton        Mem: double click and paste contents of 1.txt at cursor position
+ Win+Alt+Lbutton         Mem: double click and paste contents of number entered at prompt
+ Ctrl+Alt+0              Mem: overwrite 0.txt with selected text
+ Ctrl+Alt+1              Mem: overwrite 1.txt with selected text
+ Ctrl+Alt+2              Mem: overwrite 2.txt with selected text
+ Ctrl+Alt+3              Mem: overwrite 3.txt with selected text
+ Ctrl+Alt+4              Mem: overwrite 4.txt with selected text
+ Ctrl+Alt+5              Mem: overwrite 5.txt with selected text
+ Ctrl+Alt+6              Mem: overwrite 6.txt with selected text
+ Ctrl+Alt+7              Mem: overwrite 7.txt with selected text
+ Ctrl+Alt+8              Mem: overwrite 8.txt with selected text
+ Ctrl+Alt+9              Mem: overwrite 9.txt with selected text
+ Win+0                   Mem: paste contents of 0.txt
+ Win+1                   Mem: paste contents of 1.txt
+ Win+2                   Mem: paste contents of 2.txt
+ Win+3                   Mem: paste contents of 3.txt
+ Win+4                   Mem: paste contents of 4.txt
+ Win+5                   Mem: paste contents of 5.txt
+ Win+6                   Mem: paste contents of 6.txt
+ Win+7                   Mem: paste contents of 7.txt
+ Win+8                   Mem: paste contents of 8.txt
+ Win+9                   Mem: paste contents of 9.txt
  Ctrl+Alt+L              Navigation: End
  Ctrl+Alt+H              Navigation: Home
- Win+J                   Navigation: scroll wheel down
- Win+Rightalt+H         Navigation: scroll wheel left
- Win+Rightalt+L         Navigation: scroll wheel right
- Win+K                   Navigation: scroll wheel Up
- Alt+B                   Navigation: universal navigate to left tab
- Alt+Space               Navigation: universal navigate to right tab
+ Win+K                  Navigation: mouse scroll down 2 lines
+ Win+J                  Navigation: mouse scroll down 2 lines
+ Rightalt+Win+K         Navigation: mouse scroll down 6 lines
+ Rightalt+Win+J         Navigation: mouse scroll down 6 lines
+ Win+Rightalt+H         Navigation: mouse scroll left
+ Win+Rightalt+L         Navigation: mouse scroll right
+ Alt+B                   Navigation: navigate to left tab
+ Alt+Space               Navigation: navigate to right tab
+ Rightshift+Rightalt+O   VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2)
+ Ctrl+Alt+Enter          VirtualDesktop: Switch between desktop 1 and 2
+ Rightalt+Sc028          VirtualDesktop: Switch to desktop 1
+ Shift+Win+Q             WindowMgmt: close active window
+ Alt+Win+Q               WindowMgmt: close all instances of the active program
+ Ctrl+Alt+Space          WindowMgmt: maximize window
+ Win+Sc028               WindowMgmt: maximize window
+ Win+Sc027               WindowMgmt: minimize window
+ Alt+Sc034               WindowMgmt: move window btn monitors, cursor follows active windows
+ Shift+Win+Capslock      WindowMgmt: rotate through app instances from most recent
+ Win+Capslock            WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+ *Alt+Capslock           WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction)
+ Ctrl+Win+Sc027          WindowMgmt: show desktop
+ Win+Ins                 WindowMgmt: Window always on top: OFF
+ Win+Del                 WindowMgmt: Window always on top: ON
+ Rshift & Lshift         WinGolems: reload WinGolems
+ Lshift & Rshift         WinGolems: reload WinGolems (update running script for changes, fixes sticky keys)
+ Win+Esc                 WinGolems: toggle all hotkeys ON|OFF except for this one
+ Ctrl+Win+Enter         WinOS: open start menu
+ Win+Lbutton             WinOS: open start menu (alt: Ctrl+Esc)
+ Ctrl+Sc027              WinOS: simulate appkey
+ Alt+Sc027               WinOS: simulate esc key (alt + semicolon)
+ Alt+Win+B               WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
+ Alt+Win+D               WinSetting: display settings
+ Alt+Win+N               WinSetting: notification window
+ Alt+Win+P               WinSetting: presentation display mode
+ Alt+Win+R               WinSetting: run program
+ Alt+Win+I               WinSetting: windows settings
 
-==o====o====o====o====o== 2_TEMPLATE_ADVANCED ==o====o====o====o====o====o==
- Rightshift+C            ChgFolder: %Homedrive% (C:)
- Rightshift+U            ChgFolder: %UserProfile%
- Rightshift+Sc029        ChgFolder: AHK folder
- Rightshift+O            ChgFolder: C:\Program Files
- Rightshift+Alt+O        ChgFolder: C:\Program Files(x86)
- Rightshift+D            ChgFolder: Documents
- Rightshift+J            ChgFolder: Downloads
- Rightshift+M            ChgFolder: mem_cache
- Rightshift+P            ChgFolder: Pictures
- Rightshift+T            ChgFolder: This PC / My Computer (file explorer only)
- Shift+Alt+S             CommandBox: move CB window to bottom half small
- Shift+Alt+Z             CommandBox: move CB window to bottom left small
- Shift+Alt+C             CommandBox: move CB window to bottom right small
- Shift+Alt+A             CommandBox: move CB window to left side small
- Shift+Alt+D             CommandBox: move CB window to right side small
- Shift+Alt+W             CommandBox: move CB window to top half small
- Shift+Alt+Q             CommandBox: move CB window to top left small
- Shift+Alt+E             CommandBox: move CB window to top right small
- Ctrl+Win+Backspace      Convenience: Delete and replace selected text with blank spaces
- Alt+Sc033               Convenience: Move window to preset locations
- <HS>  date*             Convenience: output current date
- Ctrl+Win+V              Convenience: Paste and overwrite the same number of spaces (aka. overtype paste)
- Alt+Win+Space           Convenience: remove all spaces from selected text
- Alt+Win+Enter           Convenience: remove empty lines starting from selected text
- Ctrl+Win+Space          Convenience: replace multiple consecutive spaces w/ one space in selected text
- Ctrl+Win+Sc027          Convenience: show desktop
- Capslock                Convenience:1 makes capslock key function as a delete key. (old capslock functionality: ctrl + capslock)
- Ctrl+Capslock           Convenience:1 toggle capslock
- Shift+Ctrl+U            Convenience:2 capitalize selected text
- Shift+Alt+U             Convenience:2 convert selected text to lower case
- Ctrl+Alt+Shift+U        Convenience:2 Every First Letter Capitalized
- Ctrl+Alt+U              Convenience:2 First letter capitalized
- Ctrl+I                  FileExplorer: group by date
- Ctrl+O                  FileExplorer: group by file type
- Rightalt+Space          FileExplorer: move focus to current folder pane
- Leftalt+Space           FileExplorer: move focus to navigation pane
- Leftctrl+K              FileExplorer: sort by date modified
- Leftctrl+J              FileExplorer: sort by name
- Rightctrl+K             FileExplorer: sort by size
- Rightctrl+J             FileExplorer: sort by type
- Alt+Z                   FileExplorer: toggle navigation pane
- Ctrl+P                  FileExplorer: toggle preview plane
- Alt+Sc027               FileExplorer:1 detailed file info with resized columnsnmn
- Ctrl+S                  FileExplorer:1 select files by regex
- Shift+Alt+C            FileExplorer:1 store file path(s) of selected file(s) in clipboard
- Ctrl+H                  FileExplorer:1 toggle hide/unhide invisible files
+==o====o====o====o====o== B_TEXT_MANIPULATION ==o====o====o====o====o====o==
+ Alt+Win+Space           Convenience! remove all spaces from selected text
+ Alt+Win+Enter           Convenience! remove empty lines starting from selected text
+ Ctrl+Win+Space          Convenience! replace multiple consecutive spaces w/ one space in selected text
+ Shift+Ctrl+U            Convenience* capitalize selected text
+ Shift+Alt+U             Convenience* make selected text to lower case
+ Win+Backspace           Convenience: ^backspace (delete word from last character)
+ Shift+Capslock          Convenience: backspace (toggle capslock: ctrl + capslock)
+ Capslock                Convenience: delete (toggle capslock: ctrl + capslock)
+ Ctrl+Alt+D              Convenience: duplicate current line
+ Shift+Alt+Sc028         Convenience: enclose selected text with " "
+ Rightalt+M              Convenience: enclose selected text with  
+ Rightalt+N              Convenience: enclose selected text with % %
+ Ctrl+Sc028              Convenience: enclose selected text with ' '
+ Shift+Alt+9             Convenience: enclose selected text with ( )
+ Alt+Sc029               Convenience: enclose selected text with ` `
+ Shift+Alt+Sc029         Convenience: enclose selected text with ``` ```
+ Ctrl+Alt+Sc027          Convenience: left bracket
+ Ctrl+Alt+Sc028          Convenience: right bracket
+ Ctrl+Capslock           Convenience: toggle capslock
+ Ctrl+Alt+Shift+U        Convenience; Every First Letter Capitalized
+ Ctrl+Alt+U              Convenience; First letter capitalized
+ Ctrl+Win+Backspace      Convenience| Delete and replace selected text with blank spaces
+ Ctrl+Win+V              Convenience| Paste and overwrite the same number of spaces (aka. overtype paste)
+ Alt+V                   Convenience| replace multiple paragraph breaks w/ 1 break in selected text
+ Shift+Alt+V             Convenience| replace multiple paragraph breaks with space (remove paragraphs breaks)
+ Win+F                   MouseFn: 2 Left clicks (select word)
+ Ctrl+Win+F              MouseFn: 3 Left clicks (select line)
  Shift+Ctrl+Lbutton      MouseFn: click thrice, paste clipboard
  Ctrl+Alt+Lbutton        MouseFn: click twice, paste clipboard
- *Win+I                  MouseFn: Left click and save mouse position
- Alt+I                   MouseFn: mouse middle click
- Printscreen & Sc028     MouseFn: mouse Right click
- Win+Sc028               MouseFn: mouse Right click
+ *Win+D                  MouseFn: Left click and save mouse position
  Alt+Win+J              MouseFn: move mouse cursor to bottom edge
  Ralt & Lalt             MouseFn: move mouse cursor to BOTTOM LEFT of active app
  Lalt & Ralt             MouseFn: move mouse cursor to BOTTOM RIGHT of active app
  Alt+Win+H              MouseFn: move mouse cursor to Left edge
  Alt+Win+L              MouseFn: move mouse cursor to Right edge
  Alt+Win+K              MouseFn: move mouse cursor to top edge
- *Ctrl+Win+I             MouseFn: Move to saved mouse position and left click
- Win+J                   MouseFn: scroll wheel down
- Win+Rightalt+H         MouseFn: scroll wheel left
- Win+Rightalt+L         MouseFn: scroll wheel right
- Win+K                   MouseFn: scroll wheel Up
+ *Ctrl+Win+D             MouseFn: return to saved mouse position (change 0 to number of clicks)
  Ctrl+Alt+J             MouseFn: zoom in
  Ctrl+Alt+K             MouseFn: zoom out
- Win+H                  NavigateText: jump to next word; simulate ctrl+Left
- Win+L                  NavigateText: jump to next word; simulate ctrl+Right (must first disable win+L lock key combo with CB key "lf")
- *Alt+J                 NavigateText:| Down
- Alt+H                  NavigateText:| Left
- Alt+L                  NavigateText:| Right
- *Alt+K                 NavigateText:| Up
- Shift+Alt+J             SelectText: extend selection down  1 row
- Shift+Win+J            SelectText: extend selection down  1 row
- Shift+Alt+H            SelectText: extend selection Left  1 character
- Shift+Win+H            SelectText: extend selection Left  1 word
- Shift+Alt+L            SelectText: extend selection Right 1 character
- Shift+Win+L            SelectText: extend selection Right 1 word
- Shift+Alt+K             SelectText: extend selection up    1 row
- Shift+Win+K            SelectText: extend selection up    1 row
- Ctrl+Win+K             SelectText: select all above
- Ctrl+Win+J             SelectText: select all below
- Shift+Alt+F            SelectText: select current line starting from begining of line
- Ctrl+Alt+F             SelectText: select line starting from end of line
- Ctrl+Win+H             SelectText: select to beginning of line
- Ctrl+Win+L             SelectText: select to end of line
- Shift+Ctrl+K           SelectText: select to line above
- Shift+Ctrl+J           SelectText: select to next line
- Alt+F                  SelectText: select word at text cursor position
+ Win+Shift+E             Navigation: ^end
+ Win+E                   Navigation: ^home
+ Win+H                  Navigation: jump to next word; simulate ctrl+Left
+ Win+L                  Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
+ *Alt+J                 Navigation| Down
+ Alt+H                  Navigation| Left
+ Alt+L                  Navigation| Right
+ *Alt+K                 Navigation| Up
+ Shift+Win+J            Selection: extend selection down  1 row
+ Shift+Alt+J             Selection: extend selection down  1 row
+ Shift+Alt+H            Selection: extend selection Left  1 character
+ Shift+Win+H            Selection: extend selection Left  1 word
+ Shift+Win+Alt+H        Selection: extend selection Left  2 words
+ Shift+Ctrl+Win+H       Selection: extend selection Left  3 words
+ Shift+Alt+L            Selection: extend selection Right 1 character
+ Shift+Win+L            Selection: extend selection Right 1 word
+ Shift+Win+Alt+L        Selection: extend selection Right 2 words
+ Shift+Ctrl+Win+L       Selection: extend selection Right 3 words
+ Shift+Alt+K             Selection: extend selection up    1 row
+ Shift+Win+K            Selection: extend selection up    1 row
+ Ctrl+Win+K             Selection: select all above
+ Ctrl+Win+J             Selection: select all below
+ Shift+Alt+F            Selection: select current line starting from begining of line
+ Ctrl+Alt+F             Selection: select line starting from end of line
+ Ctrl+Win+H             Selection: select to beginning of line
+ Ctrl+Win+L             Selection: select to end of line
+ Shift+Ctrl+K           Selection: select to line above
+ Shift+Ctrl+J           Selection: select to next line
+ Alt+F                  Selection: select word at text cursor position
 
-==o====o====o====o====o====o====o== BING ==o====o====o====o====o====o====o==
- Sc056 & L               
- Rightshift+N            
- Sc056 & H               
- Sc056 & H               
- Leftalt+F10             
- Sc056 & J               
- Ctrl+F2                 
- Shift+Win+P             
- Shift+Win+B             
- Alt+Win+M               
- Printscreen & N         
- Ctrl+Alt+X              
- Sc056 & L               
- Sc056 & K               
- Printscreen & Sc034     <TMA> Tabs Outliner and pinned webpages
- <HS>  ahk>              = 
- <HS>  2010>             = 
- <HS>  ds>               = 
- <HS>  dag>              =           
- <HS>  &>                =  &nbsp; 
- <HS>  _>                = &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- *Sc056                 [WACS] french keyboard: holds down shift as long as SC056 (Left side '/') key is held down
- Win+M                   AA: Obsidian
- Rightalt+G              CF: AHK golems
- Rightalt+Sc029          CF: AHK_template
- Rightshift+4            CF: AHK_template
- Leftalt+F1              CF: AHK_template
- Rightshift+B            CF: Backup folder
- Ctrl+B                  CF: buffer folder
- Ctrl+F1                 CF: dag course folder
- Rightalt+3              CF: data science folderD:\buffer\
- Rightalt+2              CF: monzo folder
- Rightshift+H            CF: Pictures
- Alt+Rightshift+P        CF: Pictures
- Rightshift+S            CF: secure folder
- Rightalt+4              CF: Statistical Rethinking folder
- Rightshift+Rightalt+M   CF: win img
- Lwin & M                EF: Bing.ahk
- Printscreen & C         EF: chrome.ahk
- Lwin & M                EF: programming.notes
- Ctrl+1                  FE: open anaconda prompt in current directory with 'Jupyter Notebook' typed into the prompt
- Alt+Pgdn                MAW: rotate through active program instances starting from newest
- Printscreen & Pgdn      MAW: rotate through active program instances starting from oldest
- Shift+Win+X             Run, firefox.exe -private
-
-==o====o====o====o====o====o== CHROME ==o====o====o====o====o====o====o====o
- Alt+0                  
- Alt+1                  
- Alt+2                  
- Alt+3                  
- Alt+7                  
- Alt+8                  
- Alt+Ctrl+0             
- Printscreen & Space     
- Ctrl+S                 
- Ctrl+Sc035             
- Ctrl+Space             
- Shift+Alt+0            
- Shift+Alt+8            
- Shift+Alt+Ctrl+1       
- Shift+Alt+Ctrl+2       
- Shift+Alt+Ctrl+3       
- Shift+Alt+Ctrl+4       
- Shift+Ctrl+0           
- Printscreen & N         
- Shift+Ctrl+M           
- Win+Enter              
- Alt+N                   
- Ctrl+R                  
- Alt+Pgup                
- Alt+R                   
- Win+Space               "URL_TOC"              ;<JL> opens edit file jump list
- Shift+Win+N             [MF] click to open downloaded file
- Alt+P                   close tab
- ~Ctrl+W                 close tab
- Win+J                   MF: scroll wheel down
- Printscreen & J         MF: scroll wheel down
- Win+K                   MF: scroll wheel Up
- Printscreen & K         MF: scroll wheel Up
- Ctrl+Sc034              move tab to first position
- Leftctrl+Sc033          move tab to last position
- Shift+Ctrl+Alt+R        restart browser
- Shift+Ctrl+Alt+W       save and close all browser windows
- Alt+Sc035              SC035 = /
-
-==o====o====o====o====o====o== OBSIDIAN ==o====o====o====o====o====o====o===
- Win+Space              
- Alt+B                   
- Shift+Alt+Z             
- Alt+M                   
- Win+Enter              
- Shift+Ctrl+Alt+D        delete file
- Alt+E                   highlight text
- Alt+R                   rename file
- Shift+Alt+M             send e-mail
- Ctrl+Shift+N            Split the pane vertically and create a new file
- Alt+Z                   toggle left side bar (vault contents)
-
-==o====o====o====o====o====o== OFFICE ==o====o====o====o====o====o====o====o
- Alt+B                   
- Ctrl+J                  
- Xbutton2                
- Rightshift+Space        
- Ralt & B                
- Xbutton1                
- Ctrl+Tab                
- Shift+Win+S            
- Win+Enter              
- Win+F11                
- Win+Space              
- Ctrl+Shift+Tab          
- Ctrl+Sc028              
- Ctrl+F                  
- Win+Space               
- Alt+B                   
- Wheelright              
- Ctrl+Pgup               
- Ctrl+Pgdn               
- Wheelleft               
- Alt+Space               
- Ctrl+K                  
- ~Alt+M                 (HS) change file name and save
- ~Alt+B                 (HS) change file name and save
- Alt+S                   <ANKI> select color for font
- Alt+D                   <ANKI> underline and bold
- Shift+Alt+J             <E>  MyZoomIn
- Shift+Alt+K             <E>  MyZoomOut
- Alt+Enter               <E> edit cell {F2}
- Alt+G                   <E> highlight cell green
- Alt+P                   <E> highlight cell pink
- Alt+Y                   <E> highlight cell yellow
- Shift+Ctrl+Sc028        <E> open vba editor
- Alt+W                   <E> resize_pic by img_width
- *Wheeldown             <E> while holding shift using scroll wheel or trackpoint infinite scroll
- *Wheelup               <E> while holding shift using scroll wheel or trackpoint infinite scroll
- Ctrl+Alt+0              <w> add space above paragraph
- Ctrl+Shift+Sc027       <w> change keyboard shortcuts
- Printscreen & C         <W> change_font_AND_size
- Alt+Sc035               <w> collapse/expand headings
- Ctrl+Sc035              <w> collapse/expand headings
- Ctrl+Alt+D              <w> duplicate above line
- F1 & M                  <W> hide_statusbar
- Printscreen & F         <W> InsertFootnoteNow
- Alt+Shift+M            <w> math formula
- Ctrl+Alt+P              <W> Paste and eliminate line breaks and double spaces.
- Shift+Ctrl+Alt+9        <w> remove space between paragraphs
- Alt+W                   <w> resize pictures
- Shift+Alt+W             <w> resize pictures shorter
- Shift+Ctrl+Alt+B        <w> select all text between two headings
- Ctrl+Sc033              <W> toggle thesaurus
- Ctrl+9                  <w> zero_paragraph
- Ctrl+Alt+Z              [MF] Left click and save mouse position
- Alt+Z                  [MF] Move to saved mouse position and left click
- Alt+P                  [PDF] close tab
- Alt+Sc035              [PDF] goto index of open tabs
- Leftalt+Space           [PDF] move to Right tab
- Rightalt+Space Up       [PDF] move to Right tab
- Alt+Sc034              [PDF] toggle menu bars (.)
- Ctrl+Sc034             [PDF] toogle bookmark menu
- Ctrl+J                  [PDF] zoom in
- Ctrl+K                  [PDF] zoom out
- Leftalt+Space           [T] navigate to left tab
- Rightalt+Space          [T] navigate to left tab
- Alt+B                   [T] navigate to right tab
- Alt+U                   alt+';' = capitalizes words or titles
- Shift+Ctrl+Sc028        open vba editor
- Rightshift+Space        Send {Space 4}
+==o====o====o====o====o== C_FILE_MANAGEMENT ==o====o====o====o====o====o====
+ Rightshift+C            ChangeFolder: %Homedrive% (C:)
+ Rightshift+U            ChangeFolder: %UserProfile%
+ Rightshift+O            ChangeFolder: C:\Program Files
+ Rightshift+Alt+O        ChangeFolder: C:\Program Files(x86)
+ Rightshift+D            ChangeFolder: Documents
+ Rightshift+J            ChangeFolder: Downloads
+ Rightshift+M            ChangeFolder: mem_cache
+ Rightshift+P            ChangeFolder: Pictures
+ Rightshift+R            ChangeFolder: Recycle bin (doesn't work for save as diag)
+ Rightshift+T            ChangeFolder: This PC / My Computer
+ Rightshift+Sc029        ChangeFolder: WinGolems folder
+ Leftctrl+Space         FB: activate already open Function Box and move focus to inputbox
+ Rightctrl+Space        FB: activate already open Function Box and move focus to inputbox
+ Win+Sc033               FB: Menu for cESC-cF8 saved paths
+ Alt+O                   FileExplorer: forward folder
+ Ctrl+I                  FileExplorer: group by date
+ Ctrl+O                  FileExplorer: group by file type
+ Ctrl+U                  FileExplorer: group by name|remove grouping toggle
+ Alt+Space               FileExplorer: move focus to current folder pane
+ Alt+B                   FileExplorer: move focus to navigation pane
+ Alt+I                   FileExplorer: prev folder
+ Alt+R                  FileExplorer: rename file
+ Leftctrl+K              FileExplorer: sort by date modified
+ Leftctrl+J              FileExplorer: sort by name
+ Rightctrl+K             FileExplorer: sort by size
+ Rightctrl+J             FileExplorer: sort by type
+ Alt+Z                   FileExplorer: toggle navigation pane
+ Ctrl+P                  FileExplorer: toggle preview plane
+ Alt+U                   FileExplorer: up one folder level
+ Shift+Ctrl+Esc          FileExplorer; save file|folder path for ^esc
+ Shift+Ctrl+F1           FileExplorer; save file|folder path for ^F1
+ Shift+Ctrl+F2           FileExplorer; save file|folder path for ^F2
+ Shift+Ctrl+F3           FileExplorer; save file|folder path for ^F3
+ Shift+Ctrl+F4           FileExplorer; save file|folder path for ^F4
+ Shift+Ctrl+F5           FileExplorer; save file|folder path for ^F5
+ Shift+Ctrl+F6           FileExplorer; save file|folder path for ^F6
+ Shift+Ctrl+F7           FileExplorer; save file|folder path for ^F7
+ Shift+Ctrl+F8           FileExplorer; save file|folder path for ^F8
+ Alt+Sc027               FileExplorer| detailed file info with resized columnsnmn
+ Ctrl+S                  FileExplorer| select all files matching regex pattern
+ Shift+Alt+C            FileExplorer| store file path(s) of selected file(s) in clipboard
+ Ctrl+H                  FileExplorer| toggle hide/unhide invisible files
+ Ctrl+Esc                OpenPath: open saved file|folder path from +^esc
+ Ctrl+F1                 OpenPath: open saved file|folder path from +^F1
+ Ctrl+F2                 OpenPath: open saved file|folder path from +^F2
+ Ctrl+F3                 OpenPath: open saved file|folder path from +^F3
+ Ctrl+F4                 OpenPath: open saved file|folder path from +^F4
+ Ctrl+F5                 OpenPath: open saved file|folder path from +^F5
+ Ctrl+F6                 OpenPath: open saved file|folder path from +^F6
+ Ctrl+F7                 OpenPath: open saved file|folder path from +^F7
+ Ctrl+F8                 OpenPath: open saved file|folder path from +^F8
 
 -------------------------------- WINGOLEMS ---------------------------------
---o----o----o----o-- 3_TEMPLATE_APPLICATIONSPECIFIC --o----o----o----o----o-
 --o----o----o----o----o----o-- _SYSTEM --o----o----o----o----o----o----o----
+--o----o----o----o----o----o-- D_APP_EXAMPLES --o----o----o----o----o----o--
 --o----o----o----o----o----o----o-- TEST --o----o----o----o----o----o----o--

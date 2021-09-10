@@ -148,14 +148,14 @@
         leave_CB_open := ""
         CC("last_user_input", UserInput)                                        ; store key history
         GuiControl, 2:, UserInput,
-        FileAppend,% "`n" UserInput, %A_ScriptDir%\mem_cache\b\_hist.txt 
-        If !IsFunc(ProcessMod) 
+        if GC("CB_hist",0)
+            FileAppend,% "`n" UserInput, %A_ScriptDir%\mem_cache\_hist.txt 
+        if !IsFunc(ProcessMod) 
             afterExecution := ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, w_color)
         else 
             afterExecution := %ProcessMod%(UserInput, suffix, title, fsz, fnt, w_color, t_color)
         
         afterExecution := (GC("CB_persistent", 0) = 1) ? 2 : afterExecution
-        ; afterExecution
 
         switch afterExecution
         {

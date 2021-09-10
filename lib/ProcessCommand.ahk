@@ -193,19 +193,19 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 gosub, Load
                 return 1
             Case "R":                                                           ; replace string 
-                C_2          := SubStr(C_input, 1, 2) , sep1 := GC("Rsep1","~")
-                C3_Remainder := SubStr(C_input, 3)    , sep2 := GC("Rsep2","__") 
+                C_3          := SubStr(C_input, 1, 3) , sep1 := GC("Rsep1","~")
+                C4_Remainder := SubStr(C_input, 4)    , sep2 := GC("Rsep2","__") 
                         
-                switch C_2
+                switch C_3
                 {
-                    case "1:":
-                        CC("Rsep1", C3_Remainder), UpdateGUI()
+                    case "1~:":
+                        CC("Rsep1", C4_Remainder), PU("Rsep1: " C4_Remainder), UpdateGUI()
                         return 1
-                    case "2:":
-                        CC("Rsep2", C3_Remainder), UpdateGUI()
+                    case "2~:":
+                        CC("Rsep2", C4_Remainder), PU("Rsep2: " C4_Remainder), UpdateGUI()
                         return 1
-                    Case "f:":
-                        OuterArr := StrSplit(C3_Remainder, " ")
+                    Case "f~:":
+                        OuterArr := StrSplit(C4_Remainder, " ")
                         InnerArr := StrSplit(OuterArr[1], sep1)
                         SplitPath,% InnerArr[1], oFileName, oDir, oExtension, oNameNoExt
                         SplitPath,% InnerArr[2], pFileName, pDir, pExtension, pNameNoExt

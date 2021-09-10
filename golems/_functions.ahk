@@ -7,7 +7,7 @@
        , "lyellow"     : "FCE28A"
        , "lpurple"     : "CDC9D9"
        , "dyellow"     : "FFA404"
-       , "dgreen"     : "013220"
+       , "dgreen"      : "013220"
        , "black"       : "000000"
        , "white"       : "FFFFFF"
        , "red"         : "FF0000"
@@ -241,27 +241,28 @@
 
   ActivateExplorer := Func("ActivateApp").Bind("explorer.exe")
 
-  CloudSync(state="ON") {
-    ; Turn ON/OFF google cloud sync
+  CloudSync(state="ON") {                                                       ; Turn ON/OFF google cloud sync
     global med, config_path, C 
-    IniRead, ini_app_path, %config_path%, %A_ComputerName%, sync_path, 
-    RegExMatch(ini_app_path, "[^\\]+$", exe_name)
-
+    RegExMatch(GC("sync_path"), "[^\\]+$", exe_name)
+    DetectHiddenWindows On
     if (state = "ON") {
         try {
-            ActivateApp("sync_path")
-
-            PopUp("cloud sync initiated",C.lgreen,C.bgreen,"300", "75", "-3000")
+            ActivateApp(GC("sync_path"))
+            PU("cloud sync initiated",C.lgreen,C.bgreen)
+            sleep 600
             return
         } catch e {
             msgbox can't open cloud cloud sync app.
         }
     } else {
-        if WinExist("ahk_exe " exe_name){
-            WinClose, ahk_exe %exe_name%
-            PopUp("closing cloud sync",C.pink,,,,"-3000")
+        WinShow, ahk_exe %exe_name%
+        if WinExist("ahk_exe " exe_name) {
+            PU("closing cloud sync",C.pink)
+            sleep 600
+            Process, Close, %exe_name%
         } else {
-            PopUp("cloud sync not running",C.lpurple,C.purple,,,"-3000")
+            PU("cloud sync not running",C.lpurple,C.purple)
+            sleep 600
         }
         return
     }
@@ -371,7 +372,7 @@
         run, golems\tools\WindowSpy.ahk
     } catch e {
         SplitPath, A_AhkPath, , Dir, , 
-        run, % dir "\WindowSpy.ahk"                  ;AHK: open windows spy
+        run, % dir "\WindowSpy.ahk"                                             ;AHK: open windows spy
     }
     return
   }
@@ -1471,7 +1472,10 @@
     global config_path
     if InStr(app_path , "_path")                                                ; "_path" string match indicates a config.ini path reference
     {
-        IniRead, ini_app_path, %config_path%, %A_ComputerName%, %app_path%
+        ; IniRead, ini_app_path, %config_path%, %A_ComputerName%, %app_path%
+        ; app_path := GC(app_path)
+        ; app_path = "%app_path%" 
+        ini_app_path := GC(app_path)
         RegExMatch(ini_app_path, "[^\\]+$", exe_name)
         ActivateOrOpen(exe_name, ini_app_path, arguments)
     }
@@ -1622,7 +1626,7 @@
   ClickVidDL(path=""){
     global short, med, CB_hwnd
     BlockInput, on
-    settimer, BlockInputTimeOut,-1000
+    settimer, BlockInputTimeOut,-1500
     Click, Right
     sleep, med * 2
     winget, Pname, ProcessName, A 
