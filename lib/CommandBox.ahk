@@ -11,7 +11,8 @@
 
     CC("CB_sfx", suffix)    , CC("TGT_hwnd",tgt_hwnd) 
     CC("CBw_color",w_color) , CC("CBt_color",t_color)                           ;(1) save/store command box calling parameters in config.ini
-                                                                                ; config.ini used to preserve/change CB parameter information between redraws
+    CC("CB_ProcessMod", ProcessMod)                                             ; config.ini used to preserve/change CB parameter information between redraws
+    
     redrawGUI:
     Gui, 2: +LastFound
     Gui, 2: Destroy          
@@ -25,7 +26,7 @@
     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when saved position data is not valid
     CB_position := GC("CB_position", d)
     WP := StrSplit(CB_position, " ")
-    if (WP[4] < 10)                                                              ; check if monitor dimensions valid
+    if (WP[4] < 10)                                                             ; check if monitor dimensions valid
        CB_position := d
     wdth := WP[3]
     IBwidth := 400
@@ -38,7 +39,7 @@
     UserInput := ""
     winget, Process_Name, ProcessName, A                                        ;(3) build title bar
     CC("CB_tgtExe", Process_Name)
-    l := "    |    ", s := "  "                                                 ; FillChar("2", " ", 0, 1)                                               
+    l := "    |    ", s := "  "                                                 
     FormatTime, MyTime,, hh:mm tt               
     CB_Title_ID := s MyTime l                                                   ; CB_Title_ID2 := s "(-(-_(-_-)_-)-)" s "COMMAND BOX" l       
     
@@ -67,15 +68,15 @@
         IniWrite, %txt_file%, %config_path%, %A_ComputerName%, CB_last_display
         title := CB_Title_ID title_text suffix l txt_file RetrieveExt(A_ScriptDir "\mem_cache\" txt_file)
     }
-    ; Gui, 2: show, hide ,%title%
+    
     txt  := AccessCache(txt_file,, False)
     rows := countrows(txt)
     rows := (rows < 2) ? 2 : (rows > 30) ? 30 : rows
-    Width := StringWidth(txt, fnt, fsz)
-    Width := (Width < 200) ? 200 : (Width > MI[3]) ? MI[3] : Width
+
+
     Gui, 2: Margin, 2, 2
     wrap := wrap_txt ? "+Wrap" : ""
-    Gui, 2: Add, Edit, section x5 w%Width% R%rows% %wrap% HScroll VScroll ReadOnly -WantReturn -E0x200 vCB_Display         ; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=16964
+    Gui, 2: Add, Edit, section x5 %wdth% R%rows% %wrap% HScroll VScroll ReadOnly -WantReturn -E0x200 vCB_Display         ; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=16964
     if display {
         Guicontrol, ,CB_Display, %txt%
         Gui, 2: font ,s%fsz% c000000, %fnt%
@@ -93,14 +94,10 @@
     Gui, 2: Add, Edit, x%CtrX% w%IBwidth% r1 vUserInput, %input_txt% 
     Gui, 2: Add, Button, Default Hidden x0 y0 gEnter_Button                     ; Gui, 2: Add, Button, ys h35 x+5 w80 Default gEnter_Button, Enter ;
     
-    if (!GC("CB_appActive", 0))
-        GuiControl, Focus, UserInput 
 
     Gui, 2: +LastFound
     CB_hwnd  := WinExist() 
     CC("CB_hwnd", CB_hwnd)
-
-    ; GuiControl, MoveDraw, CB_Display, %wdth%     
 
     if !GC("CB_ScrollBars", 0)
         GuiControl, 2: -HScroll -VScroll, CB_Display                            ; remove scrollbars before the GUI draw command
@@ -113,29 +110,29 @@
     
     MouseMove, StartX, StartY
     BlockInput, MouseMoveOff
-    GuiControl, 2: +HScroll +VScroll, CB_Display                                ; add scroll bars back without redrawing them to add scrolling without visible scroll bars
-    ; ActivateWin("ahk_id " tgt_hwnd)
-    ; WinWaitClose                                      
+    if (!GC("CB_appActive", 0))
+        GuiControl, Focus, UserInput 
     if GC("CB_appActive", 0) 
         ActivateWin("ahk_id " tgt_hwnd) 
     return
-    
+   
     2GuiSize: 
-        
         If A_EventInfo = 1                                                      ; window has been minimized.  No action needed.
             Return
-        ; sleep 100
-        AutoXYWH("w*h", "CB_Display")
+        AutoXYWH("wh*", "CB_Display")
         CtrXpos := (A_GuiWidth - GC("CB_InputBox_width")) // 2
         GuiControl, MoveDraw, UserInput, x%CtrXpos%
         AutoXYWH("y*", "UserInput")
         GuiControl, 2: -HScroll -VScroll, CB_Display
-        WinSet, Redraw,, ahk_id %CB_hwnd%
         Gui, 2: show
-        GuiControl, 2: +HScroll +VScroll, CB_Display
+        settimer, InvisibleScrollbar,-400
         gosub, save_win_coord
         Return
 
+    InvisibleScrollbar:                                                         ; hack to create invisible scroll bars 
+        GuiControl, 2: +HScroll +VScroll, CB_Display                            ; adds invisible scroll bar using settimer with > 200 ms delay after drawing a GUI with no scrollbars
+        return
+        
     2GuiEscape:
     2GuiClose:
         Gui, 2: +LastFound
