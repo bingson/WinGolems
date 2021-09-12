@@ -2032,6 +2032,70 @@
   }                                                                             ;[ahk] surround selected text with block comment braces
 
 ; TEXT MANIPULATION ____________________________________________________________
+  
+  sortArray(arr,options="") {	
+    ; specify only "Flip" in the options to reverse otherwise unordered array items
+    ; https://autohotkey.com/board/topic/93570-sortarray/
+
+	if	!IsObject(arr)
+		return	0
+	new :=	[]
+	if	(options="Flip") {
+		While	(i :=	arr.MaxIndex()-A_Index+1)
+			new.Insert(arr[i])
+		return	new
+	}
+	For each, item in arr
+		list .=	item "`n"
+	list :=	Trim(list,"`n")
+	Sort, list, %options%
+	Loop, parse, list, `n, `r
+		new.Insert(A_LoopField)
+	return	new
+
+  }
+
+  HasVal(haystack, needle) {
+	if !(IsObject(haystack)) || (haystack.Length() = 0)
+		return 0
+	for index, value in haystack
+		if (value = needle)
+			return index
+	return 0
+  }
+
+
+  JEE_InStrEx(vText, vNeedle, vCaseSen=0, vPos=1, vOcc=1) {
+    
+    ;same as InStr with some slight differences:
+    ;- vPos specifies the start position, but not the search direction
+    ;e.g. vPos := 3 means search from 3rd char (forwards/backwards depending on vOcc)
+    ;e.g. vPos := -3 means search from 3rd-to-last char (forwards/backwards depending on vOcc)
+    ;- AHK v2 style is used, so: -1 means last char, -2 means 2nd-to-last char
+    ;- vOcc specificies the occurrence, and the search direction
+    ;use positive vOcc to search forwards, use negative vOcc to search backwards
+    ;e.g. vOcc := 3 means 3rd occurrence at/after position (search forwards)
+    ;e.g. vOcc := -3 means 3rd occurrence at/before position (search backwards)
+
+	if (vPos = 0) || (vOcc = 0)
+		return ""
+	vIsV1 := !!SubStr(1,0)
+	if (vOcc < 0) && (vPos > 0)
+		vPos := - StrLen(vText) - !vIsV1 + vPos
+	else if (vOcc > 0) && (vPos < 0)
+		vPos := StrLen(vText) + vIsV1 + vPos
+	else if (vOcc < 0) && (vPos < 0)
+		vPos += vIsV1
+	return InStr(vText, vNeedle, vCaseSen, vPos, Abs(vOcc))
+  }
+
+  JEE_SubStrRange(vText, vPos1, vPos2="") {
+    ;specify first and last chars of text to retrieve
+	if (vPos2 = "")
+		return SubStr(vText, vPos1)
+	else
+		return SubStr(vText, vPos1, vPos2-vPos1+1)
+  }
 
   delLine() {
     SendInput {End}{ShiftDown}{Home 2}{Left}{ShiftUp}{Delete}{Right}            ;Convenience: Delete current line of text
