@@ -362,8 +362,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Win+X                   Apps| Activate PowerPoint
  Win+S                   Apps| Activate web browser
  Win+W                   Apps| Activate Word
- Win+Space               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
- Win+Enter               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Win+Space               CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Win+Enter               CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
  Alt+Backspace           Convenience: delete current line of text
  Win+Sc035               Convenience: google search selected text
  Shift+Win+0             Mem: add selected text to the bottom of 0.txt
@@ -436,9 +436,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Alt+Win+P               WinSetting: presentation display mode
  Alt+Win+R               WinSetting: run program
  Alt+Win+I               WinSetting: windows settings
-
-
-```
+ ```
 
 </p></details>
 
@@ -457,8 +455,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Capslock                Convenience: delete (toggle capslock: ctrl + capslock)
  Ctrl+Alt+D              Convenience: duplicate current line
  Shift+Alt+Sc028         Convenience: enclose selected text with " "
- Rightalt+M              Convenience: enclose selected text with  
- Rightalt+N              Convenience: enclose selected text with % %
+ Rightalt+Shift+4        Convenience: enclose selected text with  
+ Rightalt+Shift+5        Convenience: enclose selected text with % %
  Ctrl+Sc028              Convenience: enclose selected text with ' '
  Shift+Alt+9             Convenience: enclose selected text with ( )
  Alt+Sc029               Convenience: enclose selected text with ` `
@@ -490,10 +488,10 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Win+E                   Navigation: ^home
  Win+H                   Navigation: jump to next word; simulate ctrl+Left
  Win+L                   Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
- *Alt+J                  Navigation| Down
+ *Alt+K                  Navigation| Down
  Alt+H                   Navigation| Left
  Alt+L                   Navigation| Right
- *Alt+K                  Navigation| Up
+ *Alt+J                  Navigation| Up
  Shift+Win+J             Selection: extend selection down  1 row
  Shift+Alt+J             Selection: extend selection down  1 row
  Shift+Alt+H             Selection: extend selection Left  1 character
@@ -510,8 +508,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Ctrl+Win+J              Selection: select all below
  Shift+Alt+F             Selection: select current line starting from begining of line
  Ctrl+Alt+F              Selection: select line starting from end of line
- Ctrl+Win+H              Selection: select to beginning of line
- Ctrl+Win+L              Selection: select to end of line
+ Ctrl+Win+H              Selection: select to beginning of line (press win before ctrl)
+ Ctrl+Win+L              Selection: select to end of line (press win before ctrl)
  Shift+Ctrl+K            Selection: select to line above
  Shift+Ctrl+J            Selection: select to next line
  Alt+F                   Selection: select word at text cursor position
@@ -534,11 +532,12 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Rightshift+R            ChangeFolder: Recycle bin (doesn't work for save as diag)
  Rightshift+T            ChangeFolder: This PC / My Computer
  Rightshift+Sc029        ChangeFolder: WinGolems folder
- Leftctrl+Space          FunctionBox: activate already open Function Box and move focus to inputbox
- Rightctrl+Space         FunctionBox: activate already open Function Box and move focus to inputbox
- Win+Sc033               FunctionBox: open Function Box for cESC-cF8 saved paths
+ Rightctrl+Space         FB: activate already open Function Box and move focus to inputbox
+ Leftctrl+Space          FB: activate already open Function Box and move focus to inputbox
+ Win+Sc033               FB: Menu for cESC-cF8 saved paths
  Alt+O                   FileExplorer: forward folder
- Ctrl+I                  FileExplorer: group by date
+ Alt+Ctrl+I              FileExplorer: group by date created
+ Ctrl+I                  FileExplorer: group by date modified
  Ctrl+O                  FileExplorer: group by file type
  Ctrl+U                  FileExplorer: group by name|remove grouping toggle
  Alt+Space               FileExplorer: move focus to current folder pane
@@ -581,6 +580,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
 
 ``` 
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
+ Alt+N                   CB: highlight next find match of text in the CB display window with text entered in the input box
+ Alt+B                   CB: highlight previous find match of text in the CB display window with text entered in the input box
  Alt+S                   CB: move CB window to bottom half
  Shift+Alt+S             CB: move CB window to bottom half small
  Alt+Z                   CB: move CB window to bottom left
@@ -590,8 +591,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Win+Left                CB: move CB window to left half
  Alt+A                   CB: move CB window to left half
  Shift+Alt+A             CB: move CB window to left side small
- Alt+D                   CB: move CB window to right half
  Win+Right               CB: move CB window to right half
+ Alt+D                   CB: move CB window to right half
  Shift+Alt+D             CB: move CB window to right side small
  Alt+W                   CB: move CB window to top half
  Shift+Alt+W             CB: move CB window to top half small
@@ -599,13 +600,13 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Alt+Q             CB: move CB window to top left small
  Alt+E                   CB: move CB window to top right
  Shift+Alt+E             CB: move CB window to top right small
- Leftctrl+Space          CB| activate already open CB and move focus to inputbox
  Rightctrl+Space         CB| activate already open CB and move focus to inputbox
+ Leftctrl+Space          CB| activate already open CB and move focus to inputbox
  Alt+R                   CB| reenter last command
- Alt+Space               CB| submit GUI input
  Win+Space               CB| submit GUI input
+ Alt+Space               CB| submit GUI input
  Alt+X                   CB| toggle Command Box display|minimalist mode
-```
+ ```
 
 </p></details>
 
