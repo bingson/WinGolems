@@ -1,8 +1,9 @@
 
 ; COMMAND BOX __________________________________________________________________
 
-#IF WinActive("ahk_id " CB_hwnd)                                               ; If Command or Function Box active
-  
+#IF WinActive("ahk_id " CB_hwnd)                                                ; If Command or Function Box active
+!n::               send !n                                                      ;CB: highlight next match of text in the CB display window with text entered in the input box
+!b::               send !p                                                      ;CB: highlight previous match of text in the CB display window with text entered in the input box
 !q::               MoveWin("TL")                                                ;CB: move CB window to top left
 !e::               MoveWin("TR")                                                ;CB: move CB window to top right
 !z::               MoveWin("BL")                                                ;CB: move CB window to bottom left

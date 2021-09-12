@@ -22,8 +22,8 @@
   !SC01A::               Clip("[" Clip() "]")                                   ;Convenience: enclose selected text with [ ]
   ^SC028::               Clip("'" Clip() "'")                                   ;Convenience: enclose selected text with ' '
   +!SC028::              Clip("""" Clip() """")                                 ;Convenience: enclose selected text with " "
-  >!n::                  Clip("%" Clip() "%")                                   ;Convenience: enclose selected text with % %
-  >!m::                  Clip("$" Clip() "$")                                   ;Convenience: enclose selected text with $ $
+  >!+5::                 Clip("%" Clip() "%")                                   ;Convenience: enclose selected text with % %
+  >!+4::                 Clip("$" Clip() "$")                                   ;Convenience: enclose selected text with $ $
   !sc029::               Clip("``" Clip() "``")                                 ;Convenience: enclose selected text with ` `
   +!sc029::              Clip("`````` " Clip() " ``````")                       ;Convenience: enclose selected text with ``` ```
   #backspace::           send ^{backspace}                                      ;Convenience: ^backspace (delete word from last character)
@@ -36,8 +36,8 @@
   $!f::                  SelectWord()                                           ;Selection: select word at text cursor position
   $+!f::                 SelectLine()                                           ;Selection: select current line starting from begining of line
   $^!f::                 Sendinput {end}+{home}                                 ;Selection: select line starting from end of line
-  $^#h::                 sendinput +{Home}                                      ;Selection: select to beginning of line
-  $^#l::                 sendinput +{End}                                       ;Selection: select to end of line
+  $^#h::                 sendinput +{Home}                                      ;Selection: select to beginning of line (press win before ctrl)
+  $^#l::                 sendinput +{End}                                       ;Selection: select to end of line (press win before ctrl)
   $+^j::                 Sendinput +{down}                                      ;Selection: select to next line
   $+^k::                 Sendinput +{up}                                        ;Selection: select to line above
   $^#j::                 sendinput ^+{end}                                      ;Selection: select all below
@@ -63,16 +63,16 @@
   $#l::                  sendinput ^{Right}                                     ;Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
   $!h::                  sendinput {Left}                                       ;Navigation| Left
   $!l::                  sendinput {Right}                                      ;Navigation| Right
-  *$!k::                 sendinput {Up}                                         ;Navigation| Up
-  *$!j::                 sendinput {Down}                                       ;Navigation| Down
+  *!j::                  send {down}                                            ;Navigation| Up
+  *!k::                  send {up}                                              ;Navigation| Down  
 
 ; MOUSE FUNCTION _______________________________________________________________
   *#d::                  SaveMousPos("r",1)                                     ;MouseFn: Left click and save mouse position
   *^#d::                 RecallMousePosClick("r", 0)                            ;MouseFn: return to saved mouse position (change 0 to number of clicks) 
   #f::                   Clicks(2)                                              ;MouseFn: 2 Left clicks (select word)
   ^#f::                  Clicks(3)                                              ;MouseFn: 3 Left clicks (select line)
-  ^!Lbutton::            Clicks(2), s("^v")                                     ;MouseFn: click twice, paste clipboard
-  +^Lbutton::            Clicks(3), s("^v")                                     ;MouseFn: click thrice, paste clipboard
+  ^!Lbutton::            s("{blind}"),Clicks(2), s("^v")                        ;MouseFn: click twice, paste clipboard        
+  +^Lbutton::            s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in
   $^!k::                 Sendinput ^{sc00C}                                     ;MouseFn: zoom out
   ~rctrl & ~lctrl::      CursorJump("TL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
@@ -85,3 +85,4 @@
   $!#l::                 CursorJump("R","-40")                                  ;MouseFn: move mouse cursor to Right edge
 
 #IF
+

@@ -1,5 +1,5 @@
 ; GLOBAL VARIABLES _____________________________________________________________
-  
+
   short := 150, med := 300, long := 900
 
   C := { "lgreen"      : "CEDFBF"
@@ -26,8 +26,8 @@
        , "dgrey"       : "525252"
        , "onyx"        : "353839" }
 
-  GroupAdd, FileListers, ahk_class CabinetWClass                                ; reference group for file explorer and save as dialogue boxes
-  GroupAdd, FileListers, ahk_class WorkerW
+  GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and open + save dialogue boxes
+  GroupAdd, FileListers, ahk_class WorkerW                                      ; https://www.autohotkey.com/boards/viewtopic.php?t=28347
   GroupAdd, FileListers, ahk_class #32770, ShellView
 
   GroupAdd, browsers, ahk_exe vivaldi.exe
@@ -244,6 +244,7 @@
   CloudSync(state="ON") {                                                       ; Turn ON/OFF google cloud sync
     global med, config_path, C 
     RegExMatch(GC("sync_path"), "[^\\]+$", exe_name)
+
     DetectHiddenWindows On
     if (state = "ON") {
         try {
@@ -407,11 +408,25 @@
 ; COMMAND BOX __________________________________________________________________
   
   ToggleDisplay(){
-    % (GC("CB_Display") = 1) ? (GUIFocusInput(), clip("Tm"))
-                              : (GUIFocusInput(), clip("Td"))
-    sendinput {enter}
+    if (GC("CB_Display") = 1) {
+        CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0) 
+        , IBw := GC("CB_InputBox_width")
+        , MI := StrSplit(GetMonInfo()," ")                                
+        , cX := (MI[3] - IBw) // 2
+        , bY := MI[4] - 25
+        , mw := IBw + 4
+        , mh := 40 
+        , CC("CB_position","x" cX " y" bY " w" mw " h" mh)
+    } else {
+        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0)
+        , MI := StrSplit(GetMonInfo()," ")                              
+        , d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
+        , CC("CB_position", d)
+    }
+    CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod", ProcessMod))
+    GUIFocusInput()
     return
-  }          
+  }
 
   RunOtherCB(C_input = "", Chr = "W") {
     C_1stchr := SubStr(C_input, 1, 1)
@@ -733,6 +748,28 @@
  
 ; MEM_CACHE / MEMORY SYSTEM ____________________________________________________
 
+  GetNumMemLines(startline=1,endline=2,blen=60){
+    output := ""
+    border := RepeatString("_", blen)
+    Loop, Files, C:\Users\bings\AHK\mem_cache\?.txt
+    {
+        if regexmatch(A_LoopFileName, "\d\.txt") {
+            FileReadLine, first_line, % A_LoopFilePath, 1
+            fl := trim(first_line)
+            result = %A_LoopFileName% %border% `n`n       %fl% `n`n 
+            output .= result
+        }
+
+        If WinExist(first_line)
+        {
+            WinActivate, % first_line
+            Break
+        }
+    }
+    Return % output
+  }
+
+
   WriteToCache(key, del_toggle = False, mem_path = "", input = "", append = false, supress = False) {
     ; creates a txt file in \mem_cache from selected text
     global C
@@ -857,11 +894,13 @@
     ChangeFolder(path, sys_dependent)
   }
 
-  s(k = "down", n = 1, sleep = "100" ) {                                        
+  S(k = "down", n = 1, sleep = "100" , SendInput ="") {                                        
     ; function wrapper to chain line commands using the comma operator
     ; also contains shorter aliases for frequently performed send operations
+    si := SendInput
     switch k 
     {
+        case "suspend"   : suspend
         case "enter"     : send % "{enter}"
         case "u", "up"   : send % "{ up "    n "}"
         case "d", "down" : send % "{ down "  n "}"
@@ -873,6 +912,25 @@
         sleep, %sleep%
     return
   }
+
+  SI(k = "down", n = 1, sleep = "100" , si ="") {                                        
+    ; function wrapper to chain line commands using the comma operator
+    ; also contains shorter aliases for frequently performed send operations
+    switch k 
+    {
+        case "suspend"   : suspend
+        case "enter"     : % (si ? sendinput : send) "{enter}"
+        case "u", "up"   : % (si ? sendinput : send) "{ up "    n "}"
+        case "d", "down" : % (si ? sendinput : send) "{ down "  n "}"
+        case "l", "left" : % (si ? sendinput : send) "{ left "  n "}"
+        case "r", "right": % (si ? sendinput : send) "{ right " n "}"
+        Default          : sendinput % k
+    }
+    if sleep 
+        sleep, %sleep%
+    return
+  }
+
 
   PU(msg, w_color = "F6F7F1", ctn = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi") {
     PopUp( msg, w_color, ctn , wn, hn, drtn, fsz, fwt, fnt) 
@@ -1301,11 +1359,21 @@
 
 ; FILE AND FOLDER ______________________________________________________________
   
+  SP(key = "") {
+    SavePath(key)
+    return
+  }
+
   savePath(key = "") {
     path := Explorer_GetSelection()
     CC(key, path)
     PU(key ": " path "`nSAVED",C.lgreen,,,,-1200)   
     return               
+  }
+
+  OP(path = "") {
+    OpenPath(path)
+    return
   }
 
   OpenPath(path = "") {
@@ -1392,9 +1460,18 @@
     return
   }
  
-  SortByDate() {
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
-    send !vo{Down}{enter}
+  SortByDate(optn="modified") {
+    switch optn 
+    {
+        case "modified" :
+            send {Ctrl Down}{NumpadAdd}{Ctrl up}
+            send !vo{Down}{enter}
+        case "created" :
+            send {Ctrl Down}{NumpadAdd}{Ctrl up}
+            send !vo{Down 4}{enter}
+        default:
+            return
+    }
     return
   }
  
@@ -1709,9 +1786,12 @@
   Clicks(num = 2, lrm = "left") {
     ; temporarily blocks mouse movement for more consistent doubleclick to select word
     ;ReleaseModifiers()
+    global short
+    sleep, med
     BlockInput, On
     settimer, BlockInputTimeOut,-600
-    click, %num% %lrm%
+    send {click %num% %lrm%}
+    ; click, %num% %lrm%
     BlockInput, off
     return
   }
@@ -2163,13 +2243,46 @@
     }
     return
   }
-  
+
+
   AddSpaceBeforeComment(length = "80", char = " ", lines = 1) {
-    ; Add spaces between two strings so the second string starts at the length position
-    ReleaseModifiers()
+    global short
     BlockInput, on
     settimer, BlockInputTimeOut,-600
-    Send {space}{left}+{end}                                                    ; fixes issue in vscode where ^x on empty selection will cut the whole line
+    
+    Send {space}{left}+{end}                                                    ; fixes issue in vscode where ^x on empty selection will cut the whole line                                                   
+    end_txt := Trim(clip())
+    send {del}
+    sleep, short
+    
+    Send {home}+{end} 
+    h1 := rtrim(clip())
+    sleep, short
+    
+    send {left}+{home}
+    h2 := clip()
+    l2 := strlen(h2), l1 := strlen(h1)
+    if (substr(h2,1,1) = A_space) {                                             ;  run if there's space(s) before the first character in a line       
+        sendinput % "{right "  (strlen(h1) + 1) "}"  
+        space_btn := RepeatString(A_space, length - (l1 + l2))
+        clip(space_btn end_txt)
+    } else {
+        sendinput % "{right "  (strlen(h1)) "}"                                 ; move cursor to end of first group of text   
+        space_btn := RepeatString(A_space, length - l1)
+        clip(space_btn end_txt)
+    }
+    sendinput % "{left "  (strlen(end_txt)) "}"
+    BlockInput, off
+    sleep short
+    return      
+  }
+                                                                                                                                                              
+  1AddSpaceBeforeComment(length = "80", char = " ", lines = 1) {
+    ; Add spaces between two strings so the second string starts at the length position
+    ; ReleaseModifiers()
+    BlockInput, on
+    settimer, BlockInputTimeOut,-600
+    Send {space}{left}+{end}                                                    ; fixes issue in vscode where ^x on empty selection will cut the whole line                                        
     end_txt := TrimText(1, clip())
     send {del}
     Send {home 2}+{end}

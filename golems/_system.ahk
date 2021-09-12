@@ -62,6 +62,9 @@
   :X:r~~win::   Reload                                                          ;AHK: reload ahk script
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up
+
+  ; GuiControl, 2: +HScroll, CB_Display
+  
  
 ; DEVELOPER OPTIONS ____________________________________________________________
 
@@ -97,7 +100,8 @@
     PrintScreen & 1::      RetrieveMemory(,,"PrintScreen")                      ;Memory: paste overwrite 1.txt at current cursor position
 
 
-    !sc033::    q := { "f" : "0Maximize"                                        ;FunctionBox: resize & move window
+    PrintScreen & sc034::   
+                q := { "f" : "0Maximize"                                        ;FunctionBox: resize & move window
                      , "q" : "1TopLeft"         
                      , "e" : "1TopRight"        
                      , "z" : "2BottomLeft"      
@@ -117,7 +121,9 @@
                      , "ee": "R1TopRightSmall"   
                      , "ed": "R2TopMidRightSmall"    
                      , "cd": "R3BottomMidRightSmall"                                     ; "r" optn sorts menu order by value instead of by key (default)  
-                     , "cc": "R4BottomRightSmall" }, FB("MoveWin", q, C.bwhite,, "rs")   ; "s" optn adds a space between case changes for GUI menu
+                     , "cc": "R4BottomRightSmall" }
+                FB("MoveWin", q, C.bwhite,, "rs")   ; "s" optn adds a space between case changes for GUI menu
+                return
                                                                                               
                                                                                   
     

@@ -24,7 +24,23 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 ActivateWin("ahk_id " tgt_hwnd) 
                 sleep, short
                 text_to_add := "`n" . trim(clip())
-                if (FirstChar == "A") {
+                if RegExMatch(C_input, " .+") {
+                    arr := StrSplit(C_input, " ")
+                    SplitPath,% arr[2], oFileName, oDir, oExtension, oNameNoExt 
+                    SplitPath,% arr[1], nFileName, nDir, nExtension, nNameNoExt 
+                    odir := odir ? odir . "/" : "" 
+                    ndir := ndir ? ndir . "/" : ""
+                    donorText := AccessCache(nNameNoExt, ndir, false)
+                    PU(odir)
+                    if (FirstChar == "A") {
+                        FileAppend, %donorText%, %f_path%%oDir%%oNameNoExt%.txt    
+                        PopUp( nNameNoExt " added to bottom of`n" oNameNoExt ,C.lgreen)  
+                    } else if (FirstChar == "P") {
+                        FilePrepend(f_path Dir NameNoExt ".txt", donorText) 
+                        PopUp(nNameNoExt " added to top of`n" oNameNoExt ,C.lgreen)
+                    }               
+
+                } else if (FirstChar == "A") {
                     FileAppend, %text_to_add%, %f_path%%Dir%%NameNoExt%.txt    
                     PopUp("added to bottom of`n" NameNoExt ,C.lgreen)  
                 } else {
@@ -42,7 +58,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     CC("CB_position", d)
                 }
                 tgt := f_path dir NameNoExt
-
+                
                 if (C_input = "s" or C_input = "c") {
                     NameNoExt := (C_input = "s") ? ("HotKey_List") : ("config.ini")
                     RegExMatch(config_path, ".*(?=config.ini)", cpth)           ; get everything before the last title separator and store in v
@@ -59,7 +75,9 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         PopUp("Sorry the CB only displays text strings", , ,, , drtn = "-2000") 
                         return 1
                     }
-
+                } else if (substr(C_input,1,1) = "#") {                         ; get first lines from 0-9.txt memory files 
+                    txt := GetNumMemLines()
+                    
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) 
                   or (C_input = "l") {
                     NameNoExt := "list"

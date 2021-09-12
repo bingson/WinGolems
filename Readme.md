@@ -1,5 +1,6 @@
-
 <p align="center"><img src="assets\Screens\WGLc.png" width="300"></p>
+
+## Overview
 
 WinGolems comprises a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
 <br><br>
@@ -156,6 +157,8 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 ## 2. Tutorial Templates <a name="tutorial-overview"></a> 
 
 <OL>
+
+### Instructions
 
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
 
@@ -319,9 +322,14 @@ Convenient free key combinations: #g, #u, #y, #i, #o, #n, #sc028
 
 <br>
 
+
 ### I. &nbsp; Keyboard Shortcuts <a name="ks"></a>
 
-Note: Under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
+
+
+Under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
+
+`win + esc` will toggle all other hotkeys off and on
 
 
 

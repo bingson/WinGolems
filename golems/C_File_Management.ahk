@@ -26,7 +26,8 @@
   !space::      ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FileExplorer: move focus to current folder pane
   ^u::          send !vg{up   4}{enter}                                         ;FileExplorer: group by name|remove grouping toggle
   ^o::          Send !vg{down 2}{enter}                                         ;FileExplorer: group by file type
-  ^i::          Send !vg{down 1}{enter}                                         ;FileExplorer: group by date
+  ^i::          Send !vg{down 1}{enter}                                         ;FileExplorer: group by date modified
+  !^i::         Send !vg{down 4}{enter}                                         ;FileExplorer: group by date created
   $!r::         Send {F2}                                                       ;FileExplorer: rename file
   <^j::         SortByName()                                                    ;FileExplorer: sort by name
   <^k::         SortByDate()                                                    ;FileExplorer: sort by date modified
@@ -45,7 +46,6 @@
   +^F6::        savePath("cF6_path")                                            ;FileExplorer; save file|folder path for ^F6
   +^F7::        savePath("cF7_path")                                            ;FileExplorer; save file|folder path for ^F7
   +^F8::        savePath("cF8_path")                                            ;FileExplorer; save file|folder path for ^F8
-
 
 ; OPEN FILE|FOLDER PATH ________________________________________________________
   ; works on full file paths for all MS office files (xls, doc, ppt, etc.)

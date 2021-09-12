@@ -23,12 +23,14 @@ UpdateGUI(new_txt = "" , new_title_file = "") {
         Guicontrol, ,CB_Display, %A_space%
         t_color := GC("CBt_color")
         w_color := GC("CBw_color")
-        Gui, 2: Font, +c%t_color%
-        GuiControl, Font, UserInput
+        ; Gui, 2: Font, +c%t_color% +Redraw
+        GuiControl, Font +c%t_color% +Redraw, UserInput
         Gui, 2: Color,,%w_color%
         Gui, 2: show, hide 
     } else if (display) {
         if (new_txt) {
+            ; Gui, 2: Font, +c000000 +Redraw
+            GuiControl, +c000000 +Redraw, UserInput
             GuiControl, 2:, CB_Display, %new_txt%
             GuiControl, MoveDraw, CB_Display
             AutoXYWH("w*h", "CB_Display")
@@ -37,8 +39,7 @@ UpdateGUI(new_txt = "" , new_title_file = "") {
             txt :=  AccessCache(ldspl,, 0)
             GuiControl, 2:, CB_Display, %txt%
         }
-        Gui, 2: Font, +c000000
-        GuiControl, Font, UserInput
+        
         Gui, 2: Color,,FFFFFF 
         Gui, 2: show, hide
         
