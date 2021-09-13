@@ -12,17 +12,17 @@
 |                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
-| #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  h~  Hybernate computer    |
-| !Space  submit key                                  | ------ -------------------------------------------- |  ce~ Close All Programs    |
-| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  rs~ Restart computer      |
-| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  sd~ Shut Down computer    |
-| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |                            |
+| #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   system tray           |
+| !Space  submit key                                  | ------ -------------------------------------------- |  h~  Hybernate computer    |
+| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  ce~ Close All Programs    |
+| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  rs~ Restart computer      |
+| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  sd~ Shut Down computer    |
 | !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |                            |
 |                                                     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | UPPER-case first letter required to trigger the following commands                                                                     |
 |                                                                                                                                        |
-| KEY  CONVENIENCE                             USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated                |
+| KEY  CONVENIENCE                             USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
 | R?:  Change replacement separators (1|2)     R1~:%; R2~:~>       Changes replacement separators to % and ~> from ~ and __         R?~:?|
@@ -34,16 +34,18 @@
 | G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
 |                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
 |                                                                                                                                        |
-| KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                                                                                     Format?|
+| KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                                                                                            |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  L   Load .txt file into CB display          L1, Lr\testr        Load in display => 1.txt, r\testr.txt ("Ll" .txt list)              L?|
-|      Load file shorcut keys                  Lc, Ls, Ll, L#      Load in display => config.ini, hotkey list, .txt folder, 0-9 1st line |
+|  L   Load .txt file into CB display          L1, Lr\testr, L;    Load in display => 1.txt, r\testr.txt ("Ll" .txt list), clipboard   L?|
+|      Load file shorcut keys                  LC, LH, LL, L#      Load in display => config.ini, hotkey list, mem folder, 0-9 1st line  |
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
-|  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
-|  E   Edit file in default editor             E1, Er\testr        edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
-| A|P  Append|Prepend selected text to file    A1, Ar\testr 1      add selected text to bottom of => 1.txt, r\test.txt to 1.txt   A or P?|
+|  O   Overwrite file| contents                O1, O2 help         replace => 1.txt w/ selected, 2.txt w/ help.txt                     O?|
+       Overwrite with clipboard                O;3, O3;            replace => Clipboard with 3.txt, replace 3.txt with clipboard  O;?|O?;|
+|  E   Edit file in default editor             E1, Er\test         edit => 1.txt, r\test.txt (example subfolder file path)             E?|
+| A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt     A?|P?|
+|      manually entered Append|prepend         P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|       
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
 |  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
 | Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
@@ -53,8 +55,7 @@
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
-|  Z   Change display window appearance        Z11, Zf:arial, Zd   change => font size: 11, font: courier, reset to default    Z?:? or Z?|
-|  T   CommandBox UI options                   Td, Tm, Tp,         (d)isplay mode, (m)inimalist mode, (p)ersistent: CB stays open,     T?|
+|  T   CommandBox UI options                   Td, Tm, Tp, Tf:font (d)isplay mode, (m)inimalist mode, (p)ersistent CB, (f)ont          T?|
 |                                              Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
 |________________________________________________________________________________________________________________________________________|
 

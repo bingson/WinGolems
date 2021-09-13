@@ -52,8 +52,9 @@ As something that I use daily, WinGolems is under constant development. I create
     3. [Run WinGolems](#run) <br>
     4. [Configure WinGolems](#cfg) <br>
 2. [Tutorial Templates](#tutorial-overview) <br>
-    1. [Keyboard Shortcuts](#ks) <br>
-    2. [Command Box](#cb) <br>
+    1. [Instructions](#instructions) <br>
+    2. [Keyboard Shortcuts](#ks) <br>
+    3. [Command Box](#cb) <br>
 3. [Roadmap](#roadmap)
 
 ----
@@ -158,7 +159,7 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 
 <OL>
 
-### Instructions
+### I. Instructions <a name="instructions"></a>
 
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
 
@@ -323,7 +324,7 @@ Convenient free key combinations: #g, #u, #y, #i, #o, #n, #sc028
 <br>
 
 
-### I. &nbsp; Keyboard Shortcuts <a name="ks"></a>
+### II. &nbsp; Keyboard Shortcuts <a name="ks"></a>
 
 
 
@@ -580,8 +581,10 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
 
 ``` 
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
- Alt+N                   CB: highlight next find match of text in the CB display window with text entered in the input box
- Alt+B                   CB: highlight previous find match of text in the CB display window with text entered in the input box
+ Ctrl+Alt+J              CB: Font size Decrease
+ Ctrl+Alt+K              CB: Font size Increase
+ Alt+N                   CB: highlight next match of text in the CB display window with text entered in the input box
+ Alt+B                   CB: highlight previous match of text in the CB display window with text entered in the input box
  Alt+S                   CB: move CB window to bottom half
  Shift+Alt+S             CB: move CB window to bottom half small
  Alt+Z                   CB: move CB window to bottom left
@@ -600,11 +603,11 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Alt+Q             CB: move CB window to top left small
  Alt+E                   CB: move CB window to top right
  Shift+Alt+E             CB: move CB window to top right small
- Rightctrl+Space         CB| activate already open CB and move focus to inputbox
  Leftctrl+Space          CB| activate already open CB and move focus to inputbox
+ Rightctrl+Space         CB| activate already open CB and move focus to inputbox
  Alt+R                   CB| reenter last command
- Win+Space               CB| submit GUI input
  Alt+Space               CB| submit GUI input
+ Win+Space               CB| submit GUI input
  Alt+X                   CB| toggle Command Box display|minimalist mode
  ```
 
@@ -627,7 +630,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
 
 <br>
 
-### II. &nbsp; Command Box </b><a name="cb"></a>
+### III. &nbsp; Command Box </b><a name="cb"></a>
 
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>System Commands </b></summary><p>
@@ -647,11 +650,11 @@ ________________________________________________________________________________
 |                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
-| #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  h~  Hybernate computer    |
-| !Space  submit key                                  | ------ -------------------------------------------- |  ce~ Close All Programs    |
-| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  rs~ Restart computer      |
-| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  sd~ Shut Down computer    |
-| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |                            |
+| #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   system tray           |
+| !Space  submit key                                  | ------ -------------------------------------------- |  h~  Hybernate computer    |
+| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  ce~ Close All Programs    |
+| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  rs~ Restart computer      |
+| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  sd~ Shut Down computer    |
 | !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |                            |
 |                                                     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
@@ -663,7 +666,7 @@ ________________________________________________________________________________
 
 ```
 __________________________________________________________________________________________________________________________________________
-| KEY  CONVENIENCE                             USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated                |
+| KEY  CONVENIENCE                             USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
 | R?:  Change replacement separators (1|2)     R1~:%; R2~:~>       Changes replacement separators to % and ~> from ~ and __         R?~:?|
@@ -677,16 +680,18 @@ ________________________________________________________________________________
 |________________________________________________________________________________________________________________________________________|
 
 __________________________________________________________________________________________________________________________________________
-| KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM  USAGE EXAMPLE                                                                      Format?|
+| KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                                                                                            |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  L   Load .txt file into CB display          L1, Lr\testr        Load in display => 1.txt, r\testr.txt ("Ll" .txt list)              L?|
-|      Load file shorcut keys                  Lc, Ls, Ll, L#      Load in display => config.ini, hotkey list, .txt folder, 0-9 1st line |
+|  L   Load .txt file into CB display          L1, Lr\testr, L;    Load in display => 1.txt, r\testr.txt ("Ll" .txt list), clipboard   L?|
+|      Load file shorcut keys                  LC, LH, LL, L#      Load in display => config.ini, hotkey list, mem folder, 0-9 1st line  |
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
-|  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3    replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt O?|
-|  E   Edit file in default editor             E1, Er\testr        edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          E?|
-| A|P  Append|Prepend selected text to file    A1, Ar\testr 1      add selected text to bottom of => 1.txt, r\test.txt to 1.txt   A or P?|
+|  O   Overwrite file| contents                O1, O2 help         replace => 1.txt w/ selected, 2.txt w/ help.txt                     O?|
+       Overwrite with clipboard                O;3, O3;            replace => Clipboard with 3.txt, replace 3.txt with clipboard  O;?|O?;|
+|  E   Edit file in default editor             E1, Er\test         edit => 1.txt, r\test.txt (example subfolder file path)             E?|
+| A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt     A?|P?|
+|      manually entered Append|prepend         P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|       
 |  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
 |  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
 | Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
@@ -694,12 +699,11 @@ ________________________________________________________________________________
 |________________________________________________________________________________________________________________________________________|
 
 __________________________________________________________________________________________________________________________________________
-| KEY  GUI BEHAVIOR & APPEARANCE               USAGE EXAMPLE                                                                             |
+| KEY  GUI BEHAVIOR & APPEARANCE                                                                                                         |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
-|  Z   Change display window appearance        Z11, Zf:arial, Zd   change => font size: 11, font: courier, reset to default    Z?:? or Z?|
-|  T   CommandBox UI options                   Td, Tm, Tp,         (d)isplay mode, (m)inimalist mode, (p)ersistent: CB stays open,     T?|
+|  T   CommandBox UI options                   Td, Tm, Tp, Tf:font (d)isplay mode, (m)inimalist mode, (p)ersistent CB, (f)ont          T?|
 |                                              Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
 |________________________________________________________________________________________________________________________________________|
 ```
@@ -717,9 +721,8 @@ ________________________________________________________________________________
 Current development priorities:
 
 1. save/recall CB GUI profiles by command suffix.
-2. fix edit box width redraw issues with CB
-3. add search box for finding text/highlighting text in the CB display window.
-    * https://autohotkey.com/board/topic/56336-search-inside-an-edit-box/
-3. show images in CB display window.
+2. show images in CB display window.
     * https://autohotkey.com/board/topic/97643-load-and-display-images-in-gui-window-using-gdi/
+
+
 ----

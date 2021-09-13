@@ -57,7 +57,7 @@
   #Lbutton::                                                                    ;WinOS: open start menu (alt: Ctrl+Esc)
   $^#Enter::          send ^{esc}                                               ;WinOS: open start menu 
   lshift & rshift::                                                             ;WinGolems: reload WinGolems (update running script for changes, fixes sticky keys)
-  rshift & lshift::   reload                                                    ;WinGolems: reload WinGolems 
+  rshift & lshift::   reloadWG()                                                ;WinGolems: reload WinGolems 
   ^#sc027::           Send {lwin down}d{lwin up}                                ;WindowMgmt: show desktop
   #sc028::                                                                      ;WindowMgmt: maximize window
   ^!space::           WinMaximize,A                                             ;WindowMgmt: maximize window

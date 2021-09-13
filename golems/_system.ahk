@@ -29,6 +29,7 @@
   :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;SC: open add remove programs 
   :X:s~win::    send ^{esc}                                                     ;SC: open start menu (alt: Ctrl+Esc)
   :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
+  :X:t~win::    SysTray()                                                       ;SC: system tray
   ~#left::
   ~#right::
   ~+#left::                                                                     ;SC: cursor follows active window when moving apps btn monitors (if turned on)
@@ -59,7 +60,7 @@
   
   :X:q~~win::                                                                   ;AHK: quit ahk script
   +^#q::        ExitApp                                                         ;AHK: quit ahk script
-  :X:r~~win::   Reload                                                          ;AHK: reload ahk script
+  :X:r~~win::   reloadWG()                                                      ;AHK: reload ahk script 
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up
 

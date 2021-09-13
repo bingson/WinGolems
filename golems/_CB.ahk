@@ -2,6 +2,12 @@
 ; COMMAND BOX __________________________________________________________________
 
 #IF WinActive("ahk_id " CB_hwnd)                                                ; If Command or Function Box active
+
+$^!k::                                                                          ;CB: Font size Increase
+^SC00C::           goto, CBzoomOut                                              ;CB: Font size Increase
+^SC00D::                                                                        ;CB: Font size Decrease
+$^!j::             goto, CBzoomIn                                               ;CB: Font size Decrease
+
 !n::               send !n                                                      ;CB: highlight next match of text in the CB display window with text entered in the input box
 !b::               send !p                                                      ;CB: highlight previous match of text in the CB display window with text entered in the input box
 !q::               MoveWin("TL")                                                ;CB: move CB window to top left

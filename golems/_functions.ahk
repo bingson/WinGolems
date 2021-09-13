@@ -360,6 +360,17 @@
     CFW()
   }
  
+  SysTray() {
+    If (!WinExist("ahk_class NotifyIconOverflowWindow"))
+    {
+       Send #b
+       Send {Space}
+    }
+    else
+       WinClose, ahk_class NotifyIconOverflowWindow
+    return
+  }
+
   KeyHistory() {
     KeyHistory
   }
@@ -408,6 +419,7 @@
 ; COMMAND BOX __________________________________________________________________
   
   ToggleDisplay(){
+    CC("CBfsz", "10")
     if (GC("CB_Display") = 1) {
         CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0) 
         , IBw := GC("CB_InputBox_width")
@@ -502,15 +514,14 @@
   }
 
   FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", name_dict = "", grps = 0, title="", p*) {
-    ;ReleaseModifiers()
     FunctionBox(func, input_dict, w_color, t_color, name_dict, grps, title, p*) 
   }
   
   CreateCacheList(name = "cc") {
-    Global strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
-    Global strDir  := A_ScriptDir . "\mem_cache\"
+    static strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
+    static strDir  := A_ScriptDir . "\mem_cache\"
     FileDelete %strFile%
-    Global cacheList := ""
+    static cacheList := ""
     global config_path
     IniWrite, %name%, %config_path%, %A_ComputerName%, CB_display
     
@@ -759,12 +770,7 @@
             result = %A_LoopFileName% %border% `n`n       %fl% `n`n 
             output .= result
         }
-
-        If WinExist(first_line)
-        {
-            WinActivate, % first_line
-            Break
-        }
+        
     }
     Return % output
   }
@@ -887,8 +893,12 @@
   } 
 
 ; AHK UTILITIES ________________________________________________________________
-  
-  
+
+  reloadWG() { 
+    CC("CBfsz", "10")
+    Reload                                                                      
+  }
+
   
   CF(path, sys_dependent = False) {                                             
     ChangeFolder(path, sys_dependent)
@@ -2484,7 +2494,9 @@
     return
   } 
  
-; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW _________________________________
+
+
+  ; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW -- -- -- -- -- -- -- -- -- -- 
     
   ChgInstance(switch = "capslock") {
     global tabkey := switch
@@ -2619,3 +2631,20 @@
     return var
   }
 
+; COMMAND BOX ZOOM
+
+  CBzoomOut:
+    fsz := GC("CBfsz", "10")
+    fsz -= 2
+    Gui, 2:Font, s%fsz%
+    DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
+    CC("CBfsz", fsz)
+    return
+
+  CBzoomIn:
+    fsz := GC("CBfsz", "10")
+    fsz += 1
+    Gui, 2:Font, s%fsz%
+    DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
+    CC("CBfsz", fsz)
+    return

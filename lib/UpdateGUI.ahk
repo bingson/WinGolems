@@ -47,8 +47,9 @@ UpdateGUI(new_txt = "" , new_title_file = "") {
     }
 
     CtrXpos := (SubStr(wdth, 2) - InputBox_width) // 2
-    GuiControl, MoveDraw, UserInput, x%CtrXpos%                                 ; set the width to the edit box to value stored in ini file
-
+    
+    GuiControl, MoveDraw,UserInput, x%CtrXpos%                                 ; set the width to the edit box to value stored in ini file
+    
     if !ScrollBars
         GuiControl, 2: -HScroll -VScroll, CB_Display
     else 

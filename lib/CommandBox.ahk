@@ -15,6 +15,8 @@
     CC("CB_sfx", suffix)    , CC("TGT_hwnd",tgt_hwnd) 
     CC("CBw_color",w_color) , CC("CBt_color",t_color)                           ;(1) save/store command box calling parameters in config.ini
     CC("CB_ProcessMod", ProcessMod)                                             ; config.ini used to preserve/change CB parameter information between redraws
+
+    ChangeFont := RegisterCallback("ChangeFont")
   
   ; RETRIEVE SETTINGS FROM CONFIG.INI -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     redrawGUI:
@@ -50,11 +52,11 @@
     CB_Title_ID := s MyTime l                                                   ; CB_Title_ID2 := s "(-(-_(-_-)_-)-)" s "COMMAND BOX" l       
     
     title_text := Capitalize1stLetter(Process_Name,0, 0)
-    ldspl .= RetrieveExt(A_ScriptDir "\mem_cache\" ldspl)  
-    ndspl := GC("CB_title")
+    ldspl .= RetrieveExt(A_ScriptDir "\mem_cache\" ldspl)                       ; last display  
+    ndspl := GC("CB_title")                                                     ; new display (if new file was loaded) 
     title := CB_Title_ID title_text suffix l (ndspl ? ndspl : ldspl) 
     CC("CBtitle",title)
-  
+    
   ; SET GUI OPTIONS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - 
     Gui, 2: New                                                                 
     Gui, 2: +LastFound +OwnDialogs +Owner +E0x00200 -DPIscale +AlwaysOnTop +Resize     ; +E0x08000000 
@@ -78,8 +80,16 @@
         IniWrite, %txt_file%, %config_path%, %A_ComputerName%, CB_last_display
         title := CB_Title_ID title_text suffix l txt_file RetrieveExt(A_ScriptDir "\mem_cache\" txt_file)
     }
-    
-    txt  := AccessCache(txt_file,, False)
+
+    switch ndspl 
+    {
+        case "First Line of 0-9.txt": 
+            txt := GetNumMemLines()
+            ; msgbox % GetNumMemLines()
+        case    "Clipboard Contents": txt := Clipboard
+        default:                      txt := AccessCache(txt_file,, False)
+    }
+
     rows := countrows(txt)
     rows := (rows < 2) ? 2 : (rows > 30) ? 30 : rows
     Gui, 2: Margin, 2, 2
@@ -105,7 +115,6 @@
     Gui, 2: Add, Button, Default Hidden gEnter_Button                           ; Gui, 2: Add, Button, ys h35 x+5 w80 Default gEnter_Button, Enter  ;Gui, 2: Add, Button, Default Hidden x0 y0 gEnter_Button
     Gui  2: Add, Button, Hidden gSearch_button, &n
     Gui  2: Add, Button, Hidden gReverseSearch_button, &p
-    ; static SearchStatus, ReverseSearch
 
   ; DRAW GUI -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     Gui, 2: +LastFound
@@ -139,7 +148,6 @@
         GuiControl, MoveDraw, UserInput, x%CtrXpos%
         AutoXYWH("y*", "UserInput")
         GuiControl, 2: -HScroll -VScroll, CB_Display
-        SB_SetIcon("Shell32.dll", 2)
         Gui, 2: show
         settimer, InvisibleScrollbar,-400
         gosub, save_win_coord

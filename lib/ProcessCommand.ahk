@@ -24,7 +24,21 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 ActivateWin("ahk_id " tgt_hwnd) 
                 sleep, short
                 text_to_add := "`n" . trim(clip())
-                if RegExMatch(C_input, " .+") {
+                if (InStr(C_input, ":")) {
+                    
+                    dPos  := InStr(C_input, ":")
+                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension, NameNoExt
+                    text_to_add := substr(C_input, dPos+1)
+                    if (FirstChar == "A") {
+                        FileAppend,% "`n" text_to_add, %f_path%%Dir%%NameNoExt%.txt    
+                        PopUp( """" text_to_add """" " added to bottom of`n" NameNoExt ,C.lgreen)  
+                    } else if (FirstChar == "P") {
+                        FilePrepend(f_path Dir NameNoExt ".txt", text_to_add "`n") 
+                        PopUp("added to top of`n" NameNoExt ,C.lgreen)
+                    }
+                    return 1
+                }
+                else if RegExMatch(C_input, " .+") {
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[2], oFileName, oDir, oExtension, oNameNoExt 
                     SplitPath,% arr[1], nFileName, nDir, nExtension, nNameNoExt 
@@ -33,41 +47,45 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     donorText := AccessCache(nNameNoExt, ndir, false)
                     PU(odir)
                     if (FirstChar == "A") {
-                        FileAppend, %donorText%, %f_path%%oDir%%oNameNoExt%.txt    
+                        FileAppend, % "`n" donorText, %f_path%%oDir%%oNameNoExt%.txt    
                         PopUp( nNameNoExt " added to bottom of`n" oNameNoExt ,C.lgreen)  
                     } else if (FirstChar == "P") {
-                        FilePrepend(f_path Dir NameNoExt ".txt", donorText) 
+                        FilePrepend(f_path Dir NameNoExt ".txt", donorText "`n") 
                         PopUp(nNameNoExt " added to top of`n" oNameNoExt ,C.lgreen)
                     }               
 
                 } else if (FirstChar == "A") {
-                    FileAppend, %text_to_add%, %f_path%%Dir%%NameNoExt%.txt    
+                    append_file:
+                    FileAppend,% "`n" text_to_add, %f_path%%Dir%%NameNoExt%.txt    
                     PopUp("added to bottom of`n" NameNoExt ,C.lgreen)  
-                } else {
-                    FilePrepend(f_path Dir NameNoExt ".txt", text_to_add) 
+                } else if (FirstChar == "P") {
+                    FilePrepend(f_path Dir NameNoExt ".txt", text_to_add "`n") 
                     PopUp("added to top of`n" NameNoExt ,C.lgreen)
                 }    
                 gosub, Load
                 return 1    
             Case "L":                                                           ; display file in command box
+
                 Load:         
+
                 if !GC("CB_Display") {
                     CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
                     MI := StrSplit(GetMonInfo()," ")                            ; get monitor dimensions
                     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
                     CC("CB_position", d)
                 }
+
                 tgt := f_path dir NameNoExt
-                
-                if (C_input = "s" or C_input = "c") {
-                    NameNoExt := (C_input = "s") ? ("HotKey_List") : ("config.ini")
+
+                if (C_input = "H" or C_input = "C") {
+                    NameNoExt := (C_input = "H") ? ("HotKey_List") : ("config.ini")
                     RegExMatch(config_path, ".*(?=config.ini)", cpth)           ; get everything before the last title separator and store in v
-                    dir := (C_input = "s") ? ("..\") : cpth
+                    dir := (C_input = "H") ? ("..\") : cpth
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
-                } else if (C_input = ":") {
-                    
+
+                } else if (C_input = ";") {
                     try {
                         txt := Clipboard
                         NameNoExt := "Clipboard Contents", dir := ""
@@ -75,8 +93,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         PopUp("Sorry the CB only displays text strings", , ,, , drtn = "-2000") 
                         return 1
                     }
+
                 } else if (substr(C_input,1,1) = "#") {                         ; get first lines from 0-9.txt memory files 
                     txt := GetNumMemLines()
+                    NameNoExt := "First Line of 0-9.txt", dir := ""
                     
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) 
                   or (C_input = "l") {
@@ -84,6 +104,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     CC("CB_last_display", dir NameNoExt)
                     txt := CreateCacheList("list")
                     tgt := f_path dir NameNoExt
+
                 } else {
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
@@ -95,17 +116,17 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
 
             Case "O":                                                           ; overwrite file/clipboard
                 C_input := RegExReplace(C_input, "S) +", A_Space)               
-                If (SubStr(C_input, 1 , 1) == ":")                              ; if C_input starts in ":" overwrite clipboard with file contents
+                If (SubStr(C_input, 1 , 1) == ";")                              ; if C_input starts in ";" overwrite clipboard with file contents
                 {
                     C_input := trim(SubStr(C_input, 2))
                     SplitPath, C_input, , Dir, , NameNoExt 
                     clipboard := AccessCache(NameNoExt,dir, False)
                     return 1
                 }
-                else If (SubStr(C_input, 0) == ":")                             ; if C_input ends in ":" overwrite file with clipboard contents
+                else If (SubStr(C_input, 0) == ";")                             ; if C_input ends in ";" overwrite file with clipboard contents
                 {
-                    NameNoExt := rtrim(C_input, ":")
-                    dir := (InStr(dir, ":")) ? "" : dir
+                    NameNoExt := rtrim(C_input, ";")
+                    dir := (InStr(dir, ";")) ? "" : dir
                     WriteToCache(namenoext,,dir,clipboard)   
                     return 1
                 }
@@ -328,7 +349,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 RunOtherCB(C_input, FirstChar) 
             Case "Q":                                                           ; query selected text in chosen search engine msft
                 
-                if (InStr(C_input, ":")) {                                      ; get search string from command box if semi colon detected
+                if (InStr(C_input, ":")) {                                      ; get search string from command box if colon detected
                     dPos  := InStr(C_input, ":")
                     case  := substr(C_input, 1, dPos-1)
                     strng := substr(C_input, dPos+1)
@@ -394,6 +415,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     CC("CBfsz",C_input)
                     reload
                 }
+                AutoXYWH("wh*", "CB_Display")
+                CtrXpos := (A_GuiWidth - GC("CB_InputBox_width")) // 2
+                GuiControl, MoveDraw, UserInput, x%CtrXpos%
+                AutoXYWH("y*", "UserInput")
                 return 2
             Case "T":
                 Switch C_input 
@@ -407,12 +432,12 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         return 2
                     case "default"   ,"d": 
                         CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0)
-                        , MI := StrSplit(GetMonInfo()," ")                              
+                        , MI := StrSplit(GetMonInfo()," "), CC("CBfsz", "10")                              
                         , d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
                         , CC("CB_position", d)
                     case "minimized" ,"m": 
                         CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0) 
-                        , IBw := GC("CB_InputBox_width")
+                        , IBw := GC("CB_InputBox_width"), CC("CBfsz", "10")
                         , MI := StrSplit(GetMonInfo()," ")                                
                         , cX := (MI[3] - IBw) // 2
                         , bY := MI[4] - 25
@@ -422,7 +447,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     default:
                 }
                 UpdateGUI()
-                return 1
+                return 2
+                ; return 1
 
             Default:
                 return 1
