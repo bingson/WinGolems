@@ -1799,7 +1799,7 @@
 
   CursorFollowWin(Q = "center", offset_x = "100", offset_y = "100") {
     global config_path, short, med
-    sleep, med
+    ; sleep, short
     if GC("T_CF",0)
         CursorJump(Q, offset_x, offset_y)
     return

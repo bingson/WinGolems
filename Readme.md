@@ -410,7 +410,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Alt+B                   Navigation: navigate to left tab
  Alt+Space               Navigation: navigate to right tab
  Rightshift+Rightalt+O   VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2)
- Ctrl+Alt+Enter          VirtualDesktop: Switch between desktop 1 and 2
+ Rightalt+Enter          VirtualDesktop: Switch between desktop 1 and 2
  Rightalt+Sc028          VirtualDesktop: Switch to desktop 1
  Shift+Win+Q             WindowMgmt: close active window
  Alt+Win+Q               WindowMgmt: close all instances of the active program
