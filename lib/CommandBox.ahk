@@ -71,7 +71,7 @@
   ; ADD GUI CONTROLS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
     ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
-    if (show_txt = "") {                                                        ; reload last diplayed txt                                  
+    if (show_txt = "") {                                                        ; reload last diplayed txt
         txt_file := GC("CB_last_display", "help.txt")
         if (txt_file = "help.txt")
             title := CB_Title_ID title_text suffix l txt_file
@@ -147,15 +147,12 @@
         CtrXpos := (A_GuiWidth - GC("CB_InputBox_width")) // 2
         GuiControl, MoveDraw, UserInput, x%CtrXpos%
         AutoXYWH("y*", "UserInput")
-        GuiControl, 2: -HScroll -VScroll, CB_Display
+        if !GC("CB_ScrollBars", 0)
+            GuiControl, 2: -HScroll -VScroll, CB_Display
         Gui, 2: show
-        settimer, InvisibleScrollbar,-400
+        settimer, addHiddenScrollBar,-400
         gosub, save_win_coord
         Return
-
-    InvisibleScrollbar:                                                         ; hides the scroll bar only if settimer with > 200 ms delay
-        GuiControl, 2: +HScroll +VScroll, CB_Display
-        return
         
     2GuiEscape:
     2GuiClose:

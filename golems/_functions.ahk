@@ -79,11 +79,12 @@
     
     If (winactive("ahk_id " CB_hwnd))
     {
-        ; msgbox % "x" x " y"y " w"w " h"h
-        GuiControl, 2: -HScroll -VScroll, CB_Display
+        if !GC("CB_ScrollBars", 0)
+            GuiControl, 2: -HScroll -VScroll, CB_Display
         Gui, 2: show
-        GuiControl, 2: +HScroll +VScroll, CB_Display
+        settimer, addHiddenScrollBar,-400
         CC("CB_position", "x" x " y" y " w" w " h" h)
+
     }
 
     WinMove,A,, x, y, w, h
@@ -418,6 +419,14 @@
  
 ; COMMAND BOX __________________________________________________________________
   
+  addHiddenScrollBar() {
+    GuiControl, 2: +HScroll +VScroll, CB_Display
+    send {shift up}                                                         ; corrects sticky key problem
+    send {ctrl up}                                                          ; drawing of the CB sometimes interferes 
+    send {lwin up}                                                          ; with key up signals, making windows believe the keys is still pressed
+    return
+  }
+
   ToggleDisplay(){
     CC("CBfsz", "10")
     if (GC("CB_Display") = 1) {
@@ -969,6 +978,9 @@
     SetTimer,, Off
     BlockInput, MouseMoveOff
     BlockInput, default
+    send {shift up}                                                         ; corrects sticky key problem
+    send {ctrl up}                                                          ; drawing of the CB sometimes interferes 
+    send {lwin up}                                                          ; with key up signals, making windows believe the keys is still pressed
     BlockInput, Off
     Return
   }

@@ -1,8 +1,0 @@
-CACHE CONTENTS
-----------------------------------------------------------------
-ALIAS.INI                       sck.txt
-cc.txt                          ahk\troubleshooting_options.txt
-gc.txt                          b\_hist.txt
-help.txt                        R\testr.txt
-key3.txt                        
-                                
