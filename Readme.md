@@ -581,8 +581,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
 
 ``` 
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
- Ctrl+Alt+J              CB: Font size Decrease
- Ctrl+Alt+K              CB: Font size Increase
+ Ctrl+Alt+J              CB: Font size Increase
+ Ctrl+Alt+K              CB: Font size Decrease
  Alt+N                   CB: highlight next match of text in the CB display window with text entered in the input box
  Alt+B                   CB: highlight previous match of text in the CB display window with text entered in the input box
  Alt+S                   CB: move CB window to bottom half
