@@ -688,8 +688,8 @@ ________________________________________________________________________________
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
 |  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
-|  O   Overwrite file| contents                O1, O2 help         replace => 1.txt w/ selected, 2.txt w/ help.txt                     O?|
-       Overwrite with clipboard                O;3, O3;            replace => Clipboard with 3.txt, replace 3.txt with clipboard  O;?|O?;|
+|  O   Overwrite file options                  O1, O2 help         Overwrite => 1.txt w/ selected, 2.txt w/ help.txt                   O?|
+|      Overwrite Clipboard options             O;3 (O3;)           Overwrite => Clipboard with 3.txt (3.txt with clipboard)       O;?|O?;|
 |  E   Edit file in default editor             E1, Er\test         edit => 1.txt, r\test.txt (example subfolder file path)             E?|
 | A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt     A?|P?|
 |      manually entered Append|prepend         P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|       
