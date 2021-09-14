@@ -451,11 +451,8 @@
         , mh := 20 + (2 * GC("CBfsz", "11"))
         , bY := MI[4] - mh - (2.1 * GC("CBfsz", "11"))
         , CC("CB_position","x" cX " y" bY " w" mw " h" mh)
-        ; Gui, 2:Font, s11
-        AutoXYWH("yh*", "UserInput")
         DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
-    
-    } else if (GC("CB_Display") = 0) or (set = "Display"){
+    } else if (GC("CB_Display") = 0) or (set = "Display") {
         CC("CBfsz", fszDisplay)
         CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0)
         , MI := StrSplit(GetMonInfo()," ")                              
