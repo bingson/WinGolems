@@ -1,5 +1,6 @@
 ; GLOBAL VARIABLES _____________________________________________________________
-
+  
+  ChangeFont := RegisterCallback("ChangeFont")
   short := 150, med := 300, long := 900
 
   C := { "lgreen"      : "CEDFBF"
@@ -1072,7 +1073,7 @@
 
   GetMonInfo(wa = "8", ha = "8") {
     n := GetCurrentMonitorIndex()
-    SysGet, XY, Monitor , %n%                                                   ; SysGet, XY, MonitorWorkArea , %n%
+    SysGet, XY, Monitor , %n%                                                    ; SysGet, XY, MonitorWorkArea , %n%
     x  := XYLeft                 , y  := XYtop
     w  := Abs(XYLeft-XYRight)+wa , h  := Abs(XYtop-XYbottom)+ha
     return % x " " y " " w " " h
@@ -1309,8 +1310,6 @@
     return
   }
 
-  #g:: run %A_ScriptDir%\golems\tools\Hotkey_Help.ahk
-  
   GenerateHotkeyList() {
     ; generate a .txt list of all active hotkeys and hotstrings
     ; then opens that .txt in the default editor (config.ini)
