@@ -578,6 +578,7 @@
     }
     ; Sort, cache_contents, CL
     cache_contents := "CACHE CONTENTS`n" . RepeatString("-", char_width) . "`n`r" . cache_contents
+    FileDelete, mem_cache\%name%.txt
     FileAppend, %cache_contents%, mem_cache\%name%.txt
     return % cache_contents
   }
@@ -786,12 +787,12 @@
  
 ; MEM_CACHE / MEMORY SYSTEM ____________________________________________________
 
-  GetNumMemLines(startline=1,endline=1,blen=60){
+  GetNumMemLines(startline=1,endline=1,blen=60, alpha = 0){
     output := ""
     border := RepeatString("-", blen)
     Loop, Files, C:\Users\bings\AHK\mem_cache\?.txt
     {
-        if regexmatch(A_LoopFileName, "\d\.txt") {
+        if regexmatch(A_LoopFileName, "\d\.txt") or alpha {
             lines := TF_ReadLines(A_LoopFilePath, StartLine, EndLine)           ; FileReadLine, first_line, % A_LoopFilePath, 1       
             splitpath, A_LoopFileName,,,,NameNoExt
             fl := trim(lines, " `t`r`n")
@@ -799,11 +800,9 @@
             output .= result
         }
         CC("MemSummaryLines", endline)
-        
     }
     Return % output
   }
-
 
   WriteToCache(key, del_toggle = False, mem_path = "", input = "", append = false, supress = False) {
     ; creates a txt file in \mem_cache from selected text
