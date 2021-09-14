@@ -898,6 +898,17 @@ return
 ;{-----------------------------------------------
 ;
 
+; Fast way to create a string of a repeated character (Bing)
+RepeatString(_string, _count) {
+    ; Fast way to create a string of a repeated character
+    local result
+    VarSetCapacity(result, StrLen(_string) * _count)
+    AutoTrim Off
+    Loop %_count%
+        result = %result%%_string%
+    return result
+}
+
 ; Get Value of Variable From Script Dialog
 HotkeyVariable(Script,Variable)
 {
@@ -973,7 +984,7 @@ String_Wings(String,Length:=76,Char:="=",Case:="U")
 }
 
 ; Format Spaces Between Hot Keys and Help Info to Create Columns
-Format_Line(Hot,Info,Pos_Info)
+1Format_Line(Hot,Info,Pos_Info)
 {
 	Spaces := ""
 	Length := Pos_Info - StrLen(Hot) - 1
@@ -981,6 +992,24 @@ Format_Line(Hot,Info,Pos_Info)
 		Spaces .= " "
 	return Hot Spaces Info
 }
+
+Format_Line(Hot,Info,Pos_Info)
+{
+	Spaces := ""
+    if instr(Hot,"$")
+        Hot := StrReplace(hot, "$", "")
+    if instr(Hot,"*")
+        Hot := StrReplace(hot, "*", "")
+    if instr(Hot,"~")
+        Hot := StrReplace(hot, "~", "")
+        
+	Length := Pos_Info - StrLen(Hot) - 1
+	Loop %Length%
+		Spaces .= " "
+    fspaces := substr(hot Spaces, (StrLen(Hot) + 1), Length)
+	return Hot fspaces Info
+}
+
 
 ; Reference One Branch of Array and Return Corrisponding Information on Cross Branch
 ArrayCrossRef(Array, Haystack, Needle, Cross)

@@ -20,11 +20,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 C_input := "help"
                 gosub, Load
                 return 1
-            Case "A", "P":                                                      ; append|prepend selected text
+            Case "A", "P":                                                      ; append|prepend text to file
                 ActivateWin("ahk_id " tgt_hwnd) 
                 sleep, short
-                text_to_add := "`n" . trim(clip())
-                if (InStr(C_input, ":")) {
+                if (InStr(C_input, ":")) {                                      ; append|prepend manually entered text to file 
                     
                     dPos  := InStr(C_input, ":")
                     SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension, NameNoExt
@@ -38,7 +37,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     }
                     return 1
                 }
-                else if RegExMatch(C_input, " .+") {
+                else if RegExMatch(C_input, " .+") {                            ; append|prepend 1st file to 2nd file
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[2], oFileName, oDir, oExtension, oNameNoExt 
                     SplitPath,% arr[1], nFileName, nDir, nExtension, nNameNoExt 
@@ -50,19 +49,22 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         FileAppend, % "`n" donorText, %f_path%%oDir%%oNameNoExt%.txt    
                         PopUp( nNameNoExt " added to bottom of`n" oNameNoExt ,C.lgreen)  
                     } else if (FirstChar == "P") {
-                        FilePrepend(f_path Dir NameNoExt ".txt", donorText "`n") 
+                        FilePrepend(f_path oDir oNameNoExt ".txt", donorText "`n") 
                         PopUp(nNameNoExt " added to top of`n" oNameNoExt ,C.lgreen)
                     }               
-
-                } else if (FirstChar == "A") {
-                    append_file:
-                    FileAppend,% "`n" text_to_add, %f_path%%Dir%%NameNoExt%.txt    
-                    PopUp("added to bottom of`n" NameNoExt ,C.lgreen)  
-                } else if (FirstChar == "P") {
-                    FilePrepend(f_path Dir NameNoExt ".txt", text_to_add "`n") 
-                    PopUp("added to top of`n" NameNoExt ,C.lgreen)
-                }    
-                gosub, Load
+                    NameNoExt := oNameNoExt
+                    dir := oDir
+                } else {
+                    text_to_add := trim(clip()," `t`n`r")
+                    if (FirstChar == "A") {                                  ; append|prepend selected text to file 
+                        FileAppend,% "`n" text_to_add, %f_path%%Dir%%NameNoExt%.txt    
+                        PopUp("added to bottom of`n" NameNoExt ,C.lgreen)  
+                    } else if (FirstChar == "P") {
+                        FilePrepend(f_path Dir NameNoExt ".txt", text_to_add "`n") 
+                        PopUp("added to top of`n" NameNoExt ,C.lgreen)
+                    }    
+                }
+                goto, Load
                 return 1    
             Case "L":                                                           ; display file in command box
 
@@ -95,9 +97,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     }
 
                 } else if (substr(C_input,1,1) = "#") {                         ; get first lines from 0-9.txt memory files 
-                    txt := GetNumMemLines()
-                    NameNoExt := "First Line of 0-9.txt", dir := ""
-                    
+                    remainder := substr(C_input,2)
+                    txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder) : GetNumMemLines()
+                    NameNoExt := "First lines of 0-9.txt"
+                    dir := ""
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) 
                   or (C_input = "l") {
                     NameNoExt := "list"
@@ -401,7 +404,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "Z":
                 
                 if (C_input == "d") {
-                    CC("CBfnt", "Consolas"), CC("CBfsz", "13"), CC("CBfwt", "500")               
+                    CC("CBfnt", "Consolas"), CC("CBfsz", "11"), CC("CBfwt", "500")               
                 } else if RegExMatch(c_input,"[bfBF]:") {
                     C_2 := SubStr(C_input, 1, 2)
                     C3_Remainder := SubStr(C_input, 3)
@@ -413,7 +416,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     }            
                 } else {
                     CC("CBfsz",C_input)
-                    reload
+                    reloadWG()
                 }
                 AutoXYWH("wh*", "CB_Display")
                 CtrXpos := (A_GuiWidth - GC("CB_InputBox_width")) // 2
@@ -423,27 +426,18 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "T":
                 Switch C_input 
                 {
-                    case "persistent","p": TglCFG("CB_persistent", "Toggle persistent mode: ")
-                    case "scrollbars","s": TglCFG("CB_ScrollBars", "Toggle scrollbars: ")
-                    case "title"     ,"t": TglCFG("CB_Titlebar"  , "Toggle titlebar: ")
-                    case "focus"     ,"a": TglCFG("CB_appActive" , "Toggle application focus: ")
+                    case "persistent"  ,"p"  : TglCFG("CB_persistent" , "Toggle persistent mode: ")
+                    case "scrollbars"  ,"s"  : TglCFG("CB_ScrollBars" , "Toggle scrollbars: ")
+                    case "title"       ,"t"  : TglCFG("CB_Titlebar"   , "Toggle titlebar: ")
+                    case "focus"       ,"a"  : TglCFG("CB_appActive"  , "Toggle application focus: ")
+                    case "renter input","r"  : TglCFG("CB_reenterInput" , "Re-enter last submit: ")
                     case "wrap_text" ,"w": 
                         TglCFG("CB_Wrap", "Toggle text wrap: ")
                         return 2
                     case "default"   ,"d": 
-                        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0)
-                        , MI := StrSplit(GetMonInfo()," "), CC("CBfsz", "10")                              
-                        , d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
-                        , CC("CB_position", d)
+                        ToggleDisplay("display")
                     case "minimized" ,"m": 
-                        CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0) 
-                        , IBw := GC("CB_InputBox_width"), CC("CBfsz", "10")
-                        , MI := StrSplit(GetMonInfo()," ")                                
-                        , cX := (MI[3] - IBw) // 2
-                        , bY := MI[4] - 25
-                        , mw := IBw + 4
-                        , mh := 40 
-                        , CC("CB_position","x" cX " y" bY " w" mw " h" mh)
+                        ToggleDisplay("minimal")
                     default:
                 }
                 UpdateGUI()

@@ -80,14 +80,12 @@
         IniWrite, %txt_file%, %config_path%, %A_ComputerName%, CB_last_display
         title := CB_Title_ID title_text suffix l txt_file RetrieveExt(A_ScriptDir "\mem_cache\" txt_file)
     }
-
+    
     switch ndspl 
     {
-        case "First Line of 0-9.txt": 
-            txt := GetNumMemLines()
-            ; msgbox % GetNumMemLines()
-        case    "Clipboard Contents": txt := Clipboard
-        default:                      txt := AccessCache(txt_file,, False)
+        case "First lines of 0-9.txt": txt := GetNumMemLines(,GC("MemSummaryLines", 1))
+        case "Clipboard Contents":     txt := Clipboard
+        default:                       txt := AccessCache(txt_file,, False)
     }
 
     rows := countrows(txt)
@@ -101,8 +99,8 @@
    
     }
 
-    ; input_txt := % (input_txt = "!") ? GC("last_user_input") : input_txt        ; determines what is pre-entered in the input box
-    
+    input_txt := % GC("CB_reenterInput",0) ? GC("last_user_input") : input_txt        ; determines what is pre-entered in the input box
+
     if (!display) {
         Guicontrol, ,CB_Display, %A_space%
         Gui, 2: Font, c%t_color%

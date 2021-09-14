@@ -78,7 +78,7 @@
   !#i::               WindowsSettings()                                         ;WinSetting: windows settings
   >+>!o::             % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")       ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2)
   >!sc028::           GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1
-  ^!enter::           % (t := !t) ? GotoDesktop("2") : GotoDesktop("1")         ;VirtualDesktop: Switch between desktop 1 and 2
+  >!enter::           % (t := !t) ? GotoDesktop("2") : GotoDesktop("1")         ;VirtualDesktop: Switch between desktop 1 and 2
 
 ; MEMORY FILE FUNCTIONS (BLUE)__________________________________________________
   

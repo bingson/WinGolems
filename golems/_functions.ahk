@@ -427,18 +427,26 @@
     return
   }
 
-  ToggleDisplay(){
-    CC("CBfsz", "10")
-    if (GC("CB_Display") = 1) {
+  ToggleDisplay(set = ""){
+    static fszDisplay := 11
+
+    if (GC("CB_Display") = 1) or (set = "Minimal") {
+        fszDisplay := GC("CBfsz")
+        CC("CBfsz", "11")
         CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0) 
         , IBw := GC("CB_InputBox_width")
         , MI := StrSplit(GetMonInfo()," ")                                
         , cX := (MI[3] - IBw) // 2
-        , bY := MI[4] - 25
         , mw := IBw + 4
-        , mh := 40 
+        , mh := 20 + (2 * GC("CBfsz", "11"))
+        , bY := MI[4] - mh - (2.1 * GC("CBfsz", "11"))
         , CC("CB_position","x" cX " y" bY " w" mw " h" mh)
-    } else {
+        ; Gui, 2:Font, s11
+        AutoXYWH("yh*", "UserInput")
+        DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
+    
+    } else if (GC("CB_Display") = 0) or (set = "Display"){
+        CC("CBfsz", fszDisplay)
         CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0)
         , MI := StrSplit(GetMonInfo()," ")                              
         , d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
@@ -768,17 +776,19 @@
  
 ; MEM_CACHE / MEMORY SYSTEM ____________________________________________________
 
-  GetNumMemLines(startline=1,endline=2,blen=60){
+  GetNumMemLines(startline=1,endline=1,blen=60){
     output := ""
-    border := RepeatString("_", blen)
+    border := RepeatString("-", blen)
     Loop, Files, C:\Users\bings\AHK\mem_cache\?.txt
     {
         if regexmatch(A_LoopFileName, "\d\.txt") {
-            FileReadLine, first_line, % A_LoopFilePath, 1
-            fl := trim(first_line)
-            result = %A_LoopFileName% %border% `n`n       %fl% `n`n 
+            lines := TF_ReadLines(A_LoopFilePath, StartLine, EndLine)           ; FileReadLine, first_line, % A_LoopFilePath, 1       
+            splitpath, A_LoopFileName,,,,NameNoExt
+            fl := trim(lines, " `t`r`n")
+            result =%border%`n[%NameNoExt%] %fl%`n 
             output .= result
         }
+        CC("MemSummaryLines", endline)
         
     }
     Return % output
@@ -790,9 +800,11 @@
     global C
     
     if !input
-        input := clip()                                                         ; captures selected text if no input given
+        input := clip()                                                         ; captures selected text if no input given 
+    
+    input := Ltrim(input, " `t`n`r")
 
-    if (trim(input) = "") {
+    if (input = "") {
                                 
     } else {
         if !append
@@ -904,7 +916,7 @@
 ; AHK UTILITIES ________________________________________________________________
 
   reloadWG() { 
-    CC("CBfsz", "10")
+    CC("CBfsz", "11")
     Reload                                                                      
   }
 
@@ -1287,7 +1299,9 @@
     }
     return
   }
- 
+
+  #g:: run %A_ScriptDir%\golems\tools\Hotkey_Help.ahk
+  
   GenerateHotkeyList() {
     ; generate a .txt list of all active hotkeys and hotstrings
     ; then opens that .txt in the default editor (config.ini)
@@ -1297,20 +1311,15 @@
     sleep, long * 2
     DetectHiddenWindows On                                                      ; Allows a script's hidden main window to be detected.
     SetTitleMatchMode 2
-    WinClose %A_ScriptDir%\golems\tools\Hotkey_Help.ahk
     Orig_File = %A_WorkingDir%\golems\tools\HotKey Help - Dialog.txt
-    TF_Replace(Orig_File, "$", "")
-    Updated = %A_WorkingDir%\golems\tools\HotKey Help - Dialog_copy.txt
     New_Location = %A_WorkingDir%\HotKey_List.txt
-    FileMove, %Updated% , %New_Location%, 1
+    FileMove, %Orig_File%, %New_Location%, 1
     SC_key_txt := AccessCache("sck",,False)
-    SC_key_txt := StrReplace(SC_key_txt,"/* ")
-    SC_key_txt := StrReplace(SC_key_txt,"E --", "E -- --")
-    SC_key_txt := rtrim(StrReplace(SC_key_txt,"*/"),"`r`n`t")
-    FilePrepend("HotKey_List.txt", SC_key_txt)
-    sleep, long * 2
-    EditFile("""" New_Location """")
+    FilePrepend(A_WorkingDir "\HotKey_List.txt", SC_key_txt)
+    sleep, long 
+    OP("""" New_Location """")
     FileDelete, %Orig_File%
+    WinClose %A_ScriptDir%\golems\tools\Hotkey_Help.ahk
     return
   }
  
@@ -2362,26 +2371,6 @@
     sleep short
     return      
   }
-                                                                                                                                                              
-  1AddSpaceBeforeComment(length = "80", char = " ", lines = 1) {
-    ; Add spaces between two strings so the second string starts at the length position
-    ; ReleaseModifiers()
-    BlockInput, on
-    settimer, BlockInputTimeOut,-600
-    Send {space}{left}+{end}                                                    ; fixes issue in vscode where ^x on empty selection will cut the whole line                                        
-    end_txt := TrimText(1, clip())
-    send {del}
-    Send {home 2}+{end}
-    beg_txt := TrimText(1, clip(), 1)
-    send {del}
-    gap := length - strlen(beg_txt)
-    mid_txt := RepeatString(A_space, gap)
-    new_line := beg_txt . mid_txt . end_txt
-    clip(new_line)
-    sendinput % "{left " . strlen(end_txt) . "}"
-    BlockInput, Off
-    return
-  }
  
   AddBorder(length = "80", char = "_", prefix = "" )  {
     ; Add line border to separate code sections
@@ -2648,6 +2637,7 @@
   CBzoomOut:
     fsz := GC("CBfsz", "10")
     fsz -= 2
+    fsz := (fsz < 5) ? 5 : (fsz > 20) ? 20 : fsz
     Gui, 2:Font, s%fsz%
     DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
     CC("CBfsz", fsz)
@@ -2656,7 +2646,14 @@
   CBzoomIn:
     fsz := GC("CBfsz", "10")
     fsz += 1
+    fsz := (fsz < 5) ? 5 : (fsz > 20) ? 20 : fsz
     Gui, 2:Font, s%fsz%
     DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
     CC("CBfsz", fsz)
     return
+
+  ChangeFont(hwnd, l) {
+    GuiControl Font, %hwnd%
+    return true
+  }
+

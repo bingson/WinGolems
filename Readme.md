@@ -403,8 +403,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Ctrl+Alt+H              Navigation: Home
  Win+K                   Navigation: mouse scroll down 2 lines
  Win+J                   Navigation: mouse scroll down 2 lines
- Rightalt+Win+K          Navigation: mouse scroll down 6 lines
  Rightalt+Win+J          Navigation: mouse scroll down 6 lines
+ Rightalt+Win+K          Navigation: mouse scroll down 6 lines
  Win+Rightalt+H          Navigation: mouse scroll left
  Win+Rightalt+L          Navigation: mouse scroll right
  Alt+B                   Navigation: navigate to left tab
@@ -420,7 +420,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Alt+Sc034               WindowMgmt: move window btn monitors, cursor follows active windows
  Shift+Win+Capslock      WindowMgmt: rotate through app instances from most recent
  Win+Capslock            WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
- *Alt+Capslock           WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction)
+ Alt+Capslock            WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction)
  Ctrl+Win+Sc027          WindowMgmt: show desktop
  Win+Ins                 WindowMgmt: Window always on top: OFF
  Win+Del                 WindowMgmt: Window always on top: ON
@@ -437,7 +437,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Alt+Win+P               WinSetting: presentation display mode
  Alt+Win+R               WinSetting: run program
  Alt+Win+I               WinSetting: windows settings
- ```
+```
 
 </p></details>
 
@@ -456,7 +456,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Capslock                Convenience: delete (toggle capslock: ctrl + capslock)
  Ctrl+Alt+D              Convenience: duplicate current line
  Shift+Alt+Sc028         Convenience: enclose selected text with " "
- Rightalt+Shift+4        Convenience: enclose selected text with  
+ Rightalt+Shift+4        Convenience: enclose selected text with $ $
  Rightalt+Shift+5        Convenience: enclose selected text with % %
  Ctrl+Sc028              Convenience: enclose selected text with ' '
  Shift+Alt+9             Convenience: enclose selected text with ( )
@@ -475,24 +475,24 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Ctrl+Win+F              MouseFn: 3 Left clicks (select line)
  Shift+Ctrl+Lbutton      MouseFn: click thrice, paste clipboard
  Ctrl+Alt+Lbutton        MouseFn: click twice, paste clipboard
- *Win+D                  MouseFn: Left click and save mouse position
+ Win+D                   MouseFn: Left click and save mouse position
  Alt+Win+J               MouseFn: move mouse cursor to bottom edge
  Ralt & Lalt             MouseFn: move mouse cursor to BOTTOM LEFT of active app
  Lalt & Ralt             MouseFn: move mouse cursor to BOTTOM RIGHT of active app
  Alt+Win+H               MouseFn: move mouse cursor to Left edge
  Alt+Win+L               MouseFn: move mouse cursor to Right edge
  Alt+Win+K               MouseFn: move mouse cursor to top edge
- *Ctrl+Win+D             MouseFn: return to saved mouse position (change 0 to number of clicks)
+ Ctrl+Win+D              MouseFn: return to saved mouse position (change 0 to number of clicks)
  Ctrl+Alt+J              MouseFn: zoom in
  Ctrl+Alt+K              MouseFn: zoom out
  Win+Shift+E             Navigation: ^end
  Win+E                   Navigation: ^home
  Win+H                   Navigation: jump to next word; simulate ctrl+Left
  Win+L                   Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
- *Alt+K                  Navigation| Down
+ Alt+K                   Navigation| Down
  Alt+H                   Navigation| Left
  Alt+L                   Navigation| Right
- *Alt+J                  Navigation| Up
+ Alt+J                   Navigation| Up
  Shift+Win+J             Selection: extend selection down  1 row
  Shift+Alt+J             Selection: extend selection down  1 row
  Shift+Alt+H             Selection: extend selection Left  1 character
@@ -575,14 +575,15 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Ctrl+F7                 OpenPath: open saved file|folder path from +^F7
  Ctrl+F8                 OpenPath: open saved file|folder path from +^F8
 ```
+
 </p></details>
 
 <details><summary>&nbsp;ℹ️&nbsp;<b> Command Box </b></summary><p>
 
-``` 
+```
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
- Ctrl+Alt+J              CB: Font size Increase
  Ctrl+Alt+K              CB: Font size Decrease
+ Ctrl+Alt+J              CB: Font size Increase
  Alt+N                   CB: highlight next match of text in the CB display window with text entered in the input box
  Alt+B                   CB: highlight previous match of text in the CB display window with text entered in the input box
  Alt+S                   CB: move CB window to bottom half
@@ -609,7 +610,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Alt+Space               CB| submit GUI input
  Win+Space               CB| submit GUI input
  Alt+X                   CB| toggle Command Box display|minimalist mode
- ```
+```
 
 </p></details>
 
@@ -643,7 +644,7 @@ ________________________________________________________________________________
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | Ls     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
+|     :X:a~win:: anyFunction()                        | Lh     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
 |                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
 | The above can be adaped to call scripts written in  | ws     Open Window Spy                              |  ap  Add Remove Programs   |
 | other languages such as python, VBA, C++, etc ...   | kh     Open Key History (#KeyHistory > 0 required)  |  a   Alarm Clock           |
