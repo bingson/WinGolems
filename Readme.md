@@ -334,7 +334,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
 
 
 
-<details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></sjummary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></summary><p>
 
 ```
 ==o====o====o====o====o====o== A_QUICK_START ==o====o====o====o====o====o===
