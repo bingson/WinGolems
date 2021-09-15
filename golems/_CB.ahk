@@ -1,4 +1,3 @@
-
 ; COMMAND BOX __________________________________________________________________
 
 #IF WinActive("ahk_id " CB_hwnd)                                                ; If Command or Function Box active
@@ -20,7 +19,8 @@ $^!j::             goto, CBzoomIn                                               
 !a::               MoveWin("L")                                                 ;CB: move CB window to left half
 #right::                                                                        ;CB: move CB window to right half
 !d::               MoveWin("R")                                                 ;CB: move CB window to right half
-!space::                                                                        ;CB| submit GUI input
+>!space::          GUISubmit(">!space")
+<!space::                                                                       ;CB| submit GUI input
 #space::           GUISubmit()                                                  ;CB| submit GUI input
 $!x::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
 !r::               GUIRecall()                                                  ;CB| reenter last command

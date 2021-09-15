@@ -1,12 +1,12 @@
 ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
     global config_path, File_DICT, Folder_DICT, long, med, short, tgt_hwnd, CB_hwnd, C
-    FirstChar := SubStr(UserInput, 1 , 1)
+    FirstChar := SubStr(UserInput, 1, 1), 2ndChar := SubStr(UserInput, 2 , 1)
     f_path := A_ScriptDir "\mem_cache\" 
 
     if RegExMatch(FirstChar,"[0-9A-Z\?jk:]") 
     {
         C_input := SubStr(UserInput, 2)                                         ; everything after the first character
-        SplitPath, C_input, FileName, Dir, Extension, NameNoExt                 ; msgbox % C_input "`n`nFileName: " FileName "`nDir: " Dir "`nExtension: " Extension "`nNameNoExt: " NameNoExt
+        SplitPath, C_input, FileName, Dir, Extension, NameNoExt                 ; parses everything after the command character as a file path 
         dir := dir ? dir . "\" : ""
         Switch FirstChar                                                        ; free: h,i,u,x,y
         { 
@@ -21,88 +21,136 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 gosub, Load
                 return 1
             Case "A", "P":                                                      ; append|prepend text to file
-                ActivateWin("ahk_id " tgt_hwnd) 
-                sleep, short
-                if (InStr(C_input, ":")) {                                      ; append|prepend manually entered text to file 
-                    
+                if (SubStr(UserInput, 2 , 2) = ">:") {                          ;# append|prepend manually entered text to clipboard
+                    dPos        := InStr(C_input, ":")
+                    text_to_add := substr(C_input, dPos+1)
+                    sleep, long * 0.8
+                    C_input := ">"
+                    goto, addTextToClipboard
+
+                } else if (C_input = ">") {                                     ;# append|prepend selected text to clipboard                                  
+                    ActivateWin("ahk_id " tgt_hwnd), s("") 
+                    text_to_add := trim(clip()," `t`n`r")
+                    sleep, long * 0.8
+                    C_input := ">"
+                    goto, addTextToClipboard
+
+                } else if (substr(C_input,0) = ">") {                           ;# append|prepend file to clipboard                                     
+                    SplitPath,% trim(C_input,">"), FileName, Dir, Extension, NameNoExt
+                    dir := dir ? dir . "\" : "" 
+                    text_to_add := AccessCache(NameNoExt, dir, false)
+                    sleep, long * 0.8
+                    C_input := ">"
+                    goto, addTextToClipboard
+                
+                } else if (substr(C_input,1,1) = ">") {                         ;# append|prepend clipboard to file                     
+                    C_input := trim(C_input,">")
+                    SplitPath,C_input, FileName, Dir, Extension, NameNoExt
+                    dir := dir ? dir . "\" : "" 
+                    sleep, long * 1.2
+                    savedCB := clipboardall
+                    text_to_add := clipboard
+                    clipboard := ""
+                    clipboard := savedCB
+                    clipwait 
+                    while (ErrorLevel)
+                        sleep 50
+                    goto, addTextToFile
+                
+                } else if (InStr(C_input, ":") and !InStr(C_input, ">")) {      ;# append|prepend manually entered text to file      
                     dPos  := InStr(C_input, ":")
                     SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension, NameNoExt
+                    dir := dir ? dir . "\" : "" 
                     text_to_add := substr(C_input, dPos+1)
-                    if (FirstChar == "A") {
-                        FileAppend,% "`n" text_to_add, %f_path%%Dir%%NameNoExt%.txt    
-                        PopUp( """" text_to_add """" " added to bottom of`n" NameNoExt ,C.lgreen)  
-                    } else if (FirstChar == "P") {
-                        FilePrepend(f_path Dir NameNoExt ".txt", text_to_add "`n") 
-                        PopUp("added to top of`n" NameNoExt ,C.lgreen)
-                    }
-                    return 1
-                }
-                else if RegExMatch(C_input, " .+") {                            ; append|prepend 1st file to 2nd file
+                    goto, addTextToFile
+                } else if RegExMatch(C_input, " .+") {                          ;# append|prepend 1st file to 2nd file                         
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[2], oFileName, oDir, oExtension, oNameNoExt 
                     SplitPath,% arr[1], nFileName, nDir, nExtension, nNameNoExt 
-                    odir := odir ? odir . "/" : "" 
-                    ndir := ndir ? ndir . "/" : ""
-                    donorText := AccessCache(nNameNoExt, ndir, false)
-                    PU(odir)
-                    if (FirstChar == "A") {
-                        FileAppend, % "`n" donorText, %f_path%%oDir%%oNameNoExt%.txt    
-                        PopUp( nNameNoExt " added to bottom of`n" oNameNoExt ,C.lgreen)  
-                    } else if (FirstChar == "P") {
-                        FilePrepend(f_path oDir oNameNoExt ".txt", donorText "`n") 
-                        PopUp(nNameNoExt " added to top of`n" oNameNoExt ,C.lgreen)
-                    }               
-                    NameNoExt := oNameNoExt
-                    dir := oDir
-                } else {
+                    odir := odir ? odir . "\" : "" 
+                    ndir := ndir ? ndir . "\" : ""
+                    text_to_add := AccessCache(nNameNoExt, ndir, false)
+                    path        = %f_path%%oDir%%oNameNoExt%.txt
+                    NameNoExt  := oNameNoExt
+                    dir        := oDir
+                    goto, addTextToFile
+                } else {                                                        ;# append|prepend selected text to file                                                         
                     text_to_add := trim(clip()," `t`n`r")
-                    if (FirstChar == "A") {                                  ; append|prepend selected text to file 
-                        FileAppend,% "`n" text_to_add, %f_path%%Dir%%NameNoExt%.txt    
-                        PopUp("added to bottom of`n" NameNoExt ,C.lgreen)  
-                    } else if (FirstChar == "P") {
-                        FilePrepend(f_path Dir NameNoExt ".txt", text_to_add "`n") 
-                        PopUp("added to top of`n" NameNoExt ,C.lgreen)
-                    }    
+                    path         = %f_path%%Dir%%NameNoExt%.txt
                 }
-                goto, Load
-                return 1    
+
+                addTextToFile:
+                    path = %f_path%%Dir%%NameNoExt%.txt
+                    % (FirstChar == "A") 
+                        ? FileAppend(path, text_to_add)
+                        : FilePrepend(path, text_to_add)
+                    goto, Load
+
+                addTextToClipboard:
+                    var := clipboard                                            ; [stability] placeholder var allows usage of clipwait errorLevel
+                    clipboard := ""                                             ; to monitor when the append|prepend is complete 
+                    % (FirstChar == "A") 
+                        ? (var .= "`n" text_to_add) 
+                        : (var := text_to_add "`n" var)
+                    clipboard := var
+                    clipwait 
+                    while (ErrorLevel)
+                        sleep 10
+                    goto, Load
+
             Case "L":                                                           ; display file in command box
 
                 Load:         
 
+                tgt := f_path dir NameNoExt
+                
                 if !GC("CB_Display") {
                     CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
                     MI := StrSplit(GetMonInfo()," ")                            ; get monitor dimensions
                     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
                     CC("CB_position", d)
                 }
-
-                tgt := f_path dir NameNoExt
-
-                if (C_input = "H" or C_input = "C") {
-                    NameNoExt := (C_input = "H") ? ("HotKey_List") : ("config.ini")
-                    RegExMatch(config_path, ".*(?=config.ini)", cpth)           ; get everything before the last title separator and store in v
-                    dir := (C_input = "H") ? ("..\") : cpth
+                
+                if (C_input = "C") {
+                    NameNoExt := "config.ini"
+                    RegExMatch(config_path, ".*(?=config.ini)", dir)           ; get everything before the last title separator and store in v
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
 
-                } else if (C_input = ";") {
+                } else if (C_input = "K") {                                     ; shortcut list 
+                    NameNoExt := "HotKey_List"
+                    dir := "..\"
+                    CC("CB_last_display", dir NameNoExt)
+                    txt  := AccessCache(NameNoExt,dir, False)
+                    tgt := f_path dir NameNoExt
+
+                } else if (C_input = ">") or (C_input = ":")  {                                     ; clipboard 
                     try {
                         txt := Clipboard
                         NameNoExt := "Clipboard Contents", dir := ""
+                        goto, updateGUI
                     } catch e {
                         PopUp("Sorry the CB only displays text strings", , ,, , drtn = "-2000") 
                         return 1
                     }
-
-                } else if (substr(C_input,1,1) = "#") {                         ; get first lines from 0-9.txt memory files 
+                } else if (C_input = "H") {                                     ; User Input History 
+                    NameNoExt := "_hist.txt [starting with most recent]"
+                    dir := ""
+                    CC("CB_last_display", dir NameNoExt)
+                    txt  := AccessCache(RegExReplace(NameNoExt, "\[.+?\]"),dir, False)
+                } else if (2ndChar = "#") {                                     ; get first lines from 0-9.txt memory files                        
                     remainder := substr(C_input,2)
                     txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder) : GetNumMemLines()
                     NameNoExt := "First lines of 0-9.txt"
                     dir := ""
+                } else if (2ndChar = "@") or (2ndChar = "I") {                  ; get first lines from 0-9.txt memory files 
+                    remainder := substr(C_input,2)
+                    txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder,,1) : GetNumMemLines(,,,1)
+                    NameNoExt := "First lines of 1 character files"
+                    dir := ""
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) 
-                  or (C_input = "l") {
+                  or (C_input = "L") {
                     NameNoExt := "list"
                     CC("CB_last_display", dir NameNoExt)
                     txt := CreateCacheList("list")
@@ -112,30 +160,36 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                 }
+
+                updateGUI:
+
                 new_title_file := dir . NameNoExt . RetrieveExt(tgt)            ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
                 CC("CB_title", new_title_file)
                 UpdateGUI(txt, new_title_file)
                 return 1
 
             Case "O":                                                           ; overwrite file/clipboard
-                C_input := RegExReplace(C_input, "S) +", A_Space)               
-                If (SubStr(C_input, 1 , 1) == ";")                              ; if C_input starts in ";" overwrite clipboard with file contents
+                C_input := RegExReplace(C_input, "S) +", A_Space)               ; replaces multiple spaces w/ 1        
+
+                If ((2ndChar == ">") or (2ndChar == ":")) and RegExMatch(C_input,"[0-9A-Za-z]")  ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
                 {
-                    C_input := trim(SubStr(C_input, 2))
+                    NameNoExt := trim(C_input, " >:")
+                    dir := (InStr(dir, ">")) ? "" : dir
+                    dir := (InStr(dir, ":")) ? "" : dir
+                    WriteToCache(namenoext,,dir,clipboard)   
+                    goto, load
+                }
+                else If ((SubStr(C_input, 0) == ">") or (SubStr(C_input, 0) == ":"))   ; if C_input ends in ">" overwrite clipboard with file contents                           
+                {
+                    
+                    C_input := trim(C_input, " >:")
                     SplitPath, C_input, , Dir, , NameNoExt 
                     clipboard := AccessCache(NameNoExt,dir, False)
-                    return 1
-                }
-                else If (SubStr(C_input, 0) == ";")                             ; if C_input ends in ";" overwrite file with clipboard contents
-                {
-                    NameNoExt := rtrim(C_input, ";")
-                    dir := (InStr(dir, ";")) ? "" : dir
-                    WriteToCache(namenoext,,dir,clipboard)   
-                    return 1
+                    C_input := ">"
+                    goto, load
                 }
                 else If !RegExMatch(C_input, " .+")                             ; if there's no second file name, overwrite with selected text
                 { 
-                    
                     ActivateWin("ahk_id " tgt_hwnd) 
                     text_to_add := trim(clip())
                     tgt_path := f_path dir namenoext . "txt"
@@ -150,43 +204,38 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                             return 1
                     }
                     WriteToCache(namenoext,, dir)   
-                    gosub, Load
-                    return 1 
-
-                } else {                                                        ; remaining case must be two filenames given, w/ 2nd overwriting the 1st 
+                    goto, Load
+                } else If RegExMatch(C_input, " .+") {                                                        ; remaining case: two filenames given, w/ 1st overwriting the 2nd
                     arr := StrSplit(C_input, " ")
-                    SplitPath,% arr[1], oFileName, oDir, oExtension, oNameNoExt 
-                    SplitPath,% arr[2], nFileName, nDir, nExtension, nNameNoExt 
-                    odir := odir ? odir . "/" : ""
-                    ndir := ndir ? ndir . "/" : ""
-                    if FileExist(f_path ndir nNameNoExt ".txt")
+                    SplitPath,% arr[1], 1FileName, 1Dir, 1Extension, 1NameNoExt
+                    SplitPath,% arr[2], FileName, Dir, Extension, NameNoExt 
+                    1dir := 1dir ? 1dir . "\" : ""
+                    dir := dir ? dir . "\" : ""
+                    if FileExist(f_path 1dir 1NameNoExt ".txt")
                     {
                         try {
-                            Filecopy,% f_path . nDir . nNameNoExt . ".txt",% f_path . oDir . oNameNoExt . ".txt", 1
-                            PopUp(oFileName . " overwritten with " . nFileName,C.lgreen,C.bgreen,,,-1000)
-                            txt  := AccessCache(oNameNoExt,dir, False)
-                            new_title_file := oNameNoExt . ".txt" 
+                            Filecopy,% f_path . 1Dir . 1NameNoExt . ".txt",% f_path . Dir . NameNoExt . ".txt", 1
                         } catch {
                             PopUp("invalid path",C.lgreen,C.bgreen,,,-2000)
                             UpdateGUI()
                         }
                     }
-                    UpdateGUI(txt, new_title_file)
+                    goto, load
                 }
-                return 1
+                return 2
             Case "V":                                                           ; paste file contents
-                sleep, short
+                ; sleep, short
+                namenoext := namenoext ? namenoext : GC("CB_title","")
                 ActivateWin("ahk_id"  tgt_hwnd)
                 AccessCache(namenoext, dir)
-                PopUp(namenoext " pasted",C.lgreen,"000000", "230", "70", "-600", "14", "610")
+                ; PopUp(namenoext " pasted",C.lgreen,"000000", "230", "70", "-300", "14", "610")
                 return
             Case "E":                                                           ; edit file
-                if !C_input
-                    FunctionBox("EditFile", File_DICT, lgreen)
-                else if (C_input == "F")
-                    FunctionBox("OpenFolder", Folder_DICT, lblue)
-                else    
-                {
+                if !C_input {
+                    path := f_path dir RegExReplace(GC("CB_title",""), "\[.+?\]")
+                    if FileExist(path) 
+                        EF(path)
+                } else {
                     input := f_path Dir FileName
                     if FileExist(input ".txt") 
                         input .= ".txt"
@@ -194,7 +243,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         input .= ".ini"
                     EditFile(input)
                 }
-                return
+                return 1
             Case "C":                                                           ; copy file
                 If !RegExMatch(C_input, " ")
                 {
@@ -226,11 +275,17 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 return 1
             Case "D":                                                           ; delete file
-                if (extension) {
-                    FileDelete,% f_path . Dir . NameNoExt . "." . extension
+                if (C_input == "D") {
+                    namenoext := RegExReplace(GC("CB_title",""), "\[.+?\]")
+                    FileDelete,% f_path . NameNoExt 
                 } else {
-                    FileDelete,% f_path . Dir . NameNoExt . ".txt"
+                    if (extension) {
+                        FileDelete,% f_path . Dir . NameNoExt . "." . extension
+                    } else {
+                        FileDelete,% f_path . Dir . NameNoExt . ".txt"
+                    }
                 }
+                sleep med
                 C_input := "l"
                 gosub, Load
                 return 1
@@ -287,7 +342,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "F":                                                           ; fill space with char 
                 sleep, short
                 ActivateWin("ahk_id " tgt_hwnd)                             
-                arr := StrSplit(C_input, ",")
+                arr := StrSplit(C_input, "~")
                 FillChar(arr[2], arr[1], 0)
                 return 
             Case "G":                                                           ; run function (broken right now)
@@ -453,6 +508,5 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
     {
         RunLabel(UserInput, suffix, tgt_hwnd)
     }
-    GUI 2: destroy
     return 1
  }

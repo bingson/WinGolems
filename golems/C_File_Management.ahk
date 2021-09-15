@@ -46,6 +46,7 @@
   +^F6::        savePath("cF6_path")                                            ;FileExplorer; save file|folder path for ^F6
   +^F7::        savePath("cF7_path")                                            ;FileExplorer; save file|folder path for ^F7
   +^F8::        savePath("cF8_path")                                            ;FileExplorer; save file|folder path for ^F8
+  
 
 ; OPEN FILE|FOLDER PATH ________________________________________________________
   ; works on full file paths for all MS office files (xls, doc, ppt, etc.)

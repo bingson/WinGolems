@@ -334,7 +334,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
 
 
 
-<details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></sjummary><p>
 
 ```
 ==o====o====o====o====o====o== A_QUICK_START ==o====o====o====o====o====o===
@@ -377,8 +377,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Win+7             Mem: add selected text to the bottom of 7.txt
  Shift+Win+8             Mem: add selected text to the bottom of 8.txt
  Shift+Win+9             Mem: add selected text to the bottom of 9.txt
- Ctrl+Win+Lbutton        Mem: double click and paste contents of 1.txt at cursor position
- Win+Alt+Lbutton         Mem: double click and paste contents of number entered at prompt
+ Win+Mbutton             Mem: double click and paste contents of 0.txt at cursor position
+ Ctrl+Alt+Mbutton        Mem: double click and paste contents of number entered at prompt
  Ctrl+Alt+0              Mem: overwrite 0.txt with selected text
  Ctrl+Alt+1              Mem: overwrite 1.txt with selected text
  Ctrl+Alt+2              Mem: overwrite 2.txt with selected text
@@ -401,10 +401,10 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Win+9                   Mem: paste contents of 9.txt
  Ctrl+Alt+L              Navigation: End
  Ctrl+Alt+H              Navigation: Home
- Win+K                   Navigation: mouse scroll down 2 lines
  Win+J                   Navigation: mouse scroll down 2 lines
- Rightalt+Win+J          Navigation: mouse scroll down 6 lines
+ Win+K                   Navigation: mouse scroll down 2 lines
  Rightalt+Win+K          Navigation: mouse scroll down 6 lines
+ Rightalt+Win+J          Navigation: mouse scroll down 6 lines
  Win+Rightalt+H          Navigation: mouse scroll left
  Win+Rightalt+L          Navigation: mouse scroll right
  Alt+B                   Navigation: navigate to left tab
@@ -414,8 +414,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Rightalt+Sc028          VirtualDesktop: Switch to desktop 1
  Shift+Win+Q             WindowMgmt: close active window
  Alt+Win+Q               WindowMgmt: close all instances of the active program
- Ctrl+Alt+Space          WindowMgmt: maximize window
  Win+Sc028               WindowMgmt: maximize window
+ Ctrl+Alt+Space          WindowMgmt: maximize window
  Win+Sc027               WindowMgmt: minimize window
  Alt+Sc034               WindowMgmt: move window btn monitors, cursor follows active windows
  Shift+Win+Capslock      WindowMgmt: rotate through app instances from most recent
@@ -437,10 +437,10 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Alt+Win+P               WinSetting: presentation display mode
  Alt+Win+R               WinSetting: run program
  Alt+Win+I               WinSetting: windows settings
+
 ```
 
 </p></details>
-
 
 <details><summary>&nbsp;ℹ️&nbsp;<b> (B) Text Manipulation </b></summary><p>
 
@@ -456,8 +456,10 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Capslock                Convenience: delete (toggle capslock: ctrl + capslock)
  Ctrl+Alt+D              Convenience: duplicate current line
  Shift+Alt+Sc028         Convenience: enclose selected text with " "
- Rightalt+Shift+4        Convenience: enclose selected text with $ $
- Rightalt+Shift+5        Convenience: enclose selected text with % %
+ Leftalt+Rightshift+4    Convenience: enclose selected text with $ $
+ Rightalt+Leftshift+4    Convenience: enclose selected text with $ $
+ Leftalt+Rightshift+5    Convenience: enclose selected text with % %
+ Rightalt+Leftshift+5    Convenience: enclose selected text with % %
  Ctrl+Sc028              Convenience: enclose selected text with ' '
  Shift+Alt+9             Convenience: enclose selected text with ( )
  Alt+Sc029               Convenience: enclose selected text with ` `
@@ -514,6 +516,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Ctrl+K            Selection: select to line above
  Shift+Ctrl+J            Selection: select to next line
  Alt+F                   Selection: select word at text cursor position
+
 ```
 
 </p></details>
@@ -582,6 +585,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
 
 ```
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
+ Rightalt+Space          
  Ctrl+Alt+K              CB: Font size Decrease
  Ctrl+Alt+J              CB: Font size Increase
  Alt+N                   CB: highlight next match of text in the CB display window with text entered in the input box
@@ -592,11 +596,11 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Alt+Z             CB: move CB window to bottom left small
  Alt+C                   CB: move CB window to bottom right
  Shift+Alt+C             CB: move CB window to bottom right small
- Win+Left                CB: move CB window to left half
  Alt+A                   CB: move CB window to left half
+ Win+Left                CB: move CB window to left half
  Shift+Alt+A             CB: move CB window to left side small
- Win+Right               CB: move CB window to right half
  Alt+D                   CB: move CB window to right half
+ Win+Right               CB: move CB window to right half
  Shift+Alt+D             CB: move CB window to right side small
  Alt+W                   CB: move CB window to top half
  Shift+Alt+W             CB: move CB window to top half small
@@ -604,27 +608,29 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Alt+Q             CB: move CB window to top left small
  Alt+E                   CB: move CB window to top right
  Shift+Alt+E             CB: move CB window to top right small
- Leftctrl+Space          CB| activate already open CB and move focus to inputbox
  Rightctrl+Space         CB| activate already open CB and move focus to inputbox
+ Leftctrl+Space          CB| activate already open CB and move focus to inputbox
  Alt+R                   CB| reenter last command
- Alt+Space               CB| submit GUI input
+ Leftalt+Space           CB| submit GUI input
  Win+Space               CB| submit GUI input
  Alt+X                   CB| toggle Command Box display|minimalist mode
 ```
 
 </p></details>
 
-<details><summary>&nbsp;ℹ️&nbsp;<b> SC Key Reference </b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b> SC key & Symbol Reference </b></summary><p>
 
 ```
  _______________________________________________________________________________
-| SC KEY REFERENCE                                                              |
-| ------------------------------------------------------------------------------|
-| SC029 ` ~      SC00D = +      SC00C - _                                       |
-| SC01A [ {      SC01b ] }      SC02b \ |                                       |
-| SC027 ; :      SC028 " '                                                      |
-| SC033 , <      SC034 . >      SC035 / ?                                       |
-| ______________________________________________________________________________|
+| SC KEYS                            | SYMBOLS                                  |
+| -----------------------------------|------------------------------------------|
+| SC029 ` ~   SC00D = +   SC00C - _  | # win        <# lwin        ># rwin      |
+| SC01A [ {   SC01b ] }   SC02b \ |  | ! alt        <! lalt        >! ralt      |
+| SC027 ; :   SC028 " '              | ^ ctrl       <^ lctrl       >^ rctrl     |
+| SC033 , <   SC034 . >   SC035 / ?  | + shift      <+ lshift      >+ rshift    |
+| ___________________________________|__________________________________________|
+
+An ampersand (&) between two keys or mouse buttons combines them to create a custom hotkey.
 ```
 
 </p></details>
@@ -644,7 +650,7 @@ ________________________________________________________________________________
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
-|     :X:a~win:: anyFunction()                        | Lh     see hotkey list (update hotkey list "gl")    |  v   Sound                 |
+|     :X:a~win:: anyFunction()                        | LK     see keyboard shortcut list; update list "gl" |  v   Sound                 |
 |                                                     | wg     WinGolems github repository & documentation  |  i   Windows Settings      |
 | The above can be adaped to call scripts written in  | ws     Open Window Spy                              |  ap  Add Remove Programs   |
 | other languages such as python, VBA, C++, etc ...   | kh     Open Key History (#KeyHistory > 0 required)  |  a   Alarm Clock           |
@@ -667,10 +673,13 @@ ________________________________________________________________________________
 
 ```
 __________________________________________________________________________________________________________________________________________
-| KEY  CONVENIENCE                             USAGE EXAMPLE       Notes: "__" used to link commands that can be repeated         Format?|
+| Uppercase first letters trigger the following commands           >  = windows clipboard contents                                       |
+| remaining characters are case insensitive                        ,  = separate usage examples (except for G examples)                  |
+|                                                                  __ = chains commands that can be repeated                    reference|
+| KEY  CONVENIENCE                             USAGE EXAMPLE                                                                      Format?|
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
-| R?:  Change replacement separators (1|2)     R1~:%; R2~:~>       Changes replacement separators to % and ~> from ~ and __         R?~:?|
+| R?:  Change replacement separators (1|2)     R1~:%; R2~:~:       Changes replacement separators to % and ~: from ~ and __         R?~:?|
 | Q?   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
 | Q?:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
@@ -681,21 +690,22 @@ ________________________________________________________________________________
 |________________________________________________________________________________________________________________________________________|
 
 __________________________________________________________________________________________________________________________________________
-| KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                                                                                            |
+| KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                      note: if multiple files in a command, output file is last in order    |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  L   Load .txt file into CB display          L1, Lr\testr, L;    Load in display => 1.txt, r\testr.txt ("Ll" .txt list), clipboard   L?|
-|      Load file shorcut keys                  LC, LH, LL, L#      Load in display => config.ini, hotkey list, mem folder, 0-9 1st line  |
+|  L   Load .txt file into CB display          L1, Lr\testr, L>    Load in display => 1.txt, r\testr.txt ("Ll" .txt list), clipboard   L?|
+|      Load file shorcut keys                  LC, LK, LL, L#      Load in display => config.ini, hotkey list, mem folder, 0-9 1st line  |
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
-|  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr  Paste contents of 1.txt, sck.txt, r\testr.txt in last active window V?|
+|  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, (L)loaded file                    V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with added number suffix: C1 -> 1_1.txt    C?|
-|  O   Overwrite file| contents                O1, O2 help         replace => 1.txt w/ selected, 2.txt w/ help.txt                     O?|
-       Overwrite with clipboard                O;3, O3;            replace => Clipboard with 3.txt, replace 3.txt with clipboard  O;?|O?;|
-|  E   Edit file in default editor             E1, Er\test         edit => 1.txt, r\test.txt (example subfolder file path)             E?|
+|  O   Overwrite file options                  O1, Ohelp 2         Overwrite => 1.txt w/ selected, 2.txt w/ help.txt                   O?|
+|      Overwrite Clipboard options             O3>, O>3            Overwrite => Clipboard with 3.txt (3.txt with clipboard)       O?.|O.?|
+|  E   Edit file in default editor             E1, Er\test, E      edit => 1.txt, r\test.txt (r\ subfolder file path), (L)loaded file  E?|
 | A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt     A?|P?|
-|      manually entered Append|prepend         P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|       
-|  F   Paste same string repeatedly            F-+,4               paste: -+-+ ; fmt: string, # of characters to fill                F?,?|
-|  D   Delete file                             D1, D1.txt, D1.ini  file extension optional for .txt files                              D?|
-| Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify=> 1.txt w/ pattern in p.txt & save result to n.txt     Rf:?~? ?|
+|      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|
+|      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, 1.txt, the word "sample"            |
+|  F   Paste same string repeatedly            F-+~4               paste: -+-+ ; fmt: string ~ # of characters to fill               F?~?|
+|  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, (L)loaded file          D?|
+| Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify => 1.txt w/ pattern in p.txt & save result to n.txt    Rf:?~? ?|
 |      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in pattern .txt file           ?~?__?~?|
 |________________________________________________________________________________________________________________________________________|
 
@@ -704,8 +714,9 @@ ________________________________________________________________________________
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
-|  T   CommandBox UI options                   Td, Tm, Tp, Tf:font (d)isplay mode, (m)inimalist mode, (p)ersistent CB, (f)ont          T?|
-|                                              Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
+|  T   CommandBox UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent CB, (f)ont          T?|
+|      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
+|                                              Tr, Tf:arial        (r)eenter last userinput, (f)ont change to arial                      |
 |________________________________________________________________________________________________________________________________________|
 ```
 

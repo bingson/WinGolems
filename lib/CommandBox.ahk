@@ -1,12 +1,12 @@
  CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand"
             , fwt = "500", show_txt = "", title = "",  input_txt = "") {
-
+    ; TimeCode()
   ; SAVE INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- -- 
     ; CoordMode, Mouse, Screen
     ; BlockInput, MouseMove
     ; settimer, BlockInputTimeOut,-300
     ; MouseGetPos, StartX, StartY
-
+    
     global long, med, short, C, config_path, CB_Display := ""
         , UserInput := "", tgt_hwnd := "", CB_hwnd := ""
     static PArr := [], ro := -1                                                  ; search position array
@@ -16,7 +16,7 @@
     CC("CBw_color",w_color) , CC("CBt_color",t_color)                           ;(1) save/store command box calling parameters in config.ini
     CC("CB_ProcessMod", ProcessMod)                                             ; config.ini used to preserve/change CB parameter information between redraws
 
-    ChangeFont := RegisterCallback("ChangeFont")
+    ; ChangeFont := RegisterCallback("ChangeFont")
   
   ; RETRIEVE SETTINGS FROM CONFIG.INI -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     redrawGUI:
@@ -73,6 +73,8 @@
     ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
     if (show_txt = "") {                                                        ; reload last diplayed txt
         txt_file := GC("CB_last_display", "help.txt")
+        txt_file := RegExReplace(txt_file, "\[.+?\]")                           ; removes any text surrounded by round brackets 
+
         if (txt_file = "help.txt")
             title := CB_Title_ID title_text suffix l txt_file
     } else {                                    
@@ -83,9 +85,11 @@
     
     switch ndspl 
     {
-        case "First lines of 0-9.txt": txt := GetNumMemLines(,GC("MemSummaryLines", 1))
-        case "Clipboard Contents":     txt := Clipboard
-        default:                       txt := AccessCache(txt_file,, False)
+        case "First lines of 0-9.txt"          : txt := GetNumMemLines(,GC("MemSummaryLines", 1))
+        case "First lines of 1 character files": txt := GetNumMemLines(,GC("MemSummaryLines", 1),,1)
+        case "Clipboard Contents"              : txt := Clipboard
+        default                                :
+            txt := AccessCache(txt_file,, False)
     }
 
     rows := countrows(txt)
@@ -99,7 +103,7 @@
    
     }
 
-    input_txt := % GC("CB_reenterInput",0) ? GC("last_user_input") : input_txt        ; determines what is pre-entered in the input box
+    input_txt := % GC("CB_reenterInput",1) ? GC("last_user_input") : input_txt        ; determines what is pre-entered in the input box
 
     if (!display) {
         Guicontrol, ,CB_Display, %A_space%
@@ -131,10 +135,13 @@
     ; MouseMove, StartX, StartY
     ; BlockInput, MouseMoveOff
     
-    if (!GC("CB_appActive", 0))
+    if (!GC("CB_appActive", 0)) {
         GuiControl, Focus, UserInput 
+        Send % GC("CB_reenterInput", 1) ? "^a" : ("")
+    }
     if GC("CB_appActive", 0) 
         ActivateWin("ahk_id " tgt_hwnd) 
+    ; TimeCode()
     return
   
   ; LABELS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -246,8 +253,8 @@
         leave_CB_open := ""
         CC("last_user_input", UserInput)                                        ; store key history
         GuiControl, 2:, UserInput,
-        if GC("CB_hist",0)
-            FileAppend,% "`n" UserInput, %A_ScriptDir%\mem_cache\_hist.txt 
+        if GC("CB_hist",1)
+            FilePrepend(A_ScriptDir "\mem_cache\_hist.txt", UserInput) 
         if !IsFunc(ProcessMod) 
             afterExecution := ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, w_color)
         else 
@@ -277,10 +284,5 @@
         } 
         return
 
-
  }
 
-/* editbox width research
-https://www.autohotkey.com/boards/viewtopic.php?t=67650
-
-*/

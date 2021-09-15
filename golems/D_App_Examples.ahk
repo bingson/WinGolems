@@ -26,7 +26,7 @@
        :X:gm~html::  LoadURL("mail.google.com")                                 ;html: create a command key "m" that opens gmail, if entered in a "~html" Command Box
     */
 
-#If WinActive("ahk_exe " exe["editor"])     
+#If WinActive("ahk_exe " exe["editor"])    
 
     /*  SAMPLE CODE
         #space::  CB("~editor", C.lgreen)                                       ;editor: create command box that runs ~editor suffix CB keys
@@ -40,6 +40,17 @@
 
     */
 
+
+  #If WinActive("ahk_exe " exe["editor"]) and TitleTest(".ahk")
+  ; Ctrl and S → Save changes and, if an AutoHotkey script, reload it
+  $^s::
+      SendInput, ^s
+      WinGetTitle, WindowTitle
+      If (InStr(WindowTitle, ".ahk")){
+          Reload
+      }
+      Return
+      
 #If WinActive("ahk_exe " exe["doc"])
 
 

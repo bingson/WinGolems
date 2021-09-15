@@ -75,7 +75,8 @@
 
     :X:ta~win::            CC("T_TM",1),CC("T_FM",1),CC("T_CF",1),CC("T_d",1)   ;turn on all interface layers and UI options 
                            ,PU("Advanced Mode: ON")   
-
+                           
+    !pgdn::                HideShowTaskbar(hide := !hide)                       ;Convenience| toggle taskbar 
     printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
     *printscreen::         Send {Blind}{vk07}                                   ;Convenience| makes printscreen key inert so it can be used as a modifier key
     :X:pscrn~win::         Send {PrintScreen}                                   ;windows 10 printscreen command
@@ -88,6 +89,8 @@
     lwin & rctrl::         ActivateWinID("Rctrl")                               ;ActvateApp: activate saved Window ID
     #n::                   AA("editor_path")                                    ;ActivateApp: Editor
     ralt & right::         s("{blind}"), s("{F11}")                             ;Convenience: full screen {F11}
+    printscreen & lwin::   CursorJump("BL")
+    lwin & printscreen::   CursorJump("BR")
     
     PrintScreen & 0::                                                           ;Memory: paste overwrite 0.txt at current cursor position
     PrintScreen & 9::                                                           ;Memory: paste overwrite 9.txt at current cursor position
@@ -99,8 +102,20 @@
     PrintScreen & 3::                                                           ;Memory: paste overwrite 3.txt at current cursor position
     PrintScreen & 2::                                                           ;Memory: paste overwrite 2.txt at current cursor position
     PrintScreen & 1::      RetrieveMemory(,,"PrintScreen")                      ;Memory: paste overwrite 1.txt at current cursor position
-
-
+    
+    #IF GC("T_d",0) and GetKeyState("shift", "P")
+    PrintScreen & 0::                                                           ;Memory: paste overwrite 0.txt at current cursor position
+    PrintScreen & 9::                                                           ;Memory: paste overwrite 9.txt at current cursor position
+    PrintScreen & 8::                                                           ;Memory: paste overwrite 8.txt at current cursor position
+    PrintScreen & 7::                                                           ;Memory: paste overwrite 7.txt at current cursor position
+    PrintScreen & 6::                                                           ;Memory: paste overwrite 6.txt at current cursor position
+    PrintScreen & 5::                                                           ;Memory: paste overwrite 5.txt at current cursor position
+    PrintScreen & 4::                                                           ;Memory: paste overwrite 4.txt at current cursor position
+    PrintScreen & 3::                                                           ;Memory: paste overwrite 3.txt at current cursor position
+    PrintScreen & 2::                                                           ;Memory: paste overwrite 2.txt at current cursor position
+    PrintScreen & 1::      RetrieveMemory(,,"PrintScreen")                      ;Memory: paste overwrite 1.txt at current cursor position
+    
+    #IF GC("T_d",0)
     PrintScreen & sc034::   
                 q := { "f" : "0Maximize"                                        ;FunctionBox: resize & move window
                      , "q" : "1TopLeft"         

@@ -1,5 +1,5 @@
 #IF GC("T_TM",0)                                                                ;lines below are valid anywhere in windows if "T_TM" variable in config.ini = 1
-; CONVENIENCE __________________________________________________________________
+; CONVENIENCE __________________________________________________________________~
   
   +capslock::            backspace                                              ;Convenience: backspace (toggle capslock: ctrl + capslock)
   capslock::             del                                                    ;Convenience: delete (toggle capslock: ctrl + capslock)
@@ -22,8 +22,10 @@
   !SC01A::               Clip("[" Clip() "]")                                   ;Convenience: enclose selected text with [ ]
   ^SC028::               Clip("'" Clip() "'")                                   ;Convenience: enclose selected text with ' '
   +!SC028::              Clip("""" Clip() """")                                 ;Convenience: enclose selected text with " "
-  >!+5::                 Clip("%" Clip() "%")                                   ;Convenience: enclose selected text with % %
-  >!+4::                 Clip("$" Clip() "$")                                   ;Convenience: enclose selected text with $ $
+  <!>+5::                                                                       ;Convenience: enclose selected text with % %
+  >!<+5::                Clip("%" Clip() "%")                                   ;Convenience: enclose selected text with % %
+  <!>+4::                                                                       ;Convenience: enclose selected text with $ $
+  >!<+4::                Clip("$" Clip() "$")                                   ;Convenience: enclose selected text with $ $
   !sc029::               Clip("``" Clip() "``")                                 ;Convenience: enclose selected text with ` `
   +!sc029::              Clip("`````` " Clip() " ``````")                       ;Convenience: enclose selected text with ``` ```
   #backspace::           send ^{backspace}                                      ;Convenience: ^backspace (delete word from last character)
@@ -63,8 +65,8 @@
   $#l::                  sendinput ^{Right}                                     ;Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
   $!h::                  sendinput {Left}                                       ;Navigation| Left
   $!l::                  sendinput {Right}                                      ;Navigation| Right
-  *!j::                  send {down}                                            ;Navigation| Up
-  *!k::                  send {up}                                              ;Navigation| Down  
+  !j::                  send {down}                                            ;Navigation| Up
+  !k::                  send {up}                                              ;Navigation| Down  
 
 ; MOUSE FUNCTION _______________________________________________________________
   *#d::                  SaveMousPos("r",1)                                     ;MouseFn: Left click and save mouse position
@@ -75,10 +77,10 @@
   +^Lbutton::            s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in
   $^!k::                 Sendinput ^{sc00C}                                     ;MouseFn: zoom out
-  ~rctrl & ~lctrl::      CursorJump("TL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
-  ~lctrl & ~rctrl::      CursorJump("TR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
-  ralt & lalt::          CursorJump("BL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
-  lalt & ralt::          CursorJump("BR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+  ~rctrl & ~lctrl::      CursorJump("BL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
+  ~lctrl & ~rctrl::      CursorJump("BR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
+  ralt & lalt::          CursorJump("TL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
+  lalt & ralt::          CursorJump("TR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
   $!#k::                 CursorJump("T")                                        ;MouseFn: move mouse cursor to top edge
   $!#j::                 CursorJump("B",,"-20")                                 ;MouseFn: move mouse cursor to bottom edge
   $!#h::                 CursorJump("L","20")                                   ;MouseFn: move mouse cursor to Left edge
