@@ -585,9 +585,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
 
 ```
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
- Rightalt+Space          
- Ctrl+Alt+K              CB: Font size Decrease
- Ctrl+Alt+J              CB: Font size Increase
+ Ctrl+Alt+K              CB: Font size decrease
+ Ctrl+Alt+J              CB: Font size increase
  Alt+N                   CB: highlight next match of text in the CB display window with text entered in the input box
  Alt+B                   CB: highlight previous match of text in the CB display window with text entered in the input box
  Alt+S                   CB: move CB window to bottom half
@@ -611,6 +610,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Rightctrl+Space         CB| activate already open CB and move focus to inputbox
  Leftctrl+Space          CB| activate already open CB and move focus to inputbox
  Alt+R                   CB| reenter last command
+ Rightalt+Space          CB| Capitalize first letter of user input and submit GUI       
  Leftalt+Space           CB| submit GUI input
  Win+Space               CB| submit GUI input
  Alt+X                   CB| toggle Command Box display|minimalist mode

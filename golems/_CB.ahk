@@ -2,10 +2,10 @@
 
 #IF WinActive("ahk_id " CB_hwnd)                                                ; If Command or Function Box active
 
-$^!k::                                                                          ;CB: Font size Decrease
-^SC00C::           goto, CBzoomOut                                              ;CB: Font size Decrease
-^SC00D::                                                                        ;CB: Font size Increase
-$^!j::             goto, CBzoomIn                                               ;CB: Font size Increase
+$^!k::                                                                          ;CB: Font size decrease
+^SC00C::           goto, CBzoomOut                                              ;CB: Font size decrease
+^SC00D::                                                                        ;CB: Font size increase
+$^!j::             goto, CBzoomIn                                               ;CB: Font size increase
 
 !n::               send !n                                                      ;CB: highlight next match of text in the CB display window with text entered in the input box
 !b::               send !p                                                      ;CB: highlight previous match of text in the CB display window with text entered in the input box
@@ -19,7 +19,7 @@ $^!j::             goto, CBzoomIn                                               
 !a::               MoveWin("L")                                                 ;CB: move CB window to left half
 #right::                                                                        ;CB: move CB window to right half
 !d::               MoveWin("R")                                                 ;CB: move CB window to right half
->!space::          GUISubmit(">!space")
+>!space::          GUISubmit(">!space")                                         ;CB| Capitalize first letter of user input and submit GUI
 <!space::                                                                       ;CB| submit GUI input
 #space::           GUISubmit()                                                  ;CB| submit GUI input
 $!x::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
