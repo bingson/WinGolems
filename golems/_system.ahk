@@ -38,6 +38,7 @@
 
 
   :X:tm~win::                                                                   ;SC: open task manager with hotstring combines with max + cursor follows task manager window
+  :X:.~win::                                                                    ;SC: open task manager with hotstring combines with max + cursor follows task manager window
                 send +^{esc}                                                    ;     TskMgrExt() will be executed after
   ~+^esc::      TskMgrExt()                                                     ;SC: maximize + mouse cursor follows window after task manager opens
 
@@ -50,7 +51,7 @@
   :X:ws~win::   WindowSpy()
   :X:ec~win::   EditFile("""" config_path """")                                 ;AHK: edit config.ini file
   :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")                     ;AHK: AHK beginner tutorial
-  :X:tcf~win::  TglCFG("T_CF", "Cursor follows active window: ")                ;AHK: toggle mouse cursor follows active window
+  :X:tcf~win::  TC("T_CF", "Cursor follows active window: ")                ;AHK: toggle mouse cursor follows active window
   :X:clp~win::  WriteToINI(A_ComputerName, "CL_pfx")                            ;AHK: store selected text as label prefix
   :X:cls~win::  WriteToINI(A_ComputerName, "CL_sfx")                            ;AHK: store selected text as label suffix
   :X:cl~win::   CreateLabel("CL_pfx", "CL_sfx")                                 ;AHK: create hotstring label with execution option
@@ -69,29 +70,17 @@
  
 ; DEVELOPER OPTIONS ____________________________________________________________
 
-  :X:td~win:: TglCFG("T_d","Developer options: ")                               ;[T] toggle developer optns
-  
-  #IF GC("T_d",0) ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-
-    :X:ta~win::            CC("T_TM",1),CC("T_FM",1),CC("T_CF",1),CC("T_d",1)   ;turn on all interface layers and UI options 
-                           ,PU("Advanced Mode: ON")   
-                           
-    !pgdn::                HideShowTaskbar(hide := !hide)                       ;Convenience| toggle taskbar 
-    printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
-    *printscreen::         Send {Blind}{vk07}                                   ;Convenience| makes printscreen key inert so it can be used as a modifier key
-    :X:pscrn~win::         Send {PrintScreen}                                   ;windows 10 printscreen command
-    *#i::                  SaveMousPos("i",1)                                   ;MouseFn: Left click and save mouse position
-    *^#i::                 RecallMousePosClick("i")                             ;MouseFn: Move to saved mouse position and left click
-    #o::                   Click, middle                                        ;MouseFn: mouse middle click
-    PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
-    #sc028::               Click, Right                                         ;MouseFn: mouse Right click
-    >+esc::                EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
-    lwin & rctrl::         ActivateWinID("Rctrl")                               ;ActvateApp: activate saved Window ID
-    #n::                   AA("editor_path")                                    ;ActivateApp: Editor
-    ralt & right::         s("{blind}"), s("{F11}")                             ;Convenience: full screen {F11}
-    printscreen & lwin::   CursorJump("BL")
-    lwin & printscreen::   CursorJump("BR")
+  :X:td~win:: TC("T_d","Developer options: ")                               ;[T] toggle developer optns
+  ; CB -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
+    #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                        ; If Command or Function Box active
+    printscreen & space::  GUISubmit()                                          ;CB| submit GUI input
+    #IF GC("T_d",0)
+    printscreen & space::  CB()
+
+  ; MEMORY -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    #IF GC("T_d",0) 
+
     PrintScreen & 0::                                                           ;Memory: paste overwrite 0.txt at current cursor position
     PrintScreen & 9::                                                           ;Memory: paste overwrite 9.txt at current cursor position
     PrintScreen & 8::                                                           ;Memory: paste overwrite 8.txt at current cursor position
@@ -115,6 +104,7 @@
     PrintScreen & 2::                                                           ;Memory: paste overwrite 2.txt at current cursor position
     PrintScreen & 1::      RetrieveMemory(,,"PrintScreen")                      ;Memory: paste overwrite 1.txt at current cursor position
     
+  ; REPOSITION WINDOW -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_d",0)
     PrintScreen & sc034::   
                 q := { "f" : "0Maximize"                                        ;FunctionBox: resize & move window
@@ -141,16 +131,34 @@
                 FB("MoveWin", q, C.bwhite,, "rs")   ; "s" optn adds a space between case changes for GUI menu
                 return
                                                                                               
-                                                                                  
+  ; CONVENIENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    #IF GC("T_d",0) 
+    :X:ta~win::            CC("T_TM",1),CC("T_FM",1),CC("T_CF",1),CC("T_d",1)   ;turn on all interface layers and UI options 
+                           ,PU("Advanced Mode: ON")   
+                           
+    !pgdn::                HideShowTaskbar(hide := !hide)                       ;Convenience| toggle taskbar 
+    printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
+    *printscreen::         Send {Blind}{vk07}                                   ;Convenience| makes printscreen key inert so it can be used as a modifier key
+    :X:pscrn~win::         Send {PrintScreen}                                   ;windows 10 printscreen command
+    *#i::                  SaveMousPos("i",1)                                   ;MouseFn: Left click and save mouse position
+    *^#i::                 RecallMousePosClick("i")                             ;MouseFn: Move to saved mouse position and left click
+    #o::                   Click, middle                                        ;MouseFn: mouse middle click
+    PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
+    #sc028::               Click, Right                                         ;MouseFn: mouse Right click
+    >+esc::                EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
+    lwin & rctrl::         ActivateWinID("Rctrl")                               ;ActvateApp: activate saved Window ID
+    #n::                   AA("editor_path")                                    ;ActivateApp: Editor
+    ralt & right::         s("{blind}"), s("{F11}")                             ;Convenience: full screen {F11}
+    printscreen & lwin::   CursorJump("BL")
+    lwin & printscreen::   CursorJump("BR")
+                                                                                    
     
-  #IF GC("T_d",0) and !WinActive("ahk_exe " exe["editor"]) ; -- -- -- -- -- -- -; When editor not active
+    #IF GC("T_d",0) and !WinActive("ahk_exe " exe["editor"])                    ; When editor not active 
     ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")    ;Convenience: duplicate line
     ralt & down::     s("{blind}"), s("{F11}")                                  ;Convenience: full screen {F11}
 
-  #IF GC("T_d",0) and WinActive("ahk_id " CB_hwnd) ; -- -- -- -- -- -- -- -- -- ; If command Box active
-    printscreen & space::           GUISubmit()                                 ;CB: submit user input
     
-  #If GC("T_d",0) and GetKeyState("PrintScreen", "P") ; -- -- -- -- -- -- -- -- ; convert printscreen to another modifier key
+    #If GC("T_d",0) and GetKeyState("PrintScreen", "P")                         ; convert printscreen to another modifier key 
     $!k::                           CursorJump("T")                             ;MouseFn: move mouse cursor to top edge
     $!j::                           CursorJump("B",,"-20")                      ;MouseFn: move mouse cursor to bottom edge
     $!h::                           CursorJump("L","20")                        ;MouseFn: move mouse cursor to Left edge

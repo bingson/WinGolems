@@ -1,18 +1,20 @@
+; query 412
+
 ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
-    global config_path, File_DICT, Folder_DICT, long, med, short, tgt_hwnd, CB_hwnd, C
-    FirstChar := SubStr(UserInput, 1, 1), 2ndChar := SubStr(UserInput, 2 , 1)
+    global config_path, long, med, short, tgt_hwnd, CB_hwnd, C
+    1stChar := SubStr(UserInput, 1, 1), 2ndChar := SubStr(UserInput, 2 , 1)
     f_path := A_ScriptDir "\mem_cache\" 
 
-    if RegExMatch(FirstChar,"[0-9A-Z\?jk:]") 
+    if RegExMatch(1stChar,"[0-9A-Z\?jk:]") 
     {
         C_input := SubStr(UserInput, 2)                                         ; everything after the first character
         SplitPath, C_input, FileName, Dir, Extension, NameNoExt                 ; parses everything after the command character as a file path 
         dir := dir ? dir . "\" : ""
-        Switch FirstChar                                                        ; free: h,i,u,x,y
+        Switch 1stChar                                                        ; free: h,i,u,x,y
         { 
             Case 1,2,3,4,5,6,7,8,9,0:
-                NameNoExt := FirstChar
-                C_input := FirstChar
+                NameNoExt := 1stChar
+                C_input := 1stChar
                 gosub, Load
                 return 1
             Case "?":                                                           ; load help.txt file in display
@@ -81,7 +83,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
 
                 addTextToFile:
                     path = %f_path%%Dir%%NameNoExt%.txt
-                    % (FirstChar == "A") 
+                    % (1stChar == "A") 
                         ? FileAppend(path, text_to_add)
                         : FilePrepend(path, text_to_add)
                     goto, Load
@@ -89,7 +91,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 addTextToClipboard:
                     var := clipboard                                            ; [stability] placeholder var allows usage of clipwait errorLevel
                     clipboard := ""                                             ; to monitor when the append|prepend is complete 
-                    % (FirstChar == "A") 
+                    % (1stChar == "A") 
                         ? (var .= "`n" text_to_add) 
                         : (var := text_to_add "`n" var)
                     clipboard := var
@@ -102,7 +104,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
 
                 Load:         
 
-                tgt := f_path dir NameNoExt
+                tgt := tgt ? tgt : f_path dir NameNoExt
                 
                 if !GC("CB_Display") {
                     CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
@@ -245,7 +247,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 return 1
             Case "C":                                                           ; copy file
-                If !RegExMatch(C_input, " ")
+                If !RegExMatch(C_input, " ")                                    ; if no second file name given add suffix  
                 {
                     PopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
                     var := 1
@@ -259,7 +261,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         exist = %ErrorLevel%
                     }
                 }
-                else
+                else                                                            ; if two files names given 
                 {
                     try {
                         arr := StrSplit(C_input, " ")
@@ -267,13 +269,15 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         SplitPath,% arr[2], nFileName, nDir, nExtension, nNameNoExt 
                         odir := odir ? odir . "/" : ""
                         ndir := ndir ? ndir . "/" : ""
-                        Filecopy,% f_path . oDir . oNameNoExt . ".txt",% f_path . nDir . nNameNoExt . ".txt", 1    ; 1 = overwrite 
+                        C_input := % f_path . nDir . nNameNoExt . ".txt"
+                        Filecopy,% f_path . oDir . oNameNoExt . ".txt",% C_input, 1    ; 1 = overwrite 
                         PopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
+                        msgbox % C_input
                     } catch {
                         PopUp("invalid file path",C.lgreen,C.bgreen,,,-2000)
                     }
                 }
-                return 1
+                goto, Load
             Case "D":                                                           ; delete file
                 if (C_input == "D") {
                     namenoext := RegExReplace(GC("CB_title",""), "\[.+?\]")
@@ -382,7 +386,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 else
                 {
                     ActivateWin("ahk_id " . tgt_hwnd)
-                    if (FirstChar == "j")
+                    if (1stChar == "j")
                         UDSelect("down", "10", C_input, false)                  ; no selection just row movement
                     else
                         UDSelect("down", "10", C_input)
@@ -395,7 +399,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 else 
                 {
                     ActivateWin("ahk_id " . tgt_hwnd)                           ; select|goto rows above
-                    if (FirstChar == "k")
+                    if (1stChar == "k")
                         UDSelect("Up", "10", C_input, false)
                     else
                         UDSelect("Up", "10", C_input)
@@ -404,7 +408,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 return
             Case "W","B","N","M":
                 
-                RunOtherCB(C_input, FirstChar) 
+                RunOtherCB(C_input, 1stChar) 
             Case "Q":                                                           ; query selected text in chosen search engine msft
                 
                 if (InStr(C_input, ":")) {                                      ; get search string from command box if colon detected
@@ -439,7 +443,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     default : 
                         search(, strng)                                         ; defaults to google search
                 }            
-
+                SetTimer, CFW, -600
                 return
             Case "S":                                                           ; search selected text
                 OpenFolder("mem_cache\")
@@ -481,13 +485,13 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "T":
                 Switch C_input 
                 {
-                    case "persistent"  ,"p"  : TglCFG("CB_persistent" , "Toggle persistent mode: ")
-                    case "scrollbars"  ,"s"  : TglCFG("CB_ScrollBars" , "Toggle scrollbars: ")
-                    case "title"       ,"t"  : TglCFG("CB_Titlebar"   , "Toggle titlebar: ")
-                    case "focus"       ,"a"  : TglCFG("CB_appActive"  , "Toggle application focus: ")
-                    case "renter input","r"  : TglCFG("CB_reenterInput" , "Re-enter last submit: ")
+                    case "persistent"  ,"p"  : TC("CB_persistent" , "Toggle persistent mode: ")
+                    case "scrollbars"  ,"s"  : TC("CB_ScrollBars" , "Toggle scrollbars: ")
+                    case "title"       ,"t"  : TC("CB_Titlebar"   , "Toggle titlebar: ")
+                    case "focus"       ,"a"  : TC("CB_appActive"  , "Toggle application focus: ")
+                    case "renter input","r"  : TC("CB_reenterInput" , "Re-enter last submit: ")
                     case "wrap_text" ,"w": 
-                        TglCFG("CB_Wrap", "Toggle text wrap: ")
+                        TC("CB_Wrap", "Toggle text wrap: ")
                         return 2
                     case "default"   ,"d": 
                         ToggleDisplay("display")

@@ -914,9 +914,49 @@
   } ; retrieves text to single digit memory file
 
 ; AHK UTILITIES ________________________________________________________________
- 
+  
+  ShowTime(paste_key="", show_key = "", msgbox_key = ""){
+    FormatTime, MyTime,, hh:mm:ss tt
+    switch A_ThisHotkey
+    {
+        case show_key:   popup(MyTime,,,,,"-1500")
+        case paste_key:  clip(MyTime)
+        case msgbox_key: msgbox % MyTime
+    }
+    return
+  }
 
-  TglCFG(sect = "T_CF", msg = "Cursor Follow Active Window: ") {
+  copyFiles(dest_path="", F*) {
+    loop % F.MaxIndex()
+    {   
+        FileCopy,% A_ScriptDir "\" F[A_Index],% dest_path F[A_Index], 1
+    }
+        
+    return
+  }
+
+  ; MODIFY/ACCESS CONFIG.INI -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+  CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
+    global config_path
+    section := sect ? sect : A_ComputerName
+
+    if (nval = "!") {
+        IniRead,  state,    %config_path%,%section%,%key%, 0
+        IniWrite, % !state, %config_path%,%section%,%key%
+    } else {   
+        IniWrite, %nval%, %config_path%,%section%, %key%
+    }
+    return
+  } ; (C)hange (C)onfig.ini value
+  
+  GC(key = "CB_Titlebar", d = "") {                                             ; Get Config.ini value
+    global config_path
+    IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
+    return % val
+  } ; (G)et (C)onfig.ini value
+
+  TC(sect = "T_CF", msg = "Cursor Follow Active Window: ") {
 
     global config_path, C
 
@@ -928,12 +968,7 @@
     else if state
         PopUp( msg "False",C.pink,,"300","90", "-800")
     return
-  }
-
-  reloadWG() { 
-    CC("CBfsz", "11")
-    Reload                                                                      
-  }
+  } ; (T)oggle (C)onfig.ini variable with 1 or 0, sets to 1 if no variable found
 
   ; send and wrap native ahk commands into functions -- -- -- -- -- -- -- -- -- 
   S(k = "down", n = 1, sleep = "100" , SendInput ="") {                                        
@@ -955,7 +990,6 @@
     return
   } ; Send namespace alias/function wrapper to chain line commands using the comma operator
 
-
   SI(k = "down", n = 1, sleep = "100" , si ="") {                                        
     ; function wrapper to chain line commands using the comma operator
     ; also contains shorter aliases for frequently performed send operations
@@ -974,29 +1008,17 @@
     return
   } ; SendInput namespace alias/function wrapper to chain line commands using the comma operator
 
+
+
+  reloadWG() { 
+    CC("CBfsz", "11")
+    Reload                                                                      
+  }
+
   PU(msg, w_color = "F6F7F1", ctn = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi") {
     PopUp( msg, w_color, ctn , wn, hn, drtn, fsz, fwt, fnt) 
   } ; alias for PopUp 
   
-  CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
-    global config_path
-    section := sect ? sect : A_ComputerName
-
-    if (nval = "!") {
-        IniRead,  state,    %config_path%,%section%,%key%, 0
-        IniWrite, % !state, %config_path%,%section%,%key%
-    } else {   
-        IniWrite, %nval%, %config_path%,%section%, %key%
-    }
-    return
-  } ; Change Config.ini value
-  
-  GC(key = "CB_Titlebar", d = "") {                                             ; Get Config.ini value
-    global config_path
-    IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
-    return % val
-  }
-
   BlockInputTimeOut() {
     SetTimer,, Off
     BlockInput, MouseMoveOff
@@ -1020,7 +1042,7 @@
     }
     clip(out)
     return
-  } ; 
+  } ; debugging msgbox. input format: var1, var2 __ output format: msgbox % "var1: " var 1 "`nvar2: " var 2 , etc...
  
   SelectText( ControlID, start = 0, end = -1) {
     ; EM_SETSEL = 0x00B1
@@ -1428,15 +1450,21 @@
 
   OpenPath(path = "") {
     SplitPath, path, FileName, Dir, Extension, NameNoExt
+    ; msgbox % o
+    ; Msgbox % "`nFileName: " . FileName . "`n Dir: " .  Dir . "`n Extension: " .  Extension . "`n NameNoExt: " .  NameNoExt
     if (path = "ERROR") {
         PU("No saved path found")
         return
     }
     try {
-        if Extension
+        if Extension 
+        {
             EditFile(path)
+        }
         else 
+        {
             OpenFolder(path)
+        }
     } catch e {
         PU("Invalid path")
     }
@@ -2061,6 +2089,18 @@
   }
 
 ; VS CODE ______________________________________________________________________
+
+  gotoLine(){
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1000
+    selectword()
+    sleep 50
+    var := trim(clip(), " `;")
+    sleep 50
+    s("^g"), clip(var), s("enter")
+    BlockInput, Off
+    return 
+  } ; select number and go to that position in file  
 
   FocusResults() {
     sleep 300

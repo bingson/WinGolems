@@ -6,22 +6,23 @@
     SetWorkingDir %A_ScriptDir%
     #MenuMaskKey vk07                                                           ; vk07 is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed https://www.autohotkey.com/boards/viewtopic.php?t=29595
     #MaxHotkeysPerInterval 99000000
+    #HotkeyInterval 99000000
     ; SetBatchLines -1
-    SetBatchLines, 20ms
-    ListLines Off ;On                                                           ; ListLines/KeyHistory are used to log lines of code and keys for debugging
     #KeyHistory 0 ;100                                                          ; change to a higher number for debugging
     #UseHook
     #InstallKeybdHook                                                           ; The keyboard hook monitors keystrokes for the purpose of activating hotstrings and any keyboard hotkeys
     #InstallMouseHook                                                           ; The mouse hook monitors mouse clicks for the purpose of activating mouse hotkeys and facilitating hotstrings.
     #Singleinstance Force                                                       ; only one instance of this script can be active
-    Process, Priority, , A
-    SetKeyDelay, 10, 50
     SetMouseDelay, 10                                                           ; mouse click commands become less reliable at lower settings
     SetDefaultMouseSpeed, 0
-    SetWinDelay, 10
     SetControlDelay, 20
     SendMode Event
- 
+    SetBatchLines, 10ms
+    ListLines Off ;On                                                           ; ListLines/KeyHistory are used to log lines of code and keys for debugging
+    SetKeyDelay, 10, 50
+    SetWinDelay, 10
+    Process, Priority, , A
+
   ; GLOBAL VARIABLES -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
     #NoEnv                                                                      ; prevents empty variables from being looked up as potential environment variables

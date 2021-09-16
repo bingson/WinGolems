@@ -47,6 +47,9 @@
   +^F7::        savePath("cF7_path")                                            ;FileExplorer; save file|folder path for ^F7
   +^F8::        savePath("cF8_path")                                            ;FileExplorer; save file|folder path for ^F8
   
+  !j::          send {down}                                                     ;Navigation| Up 
+  !k::          send {up}                                                       ;Navigation| Down  
+                                                                                ; file explorer needs a different key send mode 
 
 ; OPEN FILE|FOLDER PATH ________________________________________________________
   ; works on full file paths for all MS office files (xls, doc, ppt, etc.)

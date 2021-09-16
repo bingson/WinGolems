@@ -82,24 +82,8 @@
 
 ; MEMORY FILE FUNCTIONS (BLUE)__________________________________________________
   
-  ; KEY  COMMAND BOX MEMORY FILE COMMANDS        USAGE EXAMPLE         Notes: "__" used to link commands that can be repeated         
-  ;----- --------------------------------------- -------------------   ----------------------------------------------------------------------
-  ; 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9   shortcut alternative to using L1 to load 1.txt                 
-  ;  L   Load .txt file into CB display          L1, Lr\testr          Load in display => 1.txt, r\testr.txt ("Ll" .txt list)         
-  ;      Load system file shorcuts               Lc, Ls, Ll, ?         Load in display => config.ini, hotkey list, .txt file names           
-  ;  V   Paste .txt file to anchored window      V1, Vsck, Vr\testr    Paste contents of 1.txt, sck.txt, r\testr.txt in last active window 
-  ;  C   copy and rename file                    C1, C1 new_name       duplicate names resolved with added number suffix: C1 -> 1_1.txt    
-  ;  O   Overwrite file|clipboard(:) contents    O1, O2 help, O:3, O3: replace => 1.txt w/ selected, 2.txt w/ help.txt, clipboard w/ 3.txt, 3.txt w/ clipboard 
-  ;  E   Edit file in default editor             E1, Er\testr          edit => 1.txt, test.txt, r\testr.txt (subfolder file path)          
-  ; A|P  Append|Prepend selected text to file    A1, Ar\testr          add selected text to bottom of => 1.txt, r\testr.txt           
-  ;  F   Paste same string repeatedly            F-+,4                 paste: -+-+ ; fmt: string, # of characters to fill             
-  ;  D   Delete file                             D1, D1.txt, D1.ini    file extension optional for .txt files                              
-  ;  R   Replace A with B in selected text       R,~+__A~B             usage example: A,C (input) -> A+C -> B+C             
-  ; R?:  Change replacement separators (1|2)     R1:%; R2:~>           Changes the above replacement separators to % and ~> 
-  ; Rf:  Modify file w/ saved replace't pattern  Rf:1~p n              modify=> 1.txt w/ pattern in p.txt & save result to n.txt     
-  ;      pattern file fmt: no R at beginning     ,~+__A~B,             all linebreaks will be ignored in patten .txt file            
-  ;
   ; Note: The below memory functions use the last key pressed to identify which memory file to operate on.
+  ;       enter "?" in a command box to see additional memory file commands
   ; e.g., ^!a = AddToMemory() ; ctrl+alt+a -> will save selected text to a file called a.txt in the WinGolems/mem_cache folder
 
   
@@ -136,14 +120,14 @@
   #2::                                                                          ;Mem: paste contents of 2.txt   
   #1::               RetrieveMemory()                                           ;Mem: paste contents of 1.txt
   
-  $#MButton::        RetrieveMemory("#MButton")                                 ;Mem: double click and paste contents of 0.txt at cursor position
-  $^!MButton::       RetrieveMemory(,"^!MButton")                               ;Mem: double click and paste contents of number entered at prompt
+  $^RButton::        RetrieveMemory(A_ThisHotkey)                               ;Mem: double click and paste contents of 0.txt at cursor position
+  $!RButton::        RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
 
 ; COMMAND BOX __________________________________________________________________                             
   #enter::                                                                      ;CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
   #space::           CB("~win")                                                 ;CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
-  :X:tt~win::        TglCFG("T_TM","Text_Manipulation: ")                       ;CommandBox: Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows
-  :X:tf~win::        TglCFG("T_FM","File_Management: ")                         ;CommandBox: Toggle File_Navigation template ON|OFF
+  :X:tt~win::        TC("T_TM","Text_Manipulation: ")                       ;CommandBox: Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows
+  :X:tf~win::        TC("T_FM","File_Management: ")                         ;CommandBox: Toggle File_Navigation template ON|OFF
 
 
 #IF
