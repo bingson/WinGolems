@@ -1,5 +1,10 @@
  CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand"
             , fwt = "500", show_txt = "", title = "",  input_txt = "") {
+    
+    SetBatchLines, -1
+    SetkeyDelay, -1
+    SetWinDelay, -1
+    
     ; TimeCode()
   ; SAVE INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- -- 
     ; CoordMode, Mouse, Screen
@@ -141,7 +146,11 @@
     }
     if GC("CB_appActive", 0) 
         ActivateWin("ahk_id " tgt_hwnd) 
+    
     ; TimeCode()
+    SetWinDelay, 10
+    SetBatchLines, 10ms
+    SetKeyDelay, 10, 50
     return
   
   ; LABELS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --

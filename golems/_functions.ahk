@@ -1151,6 +1151,9 @@
         StartTimer := ""
         Sec := round(TimedDuration/1000)
         msg := "around "  Sec  " sec have elapsed!`n"  "("  round(TimedDuration)  " ms)"
+        . "`n WinDelay: " A_winDelay
+        . "`n KeyDelay : " A_KeyDelay 
+        . "`n BatchLines : " A_BatchLines 
         if !PU
             MsgBox % msg
         else
@@ -1443,6 +1446,14 @@
     KeyWait %kw%
     Send {Alt}
     Send vn{enter}
+    return
+  }
+
+  ToggleOpt(kw="ctrl", optn ="") {
+    ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
+    KeyWait %kw%
+    Send {Alt}
+    Send %optn%{enter}
     return
   }
 
@@ -1816,6 +1827,13 @@
         default:            send e
     }
     sleep med 
+    if !InStr(FileExist(path), "D") {
+        msg := "WinGolems can't find the folder`n`n" . dir . "`n`nWould you like to create it?"
+        MsgBox,4100,Create Hotstring,%msg% 
+        IfMsgBox Yes
+            FileCreateDir, %path%
+        return
+    }
     if (SubStr(clipboard, 1,4) = "http") {
         code := "youtube-dl " """" clipboard """" 
         Run cmd /K "cd /d " %path% 

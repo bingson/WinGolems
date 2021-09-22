@@ -1,5 +1,5 @@
 #IF GC("T_TM",0)                                                                ;lines below are valid anywhere in windows if "T_TM" variable in config.ini = 1
-; CONVENIENCE __________________________________________________________________~
+; CONVENIENCE __________________________________________________________________
   
   +capslock::            backspace                                              ;Convenience: backspace (toggle capslock: ctrl + capslock)
   capslock::             del                                                    ;Convenience: delete (toggle capslock: ctrl + capslock)
@@ -79,7 +79,9 @@
   +<!mbutton::           s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in
   $^!k::                 Sendinput ^{sc00C}                                     ;MouseFn: zoom out
+  ~ralt & ~lctrl::                                                              ;MouseFn: move mouse cursor to TOP LEFT of active app
   ~rctrl & ~lctrl::      CursorJump("BL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
+  ~lalt & ~rctrl::                                                              ;MouseFn: move mouse cursor to TOP RIGHT of active app
   ~lctrl & ~rctrl::      CursorJump("BR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
   ralt & lalt::          CursorJump("TL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
   lalt & ralt::          CursorJump("TR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
