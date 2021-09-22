@@ -41,15 +41,10 @@
     */
 
 
-  #If WinActive("ahk_exe " exe["editor"]) and TitleTest(".ahk")
-  ; Ctrl and S → Save changes and, if an AutoHotkey script, reload it
-  $^s::
-      SendInput, ^s
-      WinGetTitle, WindowTitle
-      If (InStr(WindowTitle, ".ahk")){
-          Reload
-      }
-      Return
+#If WinActive("ahk_exe " exe["editor"]) and TitleTest(".ahk")
+
+  $^s:: SaveReloadAHK()
+  
       
 #If WinActive("ahk_exe " exe["doc"])
 
@@ -74,5 +69,21 @@
 
     /*  SAMPLE CODE
         #space::  CB("~pdf", C.lpurple)                                         ;pdf: opens command box that runs ~pdf suffix CB keys
+
+        lalt & Space::
+        { 
+            send {Blind}
+            send ^{tab}
+            return
+        }
+        
+        Ralt & b::                                                              ;pdf: 
+        !b:: send ^+{tab}
+        
+        
+        
+        #If GetKeyState("alt", "P")
+        ctrl & space::                  WinMaximize, A 
+        #If
     */
 #IF

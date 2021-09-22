@@ -20,10 +20,10 @@
   !u::          send !{up}                                                      ;FileExplorer: up one folder level  
   !i::          send !{left}                                                    ;FileExplorer: prev folder
   !o::          send !{right}                                                   ;FileExplorer: forward folder
-  !z::          Send !vn{enter}                                                 ;FileExplorer: toggle navigation pane
+  !z::          ToggleNavPane("alt")
   ^p::          Send {alt down}p{alt up}                                        ;FileExplorer: toggle preview plane
-  !b::          ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FileExplorer: move focus to navigation pane
-  !space::      ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FileExplorer: move focus to current folder pane
+  !w::          ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FileExplorer: move focus to navigation pane
+  !e::          ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FileExplorer: move focus to current folder pane
   ^u::          send !vg{up   4}{enter}                                         ;FileExplorer: group by name|remove grouping toggle
   ^o::          Send !vg{down 2}{enter}                                         ;FileExplorer: group by file type
   ^i::          Send !vg{down 1}{enter}                                         ;FileExplorer: group by date modified
@@ -34,9 +34,8 @@
   >^j::         SortByType()                                                    ;FileExplorer: sort by type
   >^k::         SortBySize()                                                    ;FileExplorer: sort by size
   !SC027::      DetailedView()                                                  ;FileExplorer| detailed file info with resized columnsnmn       
-  ^h::          ToggleInvisible()                                               ;FileExplorer| toggle hide/unhide invisible files
   $+!c::        clipboard := Explorer_GetSelection()                            ;FileExplorer| store file path(s) of selected file(s) in clipboard
-  ^s::          SelectByRegEx()                                                 ;FileExplorer| select all files matching regex pattern 
+  !s::          SelectByRegEx()                                                 ;FileExplorer| select all files matching regex pattern 
   +^esc::       savePath("cESC_path")                                           ;FileExplorer; save file|folder path for ^esc
   +^F1::        savePath("cF1_path")                                            ;FileExplorer; save file|folder path for ^F1                                   
   +^F2::        savePath("cF2_path")                                            ;FileExplorer; save file|folder path for ^F2                                   
@@ -46,7 +45,8 @@
   +^F6::        savePath("cF6_path")                                            ;FileExplorer; save file|folder path for ^F6
   +^F7::        savePath("cF7_path")                                            ;FileExplorer; save file|folder path for ^F7
   +^F8::        savePath("cF8_path")                                            ;FileExplorer; save file|folder path for ^F8
-  
+  ^!h::         send {home}                                                     ;Navigation: Home
+  ^!l::         send {end}                                                      ;Navigation: End
   !j::          send {down}                                                     ;Navigation| Up 
   !k::          send {up}                                                       ;Navigation| Down  
                                                                                 ; file explorer needs a different key send mode 

@@ -164,7 +164,6 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
 
                 updateGUI:
-
                 new_title_file := dir . NameNoExt . RetrieveExt(tgt)            ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
                 CC("CB_title", new_title_file)
                 UpdateGUI(txt, new_title_file)
@@ -247,7 +246,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 }
                 return 1
             Case "C":                                                           ; copy file
-                If !RegExMatch(C_input, " ")                                    ; if no second file name given add suffix  
+                If !RegExMatch(C_input, " .+")                                  ; if no second file name given add suffix  
                 {
                     PopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
                     var := 1
@@ -267,12 +266,12 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         arr := StrSplit(C_input, " ")
                         SplitPath,% arr[1], oFileName, oDir, oExtension, oNameNoExt 
                         SplitPath,% arr[2], nFileName, nDir, nExtension, nNameNoExt 
-                        odir := odir ? odir . "/" : ""
-                        ndir := ndir ? ndir . "/" : ""
-                        C_input := % f_path . nDir . nNameNoExt . ".txt"
-                        Filecopy,% f_path . oDir . oNameNoExt . ".txt",% C_input, 1    ; 1 = overwrite 
-                        PopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
-                        msgbox % C_input
+                        odir := odir ? odir . "\" : ""
+                        ndir := ndir ? ndir . "\" : ""
+                        dest_path := C_input := f_path . nDir . nNameNoExt . ".txt"
+                        source_path :=  f_path oDir oNameNoExt ".txt"
+                        Filecopy,%source_path%,%dest_path%, 1    ; 1 = overwrite 
+                        ; PopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
                     } catch {
                         PopUp("invalid file path",C.lgreen,C.bgreen,,,-2000)
                     }

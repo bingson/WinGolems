@@ -12,6 +12,7 @@
        , "black"       : "000000"
        , "white"       : "FFFFFF"
        , "red"         : "FF0000"
+       , "lcoral"      : "FFA07A"
        , "green"       : "107A40"
        , "navy"        : "000080"
        , "blue"        : "0000FF"
@@ -318,8 +319,7 @@
   BluetoothSettings() {
     global med
     Run explorer.exe ms-settings:bluetooth
-    sleep med
-    CFW()
+    settimer, CFW,-600
   }
  
   SoundSettings() {
@@ -914,7 +914,16 @@
   } ; retrieves text to single digit memory file
 
 ; AHK UTILITIES ________________________________________________________________
-  
+
+  SaveReloadAHK() {
+    SendInput, ^s
+    WinGetTitle, WindowTitle
+    If (InStr(WindowTitle, ".ahk")){
+        Reload
+    }
+    Return
+  } ; Ctrl and S → Save changes and, if an AutoHotkey script, reload it
+    
   ShowTime(paste_key="", show_key = "", msgbox_key = ""){
     FormatTime, MyTime,, hh:mm:ss tt
     switch A_ThisHotkey
@@ -924,7 +933,7 @@
         case msgbox_key: msgbox % MyTime
     }
     return
-  }
+  } 
 
   copyFiles(dest_path="", F*) {
     loop % F.MaxIndex()
@@ -1431,6 +1440,14 @@
 
 ; FILE AND FOLDER ______________________________________________________________
   
+  ToggleNavPane(kw="ctrl") {
+    ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
+    KeyWait %kw%
+    Send {Alt}
+    Send vn{enter}
+    return
+  }
+
   SP(key = "") {
     SavePath(key)
     return
@@ -2094,9 +2111,9 @@
     BlockInput, on
     settimer, BlockInputTimeOut,-1000
     selectword()
-    sleep 50
+    sleep 200
     var := trim(clip(), " `;")
-    sleep 50
+    sleep 200
     s("^g"), clip(var), s("enter")
     BlockInput, Off
     return 

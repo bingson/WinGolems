@@ -75,7 +75,7 @@
     
     #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                        ; If Command or Function Box active
     printscreen & space::  GUISubmit()                                          ;CB| submit GUI input
-    #IF GC("T_d",0)
+    #IF GC("T_d",0) & 
     printscreen & space::  CB()
 
   ; MEMORY -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
