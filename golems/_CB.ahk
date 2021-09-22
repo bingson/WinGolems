@@ -1,5 +1,11 @@
 ; COMMAND BOX __________________________________________________________________
 
+#enter::                                                                        ;CB: opens command box that runs ~win suffix CB keys; enter "?" for help
++#space::                                                                       ;CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+#space::           CB("~win")                                                   ;CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+:X:tt~win::        TC("T_TM","Text_Manipulation: ")                             ;CB: Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows           
+:X:tf~win::        TC("T_FM","File_Management: ")                               ;CB: Toggle File_Navigation template ON|OFF
+
 #IF WinActive("ahk_id " CB_hwnd)                                                ; If Command or Function Box active
 
 $^!k::                                                                          ;CB: Font size decrease

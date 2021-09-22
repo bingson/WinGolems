@@ -122,11 +122,8 @@
   $+^mButton::        RetrieveMemory(A_ThisHotkey)                               ;Mem: double click and paste contents of 0.txt at cursor position
   $^mButton::        RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
 
-; COMMAND BOX __________________________________________________________________                             
-  #enter::                                                                      ;CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
-  #space::           CB("~win")                                                 ;CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
-  :X:tt~win::        TC("T_TM","Text_Manipulation: ")                       ;CommandBox: Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows
-  :X:tf~win::        TC("T_FM","File_Management: ")                         ;CommandBox: Toggle File_Navigation template ON|OFF
+
+  
 
 
 #IF

@@ -155,7 +155,7 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 <br><br>
 
 ----
-## 2. Tutorial Templates <a name="tutorial-overview"></a> 
+## 2. Tutorial Templates <a name="tutorial-overview"></a>
 
 <OL>
 
@@ -363,8 +363,6 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Win+X                   Apps| Activate PowerPoint
  Win+S                   Apps| Activate web browser
  Win+W                   Apps| Activate Word
- Win+Space               CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
- Win+Enter               CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
  Alt+Backspace           Convenience: delete current line of text
  Win+Sc035               Convenience: google search selected text
  Shift+Win+0             Mem: add selected text to the bottom of 0.txt
@@ -377,8 +375,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Win+7             Mem: add selected text to the bottom of 7.txt
  Shift+Win+8             Mem: add selected text to the bottom of 8.txt
  Shift+Win+9             Mem: add selected text to the bottom of 9.txt
- Ctrl+Rbutton            Mem: double click and paste contents of 0.txt at cursor position
- Alt+Rbutton             Mem: double click and paste contents of number entered at prompt
+ Shift+Ctrl+Mbutton      Mem: double click and paste contents of 0.txt at cursor position
+ Ctrl+Mbutton            Mem: double click and paste contents of number entered at prompt
  Ctrl+Alt+0              Mem: overwrite 0.txt with selected text
  Ctrl+Alt+1              Mem: overwrite 1.txt with selected text
  Ctrl+Alt+2              Mem: overwrite 2.txt with selected text
@@ -414,10 +412,10 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Rightalt+Sc028          VirtualDesktop: Switch to desktop 1
  Shift+Win+Q             WindowMgmt: close active window
  Alt+Win+Q               WindowMgmt: close all instances of the active program
- Win+Sc028               WindowMgmt: maximize window
  Ctrl+Alt+Space          WindowMgmt: maximize window
+ Win+Sc028               WindowMgmt: maximize window
  Win+Sc027               WindowMgmt: minimize window
- Alt+Sc034               WindowMgmt: move window btn monitors, cursor follows active windows
+ Ralt & Sc034            WindowMgmt: move window btn monitors, cursor follows active windows
  Shift+Win+Capslock      WindowMgmt: rotate through app instances from most recent
  Win+Capslock            WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
  Alt+Capslock            WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction)
@@ -474,8 +472,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Alt+V             Convenience| replace multiple paragraph breaks with space (remove paragraphs breaks)
  Win+F                   MouseFn: 2 Left clicks (select word)
  Ctrl+Win+F              MouseFn: 3 Left clicks (select line)
- Shift+Leftctrl+Lbutton  MouseFn: click thrice, paste clipboard
- Leftctrl+Lbutton        MouseFn: click twice, paste clipboard
+ Shift+Leftalt+Mbutton   MouseFn: click thrice, paste clipboard
+ Leftalt+Mbutton         MouseFn: click twice, paste clipboard
  Win+D                   MouseFn: Left click and save mouse position
  Alt+Win+J               MouseFn: move mouse cursor to bottom edge
  Ralt & Lalt             MouseFn: move mouse cursor to BOTTOM LEFT of active app
@@ -536,23 +534,23 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Rightshift+R            ChangeFolder: Recycle bin (doesn't work for save as diag)
  Rightshift+T            ChangeFolder: This PC / My Computer
  Rightshift+Sc029        ChangeFolder: WinGolems folder
- Rightctrl+Space         FB: activate already open Function Box and move focus to inputbox
  Leftctrl+Space          FB: activate already open Function Box and move focus to inputbox
+ Rightctrl+Space         FB: activate already open Function Box and move focus to inputbox
  Win+Sc033               FB: Menu for cESC-cF8 saved paths
  Alt+O                   FileExplorer: forward folder
- Alt+Ctrl+I              FileExplorer: group by date created
+ Ctrl+Y                  FileExplorer: group by date created
  Ctrl+I                  FileExplorer: group by date modified
  Ctrl+O                  FileExplorer: group by file type
  Ctrl+U                  FileExplorer: group by name|remove grouping toggle
- Alt+Space               FileExplorer: move focus to current folder pane
- Alt+B                   FileExplorer: move focus to navigation pane
+ Alt+E                   FileExplorer: move focus to current folder pane
+ Alt+W                   FileExplorer: move focus to navigation pane
  Alt+I                   FileExplorer: prev folder
  Alt+R                   FileExplorer: rename file
  Leftctrl+K              FileExplorer: sort by date modified
  Leftctrl+J              FileExplorer: sort by name
  Rightctrl+K             FileExplorer: sort by size
  Rightctrl+J             FileExplorer: sort by type
- Alt+Z                   FileExplorer: toggle navigation pane
+ Alt+Z                   FileExplorer: toggle navigation plane
  Ctrl+P                  FileExplorer: toggle preview plane
  Alt+U                   FileExplorer: up one folder level
  Shift+Ctrl+Esc          FileExplorer; save file|folder path for ^esc
@@ -565,9 +563,10 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Ctrl+F7           FileExplorer; save file|folder path for ^F7
  Shift+Ctrl+F8           FileExplorer; save file|folder path for ^F8
  Alt+Sc027               FileExplorer| detailed file info with resized columnsnmn
- Ctrl+S                  FileExplorer| select all files matching regex pattern
+ Alt+S                   FileExplorer| select all files matching regex pattern
  Shift+Alt+C             FileExplorer| store file path(s) of selected file(s) in clipboard
- Ctrl+H                  FileExplorer| toggle hide/unhide invisible files
+ Ctrl+Alt+L              Navigation: End
+ Ctrl+Alt+H              Navigation: Home
  Alt+K                   Navigation| Down
  Alt+J                   Navigation| Up
  Ctrl+Esc                OpenPath: open saved file|folder path from +^esc
@@ -600,8 +599,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Win+Left                CB: move CB window to left half
  Alt+A                   CB: move CB window to left half
  Shift+Alt+A             CB: move CB window to left side small
- Alt+D                   CB: move CB window to right half
  Win+Right               CB: move CB window to right half
+ Alt+D                   CB: move CB window to right half
  Shift+Alt+D             CB: move CB window to right side small
  Alt+W                   CB: move CB window to top half
  Shift+Alt+W             CB: move CB window to top half small
@@ -609,12 +608,15 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Alt+Q             CB: move CB window to top left small
  Alt+E                   CB: move CB window to top right
  Shift+Alt+E             CB: move CB window to top right small
- Rightctrl+Space         CB| activate already open CB and move focus to inputbox
+ Win+Space               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Win+Enter               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Shift+Win+Space         CB: opens command box that runs ~win suffix CB keys; enter "?" for help
  Leftctrl+Space          CB| activate already open CB and move focus to inputbox
+ Rightctrl+Space         CB| activate already open CB and move focus to inputbox
  Rightalt+Space          CB| Capitalize first letter of user input and submit GUI
  Alt+R                   CB| reenter last command
- Win+Space               CB| submit GUI input
  Leftalt+Space           CB| submit GUI input
+ Win+Space               CB| submit GUI input
  Alt+X                   CB| toggle Command Box display|minimalist mode
 ```
 

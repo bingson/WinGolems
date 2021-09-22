@@ -20,13 +20,13 @@
   !u::          send !{up}                                                      ;FileExplorer: up one folder level  
   !i::          send !{left}                                                    ;FileExplorer: prev folder
   !o::          send !{right}                                                   ;FileExplorer: forward folder
-  !z::          ToggleNavPane("alt")
+  !z::          ToggleNavPane("alt")                                            ;FileExplorer: toggle navigation plane 
   ^p::          Send {alt down}p{alt up}                                        ;FileExplorer: toggle preview plane
   !w::          ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FileExplorer: move focus to navigation pane
   !e::          ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FileExplorer: move focus to current folder pane
-  ^u::          ToggleOpt("ctrl","vg{up 4}")                                         ;FileExplorer: group by name|remove grouping toggle
-  ^o::          ToggleOpt("ctrl","vg{down 2}")                                    ;FileExplorer: group by file type
-  ^i::          ToggleOpt("ctrl","vg{down 1}")                                    ;FileExplorer: group by date modified
+  ^u::          ToggleOpt("ctrl","vg{up 4}")                                    ;FileExplorer: group by name|remove grouping toggle
+  ^o::          ToggleOpt("ctrl","vg{down 2}")                                  ;FileExplorer: group by file type
+  ^i::          ToggleOpt("ctrl","vg{down 1}")                                  ;FileExplorer: group by date modified
   ^y::          ToggleOpt("ctrl","vg{down 4}")                                  ;FileExplorer: group by date created
   $!r::         Send {F2}                                                       ;FileExplorer: rename file
   <^j::         SortByName()                                                    ;FileExplorer: sort by name
