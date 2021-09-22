@@ -75,8 +75,8 @@
   *^#d::                 RecallMousePosClick("r", 0)                            ;MouseFn: return to saved mouse position (change 0 to number of clicks) 
   #f::                   Clicks(2)                                              ;MouseFn: 2 Left clicks (select word)
   ^#f::                  Clicks(3)                                              ;MouseFn: 3 Left clicks (select line)
-  <^lbutton::            s("{blind}"),Clicks(2), s("^v")                        ;MouseFn: click twice, paste clipboard        
-  +<^lbutton::           s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
+  <!mbutton::            s("{blind}"),Clicks(2), s("^v")                        ;MouseFn: click twice, paste clipboard        
+  +<!mbutton::           s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in
   $^!k::                 Sendinput ^{sc00C}                                     ;MouseFn: zoom out
   ~rctrl & ~lctrl::      CursorJump("BL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app

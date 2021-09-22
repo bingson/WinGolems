@@ -311,9 +311,7 @@
   DisplaySettings() {
     global med
     Run explorer.exe ms-settings:display
-    sleep med
-    CFW()
-
+    settimer, CFW,-600
   }
  
   BluetoothSettings() {

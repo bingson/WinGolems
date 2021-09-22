@@ -120,8 +120,8 @@
   #2::                                                                          ;Mem: paste contents of 2.txt   
   #1::               RetrieveMemory()                                           ;Mem: paste contents of 1.txt
   
-  $^MButton::        RetrieveMemory(A_ThisHotkey)                               ;Mem: double click and paste contents of 0.txt at cursor position
-  $!MButton::        RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
+  $+^mButton::        RetrieveMemory(A_ThisHotkey)                               ;Mem: double click and paste contents of 0.txt at cursor position
+  $^mButton::        RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
 
 ; COMMAND BOX __________________________________________________________________                             
   #enter::                                                                      ;CommandBox: opens command box that runs ~win suffix CB keys; enter "?" for help
