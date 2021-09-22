@@ -1,5 +1,4 @@
 
-
 #IF
 ; ACTIVATE APPS (GREEN) ________________________________________________________
   ; AA("application_exe_path")
@@ -69,7 +68,7 @@
   #capslock::         s("{blind}"), ActivateNextInstance()                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
   +#q::               WinClose,A                                                ;WindowMgmt: close active window
   !#q::               CloseClass()                                              ;WindowMgmt: close all instances of the active program
-  !sc034::            moveWinBtnMonitors(), CFW()                               ;WindowMgmt: move window btn monitors, cursor follows active windows
+  ralt & sc034::      moveWinBtnMonitors(), CFW()                               ;WindowMgmt: move window btn monitors, cursor follows active windows
   !#b::               BluetoothSettings()                                       ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
   !#d::               DisplaySettings()                                         ;WinSetting: display settings
   !#n::               NotificationWindow()                                      ;WinSetting: notification window
