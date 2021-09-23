@@ -1,5 +1,5 @@
 #IF
-; FILE EXPLORER AND LISTVIEW WINDOWS ___________________________________________
+; CHANGE FOLDER in FILE EXPLORER AND LISTVIEW WINDOWS __________________________
   ; ChangeFolder() shortcuts are valid in file explorer and other listview type windows (e.g., save as diaglogue boxes)
 
   SetTitleMatchMode, 2
@@ -17,6 +17,10 @@
   >+r::         CF("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()         ;ChangeFolder: Recycle bin (doesn't work for save as diag)
   >+t::         CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()         ;ChangeFolder: This PC / My Computer
                                                                                 ; https://www.autohotkey.com/docs/misc/CLSID-List.htm 
+; FILE EXPLORER CONVENIENCE ____________________________________________________
+  
+  #If WinActive("ahk_exe Explorer.EXE") and GC("T_FM",0) ; -- -- -- -- -- -- -- below shortcuts active in file explorer if "T_FM" variable in config.ini = 1
+
   !u::          send !{up}                                                      ;FileExplorer: up one folder level  
   !i::          send !{left}                                                    ;FileExplorer: prev folder
   !o::          send !{right}                                                   ;FileExplorer: forward folder

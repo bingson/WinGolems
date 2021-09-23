@@ -1791,7 +1791,8 @@
  
 ; YOUTUBE-DL (Python Script Wrapper) ___________________________________________
   
-  URLvidDL(path="") {
+  URLvidDL(path="",kw="alt") {
+    keywait, %kw%
     global short, med
     BlockInput, on
     settimer, BlockInputTimeOut,-1000
@@ -1812,8 +1813,9 @@
     return
   }
   
-  ClickVidDL(path=""){
+  ClickVidDL(path="", kw="shift"){
     global short, med, CB_hwnd
+    keywait, %kw%
     BlockInput, on
     settimer, BlockInputTimeOut,-1500
     Click, Right
@@ -1842,6 +1844,38 @@
         send {enter}
         sleep short
       WinMinimize,A
+    } else 
+        PU("invalid url: " clipboard,,,,,-800)
+    BlockInput, Off
+    return
+
+  }
+    
+
+  ClickDL(path="", kw="shift"){
+    global short, med, CB_hwnd
+    keywait, %kw%
+    wintitleOfActiveWindow:="ahk_id " WinActive("A")
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1500
+    Click, Right
+    sleep, med * 2
+    app := WinExist("ahk_id " CB_hwnd) ? GC("CB_tgtExe") : Pname
+    send % "{down " GC("click_DL", 4) "}{enter}"
+    sleep, long
+
+    if (SubStr(clipboard, 1,4) = "http") {
+
+        code := "youtube-dl " """" clipboard """" 
+        Run cmd /K "cd /d " %path% 
+        ; AA(wintitleOfActiveWindow)
+        ; msgbox % wintitleOfActiveWindow
+        ; sleep, long * 3
+        sleep med * 2
+        clip(code)
+        ; send {enter}
+        ; sleep short
+        ; WinMinimize,A
     } else 
         PU("invalid url: " clipboard,,,,,-800)
     BlockInput, Off

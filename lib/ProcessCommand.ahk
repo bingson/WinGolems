@@ -59,13 +59,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         sleep 50
                     goto, addTextToFile
                 
-                } else if (InStr(C_input, ":") and !InStr(C_input, ">")) {      ;# append|prepend manually entered text to file      
-                    dPos  := InStr(C_input, ":")
-                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension, NameNoExt
-                    dir := dir ? dir . "\" : "" 
-                    text_to_add := substr(C_input, dPos+1)
-                    goto, addTextToFile
-                } else if RegExMatch(C_input, " .+") {                          ;# append|prepend 1st file to 2nd file                         
+                   } else if RegExMatch(C_input, " .+") {                          ;# append|prepend 1st file to 2nd file                         
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[2], oFileName, oDir, oExtension, oNameNoExt 
                     SplitPath,% arr[1], nFileName, nDir, nExtension, nNameNoExt 
@@ -172,25 +166,41 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
             Case "O":                                                           ; overwrite file/clipboard
                 C_input := RegExReplace(C_input, "S) +", A_Space)               ; replaces multiple spaces w/ 1        
 
-                If ((2ndChar == ">") or (2ndChar == ":")) and RegExMatch(C_input,"[0-9A-Za-z]")  ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
-                {
+                If ((2ndChar == ">") or (2ndChar == ":")) and RegExMatch(C_input,"[0-9A-Za-z]") { ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
                     NameNoExt := trim(C_input, " >:")
                     dir := (InStr(dir, ">")) ? "" : dir
                     dir := (InStr(dir, ":")) ? "" : dir
                     WriteToCache(namenoext,,dir,clipboard)   
                     goto, load
-                }
-                else If ((SubStr(C_input, 0) == ">") or (SubStr(C_input, 0) == ":"))   ; if C_input ends in ">" overwrite clipboard with file contents                           
-                {
+                } else If ((SubStr(C_input, 0) == ">") or (SubStr(C_input, 0) == ":")) {  ; if C_input ends in ">" overwrite clipboard with file contents                           
                     
                     C_input := trim(C_input, " >:")
                     SplitPath, C_input, , Dir, , NameNoExt 
                     clipboard := AccessCache(NameNoExt,dir, False)
                     C_input := ">"
                     goto, load
-                }
-                else If !RegExMatch(C_input, " .+")                             ; if there's no second file name, overwrite with selected text
-                { 
+                } else If (InStr(SubStr(C_input, 2), ":")) {
+                    dPos        := InStr(C_input, ":")
+                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension, NameNoExt                 ; parses everything after the command character as a file path 
+                    dir := dir ? dir . "\" : ""
+                    text_to_add := substr(C_input, dPos+1)
+                    
+                    if !InStr(FileExist(f_path dir), "D") and dir
+                    {                                      
+                        msg := "WinGolems can't find the folder`n`n" . dir . "`n`nWould you like to create it?"
+                        MsgBox,4100,Create Hotstring,%msg% 
+                        IfMsgBox Yes
+                        {
+                            FileCreateDir, %f_path%%dir%
+                        } else 
+                            return 1
+                    } 
+
+                    WriteToCache(namenoext,,dir,text_to_add)
+                    goto, load
+
+                } else If !RegExMatch(C_input, " .+") {                         ; if there's no second file name, overwrite with selected text 
+                
                     ActivateWin("ahk_id " tgt_hwnd) 
                     text_to_add := trim(clip())
                     tgt_path := f_path dir namenoext . "txt"
