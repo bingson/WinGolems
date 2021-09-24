@@ -366,7 +366,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 switch 
                 {   
                     case SubStr(C_input, 1 , 1) == ":":
-                        msgbox % 2
+                        ; implement option here to run native ahk syntax
                         return 1
                     case C_First2chr == "f:":                                   ; create function name alias
                         arr := StrSplit(C3_Remainder, "~")

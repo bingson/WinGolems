@@ -119,8 +119,8 @@
   #2::                                                                          ;Mem: paste contents of 2.txt   
   #1::               RetrieveMemory()                                           ;Mem: paste contents of 1.txt
   
-  $^mButton::        RetrieveMemory(A_ThisHotkey)                              ;Mem: double click and paste contents of 0.txt at cursor position
-  $+^mButton::       RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
+  $<^mButton::       RetrieveMemory(A_ThisHotkey)                               ;Mem: double click and paste contents of 0.txt at cursor position
+  $+<^mButton::      RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
 
 
   

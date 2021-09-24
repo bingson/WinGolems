@@ -375,8 +375,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Win+7             Mem: add selected text to the bottom of 7.txt
  Shift+Win+8             Mem: add selected text to the bottom of 8.txt
  Shift+Win+9             Mem: add selected text to the bottom of 9.txt
- Shift+Ctrl+Mbutton      Mem: double click and paste contents of 0.txt at cursor position
- Ctrl+Mbutton            Mem: double click and paste contents of number entered at prompt
+ Leftctrl+Mbutton        Mem: double click and paste contents of 0.txt at cursor position
+ Shift+Leftctrl+Mbutton  Mem: double click and paste contents of number entered at prompt
  Ctrl+Alt+0              Mem: overwrite 0.txt with selected text
  Ctrl+Alt+1              Mem: overwrite 1.txt with selected text
  Ctrl+Alt+2              Mem: overwrite 2.txt with selected text
@@ -412,8 +412,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Rightalt+Sc028          VirtualDesktop: Switch to desktop 1
  Shift+Win+Q             WindowMgmt: close active window
  Alt+Win+Q               WindowMgmt: close all instances of the active program
- Ctrl+Alt+Space          WindowMgmt: maximize window
  Win+Sc028               WindowMgmt: maximize window
+ Ctrl+Alt+Space          WindowMgmt: maximize window
  Win+Sc027               WindowMgmt: minimize window
  Ralt & Sc034            WindowMgmt: move window btn monitors, cursor follows active windows
  Shift+Win+Capslock      WindowMgmt: rotate through app instances from most recent
@@ -424,7 +424,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Win+Del                 WindowMgmt: Window always on top: ON
  Rshift & Lshift         WinGolems: reload WinGolems
  Lshift & Rshift         WinGolems: reload WinGolems (update running script for changes, fixes sticky keys)
- Win+Esc                 WinGolems: toggle all hotkeys ON|OFF except for this one
+ Esc & Del               WinGolems: toggle all hotkeys ON|OFF except for this one
  Ctrl+Win+Enter          WinOS: open start menu
  Win+Lbutton             WinOS: open start menu (alt: Ctrl+Esc)
  Ctrl+Sc027              WinOS: simulate appkey
@@ -534,9 +534,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Rightshift+R            ChangeFolder: Recycle bin (doesn't work for save as diag)
  Rightshift+T            ChangeFolder: This PC / My Computer
  Rightshift+Sc029        ChangeFolder: WinGolems folder
- Leftctrl+Space          FB: activate already open Function Box and move focus to inputbox
- Rightctrl+Space         FB: activate already open Function Box and move focus to inputbox
- Win+Sc033               FB: Menu for cESC-cF8 saved paths
+ Win+Sc033               FB: Opens Jump Menu for saved paths (works everwhere inclulding save dialogue windows)
  Alt+O                   FileExplorer: forward folder
  Ctrl+Y                  FileExplorer: group by date created
  Ctrl+I                  FileExplorer: group by date modified
@@ -546,22 +544,23 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Alt+W                   FileExplorer: move focus to navigation pane
  Alt+I                   FileExplorer: prev folder
  Alt+R                   FileExplorer: rename file
- Leftctrl+K              FileExplorer: sort by date modified
- Leftctrl+J              FileExplorer: sort by name
- Rightctrl+K             FileExplorer: sort by size
- Rightctrl+J             FileExplorer: sort by type
+ Ctrl+K                  FileExplorer: sort by date modified
+ Ctrl+J                  FileExplorer: sort by name
+ Ctrl+H                  FileExplorer: sort by size
+ Ctrl+L                  FileExplorer: sort by type
  Alt+Z                   FileExplorer: toggle navigation plane
  Ctrl+P                  FileExplorer: toggle preview plane
  Alt+U                   FileExplorer: up one folder level
- Shift+Ctrl+Esc          FileExplorer; save file|folder path for ^esc
- Shift+Ctrl+F1           FileExplorer; save file|folder path for ^F1
- Shift+Ctrl+F2           FileExplorer; save file|folder path for ^F2
- Shift+Ctrl+F3           FileExplorer; save file|folder path for ^F3
- Shift+Ctrl+F4           FileExplorer; save file|folder path for ^F4
- Shift+Ctrl+F5           FileExplorer; save file|folder path for ^F5
- Shift+Ctrl+F6           FileExplorer; save file|folder path for ^F6
- Shift+Ctrl+F7           FileExplorer; save file|folder path for ^F7
- Shift+Ctrl+F8           FileExplorer; save file|folder path for ^F8
+ Shift+Rightctrl+Esc     FileExplorer; file|folder save path for >^esc
+ Shift+Rightctrl+F1      FileExplorer; file|folder save path for >^F1
+ Shift+Rightctrl+F2      FileExplorer; file|folder save path for >^F2
+ Shift+Rightctrl+F3      FileExplorer; file|folder save path for >^F3
+ Shift+Rightctrl+F4      FileExplorer; file|folder save path for >^F4
+ Shift+Rightctrl+F5      FileExplorer; file|folder save path for >^F5
+ Shift+Rightctrl+F6      FileExplorer; file|folder save path for >^F6
+ Shift+Rightctrl+F7      FileExplorer; file|folder save path for >^F7
+ Shift+Rightctrl+F8      FileExplorer; file|folder save path for >^F8
+ Shift+Rightctrl+F9      FileExplorer; file|folder save path for >^F8
  Alt+Sc027               FileExplorer| detailed file info with resized columnsnmn
  Alt+S                   FileExplorer| select all files matching regex pattern
  Shift+Alt+C             FileExplorer| store file path(s) of selected file(s) in clipboard
@@ -578,6 +577,7 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Ctrl+F6                 OpenPath: open saved file|folder path from +^F6
  Ctrl+F7                 OpenPath: open saved file|folder path from +^F7
  Ctrl+F8                 OpenPath: open saved file|folder path from +^F8
+ Ctrl+F9                 OpenPath: open saved file|folder path from +^F9
 ```
 
 </p></details>
@@ -596,8 +596,8 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Alt+Z             CB: move CB window to bottom left small
  Alt+C                   CB: move CB window to bottom right
  Shift+Alt+C             CB: move CB window to bottom right small
- Win+Left                CB: move CB window to left half
  Alt+A                   CB: move CB window to left half
+ Win+Left                CB: move CB window to left half
  Shift+Alt+A             CB: move CB window to left side small
  Win+Right               CB: move CB window to right half
  Alt+D                   CB: move CB window to right half
@@ -608,16 +608,18 @@ Under WinGolems, the `win` key functions as a modifier key and will not bring up
  Shift+Alt+Q             CB: move CB window to top left small
  Alt+E                   CB: move CB window to top right
  Shift+Alt+E             CB: move CB window to top right small
- Win+Space               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
  Win+Enter               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Win+Space               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
  Shift+Win+Space         CB: opens command box that runs ~win suffix CB keys; enter "?" for help
  Leftctrl+Space          CB| activate already open CB and move focus to inputbox
  Rightctrl+Space         CB| activate already open CB and move focus to inputbox
  Rightalt+Space          CB| Capitalize first letter of user input and submit GUI
  Alt+R                   CB| reenter last command
- Leftalt+Space           CB| submit GUI input
  Win+Space               CB| submit GUI input
+ Leftalt+Space           CB| submit GUI input
  Alt+X                   CB| toggle Command Box display|minimalist mode
+ Leftctrl+Space          FB: activate already open Function Box and move focus to inputbox
+ Rightctrl+Space         FB: activate already open Function Box and move focus to inputbox
 ```
 
 </p></details>

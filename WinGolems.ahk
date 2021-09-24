@@ -67,6 +67,8 @@
 #Include *i D_App_Examples.ahk
 #Include *i Test.ahk                                                            
 
+; AHK files included earlier will have priority over ones included later, if there's overlap
+
 /* sample code for including other ahk scripts
     #Include *i %A_ScriptDir%\..\Google Drive\secure\
     #Include *i bh.ahk

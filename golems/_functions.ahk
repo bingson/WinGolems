@@ -177,7 +177,6 @@
     WinGet, Process_Name, ProcessName, A
     WinGetTitle, Title, A
     WinGetClass, class, A
-    ; Msgbox % "`nsupress1: " . supress
     if (state)
     {
         Winset, Alwaysontop, ON , A
@@ -422,7 +421,6 @@
   
   GUISubmit(commandkey = ">!space") {
     global short, med, long
-    ;     msgbox % vUserInput
     Gui +LastFound
     GuiControl, Focus, UserInput
     if Instr(A_ThisHotkey, commandkey) {
@@ -647,8 +645,7 @@
     ;              
     ;   
 
-    global UserInput, med, config_path
-    
+    global UserInput, med, config_path, uprofile    
     sleep ,med                                                                  ; short wait to delete hotstring
     
     TOC := (toc_dict) ? BuildTOC(toc_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
@@ -1454,7 +1451,9 @@
     ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
     KeyWait %kw%
     Send {Alt}
-    Send %optn%{enter}
+    Send %optn%
+    sleep 200
+    send {enter}
     return
   }
 
@@ -1466,7 +1465,10 @@
   savePath(key = "") {
     BlockInput, on
     settimer, BlockInputTimeOut,-1000
-    path := Explorer_GetSelection()
+    if WinActive("ahk_exe Explorer.EXE")
+        path := Explorer_GetSelection()
+    else 
+        path := clip()
     CC(key, path)
     PU(key ": " path "`nSAVED",C.lgreen,,,,-1200)   
     BlockInput, Off
@@ -1480,8 +1482,6 @@
 
   OpenPath(path = "") {
     SplitPath, path, FileName, Dir, Extension, NameNoExt
-    ; msgbox % o
-    ; Msgbox % "`nFileName: " . FileName . "`n Dir: " .  Dir . "`n Extension: " .  Extension . "`n NameNoExt: " .  NameNoExt
     if (path = "ERROR") {
         PU("No saved path found")
         return
@@ -1543,24 +1543,6 @@
     Return
   }
  
-  SortByName() {
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
-    send !vo{enter}
-    return
-  }
- 
-  SortBySize() {
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
-    send !vo{Down}{Down}{Down}{enter}
-    return
-  }
- 
-  SortByType() {
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
-    send !vo{Down}{Down}{enter}
-    return
-  }
- 
   ToggleInvisible() {
     send !v
     sleep, med
@@ -1596,22 +1578,29 @@
   ChangeFolder(path, sys_dependent = False) {
     ; this function instantiates a hotkey for changing the current folder
     ; in file explorer or windows "save as" type dialogue boxes
+    global uprofile
+
+    SplitPath, path, oFileName, oDir, oExtension, oNameNoExt, oDrive
+
     if (sys_dependent = TRUE) {
         path := GC(path, "")
-    }
-    try
-    {
-        if  WinActive("ahk_exe explorer.exe")
-        and WinActive("ahk_class CabinetWClass")
-        {
-            NavRun(path)
-        }
-        else                                                                    ; WinActive("ahk_class #32770") = class for "save" dialogue boxes
-        {
-            changeDialDir(path)
-        }
+    } else if oExtension {
+        EF(path)
         return
+    } if !oExtension {
+        try {
+            if  WinActive("ahk_exe explorer.exe")
+            and WinActive("ahk_class CabinetWClass")
+            {
+                NavRun(path)
+            }
+            else                                                                    ; WinActive("ahk_class #32770") = class for "save" dialogue boxes
+            {
+                changeDialDir(path)
+            }
+        }
     }
+    return
   }
  
   changeDialDir(path) {
@@ -1729,15 +1718,20 @@
   
   EditFile(file_path = "master.ahk", app_path = "editor_path") {
     ; opens or activates file in windows 10
-    global config_path
+    global config_path, PF_x86
     RegExMatch(file_path, "[^\\]+$", file_name)                                 ; file_name = everyting after the last \
     file_name := rtrim(file_name,"""")
+    file_path = "%file_path%"
     RegExMatch(file_name, "[^.]+$", ext)                                        ; ext = everything after the last .
     try
     {
         if WinExist(file_name)
         {
             WinActivate
+        }
+        else if (SubStr(file_path, 1,4) = "http")
+        {
+            LoadURL(file_path)
         }
         else if ext in docm,doc,docx,dotx,dotm
         {
@@ -1753,8 +1747,7 @@
         }   
         else if ext in mp4,webm,avi,mkv
         {
-            RunAsUser(GC("vlc_path"), file_path, A_ScriptDir)
-            ; Run, "C:\Program Files\VideoLAN\VLC\vlc.exe" %file%
+            RunAsUser(GC("vlc_path", PF_x86 "\Windows Media Player\wmplayer.exe"), file_path, A_ScriptDir)
         }
         else if ext in pdf
         {
@@ -1779,7 +1772,10 @@
   }
  
   OpenFolder(folder_path = "") {
-    RunAsUser("explorer.exe", folder_path, A_ScriptDir)
+    if WinActive("ahk_group FileListers")
+        CF(folder_path)
+    else 
+        RunAsUser("explorer.exe", folder_path, A_ScriptDir)
     return
   }
 
@@ -1874,17 +1870,10 @@
     sleep, long
 
     if (SubStr(clipboard, 1,4) = "http") {
-
         code := "youtube-dl " """" clipboard """" 
         Run cmd /K "cd /d " %path% 
-        ; AA(wintitleOfActiveWindow)
-        ; msgbox % wintitleOfActiveWindow
-        ; sleep, long * 3
         sleep med * 2
         clip(code)
-        ; send {enter}
-        ; sleep short
-        ; WinMinimize,A
     } else 
         PU("invalid url: " clipboard,,,,,-800)
     BlockInput, Off

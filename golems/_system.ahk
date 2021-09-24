@@ -49,9 +49,9 @@
   :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;AHK: open key history
   :X:ws~win::   WindowSpy()
-  :X:ec~win::   EditFile("""" config_path """")                                 ;AHK: edit config.ini file
+  :X:ec~win::   EditFile(config_path)                                           ;AHK: edit config.ini file
   :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")                     ;AHK: AHK beginner tutorial
-  :X:tcf~win::  TC("T_CF", "Cursor follows active window: ")                ;AHK: toggle mouse cursor follows active window
+  :X:tcf~win::  TC("T_CF", "Cursor follows active window: ")                    ;AHK: toggle mouse cursor follows active window
   :X:clp~win::  WriteToINI(A_ComputerName, "CL_pfx")                            ;AHK: store selected text as label prefix
   :X:cls~win::  WriteToINI(A_ComputerName, "CL_sfx")                            ;AHK: store selected text as label suffix
   :X:cl~win::   CreateLabel("CL_pfx", "CL_sfx")                                 ;AHK: create hotstring label with execution option
@@ -134,7 +134,7 @@
   ; CONVENIENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_d",0) 
     :X:ta~win::            CC("T_TM",1),CC("T_FM",1),CC("T_CF",1),CC("T_d",1)   ;turn on all interface layers and UI options 
-                           ,PU("Advanced Mode: ON")   
+                           ,CC("T_adv",1),PU("Advanced Mode: ON")   
                            
     !pgdn::                HideShowTaskbar(hide := !hide)                       ;Convenience| toggle taskbar 
     printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
