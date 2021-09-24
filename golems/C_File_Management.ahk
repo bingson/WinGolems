@@ -40,15 +40,15 @@
   !SC027::      DetailedView()                                                  ;FileExplorer| detailed file info with resized columnsnmn       
   $+!c::        clipboard := Explorer_GetSelection()                            ;FileExplorer| store file path(s) of selected file(s) in clipboard
   !s::          SelectByRegEx()                                                 ;FileExplorer| select all files matching regex pattern 
-  +^esc::       savePath("cESC_path")                                           ;FileExplorer; save file|folder path for ^esc
-  +^F1::        savePath("cF1_path")                                            ;FileExplorer; save file|folder path for ^F1                                   
-  +^F2::        savePath("cF2_path")                                            ;FileExplorer; save file|folder path for ^F2                                   
-  +^F3::        savePath("cF3_path")                                            ;FileExplorer; save file|folder path for ^F3                                   
-  +^F4::        savePath("cF4_path")                                            ;FileExplorer; save file|folder path for ^F4
-  +^F5::        savePath("cF5_path")                                            ;FileExplorer; save file|folder path for ^F5
-  +^F6::        savePath("cF6_path")                                            ;FileExplorer; save file|folder path for ^F6
-  +^F7::        savePath("cF7_path")                                            ;FileExplorer; save file|folder path for ^F7
-  +^F8::        savePath("cF8_path")                                            ;FileExplorer; save file|folder path for ^F8
+  +>^esc::      savePath("cESC_path")                                           ;FileExplorer; save file|folder path for ^esc
+  +>^F1::       savePath("cF1_path")                                            ;FileExplorer; save file|folder path for ^F1                                   
+  +>^F2::       savePath("cF2_path")                                            ;FileExplorer; save file|folder path for ^F2                                   
+  +>^F3::       savePath("cF3_path")                                            ;FileExplorer; save file|folder path for ^F3                                   
+  +>^F4::       savePath("cF4_path")                                            ;FileExplorer; save file|folder path for ^F4
+  +>^F5::       savePath("cF5_path")                                            ;FileExplorer; save file|folder path for ^F5
+  +>^F6::       savePath("cF6_path")                                            ;FileExplorer; save file|folder path for ^F6
+  +>^F7::       savePath("cF7_path")                                            ;FileExplorer; save file|folder path for ^F7
+  +>^F8::       savePath("cF8_path")                                            ;FileExplorer; save file|folder path for ^F8
   ^!h::         send {home}                                                     ;Navigation: Home
   ^!l::         send {end}                                                      ;Navigation: End
   !j::          send {down}                                                     ;Navigation| Up 
@@ -77,7 +77,7 @@
   ; The comma operator is usually faster than writing separate expressions https://www.autohotkey.com/docs/Variables.htm#comma
 
 
-   #SC033::                                                                     ;FB: Menu for cESC-cF8 saved paths
+   #SC033::                                                                     ;FB: Opens Jump Menu for saved paths
     send {blind}
     t := { "esc": GC("cESC_path", "golems\A_Quick_Start.ahk")      
           ,"f1" : GC("cF1_path" , "golems\B_Text_Manipulation.ahk")
@@ -88,7 +88,7 @@
           ,"f6" : GC("cF6_path" , "golems")                        
           ,"f7" : GC("cF7_path" , UProfile "\Documents")
           ,"f8" : GC("cF8_path" , UProfile "\Downloads")}
-    FB("OpenPath", t)
+    FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), t)
     return
 
   #IF WinExist("ahk_id " FB_hwnd)                                               ;Function Box must exist for the below two lines to be valid

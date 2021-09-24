@@ -50,7 +50,7 @@
   ~lwin & ~rshift::   CursorJump("C")                                           ;Convenience: move mouse cursor to center of active application window
   #SC035::            search()                                                  ;Convenience: google search selected text
   !Backspace::        delLine()                                                 ;Convenience: delete current line of text
-  #esc::              suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
+  esc & del::         suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
   !SC027::            Send {esc}                                                ;WinOS: simulate esc key (alt + semicolon)
   ^SC027::            Send {AppsKey}                                            ;WinOS: simulate appkey
   #Lbutton::                                                                    ;WinOS: open start menu (alt: Ctrl+Esc)

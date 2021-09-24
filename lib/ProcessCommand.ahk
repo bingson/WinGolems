@@ -497,7 +497,9 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     case "persistent"  ,"p"  : TC("CB_persistent" , "Toggle persistent mode: ")
                     case "scrollbars"  ,"s"  : TC("CB_ScrollBars" , "Toggle scrollbars: ")
                     case "title"       ,"t"  : TC("CB_Titlebar"   , "Toggle titlebar: ")
-                    case "focus"       ,"a"  : TC("CB_appActive"  , "Toggle application focus: ")
+                    case "focus"       ,"a"  : 
+                        TC("CB_appActive"  , "Toggle application focus: ")
+                        return 2
                     case "renter input","r"  : TC("CB_reenterInput" , "Re-enter last submit: ")
                     case "wrap_text" ,"w": 
                         TC("CB_Wrap", "Toggle text wrap: ")

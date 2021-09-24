@@ -420,8 +420,6 @@
  
 ; COMMAND BOX __________________________________________________________________
   
-
-  
   GUISubmit(commandkey = ">!space") {
     global short, med, long
     ;     msgbox % vUserInput
@@ -449,7 +447,7 @@
     if (GC("CB_Display") or (set = "Minimal")) {
         fszDisplay := GC("CBfsz")
         CC("CBfsz", "11")
-        CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0),CC("CB_reenterInput",1) 
+        CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_Wrap",0),CC("CB_reenterInput",1) 
         , IBw := GC("CB_InputBox_width")
         , MI := StrSplit(GetMonInfo()," ")                                
         , cX := (MI[3] - IBw) // 2
@@ -459,7 +457,7 @@
         , CC("CB_position","x" cX " y" bY " w" mw " h" mh)
     } else if (!GC("CB_Display") or (set = "Display")) {
         CC("CBfsz", fszDisplay)
-        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0),CC("CB_reenterInput",1)
+        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_Wrap",0),CC("CB_reenterInput",1)
         , MI := StrSplit(GetMonInfo()," ")                              
         , d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
         , CC("CB_position", d)
@@ -538,10 +536,6 @@
 
   CB( sfx = "~win", w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand") {
     CommandBox(sfx, w_color, t_color, ProcessMod)
-  }
-
-  FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", name_dict = "", grps = 0, title="", p*) {
-    FunctionBox(func, input_dict, w_color, t_color, name_dict, grps, title, p*) 
   }
   
   CreateCacheList(name = "cc") {
@@ -638,6 +632,10 @@
 
 ; FUNCTION BOX _________________________________________________________________
   
+  FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", name_dict = "", grps = 0, title="", p*) {
+    FunctionBox(func, input_dict, w_color, t_color, name_dict, grps, title, p*) 
+  }
+
   FunctionBox(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", optn = "", grps = 0,toc_dict="", title="", p*) {
  
     ; FunctionBox() opens an input box offering choices based on input_dict array, 
@@ -1103,9 +1101,12 @@
 
   GetMonInfo(wa = "8", ha = "8") {
     n := GetCurrentMonitorIndex()
+    CC("CBtgt_MonIdx",n)
     SysGet, XY, Monitor , %n%                                                    ; SysGet, XY, MonitorWorkArea , %n%
-    x  := XYLeft                 , y  := XYtop
+    x  := XYLeft                 
+    y  := XYtop
     w  := Abs(XYLeft-XYRight)+wa , h  := Abs(XYtop-XYbottom)+ha
+    ; Msgbox % "`nXYLeft: " . XYLeft . "`n XYtop: " .  XYtop . "`n XYRight: " .  XYRight . "`n XYbottom: " .  XYbottom
     return % x " " y " " w " " h
   }
 
@@ -1257,7 +1258,7 @@
     PATH := {}
     for each, exe in APP
     {
-        PopUp("Searching for " exe,C.lblue,,, "60", "-10000", "15")
+        PopUp("Please wait`nWinGolems is searching for " exe,C.lblue,,, "60", "-10000", "15")
         for each, dir in FOLDER
         {
             Loop Files, %dir%%exe%, R
@@ -1463,9 +1464,12 @@
   }
 
   savePath(key = "") {
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1000
     path := Explorer_GetSelection()
     CC(key, path)
     PU(key ": " path "`nSAVED",C.lgreen,,,,-1200)   
+    BlockInput, Off
     return               
   }
 
@@ -1614,8 +1618,16 @@
     ; change directory of "save as" dialogue box                                ; https://www.reddit.com/r/AutoHotkey/comments/ce8mu3/changing_folders_in_save_as_dialogue_with_com/
     WinGet, hWnd, ID, A                                                         ; Get handle of active window
     Send ^l
-    ControlSetText, Edit2, %path%, ahk_id %hWnd%
-    ControlSend, Edit2, {Enter}, ahk_id %hWnd%
+    winget, Pname, ProcessName, A 
+    ; app := WinExist("ahk_id " CB_hwnd) ? GC("CB_tgtExe") : Pname
+    switch Pname {
+        case "excel.exe" : edit := "Edit3" 
+        default:           edit := "Edit2"
+    }
+    ControlSetText, %edit%, %path%, ahk_id %hWnd%
+    ControlSend, %edit%, {Enter}, ahk_id %hWnd%
+    ; ControlSetText, Edit2, %path%, ahk_id %hWnd%
+    ; ControlSend, Edit2, {Enter}, ahk_id %hWnd%
   }
  
   GetActiveExplorer() {
@@ -1738,18 +1750,15 @@
             oExcel := ComObjCreate("Excel.Application")
             oExcel.Visible := True
             oExcel.Workbooks.Open(file_path)
-        }
-        else if ext in ppt,pptx,pptm
+        }   
+        else if ext in mp4,webm,avi,mkv
         {
-            oPowerPoint := ComObjCreate("PowerPoint.Application")
-            oPowerPoint.Visible := True
-            oPowerPoint.Presentations.Open(file_path)
+            RunAsUser(GC("vlc_path"), file_path, A_ScriptDir)
+            ; Run, "C:\Program Files\VideoLAN\VLC\vlc.exe" %file%
         }
         else if ext in pdf
         {
-            
-            IniRead, prog_path, %config_path%, %A_ComputerName%, pdf_path
-            RunAsUser(prog_path, file_path, A_ScriptDir)
+            RunAsUser(GC("pdf_path"), file_path, A_ScriptDir)
         }
         else
         {
@@ -2017,7 +2026,7 @@
     ; Browser path used to load urls dependent on computer
     global config_path, PF_x86
     winget, Pname, ProcessName, A 
-    switch Pname
+    Switch Pname
     {
         case "vivaldi.exe": output := GC("vivaldi_path")
         case "chrome.exe" : output := GC("chrome_path")

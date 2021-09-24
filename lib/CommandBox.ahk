@@ -4,18 +4,16 @@
     SetBatchLines, -1
     SetkeyDelay, -1
     SetWinDelay, -1
+    ; Process, Priority,, High
     
     ; TimeCode()
   ; SAVE INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- -- 
-    ; CoordMode, Mouse, Screen
-    ; BlockInput, MouseMove
-    ; settimer, BlockInputTimeOut,-300
-    ; MouseGetPos, StartX, StartY
     
     global long, med, short, C, config_path, CB_Display := ""
         , UserInput := "", tgt_hwnd := "", CB_hwnd := ""
     static PArr := [], ro := -1                                                  ; search position array
     tgt_hwnd := WinExist()                                                      ; save window ID of active application when CB was called (tgt window to act upon) 
+    WinGetPos, X, Y, W, H, A  ; "A" to get the active window's pos.
 
     CC("CB_sfx", suffix)    , CC("TGT_hwnd",tgt_hwnd) 
     CC("CBw_color",w_color) , CC("CBt_color",t_color)                           ;(1) save/store command box calling parameters in config.ini
@@ -37,13 +35,18 @@
   ; VALIDATE GUI DIMENSIONS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when saved position data is not valid
-    CB_position := GC("CB_position", d)
+    oCB_position := CB_position := GC("CB_position", d)
     WP := StrSplit(CB_position, " ")
-    if (WP[4] < 10)                                                             ; check if monitor dimensions valid
+
+    ; Msgbox % "`noCB_position: " . oCB_position . "`n CB_position: " .  CB_position
+
+    if (WP[4] < 5)                                                             ; check if monitor dimensions valid
        CB_position := d
+       
     wdth := WP[3]
     IBwidth := 400
     CC("CB_InputBox_width", IBwidth)
+    ; msgbox % CB_position
 
     display  := GC("CB_Display",1) , title_state := GC("CB_Titlebar",1)         ;(2a) get other CB window data
     wrap_txt := GC("CB_Wrap",0)    , ldspl       := GC("CB_last_display")
@@ -75,42 +78,45 @@
 
   ; ADD GUI CONTROLS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
-    ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
-    if (show_txt = "") {                                                        ; reload last diplayed txt
-        txt_file := GC("CB_last_display", "help.txt")
-        txt_file := RegExReplace(txt_file, "\[.+?\]")                           ; removes any text surrounded by round brackets 
-
-        if (txt_file = "help.txt")
-            title := CB_Title_ID title_text suffix l txt_file
-    } else {                                    
-        txt_file := show_txt 
-        IniWrite, %txt_file%, %config_path%, %A_ComputerName%, CB_last_display
-        title := CB_Title_ID title_text suffix l txt_file RetrieveExt(A_ScriptDir "\mem_cache\" txt_file)
-    }
-    
-    switch ndspl 
-    {
-        case "First lines of 0-9.txt"          : txt := GetNumMemLines(,GC("MemSummaryLines", 1))
-        case "First lines of 1 character files": txt := GetNumMemLines(,GC("MemSummaryLines", 1),,1)
-        case "Clipboard Contents"              : txt := Clipboard
-        default                                :
-            txt := AccessCache(txt_file,, False)
-    }
-
-    rows := countrows(txt)
-    rows := (rows < 2) ? 2 : (rows > 30) ? 30 : rows
-    Gui, 2: Margin, 2, 2
-    wrap := wrap_txt ? "+Wrap" : ""
-    Gui, 2: Add, Edit, section x5 %wdth% R%rows% %wrap% HScroll VScroll ReadOnly -WantReturn -E0x200 vCB_Display         ; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=16964
     if display {
-        Guicontrol, ,CB_Display, %txt%
-        Gui, 2: font ,s%fsz% c000000, %fnt%
-   
+          
+      ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
+      if (show_txt = "") {                                                        ; reload last diplayed txt
+          txt_file := GC("CB_last_display", "help.txt")
+          txt_file := RegExReplace(txt_file, "\[.+?\]")                           ; removes any text surrounded by round brackets 
+  
+          if (txt_file = "help.txt")
+              title := CB_Title_ID title_text suffix l txt_file
+      } else {                                    
+          txt_file := show_txt 
+          IniWrite, %txt_file%, %config_path%, %A_ComputerName%, CB_last_display
+          title := CB_Title_ID title_text suffix l txt_file RetrieveExt(A_ScriptDir "\mem_cache\" txt_file)
+      }
+      
+      switch ndspl 
+      {
+          case "First lines of 0-9.txt"          : txt := GetNumMemLines(,GC("MemSummaryLines", 1))
+          case "First lines of 1 character files": txt := GetNumMemLines(,GC("MemSummaryLines", 1),,1)
+          case "Clipboard Contents"              : txt := Clipboard
+          default                                :
+              txt := AccessCache(txt_file,, False)
+      }
+  
+      rows := countrows(txt)
+      rows := (rows < 2) ? 2 : (rows > 30) ? 30 : rows
+      Gui, 2: Margin, 2, 2
+      wrap := wrap_txt ? "+Wrap" : ""
+      ; Gui, 2: Add, Edit, section x5 %wrap% R%rows% HScroll VScroll ReadOnly -WantReturn -E0x200 vCB_Display         ; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=16964
+      Gui, 2: Add, Edit, section x5 %wdth% R%rows% %wrap% HScroll VScroll ReadOnly -WantReturn -E0x200 vCB_Display         ; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=16964
+
+      Guicontrol, ,CB_Display, %txt%
+      Gui, 2: font ,s%fsz% c000000, %fnt%
     }
 
     input_txt := % GC("CB_reenterInput",1) ? GC("last_user_input") : input_txt        ; determines what is pre-entered in the input box
 
     if (!display) {
+        Gui, 2: Margin, 2, 2
         Guicontrol, ,CB_Display, %A_space%
         Gui, 2: Font, c%t_color%
         Gui, 2: Color,,%w_color% 
@@ -131,29 +137,29 @@
     if !GC("CB_ScrollBars", 0)
         GuiControl, 2: -HScroll -VScroll, CB_Display                            ; remove scrollbars before the GUI draw command
 
-    Gui, 2: show, hide AutoSize,%title%
-    if GC("CB_appActive", 0)
-        Gui, Show, %CB_position% NoActivate
-    else    
-        Gui, Show, %CB_position% Restore
-    
-    ; MouseMove, StartX, StartY
-    ; BlockInput, MouseMoveOff
-    
+    Gui, 2: show, hide AutoSize, %title%
+    Gui, 2: Show, % CB_position . ((GC("CB_appActive", 0)) ? (" NoActivate") : (" Restore"))
+
     if (!GC("CB_appActive", 0)) {
         GuiControl, Focus, UserInput 
-        Send % GC("CB_reenterInput", 1) ? "^a" : ("")
+        Send % GC("CB_reenterInput", 1) ? ("^a") : ("")
     }
-    if GC("CB_appActive", 0) 
+
+    if GC("CB_appActive", 0) {
         ActivateWin("ahk_id " tgt_hwnd) 
+    }
     
     ; TimeCode()
     SetWinDelay, 10
     SetBatchLines, 10ms
     SetKeyDelay, 10, 50
+    ; Process, Priority, , A
     return
   
   ; LABELS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    
+    
+
     2GuiSize: 
         If A_EventInfo = 1                                                      ; window has been minimized.  No action needed.
             Return
@@ -165,7 +171,7 @@
             GuiControl, 2: -HScroll -VScroll, CB_Display
         Gui, 2: show
         settimer, addHiddenScrollBar,-400
-        gosub, save_win_coord
+        settimer, save_win_coord,-300
         Return
         
     2GuiEscape:
@@ -284,9 +290,10 @@
                                                             
     save_win_coord:
         WinGetPos(CB_hwnd, x, y, w, h, 1)
-        if (h > 0) 
+        if (h > 0) {
             CC("CB_position", "x" x " y" y " w" w " h" h)
-        else {
+            CC("CB_MonIdx", GetCurrentMonitorIndex())
+        } else {
             MI := StrSplit(GetMonInfo()," ")                                    ; get monitor dimensions
             d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2
             CC("CB_position", d)
@@ -295,3 +302,34 @@
 
  }
 
+/*
+;---------GET CENTER OF CURRENT MONITOR---------
+	;get current monitor index
+	CurrentMonitorIndex:=GetCurrentMonitorIndex()
+	;get Hwnd of current GUI
+	DetectHiddenWindows On
+	Gui, +LastFound
+	Gui, Show, Hide
+	GUI_Hwnd := WinExist()
+	;Calculate size of GUI
+	GetClientSize(GUI_Hwnd,GUI_Width,GUI_Height)
+	DetectHiddenWindows Off
+	;Calculate where the GUI should be positioned
+	GUI_X:=CoordXCenterScreen(GUI_Width,CurrentMonitorIndex)
+	GUI_Y:=CoordYCenterScreen(GUI_Height,CurrentMonitorIndex)
+;------- / GET CENTER OF CURRENT MONITOR--------- 
+;SHOW GUI AT CENTER OF CURRENT SCREEN
+Gui, Show, % "x" GUI_X " y" GUI_Y, GUI TITLE
+
+;---------GET CENTER OF CURRENT MONITOR---------
+	;get current monitor index
+	CurrentMonitorIndex:=GetCurrentMonitorIndex()
+	;Calculate size of GUI
+	Gui, %GUI_Hwnd%: Show, Hide
+	GetClientSize(GUI_Hwnd,GUI_Width,GUI_Height)
+	;Calculate where the GUI should be positioned
+	GUI_X:=CoordXCenterScreen(GUI_Width,CurrentMonitorIndex)
+	GUI_Y:=CoordYCenterScreen(GUI_Height,CurrentMonitorIndex)
+;------- / GET CENTER OF CURRENT MONITOR--------- 
+;SHOW GUI AT CENTER OF CURRENT SCREEN
+Gui, %GUI_Hwnd%: Show, % "x" GUI_X " y" GUI_Y, GUI TITLE
