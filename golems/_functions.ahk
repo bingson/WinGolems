@@ -437,7 +437,7 @@
     GuiControl, 2: +HScroll +VScroll, CB_Display
     send {shift up}                                                         ; corrects sticky key problem
     send {ctrl up}                                                          ; drawing of the CB sometimes interferes 
-    send {lwin up}                                                          ; with key up signals, making windows believe the keys is still pressed
+    send {lwin up}     
     return
   }
 
