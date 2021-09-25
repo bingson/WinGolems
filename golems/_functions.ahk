@@ -514,21 +514,24 @@
     return
   }
 
-  RunLabel(UserInput="", suffix = "", tgt_winID ="") {
+  RunLabel(UserInput="", suffix = "", tgt_winID ="",caseSensitive=0) {
     suffix := suffix ? suffix : GC("CB_sfx")
     UserInput := trim(UserInput)
-    Switch 
-    {
-        Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
-        Case IsLabel(":X:" . UserInput . suffix): UserInput := ":X:" . UserInput . suffix
-        Case IsLabel(":*:" . UserInput . suffix): UserInput := ":*:" . UserInput . suffix
-        Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
-        Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
-        Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
-        Default:
-            CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
-            return
-    }     
+    if caseSensitive and IsLabel(":cX:" . UserInput . suffix) 
+        UserInput := ":cX:" . UserInput . suffix
+    else 
+        Switch 
+        {
+            Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
+            Case IsLabel(":X:" . UserInput . suffix): UserInput := ":X:" . UserInput . suffix
+            Case IsLabel(":*:" . UserInput . suffix): UserInput := ":*:" . UserInput . suffix
+            Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
+            Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
+            Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
+            Default:
+                CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
+                return
+        }     
     ActivateWin("ahk_id " tgt_winID)
     Gosub, %UserInput% 
   }
@@ -586,13 +589,24 @@
     return
   }
 
-  GUIFocusInput() {
-    Gui, 2: +LastFound
-    Gui, 2: restore
-    GuiControl, 2: Focus, UserInput
+  GUIFocusInput(type = "CB") {
+    Gui, +LastFound
+    Gui, restore
+    if (type = "CB")
+        GuiControl, 2: Focus, UserInput
+    else 
+        GuiControl, fb: Focus, UserInput
     sendinput {home}+{end}
     return
   }
+  ;   GUIFocusInput() {
+  ;     Gui, 2: +LastFound
+  ;     Gui, 2: restore
+  ;     GuiControl, 2: Focus, UserInput
+  ;     GuiControl, cb: Focus, UserInput
+  ;     sendinput {home}+{end}
+  ;     return
+  ;   }
  
   UDSelect(d="down", interval = "5", c_input = "", select = True, MultiCursor = False, letter = "jk", MC_key = "Printscreen") {
     global short
@@ -715,18 +729,23 @@
     Gui, Color, %w_color%
     GuiControl, -HScroll -VScroll, FB_menu
     Gui, fb: Show, hide AutoSize
-    Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                                          ; Show gui at center of current screen
+    Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                               ; Show gui at center of current screen                               
     GuiControl, fb: Focus, UserInput
-    ; Gui, fb: Show, % "x" GUI_X " y" GUI_Y                                          ; Show gui at center of current screen
+    ; Gui, fb: Show, % "x" GUI_X " y" GUI_Y                                     ; Show gui at center of current screen                                     
     settimer, addHiddenScrollBar,-400
-    ; Gui, +LastFound
     WinWaitClose
     return
 
     ButtonOK:
-       Gui, fb: Submit
-       Gui, fb: Destroy
-       return
+        Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
+        Gui, fb: +LastFound
+        Gui, fb: Destroy 
+        1stChar := SubStr(UserInput, 1, 1)
+        2ndChar := SubStr(UserInput, 2, 1)
+        if (1stChar = "+") and RegExMatch(2ndChar,"[A-Z]") {
+            RunLabel(UserInput, "~win", FB_tgt_hwnd, 1)
+        }
+        return
    
     fbGuiClose:
     ButtonCancel:
@@ -741,14 +760,20 @@
     ; alt_arr tells function that 
     ; otpn :
     ;      r = reverse (sort order by value instead of key)
-    ;      s = space between case changes for value
+    ;      s = adds a space between case changes in array value for TOC menu presentation
+
     arr_KV_swapped := {}                                                        ; key value swapped version of input array
     max_str_len := 0
     arr := alt_arr ? alt_arr : arr
     TOC := ""
     for key, val in arr                                                         ; this loop cleans dictionary values and creates a key:value swapped
-    {                                                                           ; version of the array (to display TOC sorted by value instead of key)
-        RegExMatch(val, "[^\\]+$", selection)
+    {      
+        strReplace(val, "\",,count)                                             ; version of the array (to display TOC sorted by value instead of key)
+        if (count > 1)
+            RegExMatch(val, "[^\\]+$", selection)
+        else
+            selection := val
+
         selection := ReplaceAwithB(,,selection, False)                          ; replace consecutive bank spaces with 1 space
         selection := ReplaceAwithB("- ","-",selection,0)
         selection := ReplaceAwithB("_ ","_",selection,0) 
@@ -759,11 +784,11 @@
             TOC .= (TOC <> "" ? "`n" : "") key "`t" trim(selection, """") 
         max_str_len := max(max_str_len, strlen(key . selection) - 5)
     }
-
+    max_str_len := (max_str_len > 60) ? 60 : max_str_len
     line := RepeatString("-", max_str_len)
     TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r`n" . TOC) : ("Key`tSelection`n-----`t" line "`r`n")
 
-    if InStr(optn , "r") {                                                           ; optn for value ordered dictionary
+    if InStr(optn , "r") {                                                      ; optn for value ordered dictionary             
         For dest, ref in arr_KV_swapped
         {
             

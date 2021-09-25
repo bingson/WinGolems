@@ -10,47 +10,69 @@
   ; UProfile    = currently logged in windows user folder path
 
   Paths() {
+
+    msg                  := "To overwrite a shortcut, (1) SELECT a file|folder in file `n`t"
+                          . "explorer or highlight any url starting with ""http"",`n`t" 
+                          . "(2) ENTER ""+Key"" of the shortcut you want to overwrite in `n`t" 
+                          . "the input box below. `n`n`t"
+                          . "E.g., Enter ""+f1"" in input box to overwrite shortcut for `n`tB_Text_Manipulation.ahk.`n`n"
+                          . "`tSAMPLE STARTING SHORTCUTS:`n"
+                          . "`tEdit AHK Templates    `tE,F1,F2`n"
+                          . "`tOpen Folder           `t`tF3,F4,F5`n"
+                          . "`tOpen URL              `t`tF6`n" 
+                          . "`tEdit Office Documents `tF7,F8,F9`n"
+
     global UProfile
-    global p := { "e"  : GC("cE_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")      
-                , "f1" : GC("cF1_path"  , A_ScriptDir "\golems\B_Text_Manipulation.ahk")
-                , "f2" : GC("cF2_path"  , A_ScriptDir "\golems\C_File_Management.ahk")  
-                , "f2=--" : "------------------OPEN FOLDER--------------------"
-                , "f3" : GC("cF3_path"  , A_ScriptDir)                     
-                , "f4" : GC("cF4_path"  , A_ScriptDir "\mem_cache")                     
-                , "f5" : GC("cF5_path"  , A_ScriptDir "\golems")               
-                , "f5=--" : "-----------OPEN URL | OFFICE DOCUMENT------------"         
-                , "f6" : GC("cF6_path"  , "https://www.autohotkey.com/docs/Tutorial.htm")  
-                , "f7" : GC("cF7_path"  , A_ScriptDir "\assets\tutorial\example.xlsx")
-                , "f8" : GC("cF8_path"  , A_ScriptDir "\assets\tutorial\example.pptx")
-                , "f9" : GC("cF9_path"  , A_ScriptDir "\assets\tutorial\example.docx")}
+    global p := { "e"  : GC("E_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")      
+                , "f1" : GC("F1_path"  , A_ScriptDir "\golems\B_Text_Manipulation.ahk")
+                , "f2" : GC("F2_path"  , A_ScriptDir "\golems\C_File_Management.ahk")  
+                , "f3" : GC("F3_path"  , A_ScriptDir)                     
+                , "f4" : GC("F4_path"  , A_ScriptDir "\mem_cache")                     
+                , "f5" : GC("F5_path"  , A_ScriptDir "\golems")               
+                , "f6" : GC("F6_path"  , "https://www.autohotkey.com/docs/Tutorial.htm")  
+                , "f7" : GC("F7_path"  , A_ScriptDir "\assets\tutorial\example.xlsx")
+                , "f8" : GC("F8_path"  , A_ScriptDir "\assets\tutorial\example.pptx")
+                , "f9" : GC("F9_path"  , A_ScriptDir "\assets\tutorial\example.docx")
+                , "?": msg }
     return % p
   }
 
 ; SAVE PATHS ___________________________________________________________________
   
   ; command box
-  :X:se~win::   SP("cE_path")                                                   ;FileExplorer; file|folder save path for >^esc
-  :X:sF1~win::  SP("cF1_path")                                                  ;FileExplorer; file|folder save path for >^F1                                   
-  :X:sF2~win::  SP("cF2_path")                                                  ;FileExplorer; file|folder save path for >^F2                                   
-  :X:sF3~win::  SP("cF3_path")                                                  ;FileExplorer; file|folder save path for >^F3                                   
-  :X:sF4~win::  SP("cF4_path")                                                  ;FileExplorer; file|folder save path for >^F4
-  :X:sF5~win::  SP("cF5_path")                                                  ;FileExplorer; file|folder save path for >^F5
-  :X:sF6~win::  SP("cF6_path")                                                  ;FileExplorer; file|folder save path for >^F6
-  :X:sF7~win::  SP("cF7_path")                                                  ;FileExplorer; file|folder save path for >^F7
-  :X:sF8~win::  SP("cF8_path")                                                  ;FileExplorer; file|folder save path for >^F8
-  :X:sF9~win::  SP("cF9_path")                                                  ;FileExplorer; file|folder save path for >^F8
-  
+  :cX:+e~win::   SP("E_path")                                           ;FileExplorer; save file or folder path for ^esc
+  :cX:+e1~win::  SP("E1_path")
+  :cX:+e2~win::  SP("E2_path")
+  :cX:+e3~win::  SP("E3_path")
+  :cX:+e4~win::  SP("E4_path")
+  :cX:+e5~win::  SP("E5_path")
+  :cX:+e6~win::  SP("E6_path")
+  :cX:+e7~win::  SP("E7_path")
+  :cX:+e8~win::  SP("E8_path")
+  :cX:+e9~win::  SP("E9_path")
+
+  :cX:+F~win::   SP("F_path")
+  :cX:+F1~win::  SP("F1_path")
+  :cX:+F2~win::  SP("F2_path")
+  :cX:+F3~win::  SP("F3_path")
+  :cX:+F4~win::  SP("F4_path")
+  :cX:+F5~win::  SP("F5_path")
+  :cX:+F6~win::  SP("F6_path")
+  :cX:+F7~win::  SP("F7_path")
+  :cX:+F8~win::  SP("F8_path")
+  :cX:+F9~win::  SP("F9_path")
+
   ; hotkey    
-  +>^esc::      SP("cE_path")                                                   ;FileExplorer; file|folder save path for >^esc
-  +>^F1::       SP("cF1_path")                                                  ;FileExplorer; file|folder save path for >^F1                                   
-  +>^F2::       SP("cF2_path")                                                  ;FileExplorer; file|folder save path for >^F2                                   
-  +>^F3::       SP("cF3_path")                                                  ;FileExplorer; file|folder save path for >^F3                                   
-  +>^F4::       SP("cF4_path")                                                  ;FileExplorer; file|folder save path for >^F4
-  +>^F5::       SP("cF5_path")                                                  ;FileExplorer; file|folder save path for >^F5
-  +>^F6::       SP("cF6_path")                                                  ;FileExplorer; file|folder save path for >^F6
-  +>^F7::       SP("cF7_path")                                                  ;FileExplorer; file|folder save path for >^F7
-  +>^F8::       SP("cF8_path")                                                  ;FileExplorer; file|folder save path for >^F8
-  +>^F9::       SP("cF9_path")                                                  ;FileExplorer; file|folder save path for >^F8
+  +>^esc::      SP("E_path")                                                   ;FileExplorer; file|folder save path for >^esc
+  +>^F1::       SP("F1_path")                                                  ;FileExplorer; file|folder save path for >^F1                                   
+  +>^F2::       SP("F2_path")                                                  ;FileExplorer; file|folder save path for >^F2                                   
+  +>^F3::       SP("F3_path")                                                  ;FileExplorer; file|folder save path for >^F3                                   
+  +>^F4::       SP("F4_path")                                                  ;FileExplorer; file|folder save path for >^F4
+  +>^F5::       SP("F5_path")                                                  ;FileExplorer; file|folder save path for >^F5
+  +>^F6::       SP("F6_path")                                                  ;FileExplorer; file|folder save path for >^F6
+  +>^F7::       SP("F7_path")                                                  ;FileExplorer; file|folder save path for >^F7
+  +>^F8::       SP("F8_path")                                                  ;FileExplorer; file|folder save path for >^F8
+  +>^F9::       SP("F9_path")                                                  ;FileExplorer; file|folder save path for >^F8
 
 ; FILE EXPLORER CONVENIENCE ____________________________________________________
 

@@ -46,6 +46,6 @@ $>^space::         ActivateWin("ahk_id " CB_hwnd), GUIFocusInput()              
 
 #IF WinExist("ahk_id " FB_hwnd)                                                 ;Function Box must exist for the below two lines to be valid
 $<^space::                                                                      ;FB: activate already open Function Box and move focus to inputbox
-$>^space::         ActivateWin("ahk_id " FB_hwnd)                               ;FB: activate already open Function Box and move focus to inputbox
+$>^space::         ActivateWin("ahk_id " FB_hwnd), GUIFocusInput("FB")          ;FB: activate already open Function Box and move focus to inputbox
 
 #IF                                                                             ; end context dependent assignments
