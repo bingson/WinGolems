@@ -433,6 +433,7 @@
 
   addHiddenScrollBar() {
     GuiControl, 2: +HScroll +VScroll, CB_Display
+    GuiControl, fb: +HScroll +VScroll, FB_Menu
     send {shift up}                                                         ; corrects sticky key problem
     send {ctrl up}                                                          ; drawing of the CB sometimes interferes 
     send {lwin up}     
@@ -646,8 +647,8 @@
     ;   
 
     global UserInput, med, config_path, uprofile    
-    sleep ,med                                                                  ; short wait to delete hotstring
-    
+    ; sleep ,med                                                                  ; short wait to delete hotstring
+
     TOC := (toc_dict) ? BuildTOC(toc_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
     default_title := (!title) ? AddSpaceBtnCaseChange(func, 0) : title
     default_title .= "  (-_-)  "                                                ; l := "    |    " 
@@ -658,10 +659,11 @@
     ; IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     FB_tgt_hwnd := WinExist("A")                                                  ; store win ID of active application before calling GUI 
     
-    FunctionBoxGUI(TOC, default_title, w_color, t_color) 
+    FunctionBoxGUI(TOC, default_title, w_color, t_color)
     ; Iniread, tgt_winID, %config_path%, %A_ComputerName%, FB_tgt_hwnd
-    ActivateWin("ahk_id " FB_tgt_hwnd)
+    ; ActivateWin("ahk_id " FB_tgt_hwnd)
     UserInput := trim(UserInput)
+    
     if (func and input_dict[UserInput]) {
         if !(p.MaxIndex() > 0) 
             %func%(input_dict[UserInput])
@@ -680,32 +682,45 @@
   } ; run same function with different parameters from dictionary {"key" : "parameter"}
 
   FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" ) {
-    global UserInput := "", FB_hwnd := ""
+    global FB_Menu := "", UserInput := "", FB_hwnd := ""
+    static InputWidth := 170
 
-    BlockInput, mousemove
-    settimer, BlockInputTimeOut,-300
     FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
     IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     winget, output, ProcessName, A    
     
     Gui, +LastFound 
     Gui, Destroy
+
     Gui, fb: New, ,%title%
-    Gui, font,s13 , Consolas
-    Gui, fb: Add, text, xp yp+10 c%t_color%, % TOC "`n"
-    Gui, fb: Add, Edit, w120 vUserInput
-    Gui, fb: Add, Button, Default Hidden W60 X+10 gButtonOK, OK
-    ; Gui, fb: Add, Button, W60 X+5 gButtonCancel, Cancel
-    Gui, font,s8 , calibri
-    Gui, fb: add, text, xs yp+30, case insensitive
-    Gui, fb: +LastFound +OwnDialogs +AlwaysOnTop +Owner
+    Gui, fb: +OwnDialogs +Owner +DPIscale +AlwaysOnTop 
+    Gui, fb: font,s12 %t_color%, Consolas
+    Gui, fb: Margin, 2, 2
+    rows := countrows(TOC)
+    rows := (rows < 2) ? 2 : (rows > 25) ? 25 : rows
+    Width := StringWidth(toc, "Consolas", 12) + 10
+    Width := (Width < 200) ? 200 : (Width > 1000) ? 1000 : Width
+    ; msgbox % Width
+    Gui, fb: Add, Edit, section x2 w%Width% R%rows% ReadOnly -HScroll -VScroll -wrap -E0x200 vFB_Menu
+    
+    Guicontrol, ,FB_Menu, %TOC%
+
+    Gui, fb: Add, Edit, w%InputWidth% r1 vUserInput
+    Gui, fb: Add, Button, Default Hidden gButtonOK, OK;
+    Gui, fb: font,s8 , calibri
+    Gui, fb: add, text, xs yp+1, case insensitive
+    Gui, +LastFound 
     FB_hwnd  := WinExist()
     GetGUIWinCoords(GUI_X, GUI_Y)
     Gui, Color, %w_color%
-    Gui, fb: Show, % "x" GUI_X " y" GUI_Y,                                          ; Show gui at center of current screen
-    BlockInput, mousemoveOff
+    GuiControl, -HScroll -VScroll, FB_menu
+    Gui, fb: Show, hide AutoSize
+    Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                                          ; Show gui at center of current screen
+    GuiControl, fb: Focus, UserInput
+    ; Gui, fb: Show, % "x" GUI_X " y" GUI_Y                                          ; Show gui at center of current screen
+    settimer, addHiddenScrollBar,-400
     ; Gui, +LastFound
-    WinWaitClose                                                                ; WinSet, Transparent , 255, ahk_id %CB_Hwnd%
+    WinWaitClose
     return
 
     ButtonOK:
@@ -742,11 +757,11 @@
             arr_KV_swapped[selection] := key
         else             
             TOC .= (TOC <> "" ? "`n" : "") key "`t" trim(selection, """") 
-        max_str_len := max(max_str_len, strlen(key . selection))
+        max_str_len := max(max_str_len, strlen(key . selection) - 5)
     }
 
-    line := RepeatString("-", max_str_len * 1.35)
-    TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r" . TOC) : ("Key`tSelection`n-----`t" line "`r")
+    line := RepeatString("-", max_str_len)
+    TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r`n" . TOC) : ("Key`tSelection`n-----`t" line "`r`n")
 
     if InStr(optn , "r") {                                                           ; optn for value ordered dictionary
         For dest, ref in arr_KV_swapped
@@ -1721,47 +1736,52 @@
     global config_path, PF_x86
     RegExMatch(file_path, "[^\\]+$", file_name)                                 ; file_name = everyting after the last \
     file_name := rtrim(file_name,"""")
-    file_path = "%file_path%"
     RegExMatch(file_name, "[^.]+$", ext)                                        ; ext = everything after the last .
+    formatted_path = "%file_path%"
+
     try
     {
-        if WinExist(file_name)
+        if WinExist(file_name) 
         {
             WinActivate
-        }
-        else if (SubStr(file_path, 1,4) = "http")
+        } 
+        else if (SubStr(file_path, 1,4) = "http") 
         {
-            LoadURL(file_path)
+            LoadURL(formatted_path)
         }
         else if ext in docm,doc,docx,dotx,dotm
         {
             oWord := ComObjCreate("Word.Application")
             oWord.Visible := True
-            oWord.Documents.Open(file_path)
+            oWord.Documents.Open(formatted_path)
         }
         else if ext in xlsx,xlsm,xltx,xltm
         {
             oExcel := ComObjCreate("Excel.Application")
             oExcel.Visible := True
-            oExcel.Workbooks.Open(file_path)
-        }   
+            oExcel.Workbooks.Open(file_path)                                    ; not sure why this works when it doesn't with word 
+        } 
+        else if ext in ppt,pptx,pptm
+        {
+            oPowerPoint := ComObjCreate("PowerPoint.Application")
+            oPowerPoint.Visible := True
+            oPowerPoint.Presentations.Open(formatted_path)
+        } 
         else if ext in mp4,webm,avi,mkv
         {
-            RunAsUser(GC("vlc_path", PF_x86 "\Windows Media Player\wmplayer.exe"), file_path, A_ScriptDir)
-        }
-        else if ext in pdf
+            RunAsUser(GC("vlc_path", PF_x86 "\Windows Media Player\wmplayer.exe"), formatted_path, A_ScriptDir)
+        } 
+        else if ext in pdf 
         {
-            RunAsUser(GC("pdf_path"), file_path, A_ScriptDir)
-        }
-        else
+            RunAsUser(GC("pdf_path"), formatted_path, A_ScriptDir)
+        } 
+        else 
         {
-            RunAsUser(GC(app_path), file_path, A_ScriptDir)
+            RunAsUser(GC(app_path), formatted_path, A_ScriptDir)
         }
         return
-    }
-    catch
-    {
-        MsgBox, can't open unrecognized filetype
+    } catch e {
+        MsgBox, %  "Can't open — unrecognized filetype " . e
     }
     return
   }

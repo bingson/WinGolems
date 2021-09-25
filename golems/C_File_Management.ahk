@@ -14,10 +14,12 @@
     global p := { "e"  : GC("cE_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")      
                 , "f1" : GC("cF1_path"  , A_ScriptDir "\golems\B_Text_Manipulation.ahk")
                 , "f2" : GC("cF2_path"  , A_ScriptDir "\golems\C_File_Management.ahk")  
+                , "f2=--" : "------------------OPEN FOLDER--------------------"
                 , "f3" : GC("cF3_path"  , A_ScriptDir)                     
                 , "f4" : GC("cF4_path"  , A_ScriptDir "\mem_cache")                     
-                , "f5" : GC("cF5_path"  , A_ScriptDir "\golems")                        
-                , "f6" : GC("cF6_path"  , "https://www.autohotkey.com/docs/Tutorial.htm")     
+                , "f5" : GC("cF5_path"  , A_ScriptDir "\golems")               
+                , "f5=--" : "-----------OPEN URL | OFFICE DOCUMENT------------"         
+                , "f6" : GC("cF6_path"  , "https://www.autohotkey.com/docs/Tutorial.htm")  
                 , "f7" : GC("cF7_path"  , A_ScriptDir "\assets\tutorial\example.xlsx")
                 , "f8" : GC("cF8_path"  , A_ScriptDir "\assets\tutorial\example.pptx")
                 , "f9" : GC("cF9_path"  , A_ScriptDir "\assets\tutorial\example.docx")}
@@ -110,7 +112,7 @@
   >+u::         CF(UProfile)                                                    ;ChangeFolder: %UserProfile%
   >+j::         CF(UProfile "\Downloads")                                       ;ChangeFolder: Downloads
   >+o::         CF(A_ProgramFiles)                                              ;ChangeFolder: C:\Program Files
-  >+!o::        CF(PF_x86)                                                      ;ChangeFolder: C:\Program Files(x86)
+  >!o::         CF(PF_x86)                                                      ;ChangeFolder: C:\Program Files(x86)
   >+p::         CF(UProfile "\Pictures")                                        ;ChangeFolder: Pictures
   >+d::         CF(UProfile "\Documents")                                       ;ChangeFolder: Documents
   >+c::         CF(hdrive)                                                      ;ChangeFolder: %Homedrive% (C:)

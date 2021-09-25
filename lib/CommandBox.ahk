@@ -157,6 +157,7 @@
     SetBatchLines, 10ms
     SetKeyDelay, 10, 50
     ; Process, Priority, , A
+    WinWaitClose
     return
   
   ; LABELS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --

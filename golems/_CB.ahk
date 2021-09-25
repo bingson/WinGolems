@@ -48,5 +48,4 @@ $>^space::         ActivateWin("ahk_id " CB_hwnd), GUIFocusInput()              
 $<^space::                                                                      ;FB: activate already open Function Box and move focus to inputbox
 $>^space::         ActivateWin("ahk_id " FB_hwnd)                               ;FB: activate already open Function Box and move focus to inputbox
 
-
 #IF                                                                             ; end context dependent assignments
