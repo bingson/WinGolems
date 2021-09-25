@@ -29,7 +29,9 @@ Clip(Text = "", Reselect = False) {
         } Else {
             Clipboard := LastClip := Text
             ; ClipWait,,1                                                            
-            ClipWait, 10                                                        ; ClipWait (might work better defaults to 0.5)
+            ClipWait               
+            while (ErrorLevel)
+                sleep 10                                                        ; ClipWait (might work better defaults to 0.5) 
             Send, ^v
             ; SendInput, ^v
         }

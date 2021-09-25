@@ -1,7 +1,7 @@
 ; GLOBAL VARIABLES _____________________________________________________________
   
   ChangeFont := RegisterCallback("ChangeFont")
-  short := 150, med := 300, long := 900
+  short := 150, med := 300, long := 1000
 
   C := { "lgreen"      : "CEDFBF"
        , "lblue"       : "BED7D6"
@@ -12,6 +12,7 @@
        , "black"       : "000000"
        , "white"       : "FFFFFF"
        , "red"         : "FF0000"
+       , "lcoral"      : "FFA07A"
        , "green"       : "107A40"
        , "navy"        : "000080"
        , "blue"        : "0000FF"
@@ -76,25 +77,23 @@
         default:                                                              
             return
     }
-    ; #if 
     
-    If (winactive("ahk_id " CB_hwnd))
-    {
+    
+    if (winactive("ahk_id " CB_hwnd)) {
         if !GC("CB_ScrollBars", 0)
             GuiControl, 2: -HScroll -VScroll, CB_Display
         Gui, 2: show
         settimer, addHiddenScrollBar,-400
         CC("CB_position", "x" x " y" y " w" w " h" h)
-
     }
 
     WinMove,A,, x, y, w, h
     
-  }
+  } ; move active window to different areas of the screen
  
   MaximizeWin(){
     WinMaximize,A 
-  }
+  } 
  
   moveWinBtnMonitors() {
     Sendinput +#{Left}
@@ -102,19 +101,18 @@
     return
   }
  
-  WinToDesktop(n = "2") {                                                   ; https://github.com/FuPeiJiang/VD.ahk
+  WinToDesktop(n = "2") {                                                   
     vd_init()
     wintitleOfActiveWindow:="ahk_id " WinActive("A")
     VD_sendToDesktop(wintitleOfActiveWindow,n,0,0)                              ; VD_sendToDesktop(wintitle,whichDesktop, followYourWindow := false, activate := true)
     return 
-  }
+  } ; move window between virtual desktops https://github.com/FuPeiJiang/VD.ahk
 
   GotoDesktop(n = "2") {                                                        ; https://github.com/FuPeiJiang/VD.ahk
     vd_init()
     VD_goToDesktop(n)
     return 
-  }
-
+  } ; switch to particular virtual desktop
   
   TitleTest(tab_name="MISC.txt", exact = False) {
     ; checks if tab_name occurs somewhere in the window title
@@ -126,14 +124,14 @@
     SetTitleMatchMode 2
     WinGetActiveTitle, title
     return % InStr(title, tab_name)
-  }
+  } ; creates condition for context-sensitive hotkeys
  
   ActivateWin(title="Chrome") {
     SetTitleMatchMode, 2                                                        ; match anywhere in title
     IfWinExist, %title%
         WinActivate, %title%
     return
-  }
+  } 
  
   SaveWinID(key = "L") {
     global config_path, C
@@ -154,7 +152,6 @@
   }
  
   CloseAllPrograms() {
-    ; close all open programs (used before system shutdown)
     WinGet, id, list, , , Program Manager
     Loop, %id%
     {
@@ -163,23 +160,23 @@
         winclose,%this_title%
     }
     Return
-  }
+  } ; close all open programs (used before system shutdown)
+
  
   CloseClass() {
-    ; close all instances of active program
     WinGetClass class, A
     GroupAdd    grp, ahk_class %class%
     WinClose    ahk_group grp
     return
-  }
+  } ; close all instances of active program
+ 
   
   AlwaysOnTop(state = True, supress = False) {
-    ; toggle active window to be always on top
+    
     global C
     WinGet, Process_Name, ProcessName, A
     WinGetTitle, Title, A
     WinGetClass, class, A
-    ; Msgbox % "`nsupress1: " . supress
     if (state)
     {
         Winset, Alwaysontop, ON , A
@@ -191,10 +188,9 @@
             PopUp(Process_Name "`nalways on top: OFF", C.pink, C.red,"250","120","-800") 
     }
     return
-  }
+  } ; toggle active window to be always on top
  
   ActivatePrevInstance() {
-    ; activate newest instance of active program if multiple instances exist
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
     WinGet,      n_instances, List,         ahk_class %ActiveClass%
@@ -208,10 +204,10 @@
     CursorFollowWin()
     BlockInput, MousemoveOff
     return
-  }
+  } ; activate newest instance of active program if multiple instances exist
+
   
   ActivateNextInstance() {
-    ; activate oldest instance of active program if multiple instances exist
     WinGetClass, ActiveClass, A
     WinGet,      p_name,      ProcessName , ahk_class %ActiveClass%
     WinGet,      n_instances, List,         ahk_class %ActiveClass%
@@ -225,16 +221,15 @@
     BlockInput, MouseMoveOff
     SetStoreCapsLockMode, on
     return
-  }
+  } ; activate oldest instance of active program if multiple instances exist
   
   HideShowTaskbar(action) {
-    ;https://www.autohotkey.com/boards/viewtopic.php?t=60866
     static ABM_SETSTATE := 0xA, ABS_AUTOHIDE := 0x1, ABS_ALWAYSONTOP := 0x2
     VarSetCapacity(APPBARDATA, size := 2*A_PtrSize + 2*4 + 16 + A_PtrSize, 0)
     NumPut(size, APPBARDATA), NumPut(WinExist("ahk_class Shell_TrayWnd"), APPBARDATA, A_PtrSize)
     NumPut(action ? ABS_AUTOHIDE : ABS_ALWAYSONTOP, APPBARDATA, size - A_PtrSize)
     DllCall("Shell32\SHAppBarMessage", UInt, ABM_SETSTATE, Ptr, &APPBARDATA)
-  }
+  } ;https://www.autohotkey.com/boards/viewtopic.php?t=60866
  
  
 ; SYSTEM APPS __________________________________________________________________
@@ -281,7 +276,6 @@
   }
 
   ActivateCalc() {
-    ; activate windows calculator app
     global winpath
     IfWinNotExist,  Calculator
         run, %winpath%\system32\calc.exe
@@ -295,16 +289,15 @@
         winActivate, ahk_id %CalcID%
     }
     return
-  }
+  } ; activate windows calculator app
 
   ActivateMail() {
-    ; activate windows mail app
     IfWinExist, Inbox - Gmail
         WinActivate                                                             ; use the window found above
     else
         Run % A_ScriptDir "\assets\win\Mail.lnk"
     return
-  }
+  } ; activate windows mail app
  
   TskMgrExt() {
     global med
@@ -317,16 +310,13 @@
   DisplaySettings() {
     global med
     Run explorer.exe ms-settings:display
-    sleep med
-    CFW()
-
+    settimer, CFW,-600
   }
  
   BluetoothSettings() {
     global med
     Run explorer.exe ms-settings:bluetooth
-    sleep med
-    CFW()
+    settimer, CFW,-600
   }
  
   SoundSettings() {
@@ -429,21 +419,34 @@
  
 ; COMMAND BOX __________________________________________________________________
   
+  GUISubmit(commandkey = ">!space") {
+    global short, med, long
+    Gui +LastFound
+    GuiControl, Focus, UserInput
+    if Instr(A_ThisHotkey, commandkey) {
+        send ^a
+        Capitalize1stLetter()
+    }
+    Send {enter}
+    return
+  } ; submit GUI userinput; commandkey -> submit also capitalizes first letter of user input 
+
   addHiddenScrollBar() {
     GuiControl, 2: +HScroll +VScroll, CB_Display
+    GuiControl, fb: +HScroll +VScroll, FB_Menu
     send {shift up}                                                         ; corrects sticky key problem
     send {ctrl up}                                                          ; drawing of the CB sometimes interferes 
-    send {lwin up}                                                          ; with key up signals, making windows believe the keys is still pressed
+    send {lwin up}     
     return
   }
 
   ToggleDisplay(set = ""){
     static fszDisplay := 11
 
-    if (GC("CB_Display") = 1) or (set = "Minimal") {
+    if (GC("CB_Display") or (set = "Minimal")) {
         fszDisplay := GC("CBfsz")
         CC("CBfsz", "11")
-        CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0) 
+        CC("CB_Titlebar",0), CC("CB_Display",0) ,CC("CB_persistent",0),CC("CB_Wrap",0),CC("CB_reenterInput",1) 
         , IBw := GC("CB_InputBox_width")
         , MI := StrSplit(GetMonInfo()," ")                                
         , cX := (MI[3] - IBw) // 2
@@ -451,16 +454,14 @@
         , mh := 20 + (2 * GC("CBfsz", "11"))
         , bY := MI[4] - mh - (2.1 * GC("CBfsz", "11"))
         , CC("CB_position","x" cX " y" bY " w" mw " h" mh)
-        DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
-    } else if (GC("CB_Display") = 0) or (set = "Display") {
+    } else if (!GC("CB_Display") or (set = "Display")) {
         CC("CBfsz", fszDisplay)
-        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_appActive",0),CC("CB_Wrap",0)
+        CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0),CC("CB_persistent",0),CC("CB_Wrap",0),CC("CB_reenterInput",1)
         , MI := StrSplit(GetMonInfo()," ")                              
         , d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2 
         , CC("CB_position", d)
     }
-    CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod", ProcessMod))
-    GUIFocusInput()
+    CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
     return
   }
 
@@ -515,6 +516,7 @@
 
   RunLabel(UserInput="", suffix = "", tgt_winID ="") {
     suffix := suffix ? suffix : GC("CB_sfx")
+    UserInput := trim(UserInput)
     Switch 
     {
         Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
@@ -524,33 +526,26 @@
         Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
         Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
         Default:
-            Gui, 2: destroy
+            CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
             return
     }     
     ActivateWin("ahk_id " tgt_winID)
     Gosub, %UserInput% 
-    Gui, 2: +LastFound
-    Gui, 2: destroy
   }
 
   CB( sfx = "~win", w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand") {
     CommandBox(sfx, w_color, t_color, ProcessMod)
   }
-
-  FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", name_dict = "", grps = 0, title="", p*) {
-    FunctionBox(func, input_dict, w_color, t_color, name_dict, grps, title, p*) 
-  }
   
   CreateCacheList(name = "cc") {
-    static strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
-    static strDir  := A_ScriptDir . "\mem_cache\"
+    global strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
+    global strDir  := A_ScriptDir . "\mem_cache\"
     FileDelete %strFile%
-    static cacheList := ""
+    global cacheList := ""
     global config_path
-    IniWrite, %name%, %config_path%, %A_ComputerName%, CB_display
-    
+    ; IniWrite, %name%, %config_path%, %A_ComputerName%, CB_display
+    CC("CB_display", name)
     max_len := count := 0
-    ; Loop Files, %strDir%*.txt, R  ; Recurse into subfolders.
     Loop Files, %strDir%*.*, R  ; Recurse into subfolders.
     {   
         file := SubStr(A_LoopFileFullPath, strlen(strDir) + 1) . "`n"
@@ -580,18 +575,6 @@
     return % cache_contents
   }
 
-  GUISubmit() {
-    global short, med, long
-    ; BlockInput, on
-    Gui +LastFound
-    GuiControl, Focus, UserInput
-    ; GuiControl,2: Focus, UserInput
-    Send {enter}
-    ; BlockInput, off
-    ; ReleaseModifiers()
-    return
-  }
- 
   GUIRecall() {
     global short, med, long, config_path
     OutputVar := GC("last_user_input")
@@ -611,10 +594,9 @@
     return
   }
  
-  UDSelect(d="down", interval = "5", c_input = "", select = True, MultiCursor = False
-          , letter = "jk", MC_key = "Printscreen") {
-    global med
-    sleep med
+  UDSelect(d="down", interval = "5", c_input = "", select = True, MultiCursor = False, letter = "jk", MC_key = "Printscreen") {
+    global short
+    sleep short
     RegExMatch(c_input, "([0-9]+)", num)
     RegExReplace(c_input, "i)[" letter "]", "", oCount)
     n := num ? num : interval
@@ -649,6 +631,10 @@
 
 ; FUNCTION BOX _________________________________________________________________
   
+  FB(func="", input_dict="", w_color = "BED7D6", t_color = "000000", name_dict = "", grps = 0, title="", p*) {
+    FunctionBox(func, input_dict, w_color, t_color, name_dict, grps, title, p*) 
+  }
+
   FunctionBox(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", optn = "", grps = 0,toc_dict="", title="", p*) {
  
     ; FunctionBox() opens an input box offering choices based on input_dict array, 
@@ -660,10 +646,9 @@
     ;              
     ;   
 
-    global UserInput, med, config_path
-    
-    sleep ,med                                                                  ; short wait to delete hotstring
-    
+    global UserInput, med, config_path, uprofile    
+    ; sleep ,med                                                                  ; short wait to delete hotstring
+
     TOC := (toc_dict) ? BuildTOC(toc_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
     default_title := (!title) ? AddSpaceBtnCaseChange(func, 0) : title
     default_title .= "  (-_-)  "                                                ; l := "    |    " 
@@ -674,10 +659,11 @@
     ; IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     FB_tgt_hwnd := WinExist("A")                                                  ; store win ID of active application before calling GUI 
     
-    FunctionBoxGUI(TOC, default_title, w_color, t_color) 
+    FunctionBoxGUI(TOC, default_title, w_color, t_color)
     ; Iniread, tgt_winID, %config_path%, %A_ComputerName%, FB_tgt_hwnd
-    ActivateWin("ahk_id " FB_tgt_hwnd)
+    ; ActivateWin("ahk_id " FB_tgt_hwnd)
     UserInput := trim(UserInput)
+    
     if (func and input_dict[UserInput]) {
         if !(p.MaxIndex() > 0) 
             %func%(input_dict[UserInput])
@@ -693,35 +679,48 @@
         FunctionBox(func, input_dict, w_color, t_color, optn, grps, toc_dict, title, p*)
     else
     return
-  }
+  } ; run same function with different parameters from dictionary {"key" : "parameter"}
 
   FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" ) {
-    global UserInput := "", FB_hwnd := ""
+    global FB_Menu := "", UserInput := "", FB_hwnd := ""
+    static InputWidth := 170
 
-    BlockInput, mousemove
-    settimer, BlockInputTimeOut,-300
     FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
     IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     winget, output, ProcessName, A    
     
     Gui, +LastFound 
     Gui, Destroy
+
     Gui, fb: New, ,%title%
-    Gui, font,s13 , Consolas
-    Gui, fb: Add, text, xp yp+10 c%t_color%, % TOC "`n"
-    Gui, fb: Add, Edit, w120 vUserInput
-    Gui, fb: Add, Button, Default Hidden W60 X+10 gButtonOK, OK
-    ; Gui, fb: Add, Button, W60 X+5 gButtonCancel, Cancel
-    Gui, font,s8 , calibri
-    Gui, fb: add, text, xs yp+30, case insensitive
-    Gui, fb: +LastFound +OwnDialogs +AlwaysOnTop +Owner
+    Gui, fb: +OwnDialogs +Owner +DPIscale +AlwaysOnTop 
+    Gui, fb: font,s12 %t_color%, Consolas
+    Gui, fb: Margin, 2, 2
+    rows := countrows(TOC)
+    rows := (rows < 2) ? 2 : (rows > 25) ? 25 : rows
+    Width := StringWidth(toc, "Consolas", 12) + 10
+    Width := (Width < 200) ? 200 : (Width > 1000) ? 1000 : Width
+    ; msgbox % Width
+    Gui, fb: Add, Edit, section x2 w%Width% R%rows% ReadOnly -HScroll -VScroll -wrap -E0x200 vFB_Menu
+    
+    Guicontrol, ,FB_Menu, %TOC%
+
+    Gui, fb: Add, Edit, w%InputWidth% r1 vUserInput
+    Gui, fb: Add, Button, Default Hidden gButtonOK, OK;
+    Gui, fb: font,s8 , calibri
+    Gui, fb: add, text, xs yp+1, case insensitive
+    Gui, +LastFound 
     FB_hwnd  := WinExist()
     GetGUIWinCoords(GUI_X, GUI_Y)
     Gui, Color, %w_color%
-    Gui, fb: Show, % "x" GUI_X " y" GUI_Y,                                          ; Show gui at center of current screen
-    BlockInput, mousemoveOff
+    GuiControl, -HScroll -VScroll, FB_menu
+    Gui, fb: Show, hide AutoSize
+    Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                                          ; Show gui at center of current screen
+    GuiControl, fb: Focus, UserInput
+    ; Gui, fb: Show, % "x" GUI_X " y" GUI_Y                                          ; Show gui at center of current screen
+    settimer, addHiddenScrollBar,-400
     ; Gui, +LastFound
-    WinWaitClose                                                                ; WinSet, Transparent , 255, ahk_id %CB_Hwnd%
+    WinWaitClose
     return
 
     ButtonOK:
@@ -735,7 +734,7 @@
        UserInput := ""
        Gui, fb: Destroy
        return
-  }
+  } ; 
  
   BuildTOC(arr = "", optn = "" , grps = 0) {
     ; buils a table of contents string created from a dictionary input array.
@@ -758,11 +757,11 @@
             arr_KV_swapped[selection] := key
         else             
             TOC .= (TOC <> "" ? "`n" : "") key "`t" trim(selection, """") 
-        max_str_len := max(max_str_len, strlen(key . selection))
+        max_str_len := max(max_str_len, strlen(key . selection) - 5)
     }
 
-    line := RepeatString("-", max_str_len * 1.35)
-    TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r" . TOC) : ("Key`tSelection`n-----`t" line "`r")
+    line := RepeatString("-", max_str_len)
+    TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r`n" . TOC) : ("Key`tSelection`n-----`t" line "`r`n")
 
     if InStr(optn , "r") {                                                           ; optn for value ordered dictionary
         For dest, ref in arr_KV_swapped
@@ -779,7 +778,8 @@
         }
     }
     return TOC
-  }
+  } ; buils a table of contents string created from a dictionary input array.
+
 
  
 ; MEM_CACHE / MEMORY SYSTEM ____________________________________________________
@@ -798,6 +798,8 @@
         }
         CC("MemSummaryLines", endline)
     }
+    line := TF_ReadLines(clipboard, StartLine, EndLine)
+    output := "[CB] " line output
     Return % output
   }
 
@@ -822,7 +824,8 @@
     if (del_toggle = TRUE)
         send {del}
     return
-  }
+  } ; creates a txt file in \mem_cache from selected text
+
 
   RetrieveExt(tgt) {
     out := ""
@@ -849,6 +852,7 @@
             input .= ".txt"
         else if FileExist(input ".ini") 
             input .= ".ini"
+        input
     }
 
     FileRead, output, %input%
@@ -858,7 +862,7 @@
     } 
     clip(output)                                                                ; clip(output, True)
     return
-  }
+  } ; paste contents of txt|ini file or assign to variable
 
   OverwriteMemory(del_toggle = false) {
     slot := substr(A_ThisHotkey, 0)        
@@ -871,8 +875,6 @@
     CoordMode, Mouse, Screen
     BlockInput, on
     settimer, BlockInputTimeOut,-600
-    ; send {Blind}
-    ; ReleaseModifiers()
     MouseGetPos, StartX, StartY
     slot            := substr(A_ThisHotkey, 0)
     new_text_to_add := trim(clip())
@@ -885,15 +887,14 @@
        send {del}
     MouseMove, StartX, StartY
     BlockInput, Off
-    ; send {Blind}
     return
-  } 
+  }  ; appends selected text to single digit memory file
 
-  RetrieveMemory(mpaste = "^#LButton", mprompt="#!LButton", pasteOvr="PrintScreen") {
+  RetrieveMemory(mpaste = "^#LButton", mprompt="#!LButton", pasteOvr="PrintScreen", mpasteNum = "0" ) {
     global med, short, C
-    ;ReleaseModifiers()
     WinID := WinExist("A") 
-    
+    ; BlockInput, mousemove
+    ; settimer, BlockInputTimeOut,-600
     if (Instr(A_ThisHotkey, mprompt)) {
         Clicks(2)
         PopUp("PASTE WHICH SLOT #?",C.lpurple,"000000", "230", "75", "-5000", "14", "610")
@@ -901,11 +902,11 @@
         Gui, PopUp: Destroy
     } else if Instr(A_ThisHotkey, mpaste) {
         Clicks(2)
-        mem_slot := "1"
-        PopUp("M1 PASTED", C.lgreen, , "230", "75", "-600", "14", "610")
+        mem_slot := mpasteNum
+        ; PU(mpasteNum " PASTED", C.lgreen, , "230", "75", "-600", "14", "610")
     } else {
         mem_slot := substr(A_ThisHotkey, 0)                                 ; store last key pressed in hotstring/hotkey as memory slot selection 
-    }
+    } 
 
     ActivateWin("ahk_id " WinID)
     ; PU(A_ThisHotkey,,,,, -2000)
@@ -916,21 +917,87 @@
         sendinput {del %del_char%}
         return
     }
+    BlockInput, Off
     return
-  } 
+  } ; retrieves text to single digit memory file
 
 ; AHK UTILITIES ________________________________________________________________
 
-  reloadWG() { 
-    CC("CBfsz", "11")
-    Reload                                                                      
+  SaveReloadAHK() {
+    SendInput, ^s
+    WinGetTitle, WindowTitle
+    If (InStr(WindowTitle, ".ahk")){
+        Reload
+    }
+    Return
+  } ; Ctrl and S → Save changes and, if an AutoHotkey script, reload it
+    
+  ShowTime(paste_key="", show_key = "", msgbox_key = ""){
+    FormatTime, MyTime,, hh:mm:ss tt
+    switch A_ThisHotkey
+    {
+        case show_key:   popup(MyTime,,,,,"-1500")
+        case paste_key:  clip(MyTime)
+        case msgbox_key: msgbox % MyTime
+    }
+    return
+  } 
+
+  copyFiles(dest_path="", F*) {
+    loop % F.MaxIndex()
+    {   
+        FileCopy,% A_ScriptDir "\" F[A_Index],% dest_path F[A_Index], 1
+    }
+        
+    return
   }
 
+  ; MODIFY/ACCESS CONFIG.INI -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+  CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
+    global config_path
+    section := sect ? sect : A_ComputerName
+
+    if (nval = "!") {
+        IniRead,  state,    %config_path%,%section%,%key%, 0
+        IniWrite, % !state, %config_path%,%section%,%key%
+    } else {   
+        IniWrite, %nval%, %config_path%,%section%, %key%
+    }
+    return
+  } ; (C)hange (C)onfig.ini value
   
-  CF(path, sys_dependent = False) {                                             
-    ChangeFolder(path, sys_dependent)
-  }
+  GC(key = "CB_Titlebar", d = "") {                                             ; Get Config.ini value
+    global config_path
+    try {
+        IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
+        ; IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d% original good
+    } catch {
+        IniRead, SectionNames, %config_path%
+        arr := StrSplit(SectionNames, "`n")
+        loop 
 
+        return
+    }
+    arr := StrSplit(SectionNames, "`n")
+    return % val
+  } ; (G)et (C)onfig.ini value
+
+  TC(sect = "T_CF", msg = "Cursor Follow Active Window: ") {
+
+    global config_path, C
+
+    IniRead,  state,    %config_path%, %A_ComputerName%, %sect%, 0
+    IniWrite, % !state, %config_path%, %A_ComputerName%, %sect%
+
+    if !state
+        PopUp( msg "True",C.lgreen,,"300","90", "-800")
+    else if state
+        PopUp( msg "False",C.pink,,"300","90", "-800")
+    return
+  } ; (T)oggle (C)onfig.ini variable with 1 or 0, sets to 1 if no variable found
+
+  ; send and wrap native ahk commands into functions -- -- -- -- -- -- -- -- -- 
   S(k = "down", n = 1, sleep = "100" , SendInput ="") {                                        
     ; function wrapper to chain line commands using the comma operator
     ; also contains shorter aliases for frequently performed send operations
@@ -948,7 +1015,7 @@
     if sleep 
         sleep, %sleep%
     return
-  }
+  } ; Send namespace alias/function wrapper to chain line commands using the comma operator
 
   SI(k = "down", n = 1, sleep = "100" , si ="") {                                        
     ; function wrapper to chain line commands using the comma operator
@@ -966,32 +1033,19 @@
     if sleep 
         sleep, %sleep%
     return
-  }
+  } ; SendInput namespace alias/function wrapper to chain line commands using the comma operator
 
+
+
+  reloadWG() { 
+    CC("CBfsz", "11")
+    Reload                                                                      
+  }
 
   PU(msg, w_color = "F6F7F1", ctn = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi") {
     PopUp( msg, w_color, ctn , wn, hn, drtn, fsz, fwt, fnt) 
-  }
+  } ; alias for PopUp 
   
-  CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
-    global config_path
-    section := sect ? sect : A_ComputerName
-
-    if (nval = "!") {
-        IniRead,  state,    %config_path%,%section%,%key%, 0
-        IniWrite, % !state, %config_path%,%section%,%key%
-    } else {   
-        IniWrite, %nval%, %config_path%,%section%, %key%
-    }
-    return
-  }
-  
-  GC(key = "CB_Titlebar", d = "") {                                             ; Get Config.ini value
-    global config_path
-    IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
-    return % val
-  }
-
   BlockInputTimeOut() {
     SetTimer,, Off
     BlockInput, MouseMoveOff
@@ -1001,7 +1055,7 @@
     send {lwin up}                                                          ; with key up signals, making windows believe the keys is still pressed
     BlockInput, Off
     Return
-  }
+  } 
 
   MsgBoxVar(mb = True) {
     var := clip()
@@ -1015,7 +1069,7 @@
     }
     clip(out)
     return
-  }
+  } ; debugging msgbox. input format: var1, var2 __ output format: msgbox % "var1: " var 1 "`nvar2: " var 2 , etc...
  
   SelectText( ControlID, start = 0, end = -1) {
     ; EM_SETSEL = 0x00B1
@@ -1069,9 +1123,12 @@
 
   GetMonInfo(wa = "8", ha = "8") {
     n := GetCurrentMonitorIndex()
+    CC("CBtgt_MonIdx",n)
     SysGet, XY, Monitor , %n%                                                    ; SysGet, XY, MonitorWorkArea , %n%
-    x  := XYLeft                 , y  := XYtop
+    x  := XYLeft                 
+    y  := XYtop
     w  := Abs(XYLeft-XYRight)+wa , h  := Abs(XYtop-XYbottom)+ha
+    ; Msgbox % "`nXYLeft: " . XYLeft . "`n XYtop: " .  XYtop . "`n XYRight: " .  XYRight . "`n XYbottom: " .  XYbottom
     return % x " " y " " w " " h
   }
 
@@ -1106,8 +1163,8 @@
     return [Left, Top, Right, Bottom]
   }
  
-  TimeCode() {
-    ; time ahk code                                                             ; https://www.AutoHotkey.com/boards/viewtopic.php?t=45263
+  TimeCode(PU=1) {
+    ; ahk codeTimer                                                             ; https://www.AutoHotkey.com/boards/viewtopic.php?t=45263 
     Global StartTimer
 
     If (StartTimer != "")
@@ -1116,8 +1173,15 @@
         TimedDuration := FinishTimer - StartTimer
         StartTimer := ""
         Sec := round(TimedDuration/1000)
-        MsgBox, % "around " . Sec . " sec have elapsed!`n"
-        . "(" . round(TimedDuration) . " ms)"
+        msg := "around "  Sec  " sec have elapsed!`n"  "("  round(TimedDuration)  " ms)"
+        . "`n WinDelay: " A_winDelay
+        . "`n KeyDelay : " A_KeyDelay 
+        . "`n BatchLines : " A_BatchLines 
+        if !PU
+            MsgBox % msg
+        else
+            PU(msg,,,,,-2000)
+        
         Return TimedDuration
     }
     Else
@@ -1195,7 +1259,7 @@
 
   CreateConfigINI(exe*) {
     global config_path, UProfile, med, C
-
+    timecode()
     PATH := FindAppPath(exe*)
     CC("doc_path"      , PATH[exe["doc"]])
     CC("xls_path"      , PATH[exe["xls"]])
@@ -1204,6 +1268,7 @@
     CC("html_path"     , PATH[exe["html"]])
     CC("editor_path"   , PATH[exe["editor"]])
     CC("starting_icon" , "lg.ico", "settings")
+    timecode(0)
     PopUp("Configuration complete`nYou are good to go!", C.lgreen, C.bgreen, "200", "60", "-1200", "15") 
     sleep, med*4
     ClosePopup()
@@ -1212,18 +1277,22 @@
 
   FindAppPath(app*) {
     global UProfile, PF_x86, C, winpath
-    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*",UProfile "\AppData\Local\*",winpath "\system32\*" ]
+    FOLDER := [A_ProgramFiles "\Microsoft Office*",PF_x86 "\Microsoft Office*",A_ProgramFiles "\Mozilla Firefox\firefox.exe"
+        ,PF_x86 "\Google\Chrome\Application\chrome.exe",UProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe", 
+        ,PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*",UProfile "\AppData\Local\*",winpath "\system32\*" ]
     PATH := {}
     for each, exe in APP
     {
-        PopUp("Searching for " exe,C.lblue,,, "60", "-10000", "15")
+        PopUp("Please wait`nWinGolems is searching for " exe,C.lblue,,, "60", "-10000", "15")
         for each, dir in FOLDER
         {
             Loop Files, %dir%%exe%, R
             {
                 RegExMatch(A_LoopFileFullPath, "[^\\]+$", file_name)
-                if (strlen(exe) = strlen(file_name)) {                          ; Equal (=), case-sensitive-equal (==)
+                ; if (strlen(exe) = strlen(file_name)) {                          ; Equal (=), case-sensitive-equal (==)
+                if (exe = file_name) {                          ; Equal (=), case-sensitive-equal (==)
                     PATH[exe] := A_LoopFileFullPath
+                    Continue
                 }
             }
         }
@@ -1307,7 +1376,7 @@
   }
 
   GenerateHotkeyList() {
-    ; generate a .txt list of all active hotkeys and hotstrings
+    ; generate a .txt list of all active hotkeys 
     ; then opens that .txt in the default editor (config.ini)
     ;ReleaseModifiers()
     global long, med
@@ -1315,17 +1384,23 @@
     sleep, long * 2
     DetectHiddenWindows On                                                      ; Allows a script's hidden main window to be detected.
     SetTitleMatchMode 2
-    Orig_File = %A_WorkingDir%\golems\tools\HotKey Help - Dialog.txt
-    New_Location = %A_WorkingDir%\HotKey_List.txt
-    FileMove, %Orig_File%, %New_Location%, 1
+    ; Orig_File = %A_WorkingDir%\golems\tools\HotKey Help - Dialog.txt
+    FileLocation = %A_WorkingDir%\HotKey_List.txt
+    ; FileMove, %Orig_File%, %New_Location%, 1
     SC_key_txt := AccessCache("sck",,False)
-    FilePrepend(A_WorkingDir "\HotKey_List.txt", SC_key_txt)
+    FilePrepend(FileLocation, SC_key_txt)
     sleep, long 
-    OP("""" New_Location """")
-    FileDelete, %Orig_File%
     WinClose %A_ScriptDir%\golems\tools\Hotkey_Help.ahk
-    return
-  }
+    MsgBox,% (4096 + 4), ,Open updated hotkey list in the command box?
+    IfMsgBox Yes 
+    {
+        CC("CB_title", "..\HotKey_List.txt") 
+        CC("CB_last_display", "..\HotKey_List.txt") 
+    }
+    IfMsgBox No
+        return
+    CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
+  } ; generate a .txt list of all active hotkeys 
  
   ReleaseModifiers(timeout := "") {                                              ; timeout in ms
     ; sometimes modifier keys get stuck while switching between programs
@@ -1341,7 +1416,7 @@
         sleep, 5
     }
     return
-  }
+  } ; fix stuck modifier keys
  
   isaKeyPhysicallyDown(Keys) {
     if isobject(Keys)
@@ -1394,15 +1469,40 @@
 
 ; FILE AND FOLDER ______________________________________________________________
   
+  ToggleNavPane(kw="ctrl") {
+    ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
+    KeyWait %kw%
+    Send {Alt}
+    Send vn{enter}
+    return
+  }
+
+  ToggleOpt(kw="ctrl", optn ="", e = 1 ) {
+    ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
+    KeyWait %kw%
+    Send {Alt}
+    Send %optn%
+    sleep 200
+    if e
+        send {enter}
+    return
+  }
+
   SP(key = "") {
     SavePath(key)
     return
   }
 
   savePath(key = "") {
-    path := Explorer_GetSelection()
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1000
+    if WinActive("ahk_exe Explorer.EXE")
+        path := Explorer_GetSelection()
+    else 
+        path := clip()
     CC(key, path)
     PU(key ": " path "`nSAVED",C.lgreen,,,,-1200)   
+    BlockInput, Off
     return               
   }
 
@@ -1418,10 +1518,14 @@
         return
     }
     try {
-        if Extension
+        if Extension 
+        {
             EditFile(path)
+        }
         else 
+        {
             OpenFolder(path)
+        }
     } catch e {
         PU("Invalid path")
     }
@@ -1470,27 +1574,11 @@
     Return
   }
  
-  SortByName() {
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
-    send !vo{enter}
-    return
-  }
- 
-  SortBySize() {
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
-    send !vo{Down}{Down}{Down}{enter}
-    return
-  }
- 
-  SortByType() {
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
-    send !vo{Down}{Down}{enter}
-    return
-  }
- 
   ToggleInvisible() {
+    keywait alt
+    keywait ctrl
     send !v
-    sleep, med
+    sleep, 600
     send {h 2}
     return
   }
@@ -1515,34 +1603,53 @@
     send {Ctrl Down}{NumpadAdd}{Ctrl up}
     return
   }
- 
+  
+  CF(path, sys_dependent = False) {                                             
+    ChangeFolder(path, sys_dependent)
+  }
+
   ChangeFolder(path, sys_dependent = False) {
     ; this function instantiates a hotkey for changing the current folder
     ; in file explorer or windows "save as" type dialogue boxes
+    global uprofile
+
+    SplitPath, path, oFileName, oDir, oExtension, oNameNoExt, oDrive
+
     if (sys_dependent = TRUE) {
         path := GC(path, "")
-    }
-    try
-    {
-        if  WinActive("ahk_exe explorer.exe")
-        and WinActive("ahk_class CabinetWClass")
-        {
-            NavRun(path)
-        }
-        else                                                                    ; WinActive("ahk_class #32770") = class for "save" dialogue boxes
-        {
-            changeDialDir(path)
-        }
+    } else if oExtension {
+        EF(path)
         return
+    } if !oExtension {
+        try {
+            if  WinActive("ahk_exe explorer.exe")
+            and WinActive("ahk_class CabinetWClass")
+            {
+                NavRun(path)
+            }
+            else                                                                    ; WinActive("ahk_class #32770") = class for "save" dialogue boxes
+            {
+                changeDialDir(path)
+            }
+        }
     }
+    return
   }
  
   changeDialDir(path) {
     ; change directory of "save as" dialogue box                                ; https://www.reddit.com/r/AutoHotkey/comments/ce8mu3/changing_folders_in_save_as_dialogue_with_com/
     WinGet, hWnd, ID, A                                                         ; Get handle of active window
     Send ^l
-    ControlSetText, Edit2, %path%, ahk_id %hWnd%
-    ControlSend, Edit2, {Enter}, ahk_id %hWnd%
+    winget, Pname, ProcessName, A 
+    ; app := WinExist("ahk_id " CB_hwnd) ? GC("CB_tgtExe") : Pname
+    switch Pname {
+        case "excel.exe" : edit := "Edit3" 
+        default:           edit := "Edit2"
+    }
+    ControlSetText, %edit%, %path%, ahk_id %hWnd%
+    ControlSend, %edit%, {Enter}, ahk_id %hWnd%
+    ; ControlSetText, Edit2, %path%, ahk_id %hWnd%
+    ; ControlSend, Edit2, {Enter}, ahk_id %hWnd%
   }
  
   GetActiveExplorer() {
@@ -1644,49 +1751,55 @@
   
   EditFile(file_path = "master.ahk", app_path = "editor_path") {
     ; opens or activates file in windows 10
-    global config_path
+    global config_path, PF_x86
     RegExMatch(file_path, "[^\\]+$", file_name)                                 ; file_name = everyting after the last \
     file_name := rtrim(file_name,"""")
     RegExMatch(file_name, "[^.]+$", ext)                                        ; ext = everything after the last .
+    formatted_path = "%file_path%"
+
     try
     {
-        if WinExist(file_name)
+        if WinExist(file_name) 
         {
             WinActivate
+        } 
+        else if (SubStr(file_path, 1,4) = "http") 
+        {
+            LoadURL(formatted_path)
         }
         else if ext in docm,doc,docx,dotx,dotm
         {
             oWord := ComObjCreate("Word.Application")
             oWord.Visible := True
-            oWord.Documents.Open(file_path)
+            oWord.Documents.Open(formatted_path)
         }
         else if ext in xlsx,xlsm,xltx,xltm
         {
             oExcel := ComObjCreate("Excel.Application")
             oExcel.Visible := True
-            oExcel.Workbooks.Open(file_path)
-        }
+            oExcel.Workbooks.Open(file_path)                                    ; not sure why this works when it doesn't with word 
+        } 
         else if ext in ppt,pptx,pptm
         {
             oPowerPoint := ComObjCreate("PowerPoint.Application")
             oPowerPoint.Visible := True
-            oPowerPoint.Presentations.Open(file_path)
-        }
-        else if ext in pdf
+            oPowerPoint.Presentations.Open(formatted_path)
+        } 
+        else if ext in mp4,webm,avi,mkv
         {
-            
-            IniRead, prog_path, %config_path%, %A_ComputerName%, pdf_path
-            RunAsUser(prog_path, file_path, A_ScriptDir)
-        }
-        else
+            RunAsUser(GC("vlc_path", PF_x86 "\Windows Media Player\wmplayer.exe"), formatted_path, A_ScriptDir)
+        } 
+        else if ext in pdf 
         {
-            RunAsUser(GC(app_path), file_path, A_ScriptDir)
+            RunAsUser(GC("pdf_path"), formatted_path, A_ScriptDir)
+        } 
+        else 
+        {
+            RunAsUser(GC(app_path), formatted_path, A_ScriptDir)
         }
         return
-    }
-    catch
-    {
-        MsgBox, can't open unrecognized filetype
+    } catch e {
+        MsgBox, %  "Can't open — unrecognized filetype " . e
     }
     return
   }
@@ -1697,13 +1810,20 @@
   }
  
   OpenFolder(folder_path = "") {
-    RunAsUser("explorer.exe", folder_path, A_ScriptDir)
+    if WinActive("ahk_group FileListers")
+        CF(folder_path)
+    else 
+        RunAsUser("explorer.exe", folder_path, A_ScriptDir)
     return
   }
 
   OF(folder_path = "") {
     RunAsUser("explorer.exe", folder_path, A_ScriptDir)
     return
+  }
+  
+  FileAppend(path="", newtext="") {
+    FileAppend, `n%newtext%, %path%
   }
  
   FilePrepend(filename, atext) {
@@ -1714,7 +1834,8 @@
  
 ; YOUTUBE-DL (Python Script Wrapper) ___________________________________________
   
-  URLvidDL(path="") {
+  URLvidDL(path="",kw="alt") {
+    keywait, %kw%
     global short, med
     BlockInput, on
     settimer, BlockInputTimeOut,-1000
@@ -1735,8 +1856,9 @@
     return
   }
   
-  ClickVidDL(path=""){
+  ClickVidDL(path="", kw="shift"){
     global short, med, CB_hwnd
+    keywait, %kw%
     BlockInput, on
     settimer, BlockInputTimeOut,-1500
     Click, Right
@@ -1750,6 +1872,13 @@
         default:            send e
     }
     sleep med 
+    if !InStr(FileExist(path), "D") {
+        msg := "WinGolems can't find the folder`n`n" . dir . "`n`nWould you like to create it?"
+        MsgBox,4100,Create Hotstring,%msg% 
+        IfMsgBox Yes
+            FileCreateDir, %path%
+        return
+    }
     if (SubStr(clipboard, 1,4) = "http") {
         code := "youtube-dl " """" clipboard """" 
         Run cmd /K "cd /d " %path% 
@@ -1758,6 +1887,31 @@
         send {enter}
         sleep short
       WinMinimize,A
+    } else 
+        PU("invalid url: " clipboard,,,,,-800)
+    BlockInput, Off
+    return
+
+  }
+    
+
+  ClickDL(path="", kw="shift"){
+    global short, med, CB_hwnd
+    keywait, %kw%
+    wintitleOfActiveWindow:="ahk_id " WinActive("A")
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1500
+    Click, Right
+    sleep, med * 2
+    app := WinExist("ahk_id " CB_hwnd) ? GC("CB_tgtExe") : Pname
+    send % "{down " GC("click_DL", 4) "}{enter}"
+    sleep, long
+
+    if (SubStr(clipboard, 1,4) = "http") {
+        code := "youtube-dl " """" clipboard """" 
+        Run cmd /K "cd /d " %path% 
+        sleep med * 2
+        clip(code)
     } else 
         PU("invalid url: " clipboard,,,,,-800)
     BlockInput, Off
@@ -1790,19 +1944,6 @@
     Clicks(n, lrm)
     if rtn_mouse
         MouseMove, StartX, StartY
-    return
-  }
- 
-  TglCFG(sect = "T_CF", msg = "Cursor Follow Active Window: ") {
-    global config_path, C
-
-    IniRead,  state,    %config_path%, %A_ComputerName%, %sect%, 0
-    IniWrite, % !state, %config_path%, %A_ComputerName%, %sect%
-
-    if !state
-        PopUp( msg "True",C.lgreen,,"300","90", "-800")
-    else if state
-        PopUp( msg "False",C.pink,,"300","90", "-800")
     return
   }
  
@@ -1912,7 +2053,7 @@
     ; Browser path used to load urls dependent on computer
     global config_path, PF_x86
     winget, Pname, ProcessName, A 
-    switch Pname
+    Switch Pname
     {
         case "vivaldi.exe": output := GC("vivaldi_path")
         case "chrome.exe" : output := GC("chrome_path")
@@ -2051,6 +2192,18 @@
   }
 
 ; VS CODE ______________________________________________________________________
+
+  gotoLine(){
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1000
+    selectword()
+    sleep 200
+    var := trim(clip(), " `;")
+    sleep 200
+    s("^g"), clip(var), s("enter")
+    BlockInput, Off
+    return 
+  } ; select number and go to that position in file  
 
   FocusResults() {
     sleep 300
@@ -2191,6 +2344,7 @@
     var := StrReplace(var, "- =", "-=")
     var := StrReplace(var, "- >", "->")
     var := StrReplace(var, "< -", "<-")
+    send {del}
     clip(var)
     Sleep 200
     return
@@ -2456,14 +2610,20 @@
  
   PasteOverwrite() {
     BlockInput, on
+    global short
     settimer, BlockInputTimeOut,-600
     char_count := strlen(clipboard)
     send ^v
+    sleep short
+    ; sendevent {del %char_count%}
     sendinput {del %char_count%}
     BlockInput, Off
     return
   }
- 
+  
+  RAwB(A = "", B = "", var = "", paste = True, select = True, regex = false) {
+    ReplaceAwithB(A,B,var,paste,select,regex)    
+  }
   ReplaceAwithB(A = "", B = "", var = "", paste = True, select = True, regex = false) {
     ;ReleaseModifiers()
     BlockInput, on

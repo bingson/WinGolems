@@ -22,8 +22,10 @@
   !SC01A::               Clip("[" Clip() "]")                                   ;Convenience: enclose selected text with [ ]
   ^SC028::               Clip("'" Clip() "'")                                   ;Convenience: enclose selected text with ' '
   +!SC028::              Clip("""" Clip() """")                                 ;Convenience: enclose selected text with " "
-  >!+5::                 Clip("%" Clip() "%")                                   ;Convenience: enclose selected text with % %
-  >!+4::                 Clip("$" Clip() "$")                                   ;Convenience: enclose selected text with $ $
+  <!>+5::                                                                       ;Convenience: enclose selected text with % %
+  >!<+5::                Clip("%" Clip() "%")                                   ;Convenience: enclose selected text with % %
+  <!>+4::                                                                       ;Convenience: enclose selected text with $ $
+  >!<+4::                Clip("$" Clip() "$")                                   ;Convenience: enclose selected text with $ $
   !sc029::               Clip("``" Clip() "``")                                 ;Convenience: enclose selected text with ` `
   +!sc029::              Clip("`````` " Clip() " ``````")                       ;Convenience: enclose selected text with ``` ```
   #backspace::           send ^{backspace}                                      ;Convenience: ^backspace (delete word from last character)
@@ -42,6 +44,8 @@
   $+^k::                 Sendinput +{up}                                        ;Selection: select to line above
   $^#j::                 sendinput ^+{end}                                      ;Selection: select all below
   $^#k::                 sendinput ^+{home}                                     ;Selection: select all above
+  $+^h::                 Sendinput +^{Left}                                     ;Selection: extend selection Left  1 word
+  $+^l::                 Sendinput +^{Right}                                    ;Selection: extend selection Right 1 word
   $+#h::                 Sendinput +^{Left}                                     ;Selection: extend selection Left  1 word
   $+#l::                 Sendinput +^{Right}                                    ;Selection: extend selection Right 1 word
   $+#!h::                Sendinput +^{Left 2}                                   ;Selection: extend selection Left  2 words
@@ -63,22 +67,24 @@
   $#l::                  sendinput ^{Right}                                     ;Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
   $!h::                  sendinput {Left}                                       ;Navigation| Left
   $!l::                  sendinput {Right}                                      ;Navigation| Right
-  *!j::                  send {down}                                            ;Navigation| Up
-  *!k::                  send {up}                                              ;Navigation| Down  
+  !j::                   sendinput {down}                                       ;Navigation| Up
+  !k::                   sendinput {up}                                         ;Navigation| Down  
 
 ; MOUSE FUNCTION _______________________________________________________________
   *#d::                  SaveMousPos("r",1)                                     ;MouseFn: Left click and save mouse position
   *^#d::                 RecallMousePosClick("r", 0)                            ;MouseFn: return to saved mouse position (change 0 to number of clicks) 
   #f::                   Clicks(2)                                              ;MouseFn: 2 Left clicks (select word)
   ^#f::                  Clicks(3)                                              ;MouseFn: 3 Left clicks (select line)
-  ^!Lbutton::            s("{blind}"),Clicks(2), s("^v")                        ;MouseFn: click twice, paste clipboard        
-  +^Lbutton::            s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
+  <!mbutton::            s("{blind}"),Clicks(2), s("^v")                        ;MouseFn: click twice, paste clipboard        
+  +<!mbutton::           s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in
   $^!k::                 Sendinput ^{sc00C}                                     ;MouseFn: zoom out
-  ~rctrl & ~lctrl::      CursorJump("TL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
-  ~lctrl & ~rctrl::      CursorJump("TR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
-  ralt & lalt::          CursorJump("BL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
-  lalt & ralt::          CursorJump("BR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+  ~ralt & ~lctrl::                                                              ;MouseFn: move mouse cursor to TOP LEFT of active app
+  ~rctrl & ~lctrl::      CursorJump("BL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
+  ~lalt & ~rctrl::                                                              ;MouseFn: move mouse cursor to TOP RIGHT of active app
+  ~lctrl & ~rctrl::      CursorJump("BR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
+  ralt & lalt::          CursorJump("TL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
+  lalt & ralt::          CursorJump("TR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
   $!#k::                 CursorJump("T")                                        ;MouseFn: move mouse cursor to top edge
   $!#j::                 CursorJump("B",,"-20")                                 ;MouseFn: move mouse cursor to bottom edge
   $!#h::                 CursorJump("L","20")                                   ;MouseFn: move mouse cursor to Left edge

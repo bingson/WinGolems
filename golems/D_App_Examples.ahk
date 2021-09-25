@@ -26,7 +26,7 @@
        :X:gm~html::  LoadURL("mail.google.com")                                 ;html: create a command key "m" that opens gmail, if entered in a "~html" Command Box
     */
 
-#If WinActive("ahk_exe " exe["editor"])     
+#If WinActive("ahk_exe " exe["editor"])    
 
     /*  SAMPLE CODE
         #space::  CB("~editor", C.lgreen)                                       ;editor: create command box that runs ~editor suffix CB keys
@@ -40,6 +40,12 @@
 
     */
 
+
+#If WinActive("ahk_exe " exe["editor"]) and TitleTest(".ahk")
+
+  $^s:: SaveReloadAHK()
+  
+      
 #If WinActive("ahk_exe " exe["doc"])
 
 
@@ -63,5 +69,21 @@
 
     /*  SAMPLE CODE
         #space::  CB("~pdf", C.lpurple)                                         ;pdf: opens command box that runs ~pdf suffix CB keys
+
+        lalt & Space::
+        { 
+            send {Blind}
+            send ^{tab}
+            return
+        }
+        
+        Ralt & b::                                                              ;pdf: 
+        !b:: send ^+{tab}
+        
+        
+        
+        #If GetKeyState("alt", "P")
+        ctrl & space::                  WinMaximize, A 
+        #If
     */
 #IF
