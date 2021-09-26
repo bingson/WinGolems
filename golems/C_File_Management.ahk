@@ -33,7 +33,7 @@
                 , "f7" : GC("F7_path"  , A_ScriptDir "\assets\tutorial\example.xlsx")
                 , "f8" : GC("F8_path"  , A_ScriptDir "\assets\tutorial\example.pptx")
                 , "f9" : GC("F9_path"  , A_ScriptDir "\assets\tutorial\example.docx")
-                , "?": msg }
+                , "?help": msg }
     return % p
   }
 
