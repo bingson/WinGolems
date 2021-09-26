@@ -514,21 +514,24 @@
     return
   }
 
-  RunLabel(UserInput="", suffix = "", tgt_winID ="") {
+  RunLabel(UserInput="", suffix = "", tgt_winID ="",caseSensitive=0) {
     suffix := suffix ? suffix : GC("CB_sfx")
     UserInput := trim(UserInput)
-    Switch 
-    {
-        Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
-        Case IsLabel(":X:" . UserInput . suffix): UserInput := ":X:" . UserInput . suffix
-        Case IsLabel(":*:" . UserInput . suffix): UserInput := ":*:" . UserInput . suffix
-        Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
-        Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
-        Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
-        Default:
-            CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
-            return
-    }     
+    if caseSensitive and IsLabel(":cX:" . UserInput . suffix) 
+        UserInput := ":cX:" . UserInput . suffix
+    else 
+        Switch 
+        {
+            Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
+            Case IsLabel(":X:" . UserInput . suffix): UserInput := ":X:" . UserInput . suffix
+            Case IsLabel(":*:" . UserInput . suffix): UserInput := ":*:" . UserInput . suffix
+            Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
+            Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
+            Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
+            Default:
+                CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
+                return
+        }     
     ActivateWin("ahk_id " tgt_winID)
     Gosub, %UserInput% 
   }
@@ -586,10 +589,13 @@
     return
   }
 
-  GUIFocusInput() {
-    Gui, 2: +LastFound
-    Gui, 2: restore
-    GuiControl, 2: Focus, UserInput
+  GUIFocusInput(type = "CB") {
+    Gui, +LastFound
+    Gui, restore
+    if (type = "CB")
+        GuiControl, 2: Focus, UserInput
+    else 
+        GuiControl, fb: Focus, UserInput
     sendinput {home}+{end}
     return
   }
@@ -631,7 +637,7 @@
 
 ; FUNCTION BOX _________________________________________________________________
   
-  FB(func="", input_dict="", w_color = "CEDFBF", t_color = "000000", name_dict = "", grps = 0, title="", p*) {
+  FB(func="", input_dict="", w_color = "BED7D6", t_color = "000000", name_dict = "", grps = 0, title="", p*) {
     FunctionBox(func, input_dict, w_color, t_color, name_dict, grps, title, p*) 
   }
 
@@ -715,18 +721,24 @@
     Gui, Color, %w_color%
     GuiControl, -HScroll -VScroll, FB_menu
     Gui, fb: Show, hide AutoSize
-    Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                                          ; Show gui at center of current screen
+    Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                               ; Show gui at center of current screen                               
     GuiControl, fb: Focus, UserInput
-    ; Gui, fb: Show, % "x" GUI_X " y" GUI_Y                                          ; Show gui at center of current screen
+    ; Gui, fb: Show, % "x" GUI_X " y" GUI_Y                                     ; Show gui at center of current screen                                     
     settimer, addHiddenScrollBar,-400
-    ; Gui, +LastFound
     WinWaitClose
     return
 
     ButtonOK:
-       Gui, fb: Submit
-       Gui, fb: Destroy
-       return
+        Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
+        Gui, fb: +LastFound
+        Gui, fb: Destroy 
+        1stChar := SubStr(UserInput, 1, 1)
+        2ndChar := SubStr(UserInput, 2, 1)
+        if (1stChar = "+") and RegExMatch(2ndChar,"[A-ZA-Z]") {
+            RunLabel(UserInput, "~win", FB_tgt_hwnd)
+            reload
+        }
+        return
    
     fbGuiClose:
     ButtonCancel:
@@ -741,14 +753,20 @@
     ; alt_arr tells function that 
     ; otpn :
     ;      r = reverse (sort order by value instead of key)
-    ;      s = space between case changes for value
+    ;      s = adds a space between case changes in array value for TOC menu presentation
+
     arr_KV_swapped := {}                                                        ; key value swapped version of input array
     max_str_len := 0
     arr := alt_arr ? alt_arr : arr
     TOC := ""
     for key, val in arr                                                         ; this loop cleans dictionary values and creates a key:value swapped
-    {                                                                           ; version of the array (to display TOC sorted by value instead of key)
-        RegExMatch(val, "[^\\]+$", selection)
+    {      
+        strReplace(val, "\",,count)                                             ; version of the array (to display TOC sorted by value instead of key)
+        if (count > 1)
+            RegExMatch(val, "[^\\]+$", selection)
+        else
+            selection := val
+
         selection := ReplaceAwithB(,,selection, False)                          ; replace consecutive bank spaces with 1 space
         selection := ReplaceAwithB("- ","-",selection,0)
         selection := ReplaceAwithB("_ ","_",selection,0) 
@@ -759,11 +777,11 @@
             TOC .= (TOC <> "" ? "`n" : "") key "`t" trim(selection, """") 
         max_str_len := max(max_str_len, strlen(key . selection) - 5)
     }
-
+    max_str_len := (max_str_len > 60) ? 60 : max_str_len
     line := RepeatString("-", max_str_len)
-    TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r`n" . TOC) : ("Key`tSelection`n-----`t" line "`r`n")
+    TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r`n" . TOC) : ("Key`tSelection`n-----`t" line "`r")
 
-    if InStr(optn , "r") {                                                           ; optn for value ordered dictionary
+    if InStr(optn , "r") {                                                      ; optn for value ordered dictionary             
         For dest, ref in arr_KV_swapped
         {
             
@@ -969,7 +987,17 @@
   
   GC(key = "CB_Titlebar", d = "") {                                             ; Get Config.ini value
     global config_path
-    IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
+    try {
+        IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
+        ; IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d% original good
+    } catch {
+        IniRead, SectionNames, %config_path%
+        arr := StrSplit(SectionNames, "`n")
+        loop 
+
+        return
+    }
+    arr := StrSplit(SectionNames, "`n")
     return % val
   } ; (G)et (C)onfig.ini value
 
@@ -1249,7 +1277,7 @@
 
   CreateConfigINI(exe*) {
     global config_path, UProfile, med, C
-
+    timecode()
     PATH := FindAppPath(exe*)
     CC("doc_path"      , PATH[exe["doc"]])
     CC("xls_path"      , PATH[exe["xls"]])
@@ -1258,6 +1286,7 @@
     CC("html_path"     , PATH[exe["html"]])
     CC("editor_path"   , PATH[exe["editor"]])
     CC("starting_icon" , "lg.ico", "settings")
+    timecode(0)
     PopUp("Configuration complete`nYou are good to go!", C.lgreen, C.bgreen, "200", "60", "-1200", "15") 
     sleep, med*4
     ClosePopup()
@@ -1266,7 +1295,9 @@
 
   FindAppPath(app*) {
     global UProfile, PF_x86, C, winpath
-    FOLDER := [PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*",UProfile "\AppData\Local\*",winpath "\system32\*" ]
+    FOLDER := [A_ProgramFiles "\Microsoft Office*",PF_x86 "\Microsoft Office*",A_ProgramFiles "\Mozilla Firefox\firefox.exe"
+        ,PF_x86 "\Google\Chrome\Application\chrome.exe",UProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe", 
+        ,PF_x86 "\*",A_ProgramFiles "\*",UProfile "\AppData\Local\Programs\*",UProfile "\AppData\Local\*",winpath "\system32\*" ]
     PATH := {}
     for each, exe in APP
     {
@@ -1276,8 +1307,10 @@
             Loop Files, %dir%%exe%, R
             {
                 RegExMatch(A_LoopFileFullPath, "[^\\]+$", file_name)
-                if (strlen(exe) = strlen(file_name)) {                          ; Equal (=), case-sensitive-equal (==)
+                ; if (strlen(exe) = strlen(file_name)) {                          ; Equal (=), case-sensitive-equal (==)
+                if (exe = file_name) {                          ; Equal (=), case-sensitive-equal (==)
                     PATH[exe] := A_LoopFileFullPath
+                    Continue
                 }
             }
         }
@@ -1462,13 +1495,14 @@
     return
   }
 
-  ToggleOpt(kw="ctrl", optn ="") {
+  ToggleOpt(kw="ctrl", optn ="", e = 1 ) {
     ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
     KeyWait %kw%
     Send {Alt}
     Send %optn%
     sleep 200
-    send {enter}
+    if e
+        send {enter}
     return
   }
 
@@ -1559,8 +1593,10 @@
   }
  
   ToggleInvisible() {
+    keywait alt
+    keywait ctrl
     send !v
-    sleep, med
+    sleep, 600
     send {h 2}
     return
   }
@@ -1771,7 +1807,7 @@
         {
             RunAsUser(GC("vlc_path", PF_x86 "\Windows Media Player\wmplayer.exe"), formatted_path, A_ScriptDir)
         } 
-        else if ext in pdf 
+        else if ext in pdf,xcesession
         {
             RunAsUser(GC("pdf_path"), formatted_path, A_ScriptDir)
         } 
@@ -1935,8 +1971,9 @@
 
   CursorFollowWin(Q = "center", offset_x = "100", offset_y = "100") {
     global config_path, short, med
-    ; sleep, short
+    sleep, short
     if GC("T_CF",0)
+        ; settimer, CursorJump,-150
         CursorJump(Q, offset_x, offset_y)
     return
   }
@@ -1954,7 +1991,7 @@
     return
   }
  
-  CursorJump(Q = "center", offset_x = "0", offset_y = "0", ScreenDim = False) {
+  CursorJump(Q = "center", offset_x = "100", offset_y = "100", ScreenDim = False) {
     ; move mouse cursor to the middle of active window
     global short
     ; Sleep, short * 2

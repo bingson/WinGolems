@@ -1,16 +1,16 @@
  CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand"
-            , fwt = "500", show_txt = "", title = "",  input_txt = "") {
+            , fwt = "500", show_txt = "", title = "",  input_txt = "?") {
     SetBatchLines, -1
     SetkeyDelay, -1
     SetWinDelay, -1
     ; Process, Priority,, High
     
     ; TimeCode()
-  ; SAVE INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- -- 
+  ; SAVE GUI INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- --; saves information between script reloads. 
     
     global long, med, short, C, config_path, CB_Display := ""
         , UserInput := "", tgt_hwnd := "", CB_hwnd := ""
-    static PArr := [], ro := -1                                                  ; search position array
+    static PArr := [], ro := -1                                                 ; search position array                                                
     tgt_hwnd := WinExist()                                                      ; save window ID of active application when CB was called (tgt window to act upon) 
     WinGetPos, X, Y, W, H, A  ; "A" to get the active window's pos.
 
@@ -37,15 +37,12 @@
     oCB_position := CB_position := GC("CB_position", d)
     WP := StrSplit(CB_position, " ")
 
-    ; Msgbox % "`noCB_position: " . oCB_position . "`n CB_position: " .  CB_position
-
     if (WP[4] < 10)                                                             ; check if monitor dimensions valid
        CB_position := d
        
     wdth := WP[3]
     IBwidth := 400
     CC("CB_InputBox_width", IBwidth)
-    ; msgbox % CB_position
 
     display  := GC("CB_Display",1) , title_state := GC("CB_Titlebar",1)         ;(2a) get other CB window data
     wrap_txt := GC("CB_Wrap",0)    , ldspl       := GC("CB_last_display")
@@ -56,7 +53,7 @@
     CC("CB_tgtExe", Process_Name)
     l := "  |  ", s := "  "                                                 
     FormatTime, MyTime,, hh:mm tt               
-    CB_Title_ID := s MyTime l                                                   ; CB_Title_ID2 := s "(-(-_(-_-)_-)-)" s "COMMAND BOX" l       
+    CB_Title_ID := s MyTime l                                                                                                                 
     
     title_text := Capitalize1stLetter(Process_Name,0, 0)
     ldspl .= RetrieveExt(A_ScriptDir "\mem_cache\" ldspl)                       ; last display  
@@ -113,7 +110,7 @@
         Gui, 2: font ,s%fsz% c000000, %fnt%
     }
 
-    input_txt := % GC("CB_reenterInput",1) ? GC("last_user_input") : input_txt        ; determines what is pre-entered in the input box
+    input_txt := % GC("CB_reenterInput", 1) ? GC("last_user_input", "?") : ((input_txt = "Error") ? ("?") : input_txt)      ; determines what is pre-entered in the input box
 
     if (!display) {
         Gui, 2: Margin, 2, 2
@@ -139,9 +136,8 @@
     if !GC("CB_ScrollBars", 0)
         GuiControl, 2: -HScroll -VScroll, CB_Display                            ; remove scrollbars before the GUI draw command
 
-    Gui, 2: show, hide AutoSize
+    Gui, 2: show, hide AutoSize,%title%
     Gui, 2: Show, % CB_position . ((GC("CB_appActive", 0)) ? (" NoActivate") : (" Restore"))
-
     if (!GC("CB_appActive", 0)) {
         GuiControl, Focus, UserInput 
         Send % GC("CB_reenterInput", 1) ? ("^a") : ("")
@@ -157,7 +153,7 @@
     SetBatchLines, 10ms
     SetKeyDelay, 10, 50
     ; Process, Priority, , A
-    WinWaitClose
+    ; WinWaitClose
     return
   
   ; LABELS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --

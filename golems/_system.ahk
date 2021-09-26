@@ -34,7 +34,8 @@
   ~#right::
   ~+#left::                                                                     ;SC: cursor follows active window when moving apps btn monitors (if turned on)
   ~+#right::                                                                    ;SC: cursor follows active window when moving apps btn monitors (if turned on)
-  ~!tab::       CursorFollowWin()                                               ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
+  ~+!tab::                                                                      ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
+  ~!tab::       settimer, CFW,-250                                              ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
 
 
   :X:tm~win::                                                                   ;SC: open task manager with hotstring combines with max + cursor follows task manager window
@@ -106,16 +107,16 @@
     
   ; REPOSITION WINDOW -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_d",0)
-    PrintScreen & sc034::   
-                q := { "f" : "0Maximize"                                        ;FunctionBox: resize & move window
-                     , "q" : "1TopLeft"         
+    PrintScreen & sc033::   
+    ;"f" : "0Maximize"                                        ;FunctionBox: resize & move window
+                q := { "q" : "1TopLeft"         
                      , "e" : "1TopRight"        
                      , "z" : "2BottomLeft"      
                      , "c" : "2BottomRight"     
-                     , "a" : "3LeftHalf"     
-                     , "d" : "3RightHalf"       
-                     , "w" : "4TopHalf"         
-                     , "s" : "4BottomHalf"      
+                     , "a" : "0LeftHalf"     
+                     , "d" : "0RightHalf"       
+                     , "w" : "0TopHalf"         
+                     , "s" : "0BottomHalf"      
                      , "dd": "5RightHalfSmall"       
                      , "aa": "5LeftHalfSmall"       
                      , "ww": "6TopHalfSmall"
