@@ -768,8 +768,12 @@ WinPos() {
          , "ee": "R1TopRightSmall"   
          , "ed": "R2TopMidRightSmall"    
          , "cd": "R3BottomMidRightSmall"                            
-         , "cc": "R4BottomRightSmall" }  ; "r" optn sorts menu order by value instead of by key (default)
-    FB("MoveWin", q, C.bwhite,, "rs")    ; "s" optn adds a space between case changes for GUI menu   
+         , "cc": "R4BottomRightSmall" }  
+    
+    FB("MoveWin", q, C.bwhite,, "rs")    
+    ; "s" optn adds a space between case changes for GUI menu   
+    ; "r" optn sorts menu order by value instead of by key (default)
+
     return           
 } 
 ```
@@ -782,13 +786,13 @@ WinPos() {
 
 ``` ahk
 
-/* Sample code below shows how to create a keyboard driven GUI for executing and saving shortcuts to 
+/* Sample code below shows how to create a Function Box (FB) for executing and saving shortcuts to 
    - open folders in file explorer
-   - Editing any file type recognized by the configured default editor
-   - Editing any Microsoft office file
-   - Loading a webpage URL
-   - Opening a video file
-   - Opening a saved document session with PDFXEdit.exe (PDF-Xchange Editor)
+   - edit any file type recognized by the default editor
+   - edit any Microsoft office file
+   - open a webpage URL
+   - open a video file
+   - open a saved document session with PDFXEdit.exe (PDF-Xchange Editor)
 */
 
 ; Opens a function box GUI that will switch between ChangeFolder or OpenPath if current 
@@ -815,7 +819,9 @@ Paths() {  ; initializes 2-D array to feed to Function Box
     return % p
 } 
 
-; commands to overwrite saved file|folder|URL paths
+; save path commands for 
+; (1) file|folder selected in file explorer 
+; (2) URL text starting with "http" 
 :X:+e~win::   SP("E_path")                                           
 :X:+F1~win::  SP("F1_path")
 :X:+F2~win::  SP("F2_path")
