@@ -235,7 +235,6 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 <details><summary>&nbsp;📕&nbsp;<b> File locations and code organization </b></summary><p>
 
 For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
-
 <br> 
 
 ```ahk
@@ -296,6 +295,7 @@ RunLabel(UserInput="", suffix = "", tgt_winID ="") {
 }
 
 ```
+Note: that the base ~win label suffix will be checked if no valid `GoSub` label found with a user-entered CB suffix.
 
 ```ahk 
 
