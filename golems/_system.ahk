@@ -168,8 +168,8 @@
     lctrl::                                                                     ;ActvateApp: activate saved Window ID
     ralt::                          ActivateWinID("Lctrl")                      ;ActvateApp: activate saved Window ID
     rctrl::                         ActivateWinID("Rctrl")                      ;ActvateApp: activate saved Window ID
-    alt & lctrl::                   SaveWinID("Lctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
-    alt & rctrl::                   SaveWinID("Rctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
+    ralt & lctrl::                  SaveWinID("Lctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
+    ralt & rctrl::                  SaveWinID("Rctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
     alt & q::                       SaveWinID("Q")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
     alt & w::                       SaveWinID("W")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
     alt & a::                       SaveWinID("A")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & a

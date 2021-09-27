@@ -58,14 +58,14 @@
         case "TR","1TopRight"             : x := x+hw   , y := y       , w := hw , h := hh    
         case "BL","2BottomLeft"           : x := x      , y := y+hh    , w := hw , h := hh    
         case "BR","2BottomRight"          : x := x+hw   , y := y+hh    , w := hw , h := hh    
-        case "L" ,"3LeftHalf"             : x := x      , y := y       , w := hw , h := h     
-        case "R" ,"3RightHalf"            : x := x+hw   , y := y       , w := hw , h := h     
-        case "T" ,"4TopHalf"              : x := x      , y := y       , w := w  , h := hh    
-        case "B" ,"4BottomHalf"           : x := x      , y := y+hh    , w := w  , h := hh    
-        case "LS","5LeftHalfSmall"        : x := x      , y := y       , w := qw , h := h     
-        case "RS","5RightHalfSmall"       : x := x+3*qw , y := y       , w := qw , h := h     
-        case "TS","6TopHalfSmall"         : x := x      , y := y       , w := w  , h := qh    
-        case "BS","6BottomHalfSmall"      : x := x      , y := y+hh+qh , w := w  , h := qh    
+        case "L" ,"0LeftHalf"             : x := x      , y := y       , w := hw , h := h     
+        case "R" ,"0RightHalf"            : x := x+hw   , y := y       , w := hw , h := h     
+        case "T" ,"0TopHalf"              : x := x      , y := y       , w := w  , h := hh    
+        case "B" ,"0BottomHalf"           : x := x      , y := y+hh    , w := w  , h := hh    
+        case "LS","3LeftHalfSmall"        : x := x      , y := y       , w := qw , h := h     
+        case "RS","3RightHalfSmall"       : x := x+3*qw , y := y       , w := qw , h := h     
+        case "TS","4TopHalfSmall"         : x := x      , y := y       , w := w  , h := qh    
+        case "BS","4BottomHalfSmall"      : x := x      , y := y+hh+qh , w := w  , h := qh    
         case "L1","L1TopLeftSmall"        : x := x      , y := y       , w := hw , h := qh    
         case "L2","L2TopMidLeftSmall"     : x := x      , y := y+qh    , w := hw , h := qh    
         case "L3","L3BottomMidLeftSmall"  : x := x      , y := y+hh    , w := hw , h := qh    
@@ -90,6 +90,33 @@
     WinMove,A,, x, y, w, h
     
   } ; move active window to different areas of the screen
+
+  WinPos() {
+    global UProfile
+    
+                q := { "q" : "1TopLeft"         
+                     , "e" : "1TopRight"        
+                     , "z" : "2BottomLeft"      
+                     , "c" : "2BottomRight"     
+                     , "a" : "0LeftHalf"     
+                     , "d" : "0RightHalf"       
+                     , "w" : "0TopHalf"         
+                     , "s" : "0BottomHalf"      
+                     , "dd": "3RightHalfSmall"       
+                     , "aa": "3LeftHalfSmall"       
+                     , "ww": "4TopHalfSmall"
+                     , "ss": "4BottomHalfSmall"
+                     , "qq": "L1TopLeftSmall"    
+                     , "qa": "L2TopMidLeftSmall"    
+                     , "za": "L3BottomMidLeftSmall"    
+                     , "zz": "L4BottomLeftSmall" 
+                     , "ee": "R1TopRightSmall"   
+                     , "ed": "R2TopMidRightSmall"    
+                     , "cd": "R3BottomMidRightSmall"                            
+                     , "cc": "R4BottomRightSmall" }                             ; "r" optn sorts menu order by value instead of by key (default)
+                FB("MoveWin", q, C.bwhite,, "rs")                               ; "s" optn adds a space between case changes for GUI menu   
+                return                                                          ;FunctionBox: resize & move window                           
+  } ; creates function box to move windows to preset positions
  
   MaximizeWin(){
     WinMaximize,A 
@@ -514,24 +541,21 @@
     return
   }
 
-  RunLabel(UserInput="", suffix = "", tgt_winID ="",caseSensitive=0) {
+  RunLabel(UserInput="", suffix = "", tgt_winID ="") {
     suffix := suffix ? suffix : GC("CB_sfx")
     UserInput := trim(UserInput)
-    if caseSensitive and IsLabel(":cX:" . UserInput . suffix) 
-        UserInput := ":cX:" . UserInput . suffix
-    else 
-        Switch 
-        {
-            Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
-            Case IsLabel(":X:" . UserInput . suffix): UserInput := ":X:" . UserInput . suffix
-            Case IsLabel(":*:" . UserInput . suffix): UserInput := ":*:" . UserInput . suffix
-            Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
-            Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
-            Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
-            Default:
-                CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
-                return
-        }     
+    Switch 
+    {
+        Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
+        Case IsLabel(":X:" . UserInput . suffix): UserInput := ":X:" . UserInput . suffix
+        Case IsLabel(":*:" . UserInput . suffix): UserInput := ":*:" . UserInput . suffix
+        Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
+        Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
+        Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
+        Default:
+            CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
+            return
+    }     
     ActivateWin("ahk_id " tgt_winID)
     Gosub, %UserInput% 
   }
@@ -583,19 +607,24 @@
     OutputVar := GC("last_user_input")
     Gui +LastFound
     GuiControl,2: Focus, UserInput
+    ; GuiControl,2: Focus, UserInput
     sendinput {home}+{end}
     clip(OutputVar)
     sendinput {home}+{end}
     return
   }
 
-  GUIFocusInput(type = "CB") {
-    Gui, +LastFound
-    Gui, restore
-    if (type = "CB")
-        GuiControl, 2: Focus, UserInput
-    else 
-        GuiControl, fb: Focus, UserInput
+  GUIFocusInput(t = "CB") {
+    global CB_hwnd, FB_hwnd, short
+    
+    static GUI_hwnd := ""
+    switch t
+    {
+        Case "CB": GUI_hwnd := CB_hwnd
+        Case "FB": GUI_hwnd := FB_hwnd
+    }
+    ActivateWin("ahk_id " GUI_hwnd)
+    GuiControl, Focus, UserInput
     sendinput {home}+{end}
     return
   }
@@ -729,12 +758,12 @@
     return
 
     ButtonOK:
-        Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
         Gui, fb: +LastFound
+        Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
         Gui, fb: Destroy 
         1stChar := SubStr(UserInput, 1, 1)
         2ndChar := SubStr(UserInput, 2, 1)
-        if (1stChar = "+") and RegExMatch(2ndChar,"[A-ZA-Z]") {
+        if (1stChar = "+") and RegExMatch(2ndChar,"[A-Za-z]") {
             RunLabel(UserInput, "~win", FB_tgt_hwnd)
             reload
         }
@@ -2074,10 +2103,10 @@
     winget, Pname, ProcessName, A 
     Switch Pname
     {
-        case "vivaldi.exe": output := GC("vivaldi_path")
-        case "chrome.exe" : output := GC("chrome_path")
-        case "msedge.exe" : output := GC("edge_path")
-        case "firefox.exe": output := GC("firefox_path")
+        case "vivaldi.exe": output := GC("vivaldi_path", GC("html_path"))
+        case "chrome.exe" : output := GC("chrome_path", GC("html_path"))
+        case "msedge.exe" : output := GC("edge_path", GC("html_path"))
+        ; case "firefox.exe": output := GC("firefox_path", GC("html_path"))     ; look into firefox url syntax
         default: output := GC("html_path")
     }
     output := (output = "ERROR") ? GC("html_path") : output
