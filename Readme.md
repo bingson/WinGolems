@@ -748,7 +748,6 @@ A text-based interface that lets users execute the same function with different 
 #u:: WinPos()  ; creates function box to move windows to preset positions
 
 WinPos() {
-    global UProfile
     q := { "q" : "1TopLeft"         
          , "e" : "1TopRight"        
          , "z" : "2BottomLeft"      
