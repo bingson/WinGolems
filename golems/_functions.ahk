@@ -93,7 +93,6 @@
 
   WinPos() {
     global UProfile
-    
                 q := { "q" : "1TopLeft"         
                      , "e" : "1TopRight"        
                      , "z" : "2BottomLeft"      
@@ -730,7 +729,7 @@
     Gui, fb: New, ,%title%
     Gui, fb: +OwnDialogs +Owner +DPIscale +AlwaysOnTop 
     Gui, fb: font,s12 %t_color%, Consolas
-    Gui, fb: Margin, 2, 2
+    ; Gui, fb: Margin, 5, 5
     rows := countrows(TOC)
     rows := (rows < 2) ? 2 : (rows > 25) ? 25 : rows
     Width := StringWidth(toc, "Consolas", 12) + 10
@@ -739,11 +738,10 @@
     Gui, fb: Add, Edit, section x2 w%Width% R%rows% ReadOnly -HScroll -VScroll -wrap -E0x200 vFB_Menu
     
     Guicontrol, ,FB_Menu, %TOC%
-
-    Gui, fb: Add, Edit, w%InputWidth% r1 vUserInput
-    Gui, fb: Add, Button, Default Hidden gButtonOK, OK;
+    Gui, fb: Add, Edit, xm-5 y+10 w%InputWidth% r1 vUserInput
+    Gui, fb: Add, Button, Default Hidden gButtonOK, OK ;
     Gui, fb: font,s8 , calibri
-    Gui, fb: add, text, xs yp+1, case insensitive
+    Gui, fb: add, text, xs xm-5 yp-10, case insensitive
     Gui, +LastFound 
     FB_hwnd  := WinExist()
     GetGUIWinCoords(GUI_X, GUI_Y)
@@ -764,6 +762,10 @@
         1stChar := SubStr(UserInput, 1, 1)
         2ndChar := SubStr(UserInput, 2, 1)
         if (1stChar = "+") and RegExMatch(2ndChar,"[A-Za-z]") {
+            RunLabel(UserInput, "~win", FB_tgt_hwnd)
+            reload
+        } else if (1stChar = ":") {
+            UserInput := ltrim(UserInput, ":")
             RunLabel(UserInput, "~win", FB_tgt_hwnd)
             reload
         }

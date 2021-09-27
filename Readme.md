@@ -55,6 +55,7 @@ As something that I use daily, WinGolems is under constant development. I create
     1. [Instructions](#instructions) <br>
     2. [Keyboard Shortcuts](#ks) <br>
     3. [Command Box](#cb) <br>
+    3. [Function Box](#fb) <br>
 3. [Roadmap](#roadmap)
 
 ----
@@ -644,7 +645,7 @@ An ampersand (&) between two keys or mouse buttons combines them to create a cus
 <br>
 
 ### III. &nbsp; Command Box </b><a name="cb"></a>
-
+A text-based interface that can create new interface layers as well as execute any script or function using keyboard-entered commands.
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>System Commands </b></summary><p>
 
@@ -724,6 +725,107 @@ ________________________________________________________________________________
 |      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
 |                                              Tr, Tf:arial        (r)eenter last userinput, (f)ont change to arial                      |
 |________________________________________________________________________________________________________________________________________|
+```
+
+</p></details>
+
+<br> 
+
+### IV. &nbsp; Function Box </b><a name="fb"></a>
+
+A text-based interface that gives options to execute the same function with different parameters provided through a 2-D array ```{key:"parameter_value"}```.
+
+<details><summary>&nbsp;ℹ️&nbsp;<b>Move Active Window</b></summary><p>
+
+<p align="center"><img src="assets\Screens\MoveWinFB.png" width="300"></p>
+
+```ahk
+
+/* The code below creates function box to move windows to preset 
+   positions using the MoveWing(). 
+*/
+
+#u:: WinPos()  ; creates function box to move windows to preset positions
+
+WinPos() {
+    global UProfile
+    q := { "q" : "1TopLeft"         
+         , "e" : "1TopRight"        
+         , "z" : "2BottomLeft"      
+         , "c" : "2BottomRight"     
+         , "a" : "0LeftHalf"     
+         , "d" : "0RightHalf"       
+         , "w" : "0TopHalf"         
+         , "s" : "0BottomHalf"      
+         , "dd": "3RightHalfSmall"       
+         , "aa": "3LeftHalfSmall"       
+         , "ww": "4TopHalfSmall"
+         , "ss": "4BottomHalfSmall"
+         , "qq": "L1TopLeftSmall"    
+         , "qa": "L2TopMidLeftSmall"    
+         , "za": "L3BottomMidLeftSmall"    
+         , "zz": "L4BottomLeftSmall" 
+         , "ee": "R1TopRightSmall"   
+         , "ed": "R2TopMidRightSmall"    
+         , "cd": "R3BottomMidRightSmall"                            
+         , "cc": "R4BottomRightSmall" }  ; "r" optn sorts menu order by value instead of by key (default)
+    FB("MoveWin", q, C.bwhite,, "rs")    ; "s" optn adds a space between case changes for GUI menu   
+    return           
+} 
+```
+
+</p></details>
+
+<details><summary>&nbsp;ℹ️&nbsp;<b>Open Path</b></summary><p>
+
+<p align="center"><img src="assets\Screens\OpenPathFB.png" width="600"></p>
+
+``` ahk
+
+/* Sample code below shows how to create a keyboard driven GUI for executing and saving shortcuts to 
+   - open folders in file explorer
+   - Editing any file type recognized by the configured default editor
+   - Editing any Microsoft office file
+   - Loading a webpage URL
+   - Opening a video file
+   - Opening a saved document session with PDFXEdit.exe (PDF-Xchange Editor)
+*/
+
+; Opens a function box GUI that will switch between ChangeFolder or OpenPath if current application is 
+; a windows explorer class window.
+#g:: FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths())  
+
+Paths() {
+
+    ; GC(): (G)et (C)onfig.ini value for ("key", "value_returned_if_no_key_found")
+
+    AutoTrim, Off
+    global UProfile    
+    global p := { "e"  : GC("E_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")        
+                , "f1" : GC("F1_path"  , A_ScriptDir "\golems\B_Text_Manipulation.ahk")
+                , "f2" : GC("F2_path"  , A_ScriptDir "\golems\C_File_Management.ahk")  
+                , "f3" : GC("F3_path"  , A_ScriptDir)                     
+                , "f4" : GC("F4_path"  , A_ScriptDir "\mem_cache")                     
+                , "f5" : GC("F5_path"  , A_ScriptDir "\golems")               
+                , "f6" : GC("F6_path"  , "https://www.autohotkey.com/docs/Tutorial.htm")  
+                , "f7" : GC("F7_path"  , A_ScriptDir "\assets\tutorial\example.xlsx")
+                , "f8" : GC("F8_path"  , A_ScriptDir "\assets\tutorial\example.pptx")
+                , "f9" : GC("F9_path"  , A_ScriptDir "\assets\tutorial\example.docx")
+                , " ": """" }
+    return % p
+  } ; initializes path variables
+
+; commands to overwrite saved file or folder paths
+:X:+e~win::   SP("E_path")                                           
+:X:+F1~win::  SP("F1_path")
+:X:+F2~win::  SP("F2_path")
+:X:+F3~win::  SP("F3_path")
+:X:+F4~win::  SP("F4_path")
+:X:+F5~win::  SP("F5_path")
+:X:+F6~win::  SP("F6_path")
+:X:+F7~win::  SP("F7_path")
+:X:+F8~win::  SP("F8_path")
+:X:+F9~win::  SP("F9_path")
 ```
 
 </p></details>

@@ -13,18 +13,18 @@
     AutoTrim, Off
     msg                  := "How to overwrite a open file|folder|URL path shortcut: `n`n`t"
                           . "1) <SELECT> a file|folder in file explorer or highlight a url `n`t"
-                          . "including the beginning ""http"" portion;`n`n`t" 
+                          . "including the ""http"" portion;`n`n`t" 
                           . "2) <ENTER> ""+Key"" associated with the path you want to overwrite in `n`t" 
                           . "the input box below (also works in a Command Box). `n`n`t"
                           . "E.g.,`tSelect example.doc in file explorer, open a Function Box or `n`t" 
                           . "`tCommand Box and enter ""+f1"" in the input field to overwrite`n`t" 
                           . "`tthe default F1 shortcut for B_Text_Manipulation.ahk.`n`n"
-                          . "`t`tSAMPLE VALID PATH TYPES:`n`n"
-                          . "`t`tEdit AHK files        `t`tE,F1,F2`n"
-                          . "`t`tOpen Folder           `t`tF3,F4,F5`n"
-                          . "`t`tOpen URL              `t`tF6`n" 
-                          . "`t`tEdit Office Documents `tF7,F8,F9`n"
-                          . "`t`tNote: also works with video files (mp4, webm, avi, mkv)`n"
+                        ;   . "`t`tSAMPLE VALID PATH TYPES:`n`n"
+                        ;   . "`t`tEdit AHK files        `t`tE,F1,F2`n"
+                        ;   . "`t`tOpen Folder           `t`tF3,F4,F5`n"
+                        ;   . "`t`tOpen URL              `t`tF6`n" 
+                        ;   . "`t`tEdit Office Documents `tF7,F8,F9`n"
+                        ;   . "`t`tNote: also works with video files (mp4, webm, avi, mkv)`n"
     msg := help ? msg : " "
 
     global UProfile
@@ -107,7 +107,7 @@
   !j::          send {down}                                                     ;Navigation| Up 
   !k::          send {up}                                                       ;Navigation| Down  
 
-; OPEN FILE|FOLDER PATH ________________________________________________________
+; OPEN FILE|FOLDER PATH|FB _____________________________________________________
   ; works on full file paths for all MS office files (xls, doc, ppt, etc.)
   ; functions below are valid anywhere in windows if "T_FM" variable in config.ini = 1
   
@@ -125,7 +125,7 @@
   ^F9::          OP(Paths()["f9"])                                              ;OpenPath: open saved file|folder path from +^F9
 
   ; Function Box: opens a window that gives the user a menu of parameter choices for calling a function
-  #SC033::       FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths())  ;FB: Opens Jump Menu for saved paths (works everwhere inclulding save dialogue windows)
+  #SC034::       FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths(), C.lpurple)  ;FB: Opens Jump Menu for saved paths (works everwhere inclulding save dialogue windows)
 
 ; FILE EXPLORER AND LISTVIEW WINDOWS ___________________________________________
   ; ChangeFolder() shortcuts are valid in file explorer and other listview type windows (e.g., save as diaglogue boxes)
