@@ -733,7 +733,7 @@ ________________________________________________________________________________
 
 ### IV. &nbsp; Function Box </b><a name="fb"></a>
 
-A text-based interface that gives options to execute the same function with different parameters provided through a 2-D array ```{key:"parameter_value"}```.
+A text-based interface that lets users execute the same function with different parameters values retrieved from a dictionary (2-D array) ```{key:"parameter_value"}```.
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>Move Active Window</b></summary><p>
 
