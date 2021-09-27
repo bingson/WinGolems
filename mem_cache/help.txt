@@ -50,8 +50,6 @@
 |      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, 1.txt, the word "sample"            |
 |  F   Paste same string repeatedly            F-+~4               paste: -+-+ ; fmt: string ~ # of characters to fill               F?~?|
 |  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, (L)loaded file          D?|
-| Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify => 1.txt w/ pattern in p.txt & save result to n.txt    Rf:?~? ?|
-|      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in pattern .txt file           ?~?__?~?|
 |                                                                                                                                        |
 | KEY  GUI BEHAVIOR & APPEARANCE                                                                                                         |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|

@@ -4,6 +4,7 @@
   short := 150, med := 300, long := 1000
 
   C := { "lgreen"      : "CEDFBF"
+       , "SeaGreen"    : "CFE2CF"
        , "lblue"       : "BED7D6"
        , "lyellow"     : "FCE28A"
        , "lpurple"     : "CDC9D9"
@@ -12,16 +13,20 @@
        , "black"       : "000000"
        , "white"       : "FFFFFF"
        , "red"         : "FF0000"
-       , "lcoral"      : "FFA07A"
+       , "lcoral"      : "FFA07A" , "lcoral" : "FFA07A"
+
        , "green"       : "107A40"
        , "navy"        : "000080"
        , "blue"        : "0000FF"
        , "purple"      : "800080"
        , "lbrown"      : "DFD0BF"
        , "bgreen"      : "29524A"
+       , "lsalmon"     : "ffc8b3"
        , "pink"        : "F6E1E0"
        , "bwhite"      : "F6F7F1"
        , "lorange"     : "FFDEAD"
+       , "LemonChiffon": "FFFACD"
+       , "vlorange"    : "ffe4b3"
        , "dblue"       : "0A244C"
        , "rblue"       : "165CAA"
        , "pbrown"      : "D4C4B5"
@@ -92,7 +97,6 @@
   } ; move active window to different areas of the screen
 
   WinPos() {
-    global UProfile
                 q := { "q" : "1TopLeft"         
                      , "e" : "1TopRight"        
                      , "z" : "2BottomLeft"      
@@ -290,6 +294,7 @@
     } else {
         WinShow, ahk_exe %exe_name%
         if WinExist("ahk_exe " exe_name) {
+            sleep 200
             PU("closing cloud sync",C.pink)
             sleep 600
             Process, Close, %exe_name%
@@ -1602,13 +1607,13 @@
     Return result
   }
  
-  ExpandCollapseAllGroups(){
+  ExpandCollapseAllGroups(PosKey = "FE_cg"){
     global med
     WinGetActiveStats, Title, Width, Height, X, Y
     CoordMode, Mouse, Screen 
     MouseGetPos, StartX, StartY
     sleep, med * 1.5
-    RecallMousePosClick("FE_cg", "1", "right", 0) 
+    RecallMousePosClick(PosKey, "1", "right", 0) 
 
     n := 0
     Loop {
