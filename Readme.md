@@ -791,11 +791,11 @@ WinPos() {
    - Opening a saved document session with PDFXEdit.exe (PDF-Xchange Editor)
 */
 
-; Opens a function box GUI that will switch between ChangeFolder or OpenPath if current application is 
-; a windows explorer class window.
+; Opens a function box GUI that will switch between ChangeFolder or OpenPath if current 
+; application window is part of the file lister group (adds save dialogue box functionality).
 #g:: FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths())  
 
-Paths() {
+Paths() {  ; initializes 2-D array to feed to Function Box
 
     ; GC(): (G)et (C)onfig.ini value for ("key", "value_returned_if_no_key_found")
 
@@ -813,9 +813,9 @@ Paths() {
                 , "f9" : GC("F9_path"  , A_ScriptDir "\assets\tutorial\example.docx")
                 , " ": """" }
     return % p
-  } ; initializes path variables
+} 
 
-; commands to overwrite saved file or folder paths
+; commands to overwrite saved file|folder|URL paths
 :X:+e~win::   SP("E_path")                                           
 :X:+F1~win::  SP("F1_path")
 :X:+F2~win::  SP("F2_path")
