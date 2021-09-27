@@ -742,7 +742,7 @@ A text-based interface that gives options to execute the same function with diff
 ```ahk
 
 /* The code below creates function box to move windows to preset 
-   positions using the MoveWing(). 
+   positions using MoveWin(). 
 */
 
 #u:: WinPos()  ; creates function box to move windows to preset positions
@@ -770,7 +770,7 @@ WinPos() {
          , "cd": "R3BottomMidRightSmall"                            
          , "cc": "R4BottomRightSmall" }  
     
-    FB("MoveWin", q, C.bwhite,, "rs")    
+    FB("MoveWin", q, C.bwhite,, "rs")
     ; "s" optn adds a space between case changes for GUI menu   
     ; "r" optn sorts menu order by value instead of by key (default)
 
