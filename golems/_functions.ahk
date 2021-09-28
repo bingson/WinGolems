@@ -1102,7 +1102,10 @@
     return
   } ; SendInput namespace alias/function wrapper to chain line commands using the comma operator
 
-
+  KW(k = "alt") {
+    keywait, %k%
+    return
+  }
 
   reloadWG() { 
     CC("CBfsz", "11")
@@ -2194,22 +2197,48 @@
  
   RunExcelMacro(MacroName) { ; for AHK_L
     Try {
-        oExcel := ComObjActive("Excel.Application") ;
-        oExcel.Run(MacroName)
+        ControlGet, hwnd, hwnd, , Excel71, ahk_class XLMAIN
+        oExcel := Acc_ObjectFromWindow(hwnd, -16).Application
+        try 
+            oExcel.Run(MacroName) 
+        catch
+            try oExcel.Run("PERSONAL.XLSB!" MacroName)
         return 
     } catch e {
         MsgBox, something went wrong, check if you can execute macros within the workbook
         return
     }
   }
-  
-  highlight_cell(CI := 0) { ;http://www.databison.com/excel-color-palette-and-color-index-change-using-vba/
+
+  HexToDec(Hex)
+  {
+      if (InStr(Hex, "0x") != 1)
+          Hex := "0x" Hex
+      return, Hex + 0
+  }
+
+  highlight_cell(C := 0) { ;http://www.databison.com/excel-color-palette-and-color-index-change-using-vba/
     Try {
-        oExcel := ComObjActive("Excel.Application")
-        if (CI = oExcel.Selection.Interior.ColorIndex) 
-            oExcel.Selection.Interior.ColorIndex := 0
-        else 
-            oExcel.Selection.Interior.ColorIndex := CI
+        
+        ControlGet, hwnd, hwnd, , Excel71, ahk_class XLMAIN
+        oExcel := Acc_ObjectFromWindow(hwnd, -16).Application
+        if (strlen(C) = 2) {
+            if (C = oExcel.Selection.Interior.ColorIndex) 
+                oExcel.Selection.Interior.ColorIndex := 0
+            else 
+                oExcel.Selection.Interior.ColorIndex := C
+        } else {
+            
+            RegExMatch(oExcel.Selection.Interior.Color, ".[0-9]+", current_value)
+            if (current_value = HexToDec(C)) 
+                oExcel.Selection.Interior.Pattern := 0
+            else 
+                oExcel.Selection.Interior.Color := "&h" . C
+
+        }
+
+
+
         return
     } catch e {
         MsgBox, something went wrong, check if you can execute macros within the workbook
