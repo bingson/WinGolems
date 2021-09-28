@@ -79,12 +79,16 @@
   +<!mbutton::           s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in
   $^!k::                 Sendinput ^{sc00C}                                     ;MouseFn: zoom out
-  ~ralt & ~lctrl::                                                              ;MouseFn: move mouse cursor to TOP LEFT of active app
-  ~rctrl & ~lctrl::      CursorJump("BL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
-  ~lalt & ~rctrl::                                                              ;MouseFn: move mouse cursor to TOP RIGHT of active app
-  ~lctrl & ~rctrl::      CursorJump("BR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
-  ralt & lalt::          CursorJump("TL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
-  lalt & ralt::          CursorJump("TR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+  
+  ~ralt & ~lctrl::                                                              ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
+  ~rctrl & ~lctrl::      CursorJump("BL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
+  ~lalt & ~rctrl::                                                              ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+  ~lctrl & ~rctrl::      CursorJump("BR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+
+  ~rctrl & ~lalt::
+  ~ralt  & ~lalt::       CursorJump("TL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
+  ~lctrl & ~ralt::
+  ~lalt  & ~ralt::       CursorJump("TR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
   $!#k::                 CursorJump("T")                                        ;MouseFn: move mouse cursor to top edge
   $!#j::                 CursorJump("B",,"-20")                                 ;MouseFn: move mouse cursor to bottom edge
   $!#h::                 CursorJump("L","20")                                   ;MouseFn: move mouse cursor to Left edge

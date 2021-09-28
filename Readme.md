@@ -665,11 +665,11 @@ ________________________________________________________________________________
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
 | #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   system tray           |
-| !Space  submit key                                  | ------ -------------------------------------------- |  h~  Hibernate computer    |
-| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  ce~ Close All Programs    |
-| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  rs~ Restart computer      |
-| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  sd~ Shut Down computer    |
-| !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |                            |
+| !Space  submit key                                  | ------ -------------------------------------------- |  tm  task manager          |
+| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
+| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  rs~ Restart computer      |
+| !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |  sd~ Shut Down computer    |
 |                                                     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 ```
@@ -691,7 +691,7 @@ ________________________________________________________________________________
 | Q?:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
-|  G   Run any function                        GMoveWin,TopLeft    fmt: fnName1,fnParams1__fnName2,fnParams2            G?,?__?,? or G?,?|
+|  G   Run any function                        GMoveWin,TopLeft    format: fnName1,fnParams1__fnName2,fnParams2         G?,?__?,? or G?,?|
 | G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
 |                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
 |________________________________________________________________________________________________________________________________________|
@@ -710,7 +710,7 @@ ________________________________________________________________________________
 | A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt     A?|P?|
 |      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|
 |      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, 1.txt, the word "sample"            |
-|  F   Paste same string repeatedly            F-+~4               paste: -+-+ ; fmt: string ~ # of characters to fill               F?~?|
+|  F   Paste same string repeatedly            F-+~4               paste => -+-+ ; format: (string) ~ (# of characters) to fill      F?~?|
 |  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, (L)loaded file          D?|
 | Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify => 1.txt w/ pattern in p.txt & save result to n.txt    Rf:?~? ?|
 |      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in pattern .txt file           ?~?__?~?|
@@ -733,7 +733,7 @@ ________________________________________________________________________________
 
 ### IV. &nbsp; Function Box </b><a name="fb"></a>
 
-A text-based interface that lets users execute the same function with different parameters values retrieved from a dictionary (2-D array) ```{key:"parameter_value"}```.
+A text-based interface that lets users call the same function with different parameter options stored in a dictionary (2-D array) ```{key:"parameter_value"}```. Note: Can be used to run ~win CB keys if key prepended with `:`. Eg., entering `:tm` will open Windows Task Manager.
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>Move Active Window</b></summary><p>
 
@@ -818,19 +818,19 @@ Paths() {  ; initializes 2-D array to feed to Function Box
     return % p
 } 
 
-; save path commands for 
-; (1) file|folder selected in file explorer 
+; creates commands valid in CB or FB to save paths to config.ini for selected 
+; (1) file|folder in file explorer 
 ; (2) URL text starting with "http" 
-:X:+e~win::   SP("E_path")                                           
-:X:+F1~win::  SP("F1_path")
-:X:+F2~win::  SP("F2_path")
-:X:+F3~win::  SP("F3_path")
-:X:+F4~win::  SP("F4_path")
-:X:+F5~win::  SP("F5_path")
-:X:+F6~win::  SP("F6_path")
-:X:+F7~win::  SP("F7_path")
-:X:+F8~win::  SP("F8_path")
-:X:+F9~win::  SP("F9_path")
+:X:+e~win::                                            
+:X:+F1~win::  
+:X:+F2~win::  
+:X:+F3~win::  
+:X:+F4~win::  
+:X:+F5~win::  
+:X:+F6~win::  
+:X:+F7~win::  
+:X:+F8~win::  
+:X:+F9~win::  SP(ltrim(userinput, "+") . "_path")
 ```
 
 </p></details>

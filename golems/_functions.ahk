@@ -13,8 +13,16 @@
        , "black"       : "000000"
        , "white"       : "FFFFFF"
        , "red"         : "FF0000"
-       , "lcoral"      : "FFA07A" , "lcoral" : "FFA07A"
-
+       , "lcoral"      : "FFA07A" 
+       , "OldLace"     : "FDF5E6"
+       , "MintCream"   : "F5FFFA" 
+       , "AliceBlue"   : "F0F8FF" 
+       , "AntiqueWhite" : "FAEBD7"
+       , "Linen"       : "FAF0E6" 
+       , "Buttercream" : "EFE1CE" 
+       , "WhiteSmoke"  : "F5F5F5"
+       , "AliceBlue"   : "F0F8FF"
+       , "GhostWhite"  : "F8F8FF"
        , "green"       : "107A40"
        , "navy"        : "000080"
        , "blue"        : "0000FF"
@@ -724,6 +732,7 @@
     global FB_Menu := "", UserInput := "", FB_hwnd := ""
     static InputWidth := 170
 
+   ; build gui -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
     IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     winget, output, ProcessName, A    
@@ -760,7 +769,9 @@
     WinWaitClose
     return
 
+   ; labels -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ButtonOK:
+
         Gui, fb: +LastFound
         Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
         Gui, fb: Destroy 
@@ -770,9 +781,10 @@
             RunLabel(UserInput, "~win", FB_tgt_hwnd)
             reload
         } else if (1stChar = ":") {
+            winclose, A
             UserInput := ltrim(UserInput, ":")
             RunLabel(UserInput, "~win", FB_tgt_hwnd)
-            reload
+            ; reload
         }
         return
    
@@ -979,6 +991,7 @@
 
   SaveReloadAHK() {
     SendInput, ^s
+    sleep, 150
     WinGetTitle, WindowTitle
     If (InStr(WindowTitle, ".ahk")){
         Reload
@@ -1745,9 +1758,6 @@
     global config_path
     if InStr(app_path , "_path")                                                ; "_path" string match indicates a config.ini path reference
     {
-        ; IniRead, ini_app_path, %config_path%, %A_ComputerName%, %app_path%
-        ; app_path := GC(app_path)
-        ; app_path = "%app_path%" 
         ini_app_path := GC(app_path)
         RegExMatch(ini_app_path, "[^\\]+$", exe_name)
         ActivateOrOpen(exe_name, ini_app_path, arguments)
@@ -2009,7 +2019,6 @@
     global config_path, short, med
     sleep, short
     if GC("T_CF",0)
-        ; settimer, CursorJump,-150
         CursorJump(Q, offset_x, offset_y)
     return
   }

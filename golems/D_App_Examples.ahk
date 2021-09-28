@@ -42,9 +42,9 @@
 
 
 #If WinActive("ahk_exe " exe["editor"]) and TitleTest(".ahk")
-
-  $^s:: SaveReloadAHK()
-  
+    /*  SAMPLE CODE
+        $^s:: SaveReloadAHK()                                                   ;editor: reloads WinGolems.ahk every time you save with ^s                                                         
+    */
       
 #If WinActive("ahk_exe " exe["doc"])
 
