@@ -358,6 +358,10 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 arr := StrSplit(C_input, "~")
                 FillChar(arr[2], arr[1], 0)
                 return 
+            case "I":                                                           ; set path letter option  
+                CC("letter_path", ConvertUpper(C_input,0))
+                PU("Pinned Letter Path: " GC("letter_path"))
+                return 1
             Case "G":                                                           ; run function (broken right now)
                 
                 C_First2chr := SubStr(C_input, 1, 2) 

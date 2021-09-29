@@ -71,20 +71,28 @@
   !k::                   sendinput {up}                                         ;Navigation| Down  
 
 ; MOUSE FUNCTION _______________________________________________________________
-  *#d::                  SaveMousPos("r",1)                                     ;MouseFn: Left click and save mouse position
-  *^#d::                 RecallMousePosClick("r", 0)                            ;MouseFn: return to saved mouse position (change 0 to number of clicks) 
+  *#i::                                                                         ;MouseFn: return to saved mouse position and click (left click if no saved position found)
+  *#d::                  CursorRecall(substr(A_ThisHotkey,0), 1)                ;MouseFn: return to saved mouse position and click (left click if no saved position found)
+  ^#i::                                                                         ;MouseFn: Left click and save mouse position
+  ^#d::                  SaveMousPos(substr(A_ThisHotkey,0),1)                  ;MouseFn: Left click and save mouse position
+  !#i::                                                                         ;MouseFn: erase saved curor position 
+  !#d::                  DC("MousePos_" substr(A_ThisHotkey,0))                 ;MouseFn: erase saved curor position
   #f::                   Clicks(2)                                              ;MouseFn: 2 Left clicks (select word)
   ^#f::                  Clicks(3)                                              ;MouseFn: 3 Left clicks (select line)
   <!mbutton::            s("{blind}"),Clicks(2), s("^v")                        ;MouseFn: click twice, paste clipboard        
   +<!mbutton::           s("{blind}"),Clicks(3), s("^v")                        ;MouseFn: click thrice, paste clipboard                   
   $^!j::                 Sendinput ^{sc00D}                                     ;MouseFn: zoom in
   $^!k::                 Sendinput ^{sc00C}                                     ;MouseFn: zoom out
-  ~ralt & ~lctrl::                                                              ;MouseFn: move mouse cursor to TOP LEFT of active app
-  ~rctrl & ~lctrl::      CursorJump("BL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
-  ~lalt & ~rctrl::                                                              ;MouseFn: move mouse cursor to TOP RIGHT of active app
-  ~lctrl & ~rctrl::      CursorJump("BR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
-  ralt & lalt::          CursorJump("TL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
-  lalt & ralt::          CursorJump("TR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+  
+  ~ralt & ~lctrl::                                                              ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
+  ~rctrl & ~lctrl::      CursorJump("BL")                                       ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
+  ~lalt & ~rctrl::                                                              ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+  ~lctrl & ~rctrl::      CursorJump("BR")                                       ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+
+  ~rctrl & ~lalt::
+  ~ralt  & ~lalt::       CursorJump("TL")                                       ;MouseFn: move mouse cursor to TOP LEFT of active app
+  ~lctrl & ~ralt::
+  ~lalt  & ~ralt::       CursorJump("TR")                                       ;MouseFn: move mouse cursor to TOP RIGHT of active app
   $!#k::                 CursorJump("T")                                        ;MouseFn: move mouse cursor to top edge
   $!#j::                 CursorJump("B",,"-20")                                 ;MouseFn: move mouse cursor to bottom edge
   $!#h::                 CursorJump("L","20")                                   ;MouseFn: move mouse cursor to Left edge

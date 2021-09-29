@@ -7,7 +7,6 @@
 :X:tf~win::        TC("T_FM","File_Management: ")                               ;CB: Toggle File_Navigation template ON|OFF
 
 #IF WinActive("ahk_id " CB_hwnd)                                                ; If Command or Function Box active
-
 $^!k::                                                                          ;CB: Font size decrease
 ^SC00C::           goto, CBzoomOut                                              ;CB: Font size decrease
 ^SC00D::                                                                        ;CB: Font size increase
@@ -30,9 +29,9 @@ $^!j::             goto, CBzoomIn                                               
 $!x::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
 !r::               GUIRecall()                                                  ;CB| reenter last command
 
-#IF WinExist("ahk_id " CB_hwnd)                                                 ; Command Box
-$<^space::                                                                      ;CB| activate already open CB and move focus to inputbox
-$>^space::         ActivateWin("ahk_id " CB_hwnd), GUIFocusInput()              ;CB| activate already open CB and move focus to inputbox
+#IF WinExist("ahk_id " CB_hwnd)                                                 
+$<^space::                                                                      ;CB| activate already open Command Box and move focus to inputbox
+$>^space::         GUIFocusInput()                                              ;CB| activate already open Command Box and move focus to inputbox           
 
 #IF WinActive("ahk_id " CB_hwnd)                                                ; If command Box active
 +!a::              MoveWin("LS")                                                ;CB: move CB window to left side small
@@ -46,6 +45,6 @@ $>^space::         ActivateWin("ahk_id " CB_hwnd), GUIFocusInput()              
 
 #IF WinExist("ahk_id " FB_hwnd)                                                 ;Function Box must exist for the below two lines to be valid
 $<^space::                                                                      ;FB: activate already open Function Box and move focus to inputbox
-$>^space::         ActivateWin("ahk_id " FB_hwnd), GUIFocusInput("FB")          ;FB: activate already open Function Box and move focus to inputbox
+$>^space::         GUIFocusInput("FB")                                          ;FB: activate already open Function Box and move focus to inputbox           
 
 #IF                                                                             ; end context dependent assignments

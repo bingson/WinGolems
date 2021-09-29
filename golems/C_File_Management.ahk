@@ -13,22 +13,22 @@
     AutoTrim, Off
     msg                  := "How to overwrite a open file|folder|URL path shortcut: `n`n`t"
                           . "1) <SELECT> a file|folder in file explorer or highlight a url `n`t"
-                          . "including the beginning ""http"" portion;`n`n`t" 
+                          . "including the ""http"" portion;`n`n`t" 
                           . "2) <ENTER> ""+Key"" associated with the path you want to overwrite in `n`t" 
                           . "the input box below (also works in a Command Box). `n`n`t"
                           . "E.g.,`tSelect example.doc in file explorer, open a Function Box or `n`t" 
                           . "`tCommand Box and enter ""+f1"" in the input field to overwrite`n`t" 
                           . "`tthe default F1 shortcut for B_Text_Manipulation.ahk.`n`n"
-                          . "`t`tSAMPLE VALID PATH TYPES:`n`n"
-                          . "`t`tEdit AHK files        `t`tE,F1,F2`n"
-                          . "`t`tOpen Folder           `t`tF3,F4,F5`n"
-                          . "`t`tOpen URL              `t`tF6`n" 
-                          . "`t`tEdit Office Documents `tF7,F8,F9`n"
-                          . "`t`tNote: also works with video files (mp4, webm, avi, mkv)`n"
+                        ;   . "`t`tSAMPLE VALID PATH TYPES:`n`n"
+                        ;   . "`t`tEdit AHK files        `t`tE,F1,F2`n"
+                        ;   . "`t`tOpen Folder           `t`tF3,F4,F5`n"
+                        ;   . "`t`tOpen URL              `t`tF6`n" 
+                        ;   . "`t`tEdit Office Documents `tF7,F8,F9`n"
+                        ;   . "`t`tNote: also works with video files (mp4, webm, avi, mkv)`n"
     msg := help ? msg : " "
 
     global UProfile
-    global p := { "e"  : GC("E_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")      
+    global p := { "e"  : GC("esc_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")      
                 , "f1" : GC("F1_path"  , A_ScriptDir "\golems\B_Text_Manipulation.ahk")
                 , "f2" : GC("F2_path"  , A_ScriptDir "\golems\C_File_Management.ahk")  
                 , "f3" : GC("F3_path"  , A_ScriptDir)                     
@@ -45,39 +45,39 @@
 ; SAVE PATHS ___________________________________________________________________
   
   ; command box
-  :X:+e~win::   SP("E_path")                                           ;FileExplorer; save file or folder path for ^esc
-  :X:+e1~win::  SP("E1_path")
-  :X:+e2~win::  SP("E2_path")
-  :X:+e3~win::  SP("E3_path")
-  :X:+e4~win::  SP("E4_path")
-  :X:+e5~win::  SP("E5_path")
-  :X:+e6~win::  SP("E6_path")
-  :X:+e7~win::  SP("E7_path")
-  :X:+e8~win::  SP("E8_path")
-  :X:+e9~win::  SP("E9_path")
+  :X:+e~win::                                                                  ;FileExplorer; save file or folder paths
+  :X:+e1~win::  
+  :X:+e2~win::  
+  :X:+e3~win::  
+  :X:+e4~win::  
+  :X:+e5~win::  
+  :X:+e6~win::  
+  :X:+e7~win::  
+  :X:+e8~win::  
+  :X:+e9~win::  
 
-  :X:+F~win::   SP("F_path")
-  :X:+F1~win::  SP("F1_path")
-  :X:+F2~win::  SP("F2_path")
-  :X:+F3~win::  SP("F3_path")
-  :X:+F4~win::  SP("F4_path")
-  :X:+F5~win::  SP("F5_path")
-  :X:+F6~win::  SP("F6_path")
-  :X:+F7~win::  SP("F7_path")
-  :X:+F8~win::  SP("F8_path")
-  :X:+F9~win::  SP("F9_path")
+  :X:+F~win::   
+  :X:+F1~win::  
+  :X:+F2~win::  
+  :X:+F3~win::  
+  :X:+F4~win::  
+  :X:+F5~win::  
+  :X:+F6~win::  
+  :X:+F7~win::  
+  :X:+F8~win::  
+  :X:+F9~win::  SP(trim(userinput, "+") . "_path")
 
   ; hotkey    
   +>^esc::      SP("E_path")                                                   ;FileExplorer; file|folder save path for >^esc
-  +>^F1::       SP("F1_path")                                                  ;FileExplorer; file|folder save path for >^F1                                   
-  +>^F2::       SP("F2_path")                                                  ;FileExplorer; file|folder save path for >^F2                                   
-  +>^F3::       SP("F3_path")                                                  ;FileExplorer; file|folder save path for >^F3                                   
-  +>^F4::       SP("F4_path")                                                  ;FileExplorer; file|folder save path for >^F4
-  +>^F5::       SP("F5_path")                                                  ;FileExplorer; file|folder save path for >^F5
-  +>^F6::       SP("F6_path")                                                  ;FileExplorer; file|folder save path for >^F6
-  +>^F7::       SP("F7_path")                                                  ;FileExplorer; file|folder save path for >^F7
-  +>^F8::       SP("F8_path")                                                  ;FileExplorer; file|folder save path for >^F8
-  +>^F9::       SP("F9_path")                                                  ;FileExplorer; file|folder save path for >^F8
+  +>^F1::                                                                      ;FileExplorer; file|folder save path for >^F1                                   
+  +>^F2::                                                                      ;FileExplorer; file|folder save path for >^F2                                   
+  +>^F3::                                                                      ;FileExplorer; file|folder save path for >^F3                                   
+  +>^F4::                                                                      ;FileExplorer; file|folder save path for >^F4
+  +>^F5::                                                                      ;FileExplorer; file|folder save path for >^F5
+  +>^F6::                                                                      ;FileExplorer; file|folder save path for >^F6
+  +>^F7::                                                                      ;FileExplorer; file|folder save path for >^F7
+  +>^F8::                                                                      ;FileExplorer; file|folder save path for >^F8
+  +>^F9::       SP(ltrim(A_ThisHotkey, "+>^") . "_path")                       ;FileExplorer; file|folder save path for >^F8
 
 ; FILE EXPLORER CONVENIENCE ____________________________________________________
 
@@ -107,7 +107,7 @@
   !j::          send {down}                                                     ;Navigation| Up 
   !k::          send {up}                                                       ;Navigation| Down  
 
-; OPEN FILE|FOLDER PATH ________________________________________________________
+; OPEN FILE|FOLDER PATH|FB _____________________________________________________
   ; works on full file paths for all MS office files (xls, doc, ppt, etc.)
   ; functions below are valid anywhere in windows if "T_FM" variable in config.ini = 1
   
@@ -125,7 +125,7 @@
   ^F9::          OP(Paths()["f9"])                                              ;OpenPath: open saved file|folder path from +^F9
 
   ; Function Box: opens a window that gives the user a menu of parameter choices for calling a function
-  #SC033::       FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths())  ;FB: Opens Jump Menu for saved paths (works everwhere inclulding save dialogue windows)
+  #SC034::       FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths(), C.lpurple)  ;FB: Opens Jump Menu for saved paths (works everwhere inclulding save dialogue windows)
 
 ; FILE EXPLORER AND LISTVIEW WINDOWS ___________________________________________
   ; ChangeFolder() shortcuts are valid in file explorer and other listview type windows (e.g., save as diaglogue boxes)

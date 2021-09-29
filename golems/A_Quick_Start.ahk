@@ -4,7 +4,6 @@
   ; AA("application_exe_path")
   ; SaveWinID("unique_string")
   ; ActivateWinID("unique_string")
-
   #q::                AA("xls_path")                                            ;Apps| Activate Excel
   #w::                AA("doc_path")                                            ;Apps| Activate Word
   #a::                AA("pdf_path")                                            ;Apps| Activate pdf viewer
@@ -14,22 +13,24 @@
   #b::                AA("explorer.exe")                                        ;Apps| Activate File Explorer         
   #t::                AA("cmd.exe")                                             ;Apps| Activate Command window     
   #c::                ActivateCalc()                                            ;Apps| Activate Calculator   
-  ^!F1::              SaveWinID("F1")                                           ;Apps: Save window for win+F1 activation 
-  ^!F2::              SaveWinID("F2")                                           ;Apps: Save window for win+F2 activation
-  ^!F3::              SaveWinID("F3")                                           ;Apps: Save window for win+F3 activation
-  ^!F4::              SaveWinID("F4")                                           ;Apps: Save window for win+F4 activation
-  ^!F5::              SaveWinID("F5")                                           ;Apps: Save window for win+F5 activation
-  ^!F6::              SaveWinID("F6")                                           ;Apps: Save window for win+F6 activation
-  ^!F7::              SaveWinID("F7")                                           ;Apps: Save window for win+F7 activation
-  ^!F8::              SaveWinID("F8")                                           ;Apps: Save window for win+F8 activation
-  #F1::               ActivateWinID("F1")                                       ;Apps: Activate saved F1 window
-  #F2::               ActivateWinID("F2")                                       ;Apps: Activate saved F2 window
-  #F3::               ActivateWinID("F3")                                       ;Apps: Activate saved F3 window
-  #F4::               ActivateWinID("F4")                                       ;Apps: Activate saved F4 window
-  #F5::               ActivateWinID("F5")                                       ;Apps: Activate saved F5 window
-  #F6::               ActivateWinID("F6")                                       ;Apps: Activate saved F6 window
-  #F7::               ActivateWinID("F7")                                       ;Apps: Activate saved F7 window
-  #F8::               ActivateWinID("F8")                                       ;Apps: Activate saved F8 window
+
+  ^!F1::                                                                        ;Apps: Save window for win+F1 activation 
+  ^!F2::                                                                        ;Apps: Save window for win+F2 activation
+  ^!F3::                                                                        ;Apps: Save window for win+F3 activation
+  ^!F4::                                                                        ;Apps: Save window for win+F4 activation
+  ^!F5::                                                                        ;Apps: Save window for win+F5 activation
+  ^!F6::                                                                        ;Apps: Save window for win+F6 activation
+  ^!F7::                                                                        ;Apps: Save window for win+F7 activation
+  ^!F8::              SaveWinID(ltrim(A_ThisHotkey, "^!"))                      ;Apps: Save window for win+F8 activation
+
+  #F1::                                                                         ;Apps: Activate saved F1 window
+  #F2::                                                                         ;Apps: Activate saved F2 window
+  #F3::                                                                         ;Apps: Activate saved F3 window
+  #F4::                                                                         ;Apps: Activate saved F4 window
+  #F5::                                                                         ;Apps: Activate saved F5 window
+  #F6::                                                                         ;Apps: Activate saved F6 window
+  #F7::                                                                         ;Apps: Activate saved F7 window
+  #F8::               ActivateWinID(ltrim(A_ThisHotkey, "#"))                   ;Apps: Activate saved F8 window
 
 ; NAVIGATION (PURPLE) __________________________________________________________
   
@@ -41,8 +42,10 @@
   $#>!l::             Sendinput {Blind}{WheelRight 6}                           ;Navigation: mouse scroll right 
   ^!h::               sendinput {home}                                          ;Navigation: Home
   ^!l::               sendinput {end}                                           ;Navigation: End
-  !b::                send ^{PgUp}                                              ;Navigation: navigate to left tab
-  !space::            s("{blind}"), s("^{PgDn}")                                ;Navigation: navigate to right tab
+  !b::                                                                          ;Navigation: navigate to left tab
+  >^b::               send ^{PgUp}                                              ;Navigation: navigate to left tab
+  !space::                                                                      ;Navigation: navigate to right tab
+  >^space::           send ^{PgDn}                                              ;Navigation: navigate to right tab
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
   
@@ -55,17 +58,17 @@
   ^SC027::            Send {AppsKey}                                            ;WinOS: simulate appkey
   #Lbutton::                                                                    ;WinOS: open start menu (alt: Ctrl+Esc)
   $^#Enter::          send ^{esc}                                               ;WinOS: open start menu 
-  lshift & rshift::                                                             ;WinGolems: reload WinGolems (update running script for changes, fixes sticky keys)
-  rshift & lshift::   reloadWG()                                                ;WinGolems: reload WinGolems 
+  #SC029::            reloadWG()                                                ;WinGolems: reload WinGolems 
   ^#sc027::           Send {lwin down}d{lwin up}                                ;WindowMgmt: show desktop
   #sc028::                                                                      ;WindowMgmt: maximize window
   ^!space::           WinMaximize,A                                             ;WindowMgmt: maximize window
   #SC027::            WinMinimize,A                                             ;WindowMgmt: minimize window
   #del::              AlwaysOnTop(1)                                            ;WindowMgmt: Window always on top: ON
   #ins::              AlwaysOnTop(0)                                            ;WindowMgmt: Window always on top: OFF
-  *!capslock::        ChgInstance("capslock")                                   ;WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction)
+  ;*!capslock: :        ChgInstance("capslock")                                   ;WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction) **experimental messes up the taskbar sometimes
   +#capslock::        s("{blind}"), ActivatePrevInstance()                      ;WindowMgmt: rotate through app instances from most recent
   #capslock::         s("{blind}"), ActivateNextInstance()                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+  ^#q::
   +#q::               WinClose,A                                                ;WindowMgmt: close active window
   !#q::               CloseClass()                                              ;WindowMgmt: close all instances of the active program
   ralt & sc034::      moveWinBtnMonitors(), CFW()                               ;WindowMgmt: move window btn monitors, cursor follows active windows

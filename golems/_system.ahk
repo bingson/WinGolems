@@ -141,8 +141,8 @@
     printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
     *printscreen::         Send {Blind}{vk07}                                   ;Convenience| makes printscreen key inert so it can be used as a modifier key
     :X:pscrn~win::         Send {PrintScreen}                                   ;windows 10 printscreen command
-    *#i::                  SaveMousPos("i",1)                                   ;MouseFn: Left click and save mouse position
-    *^#i::                 RecallMousePosClick("i")                             ;MouseFn: Move to saved mouse position and left click
+    ; *#i::                  SaveMousPos("i",1)                                   ;MouseFn: Left click and save mouse position
+    ; *^#i::                 CursorRecall("i")                             ;MouseFn: Move to saved mouse position and left click
     #o::                   Click, middle                                        ;MouseFn: mouse middle click
     PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
     #sc028::               Click, Right                                         ;MouseFn: mouse Right click

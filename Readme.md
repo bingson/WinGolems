@@ -55,6 +55,7 @@ As something that I use daily, WinGolems is under constant development. I create
     1. [Instructions](#instructions) <br>
     2. [Keyboard Shortcuts](#ks) <br>
     3. [Command Box](#cb) <br>
+    3. [Function Box](#fb) <br>
 3. [Roadmap](#roadmap)
 
 ----
@@ -644,7 +645,7 @@ An ampersand (&) between two keys or mouse buttons combines them to create a cus
 <br>
 
 ### III. &nbsp; Command Box </b><a name="cb"></a>
-
+A text-based interface that can create new interface layers as well as execute any script or function using keyboard-entered commands.
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>System Commands </b></summary><p>
 
@@ -664,11 +665,11 @@ ________________________________________________________________________________
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
 | #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   system tray           |
-| !Space  submit key                                  | ------ -------------------------------------------- |  h~  Hibernate computer    |
-| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  ce~ Close All Programs    |
-| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  rs~ Restart computer      |
-| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  sd~ Shut Down computer    |
-| !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |                            |
+| !Space  submit key                                  | ------ -------------------------------------------- |  tm  task manager          |
+| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
+| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  ce~ Close All Programs    |
+| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  rs~ Restart computer      |
+| !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |  sd~ Shut Down computer    |
 |                                                     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 ```
@@ -690,7 +691,7 @@ ________________________________________________________________________________
 | Q?:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
-|  G   Run any function                        GMoveWin,TopLeft    fmt: fnName1,fnParams1__fnName2,fnParams2            G?,?__?,? or G?,?|
+|  G   Run any function                        GMoveWin,TopLeft    format: fnName1,fnParams1__fnName2,fnParams2         G?,?__?,? or G?,?|
 | G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
 |                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
 |________________________________________________________________________________________________________________________________________|
@@ -709,7 +710,7 @@ ________________________________________________________________________________
 | A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt     A?|P?|
 |      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|
 |      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, 1.txt, the word "sample"            |
-|  F   Paste same string repeatedly            F-+~4               paste: -+-+ ; fmt: string ~ # of characters to fill               F?~?|
+|  F   Paste same string repeatedly            F-+~4               paste => -+-+ ; format: (string) ~ (# of characters) to fill      F?~?|
 |  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, (L)loaded file          D?|
 | Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify => 1.txt w/ pattern in p.txt & save result to n.txt    Rf:?~? ?|
 |      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in pattern .txt file           ?~?__?~?|
@@ -724,6 +725,112 @@ ________________________________________________________________________________
 |      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
 |                                              Tr, Tf:arial        (r)eenter last userinput, (f)ont change to arial                      |
 |________________________________________________________________________________________________________________________________________|
+```
+
+</p></details>
+
+<br> 
+
+### IV. &nbsp; Function Box </b><a name="fb"></a>
+
+A text-based interface that lets users call the same function with different parameter options stored in a dictionary (2-D array) ```{key:"parameter_value"}```. Note: Can be used to run ~win CB keys if key prepended with `:`. Eg., entering `:tm` will open Windows Task Manager.
+
+<details><summary>&nbsp;ℹ️&nbsp;<b>Move Active Window</b></summary><p>
+
+<p align="center"><img src="assets\Screens\MoveWinFB.png" width="300"></p>
+
+```ahk
+
+/* The code below creates function box to move windows to preset 
+   positions using MoveWin(). 
+*/
+
+#u:: WinPos()  ; creates function box to move windows to preset positions
+
+WinPos() {
+    q := { "q" : "1TopLeft"         
+         , "e" : "1TopRight"        
+         , "z" : "2BottomLeft"      
+         , "c" : "2BottomRight"     
+         , "a" : "0LeftHalf"     
+         , "d" : "0RightHalf"       
+         , "w" : "0TopHalf"         
+         , "s" : "0BottomHalf"      
+         , "dd": "3RightHalfSmall"       
+         , "aa": "3LeftHalfSmall"       
+         , "ww": "4TopHalfSmall"
+         , "ss": "4BottomHalfSmall"
+         , "qq": "L1TopLeftSmall"    
+         , "qa": "L2TopMidLeftSmall"    
+         , "za": "L3BottomMidLeftSmall"    
+         , "zz": "L4BottomLeftSmall" 
+         , "ee": "R1TopRightSmall"   
+         , "ed": "R2TopMidRightSmall"    
+         , "cd": "R3BottomMidRightSmall"                            
+         , "cc": "R4BottomRightSmall" }  
+    
+    FB("MoveWin", q, C.bwhite,, "rs")
+    ; "s" optn adds a space between case changes for GUI menu   
+    ; "r" optn sorts menu order by value instead of by key (default)
+
+    return           
+} 
+```
+
+</p></details>
+
+<details><summary>&nbsp;ℹ️&nbsp;<b>Open Path</b></summary><p>
+
+<p align="center"><img src="assets\Screens\OpenPathFB.png" width="600"></p>
+
+``` ahk
+
+/* Sample code below shows how to create a Function Box (FB) for executing and saving shortcuts to 
+   - open folders in file explorer
+   - edit any file type recognized by the default editor
+   - edit any Microsoft office file
+   - open a webpage URL
+   - open a video file
+   - open a saved document session with PDFXEdit.exe (PDF-Xchange Editor)
+*/
+
+; Opens a function box GUI that will switch between ChangeFolder or OpenPath if current 
+; application window is part of the file lister group (adds save dialogue box functionality).
+#g:: FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths())  
+
+Paths() {  ; initializes 2-D array to feed to Function Box
+
+    ; GC(): (G)et (C)onfig.ini value for ("key", "value_returned_if_no_key_found")
+
+    AutoTrim, Off
+    global UProfile    
+    global p := { "e"  : GC("E_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")        
+                , "f1" : GC("F1_path"  , A_ScriptDir "\golems\B_Text_Manipulation.ahk")
+                , "f2" : GC("F2_path"  , A_ScriptDir "\golems\C_File_Management.ahk")  
+                , "f3" : GC("F3_path"  , A_ScriptDir)                     
+                , "f4" : GC("F4_path"  , A_ScriptDir "\mem_cache")                     
+                , "f5" : GC("F5_path"  , A_ScriptDir "\golems")               
+                , "f6" : GC("F6_path"  , "https://www.autohotkey.com/docs/Tutorial.htm")  
+                , "f7" : GC("F7_path"  , A_ScriptDir "\assets\tutorial\example.xlsx")
+                , "f8" : GC("F8_path"  , A_ScriptDir "\assets\tutorial\example.pptx")
+                , "f9" : GC("F9_path"  , A_ScriptDir "\assets\tutorial\example.docx")
+                , " ": """" }
+    return % p
+} 
+
+; creates commands in CB and FB to save paths to config.ini for selected 
+; (1) file|folder in file explorer 
+; (2) URL text starting with "http" 
+:X:+e~win::                                            
+:X:+F1~win::  
+:X:+F2~win::  
+:X:+F3~win::  
+:X:+F4~win::  
+:X:+F5~win::  
+:X:+F6~win::  
+:X:+F7~win::  
+:X:+F8~win::  
+:X:+F9~win::  SP(ltrim(userinput, "+") . "_path")
 ```
 
 </p></details>

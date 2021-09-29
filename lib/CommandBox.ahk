@@ -203,7 +203,7 @@
         offset := pos - Strlen(UserInput)
         if ((HasVal(PArr, pos) = 0) and (pos > 0) and addToPos) {
             PArr.Push(pos)
-            writetocache("1f", , ,  "`n pos: " pos " addToPos: "  addToPos, 1,1)
+            ; writetocache("1f", , ,  "`n pos: " pos " addToPos: "  addToPos, 1,1)
         }
         ro--
         Gui, 2: Show, , % GC("CBtitle") "  |  line: " . addToPos + 1 . "  (" . PArr.MaxIndex() . (PArr.MaxIndex() = 1 ? " hit" : " hits") . ")"
@@ -252,7 +252,7 @@
         lastFind = %UserInput%
         
         if ((HasVal(PArr, pos) = 0) and (pos > 0) and addToPos) {
-            writetocache("1f", , ,  "`n pos: " pos " addToPos: "  addToPos, 1,1)
+            ; writetocache("1f", , ,  "`n pos: " pos " addToPos: "  addToPos, 1,1)
             PArr.Push(pos)
         } 
 

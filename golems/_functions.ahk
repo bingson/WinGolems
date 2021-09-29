@@ -4,6 +4,7 @@
   short := 150, med := 300, long := 1000
 
   C := { "lgreen"      : "CEDFBF"
+       , "SeaGreen"    : "CFE2CF"
        , "lblue"       : "BED7D6"
        , "lyellow"     : "FCE28A"
        , "lpurple"     : "CDC9D9"
@@ -12,16 +13,28 @@
        , "black"       : "000000"
        , "white"       : "FFFFFF"
        , "red"         : "FF0000"
-       , "lcoral"      : "FFA07A"
+       , "lcoral"      : "FFA07A" 
+       , "OldLace"     : "FDF5E6"
+       , "MintCream"   : "F5FFFA" 
+       , "AliceBlue"   : "F0F8FF" 
+       , "AntiqueWhite" : "FAEBD7"
+       , "Linen"       : "FAF0E6" 
+       , "Buttercream" : "EFE1CE" 
+       , "WhiteSmoke"  : "F5F5F5"
+       , "AliceBlue"   : "F0F8FF"
+       , "GhostWhite"  : "F8F8FF"
        , "green"       : "107A40"
        , "navy"        : "000080"
        , "blue"        : "0000FF"
        , "purple"      : "800080"
        , "lbrown"      : "DFD0BF"
        , "bgreen"      : "29524A"
+       , "lsalmon"     : "ffc8b3"
        , "pink"        : "F6E1E0"
        , "bwhite"      : "F6F7F1"
        , "lorange"     : "FFDEAD"
+       , "LemonChiffon": "FFFACD"
+       , "vlorange"    : "ffe4b3"
        , "dblue"       : "0A244C"
        , "rblue"       : "165CAA"
        , "pbrown"      : "D4C4B5"
@@ -92,8 +105,6 @@
   } ; move active window to different areas of the screen
 
   WinPos() {
-    global UProfile
-    
                 q := { "q" : "1TopLeft"         
                      , "e" : "1TopRight"        
                      , "z" : "2BottomLeft"      
@@ -291,6 +302,7 @@
     } else {
         WinShow, ahk_exe %exe_name%
         if WinExist("ahk_exe " exe_name) {
+            sleep 200
             PU("closing cloud sync",C.pink)
             sleep 600
             Process, Close, %exe_name%
@@ -607,19 +619,24 @@
     OutputVar := GC("last_user_input")
     Gui +LastFound
     GuiControl,2: Focus, UserInput
+    ; GuiControl,2: Focus, UserInput
     sendinput {home}+{end}
     clip(OutputVar)
     sendinput {home}+{end}
     return
   }
 
-  GUIFocusInput(type = "CB") {
-    Gui, +LastFound
-    Gui, restore
-    if (type = "CB")
-        GuiControl, 2: Focus, UserInput
-    else 
-        GuiControl, fb: Focus, UserInput
+  GUIFocusInput(t = "CB") {
+    global CB_hwnd, FB_hwnd, short
+    
+    static GUI_hwnd := ""
+    switch t
+    {
+        Case "CB": GUI_hwnd := CB_hwnd
+        Case "FB": GUI_hwnd := FB_hwnd
+    }
+    ActivateWin("ahk_id " GUI_hwnd)
+    GuiControl, Focus, UserInput
     sendinput {home}+{end}
     return
   }
@@ -676,7 +693,7 @@
     ;              
     ;   
 
-    global UserInput, med, config_path, uprofile    
+    global UserInput, med, config_path, uprofile
     ; sleep ,med                                                                  ; short wait to delete hotstring
 
     TOC := (toc_dict) ? BuildTOC(toc_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
@@ -689,7 +706,7 @@
     ; IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     FB_tgt_hwnd := WinExist("A")                                                  ; store win ID of active application before calling GUI 
     
-    FunctionBoxGUI(TOC, default_title, w_color, t_color)
+    FunctionBoxGUI(TOC, default_title, w_color, t_color, input_dict, optn, grps, toc_dict, title, p*)
     ; Iniread, tgt_winID, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     ; ActivateWin("ahk_id " FB_tgt_hwnd)
     UserInput := trim(UserInput)
@@ -711,21 +728,22 @@
     return
   } ; run same function with different parameters from dictionary {"key" : "parameter"}
 
-  FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" ) {
+  FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" , input_dict="", optn="", grps="", toc_dict="", p*) {
     global FB_Menu := "", UserInput := "", FB_hwnd := ""
     static InputWidth := 170
 
+   ; build gui -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
     IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     winget, output, ProcessName, A    
-    
+    reloadFB:
     Gui, +LastFound 
     Gui, Destroy
 
     Gui, fb: New, ,%title%
     Gui, fb: +OwnDialogs +Owner +DPIscale +AlwaysOnTop 
     Gui, fb: font,s12 %t_color%, Consolas
-    Gui, fb: Margin, 2, 2
+    ; Gui, fb: Margin, 5, 5
     rows := countrows(TOC)
     rows := (rows < 2) ? 2 : (rows > 25) ? 25 : rows
     Width := StringWidth(toc, "Consolas", 12) + 10
@@ -734,11 +752,10 @@
     Gui, fb: Add, Edit, section x2 w%Width% R%rows% ReadOnly -HScroll -VScroll -wrap -E0x200 vFB_Menu
     
     Guicontrol, ,FB_Menu, %TOC%
-
-    Gui, fb: Add, Edit, w%InputWidth% r1 vUserInput
-    Gui, fb: Add, Button, Default Hidden gButtonOK, OK;
+    Gui, fb: Add, Edit, xm-5 y+10 w%InputWidth% r1 vUserInput
+    Gui, fb: Add, Button, Default Hidden gButtonOK, OK ;
     Gui, fb: font,s8 , calibri
-    Gui, fb: add, text, xs yp+1, case insensitive
+    Gui, fb: add, text, xs xm-5 yp-10, case insensitive
     Gui, +LastFound 
     FB_hwnd  := WinExist()
     GetGUIWinCoords(GUI_X, GUI_Y)
@@ -752,16 +769,27 @@
     WinWaitClose
     return
 
+   ; labels -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ButtonOK:
-        Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
+
         Gui, fb: +LastFound
-        Gui, fb: Destroy 
+        Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
+        Gui, fb:Destroy 
         1stChar := SubStr(UserInput, 1, 1)
         2ndChar := SubStr(UserInput, 2, 1)
         if (1stChar = "+") and RegExMatch(2ndChar,"[A-Za-z]") {
             RunLabel(UserInput, "~win", FB_tgt_hwnd)
-            reload
+        } else if (1stChar = ":") {
+            UserInput := ltrim(UserInput, ":")
+            tgt_hwnd := FB_tgt_hwnd
+            ProcessCommand(UserInput, "~win", title, fsz, fnt, w_color, t_color)
+            
+            ; Gui, fb: +LastFound
+            ; Gui, fb:Destroy 
+            ; RunLabel(UserInput, "~win", FB_tgt_hwnd)
+            ; reload
         }
+        SetTimer, reloadWG, -700
         return
    
     fbGuiClose:
@@ -967,6 +995,7 @@
 
   SaveReloadAHK() {
     SendInput, ^s
+    sleep, 150
     WinGetTitle, WindowTitle
     If (InStr(WindowTitle, ".ahk")){
         Reload
@@ -995,6 +1024,12 @@
   }
 
   ; MODIFY/ACCESS CONFIG.INI -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+  DC(key = "CB_Titlebar", sect = "") {
+    global config_path
+    section := sect ? sect : A_ComputerName
+    IniDelete, %config_path%, %Section% , %Key%
+  }
 
   CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
     global config_path
@@ -1077,7 +1112,10 @@
     return
   } ; SendInput namespace alias/function wrapper to chain line commands using the comma operator
 
-
+  KW(k = "alt") {
+    keywait, %k%
+    return
+  }
 
   reloadWG() { 
     CC("CBfsz", "11")
@@ -1595,13 +1633,13 @@
     Return result
   }
  
-  ExpandCollapseAllGroups(){
+  ExpandCollapseAllGroups(PosKey = "FE_cg"){
     global med
     WinGetActiveStats, Title, Width, Height, X, Y
     CoordMode, Mouse, Screen 
     MouseGetPos, StartX, StartY
     sleep, med * 1.5
-    RecallMousePosClick("FE_cg", "1", "right", 0) 
+    CursorRecall(PosKey, "1", "right", 0) 
 
     n := 0
     Loop {
@@ -1733,9 +1771,6 @@
     global config_path
     if InStr(app_path , "_path")                                                ; "_path" string match indicates a config.ini path reference
     {
-        ; IniRead, ini_app_path, %config_path%, %A_ComputerName%, %app_path%
-        ; app_path := GC(app_path)
-        ; app_path = "%app_path%" 
         ini_app_path := GC(app_path)
         RegExMatch(ini_app_path, "[^\\]+$", exe_name)
         ActivateOrOpen(exe_name, ini_app_path, arguments)
@@ -1975,17 +2010,23 @@
     return
   }
   
-  RecallMousePosClick(key = "A", n = "1", lrm = "left", rtn_mouse = False) {
+  CursorRecall(key = "A", n = "1", lrm = "left", rtn_mouse = False) {
     global config_path
-    CoordMode, Mouse, Screen
-    MouseGetPos, StartX, StartY
-    IniRead, mpos, %config_path%, %A_ComputerName%, MousePos_%Key%
-    pos_array := StrSplit(mpos, " ")
-    DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
-    ; MouseMove, pos_array[1], pos_array[2]
-    Clicks(n, lrm)
-    if rtn_mouse
-        MouseMove, StartX, StartY
+    if (GC("MousePos_" Key) != "ERROR") {
+        CoordMode, Mouse, Screen
+        MouseGetPos, StartX, StartY
+        IniRead, mpos, %config_path%, %A_ComputerName%, MousePos_%Key%
+        GC("MousePos_" Key)
+        pos_array := StrSplit(mpos, " ")
+        DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
+        ; MouseMove, pos_array[1], pos_array[2]
+        Clicks(n, lrm)
+        if rtn_mouse
+            MouseMove, StartX, StartY
+        return
+    } else {
+        Click
+    }
     return
   }
  
@@ -1997,7 +2038,6 @@
     global config_path, short, med
     sleep, short
     if GC("T_CF",0)
-        ; settimer, CursorJump,-150
         CursorJump(Q, offset_x, offset_y)
     return
   }
@@ -2173,22 +2213,47 @@
  
   RunExcelMacro(MacroName) { ; for AHK_L
     Try {
-        oExcel := ComObjActive("Excel.Application") ;
-        oExcel.Run(MacroName)
+        ControlGet, hwnd, hwnd, , Excel71, ahk_class XLMAIN
+        oExcel := Acc_ObjectFromWindow(hwnd, -16).Application
+        try 
+            oExcel.Run(MacroName) 
+        catch
+            try oExcel.Run("PERSONAL.XLSB!" MacroName)
         return 
     } catch e {
         MsgBox, something went wrong, check if you can execute macros within the workbook
         return
     }
   }
-  
-  highlight_cell(CI := 0) { ;http://www.databison.com/excel-color-palette-and-color-index-change-using-vba/
+
+  HexToDec(Hex) {
+      if (InStr(Hex, "0x") != 1)
+          Hex := "0x" Hex
+      return, Hex + 0
+  }
+
+  highlight_cell(C := 0) { ;http://www.databison.com/excel-color-palette-and-color-index-change-using-vba/
     Try {
-        oExcel := ComObjActive("Excel.Application")
-        if (CI = oExcel.Selection.Interior.ColorIndex) 
-            oExcel.Selection.Interior.ColorIndex := 0
-        else 
-            oExcel.Selection.Interior.ColorIndex := CI
+        
+        ControlGet, hwnd, hwnd, , Excel71, ahk_class XLMAIN
+        oExcel := Acc_ObjectFromWindow(hwnd, -16).Application
+        if (strlen(C) = 2) {
+            if (C = oExcel.Selection.Interior.ColorIndex) 
+                oExcel.Selection.Interior.ColorIndex := 0
+            else 
+                oExcel.Selection.Interior.ColorIndex := C
+        } else {
+            
+            RegExMatch(oExcel.Selection.Interior.Color, ".[0-9]+", current_value)
+            if (current_value = HexToDec(C)) 
+                oExcel.Selection.Interior.Pattern := 0
+            else 
+                oExcel.Selection.Interior.Color := "&h" . C
+
+        }
+
+
+
         return
     } catch e {
         MsgBox, something went wrong, check if you can execute macros within the workbook
@@ -2251,7 +2316,9 @@
   FocusResults() {
     sleep 300
     send ^m
-    Send {shift down}{tab 5}{shift up}
+    sleep 200
+    Send {shift down}{tab 7}{shift up}
+    sleep 200
     send ^m
     return
   }
@@ -2540,7 +2607,6 @@
     return
   }
 
-
   AddSpaceBeforeComment(length = "80", char = " ", lines = 1) {
     global short
     BlockInput, on
@@ -2702,144 +2768,143 @@
     return
   } 
  
-
-
-  ; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW -- -- -- -- -- -- -- -- -- -- 
-    
-  ChgInstance(switch = "capslock") {
-    global tabkey := switch
-    gosub, chgInstance~win
-    return
-  }
-
-  return ; END OF AUTOEXECUTION ... ... ... ... ... ... ... ... ... ... ... ...
-
-  ChgInstance~win:                                                              ; https://superuser.com/questions/435602/shortcut-in-windows-7-to-switch-between-same-applications-windows-like-cmd
-
-  WS_EX_TOOLWINDOW = 0x80
-  WS_EX_APPWINDOW = 0x40000
-  tw := []
-  aw := []
-
-  WinGet, processName, ProcessName, A
-
-  DetectHiddenWindows, Off
-  AltTab_window_list(1)
-
-  Loop, %AltTab_ID_List_0%
-  {
-     wid := AltTab_ID_List_%A_Index%
-     WinGet, processName2, ProcessName, ahk_id %wid%
+; EXPERIMENTAL _________________________________________________________________
+ ; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW -- -- -- -- -- -- -- -- -- -- 
      
-     if (processName2 != processName)
-     {
-        WinGet, exStyle2, ExStyle, ahk_id %wid%
-
-        if (!(exStyle2 & WS_EX_TOOLWINDOW))
-        {
-           tw.InsertAt(0, wid)
-           WinSet, ExStyle, ^0x80, ahk_id %wid%
-        }
-
-        if ((exStyle2 & WS_EX_APPWINDOW))
-        {
-           aw.InsertAt(0, wid)
-           WinSet, ExStyle, ^0x40000, ahk_id %wid%
-        }
-     }
-  }
-
-  Send {Alt Down}{Tab} ; Bring up switcher immediately
-
-  ; KeyWait, sc029, T.25  ; Go to next window; wait .25s before looping         
-  ; KeyWait, ``, T.25  ; Go to next window; wait .25s before looping
-  KeyWait, %tabkey%, T.25  ; Go to next window; wait .25s before looping
-  if (Errorlevel == 0)
-  {
-      While ( GetKeyState( "alt","P" ) )
-     {
-      ;   KeyWait, ``, D T.25
-        ; KeyWait, sc029, D T.25
-        KeyWait,%tabkey%, D T.25                                                ; Go to next window; wait .25s before looping
-        if (Errorlevel == 0)
-        {
-           if (GetKeyState( "Shift","P" ))
-           {
-              Send {Alt Down}{Shift Down}{Tab}
-              Sleep, 200
-           }
-           else
-           {
-              Send {Alt Down}{Tab}
-              Sleep, 200
-           }
-        }
-     }
-  }
-
-  Send {Alt Up}                                                                 ; Close switcher on hotkey release
-
-  for index, wid in tw
-  {
-     WinSet, ExStyle, ^0x80, ahk_id %wid%
-  }
-
-  for index, wid in aw
-  {
-     WinSet, ExStyle, ^0x40000, ahk_id %wid%
-  }
-
-  return
-
-    
-  AltTab_window_list(excludeToolWindows)
-  {
-     global
-     WS_EX_CONTROLPARENT =0x10000
-     WS_EX_APPWINDOW =0x40000
-     WS_EX_TOOLWINDOW =0x80
-     WS_DISABLED =0x8000000
-     WS_POPUP =0x80000000
-     AltTab_ID_List_ =0
-     WinGet, Window_List, List,,, Program Manager                               ; Gather a list of running programs
-     id_list =
-     Loop, %Window_List%
-     {
-        wid := Window_List%A_Index%
-        winget, ProcName, ProcessName, ahk_id %wid%
-
-        WinGetTitle, wid_Title, ahk_id %wid%
-        WinGet, Style, Style, ahk_id %wid%
-        If ((Style & WS_DISABLED) or !(wid_Title))                              ; skip unimportant windows
-           Continue
-        
-        WinGet, es, ExStyle, ahk_id %wid%
-        Parent := Decimal_to_Hex( DllCall( "GetParent", "uint", wid ) )
-        WinGetClass, Win_Class, ahk_id %wid%
-        WinGet, Style_parent, Style, ahk_id %Parent%
-  
-        If ((excludeToolWindows & (es & WS_EX_TOOLWINDOW))
-           or ((es & ws_ex_controlparent) and ! (Style & WS_POPUP) and !(Win_Class ="#32770") and ! (es & WS_EX_APPWINDOW)) ; pspad child window excluded
-           or ((Style & WS_POPUP) and (Parent) and ((Style_parent & WS_DISABLED) =0))) ; notepad find window excluded ; note - some windows result in blank value so must test for zero instead of using NOT operator!
-           continue
-
-        AltTab_ID_List_ ++
-        AltTab_ID_List_%AltTab_ID_List_% :=wid
-     }  
+   ChgInstance(switch = "capslock") {
+     global tabkey := switch
+     gosub, chgInstance~win
+     return
+   }
+ 
+   return ; END OF AUTOEXECUTION ... ... ... ... ... ... ... ... ... ... ... ...
+ 
+   ChgInstance~win:                                                              ; https://superuser.com/questions/435602/shortcut-in-windows-7-to-switch-between-same-applications-windows-like-cmd
+ 
+   WS_EX_TOOLWINDOW = 0x80
+   WS_EX_APPWINDOW = 0x40000
+   tw := []
+   aw := []
+ 
+   WinGet, processName, ProcessName, A
+ 
+   DetectHiddenWindows, Off
+   AltTab_window_list(1)
+ 
+   Loop, %AltTab_ID_List_0%
+   {
+      wid := AltTab_ID_List_%A_Index%
+      WinGet, processName2, ProcessName, ahk_id %wid%
+      
+      if (processName2 != processName)
+      {
+         WinGet, exStyle2, ExStyle, ahk_id %wid%
+ 
+         if (!(exStyle2 & WS_EX_TOOLWINDOW))
+         {
+            tw.InsertAt(0, wid)
+            WinSet, ExStyle, ^0x80, ahk_id %wid%
+         }
+ 
+         if ((exStyle2 & WS_EX_APPWINDOW))
+         {
+            aw.InsertAt(0, wid)
+            WinSet, ExStyle, ^0x40000, ahk_id %wid%
+         }
+      }
+   }
+ 
+   Send {Alt Down}{Tab} ; Bring up switcher immediately
+ 
+   ; KeyWait, sc029, T.25  ; Go to next window; wait .25s before looping         
+   ; KeyWait, ``, T.25  ; Go to next window; wait .25s before looping
+   KeyWait, %tabkey%, T.25  ; Go to next window; wait .25s before looping
+   if (Errorlevel == 0)
+   {
+       While ( GetKeyState( "alt","P" ) )
+      {
+       ;   KeyWait, ``, D T.25
+         ; KeyWait, sc029, D T.25
+         KeyWait,%tabkey%, D T.25                                                ; Go to next window; wait .25s before looping
+         if (Errorlevel == 0)
+         {
+            if (GetKeyState( "Shift","P" ))
+            {
+               Send {Alt Down}{Shift Down}{Tab}
+               Sleep, 200
+            }
+            else
+            {
+               Send {Alt Down}{Tab}
+               Sleep, 200
+            }
+         }
+      }
+   }
+ 
+   Send {Alt Up}                                                                 ; Close switcher on hotkey release
+ 
+   for index, wid in tw
+   {
+      WinSet, ExStyle, ^0x80, ahk_id %wid%
+   }
+ 
+   for index, wid in aw
+   {
+      WinSet, ExStyle, ^0x40000, ahk_id %wid%
+   }
+ 
+   return
+ 
      
-     AltTab_ID_List_0 := AltTab_ID_List_
+   AltTab_window_list(excludeToolWindows)
+   {
+      global
+      WS_EX_CONTROLPARENT =0x10000
+      WS_EX_APPWINDOW =0x40000
+      WS_EX_TOOLWINDOW =0x80
+      WS_DISABLED =0x8000000
+      WS_POPUP =0x80000000
+      AltTab_ID_List_ =0
+      WinGet, Window_List, List,,, Program Manager                               ; Gather a list of running programs
+      id_list =
+      Loop, %Window_List%
+      {
+         wid := Window_List%A_Index%
+         winget, ProcName, ProcessName, ahk_id %wid%
+ 
+         WinGetTitle, wid_Title, ahk_id %wid%
+         WinGet, Style, Style, ahk_id %wid%
+         If ((Style & WS_DISABLED) or !(wid_Title))                              ; skip unimportant windows
+            Continue
+         
+         WinGet, es, ExStyle, ahk_id %wid%
+         Parent := Decimal_to_Hex( DllCall( "GetParent", "uint", wid ) )
+         WinGetClass, Win_Class, ahk_id %wid%
+         WinGet, Style_parent, Style, ahk_id %Parent%
    
-  }
-  
-  Decimal_to_Hex(var)
-  {
-    SetFormat, integer, hex
-    var += 0
-    SetFormat, integer, d
-    return var
-  }
-
-; COMMAND BOX ZOOM
+         If ((excludeToolWindows & (es & WS_EX_TOOLWINDOW))
+            or ((es & ws_ex_controlparent) and ! (Style & WS_POPUP) and !(Win_Class ="#32770") and ! (es & WS_EX_APPWINDOW)) ; pspad child window excluded
+            or ((Style & WS_POPUP) and (Parent) and ((Style_parent & WS_DISABLED) =0))) ; notepad find window excluded ; note - some windows result in blank value so must test for zero instead of using NOT operator!
+            continue
+ 
+         AltTab_ID_List_ ++
+         AltTab_ID_List_%AltTab_ID_List_% :=wid
+      }  
+      
+      AltTab_ID_List_0 := AltTab_ID_List_
+    
+   }
+   
+   Decimal_to_Hex(var)
+   {
+     SetFormat, integer, hex
+     var += 0
+     SetFormat, integer, d
+     return var
+   }
+ 
+ ; COMMAND BOX ZOOM -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
   CBzoomOut:
     fsz := GC("CBfsz", "10")
