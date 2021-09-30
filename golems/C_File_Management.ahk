@@ -42,42 +42,20 @@
     return % p
   }
 
-; SAVE PATHS ___________________________________________________________________
+; OPEN|SAVE PATHS HOTKEYS ______________________________________________________
+  ; golems\_paths.ahk contains 
   
-  ; command box
-  :X:+e~win::                                                                  ;FileExplorer; save file or folder paths
-  :X:+e1~win::  
-  :X:+e2~win::  
-  :X:+e3~win::  
-  :X:+e4~win::  
-  :X:+e5~win::  
-  :X:+e6~win::  
-  :X:+e7~win::  
-  :X:+e8~win::  
-  :X:+e9~win::  
-
-  :X:+F~win::   
-  :X:+F1~win::  
-  :X:+F2~win::  
-  :X:+F3~win::  
-  :X:+F4~win::  
-  :X:+F5~win::  
-  :X:+F6~win::  
-  :X:+F7~win::  
-  :X:+F8~win::  
-  :X:+F9~win::  SP(trim(userinput, "+") . "_path")
-
   ; hotkey    
-  +>^esc::      SP("E_path")                                                   ;FileExplorer; file|folder save path for >^esc
-  +>^F1::                                                                      ;FileExplorer; file|folder save path for >^F1                                   
-  +>^F2::                                                                      ;FileExplorer; file|folder save path for >^F2                                   
-  +>^F3::                                                                      ;FileExplorer; file|folder save path for >^F3                                   
-  +>^F4::                                                                      ;FileExplorer; file|folder save path for >^F4
-  +>^F5::                                                                      ;FileExplorer; file|folder save path for >^F5
-  +>^F6::                                                                      ;FileExplorer; file|folder save path for >^F6
-  +>^F7::                                                                      ;FileExplorer; file|folder save path for >^F7
-  +>^F8::                                                                      ;FileExplorer; file|folder save path for >^F8
-  +>^F9::       SP(ltrim(A_ThisHotkey, "+>^") . "_path")                       ;FileExplorer; file|folder save path for >^F8
+  +>^esc::      SP("E_path")                                                   ;FileExplorer; file|folder save E_path 
+  +>^F1::                                                                      ;FileExplorer; file|folder save F1_path                                 
+  +>^F2::                                                                      ;FileExplorer; file|folder save F2_path                                 
+  +>^F3::                                                                      ;FileExplorer; file|folder save F3_path                                 
+  +>^F4::                                                                      ;FileExplorer; file|folder save F4_path 
+  +>^F5::                                                                      ;FileExplorer; file|folder save F5_path 
+  +>^F6::                                                                      ;FileExplorer; file|folder save F6_path 
+  +>^F7::                                                                      ;FileExplorer; file|folder save F7_path 
+  +>^F8::                                                                      ;FileExplorer; file|folder save F8_path 
+  +>^F9::       SP(ltrim(A_ThisHotkey, "+>^") . "_path")                       ;FileExplorer; file|folder save F9_path 
 
 ; FILE EXPLORER CONVENIENCE ____________________________________________________
 
@@ -86,19 +64,19 @@
   !u::          send !{up}                                                      ;FileExplorer: up one folder level  
   !i::          send !{left}                                                    ;FileExplorer: prev folder
   !o::          send !{right}                                                   ;FileExplorer: forward folder
-  !z::          ToggleNavPane("alt")                                            ;FileExplorer: toggle navigation plane 
+  !z::          ToggleNavPane()                                                 ;FileExplorer: toggle navigation plane 
   ^p::          Send {alt down}p{alt up}                                        ;FileExplorer: toggle preview plane
   !w::          ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FileExplorer: move focus to navigation pane
   !e::          ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FileExplorer: move focus to current folder pane
   $!r::         Send {F2}                                                       ;FileExplorer: rename file
-  ^u::          ToggleOpt("ctrl","vg{up 4}")                                    ;FileExplorer: group by name|remove grouping toggle
-  ^o::          ToggleOpt("ctrl","vg{down 2}")                                  ;FileExplorer: group by file type
-  ^i::          ToggleOpt("ctrl","vg{down 1}")                                  ;FileExplorer: group by date modified
-  ^y::          ToggleOpt("ctrl","vg{down 4}")                                  ;FileExplorer: group by date created
-  ^j::          ToggleOpt("ctrl","vo")                                          ;FileExplorer: sort by name
-  ^k::          ToggleOpt("ctrl","vo{down}")                                    ;FileExplorer: sort by date modified
-  ^l::          ToggleOpt("ctrl","vo{down 2}")                                  ;FileExplorer: sort by type
-  ^h::          ToggleOpt("ctrl","vo{down 3}")                                  ;FileExplorer: sort by size
+  ^u::          ToggleOpt("vg{up 4}")                                           ;FileExplorer: group by name|remove grouping toggle
+  ^o::          ToggleOpt("vg{down 2}")                                         ;FileExplorer: group by file type
+  ^i::          ToggleOpt("vg{down 1}")                                         ;FileExplorer: group by date modified
+  ^y::          ToggleOpt("vg{down 4}")                                         ;FileExplorer: group by date created
+  ^j::          ToggleOpt("vo")                                                 ;FileExplorer: sort by name
+  ^k::          ToggleOpt("vo{down}")                                           ;FileExplorer: sort by date modified
+  ^l::          ToggleOpt("vo{down 2}")                                         ;FileExplorer: sort by type
+  ^h::          ToggleOpt("vo{down 3}")                                         ;FileExplorer: sort by size
   !SC027::      DetailedView()                                                  ;FileExplorer| detailed file info with resized columnsnmn
   $+!c::        clipboard := Explorer_GetSelection()                            ;FileExplorer| store file path(s) of selected file(s) in clipboard
   !s::          SelectByRegEx()                                                 ;FileExplorer| select all files matching regex pattern

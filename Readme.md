@@ -818,12 +818,11 @@ Paths() {  ; initializes 2-D array to feed to Function Box
     return % p
 } 
 
-; creates commands valid in CB or FB to save paths to config.ini for selected 
+; creates commands in CB and FB to save paths to config.ini for selected 
 ; (1) file|folder in file explorer 
 ; (2) URL text starting with "http" 
 :X:+e~win::                                            
 :X:+F1~win::  
-
 :X:+F2~win::  
 :X:+F3~win::  
 :X:+F4~win::  

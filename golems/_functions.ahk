@@ -2,45 +2,31 @@
   
   ChangeFont := RegisterCallback("ChangeFont")
   short := 150, med := 300, long := 1000
-
-  C := { "lgreen"      : "CEDFBF"
-       , "SeaGreen"    : "CFE2CF"
-       , "lblue"       : "BED7D6"
-       , "lyellow"     : "FCE28A"
-       , "lpurple"     : "CDC9D9"
-       , "dyellow"     : "FFA404"
-       , "dgreen"      : "013220"
-       , "black"       : "000000"
-       , "white"       : "FFFFFF"
-       , "red"         : "FF0000"
-       , "lcoral"      : "FFA07A" 
-       , "OldLace"     : "FDF5E6"
-       , "MintCream"   : "F5FFFA" 
-       , "AliceBlue"   : "F0F8FF" 
-       , "AntiqueWhite" : "FAEBD7"
-       , "Linen"       : "FAF0E6" 
-       , "Buttercream" : "EFE1CE" 
-       , "WhiteSmoke"  : "F5F5F5"
-       , "AliceBlue"   : "F0F8FF"
-       , "GhostWhite"  : "F8F8FF"
-       , "green"       : "107A40"
-       , "navy"        : "000080"
-       , "blue"        : "0000FF"
-       , "purple"      : "800080"
-       , "lbrown"      : "DFD0BF"
-       , "bgreen"      : "29524A"
-       , "lsalmon"     : "ffc8b3"
-       , "pink"        : "F6E1E0"
-       , "bwhite"      : "F6F7F1"
-       , "lorange"     : "FFDEAD"
-       , "LemonChiffon": "FFFACD"
-       , "vlorange"    : "ffe4b3"
-       , "dblue"       : "0A244C"
-       , "rblue"       : "165CAA"
-       , "pbrown"      : "D4C4B5"
-       , "dgrey"       : "525252"
-       , "onyx"        : "353839" }
-
+  C := { "AliceBlue"    : "F0F8FF"   ,   "LemonChiffon" : "FFFACD"
+       , "Bgreen"       : "29524A"   ,   "Lgreen"       : "CEDFBF"
+       , "BGyellow"     : "FFFFE0"   ,   "Linen"        : "FAF0E6"
+       , "Black"        : "000000"   ,   "Lorange"      : "FFDEAD"
+       , "Blue"         : "0000FF"   ,   "Lpurple"      : "CDC9D9"
+       , "BurntUmber"   : "330000"   ,   "Lsalmon"      : "ffc8b3"
+       , "Buttercream"  : "EFE1CE"   ,   "Lyellow"      : "FCE28A"
+       , "Bwhite"       : "F6F7F1"   ,   "Midnightblue" : "000033"
+       , "Chrome"       : "E8F1D4"   ,   "MintCream"    : "F5FFFA"
+       , "Cornsilk"     : "FFF8DC"   ,   "Navy"         : "000080"
+       , "Cyan"         : "00FFFF"   ,   "OldLace"      : "FDF5E6"
+       , "Dblue"        : "093145"   ,   "OldWhite"     : "FAEBD7"
+       , "Dgreen"       : "013220"   ,   "Onyx"         : "353839"
+       , "Dgrey"        : "525252"   ,   "Pbrown"       : "D4C4B5"
+       , "Dpurple"      : "330033"   ,   "Pink"         : "F6E1E0"
+       , "Drkcherryred" : "330000"   ,   "Purple"       : "800080"
+       , "Dyellow"      : "FFA404"   ,   "RawUmber"     : "333300"
+       , "GhostWhite"   : "F8F8FF"   ,   "Rblue"        : "165CAA"
+       , "Green"        : "107A40"   ,   "Red"          : "FF0000"
+       , "KashmirGreen" : "003300"   ,   "SeaGreen"     : "CFE2CF"
+       , "Lblue"        : "BED7D6"   ,   "Silver"       : "CCCCCC"
+       , "Lbrown"       : "DFD0BF"   ,   "Vlorange"     : "ffe4b3"
+       , "Lcoral"       : "FFA07A"   ,   "White"        : "FFFFFF"
+       , "Ldaisy"       : "EFD469"   ,   "WhiteSmoke"   : "F5F5F5" }
+  
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and open + save dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW                                      ; https://www.autohotkey.com/boards/viewtopic.php?t=28347
   GroupAdd, FileListers, ahk_class #32770, ShellView
@@ -51,7 +37,7 @@
   GroupAdd, browsers, ahk_exe firefox.exe
         
 
-; WINDOW MANAGEMENT ____________________________________________________________
+; WINDOW MANAGEMENT ____________________________________________________________x
 
   MoveWin(Q = "TL", ha = 8, wa = 8) {
     global config_path, CB_hwnd
@@ -66,27 +52,31 @@
 
     switch Q
     {
-        case "F" ,"0Maximize"             : x := x      , y := y       , w := w  , h := h                   
-        case "TL","1TopLeft"              : x := x      , y := y       , w := hw , h := hh    
-        case "TR","1TopRight"             : x := x+hw   , y := y       , w := hw , h := hh    
-        case "BL","2BottomLeft"           : x := x      , y := y+hh    , w := hw , h := hh    
-        case "BR","2BottomRight"          : x := x+hw   , y := y+hh    , w := hw , h := hh    
-        case "L" ,"0LeftHalf"             : x := x      , y := y       , w := hw , h := h     
-        case "R" ,"0RightHalf"            : x := x+hw   , y := y       , w := hw , h := h     
-        case "T" ,"0TopHalf"              : x := x      , y := y       , w := w  , h := hh    
-        case "B" ,"0BottomHalf"           : x := x      , y := y+hh    , w := w  , h := hh    
-        case "LS","3LeftHalfSmall"        : x := x      , y := y       , w := qw , h := h     
-        case "RS","3RightHalfSmall"       : x := x+3*qw , y := y       , w := qw , h := h     
-        case "TS","4TopHalfSmall"         : x := x      , y := y       , w := w  , h := qh    
-        case "BS","4BottomHalfSmall"      : x := x      , y := y+hh+qh , w := w  , h := qh    
-        case "L1","L1TopLeftSmall"        : x := x      , y := y       , w := hw , h := qh    
-        case "L2","L2TopMidLeftSmall"     : x := x      , y := y+qh    , w := hw , h := qh    
-        case "L3","L3BottomMidLeftSmall"  : x := x      , y := y+hh    , w := hw , h := qh    
-        case "L4","L4BottomLeftSmall"     : x := x      , y := y+3*qh  , w := hw , h := qh    
-        case "R1","R1TopRightSmall"       : x := x+hw   , y := y       , w := hw , h := qh    
-        case "R2","R2TopMidRightSmall"    : x := x+hw   , y := y+qh    , w := hw , h := qh    
-        case "R3","R3BottomMidRightSmall" : x := x+hw   , y := y+hh    , w := hw , h := qh    
-        case "R4","R4BottomRightSmall"    : x := x+hw   , y := y+3*qh  , w := hw , h := qh    
+        case "F" ,"0Maximize"             : x := x      , y := y       , w := w    , h := h                   
+        case "TL","1TopLeft"              : x := x      , y := y       , w := hw   , h := hh    
+        case "TR","1TopRight"             : x := x+hw   , y := y       , w := hw   , h := hh    
+        case "BL","2BottomLeft"           : x := x      , y := y+hh    , w := hw   , h := hh    
+        case "BR","2BottomRight"          : x := x+hw   , y := y+hh    , w := hw   , h := hh    
+        case "L" ,"0LeftHalf"             : x := x      , y := y       , w := hw   , h := h     
+        case "R" ,"0RightHalf"            : x := x+hw   , y := y       , w := hw   , h := h     
+        case "T" ,"0TopHalf"              : x := x      , y := y       , w := w    , h := hh    
+        case "B" ,"0BottomHalf"           : x := x      , y := y+hh    , w := w    , h := hh    
+        case "LS","3LeftHalfSmall"        : x := x      , y := y       , w := qw   , h := h
+        case "RS","3RightHalfSmall"       : x := x+3*qw , y := y       , w := qw   , h := h
+        case "TS","4TopHalfSmall"         : x := x      , y := y       , w := w    , h := qh
+        case "BS","4BottomHalfSmall"      : x := x      , y := y+hh+qh , w := w    , h := qh
+        case "L1a","L1TopLeftSmall"       : x := x      , y := y       , w := hw   , h := qh
+        case "L1","L1aTopLeftSmall"       : x := x      , y := y       , w := qw   , h := hh
+        case "L2","L2TopMidLeftSmall"     : x := x      , y := y+qh    , w := hw   , h := qh
+        case "L3","L3BottomMidLeftSmall"  : x := x      , y := y+hh    , w := hw   , h := qh
+        case "L4a","L4BottomLeftSmall"    : x := x      , y := y+3*qh  , w := hw   , h := qh
+        case "L4","L4aBottomLeftSmall"    : x := x      , y := y+hh    , w := qw   , h := hh
+        case "R1a","R1aTopRightSmall"      : x := x+hw   , y := y       , w := hw   , h := qh
+        case "R1","R1TopRightSmall"      : x := x+3*qw , y := y       , w := qw , h := hh
+        case "R2","R2TopMidRightSmall"    : x := x+hw   , y := y+qh    , w := hw   , h := qh
+        case "R3","R3BottomMidRightSmall" : x := x+hw   , y := y+hh    , w := hw   , h := qh
+        case "R4a","R4aBottomRightSmall"   : x := x+hw   , y := y+3*qh  , w := hw   , h := qh
+        case "R4","R4BottomRightSmall"   : x := x+3*qw , y := y+hh    , w := qw , h := hh
         default:                                                              
             return
     }
@@ -327,6 +317,7 @@
             CalcID := CalcIDs2                                                  ; Calc is Minimized use 2nd ID
         winActivate, ahk_id %CalcID%
     }
+    CFW()
     return
   } ; activate windows calculator app
 
@@ -693,7 +684,7 @@
     ;              
     ;   
 
-    global UserInput, med, config_path, uprofile    
+    global UserInput, med, config_path, uprofile
     ; sleep ,med                                                                  ; short wait to delete hotstring
 
     TOC := (toc_dict) ? BuildTOC(toc_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
@@ -706,7 +697,7 @@
     ; IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     FB_tgt_hwnd := WinExist("A")                                                  ; store win ID of active application before calling GUI 
     
-    FunctionBoxGUI(TOC, default_title, w_color, t_color)
+    FunctionBoxGUI(TOC, default_title, w_color, t_color, input_dict, optn, grps, toc_dict, title, p*)
     ; Iniread, tgt_winID, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     ; ActivateWin("ahk_id " FB_tgt_hwnd)
     UserInput := trim(UserInput)
@@ -728,7 +719,7 @@
     return
   } ; run same function with different parameters from dictionary {"key" : "parameter"}
 
-  FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" ) {
+  FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" , input_dict="", optn="", grps="", toc_dict="", p*) {
     global FB_Menu := "", UserInput := "", FB_hwnd := ""
     static InputWidth := 170
 
@@ -736,9 +727,9 @@
     FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
     IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
     winget, output, ProcessName, A    
-    
+    reloadFB:
     Gui, +LastFound 
-    Gui, Destroy
+    Gui, fb: Destroy
 
     Gui, fb: New, ,%title%
     Gui, fb: +OwnDialogs +Owner +DPIscale +AlwaysOnTop 
@@ -773,19 +764,19 @@
     ButtonOK:
 
         Gui, fb: +LastFound
-        Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
+        ; Gui, fb: Submit                                                         ; Save the input from the user to each control's associated variable. 
+        Gui, fb: Submit, Nohide
         Gui, fb: Destroy 
         1stChar := SubStr(UserInput, 1, 1)
         2ndChar := SubStr(UserInput, 2, 1)
         if (1stChar = "+") and RegExMatch(2ndChar,"[A-Za-z]") {
             RunLabel(UserInput, "~win", FB_tgt_hwnd)
-            reload
         } else if (1stChar = ":") {
-            winclose, A
             UserInput := ltrim(UserInput, ":")
-            RunLabel(UserInput, "~win", FB_tgt_hwnd)
-            ; reload
+            tgt_hwnd := FB_tgt_hwnd
+            ProcessCommand(UserInput, "~win", title, fsz, fnt, w_color, t_color)
         }
+        SetTimer, reloadWG, -700
         return
    
     fbGuiClose:
@@ -1020,6 +1011,12 @@
   }
 
   ; MODIFY/ACCESS CONFIG.INI -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+  DC(key = "CB_Titlebar", sect = "") {
+    global config_path
+    section := sect ? sect : A_ComputerName
+    IniDelete, %config_path%, %Section% , %Key%
+  }
 
   CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
     global config_path
@@ -1539,17 +1536,17 @@
 
 ; FILE AND FOLDER ______________________________________________________________
   
-  ToggleNavPane(kw="ctrl") {
+  ToggleNavPane() {
     ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
-    KeyWait %kw%
+    KeyWait()
     Send {Alt}
     Send vn{enter}
     return
   }
 
-  ToggleOpt(kw="ctrl", optn ="", e = 1 ) {
+  ToggleOpt(optn ="", e = 1 ) {
     ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
-    KeyWait %kw%
+    KeyWait()
     Send {Alt}
     Send %optn%
     sleep 200
@@ -1629,7 +1626,7 @@
     CoordMode, Mouse, Screen 
     MouseGetPos, StartX, StartY
     sleep, med * 1.5
-    RecallMousePosClick(PosKey, "1", "right", 0) 
+    CursorRecall(PosKey, "1", "right", 0) 
 
     n := 0
     Loop {
@@ -1645,8 +1642,7 @@
   }
  
   ToggleInvisible() {
-    keywait alt
-    keywait ctrl
+    KeyWait()
     send !v
     sleep, 600
     send {h 2}
@@ -1792,7 +1788,9 @@
     } else {
         grp_ID := arguments "ahk_exe " exe_name
     }
-    WinGet, wList, List, %grp_ID%
+    
+    WinGet, wList, List, %grp_ID%,,% ((grp_ID = "ahk_exe chrome.exe") ? "Tabs Outliner" : "")        ; exclude tabs outliner tab management window if app hhhis chrome
+
     if !wList 
     {
         app_path := (exe_name = "explorer.exe" or exe_name = "cmd.exe") ? exe_name : app_path  ; cmd.exe and explorer.exe do not need filepaths
@@ -1901,8 +1899,8 @@
  
 ; YOUTUBE-DL (Python Script Wrapper) ___________________________________________
   
-  URLvidDL(path="",kw="alt") {
-    keywait, %kw%
+  URLvidDL(path="") {
+    keywait()
     global short, med
     BlockInput, on
     settimer, BlockInputTimeOut,-1000
@@ -1923,9 +1921,9 @@
     return
   }
   
-  ClickVidDL(path="", kw="shift"){
+  ClickVidDL(path=""){
     global short, med, CB_hwnd
-    keywait, %kw%
+    keywait()
     BlockInput, on
     settimer, BlockInputTimeOut,-1500
     Click, Right
@@ -1962,9 +1960,9 @@
   }
     
 
-  ClickDL(path="", kw="shift"){
+  ClickDL(path=""){
     global short, med, CB_hwnd
-    keywait, %kw%
+    keywait()
     wintitleOfActiveWindow:="ahk_id " WinActive("A")
     BlockInput, on
     settimer, BlockInputTimeOut,-1500
@@ -1999,18 +1997,58 @@
     IniWrite,%StartX% %StartY%, %config_path%, %A_ComputerName%, MousePos_%Key%
     return
   }
-  
-  RecallMousePosClick(key = "A", n = "1", lrm = "left", rtn_mouse = False) {
+
+  keyWait(k = "") {
+    switch k
+    {
+        case "alt","a":
+            KWalt:
+            if (instr(A_ThisHotKey,"alt") or instr(A_ThisHotKey,"!") or instr(A_ThisHotKey,"lalt") or instr(A_ThisHotKey,"ralt")) 
+                KeyWait, alt
+            return
+        case "ctrl","c":
+            KWctrl:
+            if (instr(A_ThisHotKey,"ctrl") or instr(A_ThisHotKey,"^") or instr(A_ThisHotKey,"lctrl") or instr(A_ThisHotKey,"rctrl")) 
+                KeyWait, ctrl
+            return
+        case "shift","s":
+            KWshift:
+            if (instr(A_ThisHotKey,"shift") or instr(A_ThisHotKey,"+") or instr(A_ThisHotKey,"lshift") or instr(A_ThisHotKey,"rshift")) 
+                KeyWait, shift
+            return
+        case "lwin","w":
+            KWwin:
+            if (instr(A_ThisHotKey,"#") or instr(A_ThisHotKey,"lwin") or instr(A_ThisHotKey,"win")) 
+                KeyWait, lwin
+            return
+        case default:
+            gosub, KWalt 
+            gosub, KWctrl 
+            gosub, KWshift
+            gosub, KWwin 
+            return
+    }
+    return
+  }
+
+  CursorRecall(key = "A", n = "1", lrm = "left", rtn_mouse = False) {
     global config_path
-    CoordMode, Mouse, Screen
-    MouseGetPos, StartX, StartY
-    IniRead, mpos, %config_path%, %A_ComputerName%, MousePos_%Key%
-    pos_array := StrSplit(mpos, " ")
-    DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
-    ; MouseMove, pos_array[1], pos_array[2]
-    Clicks(n, lrm)
-    if rtn_mouse
-        MouseMove, StartX, StartY
+    if (GC("MousePos_" Key) != "ERROR") {
+        KeyWait()
+        CoordMode, Mouse, Screen
+        MouseGetPos, StartX, StartY
+        IniRead, mpos, %config_path%, %A_ComputerName%, MousePos_%Key%
+        GC("MousePos_" Key)
+        pos_array := StrSplit(mpos, " ")
+        DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
+        ; MouseMove, pos_array[1], pos_array[2]
+        Clicks(n, lrm)
+        if rtn_mouse
+            MouseMove, StartX, StartY
+        return
+    } else {
+        Click
+    }
     return
   }
  
@@ -2210,8 +2248,7 @@
     }
   }
 
-  HexToDec(Hex)
-  {
+  HexToDec(Hex) {
       if (InStr(Hex, "0x") != 1)
           Hex := "0x" Hex
       return, Hex + 0
@@ -2301,7 +2338,9 @@
   FocusResults() {
     sleep 300
     send ^m
-    Send {shift down}{tab 5}{shift up}
+    sleep 200
+    Send {shift down}{tab 7}{shift up}
+    sleep 200
     send ^m
     return
   }
@@ -2590,7 +2629,6 @@
     return
   }
 
-
   AddSpaceBeforeComment(length = "80", char = " ", lines = 1) {
     global short
     BlockInput, on
@@ -2752,150 +2790,150 @@
     return
   } 
  
-
-
-  ; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW -- -- -- -- -- -- -- -- -- -- 
-    
-  ChgInstance(switch = "capslock") {
-    global tabkey := switch
-    gosub, chgInstance~win
-    return
-  }
-
-  return ; END OF AUTOEXECUTION ... ... ... ... ... ... ... ... ... ... ... ...
-
-  ChgInstance~win:                                                              ; https://superuser.com/questions/435602/shortcut-in-windows-7-to-switch-between-same-applications-windows-like-cmd
-
-  WS_EX_TOOLWINDOW = 0x80
-  WS_EX_APPWINDOW = 0x40000
-  tw := []
-  aw := []
-
-  WinGet, processName, ProcessName, A
-
-  DetectHiddenWindows, Off
-  AltTab_window_list(1)
-
-  Loop, %AltTab_ID_List_0%
-  {
-     wid := AltTab_ID_List_%A_Index%
-     WinGet, processName2, ProcessName, ahk_id %wid%
+; EXPERIMENTAL _________________________________________________________________
+ ; SWITCH APP INSTANCES WITH THUMBNAILS PREVIEW -- -- -- -- -- -- -- -- -- -- 
      
-     if (processName2 != processName)
-     {
-        WinGet, exStyle2, ExStyle, ahk_id %wid%
-
-        if (!(exStyle2 & WS_EX_TOOLWINDOW))
-        {
-           tw.InsertAt(0, wid)
-           WinSet, ExStyle, ^0x80, ahk_id %wid%
-        }
-
-        if ((exStyle2 & WS_EX_APPWINDOW))
-        {
-           aw.InsertAt(0, wid)
-           WinSet, ExStyle, ^0x40000, ahk_id %wid%
-        }
-     }
-  }
-
-  Send {Alt Down}{Tab} ; Bring up switcher immediately
-
-  ; KeyWait, sc029, T.25  ; Go to next window; wait .25s before looping         
-  ; KeyWait, ``, T.25  ; Go to next window; wait .25s before looping
-  KeyWait, %tabkey%, T.25  ; Go to next window; wait .25s before looping
-  if (Errorlevel == 0)
-  {
-      While ( GetKeyState( "alt","P" ) )
-     {
-      ;   KeyWait, ``, D T.25
-        ; KeyWait, sc029, D T.25
-        KeyWait,%tabkey%, D T.25                                                ; Go to next window; wait .25s before looping
-        if (Errorlevel == 0)
-        {
-           if (GetKeyState( "Shift","P" ))
-           {
-              Send {Alt Down}{Shift Down}{Tab}
-              Sleep, 200
-           }
-           else
-           {
-              Send {Alt Down}{Tab}
-              Sleep, 200
-           }
-        }
-     }
-  }
-
-  Send {Alt Up}                                                                 ; Close switcher on hotkey release
-
-  for index, wid in tw
-  {
-     WinSet, ExStyle, ^0x80, ahk_id %wid%
-  }
-
-  for index, wid in aw
-  {
-     WinSet, ExStyle, ^0x40000, ahk_id %wid%
-  }
-
-  return
-
-    
-  AltTab_window_list(excludeToolWindows)
-  {
-     global
-     WS_EX_CONTROLPARENT =0x10000
-     WS_EX_APPWINDOW =0x40000
-     WS_EX_TOOLWINDOW =0x80
-     WS_DISABLED =0x8000000
-     WS_POPUP =0x80000000
-     AltTab_ID_List_ =0
-     WinGet, Window_List, List,,, Program Manager                               ; Gather a list of running programs
-     id_list =
-     Loop, %Window_List%
-     {
-        wid := Window_List%A_Index%
-        winget, ProcName, ProcessName, ahk_id %wid%
-
-        WinGetTitle, wid_Title, ahk_id %wid%
-        WinGet, Style, Style, ahk_id %wid%
-        If ((Style & WS_DISABLED) or !(wid_Title))                              ; skip unimportant windows
-           Continue
-        
-        WinGet, es, ExStyle, ahk_id %wid%
-        Parent := Decimal_to_Hex( DllCall( "GetParent", "uint", wid ) )
-        WinGetClass, Win_Class, ahk_id %wid%
-        WinGet, Style_parent, Style, ahk_id %Parent%
-  
-        If ((excludeToolWindows & (es & WS_EX_TOOLWINDOW))
-           or ((es & ws_ex_controlparent) and ! (Style & WS_POPUP) and !(Win_Class ="#32770") and ! (es & WS_EX_APPWINDOW)) ; pspad child window excluded
-           or ((Style & WS_POPUP) and (Parent) and ((Style_parent & WS_DISABLED) =0))) ; notepad find window excluded ; note - some windows result in blank value so must test for zero instead of using NOT operator!
-           continue
-
-        AltTab_ID_List_ ++
-        AltTab_ID_List_%AltTab_ID_List_% :=wid
-     }  
+   ChgInstance(switch = "capslock") {
+     global tabkey := switch
+     gosub, chgInstance~win
+     return
+   }
+ 
+   return ; END OF AUTOEXECUTION ... ... ... ... ... ... ... ... ... ... ... ...
+ 
+   ChgInstance~win:                                                              ; https://superuser.com/questions/435602/shortcut-in-windows-7-to-switch-between-same-applications-windows-like-cmd
+ 
+   WS_EX_TOOLWINDOW = 0x80
+   WS_EX_APPWINDOW = 0x40000
+   tw := []
+   aw := []
+ 
+   WinGet, processName, ProcessName, A
+ 
+   DetectHiddenWindows, Off
+   AltTab_window_list(1)
+ 
+   Loop, %AltTab_ID_List_0%
+   {
+      wid := AltTab_ID_List_%A_Index%
+      WinGet, processName2, ProcessName, ahk_id %wid%
+      
+      if (processName2 != processName)
+      {
+         WinGet, exStyle2, ExStyle, ahk_id %wid%
+ 
+         if (!(exStyle2 & WS_EX_TOOLWINDOW))
+         {
+            tw.InsertAt(0, wid)
+            WinSet, ExStyle, ^0x80, ahk_id %wid%
+         }
+ 
+         if ((exStyle2 & WS_EX_APPWINDOW))
+         {
+            aw.InsertAt(0, wid)
+            WinSet, ExStyle, ^0x40000, ahk_id %wid%
+         }
+      }
+   }
+ 
+   Send {Alt Down}{Tab} ; Bring up switcher immediately
+ 
+   ; KeyWait, sc029, T.25  ; Go to next window; wait .25s before looping         
+   ; KeyWait, ``, T.25  ; Go to next window; wait .25s before looping
+   KeyWait, %tabkey%, T.25  ; Go to next window; wait .25s before looping
+   if (Errorlevel == 0)
+   {
+       While ( GetKeyState( "alt","P" ) )
+      {
+       ;   KeyWait, ``, D T.25
+         ; KeyWait, sc029, D T.25
+         KeyWait,%tabkey%, D T.25                                                ; Go to next window; wait .25s before looping
+         if (Errorlevel == 0)
+         {
+            if (GetKeyState( "Shift","P" ))
+            {
+               Send {Alt Down}{Shift Down}{Tab}
+               Sleep, 200
+            }
+            else
+            {
+               Send {Alt Down}{Tab}
+               Sleep, 200
+            }
+         }
+      }
+   }
+ 
+   Send {Alt Up}                                                                 ; Close switcher on hotkey release
+ 
+   for index, wid in tw
+   {
+      WinSet, ExStyle, ^0x80, ahk_id %wid%
+   }
+ 
+   for index, wid in aw
+   {
+      WinSet, ExStyle, ^0x40000, ahk_id %wid%
+   }
+ 
+   return
+ 
      
-     AltTab_ID_List_0 := AltTab_ID_List_
+   AltTab_window_list(excludeToolWindows)
+   {
+      global
+      WS_EX_CONTROLPARENT =0x10000
+      WS_EX_APPWINDOW =0x40000
+      WS_EX_TOOLWINDOW =0x80
+      WS_DISABLED =0x8000000
+      WS_POPUP =0x80000000
+      AltTab_ID_List_ =0
+      WinGet, Window_List, List,,, Program Manager                               ; Gather a list of running programs
+      id_list =
+      Loop, %Window_List%
+      {
+         wid := Window_List%A_Index%
+         winget, ProcName, ProcessName, ahk_id %wid%
+ 
+         WinGetTitle, wid_Title, ahk_id %wid%
+         WinGet, Style, Style, ahk_id %wid%
+         If ((Style & WS_DISABLED) or !(wid_Title))                              ; skip unimportant windows
+            Continue
+         
+         WinGet, es, ExStyle, ahk_id %wid%
+         Parent := Decimal_to_Hex( DllCall( "GetParent", "uint", wid ) )
+         WinGetClass, Win_Class, ahk_id %wid%
+         WinGet, Style_parent, Style, ahk_id %Parent%
    
-  }
-  
-  Decimal_to_Hex(var)
-  {
-    SetFormat, integer, hex
-    var += 0
-    SetFormat, integer, d
-    return var
-  }
-
-; COMMAND BOX ZOOM
+         If ((excludeToolWindows & (es & WS_EX_TOOLWINDOW))
+            or ((es & ws_ex_controlparent) and ! (Style & WS_POPUP) and !(Win_Class ="#32770") and ! (es & WS_EX_APPWINDOW)) ; pspad child window excluded
+            or ((Style & WS_POPUP) and (Parent) and ((Style_parent & WS_DISABLED) =0))) ; notepad find window excluded ; note - some windows result in blank value so must test for zero instead of using NOT operator!
+            continue
+ 
+         AltTab_ID_List_ ++
+         AltTab_ID_List_%AltTab_ID_List_% :=wid
+      }  
+      
+      AltTab_ID_List_0 := AltTab_ID_List_
+    
+   }
+   
+   Decimal_to_Hex(var)
+   {
+     SetFormat, integer, hex
+     var += 0
+     SetFormat, integer, d
+     return var
+   }
+ 
+ ; COMMAND BOX ZOOM -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
   CBzoomOut:
     fsz := GC("CBfsz", "10")
     fsz -= 2
     fsz := (fsz < 5) ? 5 : (fsz > 20) ? 20 : fsz
-    Gui, 2:Font, s%fsz%
+    Gui, 2:font,% "c" GC("CBt_color") " s" fsz " w" GC("CBfwt", "500"), % GC("CBfnt", "Consolas")
+    ; Gui, 2:Font, s%fsz%
     DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
     CC("CBfsz", fsz)
     return
@@ -2904,7 +2942,8 @@
     fsz := GC("CBfsz", "10")
     fsz += 1
     fsz := (fsz < 5) ? 5 : (fsz > 20) ? 20 : fsz
-    Gui, 2:Font, s%fsz%
+    Gui, 2:font,% "c" GC("CBt_color") " s" fsz " w" GC("CBfwt", "500"), % GC("CBfnt", "Consolas")
+    ; Gui, 2:Font, s%fsz%
     DllCall("EnumChildWindows", "Ptr", CB_hwnd, "Ptr", ChangeFont)
     CC("CBfsz", fsz)
     return
@@ -2914,3 +2953,332 @@
     return true
   }
 
+; SAVE PATHS HOTSTRING INITIALIZATION __________________________________________
+  ; declaring hotstrings via hotstring() can be done programmatically, but gosub
+  ; will not recognize those hotstrings as lables, therefore won't be recognized by
+  ; command|function boxes.
+
+  :X:+A~win::   
+  :X:+A0~win::  
+  :X:+A1~win::  
+  :X:+A2~win::  
+  :X:+A3~win::  
+  :X:+A4~win::  
+  :X:+A5~win::  
+  :X:+A6~win::  
+  :X:+A7~win::  
+  :X:+A8~win::  
+  :X:+A9~win::  
+  
+  :X:+B~win:: 
+  :X:+B0~win:: 
+  :X:+B1~win:: 
+  :X:+B2~win:: 
+  :X:+B3~win:: 
+  :X:+B4~win:: 
+  :X:+B5~win:: 
+  :X:+B6~win:: 
+  :X:+B7~win:: 
+  :X:+B8~win:: 
+  :X:+B9~win:: 
+  
+  :X:+C~win::   
+  :X:+C0~win::  
+  :X:+C1~win::  
+  :X:+C2~win::  
+  :X:+C3~win::  
+  :X:+C4~win::  
+  :X:+C5~win::  
+  :X:+C6~win::  
+  :X:+C7~win::  
+  :X:+C8~win::  
+  :X:+C9~win::  
+  
+  :X:+D~win:: 
+  :X:+D0~win:: 
+  :X:+D1~win:: 
+  :X:+D2~win:: 
+  :X:+D3~win:: 
+  :X:+D4~win:: 
+  :X:+D5~win:: 
+  :X:+D6~win:: 
+  :X:+D7~win:: 
+  :X:+D8~win:: 
+  :X:+D9~win:: 
+  
+  :X:+E~win:: 
+  :X:+E0~win:: 
+  :X:+E1~win:: 
+  :X:+E2~win:: 
+  :X:+E3~win:: 
+  :X:+E4~win:: 
+  :X:+E5~win:: 
+  :X:+E6~win:: 
+  :X:+E7~win:: 
+  :X:+E8~win:: 
+  :X:+E9~win:: 
+  
+  :X:+F~win:: 
+  :X:+F0~win:: 
+  :X:+F1~win:: 
+  :X:+F2~win:: 
+  :X:+F3~win:: 
+  :X:+F4~win:: 
+  :X:+F5~win:: 
+  :X:+F6~win:: 
+  :X:+F7~win:: 
+  :X:+F8~win:: 
+  :X:+F9~win:: 
+  
+  :X:+G~win::   
+  :X:+G0~win::  
+  :X:+G1~win::                              
+  :X:+G2~win::  
+  :X:+G3~win::  
+  :X:+G4~win::  
+  :X:+G5~win::  
+  :X:+G6~win::  
+  :X:+G7~win::  
+  :X:+G8~win::  
+  :X:+G9~win::  
+  
+  :X:+H~win::   
+  :X:+H0~win::  
+  :X:+H1~win::  
+  :X:+H2~win::  
+  :X:+H3~win::  
+  :X:+H4~win::  
+  :X:+H5~win::  
+  :X:+H6~win::  
+  :X:+H7~win::  
+  :X:+H8~win::  
+  :X:+H9~win::  
+  
+  :X:+I~win:: 
+  :X:+I0~win:: 
+  :X:+I1~win:: 
+  :X:+I2~win:: 
+  :X:+I3~win:: 
+  :X:+I4~win:: 
+  :X:+I5~win:: 
+  :X:+I6~win:: 
+  :X:+I7~win:: 
+  :X:+I8~win:: 
+  :X:+I9~win:: 
+  
+  
+  :X:+J~win::   
+  :X:+J0~win::  
+  :X:+J1~win::  
+  :X:+J2~win::  
+  :X:+J3~win::  
+  :X:+J4~win::  
+  :X:+J5~win::  
+  :X:+J6~win::  
+  :X:+J7~win::  
+  :X:+J8~win::  
+  :X:+J9~win::  
+  
+  :X:+K~win:: 
+  :X:+K0~win:: 
+  :X:+K1~win:: 
+  :X:+K2~win:: 
+  :X:+K3~win:: 
+  :X:+K4~win:: 
+  :X:+K5~win:: 
+  :X:+K6~win:: 
+  :X:+K7~win:: 
+  :X:+K8~win:: 
+  :X:+K9~win:: 
+  
+  :X:+L~win:: 
+  :X:+L0~win:: 
+  :X:+L1~win:: 
+  :X:+L2~win:: 
+  :X:+L3~win:: 
+  :X:+L4~win:: 
+  :X:+L5~win:: 
+  :X:+L6~win:: 
+  :X:+L7~win:: 
+  :X:+L8~win:: 
+  :X:+L9~win:: 
+  
+  :X:+M~win:: 
+  :X:+M0~win:: 
+  :X:+M1~win:: 
+  :X:+M2~win:: 
+  :X:+M3~win:: 
+  :X:+M4~win:: 
+  :X:+M5~win:: 
+  :X:+M6~win:: 
+  :X:+M7~win:: 
+  :X:+M8~win:: 
+  :X:+M9~win::
+  
+  :X:+N~win:: 
+  :X:+N0~win:: 
+  :X:+N1~win:: 
+  :X:+N2~win:: 
+  :X:+N3~win:: 
+  :X:+N4~win:: 
+  :X:+N5~win:: 
+  :X:+N6~win:: 
+  :X:+N7~win:: 
+  :X:+N8~win:: 
+  :X:+N9~win:: 
+  
+  :X:+s~win::   
+  :X:+S0~win:: 
+  :X:+S1~win:: 
+  :X:+S2~win:: 
+  :X:+S3~win:: 
+  :X:+S4~win:: 
+  :X:+S5~win:: 
+  :X:+S6~win:: 
+  :X:+S7~win:: 
+  :X:+S8~win:: 
+  :X:+S9~win:: 
+  
+  :X:+O~win:: 
+  :X:+O0~win:: 
+  :X:+O1~win:: 
+  :X:+O2~win:: 
+  :X:+O3~win:: 
+  :X:+O4~win:: 
+  :X:+O5~win:: 
+  :X:+O6~win:: 
+  :X:+O7~win:: 
+  :X:+O8~win:: 
+  :X:+O9~win:: 
+  
+  :X:+P~win:: 
+  :X:+P0~win:: 
+  :X:+P1~win:: 
+  :X:+P2~win:: 
+  :X:+P3~win:: 
+  :X:+P4~win:: 
+  :X:+P5~win:: 
+  :X:+P6~win:: 
+  :X:+P7~win:: 
+  :X:+P8~win:: 
+  :X:+P9~win:: 
+  
+  :X:+Q~win:: 
+  :X:+Q0~win:: 
+  :X:+Q1~win:: 
+  :X:+Q2~win:: 
+  :X:+Q3~win:: 
+  :X:+Q4~win:: 
+  :X:+Q5~win:: 
+  :X:+Q6~win:: 
+  :X:+Q7~win:: 
+  :X:+Q8~win:: 
+  :X:+Q9~win:: 
+  
+  :X:+R~win:: 
+  :X:+R0~win:: 
+  :X:+R1~win:: 
+  :X:+R2~win:: 
+  :X:+R3~win:: 
+  :X:+R4~win:: 
+  :X:+R5~win:: 
+  :X:+R6~win:: 
+  :X:+R7~win:: 
+  :X:+R8~win:: 
+  :X:+R9~win:: 
+  
+  :X:+S~win:: 
+  :X:+S0~win:: 
+  :X:+S1~win:: 
+  :X:+S2~win:: 
+  :X:+S3~win:: 
+  :X:+S4~win:: 
+  :X:+S5~win:: 
+  :X:+S6~win:: 
+  :X:+S7~win:: 
+  :X:+S8~win:: 
+  :X:+S9~win:: 
+  
+  :X:+T~win:: 
+  :X:+T0~win:: 
+  :X:+T1~win:: 
+  :X:+T2~win:: 
+  :X:+T3~win:: 
+  :X:+T4~win:: 
+  :X:+T5~win:: 
+  :X:+T6~win:: 
+  :X:+T7~win:: 
+  :X:+T8~win:: 
+  :X:+T9~win:: 
+  
+  :X:+U~win:: 
+  :X:+U0~win:: 
+  :X:+U1~win:: 
+  :X:+U2~win:: 
+  :X:+U3~win:: 
+  :X:+U4~win:: 
+  :X:+U5~win:: 
+  :X:+U6~win:: 
+  :X:+U7~win:: 
+  :X:+U8~win:: 
+  :X:+U9~win:: 
+  
+  :X:+V~win:: 
+  :X:+V0~win:: 
+  :X:+V1~win:: 
+  :X:+V2~win:: 
+  :X:+V3~win:: 
+  :X:+V4~win:: 
+  :X:+V5~win:: 
+  :X:+V6~win:: 
+  :X:+V7~win:: 
+  :X:+V8~win:: 
+  :X:+V9~win:: 
+  
+  :X:+W~win:: 
+  :X:+W0~win:: 
+  :X:+W1~win:: 
+  :X:+W2~win:: 
+  :X:+W3~win:: 
+  :X:+W4~win:: 
+  :X:+W5~win:: 
+  :X:+W6~win:: 
+  :X:+W7~win:: 
+  :X:+W8~win:: 
+  :X:+W9~win:: 
+  
+  :X:+X~win:: 
+  :X:+X0~win:: 
+  :X:+X1~win:: 
+  :X:+X2~win:: 
+  :X:+X3~win:: 
+  :X:+X4~win:: 
+  :X:+X5~win:: 
+  :X:+X6~win:: 
+  :X:+X7~win:: 
+  :X:+X8~win:: 
+  :X:+X9~win:: 
+  
+  :X:+Y~win:: 
+  :X:+Y0~win:: 
+  :X:+Y1~win:: 
+  :X:+Y2~win:: 
+  :X:+Y3~win:: 
+  :X:+Y4~win:: 
+  :X:+Y5~win:: 
+  :X:+Y6~win:: 
+  :X:+Y7~win:: 
+  :X:+Y8~win:: 
+  :X:+Y9~win:: 
+  
+  :X:+Z~win:: 
+  :X:+Z0~win:: 
+  :X:+Z1~win:: 
+  :X:+Z2~win:: 
+  :X:+Z3~win:: 
+  :X:+Z4~win:: 
+  :X:+Z5~win:: 
+  :X:+Z6~win:: 
+  :X:+Z7~win:: 
+  :X:+Z8~win:: SP(trim(userinput, "+") . "_path") 
+#IF

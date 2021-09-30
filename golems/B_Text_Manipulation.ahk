@@ -71,8 +71,12 @@
   !k::                   sendinput {up}                                         ;Navigation| Down  
 
 ; MOUSE FUNCTION _______________________________________________________________
-  *#d::                  SaveMousPos("r",1)                                     ;MouseFn: Left click and save mouse position
-  *^#d::                 RecallMousePosClick("r", 0)                            ;MouseFn: return to saved mouse position (change 0 to number of clicks) 
+  *#i::                                                                         ;MouseFn: return to saved mouse position and click (left click if no saved position found)
+  *#d::                  CursorRecall(substr(A_ThisHotkey,0), 1)                ;MouseFn: return to saved mouse position and click (left click if no saved position found)
+  ^#i::                                                                         ;MouseFn: Left click and save mouse position
+  ^#d::                  SaveMousPos(substr(A_ThisHotkey,0),1)                  ;MouseFn: Left click and save mouse position
+  !#i::                                                                         ;MouseFn: erase saved curor position 
+  !#d::                  DC("MousePos_" substr(A_ThisHotkey,0))                 ;MouseFn: erase saved curor position
   #f::                   Clicks(2)                                              ;MouseFn: 2 Left clicks (select word)
   ^#f::                  Clicks(3)                                              ;MouseFn: 3 Left clicks (select line)
   <!mbutton::            s("{blind}"),Clicks(2), s("^v")                        ;MouseFn: click twice, paste clipboard        

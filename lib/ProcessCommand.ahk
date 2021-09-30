@@ -29,7 +29,6 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     sleep, long * 0.8
                     C_input := ">"
                     goto, addTextToClipboard
-
                 } else if (C_input = ">") {                                     ;# append|prepend selected text to clipboard                                  
                     ActivateWin("ahk_id " tgt_hwnd), s("") 
                     text_to_add := trim(clip()," `t`n`r")
@@ -44,7 +43,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     sleep, long * 0.8
                     C_input := ">"
                     goto, addTextToClipboard
-                
+                    
                 } else if (substr(C_input,1,1) = ">") {                         ;# append|prepend clipboard to file                     
                     C_input := trim(C_input,">")
                     SplitPath,C_input, FileName, Dir, Extension, NameNoExt
@@ -58,8 +57,15 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     while (ErrorLevel)
                         sleep 50
                     goto, addTextToFile
-                
-                   } else if RegExMatch(C_input, " .+") {                          ;# append|prepend 1st file to 2nd file                         
+                } else if (instr(UserInput, ":") and !instr(UserInput, ">")) {  ;# append|prepend manually entered text to file            
+                    dPos        := InStr(C_input, ":")
+                    text_to_add := substr(C_input, dPos+1)
+                    file_path   := substr(C_input, 1, dPos-1)
+                    SplitPath, file_path, , Dir, Extension, NameNoExt 
+                    sleep, long * 0.8
+                    goto, addTextToFile
+
+                } else if RegExMatch(C_input, " .+") {                          ;# append|prepend 1st file to 2nd file                         
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[2], oFileName, oDir, oExtension, oNameNoExt 
                     SplitPath,% arr[1], nFileName, nDir, nExtension, nNameNoExt 
@@ -358,6 +364,13 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 arr := StrSplit(C_input, "~")
                 FillChar(arr[2], arr[1], 0)
                 return 
+            case "I":                                                           ; change retrieve path letter variable  
+                if (2ndChar = ":") 
+                    CC("chr2_path", ConvertUpper(ltrim(C_input,":"),0))
+                else
+                    CC("chr_path", ConvertUpper(trim(C_input),0))
+                PU("Pinned Letter Path: " GC((2ndChar = ":") ? "chr2_path" : "chr_path"))
+                return 1
             Case "G":                                                           ; run function (broken right now)
                 
                 C_First2chr := SubStr(C_input, 1, 2) 
