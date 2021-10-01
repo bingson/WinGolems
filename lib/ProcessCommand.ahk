@@ -5,7 +5,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
     1stChar := SubStr(UserInput, 1, 1), 2ndChar := SubStr(UserInput, 2 , 1)
     f_path := A_ScriptDir "\mem_cache\" 
 
-    if RegExMatch(1stChar,"[0-9A-Z\?jk:]") 
+    ; if RegExMatch(1stChar,"[0-9A-Z\?jk:]") 
+    if (1stChar ~= "[0-9A-Z\?jk:]")
     {
         C_input := SubStr(UserInput, 2)                                         ; everything after the first character
         SplitPath, C_input, FileName, Dir, Extension, NameNoExt                 ; parses everything after the command character as a file path 
@@ -17,7 +18,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 C_input := 1stChar
                 gosub, Load
                 return 1
-            Case "?":                                                           ; load help.txt file in display
+            Case "?":                                                           ; load help.txt file in display                                                    
                 NameNoExt := "help"
                 C_input := "help"
                 gosub, Load
@@ -65,7 +66,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     sleep, long * 0.8
                     goto, addTextToFile
 
-                } else if RegExMatch(C_input, " .+") {                          ;# append|prepend 1st file to 2nd file                         
+                } else if (C_input ~= " .+") {                          ;# append|prepend 1st file to 2nd file; RegExMatch(C_input, " .+")                         
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[2], oFileName, oDir, oExtension, oNameNoExt 
                     SplitPath,% arr[1], nFileName, nDir, nExtension, nNameNoExt 
@@ -178,7 +179,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     dir := (InStr(dir, ":")) ? "" : dir
                     WriteToCache(namenoext,,dir,clipboard)   
                     goto, load
-                } else If ((SubStr(C_input, 0) == ">") or (SubStr(C_input, 0) == ":")) {  ; if C_input ends in ">" overwrite clipboard with file contents                           
+                } else If ((SubStr(C_input, 0) == ">") or (SubStr(C_input, 0) == ":")) {                           ; if C_input ends in ">" overwrite clipboard with file contents                           
                     
                     C_input := trim(C_input, " >:")
                     SplitPath, C_input, , Dir, , NameNoExt 
@@ -187,7 +188,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                     goto, load
                 } else If (InStr(SubStr(C_input, 2), ":")) {
                     dPos        := InStr(C_input, ":")
-                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension, NameNoExt                 ; parses everything after the command character as a file path 
+                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension,                               ; parses everything after the command character as a file pathNameNoExt               
                     dir := dir ? dir . "\" : ""
                     text_to_add := substr(C_input, dPos+1)
                     
@@ -473,6 +474,8 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                 sleep 400
                 SelectByRegEx(C_input)
                 return
+            Case "X":
+                    
             Case "Y":
                 if (SubStr(C_input, 1, 2) = "s:") {
                     C3_Remainder := SubStr(C_input, 3)

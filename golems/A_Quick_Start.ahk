@@ -111,6 +111,28 @@
   +#2::                                                                         ;Mem: add selected text to the bottom of 2.txt
   +#1::              AddToMemory()                                              ;Mem: add selected text to the bottom of 1.txt
 
+  ^#0::                                                                         ;Mem: add selected text to the bottom of 0.txt with breaks removed
+  ^#9::                                                                         ;Mem: add selected text to the bottom of 9.txt with breaks removed
+  ^#8::                                                                         ;Mem: add selected text to the bottom of 8.txt with breaks removed
+  ^#7::                                                                         ;Mem: add selected text to the bottom of 7.txt with breaks removed
+  ^#6::                                                                         ;Mem: add selected text to the bottom of 6.txt with breaks removed
+  ^#5::                                                                         ;Mem: add selected text to the bottom of 5.txt with breaks removed
+  ^#4::                                                                         ;Mem: add selected text to the bottom of 4.txt with breaks removed
+  ^#3::                                                                         ;Mem: add selected text to the bottom of 3.txt with breaks removed
+  ^#2::                                                                         ;Mem: add selected text to the bottom of 2.txt with breaks removed
+  ^#1::              AddToMemory(,1)                                            ;Mem: add selected text to the bottom of 1.txt with breaks removed
+  
+  !#0::                                                                         ;Mem: add selected text to the bottom of 0.txt with blank lines removed
+  !#9::                                                                         ;Mem: add selected text to the bottom of 9.txt with blank lines removed
+  !#8::                                                                         ;Mem: add selected text to the bottom of 8.txt with blank lines removed
+  !#7::                                                                         ;Mem: add selected text to the bottom of 7.txt with blank lines removed
+  !#6::                                                                         ;Mem: add selected text to the bottom of 6.txt with blank lines removed
+  !#5::                                                                         ;Mem: add selected text to the bottom of 5.txt with blank lines removed
+  !#4::                                                                         ;Mem: add selected text to the bottom of 4.txt with blank lines removed
+  !#3::                                                                         ;Mem: add selected text to the bottom of 3.txt with blank lines removed
+  !#2::                                                                         ;Mem: add selected text to the bottom of 2.txt with blank lines removed
+  !#1::              AddToMemory(,0,1)                                          ;Mem: add selected text to the bottom of 1.txt with blank lines removed
+
   #0::                                                                          ;Mem: paste contents of 0.txt 
   #9::                                                                          ;Mem: paste contents of 9.txt   
   #8::                                                                          ;Mem: paste contents of 8.txt   

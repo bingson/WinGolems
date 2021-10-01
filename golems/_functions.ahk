@@ -37,7 +37,7 @@
   GroupAdd, browsers, ahk_exe firefox.exe
         
 
-; WINDOW MANAGEMENT ____________________________________________________________x
+; WINDOW MANAGEMENT ____________________________________________________________
 
   MoveWin(Q = "TL", ha = 8, wa = 8) {
     global config_path, CB_hwnd
@@ -715,7 +715,7 @@
         }
     } else if UserInput                                                         
         FunctionBox(func, input_dict, w_color, t_color, optn, grps, toc_dict, title, p*)
-    else
+    
     return
   } ; run same function with different parameters from dictionary {"key" : "parameter"}
 
@@ -743,7 +743,7 @@
     Gui, fb: Add, Edit, section x2 w%Width% R%rows% ReadOnly -HScroll -VScroll -wrap -E0x200 vFB_Menu
     
     Guicontrol, ,FB_Menu, %TOC%
-    Gui, fb: Add, Edit, xm-5 y+10 w%InputWidth% r1 vUserInput
+    Gui, fb: Add, Edit, xm-5 y+10 w%InputWidth% r1 vUserInput ;,% GC("chr_path")
     Gui, fb: Add, Button, Default Hidden gButtonOK, OK ;
     Gui, fb: font,s8 , calibri
     Gui, fb: add, text, xs xm-5 yp-10, case insensitive
@@ -752,9 +752,12 @@
     GetGUIWinCoords(GUI_X, GUI_Y)
     Gui, Color, %w_color%
     GuiControl, -HScroll -VScroll, FB_menu
+    ; Gui, fb: Show, AutoSize
     Gui, fb: Show, hide AutoSize
-    Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                               ; Show gui at center of current screen                               
+    Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                               ; Show gui at center of active screen                               
     GuiControl, fb: Focus, UserInput
+    ; Send % GC("chr_path") ? ("{end}") : ("")
+
     ; Gui, fb: Show, % "x" GUI_X " y" GUI_Y                                     ; Show gui at center of current screen                                     
     settimer, addHiddenScrollBar,-400
     WinWaitClose
@@ -775,8 +778,11 @@
             UserInput := ltrim(UserInput, ":")
             tgt_hwnd := FB_tgt_hwnd
             ProcessCommand(UserInput, "~win", title, fsz, fnt, w_color, t_color)
+            ; SetTimer, reloadWG, -700
+        } else if (1stChar ~= "[0-9]") {
+            UserInput := GC("chr_path","F") . UserInput
         }
-        SetTimer, reloadWG, -700
+        reloadWG()
         return
    
     fbGuiClose:
@@ -787,7 +793,7 @@
        return
   } ; 
  
-  BuildTOC(arr = "", optn = "" , grps = 0) {
+  BuildTOC(arr = "", optn = "" , grps = 0, maxW = 45) {
     ; buils a table of contents string created from a dictionary input array.
     ; alt_arr tells function that 
     ; otpn :
@@ -809,14 +815,19 @@
         selection := ReplaceAwithB(,,selection, False)                          ; replace consecutive bank spaces with 1 space
         selection := ReplaceAwithB("- ","-",selection,0)
         selection := ReplaceAwithB("_ ","_",selection,0) 
+        selection := ReplaceAwithB("_ ","_",selection,0) 	
+        selection := RegExReplace(selection, "^(?:https?:\/\/)?(?:www\.)?", "") 
+        selection := (strlen(selection) > maxW) ? substr(selection, 1, maxW) : selection
+        NewStr := SubStr(String, StartingPos , Length)
+
         selection := InStr(optn, "s") ? Trim(AddSpaceBtnCaseChange(selection, 0)) : selection 
         if InStr(optn , "r")                                                    ; (optn = "r") ;InStr(optn , "r")
             arr_KV_swapped[selection] := key
         else             
             TOC .= (TOC <> "" ? "`n" : "") key "`t" trim(selection, """") 
-        max_str_len := max(max_str_len, strlen(key . selection) - 5)
+        max_str_len := max(max_str_len, strlen(key . selection))
     }
-    max_str_len := (max_str_len > 60) ? 60 : max_str_len
+    max_str_len := (max_str_len > maxW) ? maxW : max_str_len
     line := RepeatString("-", max_str_len)
     TOC := !InStr(optn , "r") ? ("Key`tSelection`n-----`t" line "`r`n" . TOC) : ("Key`tSelection`n-----`t" line "`r")
 
@@ -883,7 +894,6 @@
     return
   } ; creates a txt file in \mem_cache from selected text
 
-
   RetrieveExt(tgt) {
     out := ""
     if FileExist(tgt ".txt") 
@@ -927,14 +937,16 @@
     return
   }
 
-  AddToMemory(del_after_copy = "0"){
+  AddToMemory(del_after_copy = "0", del_breaks = 0, del_blank_lines = 0){
     global C, CB_hwnd, short
     CoordMode, Mouse, Screen
     BlockInput, on
     settimer, BlockInputTimeOut,-600
     MouseGetPos, StartX, StartY
     slot            := substr(A_ThisHotkey, 0)
-    new_text_to_add := trim(clip())
+    input := clip()
+    input := (del_breaks + del_blank_lines > 0) ? PasteWithoutBreaks(del_breaks,input,del_blank_lines) : input
+    new_text_to_add := trim(Input)
     FileAppend % "`n" . new_text_to_add, mem_cache\%slot%.txt           
     PopUp("added to bottom of`n" slot ".txt",C.lgreen)
     If WinExist("ahk_id " CB_hwnd)
@@ -1633,8 +1645,10 @@
         MouseGetPos,,,, fc
         Sleep, fc ? 25 : 0
     } Until !fc ||g_highlight ++n > 80
-
-    Send % (Instr(A_ThisHotkey, "^") ? "u" : "g") "{Enter}"                     ; ternary: sends u if if detects ctrl was pressed as part of the hotkey, g otherwise
+    sleep 100
+    
+    Send % (Instr(A_ThisHotkey, "^") ? "{down 3}" : "{down 2}") "{Enter}"                     ; ternary: sends u if if detects ctrl was pressed as part of the hotkey, g otherwise
+    ; Send % (Instr(A_ThisHotkey, "^") ? "u" : "g") "{Enter}"                     ; ternary: sends u if if detects ctrl was pressed as part of the hotkey, g otherwise
     sleep, short
     DllCall("SetCursorPos", int, StartX, int, StartY) 
     ; MouseMove StartX, StartY
@@ -1850,6 +1864,10 @@
             oPowerPoint.Visible := True
             oPowerPoint.Presentations.Open(formatted_path)
         } 
+        else if ext in png,jpeg,gif,bmp
+        {
+            try RunAsUser(GC("hypersnap_path"), formatted_path, A_ScriptDir)
+        }
         else if ext in mp4,webm,avi,mkv
         {
             RunAsUser(GC("vlc_path", PF_x86 "\Windows Media Player\wmplayer.exe"), formatted_path, A_ScriptDir)
@@ -2031,7 +2049,7 @@
     return
   }
 
-  CursorRecall(key = "A", n = "1", lrm = "left", rtn_mouse = False) {
+  CursorRecall(key = "A", n = "1", lrm = "left", rtn_mouse = False, msg = 0) {
     global config_path
     if (GC("MousePos_" Key) != "ERROR") {
         KeyWait()
@@ -2043,6 +2061,7 @@
         DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
         ; MouseMove, pos_array[1], pos_array[2]
         Clicks(n, lrm)
+        msg ? pu("click recall") : ""
         if rtn_mouse
             MouseMove, StartX, StartY
         return
@@ -2494,17 +2513,21 @@
     return
   }
  
-  RemoveBlankLines(reselect=False) {
+  RemoveBlankLines(reselect=False, input="") {
     ; Removes blank lines within a block of selected text
     BlockInput, on
     settimer, BlockInputTimeOut,-600
-    vText := clip()
+    var := input ? input : clip()
     if !ErrorLevel
     {
-        vText := RegExReplace(vText, "m)^ +$")
-        vText := RegExReplace(vText, "\R+\R", "`r`n")
-        clip(vText)
+        var := RegExReplace(var, "m)^ +$")
+        var := RegExReplace(var, "\R+\R", "`r`n")
     }
+    if !input
+        clip(var)
+    else 
+        return % var
+
     BlockInput, Off
     return
   }
@@ -2691,16 +2714,34 @@
         return % trim(input)
     return
   }
- 
-  PasteWithoutBreaks(btn_paragraphs = False) {
+
+  PasteWithoutBreaks(btn_paragraphs = False, input = "", no_blank_lines = 0) {
     ; Format clipboard contents: remove double spaces and line breaks
     ; while keeping the empty lines between paragraphs
-    Clipboard := RegExReplace(Clipboard, "(\S.*?)\R(.*?\S)", "$1 $2")           ; strip single line breaks + replace with single space
-    if (btn_paragraphs = True)
-        clipboard := RegExReplace(clipboard, "\R", A_space)                     ; replace paragraph breaks with space
-    clipboard := RegExReplace(clipboard, "S) +", A_Space)                       ; replace multiple spaces with single space
-    clipboard := RegExReplace(clipboard, "(?<!<)-\s", "$1")                     ; <= remove "-" if not preceded by < ("<-")
-    send ^v                                                                     ;    for stitching words back together if split by
+    var := (input) ? input : Clipboard
+    global long
+    var := RegExReplace(var, "(\S.*?)\R(.*?\S)", "$1 $2")           ; strip single line breaks + replace with single space
+    if btn_paragraphs
+        var := RegExReplace(var, "\R", A_space)                     ; replace paragraph breaks with space
+    var := RegExReplace(var, "S) +", A_Space)                       ; replace multiple spaces with single space
+    var := RegExReplace(var, "(?<!<)-\s", "$1")                     ; <= remove "-" if not preceded by < ("<-")
+    if no_blank_lines
+        var := RemoveBlankLines(0,var)
+    if !input {
+        sleep, long * 0.8
+        clipboard := var
+        send ^v                                                                     ;    for stitching words back together if split by
+    } else {
+        ; var := RegExReplace(var, "^(`r`n)+")
+        ; var := RegExReplace(var, "(`r`n){2,}", "`r`n")
+        ; var := RegExReplace(var, "(`r`n)+$")
+        var := RegExReplace(var, "m)(*ANYCRLF)")
+        ; var := RegExReplace(var, "m)^`t+")
+        ; var := RegExReplace(var, "`t{2,}", "`t")
+        ; var := RegExReplace(var, "m)`t+$")
+        ; sleep, long * 0.8
+        return % var
+    }
     return                                                                      ;    line breaks in pdf documents
   }
  

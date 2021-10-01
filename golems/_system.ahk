@@ -160,6 +160,8 @@
 
     
     #If GC("T_d",0) and GetKeyState("PrintScreen", "P")                         ; convert printscreen to another modifier key 
+    ralt & i::
+    ralt & d::   DC("MousePos_" substr(A_ThisHotkey,0)),PU("cleared")                ;MouseFn: erase saved curor position 
     $!k::                           CursorJump("T")                             ;MouseFn: move mouse cursor to top edge
     $!j::                           CursorJump("B",,"-20")                      ;MouseFn: move mouse cursor to bottom edge
     $!h::                           CursorJump("L","20")                        ;MouseFn: move mouse cursor to Left edge

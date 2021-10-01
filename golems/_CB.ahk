@@ -12,7 +12,7 @@ $^!k::                                                                          
 ^SC00D::                                                                        ;CB: Font size increase
 $^!j::             goto, CBzoomIn                                               ;CB: Font size increase
 !n::               send !n                                                      ;CB: highlight next match of text in the CB display window with text entered in the input box
-!b::               send !p                                                      ;CB: highlight previous match of text in the CB display window with text entered in the input box
++!n::               send !p                                                      ;CB: highlight previous match of text in the CB display window with text entered in the input box
 !q::               MoveWin("TL")                                                ;CB: move CB window to top left
 !e::               MoveWin("TR")                                                ;CB: move CB window to top right
 !z::               MoveWin("BL")                                                ;CB: move CB window to bottom left
@@ -44,6 +44,7 @@ $^!j::             goto, CBzoomIn                                               
 >!space::          GUISubmit(">!space")                                         ;CB| Capitalize first letter of user input and submit GUI
 <!space::                                                                       ;CB| submit GUI input
 #space::           GUISubmit()                                                  ;CB| submit GUI input
+$!b::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
 $!x::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
 !r::               GUIRecall()                                                  ;CB| reenter last command
 
