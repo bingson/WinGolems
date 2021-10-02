@@ -58,14 +58,13 @@
   ^SC027::            Send {AppsKey}                                            ;WinOS: simulate appkey
   #Lbutton::                                                                    ;WinOS: open start menu (alt: Ctrl+Esc)
   $^#Enter::          send ^{esc}                                               ;WinOS: open start menu 
-  #SC029::            reloadWG()                                                ;WinGolems: reload WinGolems 
+  #esc::              reloadWG()                                                ;WinGolems: reload WinGolems 
   ^#sc027::           Send {lwin down}d{lwin up}                                ;WindowMgmt: show desktop
   #sc028::                                                                      ;WindowMgmt: maximize window
   ^!space::           WinMaximize,A                                             ;WindowMgmt: maximize window
   #SC027::            WinMinimize,A                                             ;WindowMgmt: minimize window
   #del::              AlwaysOnTop(1)                                            ;WindowMgmt: Window always on top: ON
   #ins::              AlwaysOnTop(0)                                            ;WindowMgmt: Window always on top: OFF
-  ;*!capslock: :        ChgInstance("capslock")                                   ;WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction) **experimental messes up the taskbar sometimes
   +#capslock::        s("{blind}"), ActivatePrevInstance()                      ;WindowMgmt: rotate through app instances from most recent
   #capslock::         s("{blind}"), ActivateNextInstance()                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
   ^#q::

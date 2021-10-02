@@ -25,7 +25,8 @@
        , "Lblue"        : "BED7D6"   ,   "Silver"       : "CCCCCC"
        , "Lbrown"       : "DFD0BF"   ,   "Vlorange"     : "ffe4b3"
        , "Lcoral"       : "FFA07A"   ,   "White"        : "FFFFFF"
-       , "Ldaisy"       : "EFD469"   ,   "WhiteSmoke"   : "F5F5F5" }
+       , "Ldaisy"       : "EFD469"   ,   "WhiteSmoke"   : "F5F5F5" 
+       , "lgrey"        : "EDEDED"   }
   
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and open + save dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW                                      ; https://www.autohotkey.com/boards/viewtopic.php?t=28347
@@ -1976,7 +1977,6 @@
     return
 
   }
-    
 
   ClickDL(path=""){
     global short, med, CB_hwnd
@@ -2012,7 +2012,7 @@
     loop % n
         click
     MouseGetPos, StartX, StartY
-    IniWrite,%StartX% %StartY%, %config_path%, %A_ComputerName%, MousePos_%Key%
+    IniWrite,%StartX% %StartY%, %config_path%, %A_ComputerName%, MPos_%Key%
     return
   }
 
@@ -2051,12 +2051,12 @@
 
   CursorRecall(key = "A", n = "1", lrm = "left", rtn_mouse = False, msg = 0) {
     global config_path
-    if (GC("MousePos_" Key) != "ERROR") {
+    if (GC("MPos_" Key) != "ERROR") {
         KeyWait()
         CoordMode, Mouse, Screen
         MouseGetPos, StartX, StartY
-        IniRead, mpos, %config_path%, %A_ComputerName%, MousePos_%Key%
-        GC("MousePos_" Key)
+        IniRead, mpos, %config_path%, %A_ComputerName%, MPos_%Key%
+        GC("MPos_" Key)
         pos_array := StrSplit(mpos, " ")
         DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
         ; MouseMove, pos_array[1], pos_array[2]
@@ -2316,14 +2316,36 @@
 
   }
 
+  RunVBA(MacroName) {
+    winget, Pname, ProcessName, A 
+    try 
+    {
+        switch Pname 
+        {
+            ; case "excel.exe" :   ControlGet, hwnd, hwnd, , Excel71, ahk_class XLMAIN
+            case "excel.exe" :   
+                ControlGet, hwnd, hwnd, , Excel71, ahk_exe excel.exe
+            case "winword.exe" : 
+                ControlGet, Hwnd, Hwnd,, _WwG1, ahk_exe winword.exe
+            case "powerpnt.exe": 
+                ControlGet, Hwnd, Hwnd,, mdiClass1, ahk_exe powerpnt.exe
+            default:            
+        }
+        oApp := Acc_ObjectFromWindow(hwnd, -16).Application
+        oApp.Run(MacroName)
+    } catch {
+        MsgBox, something went wrong, check if you have permission to run macros 
+    }
+  }
+
   RunMSWordMacro(MacroName) { ; for AHK_L
     ; Retrieves a running object that has been registered with OLE.
     ; an inter-process communication mechanism. 
     ; Based on a subset of Component Object Model (COM) that 
     ; was intended for use by scripting languages
     try {
-        ; WinActivate % "ahk_id " DllCall("GetDesktopWindow","ptr")             ; https://www.autohotkey.com/boards/viewtopic.php?t=16081&p=81604
-        oWord := ComObjActive("Word.Application")
+        ControlGet, Hwnd, Hwnd,, _WwG1, ahk_exe winword.exe
+        oWord := Acc_ObjectFromWindow(hwnd, -16).Application                    ;https://autohotkey.com/board/topic/77303-acc-library-ahk-l-updated-09272012/  
         oWord.Run(MacroName)
     } catch e {
         MsgBox, something went wrong, check if you have permission to run macros 
@@ -2332,6 +2354,15 @@
     return
   }
  
+  ToggleThesaurus(){ 
+    t := !t
+    if (t = true)
+        send +{F7}                                                          ; open thesaurus
+    else
+        RunMSWordMacro("thesaurus_close")   
+    return
+  }
+
   command(tgt, opt = "") {
     ; run obsidian command corresponding to tgt string
     Send ^p

@@ -4,6 +4,7 @@ SelectWord() {
     ; https://www.autohotkey.com/boards/viewtopic.php?t=23842
     ; Bing: I modified the mouse movement and sleep periods to make script work 
     ; more reliably in word 2019
+    ; keywait()
     ClipSaved := ClipboardAll
 
     ; get letter on the Left
