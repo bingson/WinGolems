@@ -668,6 +668,24 @@
     return cache_file
   }
 
+  BufferKeystrokes() {
+    global input_buffer
+    BlockInput, on
+    settimer, BlockInputTimeOut,-300
+    SetTimer, CheckKeystrokeBuffer, -300
+    input, input_buffer, V T.3
+    return
+  } ; saves user keystrokes while a GUI is loading and enters them in the input box
+
+  CheckKeystrokeBuffer(){
+    global input_buffer
+    if input_buffer 
+        clip(input_buffer)
+    return
+  }
+
+  
+
 ; FUNCTION BOX _________________________________________________________________
   
   FB(func="", input_dict="", w_color = "BED7D6", t_color = "000000", name_dict = "", grps = 0, title="", p*) {

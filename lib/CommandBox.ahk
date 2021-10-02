@@ -1,17 +1,18 @@
- CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand"
-            , fwt = "500", show_txt = "", title = "",  input_txt = "?") {
+ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand" , fwt = "500", show_txt = "", title = "",  input_txt = "?") {
     SetBatchLines, -1
     SetkeyDelay, -1
     SetWinDelay, -1
     ; Process, Priority,, High
-    
+    BufferKeystrokes() 
     ; TimeCode()
   ; SAVE GUI INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- --; saves information between script reloads. 
     
     global long, med, short, C, config_path, CB_Display := ""
-        , UserInput := "", tgt_hwnd := "", CB_hwnd := ""
-    static PArr := [], ro := -1                                                 ; search position array                                                
-    tgt_hwnd := WinExist()                                                      ; save window ID of active application when CB was called (tgt window to act upon) 
+        , UserInput := "", tgt_hwnd := "", CB_hwnd := "", input_buffer
+    static PArr := []                                                           ; search position array                                                
+    
+
+    tgt_hwnd := WinExist()                                                      ; save window ID of active application when CB was called (tgt window to act upon) s
     WinGetPos, X, Y, W, H, A  ; "A" to get the active window's pos.
 
     CC("CB_sfx", suffix)    , CC("TGT_hwnd",tgt_hwnd) 
@@ -109,7 +110,7 @@
         Guicontrol, ,CB_Display, %txt%
         Gui, 2: font ,s%fsz% c000000, %fnt%
     }
-
+    
     input_txt := % GC("CB_reenterInput", 1) ? GC("last_user_input", "?") : ((input_txt = "Error") ? ("?") : input_txt)      ; determines what is pre-entered in the input box
 
     if (!display) {
@@ -146,13 +147,13 @@
     if GC("CB_appActive", 0) {
         ActivateWin("ahk_id " tgt_hwnd) 
     }
-
     ; WinSet, TransColor,Off                                                    ; with key up signals, making windows believe the keys is still pressed                                                  
     ; TimeCode()
     SetWinDelay, 10
     SetBatchLines, 10ms
     SetKeyDelay, 10, 50
     ; Process, Priority, , A
+    BlockInput OFF
     ; WinWaitClose
     return
   
@@ -205,7 +206,6 @@
             PArr.Push(pos)
             ; writetocache("1f", , ,  "`n pos: " pos " addToPos: "  addToPos, 1,1)
         }
-        ro--
         Gui, 2: Show, , % GC("CBtitle") "  |  line: " . addToPos + 1 . "  (" . PArr.MaxIndex() . (PArr.MaxIndex() = 1 ? " hit" : " hits") . ")"
         CC("CB_LastSrchPos", pos)
         return
