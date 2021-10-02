@@ -110,22 +110,24 @@ git clone https://github.com/bingson/WinGolems.git
 
 
 ### III. &nbsp; Run WinGolems <a name="run"></a>
-
+<p> After downloading and unzipping the WinGolems project folder, navigate to that folder in file explorer and run one of two options
 <ul>
-    <p> After downloading and unzipping the WinGolems project folder, navigate to that folder in file explorer and choose one of two options
-    <li><b> Option 1: run WinGolems.exe</b></p>
+    
+   <li>
+    <p><b> WinGolems.exe</b></p>
      This option lets users try out the tutorial templates without having to install AHK. If any changes are made to a WinGolems AHK file, the executable must be recompiled, which requires AHK installation.
 
    </li>
 
    <li>
-     <p><b> Option 2: run WinGolems.ahk </b></p>
+     <p><b> WinGolems.ahk </b></p>
      This option requires AHK installation and lets users make changes and run/reload AHK scripts without needing to compile an executable. 
    
    </li> 
-    <p> Note: By default, UAC protects "elevated" programs (that is, programs which are running as admin) from being automated by non-elevated programs, since that would allow them to bypass security restrictions. The ability to run programs with administrator rights is required for WinGolems to work on Microsoft application windows (e.g, MS office apps, task manager window). If the user does not have the rights to run programs as administrator, please visit <a href="https://www.autohotkey.com/docs/FAQ.htm#uac"> this link </a> for some workarounds.
+   <br>
 
 </ul>
+<p> Note: By default, UAC protects "elevated" programs (that is, programs which are running as admin) from being automated by non-elevated programs, since that would allow them to bypass security restrictions. The ability to run programs with administrator rights is required for WinGolems to work on Microsoft application windows (e.g, MS office apps, task manager window). If the user does not have the rights to run programs as administrator, please visit <a href="https://www.autohotkey.com/docs/FAQ.htm#uac"> this link </a> for some workarounds.
 
 <br>
 
