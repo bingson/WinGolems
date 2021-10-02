@@ -1,17 +1,18 @@
 
 ; INITIALIZATION (start of auto-execution section) _____________________________
+  ; ENSURE RUNNIG SCRIPT AS ADMIN -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- s
+    ;https://www.reddit.com/r/AutoHotkey/comments/ac1epn/groggy_guide_admin_rights_privilege_level/
+    if !A_IsAdmin || !(DllCall("GetCommandLine","Str")~=" /restart(?!\S)")
+      Try Run % "*RunAs """ (A_IsCompiled?A_ScriptFullPath """ /restart":A_AhkPath """ /restart """ A_ScriptFullPath """")
+      Finally ExitApp
+
   ; SCRIPT CONFIG -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ; explained: https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
     
     SetWorkingDir %A_ScriptDir%
     #MenuMaskKey vk07                                                           ; vk07 is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed https://www.autohotkey.com/boards/viewtopic.php?t=29595
     #MaxHotkeysPerInterval 99000000
-<<<<<<< HEAD
-    #HotkeyInterval 99000000
-    ; SetBatchLines -1
-=======
     ListLines Off ;On                                                           ; ListLines/KeyHistory are used to log lines of code and keys for debugging
->>>>>>> 746bb8b6ff5a4f3a6aefb14ab5dc68140b37514c
     #KeyHistory 0 ;100                                                          ; change to a higher number for debugging
     #UseHook
     #InstallKeybdHook                                                           ; The keyboard hook monitors keystrokes for the purpose of activating hotstrings and any keyboard hotkeys
@@ -19,13 +20,10 @@
     #Singleinstance Force                                                       ; only one instance of this script can be active
     SetMouseDelay, 10                                                           ; mouse click commands become less reliable at lower settings
     SetDefaultMouseSpeed, 0
-<<<<<<< HEAD
-=======
     SetBatchLines, -1
     SetWinDelay, -1
     ;SetBatchLines, 20ms                                                        ; for slower computers 
     ;SetWinDelay, 10
->>>>>>> 746bb8b6ff5a4f3a6aefb14ab5dc68140b37514c
     SetControlDelay, 20
     SendMode Event
     SetBatchLines, 10ms

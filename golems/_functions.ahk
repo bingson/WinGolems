@@ -1494,10 +1494,11 @@
     {
         CC("CB_title", "..\HotKey_List.txt") 
         CC("CB_last_display", "..\HotKey_List.txt") 
+        CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod")) 
     }
     IfMsgBox No
         return
-    CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
+    ; 
   } ; generate a .txt list of all active hotkeys 
  
   ReleaseModifiers(timeout := "") {                                              ; timeout in ms
