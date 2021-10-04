@@ -91,16 +91,16 @@
   
   #IF GC("T_FM",0) 
                                                                                 ; GC = (G)et (C)onfig.ini("var_name", "value returned if none found") 
-  ^esc::         OP(Paths()["e"])                                               ;OpenPath: open saved file|folder path from +^esc                                       
-  ^F1::          OP(Paths()["f1"])                                              ;OpenPath: open saved file|folder path from +^F1
-  ^F2::          OP(Paths()["f2"])                                              ;OpenPath: open saved file|folder path from +^F2
-  ^F3::          OP(Paths()["f3"])                                              ;OpenPath: open saved file|folder path from +^F3
-  ^F4::          OP(Paths()["f4"])                                              ;OpenPath: open saved file|folder path from +^F4
-  ^F5::          OP(Paths()["f5"])                                              ;OpenPath: open saved file|folder path from +^F5
-  ^F6::          OP(Paths()["f6"])                                              ;OpenPath: open saved file|folder path from +^F6
-  ^F7::          OP(Paths()["f7"])                                              ;OpenPath: open saved file|folder path from +^F7
-  ^F8::          OP(Paths()["f8"])                                              ;OpenPath: open saved file|folder path from +^F8
-  ^F9::          OP(Paths()["f9"])                                              ;OpenPath: open saved file|folder path from +^F9
+  >^esc::         OP(Paths()["e"])                                             ;OpenPath: open saved file|folder path from +^esc                                       
+  >^F1::          OP(Paths()["f1"])                                            ;OpenPath: open saved file|folder path from +^F1
+  >^F2::          OP(Paths()["f2"])                                            ;OpenPath: open saved file|folder path from +^F2
+  >^F3::          OP(Paths()["f3"])                                            ;OpenPath: open saved file|folder path from +^F3
+  >^F4::          OP(Paths()["f4"])                                            ;OpenPath: open saved file|folder path from +^F4
+  >^F5::          OP(Paths()["f5"])                                            ;OpenPath: open saved file|folder path from +^F5
+  >^F6::          OP(Paths()["f6"])                                            ;OpenPath: open saved file|folder path from +^F6
+  >^F7::          OP(Paths()["f7"])                                            ;OpenPath: open saved file|folder path from +^F7
+  >^F8::          OP(Paths()["f8"])                                            ;OpenPath: open saved file|folder path from +^F8
+  >^F9::          OP(Paths()["f9"])                                            ;OpenPath: open saved file|folder path from +^F9
 
   ; Function Box: opens a window that gives the user a menu of parameter choices for calling a function
   #SC034::       FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths(), C.lpurple)  ;FB: Opens Jump Menu for saved paths (works everwhere inclulding save dialogue windows)

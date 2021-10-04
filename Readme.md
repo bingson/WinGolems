@@ -327,11 +327,13 @@ Convenient free key combinations: #g, #u, #y, #i, #o, #n, #sc028
 
 ### II. &nbsp; Keyboard Shortcuts <a name="ks"></a>
 
+Below is a 30 Sept 2021 snap shot of WinGolems keyboard shortcuts and command box features. Once WinGolems is installed, enter `gl` in a command box (`lwin` + `space`) to generate an updated version.
+
+Note, under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`.
+
+- To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode).
 
 
-Under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`
-
-`win + esc` will toggle all other hotkeys off and on
 
 
 

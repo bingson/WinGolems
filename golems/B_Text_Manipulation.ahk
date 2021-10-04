@@ -20,7 +20,7 @@
   +!9::              Clip("(" Clip() ")")                                       ;Convenience: enclose selected text with ( )
   $+!SC01A::         Clip("{" Clip() "}")                                       ;Convenience: enclose selected text with { }
   !SC01A::           Clip("[" Clip() "]")                                       ;Convenience: enclose selected text with [ ]
-  ^SC028::           Clip("'" Clip() "'")                                       ;Convenience: enclose selected text with ' '
+  +^SC028::          Clip("'" Clip() "'")                                       ;Convenience: enclose selected text with ' '
   +!SC028::          Clip("""" Clip() """")                                     ;Convenience: enclose selected text with " "
   <!>+5::                                                                       ;Convenience: enclose selected text with % %
   >!<+5::            Clip("%" Clip() "%")                                       ;Convenience: enclose selected text with % %
@@ -35,7 +35,7 @@
 
 ; SELECTION ____________________________________________________________________
   
-  $!f::              SelectWord()                                               ;Selection: select word at text cursor position
+  $<!f::             SelectWord()                                               ;Selection: select word at text cursor position
   $+!f::             SelectLine()                                               ;Selection: select current line starting from begining of line
   $^!f::             Sendinput {end}+{home}                                     ;Selection: select line starting from end of line
   $^#h::             sendinput +{Home}                                          ;Selection: select to beginning of line (press win before ctrl)

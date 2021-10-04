@@ -38,13 +38,14 @@ fix multi screen display toggle
 |                                                                                                                                        |
 | KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                      note: if multiple files in a command, file being modified is last     |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  L   Load .txt file into CB display          L1, Lr\testr, L>    Load in display => 1.txt, r\testr.txt ("Ll" .txt list), clipboard   L?|
-|      Load file shorcut keys                  LC, LK, LL, L#      Load in display => config.ini, hotkey list, mem folder, 0-9 1st line  |
+|  L   Load .txt file into CB display          L1, Lr\testr, L>    Load: 1.txt, r\testr.txt ("Ll" .txt list), clipboard                L?|
+|      L? shortcuts for useful information     LC, LK, LL, L#      Load: (C)onfig.ini, Hot(K)ey list, (L)ist of mem folder files         |
+                                               L#4, LI, LI2        (#) 1st line of #.txt files (#4: 1st 4 lines), (I) #.txt + A-Z.txt    |
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
 |  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, (L)loaded file                    V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with number suffix: C1 -> 1_1.txt          C?|
 |  O   Overwrite file options                  O1, Ohelp 2         Overwrite => 1.txt w/ selected, 2.txt w/ help.txt                   O?|
-|      Overwrite Clipboard options             O3>, O>3            overwrites clipboard, 3.txt overwrites clipboard         O?.|O.?|
+|      Overwrite Clipboard options             O3>, O>3            3.txt overwrites clipboard, 3.txt overwrites clipboard         O?.|O.?|
 |  E   Edit file in default editor             E1, Er\test, E      edit => 1.txt, r\test.txt (r\ subfolder file path), (L)loaded file  E?|
 | A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt     A?|P?|
 |      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|

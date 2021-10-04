@@ -346,6 +346,7 @@ ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
                         return
 
                     default:
+                        sleep short
                         ActivateWin("ahk_id " tgt_hwnd)      
                         vtext := clip()                       
                         arrN := StrSplit(C_input, GC("Rsep2", "__"))  
