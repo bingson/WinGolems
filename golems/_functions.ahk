@@ -276,9 +276,21 @@
 
   ActivateExplorer := Func("ActivateApp").Bind("explorer.exe")
 
+
   CloudSync(state="ON") {                                                       ; Turn ON/OFF google cloud sync
     global med, config_path, C 
-    RegExMatch(GC("sync_path"), "[^\\]+$", exe_name)
+
+    dir := "C:\Program Files\Google\Drive File Stream\*"
+    exe_name := "GoogleDriveFS.exe"
+
+    Loop Files, %dir%, R
+    {
+        RegExMatch(A_LoopFileFullPath, "[^\\]+$", file_name)
+        if (exe_name = file_name) {                          ; Equal (=), case-sensitive-equal (==)
+            CC("sync_path", A_LoopFileFullPath)
+            Continue
+        }
+    }
 
     DetectHiddenWindows On
     if (state = "ON") {
@@ -705,7 +717,7 @@
 
     global UserInput, med, config_path, uprofile
     ; sleep ,med                                                                  ; short wait to delete hotstring
-
+    
     TOC := (toc_dict) ? BuildTOC(toc_dict, optn, grps) : BuildTOC(input_dict, optn, grps)
     default_title := (!title) ? AddSpaceBtnCaseChange(func, 0) : title
     default_title .= "  (-_-)  "                                                ; l := "    |    " 
@@ -741,7 +753,7 @@
   FunctionBoxGUI(TOC, title, w_color ="CEDFBF", t_color = "000000" , input_dict="", optn="", grps="", toc_dict="", p*) {
     global FB_Menu := "", UserInput := "", FB_hwnd := ""
     static InputWidth := 170
-
+    BufferKeystrokes()
    ; build gui -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     FB_tgt_hwnd := WinExist("A")                                                      ; store win ID of active application before calling GUI 
     IniWrite, %FB_tgt_hwnd%, %config_path%, %A_ComputerName%, FB_tgt_hwnd
@@ -776,9 +788,9 @@
     Gui, fb: Show, % "x" GUI_X " y" GUI_Y Restore                               ; Show gui at center of active screen                               
     GuiControl, fb: Focus, UserInput
     ; Send % GC("chr_path") ? ("{end}") : ("")
-
     ; Gui, fb: Show, % "x" GUI_X " y" GUI_Y                                     ; Show gui at center of current screen                                     
     settimer, addHiddenScrollBar,-400
+    BlockInput OFF
     WinWaitClose
     return
 
@@ -1129,11 +1141,6 @@
         sleep, %sleep%
     return
   } ; SendInput namespace alias/function wrapper to chain line commands using the comma operator
-
-  KW(k = "alt") {
-    keywait, %k%
-    return
-  }
 
   reloadWG() { 
     CC("CBfsz", "11")
@@ -1868,21 +1875,15 @@
         }
         else if ext in docm,doc,docx,dotx,dotm
         {
-            oWord := ComObjCreate("Word.Application")
-            oWord.Visible := True
-            oWord.Documents.Open(formatted_path)
+            Run, % "winword.exe " . formatted_path
         }
         else if ext in xlsx,xlsm,xltx,xltm
         {
-            oExcel := ComObjCreate("Excel.Application")
-            oExcel.Visible := True
-            oExcel.Workbooks.Open(file_path)                                    ; not sure why this works when it doesn't with word 
+            Run, % "excel.exe " . formatted_path
         } 
         else if ext in ppt,pptx,pptm
         {
-            oPowerPoint := ComObjCreate("PowerPoint.Application")
-            oPowerPoint.Visible := True
-            oPowerPoint.Presentations.Open(formatted_path)
+            Run, % "powerpnt.exe " . formatted_path
         } 
         else if ext in png,jpeg,gif,bmp
         {
@@ -2032,6 +2033,11 @@
         click
     MouseGetPos, StartX, StartY
     IniWrite,%StartX% %StartY%, %config_path%, %A_ComputerName%, MPos_%Key%
+    return
+  }
+  
+  KW(k) {
+    keywait(k)
     return
   }
 
@@ -2271,7 +2277,7 @@
         return
   }
  
-  RunExcelMacro(MacroName) { ; for AHK_L
+  RunExcelVBA(MacroName) { ; for AHK_L
     Try {
         ControlGet, hwnd, hwnd, , Excel71, ahk_class XLMAIN
         oExcel := Acc_ObjectFromWindow(hwnd, -16).Application
@@ -2316,7 +2322,7 @@
 
         return
     } catch e {
-        MsgBox, something went wrong, check if you can execute macros within the workbook
+        ; MsgBox, something went wrong, check if you can execute macros within the workbook
         return
     }
     
@@ -2337,6 +2343,7 @@
 
   RunVBA(MacroName) {
     winget, Pname, ProcessName, A 
+    ; https://www.autohotkey.com/boards/viewtopic.php?t=71148 another option to try if this method breaks
     try 
     {
         switch Pname 
@@ -2351,9 +2358,17 @@
             default:            
         }
         oApp := Acc_ObjectFromWindow(hwnd, -16).Application
-        oApp.Run(MacroName)
+        if (Pname = "excel.exe") {
+            try 
+                oApp.Run("PERSONAL.XLSB!" MacroName)
+            catch 
+                oApp.Run(MacroName)
+        } else {
+            oApp.Run(MacroName)
+        }
     } catch {
-        MsgBox, something went wrong, check if you have permission to run macros 
+        return
+       ; MsgBox, something went wrong, check if you have permission to run macros 
     }
   }
 
