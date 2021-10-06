@@ -327,14 +327,11 @@ Convenient free key combinations: #g, #u, #y, #i, #o, #n, #sc028
 
 ### II. &nbsp; Keyboard Shortcuts <a name="ks"></a>
 
-Below is a 30 Sept 2021 snap shot of WinGolems keyboard shortcuts and command box features. Once WinGolems is installed, enter `gl` in a command box (`lwin` + `space`) to generate an updated version.
+Below is a 30 Sept 2021 snap shot of WinGolems keyboard shortcuts and command box features. Once WinGolems is installed, enter `gl` in a command box to generate an updated version.
 
-Note, under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc`, `win + left click`, or `ctrl + win + enter`.
+Note: under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc` or `win + left click`.
 
-- To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode).
-
-
-
+To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode).
 
 
 <details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></summary><p>
@@ -770,7 +767,9 @@ ________________________________________________________________________________
 
 ### IV. &nbsp; Function Box </b><a name="fb"></a>
 
-A text-based interface that lets users call the same function with different parameter options stored in a dictionary (2-D array) ```{key:"parameter_value"}```. Note: Can be used to run ~win CB keys if key prepended with `:`. Eg., entering `:tm` will open Windows Task Manager.
+A text-based interface that lets users call the same function with different parameter options stored in a 2-D array ```{key:"parameter_value"}```. 
+
+Note: Function boxes can be used to run "~win" CB keys if prepended with `:`. Eg., entering `:tm` will open Windows Task Manager.
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>Move Active Window</b></summary><p>
 

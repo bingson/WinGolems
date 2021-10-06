@@ -2457,7 +2457,7 @@
 
   commentSelected(pfx = "/*", sfx = "*/") {
     send {tab}
-    Clip(pfx clip() sfx)git commit -a
+    Clip(pfx clip() sfx)
     return
   }                                                                             ;[ahk] surround selected text with block comment braces
 
