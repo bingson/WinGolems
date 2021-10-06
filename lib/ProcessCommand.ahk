@@ -1,6 +1,6 @@
 ; query 412
 
-ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
+ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_color = "", t_color = "") {
     global config_path, long, med, short, tgt_hwnd, CB_hwnd, C
     1stChar := SubStr(UserInput, 1, 1), 2ndChar := SubStr(UserInput, 2 , 1)
     f_path := A_ScriptDir "\mem_cache\" 

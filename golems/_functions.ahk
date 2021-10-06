@@ -280,26 +280,21 @@
   CloudSync(state="ON") {                                                       ; Turn ON/OFF google cloud sync
     global med, config_path, C 
 
-    dir := "C:\Program Files\Google\Drive File Stream\*"
-    exe_name := "GoogleDriveFS.exe"
-
-    Loop Files, %dir%, R
-    {
-        RegExMatch(A_LoopFileFullPath, "[^\\]+$", file_name)
-        if (exe_name = file_name) {                          ; Equal (=), case-sensitive-equal (==)
-            CC("sync_path", A_LoopFileFullPath)
-            Continue
-        }
-    }
 
     DetectHiddenWindows On
     if (state = "ON") {
-        try {
-            ActivateApp(GC("sync_path"))
+        Try {
+            ; AA() = ActivateApp()
+            Try AA(GC("sync_path"))
+            Catch {
+                gosub, FindSyncPath
+                AA(GC("sync_path"))
+            }
+
             PU("cloud sync initiated",C.lgreen,C.bgreen)
             sleep 600
             return
-        } catch e {
+        } Catch e {
             msgbox can't open cloud cloud sync app.
         }
     } else {
@@ -315,6 +310,21 @@
         }
         return
     }
+
+    
+    
+    FindSyncPath:                                                               ; fix for google constantly changing the folder name with version number. 
+    dir := "C:\Program Files\Google\Drive File Stream\*"
+    exe_name := "GoogleDriveFS.exe"
+    Loop Files, %dir%, R
+    {
+        RegExMatch(A_LoopFileFullPath, "[^\\]+$", file_name)
+        if (exe_name = file_name) {                          ; Equal (=), case-sensitive-equal (==)
+            CC("sync_path", A_LoopFileFullPath)
+            Continue
+        }
+    }
+    return
   }
 
   ActivateCalc() {
@@ -462,6 +472,21 @@
  
 ; COMMAND BOX __________________________________________________________________
   
+  RunCB(Prefix="", key="",sfx="~win"){
+    keywait()
+    GC("T_WinEnterSelect",1) ? S("+^{left}") : ("")
+    ; GC("T_WinEnterSelect",1) ? SelectWord() : ("")
+    userInput := clip()
+    Switch Prefix
+    {
+        case "V" : AccessCache(userInput)
+        default  : 
+            send {del}
+            RunLabel(userInput, sfx, WinExist()) 
+
+    }
+  }
+
   GUISubmit(commandkey = ">!space") {
     global short, med, long
     Gui +LastFound
@@ -557,17 +582,17 @@
     return
   }
 
-  RunLabel(UserInput="", suffix = "", tgt_winID ="") {
+  RunLabel(UserInput="", suffix = "", tgt_winID ="", base_sfx = "~win") {
     suffix := suffix ? suffix : GC("CB_sfx")
     UserInput := trim(UserInput)
     Switch 
     {
-        Case IsLabel(        UserInput . suffix): UserInput :=         UserInput . suffix
-        Case IsLabel(":X:" . UserInput . suffix): UserInput := ":X:" . UserInput . suffix
-        Case IsLabel(":*:" . UserInput . suffix): UserInput := ":*:" . UserInput . suffix
-        Case IsLabel(        UserInput . "~win"): UserInput :=         UserInput . "~win"
-        Case IsLabel(":X:" . UserInput . "~win"): UserInput := ":X:" . UserInput . "~win"
-        Case IsLabel(":*:" . UserInput . "~win"): UserInput := ":*:" . UserInput . "~win"
+        Case IsLabel(        UserInput . suffix)   : UserInput :=         UserInput . suffix
+        Case IsLabel(":X:" . UserInput . suffix)   : UserInput := ":X:" . UserInput . suffix
+        Case IsLabel(":*:" . UserInput . suffix)   : UserInput := ":*:" . UserInput . suffix
+        Case IsLabel(        UserInput . base_sfx) : UserInput :=         UserInput . base_sfx
+        Case IsLabel(":X:" . UserInput . base_sfx) : UserInput := ":X:" . UserInput . base_sfx
+        Case IsLabel(":*:" . UserInput . base_sfx) : UserInput := ":*:" . UserInput . base_sfx
         Default:
             CB(GC("CB_sfx"), GC("CBw_color"), GC("CBt_color"), GC("CB_ProcessMod"))
             return
@@ -583,9 +608,10 @@
   CreateCacheList(name = "cc") {
     global strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
     global strDir  := A_ScriptDir . "\mem_cache\"
-    FileDelete %strFile%
     global cacheList := ""
     global config_path
+    
+    FileDelete %strFile%
     ; IniWrite, %name%, %config_path%, %A_ComputerName%, CB_display
     CC("CB_display", name)
     max_len := count := 0
@@ -968,7 +994,7 @@
     return
   }
 
-  AddToMemory(del_after_copy = "0", del_breaks = 0, del_blank_lines = 0){
+  AddToMemory(del_after_copy = "0", del_breaks = 0, del_blank_lines = 0, del_leading_spaces = 0){
     global C, CB_hwnd, short
     CoordMode, Mouse, Screen
     BlockInput, on
@@ -976,8 +1002,11 @@
     MouseGetPos, StartX, StartY
     slot            := substr(A_ThisHotkey, 0)
     input := clip()
-    input := (del_breaks + del_blank_lines > 0) ? PasteWithoutBreaks(del_breaks,input,del_blank_lines) : input
-    new_text_to_add := trim(Input)
+    input := del_breaks ? PasteWithoutBreaks(del_breaks,input) : input
+    var := del_blank_lines ? RemoveBlankLines(0,var) : var
+    input := del_leading_spaces ? RegExReplace(input, " [ `t]+", " ") : input
+    ; new_text_to_add := trim(Input)
+    new_text_to_add := Input
     FileAppend % "`n" . new_text_to_add, mem_cache\%slot%.txt           
     PopUp("added to bottom of`n" slot ".txt",C.lgreen)
     If WinExist("ahk_id " CB_hwnd)
@@ -1078,12 +1107,13 @@
     global config_path
     try {
         IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
-        ; IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d% original good
     } catch {
-        IniRead, SectionNames, %config_path%
-        arr := StrSplit(SectionNames, "`n")
-        loop 
+        /*  loop other sections of config.ini 
+            IniRead, SectionNames, %config_path%
+            arr := StrSplit(SectionNames, "`n")
+            loop 
 
+        */
         return
     }
     arr := StrSplit(SectionNames, "`n")
@@ -1112,7 +1142,7 @@
     switch k 
     {
         case "suspend"   : suspend
-        case "enter"     : send % "{enter}"
+        case "e", "enter": send % "{enter}"
         case "u", "up"   : send % "{ up "    n "}"
         case "d", "down" : send % "{ down "  n "}"
         case "l", "left" : send % "{ left "  n "}"
@@ -1990,7 +2020,7 @@
         clip(code)
         send {enter}
         sleep short
-      WinMinimize,A
+        WinMinimize,A
     } else 
         PU("invalid url: " clipboard,,,,,-800)
     BlockInput, Off
@@ -2036,7 +2066,7 @@
     return
   }
   
-  KW(k) {
+  KW(k="") {
     keywait(k)
     return
   }
@@ -2348,16 +2378,12 @@
     {
         switch Pname 
         {
-            ; case "excel.exe" :   ControlGet, hwnd, hwnd, , Excel71, ahk_class XLMAIN
-            case "excel.exe" :   
-                ControlGet, hwnd, hwnd, , Excel71, ahk_exe excel.exe
-            case "winword.exe" : 
-                ControlGet, Hwnd, Hwnd,, _WwG1, ahk_exe winword.exe
-            case "powerpnt.exe": 
-                ControlGet, Hwnd, Hwnd,, mdiClass1, ahk_exe powerpnt.exe
+            case "excel.exe"   : ControlGet , Hwnd , hwnd ,, Excel71   , ahk_exe excel.exe
+            case "winword.exe" : ControlGet , Hwnd , hwnd ,, _WwG1     , ahk_exe winword.exe
+            case "powerpnt.exe": ControlGet , Hwnd , hwnd ,, mdiClass1 , ahk_exe powerpnt.exe
             default:            
         }
-        oApp := Acc_ObjectFromWindow(hwnd, -16).Application
+        oApp := Acc_ObjectFromWindow(Hwnd, -16).Application
         if (Pname = "excel.exe") {
             try 
                 oApp.Run("PERSONAL.XLSB!" MacroName)
@@ -2431,7 +2457,7 @@
 
   commentSelected(pfx = "/*", sfx = "*/") {
     send {tab}
-    Clip(pfx clip() sfx)
+    Clip(pfx clip() sfx)git commit -a
     return
   }                                                                             ;[ahk] surround selected text with block comment braces
 
@@ -2470,7 +2496,7 @@
 
 
   JEE_InStrEx(vText, vNeedle, vCaseSen=0, vPos=1, vOcc=1) {
-    
+    ;https://www.autohotkey.com/boards/viewtopic.php?style=7&t=34207
     ;same as InStr with some slight differences:
     ;- vPos specifies the start position, but not the search direction
     ;e.g. vPos := 3 means search from 3rd char (forwards/backwards depending on vOcc)
@@ -2780,34 +2806,31 @@
     return
   }
 
-  PasteWithoutBreaks(btn_paragraphs = False, input = "", no_blank_lines = 0) {
+  PasteWithoutBreaks(NoParagraphs = False, input = "") {
     ; Format clipboard contents: remove double spaces and line breaks
     ; while keeping the empty lines between paragraphs
     var := (input) ? input : Clipboard
     global long
     var := RegExReplace(var, "(\S.*?)\R(.*?\S)", "$1 $2")           ; strip single line breaks + replace with single space
-    if btn_paragraphs
-        var := RegExReplace(var, "\R", A_space)                     ; replace paragraph breaks with space
+    var := NoParagraphs ? RegExReplace(var, "\R", A_space) : var    ; replace paragraph breaks with space
     var := RegExReplace(var, "S) +", A_Space)                       ; replace multiple spaces with single space
     var := RegExReplace(var, "(?<!<)-\s", "$1")                     ; <= remove "-" if not preceded by < ("<-")
-    if no_blank_lines
-        var := RemoveBlankLines(0,var)
     if !input {
         sleep, long * 0.8
         clipboard := var
-        send ^v                                                                     ;    for stitching words back together if split by
-    } else {
-        ; var := RegExReplace(var, "^(`r`n)+")
-        ; var := RegExReplace(var, "(`r`n){2,}", "`r`n")
-        ; var := RegExReplace(var, "(`r`n)+$")
-        var := RegExReplace(var, "m)(*ANYCRLF)")
-        ; var := RegExReplace(var, "m)^`t+")
-        ; var := RegExReplace(var, "`t{2,}", "`t")
-        ; var := RegExReplace(var, "m)`t+$")
-        ; sleep, long * 0.8
-        return % var
-    }
-    return                                                                      ;    line breaks in pdf documents
+        send ^v                                                     ;    for stitching words back together if split by
+    } 
+    /*
+    ; var := RegExReplace(var, "^(`r`n)+")
+    ; var := RegExReplace(var, "(`r`n){2,}", "`r`n")
+    ; var := RegExReplace(var, "(`r`n)+$")
+    var := RegExReplace(var, "m)(*ANYCRLF)")
+    ; var := RegExReplace(var, "m)^`t+")
+    ; var := RegExReplace(var, "`t{2,}", "`t")
+    ; var := RegExReplace(var, "m)`t+$")
+    ; sleep, long * 0.8
+    */
+    return % var
   }
  
   SelectLine() {

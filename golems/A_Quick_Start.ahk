@@ -4,6 +4,7 @@
   ; AA("application_exe_path")
   ; SaveWinID("unique_string")
   ; ActivateWinID("unique_string")
+
   #q::                AA("xls_path")                                            ;Apps| Activate Excel
   #w::                AA("doc_path")                                            ;Apps| Activate Word
   #a::                AA("pdf_path")                                            ;Apps| Activate pdf viewer
@@ -48,7 +49,7 @@
   >^space::           send ^{PgDn}                                              ;Navigation: navigate to right tab
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
-  
+
   ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
   ~lwin & ~rshift::   CursorJump("C")                                           ;Convenience: move mouse cursor to center of active application window
   #SC035::            search()                                                  ;Convenience: google search selected text
@@ -67,7 +68,7 @@
   #ins::              AlwaysOnTop(0)                                            ;WindowMgmt: Window always on top: OFF
   +#capslock::        s("{blind}"), ActivatePrevInstance()                      ;WindowMgmt: rotate through app instances from most recent
   #capslock::         s("{blind}"), ActivateNextInstance()                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-  ^#q::
+  ^#q::                                                                         ;WindowMgmt: close active window 
   +#q::               WinClose,A                                                ;WindowMgmt: close active window
   !#q::               CloseClass()                                              ;WindowMgmt: close all instances of the active program
   ralt & sc034::      moveWinBtnMonitors(), CFW()                               ;WindowMgmt: move window btn monitors, cursor follows active windows
@@ -119,18 +120,18 @@
   ^#4::                                                                         ;Mem: add selected text to the bottom of 4.txt with breaks removed
   ^#3::                                                                         ;Mem: add selected text to the bottom of 3.txt with breaks removed
   ^#2::                                                                         ;Mem: add selected text to the bottom of 2.txt with breaks removed
-  ^#1::              AddToMemory(,1)                                            ;Mem: add selected text to the bottom of 1.txt with breaks removed
+  ^#1::              AddToMemory(,1,1)                                          ;Mem: add selected text to the bottom of 1.txt with breaks removed
   
-  !#0::                                                                         ;Mem: add selected text to the bottom of 0.txt with blank lines removed
-  !#9::                                                                         ;Mem: add selected text to the bottom of 9.txt with blank lines removed
-  !#8::                                                                         ;Mem: add selected text to the bottom of 8.txt with blank lines removed
-  !#7::                                                                         ;Mem: add selected text to the bottom of 7.txt with blank lines removed
-  !#6::                                                                         ;Mem: add selected text to the bottom of 6.txt with blank lines removed
-  !#5::                                                                         ;Mem: add selected text to the bottom of 5.txt with blank lines removed
-  !#4::                                                                         ;Mem: add selected text to the bottom of 4.txt with blank lines removed
-  !#3::                                                                         ;Mem: add selected text to the bottom of 3.txt with blank lines removed
-  !#2::                                                                         ;Mem: add selected text to the bottom of 2.txt with blank lines removed
-  !#1::              AddToMemory(,0,1)                                          ;Mem: add selected text to the bottom of 1.txt with blank lines removed
+  !#0::                                                                         ;Mem: add selected text to the bottom of 0.txt with leading spaces removed
+  !#9::                                                                         ;Mem: add selected text to the bottom of 9.txt with leading spaces removed
+  !#8::                                                                         ;Mem: add selected text to the bottom of 8.txt with leading spaces removed
+  !#7::                                                                         ;Mem: add selected text to the bottom of 7.txt with leading spaces removed
+  !#6::                                                                         ;Mem: add selected text to the bottom of 6.txt with leading spaces removed
+  !#5::                                                                         ;Mem: add selected text to the bottom of 5.txt with leading spaces removed
+  !#4::                                                                         ;Mem: add selected text to the bottom of 4.txt with leading spaces removed
+  !#3::                                                                         ;Mem: add selected text to the bottom of 3.txt with leading spaces removed
+  !#2::                                                                         ;Mem: add selected text to the bottom of 2.txt with leading spaces removed
+  !#1::              AddToMemory(,,1,1)                                         ;Mem: add selected text to the bottom of 1.txt with leading spaces removed
 
   #0::                                                                          ;Mem: paste contents of 0.txt 
   #9::                                                                          ;Mem: paste contents of 9.txt   
@@ -145,9 +146,8 @@
   
   $<^mButton::       RetrieveMemory(A_ThisHotkey)                               ;Mem: double click and paste contents of 0.txt at cursor position
   $+<^mButton::      RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
-
-
-  
-
-
+      
 #IF
+/*
+   
+  

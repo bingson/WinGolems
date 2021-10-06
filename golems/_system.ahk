@@ -68,10 +68,13 @@
 
   ; GuiControl, 2: +HScroll, CB_Display
   
- 
+  :X:ts~win::        TC("T_WinEnterSelect", "WIN + ENTER SELECT: ")             ;[T] Toggle config.ini entry for auto select word mode when executing win+enter CB commands  
+  :X:tt~win::        TC("T_TM","Text_Manipulation: ")                           ;[T] Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows           
+  :X:tf~win::        TC("T_FM","File_Management: ")                             ;[T] Toggle File_Navigation template ON|OFF
+  :X:td~win::        TC("T_d","Developer options: ")                            ;[T] Toggle developer optns
+  
 ; DEVELOPER OPTIONS ____________________________________________________________
 
-  :X:td~win:: TC("T_d","Developer options: ")                               ;[T] toggle developer optns
   ; CB -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
     #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                        ; If Command or Function Box active

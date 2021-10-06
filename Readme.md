@@ -369,15 +369,35 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Alt+Backspace           Convenience: delete current line of text
  Win+Sc035               Convenience: google search selected text
  Shift+Win+0             Mem: add selected text to the bottom of 0.txt
+ Ctrl+Win+0              Mem: add selected text to the bottom of 0.txt with breaks removed
+ Alt+Win+0               Mem: add selected text to the bottom of 0.txt with leading spaces removed
  Shift+Win+1             Mem: add selected text to the bottom of 1.txt
+ Ctrl+Win+1              Mem: add selected text to the bottom of 1.txt with breaks removed
+ Alt+Win+1               Mem: add selected text to the bottom of 1.txt with leading spaces removed
  Shift+Win+2             Mem: add selected text to the bottom of 2.txt
+ Ctrl+Win+2              Mem: add selected text to the bottom of 2.txt with breaks removed
+ Alt+Win+2               Mem: add selected text to the bottom of 2.txt with leading spaces removed
  Shift+Win+3             Mem: add selected text to the bottom of 3.txt
+ Ctrl+Win+3              Mem: add selected text to the bottom of 3.txt with breaks removed
+ Alt+Win+3               Mem: add selected text to the bottom of 3.txt with leading spaces removed
  Shift+Win+4             Mem: add selected text to the bottom of 4.txt
+ Ctrl+Win+4              Mem: add selected text to the bottom of 4.txt with breaks removed
+ Alt+Win+4               Mem: add selected text to the bottom of 4.txt with leading spaces removed
  Shift+Win+5             Mem: add selected text to the bottom of 5.txt
+ Ctrl+Win+5              Mem: add selected text to the bottom of 5.txt with breaks removed
+ Alt+Win+5               Mem: add selected text to the bottom of 5.txt with leading spaces removed
  Shift+Win+6             Mem: add selected text to the bottom of 6.txt
+ Ctrl+Win+6              Mem: add selected text to the bottom of 6.txt with breaks removed
+ Alt+Win+6               Mem: add selected text to the bottom of 6.txt with leading spaces removed
  Shift+Win+7             Mem: add selected text to the bottom of 7.txt
+ Ctrl+Win+7              Mem: add selected text to the bottom of 7.txt with breaks removed
+ Alt+Win+7               Mem: add selected text to the bottom of 7.txt with leading spaces removed
  Shift+Win+8             Mem: add selected text to the bottom of 8.txt
+ Ctrl+Win+8              Mem: add selected text to the bottom of 8.txt with breaks removed
+ Alt+Win+8               Mem: add selected text to the bottom of 8.txt with leading spaces removed
  Shift+Win+9             Mem: add selected text to the bottom of 9.txt
+ Ctrl+Win+9              Mem: add selected text to the bottom of 9.txt with breaks removed
+ Alt+Win+9               Mem: add selected text to the bottom of 9.txt with leading spaces removed
  Leftctrl+Mbutton        Mem: double click and paste contents of 0.txt at cursor position
  Shift+Leftctrl+Mbutton  Mem: double click and paste contents of number entered at prompt
  Ctrl+Alt+0              Mem: overwrite 0.txt with selected text
@@ -402,17 +422,20 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Win+9                   Mem: paste contents of 9.txt
  Ctrl+Alt+L              Navigation: End
  Ctrl+Alt+H              Navigation: Home
- Win+J                   Navigation: mouse scroll down 2 lines
  Win+K                   Navigation: mouse scroll down 2 lines
- Rightalt+Win+K          Navigation: mouse scroll down 6 lines
+ Win+J                   Navigation: mouse scroll down 2 lines
  Rightalt+Win+J          Navigation: mouse scroll down 6 lines
+ Rightalt+Win+K          Navigation: mouse scroll down 6 lines
  Win+Rightalt+H          Navigation: mouse scroll left
  Win+Rightalt+L          Navigation: mouse scroll right
+ Rightctrl+B             Navigation: navigate to left tab
  Alt+B                   Navigation: navigate to left tab
  Alt+Space               Navigation: navigate to right tab
+ Rightctrl+Space         Navigation: navigate to right tab
  Rightshift+Rightalt+O   VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2)
  Rightalt+Enter          VirtualDesktop: Switch between desktop 1 and 2
  Rightalt+Sc028          VirtualDesktop: Switch to desktop 1
+ Ctrl+Win+Q              WindowMgmt: close active window
  Shift+Win+Q             WindowMgmt: close active window
  Alt+Win+Q               WindowMgmt: close all instances of the active program
  Win+Sc028               WindowMgmt: maximize window
@@ -421,12 +444,10 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Ralt & Sc034            WindowMgmt: move window btn monitors, cursor follows active windows
  Shift+Win+Capslock      WindowMgmt: rotate through app instances from most recent
  Win+Capslock            WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
- Alt+Capslock            WindowMgmt: rotate through app instances with thumbnails(+!capslock for other direction)
  Ctrl+Win+Sc027          WindowMgmt: show desktop
  Win+Ins                 WindowMgmt: Window always on top: OFF
  Win+Del                 WindowMgmt: Window always on top: ON
- Rshift & Lshift         WinGolems: reload WinGolems
- Lshift & Rshift         WinGolems: reload WinGolems (update running script for changes, fixes sticky keys)
+ Win+Esc                 WinGolems: reload WinGolems
  Esc & Del               WinGolems: toggle all hotkeys ON|OFF except for this one
  Ctrl+Win+Enter          WinOS: open start menu
  Win+Lbutton             WinOS: open start menu (alt: Ctrl+Esc)
@@ -458,9 +479,9 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Shift+Alt+Sc028         Convenience: enclose selected text with " "
  Leftalt+Rightshift+4    Convenience: enclose selected text with $ $
  Rightalt+Leftshift+4    Convenience: enclose selected text with $ $
- Rightalt+Leftshift+5    Convenience: enclose selected text with % %
  Leftalt+Rightshift+5    Convenience: enclose selected text with % %
- Ctrl+Sc028              Convenience: enclose selected text with ' '
+ Rightalt+Leftshift+5    Convenience: enclose selected text with % %
+ Shift+Ctrl+Sc028        Convenience: enclose selected text with ' '
  Shift+Alt+9             Convenience: enclose selected text with ( )
  Alt+Sc029               Convenience: enclose selected text with ` `
  Shift+Alt+Sc029         Convenience: enclose selected text with ``` ```
@@ -477,16 +498,18 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Ctrl+Win+F              MouseFn: 3 Left clicks (select line)
  Shift+Leftalt+Mbutton   MouseFn: click thrice, paste clipboard
  Leftalt+Mbutton         MouseFn: click twice, paste clipboard
- Win+D                   MouseFn: Left click and save mouse position
+ Alt+Win+D               MouseFn: erase saved curor position
+ Alt+Win+I               MouseFn: erase saved curor position
+ Ctrl+Win+I              MouseFn: Left click and save mouse position
  Alt+Win+J               MouseFn: move mouse cursor to bottom edge
- Ralt & Lalt             MouseFn: move mouse cursor to BOTTOM LEFT of active app
- Lalt & Ralt             MouseFn: move mouse cursor to BOTTOM RIGHT of active app
  Alt+Win+H               MouseFn: move mouse cursor to Left edge
  Alt+Win+L               MouseFn: move mouse cursor to Right edge
  Alt+Win+K               MouseFn: move mouse cursor to top edge
- Ctrl+Win+D              MouseFn: return to saved mouse position (change 0 to number of clicks)
+ Win+D                   MouseFn: return to saved mouse position and click (left click if no saved position found)
+ Win+I                   MouseFn: return to saved mouse position and click (left click if no saved position found)
  Ctrl+Alt+J              MouseFn: zoom in
  Ctrl+Alt+K              MouseFn: zoom out
+ Ctrl+Win+D              MouseFn:f Left click and save mouse position
  Win+Shift+E             Navigation: ^end
  Win+E                   Navigation: ^home
  Win+H                   Navigation: jump to next word; simulate ctrl+Left
@@ -517,7 +540,7 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Ctrl+Win+L              Selection: select to end of line (press win before ctrl)
  Shift+Ctrl+K            Selection: select to line above
  Shift+Ctrl+J            Selection: select to next line
- Alt+F                   Selection: select word at text cursor position
+ Leftalt+F               Selection: select word at text cursor position
 ```
 
 </p></details>
@@ -529,7 +552,7 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Rightshift+C            ChangeFolder: %Homedrive% (C:)
  Rightshift+U            ChangeFolder: %UserProfile%
  Rightshift+O            ChangeFolder: C:\Program Files
- Rightshift+Alt+O        ChangeFolder: C:\Program Files(x86)
+ Rightalt+O              ChangeFolder: C:\Program Files(x86)
  Rightshift+D            ChangeFolder: Documents
  Rightshift+J            ChangeFolder: Downloads
  Rightshift+M            ChangeFolder: mem_cache
@@ -537,7 +560,7 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Rightshift+R            ChangeFolder: Recycle bin (doesn't work for save as diag)
  Rightshift+T            ChangeFolder: This PC / My Computer
  Rightshift+Sc029        ChangeFolder: WinGolems folder
- Win+Sc033               FB: Opens Jump Menu for saved paths (works everwhere inclulding save dialogue windows)
+ Win+Sc034               FB: Opens Jump Menu for opening saved paths to files, folders, URLs (works in save dialogue windows)
  Alt+O                   FileExplorer: forward folder
  Ctrl+Y                  FileExplorer: group by date created
  Ctrl+I                  FileExplorer: group by date modified
@@ -554,16 +577,16 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Alt+Z                   FileExplorer: toggle navigation plane
  Ctrl+P                  FileExplorer: toggle preview plane
  Alt+U                   FileExplorer: up one folder level
- Shift+Rightctrl+Esc     FileExplorer; file|folder save path for >^esc
- Shift+Rightctrl+F1      FileExplorer; file|folder save path for >^F1
- Shift+Rightctrl+F2      FileExplorer; file|folder save path for >^F2
- Shift+Rightctrl+F3      FileExplorer; file|folder save path for >^F3
- Shift+Rightctrl+F4      FileExplorer; file|folder save path for >^F4
- Shift+Rightctrl+F5      FileExplorer; file|folder save path for >^F5
- Shift+Rightctrl+F6      FileExplorer; file|folder save path for >^F6
- Shift+Rightctrl+F7      FileExplorer; file|folder save path for >^F7
- Shift+Rightctrl+F8      FileExplorer; file|folder save path for >^F8
- Shift+Rightctrl+F9      FileExplorer; file|folder save path for >^F8
+ Shift+Rightctrl+Esc     FileExplorer; file|folder save E_path
+ Shift+Rightctrl+F1      FileExplorer; file|folder save F1_path
+ Shift+Rightctrl+F2      FileExplorer; file|folder save F2_path
+ Shift+Rightctrl+F3      FileExplorer; file|folder save F3_path
+ Shift+Rightctrl+F4      FileExplorer; file|folder save F4_path
+ Shift+Rightctrl+F5      FileExplorer; file|folder save F5_path
+ Shift+Rightctrl+F6      FileExplorer; file|folder save F6_path
+ Shift+Rightctrl+F7      FileExplorer; file|folder save F7_path
+ Shift+Rightctrl+F8      FileExplorer; file|folder save F8_path
+ Shift+Rightctrl+F9      FileExplorer; file|folder save F9_path
  Alt+Sc027               FileExplorer| detailed file info with resized columnsnmn
  Alt+S                   FileExplorer| select all files matching regex pattern
  Shift+Alt+C             FileExplorer| store file path(s) of selected file(s) in clipboard
@@ -571,16 +594,16 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
  Ctrl+Alt+H              Navigation: Home
  Alt+K                   Navigation| Down
  Alt+J                   Navigation| Up
- Ctrl+Esc                OpenPath: open saved file|folder path from +^esc
- Ctrl+F1                 OpenPath: open saved file|folder path from +^F1
- Ctrl+F2                 OpenPath: open saved file|folder path from +^F2
- Ctrl+F3                 OpenPath: open saved file|folder path from +^F3
- Ctrl+F4                 OpenPath: open saved file|folder path from +^F4
- Ctrl+F5                 OpenPath: open saved file|folder path from +^F5
- Ctrl+F6                 OpenPath: open saved file|folder path from +^F6
- Ctrl+F7                 OpenPath: open saved file|folder path from +^F7
- Ctrl+F8                 OpenPath: open saved file|folder path from +^F8
- Ctrl+F9                 OpenPath: open saved file|folder path from +^F9
+ Rightctrl+Esc           OpenPath: open saved file|folder path from +^esc
+ Rightctrl+F1            OpenPath: open saved file|folder path from +^F1
+ Rightctrl+F2            OpenPath: open saved file|folder path from +^F2
+ Rightctrl+F3            OpenPath: open saved file|folder path from +^F3
+ Rightctrl+F4            OpenPath: open saved file|folder path from +^F4
+ Rightctrl+F5            OpenPath: open saved file|folder path from +^F5
+ Rightctrl+F6            OpenPath: open saved file|folder path from +^F6
+ Rightctrl+F7            OpenPath: open saved file|folder path from +^F7
+ Rightctrl+F8            OpenPath: open saved file|folder path from +^F8
+ Rightctrl+F9            OpenPath: open saved file|folder path from +^F9
 ```
 
 </p></details>
@@ -589,38 +612,48 @@ Note, under WinGolems, the `win` key functions as a modifier key and will not br
 
 ```
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
+ Lwin & Enter            CB: (V command) overwrite selected text w/ corresponding mem_cache .txt file. E.g., with "1" selected, pressing win + enter will paste contents of 1.txt.
+ Lwin & Enter            CB: (win+enter+shift) run command keys entered in any text field in windows (word at cursor will be consumed)
  Ctrl+Alt+K              CB: Font size decrease
  Ctrl+Alt+J              CB: Font size increase
  Alt+N                   CB: highlight next match of text in the CB display window with text entered in the input box
- Alt+B                   CB: highlight previous match of text in the CB display window with text entered in the input box
+ Shift+Alt+N             CB: highlight previous match of text in the CB display window with text entered in the input box
  Alt+S                   CB: move CB window to bottom half
  Shift+Alt+S             CB: move CB window to bottom half small
  Alt+Z                   CB: move CB window to bottom left
- Shift+Alt+Z             CB: move CB window to bottom left small
+ Shift+Rightalt+Z        CB: move CB window to bottom left small (landscape)
+ Rightshift+Alt+Z        CB: move CB window to bottom left small (landscape)
+ Shift+Alt+Z             CB: move CB window to bottom left small (portrait)
  Alt+C                   CB: move CB window to bottom right
- Shift+Alt+C             CB: move CB window to bottom right small
- Alt+A                   CB: move CB window to left half
+ Rightshift+Alt+C        CB: move CB window to bottom right small (landscape)
+ Shift+Rightalt+C        CB: move CB window to bottom right small (landscape)
+ Shift+Alt+C             CB: move CB window to bottom right small (portrait)
  Win+Left                CB: move CB window to left half
+ Alt+A                   CB: move CB window to left half
  Shift+Alt+A             CB: move CB window to left side small
- Win+Right               CB: move CB window to right half
  Alt+D                   CB: move CB window to right half
+ Win+Right               CB: move CB window to right half
  Shift+Alt+D             CB: move CB window to right side small
  Alt+W                   CB: move CB window to top half
  Shift+Alt+W             CB: move CB window to top half small
  Alt+Q                   CB: move CB window to top left
- Shift+Alt+Q             CB: move CB window to top left small
+ Shift+Rightalt+Q        CB: move CB window to top left small (landscape)
+ Rightshift+Alt+Q        CB: move CB window to top left small (landscape)
+ Shift+Alt+Q             CB: move CB window to top left small (portrait)
  Alt+E                   CB: move CB window to top right
- Shift+Alt+E             CB: move CB window to top right small
- Win+Enter               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
- Win+Space               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Rightshift+Alt+E        CB: move CB window to top right small (landscape)
+ Shift+Rightalt+E        CB: move CB window to top right small (landscape)
+ Shift+Alt+E             CB: move CB window to top right small (portrait)
  Shift+Win+Space         CB: opens command box that runs ~win suffix CB keys; enter "?" for help
- Leftctrl+Space          CB| activate already open CB and move focus to inputbox
- Rightctrl+Space         CB| activate already open CB and move focus to inputbox
+ Win+Space               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
+ Leftctrl+Space          CB| activate already open Command Box and move focus to inputbox
+ Rightctrl+Space         CB| activate already open Command Box and move focus to inputbox
  Rightalt+Space          CB| Capitalize first letter of user input and submit GUI
  Alt+R                   CB| reenter last command
- Win+Space               CB| submit GUI input
  Leftalt+Space           CB| submit GUI input
+ Win+Space               CB| submit GUI input
  Alt+X                   CB| toggle Command Box display|minimalist mode
+ Alt+B                   CB| toggle Command Box display|minimalist mode
  Leftctrl+Space          FB: activate already open Function Box and move focus to inputbox
  Rightctrl+Space         FB: activate already open Function Box and move focus to inputbox
 ```
@@ -652,7 +685,7 @@ A text-based interface that can create new interface layers as well as execute a
 <details><summary>&nbsp;ℹ️&nbsp;<b>System Commands </b></summary><p>
 
 ``` 
-__________________________________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________________________________
 | CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND       |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
@@ -666,13 +699,14 @@ ________________________________________________________________________________
 |                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
-| #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   system tray           |
-| !Space  submit key                                  | ------ -------------------------------------------- |  tm  task manager          |
-| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
-| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  ce~ Close All Programs    |
-| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  rs~ Restart computer      |
-| !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |  sd~ Shut Down computer    |
-|                                                     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
+| #Space      open command box or submit key          | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   System tray           |
+| <!Space     submit key (left alt: <! right alt: >!) | ------ -------------------------------------------- |  tm  Sask manager          |
+| >!Space     capitalize 1st letter and submit key    | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
+| ^Space      move to CB input box from another app   | tt     [T] text manipulation interface layers       |  ce~ Close All Programs    |
+| !r          reenter last submitted CB key           | tf     [T] file management interface layers         |  rs~ Restart computer      |
+| !b          toggle GUI minimal or display mode      | ts     [T] auto-selection after win+enter commands  |  sd~ Shut Down computer    |
+| !q !e !a !d move & resize CB window to 4 quadrants  | td     [T] trackpoint interface layers              |                            |
+| !n          find text in CB display (+!n: prev)     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 ```
 
@@ -701,10 +735,11 @@ ________________________________________________________________________________
 __________________________________________________________________________________________________________________________________________
 | KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                      note: if multiple files in a command, output file is last in order    |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  L   Load .txt file into CB display          L1, Lr\testr, L>    Load in display => 1.txt, r\testr.txt ("Ll" .txt list), clipboard   L?|
-|      Load file shorcut keys                  LC, LK, LL, L#      Load in display => config.ini, hotkey list, mem folder, 0-9 1st line  |
+|  L   Load .txt file into CB display          L1, Lr\testr, L>    Load: 1.txt, r\testr.txt ("Ll" .txt list), clipboard                L?|
+|      L?: shortcuts for useful information    LC, LK, LL, L#      Load: (C)onfig.ini, Hot(K)ey list, (L)ist of mem folder files         |
+|      L#? or LI?: 1st lines of a-z or #.txt   L#4, LI, LI2        (#) 1st line of #.txt files (#4: 1st 4 lines), (I) #.txt + A-Z.txt    |
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
-|  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, (L)loaded file                    V?|
+|  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, current file in CB display        V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with number suffix: C1 -> 1_1.txt          C?|
 |  O   Overwrite file options                  O1, Ohelp 2         Overwrite => 1.txt w/ selected, 2.txt w/ help.txt                   O?|
 |      Overwrite Clipboard options             O3>, O>3            Overwrite => Clipboard with 3.txt (3.txt with clipboard)       O?.|O.?|

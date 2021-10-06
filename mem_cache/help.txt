@@ -13,13 +13,14 @@ fix multi screen display toggle
 |                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
-| #Space  open command box or submit key              | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   system tray           |
-| !Space  submit key                                  | ------ -------------------------------------------- |  h~  Hibernate computer    |
-| ^Space  move focus CB input box                     | tcf    [T] mouse cursor follows active window       |  ce~ Close All Programs    |
-| !r      reenter last submitted key                  | tt     [T] text manipulation interface layers       |  rs~ Restart computer      |
-| !x      toggle GUI minimal or display mode          | tf     [T] file management interface layers         |  sd~ Shut Down computer    |
-| !e      move & resize CB window to top left corner  | td     [T] trackpoint interface layers              |                            |
-|                                                     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
+| #Space      open command box or submit key          | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   System tray           |
+| <!Space     submit key (left alt: <! right alt: >!) | ------ -------------------------------------------- |  tm  Sask manager          |
+| >!Space     capitalize 1st letter and submit key    | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
+| ^Space      move to CB input box from another app   | tt     [T] text manipulation interface layers       |  ce~ Close All Programs    |
+| !r          reenter last submitted CB key           | tf     [T] file management interface layers         |  rs~ Restart computer      |
+| !b          toggle GUI minimal or display mode      | ts     [T] auto-selection after win+enter commands  |  sd~ Shut Down computer    |
+| !q !e !a !d move & resize CB window to 4 quadrants  | td     [T] trackpoint interface layers              |                            |
+| !n          find text in CB display (+!n: prev)     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | Uppercase first letters trigger the following commands           >  = windows clipboard contents                                       |
 | remaining characters are case insensitive                        ,  = separate usage examples (except for G examples)                  |
@@ -39,10 +40,10 @@ fix multi screen display toggle
 | KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                      note: if multiple files in a command, file being modified is last     |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  L   Load .txt file into CB display          L1, Lr\testr, L>    Load: 1.txt, r\testr.txt ("Ll" .txt list), clipboard                L?|
-|      L? shortcuts for useful information     LC, LK, LL, L#      Load: (C)onfig.ini, Hot(K)ey list, (L)ist of mem folder files         |
-                                               L#4, LI, LI2        (#) 1st line of #.txt files (#4: 1st 4 lines), (I) #.txt + A-Z.txt    |
+|      L?: shortcuts for useful information    LC, LK, LL, L#      Load: (C)onfig.ini, Hot(K)ey list, (L)ist of mem folder files         |
+|      L#? or LI?: 1st lines of a-z or #.txt   L#4, LI, LI2        (#) 1st line of #.txt files (#4: 1st 4 lines), (I) #.txt + A-Z.txt    |
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
-|  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, (L)loaded file                    V?|
+|  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, current file in CB display        V?|
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with number suffix: C1 -> 1_1.txt          C?|
 |  O   Overwrite file options                  O1, Ohelp 2         Overwrite => 1.txt w/ selected, 2.txt w/ help.txt                   O?|
 |      Overwrite Clipboard options             O3>, O>3            3.txt overwrites clipboard, 3.txt overwrites clipboard         O?.|O.?|
