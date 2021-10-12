@@ -179,7 +179,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     dir := (InStr(dir, ":")) ? "" : dir
                     WriteToCache(namenoext,,dir,clipboard)   
                     goto, load
-                } else If ((SubStr(C_input, 0) == ">") or (SubStr(C_input, 0) == ":")) {                           ; if C_input ends in ">" overwrite clipboard with file contents                           
+                } else If ((SubStr(C_input, 0) == ">") or (SubStr(C_input, 0) == ":")) {   ; if C_input ends in ">" overwrite clipboard with file contents                           
+                     
                     
                     C_input := trim(C_input, " >:")
                     SplitPath, C_input, , Dir, , NameNoExt 
@@ -188,7 +189,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     goto, load
                 } else If (InStr(SubStr(C_input, 2), ":")) {
                     dPos        := InStr(C_input, ":")
-                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension,                               ; parses everything after the command character as a file pathNameNoExt               
+                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension,         ; parses everything after the command character as a file pathNameNoExt               
                     dir := dir ? dir . "\" : ""
                     text_to_add := substr(C_input, dPos+1)
                     
@@ -206,7 +207,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     WriteToCache(namenoext,,dir,text_to_add)
                     goto, load
 
-                } else If !RegExMatch(C_input, " .+") {                         ; if there's no second file name, overwrite with selected text 
+                } else If !RegExMatch(C_input, " .+") {                         ; if there's no second file name, overwrite with selected text                    
                 
                     ActivateWin("ahk_id " tgt_hwnd) 
                     text_to_add := trim(clip())
@@ -223,7 +224,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     }
                     WriteToCache(namenoext,, dir)   
                     goto, Load
-                } else If RegExMatch(C_input, " .+") {                                                        ; remaining case: two filenames given, w/ 1st overwriting the 2nd
+                } else If RegExMatch(C_input, " .+") {                          ; remaining case: two filenames given, w/ 1st overwriting the 2nd                         
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[1], 1FileName, 1Dir, 1Extension, 1NameNoExt
                     SplitPath,% arr[2], FileName, Dir, Extension, NameNoExt 
@@ -267,7 +268,9 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 {
                     PopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
                     var := 1
-                    Filecopy,%f_path%%C_input%.txt,%f_path%%Dir%%namenoext%_%var%.txt,0
+                    source := f_path . Dir . namenoext . "." . (Extension ? Extension : "txt")
+                    dest := f_path . Dir . namenoext . "_" . var . "." . (Extension ? Extension : "txt")
+                    Filecopy,%source%,%dest%,0
                     exist = %ErrorLevel%                                        ; get the error level 0 = no errors
                     while exist > 0                                             ; what to do if there is an error like filename already exists
                     {
@@ -285,8 +288,21 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         SplitPath,% arr[2], nFileName, nDir, nExtension, nNameNoExt 
                         odir := odir ? odir . "\" : ""
                         ndir := ndir ? ndir . "\" : ""
-                        dest_path := C_input := f_path . nDir . nNameNoExt . ".txt"
-                        source_path :=  f_path oDir oNameNoExt ".txt"
+                        dest_path := C_input := f_path . nDir . nNameNoExt . "." . (nExtension ? nExtension : "txt")
+                        source_path :=  f_path oDir oNameNoExt . "." . (oExtension ? oExtension : "txt")
+                        
+                        if !InStr(FileExist(f_path ndir), "D") and ndir
+                        {                                      
+                            msg := "WinGolems can't find the folder`n`n" . ndir . "`n`nWould you like to create it?"
+                            MsgBox,4100,Create Hotstring,%msg% 
+                            IfMsgBox Yes
+                            {
+                                FileCreateDir, %f_path%%ndir%
+                            } else 
+                                return 1
+                        } 
+    
+                        ; Msgbox % "`ndest_path: " . dest_path . "`n source_path: " .  source_path
                         Filecopy,%source_path%,%dest_path%, 1    ; 1 = overwrite 
                         ; PopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
                     } catch {
@@ -295,15 +311,12 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 }
                 goto, Load
             Case "D":                                                           ; delete file
-                if (C_input == "D") {
-                    namenoext := RegExReplace(GC("CB_title",""), "\[.+?\]")
-                    FileDelete,% f_path . NameNoExt 
+                if (UserInput == "D") {
+                    SplitPath,% GC("CB_title",""), FileName, Dir, Extension, NameNoExt
+                    dir := dir ? dir . "\" : ""
+                    FileDelete,% f_path . Dir . NameNoExt . "." . (Extension ? Extension : "txt")
                 } else {
-                    if (extension) {
-                        FileDelete,% f_path . Dir . NameNoExt . "." . extension
-                    } else {
-                        FileDelete,% f_path . Dir . NameNoExt . ".txt"
-                    }
+                    FileDelete,% f_path . Dir . NameNoExt . "." . (Extension ? Extension : "txt")
                 }
                 sleep med
                 C_input := "l"

@@ -472,20 +472,40 @@
  
 ; COMMAND BOX __________________________________________________________________
   
-  RunCB(Prefix="", key="",sfx="~win"){
-    keywait()
-    GC("T_WinEnterSelect",1) ? S("+^{left}") : ("")
-    ; GC("T_WinEnterSelect",1) ? SelectWord() : ("")
+  RunCB(Prefix="",sfx="~win"){
+    global short
+    BlockInput, on
+    SetBatchLines, -1
+    SetkeyDelay, -1
+    SetWinDelay, -1
+
+    settimer, BlockInputTimeOut,-1000
+    
+    GC("T_WinEnterSelect",1) ? S("+^{left}") : ("")                             ; GC("T_WinEnterSelect",1) ? SelectWord() : ("") 
     userInput := clip()
-    Switch Prefix
+    Switch
     {
-        case "V" : AccessCache(userInput)
-        default  : 
+        case substr(Prefix,1,1) == "V" :
+            Prefix := LTrim(Prefix, "V")
+            userInput := trim(userInput)
+            AccessCache(userInput,(userinput ~= "[0-9]") ? ("") : Prefix)
+        ; Case "?": 
+        ; Case "A", "P":   1 
+        ; Case "L": 
+        default: 
             send {del}
-            RunLabel(userInput, sfx, WinExist()) 
+            ; Msgbox % "`nuserInput: " . userInput . "`n sfx: " .  sfx . "`n WinExist(): " .  WinExist() time           
+            RunLabel(userInput, sfx, WinExist())  
 
     }
+    SetWinDelay, 10
+    SetBatchLines, 10ms
+    SetKeyDelay, 10, 50
+    keywait()
+    BlockInput, Off
+    return
   }
+   
 
   GUISubmit(commandkey = ">!space") {
     global short, med, long
@@ -671,7 +691,7 @@
     return
   }
  
-  UDSelect(d="down", interval = "5", c_input = "", select = True, MultiCursor = False, letter = "jk", MC_key = "Printscreen") {
+  UDSelect(d="down", interval = "5", c_input = "", select = True, MultiCursor = False, letter = "jk", MC_key = "rshift") {
     global short
     sleep short
     RegExMatch(c_input, "([0-9]+)", num)
@@ -684,8 +704,12 @@
         Case Instr(c_input, "!"):
             sendinput % "+{" . d . " " . n . "}{del}"
         case MultiCursor, Instr(A_ThisHotkey, MC_key):
-            sendinput % "+^!{" . d . " " . n . "}"                              ; multi cursor selection for VScode
+            if WinActive("ahk_exe code.exe")
+                sendinput % "+^!{" . d . " " . n . "}"                              ; multi cursor selection for VScode
+            else 
+                goto, normal
         Default:
+            normal:
             sendinput % select  
                     ? "+{" . d . " " . n . "}"
                     : "{" . d . " " . n . "}"

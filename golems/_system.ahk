@@ -1,4 +1,4 @@
-#IF
+ #IF
 ; LWIN MODIFIER KEY ____________________________________________________________
   
   ~LWin::       Send {Blind}{vk07}                                              ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
@@ -66,20 +66,20 @@
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up
 
-  ; GuiControl, 2: +HScroll, CB_Display
+; TOGGLES  
   
   :X:ts~win::        TC("T_WinEnterSelect", "WIN + ENTER SELECT: ")             ;[T] Toggle config.ini entry for auto select word mode when executing win+enter CB commands  
   :X:tt~win::        TC("T_TM","Text_Manipulation: ")                           ;[T] Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows           
   :X:tf~win::        TC("T_FM","File_Management: ")                             ;[T] Toggle File_Navigation template ON|OFF
   :X:td~win::        TC("T_d","Developer options: ")                            ;[T] Toggle developer optns
-  
+    
 ; DEVELOPER OPTIONS ____________________________________________________________
 
   ; CB -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
     #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                        ; If Command or Function Box active
     printscreen & space::  GUISubmit()                                          ;CB| submit GUI input
-    #IF GC("T_d",0) & 
+    #IF GC("T_d",0) 
     printscreen & space::  CB()
 
   ; MEMORY -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -149,10 +149,9 @@
     #o::                   Click, middle                                        ;MouseFn: mouse middle click
     PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
     #sc028::               Click, Right                                         ;MouseFn: mouse Right click
-    >+esc::                EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
+    ^!esc::                EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
     lwin & rctrl::         ActivateWinID("Rctrl")                               ;ActvateApp: activate saved Window ID
     #n::                   AA("editor_path")                                    ;ActivateApp: Editor
-    ralt & right::         s("{blind}"), s("{F11}")                             ;Convenience: full screen {F11}
     printscreen & lwin::   CursorJump("BL")
     lwin & printscreen::   CursorJump("BR")
                                                                                     

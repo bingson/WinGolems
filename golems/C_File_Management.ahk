@@ -72,7 +72,6 @@
   ^u::          ToggleOpt("vg{up 4}")                                           ;FileExplorer: group by name|remove grouping toggle
   ^o::          ToggleOpt("vg{down 2}")                                         ;FileExplorer: group by file type
   ^i::          ToggleOpt("vg{down 1}")                                         ;FileExplorer: group by date modified
-  ^y::          ToggleOpt("vg{down 4}")                                         ;FileExplorer: group by date created
   ^j::          ToggleOpt("vo")                                                 ;FileExplorer: sort by name
   ^k::          ToggleOpt("vo{down}")                                           ;FileExplorer: sort by date modified
   ^l::          ToggleOpt("vo{down 2}")                                         ;FileExplorer: sort by type

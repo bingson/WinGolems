@@ -609,8 +609,9 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
 
 ```
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
- Lwin & Enter            CB: (V command) overwrite selected text w/ corresponding mem_cache .txt file. E.g., with "1" selected, pressing win + enter will paste contents of 1.txt.
- Lwin & Enter            CB: (win+enter+shift) run command keys entered in any text field in windows (word at cursor will be consumed)
+ Lwin & Enter            CB. (V command) selects word at cursor position and replaces it with \mem_cache .txt file with the same name (e.g., 1 = 1.txt).
+ Win+Space               CB. opens command box that runs ~win suffix CB keys; enter "?" for help
+ Lshift & Enter          CB. selects word at text cursor position and run as CB "~win" key
  Ctrl+Alt+K              CB: Font size decrease
  Ctrl+Alt+J              CB: Font size increase
  Alt+N                   CB: highlight next match of text in the CB display window with text entered in the input box
@@ -618,15 +619,15 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
  Alt+S                   CB: move CB window to bottom half
  Shift+Alt+S             CB: move CB window to bottom half small
  Alt+Z                   CB: move CB window to bottom left
- Shift+Rightalt+Z        CB: move CB window to bottom left small (landscape)
  Rightshift+Alt+Z        CB: move CB window to bottom left small (landscape)
+ Shift+Rightalt+Z        CB: move CB window to bottom left small (landscape)
  Shift+Alt+Z             CB: move CB window to bottom left small (portrait)
  Alt+C                   CB: move CB window to bottom right
- Rightshift+Alt+C        CB: move CB window to bottom right small (landscape)
  Shift+Rightalt+C        CB: move CB window to bottom right small (landscape)
+ Rightshift+Alt+C        CB: move CB window to bottom right small (landscape)
  Shift+Alt+C             CB: move CB window to bottom right small (portrait)
- Win+Left                CB: move CB window to left half
  Alt+A                   CB: move CB window to left half
+ Win+Left                CB: move CB window to left half
  Shift+Alt+A             CB: move CB window to left side small
  Alt+D                   CB: move CB window to right half
  Win+Right               CB: move CB window to right half
@@ -641,8 +642,6 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
  Rightshift+Alt+E        CB: move CB window to top right small (landscape)
  Shift+Rightalt+E        CB: move CB window to top right small (landscape)
  Shift+Alt+E             CB: move CB window to top right small (portrait)
- Shift+Win+Space         CB: opens command box that runs ~win suffix CB keys; enter "?" for help
- Win+Space               CB: opens command box that runs ~win suffix CB keys; enter "?" for help
  Leftctrl+Space          CB| activate already open Command Box and move focus to inputbox
  Rightctrl+Space         CB| activate already open Command Box and move focus to inputbox
  Rightalt+Space          CB| Capitalize first letter of user input and submit GUI

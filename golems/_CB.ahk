@@ -1,16 +1,13 @@
-; COMMAND BOX __________________________________________________________________
+; COMMAND BOX __________________________________________________________________ 
 
-+#space::                                                                       ;CB: opens command box that runs ~win suffix CB keys; enter "?" for help                                                                   
-#space::           CB("~win")                                                   ;CB: opens command box that runs ~win suffix CB keys; enter "?" for help                            
-Lwin & enter::     RunCB("V")                                                   ;CB: (V command) overwrite selected text w/ corresponding mem_cache .txt file. E.g., with "1" selected, pressing win + enter will paste contents of 1.txt.                                            
-
-#If GetKeyState("shift", "P")
-  Lwin & enter::   RunCB(,"~win")                                               ;CB: (win+enter+shift) run command keys entered in any text field in windows (word at cursor will be consumed) 
-#If
+#space::           CB("~win")                                                   ;CB. opens command box that runs ~win suffix CB keys; enter "?" for help                            
+Lwin & enter::     RunCB(,GC("win_S","~win"))                                   ;CB. selects word at text cursor position and run as CB "~win" key
++<!space::                                                                      ;CB. (V command) selects word at cursor position and replaces it with \mem_cache .txt file with the same name (e.g., 1 = 1.txt).                                   
+<!space::          RunCB(GC("win_P","V"))                                       ;CB. (V command) selects word at cursor position and replaces it with \mem_cache .txt file with the same name (e.g., 1 = 1.txt).
 
 #IF WinActive("ahk_id " CB_hwnd)                                                ; If Command or Function Box active
 $^!k::                                                                          ;CB: Font size decrease
-^SC00C::           goto, CBzoomOut                                              ;CB: Font size decrease
+^SC00C::           goto, CBzoomOut                                              ;CB: Font size decrease 
 ^SC00D::                                                                        ;CB: Font size increase
 $^!j::             goto, CBzoomIn                                               ;CB: Font size increase
 !n::               send !n                                                      ;CB: highlight next match of text in the CB display window with text entered in the input box
@@ -41,9 +38,8 @@ $^!j::             goto, CBzoomIn                                               
 +>!z::             MoveWin("L4a")                                               ;CB: move CB window to bottom left small (landscape)
 >+!c::                                                                          ;CB: move CB window to bottom right small (landscape)
 +>!c::             MoveWin("R4a")                                               ;CB: move CB window to bottom right small (landscape)
->!space::          GUISubmit(">!space")                                         ;CB| Capitalize first letter of user input and submit GUI
-<!space::                                                                       ;CB| submit GUI input
-#space::           GUISubmit()                                                  ;CB| submit GUI input
+#space::           GUISubmit()                                                  ;CB| submit user input
+rshift & space::   GUISubmit("rshift")                                          ;CB| Capitalize first letter of user input, then submit
 $!b::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
 $!x::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
 !r::               GUIRecall()                                                  ;CB| reenter last command

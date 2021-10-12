@@ -11,6 +11,7 @@
     
     SetWorkingDir %A_ScriptDir%
     #MenuMaskKey vk07                                                           ; vk07 is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed https://www.autohotkey.com/boards/viewtopic.php?t=29595
+    #MaxMem 128
     #MaxHotkeysPerInterval 99000000
     ListLines Off ;On                                                           ; ListLines/KeyHistory are used to log lines of code and keys for debugging
     #KeyHistory 0 ;100                                                          ; change to a higher number for debugging

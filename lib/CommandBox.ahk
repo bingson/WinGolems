@@ -76,8 +76,6 @@
 
   ; ADD GUI CONTROLS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
-    ; if display {
-          
     ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
     if (show_txt = "") {                                                        ; reload last diplayed txt
         txt_file := GC("CB_last_display", "help.txt")
@@ -147,7 +145,6 @@
     if GC("CB_appActive", 0) {
         ActivateWin("ahk_id " tgt_hwnd) 
     }
-    ; WinSet, TransColor,Off                                                    ; with key up signals, making windows believe the keys is still pressed                                                  
     ; TimeCode()
     SetWinDelay, 10
     SetBatchLines, 10ms
@@ -204,7 +201,6 @@
         offset := pos - Strlen(UserInput)
         if ((HasVal(PArr, pos) = 0) and (pos > 0) and addToPos) {
             PArr.Push(pos)
-            ; writetocache("1f", , ,  "`n pos: " pos " addToPos: "  addToPos, 1,1)
         }
         Gui, 2: Show, , % GC("CBtitle") "  |  line: " . addToPos + 1 . "  (" . PArr.MaxIndex() . (PArr.MaxIndex() = 1 ? " hit" : " hits") . ")"
         CC("CB_LastSrchPos", pos)
@@ -300,36 +296,3 @@
 
  }
 
-/*
-;---------GET CENTER OF CURRENT MONITOR---------
-	;get current monitor index
-	CurrentMonitorIndex:=GetCurrentMonitorIndex()
-	;get Hwnd of current GUI
-	DetectHiddenWindows On
-	Gui, +LastFound
-	Gui, Show, Hide
-	GUI_Hwnd := WinExist()
-	;Calculate size of GUI
-	GetClientSize(GUI_Hwnd,GUI_Width,GUI_Height)
-	DetectHiddenWindows Off
-	;Calculate where the GUI should be positioned
-	GUI_X:=CoordXCenterScreen(GUI_Width,CurrentMonitorIndex)
-	GUI_Y:=CoordYCenterScreen(GUI_Height,CurrentMonitorIndex)
-;------- / GET CENTER OF CURRENT MONITOR--------- 
-;SHOW GUI AT CENTER OF CURRENT SCREEN
-Gui, Show, % "x" GUI_X " y" GUI_Y, GUI TITLE
-
-;---------GET CENTER OF CURRENT MONITOR---------
-	;get current monitor index
-	CurrentMonitorIndex:=GetCurrentMonitorIndex()
-	;Calculate size of GUI
-	Gui, %GUI_Hwnd%: Show, Hide
-	GetClientSize(GUI_Hwnd,GUI_Width,GUI_Height)
-	;Calculate where the GUI should be positioned
-	GUI_X:=CoordXCenterScreen(GUI_Width,CurrentMonitorIndex)
-	GUI_Y:=CoordYCenterScreen(GUI_Height,CurrentMonitorIndex)
-;------- / GET CENTER OF CURRENT MONITOR--------- 
-;SHOW GUI AT CENTER OF CURRENT SCREEN
-Gui, %GUI_Hwnd%: Show, % "x" GUI_X " y" GUI_Y, GUI TITLE
-
-*/

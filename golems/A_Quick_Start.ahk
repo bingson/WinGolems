@@ -43,13 +43,12 @@
   $#>!l::             Sendinput {Blind}{WheelRight 6}                           ;Navigation: mouse scroll right 
   ^!h::               sendinput {home}                                          ;Navigation: Home
   ^!l::               sendinput {end}                                           ;Navigation: End
-  !b::                                                                          ;Navigation: navigate to left tab
-  >^b::               send ^{PgUp}                                              ;Navigation: navigate to left tab
-  !space::                                                                      ;Navigation: navigate to right tab
-  >^space::           send ^{PgDn}                                              ;Navigation: navigate to right tab
+  ^b::                sendinput ^{PgUp}                                         ;Navigation: navigate to left tab
+  ^space::            sendinput ^{PgDn}                                         ;Navigation: navigate to right tab
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
-
+  >+b::                                                                         ;Convenience: Lalt+b = ctrl+b (taken over by tab movement function) 
+  <!b::               send ^b                                                   ;Convenience: Lalt+b = ctrl+b (taken over by tab movement function)
   ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
   ~lwin & ~rshift::   CursorJump("C")                                           ;Convenience: move mouse cursor to center of active application window
   #SC035::            search()                                                  ;Convenience: google search selected text

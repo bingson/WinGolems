@@ -33,9 +33,9 @@ fix multi screen display toggle
 | Q?:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
-|  G   Run any function                        GMoveWin,TopLeft    fmt: fnName1,fnParams1__fnName2,fnParams2            G?,?__?,? or G?,?|
-| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
-|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
+|  G   Run AHK function from CB                Gcc,code_p,Vr\      changes config.ini variable for code_p to "vr\"                   G?,?|
+|                                                                  this is equivalent to ahk code: CC("code_p","Vr\")                    |
+|                                                                  format: function_name,parameter_1,parameter_2,etc...                  |
 |                                                                                                                                        |
 | KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                      note: if multiple files in a command, file being modified is last     |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
@@ -44,6 +44,7 @@ fix multi screen display toggle
 |      L#? or LI?: 1st lines of a-z or #.txt   L#4, LI, LI2        (#) 1st line of #.txt files (#4: 1st 4 lines), (I) #.txt + A-Z.txt    |
 | 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
 |  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, current file in CB display        V?|
+       non CB hotkey: "filename" Lwin + enter  1, sck              after typing "1", pressing Lwin + enter replace 1 with 1.txt contents |
 |  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with number suffix: C1 -> 1_1.txt          C?|
 |  O   Overwrite file options                  O1, Ohelp 2         Overwrite => 1.txt w/ selected, 2.txt w/ help.txt                   O?|
 |      Overwrite Clipboard options             O3>, O>3            3.txt overwrites clipboard, 3.txt overwrites clipboard         O?.|O.?|
