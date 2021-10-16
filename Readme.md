@@ -2,7 +2,7 @@
 
 ## Overview
 
-WinGolems comprises a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
+WinGolems, aka Windows Golems, describes collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
 <br><br>
 
 Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the features of each template. 
@@ -164,7 +164,7 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 
 To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
 
-To turn on UI options and other tutorial interface layers, open a CommandBox with `win + enter` or `win + spacebar` and submit one of the following keys. 
+To turn on UI options and other tutorial interface layers, open a CommandBox with `win + spacebar` and submit one of the following keys. 
 
 |KEY   |WinGolems Option|           
 |:-----|:----------------------------------------------------------------------------------------------------|
@@ -263,12 +263,12 @@ For convenience, the code for the creation of interface layers is abstracted awa
 ; the 'X' option lets a hotstring execute a command/expression instead of sending replacement text   
 
 
-:X:wg~win::   LoadURL("https://github.com/bingson/wingolems")    ; Load WinGolems GitHub Page
+:X:wg~win::   LURL("https://github.com/bingson/wingolems")    ; Load WinGolems GitHub Page
 :X:oc~win::   OpenFolder("mem_cache\")                           ; open mem folder in file explorer
 :X:kh~win::   KeyHistory                                         ; open key history
 :X:ws~win::   WindowSpy()                                        ; open windows spy
 :X:ec~win::   EditFile("""" config_path """")                    ; edit config.ini file
-:X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")        ; AHK beginner tutorial
+:X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")        ; AHK beginner tutorial
 :X:tcf~win::  TC("T_CF", "Cursor follows active window: ")   ; toggle cursor follows window
 ```
 
@@ -685,7 +685,7 @@ ________________________________________________________________________________
 | CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND       |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
-|     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
+|     lwin & space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
 |     :X:a~win:: anyFunction()                        | LK     see keyboard shortcut list; update list "gl" |  v   Sound                 |

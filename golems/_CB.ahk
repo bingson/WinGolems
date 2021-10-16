@@ -1,11 +1,22 @@
 ; COMMAND BOX __________________________________________________________________ 
 
-#space::           CB("~win")                                                   ;CB. opens command box that runs ~win suffix CB keys; enter "?" for help                            
-Lwin & enter::     RunCB(,GC("win_S","~win"))                                   ;CB. selects word at text cursor position and run as CB "~win" key
-+<!space::                                                                      ;CB. (V command) selects word at cursor position and replaces it with \mem_cache .txt file with the same name (e.g., 1 = 1.txt).                                   
-<!space::          RunCB(GC("win_P","V"))                                       ;CB. (V command) selects word at cursor position and replaces it with \mem_cache .txt file with the same name (e.g., 1 = 1.txt).
+; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- c3
+; Valid anywhere in windows
+ 
+ #If GetKeyState("lshift", "P")                                                  
+ lwin & space::                                                                 ;CB. (+Lshift) opens command box that runs ~win suffix CB keys
+ #If 
+ lwin & space::    CB("~win")                                                   ;CB. opens command box that runs ~win suffix CB keys
+ 
+ rshift & enter::
+ Lwin   & enter::  RunCmd(,GC("win_S","~win"))                                  ;CB.. selects word at text cursor position and run as CB "~win" key
 
-#IF WinActive("ahk_id " CB_hwnd)                                                ; If Command or Function Box active
+ +<!space::                                                                     ;CB.. (V command) simulates ctrl+shift+left to select last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., 1 = 1.txt).
+ <!space::         RunCmd(GC("win_P","V"))                                      ;CB.. (V command) simulates ctrl+shift+left to select last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., 1 = 1.txt).
+ 
+; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+; Hotkeys below are active if a Command or Function Box is the active window
+#IF WinActive("ahk_id " CB_hwnd)                                                
 $^!k::                                                                          ;CB: Font size decrease
 ^SC00C::           goto, CBzoomOut                                              ;CB: Font size decrease 
 ^SC00D::                                                                        ;CB: Font size increase
@@ -43,6 +54,9 @@ rshift & space::   GUISubmit("rshift")                                          
 $!b::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
 $!x::              ToggleDisplay()                                              ;CB| toggle Command Box display|minimalist mode
 !r::               GUIRecall()                                                  ;CB| reenter last command
+
+; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+; Hotkeys below are active if a Command or Function Box exists but it not the active window
 
 #IF WinExist("ahk_id " CB_hwnd)                                                 
 $<^space::                                                                      ;CB| activate already open Command Box and move focus to inputbox

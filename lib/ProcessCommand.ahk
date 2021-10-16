@@ -302,8 +302,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                                 return 1
                         } 
     
-                        ; Msgbox % "`ndest_path: " . dest_path . "`n source_path: " .  source_path
-                        Filecopy,%source_path%,%dest_path%, 1    ; 1 = overwrite 
+                        Msgbox % "`ndest_path: " . dest_path . "`n source_path: " .  source_path
+                        Filecopy,%source_path%,%dest_path%,1    ; 1 = overwrite 
                         ; PopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
                     } catch {
                         PopUp("invalid file path",C.lgreen,C.bgreen,,,-2000)
@@ -460,8 +460,10 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 }
                 switch case
                 {
-                    Case "t"       : search("www.thesaurus.com/browse/", strng)                                 
-                    Case "d"       : search("www.dictionary.com/browse/", strng)  
+                    Case "t"       : search("www.macmillanthesaurus.com/", strng)                                 
+                    Case "d"       : search("https://www.macmillandictionary.com/us/dictionary/american/", strng)                                 
+                    Case "ot"      : search("www.thesaurus.com/browse/", strng)                                 
+                    Case "od"      : search("www.dictionary.com/browse/", strng)  
                     Case "f"       : search("www.finviz.com/quote.ashx?t=", strng) 
                     Case "yf"      : search("ca.finance.yahoo.com/quote/", strng) 
                     case "y"       : search("www.youtube.com/results?search_query=", strng)

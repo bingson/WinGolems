@@ -472,7 +472,7 @@
  
 ; COMMAND BOX __________________________________________________________________
   
-  RunCB(Prefix="",sfx="~win"){
+  RunCmd(Prefix="",sfx="~win"){
     global short
     BlockInput, on
     SetBatchLines, -1
@@ -481,20 +481,20 @@
 
     settimer, BlockInputTimeOut,-1000
     
-    GC("T_WinEnterSelect",1) ? S("+^{left}") : ("")                             ; GC("T_WinEnterSelect",1) ? SelectWord() : ("") 
+    GC("T_CmdSelect",1) ? S("+^{left}") : ("")                             ; GC("T_WinEnterSelect",1) ? SelectWord() : ("") c3
+
     userInput := clip()
     Switch
     {
-        case substr(Prefix,1,1) == "V" :
-            Prefix := LTrim(Prefix, "V")
-            userInput := trim(userInput)
-            AccessCache(userInput,(userinput ~= "[0-9]") ? ("") : Prefix)
+        case substr(Prefix,1,1) == "V":
+            Prefix := LTrim(Prefix, "V"), userInput := trim(userInput)
+            ; Msgbox % "`nPrefix: " . Prefix . "`nuserInput: " . userInput
+            AccessCache(userInput,(userinput ~= "\b[0-9]\b") ? ("") : Prefix)
         ; Case "?": 
         ; Case "A", "P":   1 
         ; Case "L": 
         default: 
             send {del}
-            ; Msgbox % "`nuserInput: " . userInput . "`n sfx: " .  sfx . "`n WinExist(): " .  WinExist() time           
             RunLabel(userInput, sfx, WinExist())  
 
     }
@@ -1142,12 +1142,12 @@
     }
     arr := StrSplit(SectionNames, "`n")
     return % val
-  } ; (G)et (C)onfig.ini value
+  } ; (G)et (C)onfig.ini value 
 
-  TC(sect = "T_CF", msg = "Cursor Follow Active Window: ") {
+  TC(sect = "T_CF", msg = "") {
 
     global config_path, C
-
+    msg := msg ? msg : (sect . ":") 
     IniRead,  state,    %config_path%, %A_ComputerName%, %sect%, 0
     IniWrite, % !state, %config_path%, %A_ComputerName%, %sect%
 
@@ -1925,7 +1925,7 @@
         } 
         else if (SubStr(file_path, 1,4) = "http") 
         {
-            LoadURL(formatted_path)
+            LURL(formatted_path)
         }
         else if ext in docm,doc,docx,dotx,dotm
         {
@@ -2038,7 +2038,8 @@
         return
     }
     if (SubStr(clipboard, 1,4) = "http") {
-        code := "youtube-dl " """" clipboard """" 
+        code := "youtube-dl --no-check-certificate " """" clipboard """" 
+        ; code := "youtube-dl " """" clipboard """" 
         Run cmd /K "cd /d " %path% 
         sleep med * 2
         clip(code)
@@ -2251,30 +2252,31 @@
         sendinput {sc01a 2}                                                     ; vimium integration
     }
   }
-  
-  LoadURL(URL) {
+
+  LURL(URL, i = false) {
     ; Browser path used to load urls dependent on computer
     global config_path, PF_x86
     winget, Pname, ProcessName, A 
     Switch Pname
     {
-        case "vivaldi.exe": output := GC("vivaldi_path", GC("html_path"))
-        case "chrome.exe" : output := GC("chrome_path", GC("html_path"))
+        case "vivaldi.exe": output := GC("vivaldi_path", GC("html_path")) 
+        case "chrome.exe" : output := GC("chrome_path", GC("html_path")) . (i ? " -incognito " : "")
         case "msedge.exe" : output := GC("edge_path", GC("html_path"))
         ; case "firefox.exe": output := GC("firefox_path", GC("html_path"))     ; look into firefox url syntax
         default: output := GC("html_path")
     }
     output := (output = "ERROR") ? GC("html_path") : output
-    Run, %output% %URL%
+    Run, %output% "%URL%"
+    clipboard = %output% "%URL%"
     return
-  }
+  } ; load URL in web browser
 
   Search(prefix = "google.com/search?q=", var = "", suffix = "") {
     global short, med
     var := (!var ? clip() : var)
-    url := prefix . """" var """" . suffix
+    url := prefix . var . suffix
     sleep med
-    loadURL(url)
+    LURL(url)
     CursorFollowWin()
     return
   }
@@ -2282,7 +2284,7 @@
   OpenGoogleDrive(num) {
     ; Function for opening different google drive folders
     global config_path
-    LoadURL("-incognito https://drive.google.com/drive/my-drive")               ; icognito to avoid signing out of google account
+    LURL("-incognito https://drive.google.com/drive/my-drive")               ; icognito to avoid signing out of google account
     MsgBox,4100, Accessing Google Drive, Enter login/pwd after page loads?
     IfMsgBox Yes
     {

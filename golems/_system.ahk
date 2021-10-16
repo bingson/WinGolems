@@ -46,12 +46,12 @@
 
 ; CB AHK UTILITIES _____________________________________________________________
 
-  :X:wg~win::   LoadURL("https://github.com/bingson/wingolems")                 ;AHK: Load WinGolems GitHub Page
+  :X:wg~win::   LURL("https://github.com/bingson/wingolems")                 ;AHK: Load WinGolems GitHub Page
   :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;AHK: open key history
   :X:ws~win::   WindowSpy()
   :X:ec~win::   EditFile(config_path)                                           ;AHK: edit config.ini file
-  :X:tut~win::  loadURL("autohotkey.com/docs/Tutorial.htm")                     ;AHK: AHK beginner tutorial
+  :X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")                     ;AHK: AHK beginner tutorial
   :X:tcf~win::  TC("T_CF", "Cursor follows active window: ")                    ;AHK: toggle mouse cursor follows active window
   :X:clp~win::  WriteToINI(A_ComputerName, "CL_pfx")                            ;AHK: store selected text as label prefix
   :X:cls~win::  WriteToINI(A_ComputerName, "CL_sfx")                            ;AHK: store selected text as label suffix
@@ -77,7 +77,7 @@
 
   ; CB -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
-    #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                        ; If Command or Function Box active
+    #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                            ; If Command or Function Box active                       
     printscreen & space::  GUISubmit()                                          ;CB| submit GUI input
     #IF GC("T_d",0) 
     printscreen & space::  CB()
@@ -144,12 +144,10 @@
     printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
     *printscreen::         Send {Blind}{vk07}                                   ;Convenience| makes printscreen key inert so it can be used as a modifier key
     :X:pscrn~win::         Send {PrintScreen}                                   ;windows 10 printscreen command
-    ; *#i::                  SaveMousPos("i",1)                                   ;MouseFn: Left click and save mouse position
-    ; *^#i::                 CursorRecall("i")                             ;MouseFn: Move to saved mouse position and left click
     #o::                   Click, middle                                        ;MouseFn: mouse middle click
     PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
     #sc028::               Click, Right                                         ;MouseFn: mouse Right click
-    ^!esc::                EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
+    >^>!esc::                EditFile("golems\_system.ahk")                     ;Convenience: open _system.ahk
     lwin & rctrl::         ActivateWinID("Rctrl")                               ;ActvateApp: activate saved Window ID
     #n::                   AA("editor_path")                                    ;ActivateApp: Editor
     printscreen & lwin::   CursorJump("BL")

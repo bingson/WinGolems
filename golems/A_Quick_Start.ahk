@@ -43,12 +43,15 @@
   $#>!l::             Sendinput {Blind}{WheelRight 6}                           ;Navigation: mouse scroll right 
   ^!h::               sendinput {home}                                          ;Navigation: Home
   ^!l::               sendinput {end}                                           ;Navigation: End
+  
+  #IF GC("T_tabNav",1)                                                          ; can be toggled on/off by entering Gtc,T_tabNav in a CB 
   ^b::                sendinput ^{PgUp}                                         ;Navigation: navigate to left tab
   ^space::            sendinput ^{PgDn}                                         ;Navigation: navigate to right tab
+  #IF
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
-  >+b::                                                                         ;Convenience: Lalt+b = ctrl+b (taken over by tab movement function) 
-  <!b::               send ^b                                                   ;Convenience: Lalt+b = ctrl+b (taken over by tab movement function)
+  !b::                                                                          ;Convenience: Lalt+b = ctrl+b (taken over by tab movement function) 
+  >+b::               send ^b                                                   ;Convenience: Lshift+b = ctrl+b (taken over by tab movement function)
   ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
   ~lwin & ~rshift::   CursorJump("C")                                           ;Convenience: move mouse cursor to center of active application window
   #SC035::            search()                                                  ;Convenience: google search selected text

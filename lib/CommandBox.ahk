@@ -3,6 +3,7 @@
     SetkeyDelay, -1
     SetWinDelay, -1
     ; Process, Priority,, High
+    kw()                                                                        ; wait for shift,ctrl, or win keys to send up
     BufferKeystrokes() 
     ; TimeCode()
   ; SAVE GUI INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- --; saves information between script reloads. 

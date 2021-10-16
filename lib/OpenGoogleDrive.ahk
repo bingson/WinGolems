@@ -1,7 +1,7 @@
  OpenGoogleDrive(num) {
     ; Function for opening different google drive folders 
     global config_path
-    LoadURL("-incognito https://drive.google.com/drive/my-drive")               ; icognito to avoid signing out of google account
+    LURL("-incognito https://drive.google.com/drive/my-drive")               ; icognito to avoid signing out of google account
     MsgBox,4100, Accessing Google Drive, Enter login/pwd after page loads?
     IfMsgBox Yes
     {
