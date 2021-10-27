@@ -8,8 +8,8 @@
  #If 
  lwin & space::    CB("~win")                                                   ;CB. opens command box that runs ~win suffix CB keys
  
- rshift & enter::
- Lwin   & enter::  RunCmd(,GC("win_S","~win"))                                  ;CB.. selects word at text cursor position and run as CB "~win" key
+ rshift & enter::  RunCmd(,GC("win_S","~win")) 
+ Lwin & enter::  RunCmd(,GC("win_S","~win"))                                  ;CB.. selects word at text cursor position and run as CB "~win" key
 
  +<!space::                                                                     ;CB.. (V command) simulates ctrl+shift+left to select last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., 1 = 1.txt).
  <!space::         RunCmd(GC("win_P","V"))                                      ;CB.. (V command) simulates ctrl+shift+left to select last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., 1 = 1.txt).

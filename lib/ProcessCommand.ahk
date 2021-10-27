@@ -446,7 +446,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
             Case "W","B","N","M":
                 
                 RunOtherCB(C_input, 1stChar) 
-            Case "Q":                                                           ; query selected text in chosen search engine msft
+            Case "Q", "S":                                                      ; search selected text in chosen search engine msft
                 
                 if (InStr(C_input, ":")) {                                      ; get search string from command box if colon detected
                     dPos  := InStr(C_input, ":")
@@ -484,12 +484,12 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 }            
                 SetTimer, CFW, -600
                 return
-            Case "S":                                                           ; search selected text
-                OpenFolder("mem_cache\")
-                ActivateApp("explorer.exe", A_ScriptDir "\mem_cache\", False)
-                sleep 400
-                SelectByRegEx(C_input)
-                return
+            ; Case "S":                                                          
+                ; OpenFolder("mem_cache\")
+                ; ActivateApp("explorer.exe", A_ScriptDir "\mem_cache\", False)
+                ; sleep 400
+                ; SelectByRegEx(C_input)
+                ; return
             Case "X":
                     
             Case "Y":

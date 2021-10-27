@@ -1142,7 +1142,7 @@
     }
     arr := StrSplit(SectionNames, "`n")
     return % val
-  } ; (G)et (C)onfig.ini value 
+  } ; (G)et (C)onfig.ini value
 
   TC(sect = "T_CF", msg = "") {
 
@@ -1713,6 +1713,7 @@
     Return result
   }
  
+
   ExpandCollapseAllGroups(PosKey = "FE_cg"){
     global med
     WinGetActiveStats, Title, Width, Height, X, Y
@@ -2001,7 +2002,8 @@
     url := clip()
     sleep med
     if (SubStr(url, 1,4) = "http") {
-        code := "youtube-dl " """" url """" 
+        ; code := "youtube-dl " """" url """" 
+        code := "youtube-dl --no-check-certificate " """" url """"
         Run cmd /K "cd /d " %path% 
         sleep med
         clip(code)
@@ -2130,7 +2132,7 @@
   }
 
   CursorRecall(key = "A", n = "1", lrm = "left", rtn_mouse = False, msg = 0) {
-    global config_path
+    global config_path, short
     if (GC("MPos_" Key) != "ERROR") {
         KeyWait()
         CoordMode, Mouse, Screen
@@ -2140,6 +2142,7 @@
         pos_array := StrSplit(mpos, " ")
         DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
         ; MouseMove, pos_array[1], pos_array[2]
+        sleep short
         Clicks(n, lrm)
         msg ? pu("click recall") : ""
         if rtn_mouse
@@ -2266,8 +2269,8 @@
         default: output := GC("html_path")
     }
     output := (output = "ERROR") ? GC("html_path") : output
+    sleep 100
     Run, %output% "%URL%"
-    clipboard = %output% "%URL%"
     return
   } ; load URL in web browser
 

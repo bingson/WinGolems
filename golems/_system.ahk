@@ -46,12 +46,12 @@
 
 ; CB AHK UTILITIES _____________________________________________________________
 
-  :X:wg~win::   LURL("https://github.com/bingson/wingolems")                 ;AHK: Load WinGolems GitHub Page
+  :X:wg~win::   LURL("https://github.com/bingson/wingolems")                    ;AHK: Load WinGolems GitHub Page   
   :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;AHK: open key history
-  :X:ws~win::   WindowSpy()
+  :X:ws~win::   WindowSpy()                                                     ;AHK: open window spy 
   :X:ec~win::   EditFile(config_path)                                           ;AHK: edit config.ini file
-  :X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")                     ;AHK: AHK beginner tutorial
+  :X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")                        ;AHK: AHK beginner tutorial
   :X:tcf~win::  TC("T_CF", "Cursor follows active window: ")                    ;AHK: toggle mouse cursor follows active window
   :X:clp~win::  WriteToINI(A_ComputerName, "CL_pfx")                            ;AHK: store selected text as label prefix
   :X:cls~win::  WriteToINI(A_ComputerName, "CL_sfx")                            ;AHK: store selected text as label suffix

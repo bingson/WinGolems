@@ -2,10 +2,10 @@
 
 ## Overview
 
-WinGolems, aka Windows Golems, describes collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
+WinGolems, aka Windows Golems, encompasses a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
 <br><br>
 
-Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the features of each template. 
+Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the features of each dedicated interface layer. 
 <br><br>
 
 <p align="center"><img src="assets\Screens\QuickStartHotkeys.png" width = "800">  </p>
@@ -81,7 +81,6 @@ As something that I use daily, WinGolems is under constant development. I create
  </ul>
  
  <br>
-
 
 ### II. &nbsp; Download WinGolems <a name="download"></a>
 
@@ -193,7 +192,11 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 5.  [Objects](https://www.autohotkey.com/docs/Tutorial.htm#s7)
     * [Creating Objects](https://www.autohotkey.com/docs/Tutorial.htm#s71)
     * [Using Objects](https://www.autohotkey.com/docs/Tutorial.htm#s72)
-6.  Misc.
+6.  Interface Design
+    * [User Interface: A Personal View — Alan Kay (1989)](https://numinous.productions/ttft/assets/Kay1989.pdf)
+    * [How can we develop transformative tools for thought? — Matuschak & Nielsen](https://numinous.productions/ttft/) 
+    * [Thought as a Technology — Nielsen](http://cognitivemedium.com/tat/index.html)
+7.  Misc.
     * [Send commands](https://www.autohotkey.com/docs/commands/Send.htm)
     * [Optimizing the speed of a script](https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413&sid=a3fa467747d78cedad4ca780b4e08dbb)
     * [Square Brackets Notation (documentation)](https://www.autohotkey.com/docs/Tutorial.htm#s81)
@@ -210,9 +213,9 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 <br>
 </p></details>
 
-<details><summary>&nbsp;📕&nbsp;<b> Loading AHK scripts </b></summary><p>
+<details><summary>&nbsp;📕&nbsp;<b> Adding interface layers </b></summary><p>
 
-`WinGolems.ahk` is the master script that controls all others. To change which scripts get loaded by WinGolems modify the following section in `WinGolems.ahk`. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. Although it's possible to run multiple AHK scripts concurrently, it is always better to combine multiple scripts together with include statements and run one script. 
+`WinGolems.ahk` is the master script that controls all others. To change which scripts get loaded by WinGolems, modify the following section in `WinGolems.ahk`. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. Although it's possible to run multiple AHK scripts concurrently, it is always better to combine multiple scripts together with include statements and run one script. 
 
 [See: Combining Multiple Scripts (#Include)](https://www.autohotkey.com/docs/commands/_Include.htm)
 
@@ -221,9 +224,9 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 ; LOAD AHK SCRIPTS (GOLEMS) __________________________________________
 
 #Include %A_ScriptDir%\golems\             
-#Include _functions.ahk                    ; system files don't modify
-#Include _system.ahk                       ;
-#Include _CB.ahk                           ;
+#Include _functions.ahk                    ; system files 
+#Include _system.ahk                       ; modify with caution
+#Include _CB.ahk                           ; 
 
                                            ; TUTORIAL TEMPLATES
 #Include *i A_Quick_Start.ahk              ; base template
@@ -233,7 +236,7 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 ```
 <br></p></details>
 
-<details><summary>&nbsp;📕&nbsp;<b> File locations and code organization </b></summary><p>
+<details><summary>&nbsp;📕&nbsp;<b> File structure </b></summary><p>
 
 For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
 <br> 
@@ -245,14 +248,45 @@ For convenience, the code for the creation of interface layers is abstracted awa
 ; ! = Alt Key
 ; ^ = Ctrl Key
 
-#s::       ActivateApp("C:\browser_path")    ; open or reactivate a web browser window with 'win + s' 
-^!space::  WinMaximize,A                     ; maximize active window with 'ctrl + alt + spacebar'    
+#s::      ActivateApp("C:\browser_path")  ; open or reactivate a web browser window with 'win + s' 
+^!space:: WinMaximize,A                   ; maximize active window with 'ctrl + alt + spacebar'    
 
 ```
 
 - All tutorial template files are located in the `WinGolems\golems` folder. 
-- Functions are located in the `WinGolems\lib` folder as well as the `_functions.ahk` file in the `WinGolems\golems` folder. 
+- Functions are located in the `WinGolems\lib` folder as well as the `_functions.ahk` file. 
 - Memory system files are located in the `WinGolems\mem_cache` folder
+
+<br>
+
+```
+WinGolems
+  ├── WinGolems.ahk
+  ├── WinGolems.exe
+  ├── config.ini                    (computer specific settings)
+  ├── HotKey_List.txt               (last generated list of hotkeys)
+  ├── Readme.md
+  |
+  ├──golems 
+  |   ├── _functions.ahk            (function library)
+  |   ├── _CB.ahk                   (command box interface)
+  |   ├── _system.ahk               (system related CB keys)
+  |   ├── A_Quick_Start.ahk         ┐                                                              
+  |   ├── B_Text_Manipulation.ahk   ├─ tutorial template files
+  |   ├── C_File_Management.ahk     |  and sample code                                            
+  |   └── D_App_Examples.ahk        ┘                                            
+  |
+  ├──lib                            (function library)
+  |   ├── CommandBox.ahk
+  |   ├── ProcessCommand.ahk 
+  |   └── large WinGolems functions and third party functions
+  |
+  ├──mem_cache
+  |   └── all text files related to memory system and clipboard manager (including 0.txt to 9.txt)
+  |
+  └──assets
+      └── all non ahk files         (icons, tutorial screenshots, etc.)
+```
 
 <br></p></details>
 
@@ -260,15 +294,15 @@ For convenience, the code for the creation of interface layers is abstracted awa
 
 ```ahk 
 ; CB keys are hotstrings or labels with a unique suffix appended e.g., "~win", "~coding", etc.
-; the 'X' option lets a hotstring execute a command/expression instead of sending replacement text   
+; 'X' option lets a hotstring execute a command/expression instead of sending text
 
 
-:X:wg~win::   LURL("https://github.com/bingson/wingolems")    ; Load WinGolems GitHub Page
-:X:oc~win::   OpenFolder("mem_cache\")                           ; open mem folder in file explorer
-:X:kh~win::   KeyHistory                                         ; open key history
-:X:ws~win::   WindowSpy()                                        ; open windows spy
-:X:ec~win::   EditFile("""" config_path """")                    ; edit config.ini file
-:X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")        ; AHK beginner tutorial
+:X:wg~win::   LURL("https://github.com/bingson/wingolems")   ; Load WinGolems GitHub Page
+:X:oc~win::   OpenFolder("mem_cache\")                       ; open mem_cache folder
+:X:kh~win::   KeyHistory                                     ; open key history
+:X:ws~win::   WindowSpy()                                    ; open windows spy
+:X:ec~win::   EditFile(config_path)                          ; edit config.ini file
+:X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")       ; AHK beginner tutorial
 :X:tcf~win::  TC("T_CF", "Cursor follows active window: ")   ; toggle cursor follows window
 ```
 
@@ -298,16 +332,6 @@ RunLabel(UserInput="", suffix = "", tgt_winID ="") {
 ```
 Note: that the base ~win label suffix will be checked if no valid `GoSub` label found with a user-entered CB suffix.
 
-```ahk 
-
-; Calling Convention: CB( command_suffix, window_color, text_color, ProcessorModule) 
-; "ProcessCommand" is a sample command-line processor module that can be replaced 
-; with a user created one. See WinGolems\lib\ProcessCommand.ahk for sample code
-
-#enter:: CB("~win",  C.lblue, C.dblue , "ProcessCommand")                   
-
-```
-
 <br></p></details>
 
 <details><summary>&nbsp;📕&nbsp;<b> Developer mode free keys</b></summary><p>
@@ -327,7 +351,8 @@ Convenient free key combinations: #g, #u, #y, #i, #o, #n, #sc028
 
 ### II. &nbsp; Keyboard Shortcuts <a name="ks"></a>
 
-Below is a 30 Sept 2021 snap shot of WinGolems keyboard shortcuts and command box features. Once WinGolems is installed, enter `gl` in a command box to generate an updated version.
+Below is a 30 Sept 2021 snap shot of WinGolems keyboard shortcuts and command box features. As the tutorial templates are part of my own setup, changes are constantly being made. 
+Once WinGolems is installed, enter `gl` in a command box to generate an updated version.
 
 Note: under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc` or `win + left click`.
 

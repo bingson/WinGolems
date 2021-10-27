@@ -75,7 +75,7 @@
     else 
         Gui, 2: +Caption
 
-  ; ADD GUI CONTROLS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  ; ADD GUI INTERFACE ELEMENTS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
     ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
     if (show_txt = "") {                                                        ; reload last diplayed txt
@@ -119,7 +119,7 @@
         Gui, 2: Color,,%w_color% 
     }
 
-    ; build GUI controls ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
+    ; BUILD GUI CONTROLS ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
     CtrX    := (SubStr(wdth, 2) - IBwidth) // 2
     Gui, 2: Add, Edit, x%CtrX% w%IBwidth% r1 vUserInput, %input_txt% 
     Gui, 2: Add, Button, Default Hidden gEnter_Button                           ; Gui, 2: Add, Button, ys h35 x+5 w80 Default gEnter_Button, Enter  ;Gui, 2: Add, Button, Default Hidden x0 y0 gEnter_Button
@@ -261,14 +261,20 @@
     Enter_Button:
         Gui, 2: Submit, Hide
         leave_CB_open := ""
-        CC("last_user_input", UserInput)                                        ; store key history
+        
+        (substr(UserInput,0) = "~") ? ("") : CC("last_user_input", UserInput)   ; store key history, except keys ending in "~" (shutdown related)   
+        
         GuiControl, 2:, UserInput,
-        if GC("CB_hist",1)
-            FilePrepend(A_ScriptDir "\mem_cache\_hist.txt", UserInput) 
-        if !IsFunc(ProcessMod) 
-            afterExecution := ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, w_color)
-        else 
-            afterExecution := %ProcessMod%(UserInput, suffix, title, fsz, fnt, w_color, t_color)
+        GC("CB_hist",1) ? FilePrepend(A_ScriptDir "\mem_cache\_hist.txt", UserInput) : ("")
+
+        afterExecution := IsFunc(ProcessMod) 
+                        ? %ProcessMod%(UserInput, suffix, title, fsz, fnt, w_color, t_color)
+                        : ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, w_color)
+
+        ; if !IsFunc(ProcessMod) 
+        ;     afterExecution := ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, w_color)
+        ; else 
+        ;     afterExecution := %ProcessMod%(UserInput, suffix, title, fsz, fnt, w_color, t_color)
         
         afterExecution := (GC("CB_persistent", 0) = 1) ? 2 : afterExecution
 
