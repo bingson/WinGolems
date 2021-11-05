@@ -1,3 +1,70 @@
+#g:: MI_Toggle_DarkMode()                          ; set Win + n to toggle nightmode
+
+WM_SETTINGCHANGE(L_wParam,L_lParam,L_msg,L_hwnd){ ; message handler
+	If (L_msg=0x001A)                               ; WM_SETTINGCHANGE	:= 0x001A
+		RegRead,L_LightMode,HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize,AppsUseLightTheme
+	if L_LightMode<>G_LightMode                     ; If the lightmode has changed
+		Gui_Color_Changed(G_LightMode:=L_LightMode)   ; assign the new mode and change the colors
+	Return,1
+}
+
+MI_Toggle_DarkMode(){                             ; MI_ stands for MenuItem
+	G_ScriptLightMode := !G_ScriptLightMode         ; toggle the scripts lightmode
+	Gui_Color_Changed()                             ; change the colors
+}
+
+Gui_Color_Changed(L_LightMode:=""){
+	If (L_LightMode=0)                              ; if lightmode is off
+		G_ScriptLightMode:=0                          ; overwrite the app mode
+	else If (L_LightMode=1)                         ; if lightmode is on
+		G_ScriptLightMode:=1                          ; overwrite the app mode
+	If G_ScriptLightMode {                          ; if the script needs to be Light
+		Gui,Color,White,White                         ; change the gui color, and controls
+		Gui,Font ,cBlack                              ; new controls wil have this text color
+		GuiControl,+BackGroundWhite +cBlack,%G_hTV%
+		GuiControl,+BackGroundWhite +cBlack,%G_hLV%
+		GuiControl,+BackGroundWhite +cBlack,%G_hEB%
+		}
+	else {                                          ; if the script needs to be Dark
+		Gui,Color,Black,Black                         ; change the gui color, and controls
+		Gui,Font ,cWhite                              ; new controls wil have this text color
+		GuiControl,+BackGroundBlack +cWhite,%G_hTV%
+		GuiControl,+BackGroundBlack +cWhite,%G_hLV%
+		GuiControl,+BackGroundBlack +cWhite,%G_hEB%
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ; SCRIPT OPTIMIZATION SETTINGS _________________________________________________
 
   SetWorkingDir %A_ScriptDir%                                                   ; https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413

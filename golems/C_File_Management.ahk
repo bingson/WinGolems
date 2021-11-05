@@ -28,7 +28,7 @@
     msg := help ? msg : " "
 
     global UProfile
-    global p := { "e"  : GC("esc_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")      
+    global p := { "e"  : GC("esc_path" , A_ScriptDir "\golems\A_Quick_Start.ahk")      
                 , "f1" : GC("F1_path"  , A_ScriptDir "\golems\B_Text_Manipulation.ahk")
                 , "f2" : GC("F2_path"  , A_ScriptDir "\golems\C_File_Management.ahk")  
                 , "f3" : GC("F3_path"  , A_ScriptDir)                     

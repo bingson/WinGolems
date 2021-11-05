@@ -11,7 +11,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
         C_input := SubStr(UserInput, 2)                                         ; everything after the first character
         SplitPath, C_input, FileName, Dir, Extension, NameNoExt                 ; parses everything after the command character as a file path 
         dir := dir ? dir . "\" : ""
-        Switch 1stChar                                                        ; free: h,i,u,x,y
+        Switch 1stChar                                                          ; free: h,i,u,x,y
         { 
             Case 1,2,3,4,5,6,7,8,9,0:
                 NameNoExt := 1stChar
@@ -62,7 +62,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     dPos        := InStr(C_input, ":")
                     text_to_add := substr(C_input, dPos+1)
                     file_path   := substr(C_input, 1, dPos-1)
-                    SplitPath, file_path, , Dir, Extension, NameNoExt 
+                    SplitPath, file_path, , dir, Extension, NameNoExt 
+                    dir := dir ? dir . "\" : ""
                     sleep, long * 0.8
                     goto, addTextToFile
 
@@ -376,7 +377,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
             Case "F":                                                           ; fill space with char 
                 sleep, short
                 ActivateWin("ahk_id " tgt_hwnd)                             
-                arr := StrSplit(C_input, "~")
+                arr := (InStr(C_input, "~")) ? StrSplit(C_input, "~") 
+                                             : StrSplit(C_input, ",")
                 FillChar(arr[2], arr[1], 0)
                 return 
             case "I":                                                           ; change retrieve path letter variable  
@@ -446,7 +448,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
             Case "W","B","N","M":
                 
                 RunOtherCB(C_input, 1stChar) 
-            Case "Q", "S":                                                      ; search selected text in chosen search engine msft
+            Case "S":                                                           ; search selected text in chosen search engine msft
                 
                 if (InStr(C_input, ":")) {                                      ; get search string from command box if colon detected
                     dPos  := InStr(C_input, ":")
@@ -460,10 +462,10 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 }
                 switch case
                 {
-                    Case "t"       : search("www.macmillanthesaurus.com/", strng)                                 
-                    Case "d"       : search("https://www.macmillandictionary.com/us/dictionary/american/", strng)                                 
-                    Case "ot"      : search("www.thesaurus.com/browse/", strng)                                 
-                    Case "od"      : search("www.dictionary.com/browse/", strng)  
+                    Case "ta"      : search("www.macmillanthesaurus.com/", strng)                                 
+                    Case "da"      : search("https://www.macmillandictionary.com/us/dictionary/american/", strng)                                 
+                    Case "t"       : search("www.thesaurus.com/browse/", strng)                                 
+                    Case "d"       : search("www.dictionary.com/browse/", strng)  
                     Case "f"       : search("www.finviz.com/quote.ashx?t=", strng) 
                     Case "yf"      : search("ca.finance.yahoo.com/quote/", strng) 
                     case "y"       : search("www.youtube.com/results?search_query=", strng)

@@ -190,7 +190,6 @@
     }
     Return
   } ; close all open programs (used before system shutdown)
-
  
   CloseClass() {
     WinGetClass class, A
@@ -260,6 +259,24 @@
     DllCall("Shell32\SHAppBarMessage", UInt, ABM_SETSTATE, Ptr, &APPBARDATA)
   } ;https://www.autohotkey.com/boards/viewtopic.php?t=60866
  
+  toggle_DarkMode(){       
+    #SingleInstance Force                             ; Allow only one instance off this app]
+    ; #NoTrayIcon                                       ; we don't want a SystemTray icon
+    ; read the System lightmode from the registry 
+    RegRead,L_LightMode,HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize,SystemUsesLightTheme
+    If L_LightMode {                                  ; if the mode was Light
+        ; write both system end App lightmode to the registry
+        RegWrite,Reg_Dword,HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize,SystemUsesLightTheme,0
+        RegWrite,Reg_Dword,HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize,AppsUseLightTheme   ,0
+        }
+    else {                                            ; if the mode was dark
+        ; write both system end App lightmode to the registry
+        RegWrite,Reg_Dword,HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize,SystemUsesLightTheme,1
+        RegWrite,Reg_Dword,HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize,AppsUseLightTheme   ,1
+        }
+    ; tell the system it needs to refresh the user settings
+    run,RUNDLL32.EXE USER32.DLL`, UpdatePerUserSystemParameters `,2 `,True
+  } ; toggle dark/light mode for windows apps https://www.autohotkey.com/boards/viewtopic.php?t=73967
  
 ; SYSTEM APPS __________________________________________________________________
  
@@ -2156,6 +2173,7 @@
  
   CFW(Q = "center", offset_x = "100", offset_y = "100") {
     CursorFollowWin(Q, offset_x, offset_y) 
+    return
   }      
 
   CursorFollowWin(Q = "center", offset_x = "100", offset_y = "100") {
@@ -2224,13 +2242,6 @@
 
 
 ; BROWSERS _____________________________________________________________________
- 
-  CFG(tgt) { 
-    send ^l
-    clip(tgt)
-    send !{enter}
-    return
-  }
  
   BrowserForward(isHold, taps, state) {
     if (taps > 1) {

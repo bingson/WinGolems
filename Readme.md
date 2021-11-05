@@ -238,7 +238,7 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 
 <details><summary>&nbsp;📕&nbsp;<b> File structure </b></summary><p>
 
-For convenience, the code for the creation of interface layers is abstracted away (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
+A core part of good software is readability. Keeping the mental complexity low so that everybody has an easy time understanding it. For this reason, the code for the creation of interface layers is separated (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
 <br> 
 
 ```ahk

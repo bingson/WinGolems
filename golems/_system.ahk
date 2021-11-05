@@ -6,37 +6,41 @@
   LWin Up::     Send {Blind}{vk07}{LWin Up}                                     ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
 
 ; CB SYSTEM COMMANDS ___________________________________________________________
-  :X:b~win::    BluetoothSettings()                                             ;SC: bluetooth settings
-  :X:d~win::    DisplaySettings()                                               ;SC: display settings
-  :X:n~win::    NotificationWindow()                                            ;SC: notification window
-  :X:v~win::    SoundSettings()                                                 ;SC: sound settings
-  :X:r~win::    RunProgWindow()                                                 ;SC: run program
-  :X:x~win::    StartContextMenu()                                              ;SC: context menu for the Start button
-  :X:k~win::    QuickConnectWindow()                                            ;SC: quick connect window
-  :X:i~win::    WindowsSettings()                                               ;SC: windows settings
-  :X:p~win::    PresentationDisplayMode()                                       ;SC: presentation display mode
-  :X:s~~win::   PowerOptions("sleep")                                           ;SC: enter sleep mode
-  :X:h~~win::   PowerOptions("hybernate")                                       ;SC: enter hybernate mode
-  :X:sd~~win::  PowerOptions("shutdown")                                        ;SC: shutdown + power down 
-  :X:rs~~win::  PowerOptions("restart")                                         ;SC: restart the computer
-  :X:a~win::    Run assets\win\Alarms & Clock.lnk                               ;SC: alarm clock
-  :X:m~win::    sendEmail()                                                     ;SC: send mail
-  :X:ce~~win::  CloseAllPrograms()                                              ;SC: close all open programs 
-  :X:ss~win::   CloudSync("ON")                                                 ;SC: turn on cloud sync 
-  :X:qs~win::   CloudSync("OFF")                                                ;SC: turn off cloud sync
-  :X:lt~win::   WinLLock(True)                                                  ;SC: turn on win+L locks computer
-  :X:lf~win::   WinLLock(False)                                                 ;SC: turn off win+L locks computer
-  :X:ap~win::   Run assets\win\Add Remove Programs.lnk                          ;SC: open add remove programs 
-  :X:s~win::    send ^{esc}                                                     ;SC: open start menu (alt: Ctrl+Esc)
-  :X:de~win::   send #{tab}                                                     ;SC: desktop environment overview
-  :X:t~win::    SysTray()                                                       ;SC: system tray
+  :X:b~win::     BluetoothSettings()                                            ;SC: bluetooth settings
+  :X:d~win::     DisplaySettings()                                              ;SC: display settings
+  :X:n~win::     NotificationWindow()                                           ;SC: notification window
+  :X:v~win::     SoundSettings()                                                ;SC: sound settings
+  :X:r~win::     RunProgWindow()                                                ;SC: run program
+  :X:x~win::     StartContextMenu()                                             ;SC: context menu for the Start button
+  :X:k~win::     QuickConnectWindow()                                           ;SC: quick connect window
+  :X:i~win::     WindowsSettings()                                              ;SC: windows settings
+  :X:p~win::     PresentationDisplayMode()                                      ;SC: presentation display mode
+  :X:s~~win::    PowerOptions("sleep")                                          ;SC: enter sleep mode
+  :X:h~~win::    PowerOptions("hybernate")                                      ;SC: enter hybernate mode
+  :X:sd~~win::   PowerOptions("shutdown")                                       ;SC: shutdown + power down 
+  :X:rs~~win::   PowerOptions("restart")                                        ;SC: restart the computer
+  :X:a~win::     Run assets\win\Alarms & Clock.lnk                              ;SC: alarm clock
+  :X:m~win::     sendEmail()                                                    ;SC: send mail
+  :X:ce~~win::   CloseAllPrograms()                                             ;SC: close all open programs 
+  :X:ss~win::    CloudSync("ON")                                                ;SC: turn on cloud sync 
+  :X:qs~win::    CloudSync("OFF")                                               ;SC: turn off cloud sync
+  :X:lt~win::    WinLLock(True)                                                 ;SC: turn on win+L locks computer
+  :X:lf~win::    WinLLock(False)                                                ;SC: turn off win+L locks computer
+  :X:ap~win::    Run assets\win\Add Remove Programs.lnk                         ;SC: open add remove programs 
+  :X:phone~win:: Run assets\win\Your Phone.lnk                                  ;SC: open add remove programs 
+  :X:s~win::     send ^{esc}                                                    ;SC: open start menu (alt: Ctrl+Esc)
+  :X:de~win::    send #{tab}                                                    ;SC: desktop environment overview
+  :X:t~win::     SysTray()                                                      ;SC: system tray
   ~#left::
   ~#right::
   ~+#left::                                                                     ;SC: cursor follows active window when moving apps btn monitors (if turned on)
   ~+#right::                                                                    ;SC: cursor follows active window when moving apps btn monitors (if turned on)
   ~+!tab::                                                                      ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
   ~!tab::       settimer, CFW,-250                                              ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
-
+  
+  :X:light~win::
+  :X:dark~win::
+  :X:TDL~win::  toggle_DarkMode()                                               ;SC: toggle dark/light mode 
 
   :X:tm~win::                                                                   ;SC: open task manager with hotstring combines with max + cursor follows task manager window
   :X:.~win::                                                                    ;SC: open task manager with hotstring combines with max + cursor follows task manager window
@@ -49,6 +53,7 @@
   :X:wg~win::   LURL("https://github.com/bingson/wingolems")                    ;AHK: Load WinGolems GitHub Page   
   :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;AHK: open key history
+  :X:ll~win::   ListLines                                                       ;AHK: Displays the script lines most recently executed.
   :X:ws~win::   WindowSpy()                                                     ;AHK: open window spy 
   :X:ec~win::   EditFile(config_path)                                           ;AHK: edit config.ini file
   :X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")                        ;AHK: AHK beginner tutorial
