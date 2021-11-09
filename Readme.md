@@ -704,7 +704,7 @@ An ampersand (&) between two keys or mouse buttons combines them to create a cus
 ### III. &nbsp; Command Box </b><a name="cb"></a>
 The Command Box (CB) is a GUI that can execute any script or function. Where applicable, the CB operates on the last active application window (target application.exe).
 
-<p align="center"><img src="assets\Screens\CB_header.png" width="500"></p>
+<p align="center"><img src="assets\Screens\CB_header.png" width="600"></p>
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>Command Keys</b></summary><p>
 
