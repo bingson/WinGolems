@@ -802,7 +802,7 @@ In any windows application text field pressing
 
 <br>
 
-- `lalt` + `spacebar` will consume the user's last typed word and replace it with the contents of the corresponding memory file—equivalent to Uppercase-initiated V (paste) function
+- `lalt` + `spacebar` will consume the user's last typed word and replace it with the contents of the corresponding memory file—equivalent to uppercase-initiated V (paste) function
 
     > E.g., typing "1", then hitting `lalt` + `spacebar` will replace "1" with the contents of 1.txt in the `mem_cache` folder.
 
