@@ -282,7 +282,8 @@ WinGolems
   ├──lib                            ; function library
   |   ├── CommandBox.ahk            ; command box GUI code
   |   ├── ProcessCommand.ahk        ; example command processing module 
-  |   └── large WinGolems functions and third party functions
+  |   └── large WinGolems functions 
+  |       and third party functions
   |
   ├──mem_cache
   |   └── all text files related to memory system (including 0.txt to 9.txt)
