@@ -93,6 +93,7 @@
   ~ralt  & ~lalt::    CursorJump("TL")                                          ;MouseFn: move mouse cursor to TOP LEFT of active app
   ~lctrl & ~ralt::
   ~lalt  & ~ralt::    CursorJump("TR")                                          ;MouseFn: move mouse cursor to TOP RIGHT of active app
+  
   $!#k::              CursorJump("T")                                           ;MouseFn: move mouse cursor to top edge
   $!#j::              CursorJump("B",,"-20")                                    ;MouseFn: move mouse cursor to bottom edge
   $!#h::              CursorJump("L","20")                                      ;MouseFn: move mouse cursor to Left edge

@@ -71,7 +71,7 @@
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up
 
-; TOGGLES  
+; TOGGLES ______________________________________________________________________
   
   :X:ts~win::        TC("T_WinEnterSelect", "WIN + ENTER SELECT: ")             ;[T] Toggle config.ini entry for auto select word mode when executing win+enter CB commands  
   :X:tt~win::        TC("T_TM","Text_Manipulation: ")                           ;[T] Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows           

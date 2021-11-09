@@ -9,7 +9,7 @@
   ; A_ScriptDir = WinGolems folder path 
   ; UProfile    = currently logged in windows user folder path
 
-  Paths(help=1) {
+  Paths(help=0) {
     AutoTrim, Off
     msg                  := "How to overwrite a open file|folder|URL path shortcut: `n`n`t"
                           . "1) <SELECT> a file|folder in file explorer or highlight a url `n`t"
@@ -102,7 +102,7 @@
   >^F9::        OP(Paths()["f9"])                                            ;OpenPath: open saved file|folder path from +^F9
 
   ; Function Box: opens a window that gives the user a menu of parameter choices for calling a function
-  #SC034::      FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths(), C.lpurple)  ;FB: Opens Jump Menu for opening saved paths to files, folders, URLs (works in save dialogue windows)
+  ; #SC034: :      FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths(), C.lpurple)  ;FB: Opens Jump Menu for opening saved paths to files, folders, URLs (works in save dialogue windows)
 
 ; FILE EXPLORER AND LISTVIEW WINDOWS ___________________________________________
   ; ChangeFolder() shortcuts are valid in file explorer and other listview type windows (e.g., save as diaglogue boxes)

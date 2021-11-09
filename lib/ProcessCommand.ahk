@@ -486,14 +486,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 }            
                 SetTimer, CFW, -600
                 return
-            ; Case "S":                                                          
-                ; OpenFolder("mem_cache\")
-                ; ActivateApp("explorer.exe", A_ScriptDir "\mem_cache\", False)
-                ; sleep 400
-                ; SelectByRegEx(C_input)
-                ; return
-            Case "X":
-                    
+            
+            ; Case "X":
             Case "Y":
                 if (SubStr(C_input, 1, 2) = "s:") {
                     C3_Remainder := SubStr(C_input, 3)

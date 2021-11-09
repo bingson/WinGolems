@@ -257,7 +257,7 @@
     NumPut(size, APPBARDATA), NumPut(WinExist("ahk_class Shell_TrayWnd"), APPBARDATA, A_PtrSize)
     NumPut(action ? ABS_AUTOHIDE : ABS_ALWAYSONTOP, APPBARDATA, size - A_PtrSize)
     DllCall("Shell32\SHAppBarMessage", UInt, ABM_SETSTATE, Ptr, &APPBARDATA)
-  } ;https://www.autohotkey.com/boards/viewtopic.php?t=60866
+  } ; https://www.autohotkey.com/boards/viewtopic.php?t=60866
  
   toggle_DarkMode(){       
     #SingleInstance Force                             ; Allow only one instance off this app]
@@ -523,7 +523,6 @@
     return
   }
    
-
   GUISubmit(commandkey = ">!space") {
     global short, med, long
     Gui +LastFound
@@ -2221,11 +2220,11 @@
             x := winTopL_x + width
             MouseGetPos,,y
         case "TL":
-            x := winTopL_x + width  * .10
-            y := winTopL_y + height * .15
+            x := winTopL_x + width  * .05
+            y := winTopL_y + height * .05
         case "TR":
-            x := winTopL_x + width  * .80
-            y := winTopL_y + height * .15
+            x := winTopL_x + width  * .85
+            y := winTopL_y + height * .05
         case "BL":
             x := winTopL_x + width  * .10 
             y := winTopL_y + height * .80

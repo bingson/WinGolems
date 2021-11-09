@@ -2,7 +2,7 @@
 
 ## Overview
 
-WinGolems, aka Windows Golems, encompasses a collection of AutoHotkey (AHK) functions and interface templates that I have developed over the years to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to leverage more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
+WinGolems, aka Windows Golems, encompasses a collection of AutoHotkey (AHK) functions and interface templates that I have written to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from the tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface to better fit ones hardware and ergonomic preferences so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to bring to bear more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
 <br><br>
 
 Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the features of each dedicated interface layer. 
@@ -12,17 +12,21 @@ Before investing any time into learning AHK, prospective users can try out the t
 
 <br> 
 
-Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box (CB), a keyboard-driven text-based user interface that was originally conceived to alleviate the following issues:
+Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box (CB), an entirely keyboard-driven GUI that was originally conceived to alleviate the following issues:
 
  * a lack of keyboard real-estate/mental bandwidth for assigning/remembering less frequently used operations;
     
-    - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember keyboard shortcuts.
+    - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember keyboard shortcuts. 
     
-    - The CB can also be used to create interface layers active only when a particular CB is open.
+    - The CB can be used to create interface layers active only when a particular CB is open.
+
+    - CB commands can be executed in any text field of any windows application via hotkeys that access the contents of the windows clipboard.
  
  * having to repeatedly go back and forth between two application windows to copy and paste multiple sections of text in a specific order;
 
-    - The CB provides text manipulation and file saving functions that allow users to append and prepend text to the clipboard in any order, reducing the need to switch back and forth between windows.
+    - The CB provides text manipulation and file saving functions that allow users to append and prepend text to the clipboard in any order.
+
+    - Through its display window, the CB lets users view, modify, and paste contents of .txt files (e.g., code snippets, parameterized function APIs, passwords) into any windows application 
  
  * a limited ability to dynamically pass parameters to a called function using keyboard shortcuts alone.
 
@@ -41,7 +45,7 @@ Press ALT + X to switch between modes
 
 See [Tutorial Templates](#tutorial-overview) for a more complete list of template shortcuts and Command Box features.
 
-As something that I use daily, WinGolems is under constant development. I created this repository to give back to the AHK community, as much of WinGolems' code base comes from code adapted from AHK forums and stack overflow posts. It is my hope that others might find this repository useful enough to want to invest some time into improving WinGolems by pushing contributions back through git.  
+WinGolems is under constant development. I created this repository to give back to the AHK community, as much of WinGolems' code base comes from code adapted from AHK forums, reddit, and stack overflow. It is my hope that others might find this repository useful enough to want to invest some time into improving WinGolems by pushing contributions back through git.  
   
 ----
 ## Contents
@@ -55,7 +59,6 @@ As something that I use daily, WinGolems is under constant development. I create
     1. [Instructions](#instructions) <br>
     2. [Keyboard Shortcuts](#ks) <br>
     3. [Command Box](#cb) <br>
-    3. [Function Box](#fb) <br>
 3. [Roadmap](#roadmap)
 
 ----
@@ -215,7 +218,7 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 
 <details><summary>&nbsp;📕&nbsp;<b> Adding interface layers </b></summary><p>
 
-`WinGolems.ahk` is the master script that controls all others. To change which scripts get loaded by WinGolems, modify the following section in `WinGolems.ahk`. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. Although it's possible to run multiple AHK scripts concurrently, it is always better to combine multiple scripts together with include statements and run one script. 
+`WinGolems.ahk` is the master script that calls/manages other AHK scripts. To change which scripts get loaded by WinGolems, modify the following section. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. Although it's possible to run multiple AHK scripts concurrently, its better to combine multiple scripts together with include statements for improved stability and reliability. 
 
 [See: Combining Multiple Scripts (#Include)](https://www.autohotkey.com/docs/commands/_Include.htm)
 
@@ -238,7 +241,7 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 
 <details><summary>&nbsp;📕&nbsp;<b> File structure </b></summary><p>
 
-A core part of good software is readability. Keeping the mental complexity low so that everybody has an easy time understanding it. For this reason, the code for the creation of interface layers is separated (i.e., interface template files) from the code that does most of the heavy lifting (function library files). To modify tutorial interface shortcuts, users will only need to know how to modify template files, which consist mostly of single-line assignment statements that connect hotkeys (i.e., keyboard shortcuts) to WinGolems convenience functions or native AHK commands/functions. 
+A core component of good code is readability. For this reason, the code for the creation of interface layers is separated (i.e., interface template files) from the code that executes the underlying task (function library files). To build their own interfaces, users will only need to know how to modify the tutorial template files, which consist mainly of single-line assignment statements that connect hotkeys to WinGolems functions or native AHK commands/functions. 
 <br> 
 
 ```ahk
@@ -262,30 +265,30 @@ A core part of good software is readability. Keeping the mental complexity low s
 ```
 WinGolems
   ├── WinGolems.ahk
-  ├── WinGolems.exe
-  ├── config.ini                    (computer specific settings)
-  ├── HotKey_List.txt               (last generated list of hotkeys)
+  ├── WinGolems.exe               
+  ├── config.ini                    ; computer specific settings
+  ├── HotKey_List.txt               ; last generated list of hotkeys
   ├── Readme.md
   |
   ├──golems 
-  |   ├── _functions.ahk            (function library)
-  |   ├── _CB.ahk                   (command box interface)
-  |   ├── _system.ahk               (system related CB keys)
+  |   ├── _functions.ahk            ; function library
+  |   ├── _CB.ahk                   ; command box interface)
+  |   ├── _system.ahk               ; system related CB keys)
   |   ├── A_Quick_Start.ahk         ┐                                                              
   |   ├── B_Text_Manipulation.ahk   ├─ tutorial template files
   |   ├── C_File_Management.ahk     |  and sample code                                            
   |   └── D_App_Examples.ahk        ┘                                            
   |
-  ├──lib                            (function library)
-  |   ├── CommandBox.ahk
-  |   ├── ProcessCommand.ahk 
+  ├──lib                            ; function library
+  |   ├── CommandBox.ahk            ; command box GUI code
+  |   ├── ProcessCommand.ahk        ; example command processing module 
   |   └── large WinGolems functions and third party functions
   |
   ├──mem_cache
-  |   └── all text files related to memory system and clipboard manager (including 0.txt to 9.txt)
+  |   └── all text files related to memory system (including 0.txt to 9.txt)
   |
   └──assets
-      └── all non ahk files         (icons, tutorial screenshots, etc.)
+      └── all non ahk files         ;icons, tutorial screenshots, etc.
 ```
 
 <br></p></details>
@@ -298,11 +301,11 @@ WinGolems
 
 
 :X:wg~win::   LURL("https://github.com/bingson/wingolems")   ; Load WinGolems GitHub Page
+:X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")       ; Load AHK beginner tutorial
 :X:oc~win::   OpenFolder("mem_cache\")                       ; open mem_cache folder
 :X:kh~win::   KeyHistory                                     ; open key history
 :X:ws~win::   WindowSpy()                                    ; open windows spy
 :X:ec~win::   EditFile(config_path)                          ; edit config.ini file
-:X:tut~win::  LURL("autohotkey.com/docs/Tutorial.htm")       ; AHK beginner tutorial
 :X:tcf~win::  TC("T_CF", "Cursor follows active window: ")   ; toggle cursor follows window
 ```
 
@@ -330,13 +333,13 @@ RunLabel(UserInput="", suffix = "", tgt_winID ="") {
 }
 
 ```
-Note: that the base ~win label suffix will be checked if no valid `GoSub` label found with a user-entered CB suffix.
+Note: that the base ~win label suffix will be checked if no valid `GoSub` label found with a user-defined CB suffix.
 
 <br></p></details>
 
 <details><summary>&nbsp;📕&nbsp;<b> Developer mode free keys</b></summary><p>
 
-The developer mode is a hidden interface template found in the _system.ahk file. The developer mode adds an interface layer that leverages the unique keyboard layout of Lenovo Trackpoint Keyboards (as shown in the keyboard layout image in the intro). In short, it adds shortcuts by transforming the PrintScreen key into another modifier key as ell as mouse click functions designed to work with the TrackPoint nub.
+The developer mode is a hidden template found in the _system.ahk file that adds an interface layer designed for the unique keyboard layout of a Lenovo Trackpoint Keyboards (e.g., transforms PrintScreen key into a modifier key, adds special macros designed to work with the TrackPoint nub and mouse keys).
 
 Turning on the developer interface does not make sense for non-TrackPoint keyboard layouts, leaving free keys that should be reassigned. 
 
@@ -351,13 +354,11 @@ Convenient free key combinations: #g, #u, #y, #i, #o, #n, #sc028
 
 ### II. &nbsp; Keyboard Shortcuts <a name="ks"></a>
 
-Below is a 30 Sept 2021 snap shot of WinGolems keyboard shortcuts and command box features. As the tutorial templates are part of my own setup, changes are constantly being made. 
-Once WinGolems is installed, enter `gl` in a command box to generate an updated version.
+Below is a snap shot (as of 30 Sept 2021) of WinGolems keyboard shortcuts and command box features. As the tutorial templates are part of my own setup, changes are constantly being made. Once WinGolems is installed, enter `gl` in a command box to generate an updated list of hotkeys.
 
-Note: under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed alone. The start menu can be accessed with `ctrl + esc` or `win + left click`.
+Note: under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed. The start menu can be accessed with `ctrl + esc` or `win + left click`.
 
 To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode).
-
 
 <details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></summary><p>
 
@@ -701,7 +702,13 @@ An ampersand (&) between two keys or mouse buttons combines them to create a cus
 <br>
 
 ### III. &nbsp; Command Box </b><a name="cb"></a>
-A text-based interface that can create new interface layers as well as execute any script or function using keyboard-entered commands.
+The command box is a GUI that can execute any script or function using keyboard-entered commands.
+
+In any windows application text field pressing
+- `lwin` + `enter` will select and consume the user's last typed word and treat it as a CB key submission;
+- `lalt` + `spacebar` will select and consume the user's last typed word and replace it with the contents of the corresponding memory file name.
+
+<br>
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>System Commands </b></summary><p>
 
@@ -710,7 +717,7 @@ ________________________________________________________________________________
 | CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND       |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
-|     lwin & space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
+|     lwin & space:: CB("~win")                       | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | oc     open memory .txt folder in file explorer     |  n   Notifications         |
 | 2) Create a command key "a" to call any function:   | ec     Edit WinGolems config.ini                    |  p   Presentation mode     |
 |     :X:a~win:: anyFunction()                        | LK     see keyboard shortcut list; update list "gl" |  v   Sound                 |
@@ -744,8 +751,8 @@ ________________________________________________________________________________
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
 | R?:  Change replacement separators (1|2)     R1~:%; R2~:~:       Changes replacement separators to % and ~: from ~ and __         R?~:?|
-| Q?   Query selected text in search engine    Qd, Qt, Qw, Qn, Qf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      Q?|
-| Q?:  Query submitted text                    Qd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     Q?:?|
+| S?   Query selected text in search engine    Sd, St, Sw, Sn, Sf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      S?|
+| S?:  Query submitted text                    Sd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     S?:?|
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
 |  G   Run any function                        GMoveWin,TopLeft    format: fnName1,fnParams1__fnName2,fnParams2         G?,?__?,? or G?,?|
@@ -788,113 +795,6 @@ ________________________________________________________________________________
 </p></details>
 
 <br> 
-
-### IV. &nbsp; Function Box </b><a name="fb"></a>
-
-A text-based interface that lets users call the same function with different parameter options stored in a 2-D array ```{key:"parameter_value"}```. 
-
-Note: Function boxes can be used to run "~win" CB keys if prepended with `:`. Eg., entering `:tm` will open Windows Task Manager.
-
-<details><summary>&nbsp;ℹ️&nbsp;<b>Move Active Window</b></summary><p>
-
-<p align="center"><img src="assets\Screens\MoveWinFB.png" width="300"></p>
-
-```ahk
-
-/* The code below creates function box to move windows to preset 
-   positions using MoveWin(). 
-*/
-
-#u:: WinPos()  ; creates function box to move windows to preset positions
-
-WinPos() {
-    q := { "q" : "1TopLeft"         
-         , "e" : "1TopRight"        
-         , "z" : "2BottomLeft"      
-         , "c" : "2BottomRight"     
-         , "a" : "0LeftHalf"     
-         , "d" : "0RightHalf"       
-         , "w" : "0TopHalf"         
-         , "s" : "0BottomHalf"      
-         , "dd": "3RightHalfSmall"       
-         , "aa": "3LeftHalfSmall"       
-         , "ww": "4TopHalfSmall"
-         , "ss": "4BottomHalfSmall"
-         , "qq": "L1TopLeftSmall"    
-         , "qa": "L2TopMidLeftSmall"    
-         , "za": "L3BottomMidLeftSmall"    
-         , "zz": "L4BottomLeftSmall" 
-         , "ee": "R1TopRightSmall"   
-         , "ed": "R2TopMidRightSmall"    
-         , "cd": "R3BottomMidRightSmall"                            
-         , "cc": "R4BottomRightSmall" }  
-    
-    FB("MoveWin", q, C.bwhite,, "rs")
-    ; "s" optn adds a space between case changes for GUI menu   
-    ; "r" optn sorts menu order by value instead of by key (default)
-
-    return           
-} 
-```
-
-</p></details>
-
-<details><summary>&nbsp;ℹ️&nbsp;<b>Open Path</b></summary><p>
-
-<p align="center"><img src="assets\Screens\OpenPathFB.png" width="600"></p>
-
-``` ahk
-
-/* Sample code below shows how to create a Function Box (FB) for executing and saving shortcuts to 
-   - open folders in file explorer
-   - edit any file type recognized by the default editor
-   - edit any Microsoft office file
-   - open a webpage URL
-   - open a video file
-   - open a saved document session with PDFXEdit.exe (PDF-Xchange Editor)
-*/
-
-; Opens a function box GUI that will switch between ChangeFolder or OpenPath if current 
-; application window is part of the file lister group (adds save dialogue box functionality).
-#g:: FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths())  
-
-Paths() {  ; initializes 2-D array to feed to Function Box
-
-    ; GC(): (G)et (C)onfig.ini value for ("key", "value_returned_if_no_key_found")
-
-    AutoTrim, Off
-    global UProfile    
-    global p := { "e"  : GC("E_path"   , A_ScriptDir "\golems\A_Quick_Start.ahk")        
-                , "f1" : GC("F1_path"  , A_ScriptDir "\golems\B_Text_Manipulation.ahk")
-                , "f2" : GC("F2_path"  , A_ScriptDir "\golems\C_File_Management.ahk")  
-                , "f3" : GC("F3_path"  , A_ScriptDir)                     
-                , "f4" : GC("F4_path"  , A_ScriptDir "\mem_cache")                     
-                , "f5" : GC("F5_path"  , A_ScriptDir "\golems")               
-                , "f6" : GC("F6_path"  , "https://www.autohotkey.com/docs/Tutorial.htm")  
-                , "f7" : GC("F7_path"  , A_ScriptDir "\assets\tutorial\example.xlsx")
-                , "f8" : GC("F8_path"  , A_ScriptDir "\assets\tutorial\example.pptx")
-                , "f9" : GC("F9_path"  , A_ScriptDir "\assets\tutorial\example.docx")
-                , " ": """" }
-    return % p
-} 
-
-; creates commands in CB and FB to save paths to config.ini for selected 
-; (1) file|folder in file explorer 
-; (2) URL text starting with "http" 
-:X:+e~win::                                            
-:X:+F1~win::  
-:X:+F2~win::  
-:X:+F3~win::  
-:X:+F4~win::  
-:X:+F5~win::  
-:X:+F6~win::  
-:X:+F7~win::  
-:X:+F8~win::  
-:X:+F9~win::  SP(ltrim(userinput, "+") . "_path")
-```
-
-</p></details>
-
 
 </ol>
 
