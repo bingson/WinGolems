@@ -702,15 +702,11 @@ An ampersand (&) between two keys or mouse buttons combines them to create a cus
 <br>
 
 ### III. &nbsp; Command Box </b><a name="cb"></a>
-The command box is a GUI that can execute any script or function using keyboard-entered commands.
+The Command Box (CB) is a GUI that can execute any script or function. Where applicable, the CB operates on the last active application window (target application.exe).
 
-In any windows application text field pressing
-- `lwin` + `enter` will select and consume the user's last typed word and treat it as a CB key submission;
-- `lalt` + `spacebar` will select and consume the user's last typed word and replace it with the contents of the corresponding memory file name.
+<p align="center"><img src="assets\Screens\CB_header.png" width="500"></p>
 
-<br>
-
-<details><summary>&nbsp;ℹ️&nbsp;<b>System Commands </b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b>Command Keys</b></summary><p>
 
 ``` 
 _________________________________________________________________________________________________________________________________________
@@ -740,11 +736,11 @@ ________________________________________________________________________________
 
 </p></details>
 
-<details><summary>&nbsp;ℹ️&nbsp;<b>Uppercase first letter initiated commands</b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b>Uppercase 1st letter initiated functions</b></summary><p>
 
 ```
 __________________________________________________________________________________________________________________________________________
-| Uppercase first letters trigger the following commands           >  = windows clipboard contents                                       |
+| Uppercase 1st letters trigger the following functions            >  = windows clipboard contents                                       |
 | remaining characters are case insensitive                        ,  = separate usage examples (except for G examples)                  |
 |                                                                  __ = chains commands that can be repeated                    reference|
 | KEY  CONVENIENCE                             USAGE EXAMPLE                                                                      Format?|
@@ -794,8 +790,24 @@ ________________________________________________________________________________
 
 </p></details>
 
-<br> 
+<details><summary>&nbsp;ℹ️&nbsp;<b>Pseudo command-line interface</b></summary><p>
 
+Using hotkeys, users can access Command Box functions without calling the GUI. 
+
+In any windows application text field pressing
+
+- `lwin` + `enter` will consume the user's last typed word and treat it as a CB key submission (default suffix: "~win");
+
+    > E.g., typing "oc", then hitting `lwin` + `enter` will open the `mem_cache` folder in windows file explorer.
+
+<br>
+
+- `lalt` + `spacebar` will consume the user's last typed word and replace it with the contents of the corresponding memory file—equivalent to Uppercase-initiated V (paste) function
+
+    > E.g., typing "1", then hitting `lalt` + `spacebar` will replace "1" with the contents of 1.txt in the `mem_cache` folder.
+
+</p></details>
+<br>
 </ol>
 
 <br>

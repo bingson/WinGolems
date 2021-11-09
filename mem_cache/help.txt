@@ -1,4 +1,3 @@
-fix multi screen display toggle
  _________________________________________________________________________________________________________________________________________
 | CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND       |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
@@ -22,7 +21,7 @@ fix multi screen display toggle
 | !q !e !a !d move & resize CB window to 4 quadrants  | td     [T] trackpoint interface layers              |                            |
 | !n          find text in CB display (+!n: prev)     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
-| Uppercase first letters trigger the following commands           >  = windows clipboard contents                                       |
+| Uppercase 1st letters trigger the following functions            >  = windows clipboard contents                                       |
 | remaining characters are case insensitive                        ,  = separate usage examples (except for G examples)                  |
 |                                                                  __ = chains commands that can be repeated                    reference|
 | KEY  CONVENIENCE                             USAGE EXAMPLE                                                                      Format?|
