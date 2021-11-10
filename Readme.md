@@ -3,7 +3,7 @@
 ## Overview
 
 WinGolems, aka Windows Golems, encompasses a collection of AutoHotkey (AHK) functions and interface templates that I have written to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from the tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface to better fit ones hardware and ergonomic preferences so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to bring to bear more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
-<br><br>
+<br>
 
 Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the features of each dedicated interface layer. 
 <br><br>
@@ -12,27 +12,7 @@ Before investing any time into learning AHK, prospective users can try out the t
 
 <br> 
 
-Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box (CB), an entirely keyboard-driven GUI that was originally conceived to alleviate the following issues:
-
- * a lack of keyboard real-estate/mental bandwidth for assigning/remembering less frequently used operations;
-    
-    - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember keyboard shortcuts. 
-    
-    - The CB can be used to create interface layers active only when a particular CB is open.
-
-    - CB commands can be executed in any text field of any windows application via hotkeys that access the contents of the windows clipboard.
- 
- * having to repeatedly go back and forth between two application windows to copy and paste multiple sections of text in a specific order;
-
-    - The CB provides text manipulation and file saving functions that allow users to append and prepend text to the clipboard in any order.
-
-    - Through its display window, the CB lets users view, modify, and paste contents of .txt files (e.g., code snippets, parameterized function APIs, passwords) into any windows application 
- 
- * a limited ability to dynamically pass parameters to a called function using keyboard shortcuts alone.
-
-    - Users can swap in their own command-line processor module to create their own specialized syntax for dynamically parameterizing and calling functions.
-
-<br>
+Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box (CB), a keyboard-driven GUI that can execute any script or manipulate any windows application through user-defined functions.
 
 | DISPLAY MODE | MINIMALIST MODE |
 | :-: | :-: |
@@ -76,8 +56,7 @@ WinGolems is under constant development. I created this repository to give back 
      <p>  <b>Recommended Editor:</b> </p>
      <p>  A code editor that supports indentation-based code folding and AutoHotkey syntax highlighting.
      <p>  – &nbsp; <a href="https://code.visualstudio.com/">Visual Studio Code</a> editor with the following extension IDs 
-     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; slevesque.vscode-AutoHotkey
-     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; helsmy.ahk-simple-ls
+     <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; mark-wiemer.vscode-autohotkey-plus-plus
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; johnnywong.vscode-ts-whitespace-converter
      <br> &nbsp;&nbsp;&nbsp;&nbsp; + &nbsp; janjoerke.align-by-regex
    </li>
@@ -282,8 +261,7 @@ WinGolems
   ├──lib                            ; function library
   |   ├── CommandBox.ahk            ; command box GUI code
   |   ├── ProcessCommand.ahk        ; example command processing module 
-  |   └── large WinGolems functions 
-  |       and third party functions
+  |   └── large WinGolems functions and third party functions
   |
   ├──mem_cache
   |   └── all text files related to memory system (including 0.txt to 9.txt)
@@ -355,7 +333,7 @@ Convenient free key combinations: #g, #u, #y, #i, #o, #n, #sc028
 
 ### II. &nbsp; Keyboard Shortcuts <a name="ks"></a>
 
-Below is a snap shot (as of 30 Sept 2021) of WinGolems keyboard shortcuts and command box features. As the tutorial templates are part of my own setup, changes are constantly being made. Once WinGolems is installed, enter `gl` in a command box to generate an updated list of hotkeys.
+Below is a snap shot (as of 30 Sept 2021) of WinGolems keyboard shortcuts and command box features. As the tutorial templates are a component of my own Windows setup, changes are constantly being made. Once WinGolems is installed, enter `gl` in a command box to generate an updated list of hotkeys.
 
 Note: under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed. The start menu can be accessed with `ctrl + esc` or `win + left click`.
 
@@ -703,9 +681,31 @@ An ampersand (&) between two keys or mouse buttons combines them to create a cus
 <br>
 
 ### III. &nbsp; Command Box </b><a name="cb"></a>
-The Command Box (CB) is a GUI that can execute any script or function. Where applicable, the CB operates on the last active application window (target application.exe).
+The Command Box (CB) is a GUI that can execute any script. Where applicable, the CB operates on the last active application window (target application.exe).
 
 <p align="center"><img src="assets\Screens\CB_header.png" width="600"></p>
+
+The Command Box was originally conceived to alleviate the following issues:
+
+ * a lack of keyboard real-estate and mental bandwidth for assigning and remembering less frequently used operations;
+    
+    - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember keyboard shortcuts. 
+    
+    - The CB can be used to create interface layers active only when a particular CB is open.
+
+    - CB commands can be executed in any text field of any windows application without calling the GUI (i.e., pseudo command-line interface).
+ 
+ * having to repeatedly go back and forth between two application windows to copy and paste multiple sections of text in a specific order;
+
+    - The CB provides text manipulation and file saving functions that allow users to append and prepend text to the clipboard in any order.
+
+    - Through its display window, the CB lets users view, modify, and paste contents of .txt files (e.g., code snippets, regex patterns, frequently typed text) into any windows application. 
+ 
+ * a limited ability to dynamically pass parameters to a called function using keyboard shortcuts alone.
+
+    - Users can swap in their own command-line processor module to create their own specialized syntax for dynamically parameterizing and calling functions.
+
+<br>
 
 <details><summary>&nbsp;ℹ️&nbsp;<b>Command Keys</b></summary><p>
 
