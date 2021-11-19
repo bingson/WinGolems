@@ -174,6 +174,7 @@
     2GuiEscape:
     2GuiClose:
         Gui, 2: +LastFound
+        CleanHist(40)
         gosub, save_win_coord
         Gui, 2: destroy
         exit

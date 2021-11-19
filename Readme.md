@@ -1,4 +1,4 @@
-<p align="center"><img src="assets\Screens\WGLc.png" width="300"></p>
+# WinGolems
 
 ## Overview
 
@@ -261,7 +261,8 @@ WinGolems
   ├──lib                            ; function library
   |   ├── CommandBox.ahk            ; command box GUI code
   |   ├── ProcessCommand.ahk        ; example command processing module 
-  |   └── large WinGolems functions and third party functions
+  |   └── large WinGolems functions 
+  |       and third party functions
   |
   ├──mem_cache
   |   └── all text files related to memory system (including 0.txt to 9.txt)
@@ -685,11 +686,11 @@ The Command Box (CB) is a GUI that can execute any script. Where applicable, the
 
 <p align="center"><img src="assets\Screens\CB_header.png" width="600"></p>
 
-The Command Box was originally conceived to alleviate the following issues:
+The Command Box was conceived to alleviate the following problems:
 
  * a lack of keyboard real-estate and mental bandwidth for assigning and remembering less frequently used operations;
     
-    - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember keyboard shortcuts. 
+    - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember hotkeys. 
     
     - The CB can be used to create interface layers active only when a particular CB is open.
 
@@ -797,13 +798,13 @@ Using hotkeys, users can access Command Box functions without calling the GUI.
 
 In any windows application text field pressing
 
-- `lwin` + `enter` will consume the user's last typed word and treat it as a CB key submission (default suffix: "~win");
+- `lwin` + `enter` will consume the last typed word and treat it as a CB key submission (default suffix: "~win");
 
     > E.g., typing "oc", then hitting `lwin` + `enter` will open the `mem_cache` folder in windows file explorer.
 
 <br>
 
-- `lalt` + `spacebar` will consume the user's last typed word and replace it with the contents of the corresponding memory file—equivalent to uppercase-initiated V (paste) function
+- `lalt` + `spacebar` will consume the last typed word and replace it with the contents of the corresponding memory file—equivalent to uppercase-initiated V (paste) function
 
     > E.g., typing "1", then hitting `lalt` + `spacebar` will replace "1" with the contents of 1.txt in the `mem_cache` folder.
 

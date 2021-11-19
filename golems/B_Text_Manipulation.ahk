@@ -4,8 +4,6 @@
   +capslock::        backspace                                                  ;Convenience: backspace (toggle capslock: ctrl + capslock)
   capslock::         del                                                        ;Convenience: delete (toggle capslock: ctrl + capslock)
   ^capslock::        Send {blind}{capslock}                                     ;Convenience: toggle capslock
-  +!sc00C::          Send, {ASC 0150}                                           ;Convenience- en dash (–)
-  !sc00C::           Send, {ASC 0151}                                           ;Convenience- em dash (—)
   ^#Backspace::      ReplaceBackspaceWithSpaces()                               ;Convenience| Delete and replace selected text with blank spaces
   !v::               PasteWithoutBreaks()                                       ;Convenience| replace multiple paragraph breaks w/ 1 break in selected text
   +!v::              PasteWithoutBreaks(True)                                   ;Convenience| replace multiple paragraph breaks with space (remove paragraphs breaks)

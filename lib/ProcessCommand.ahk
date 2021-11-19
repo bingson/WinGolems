@@ -445,8 +445,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 }
                 GUI 2: destroy
                 return
-            Case "W","B","N","M":
-                
+            Case "W","B","H","N","M":
                 RunOtherCB(C_input, 1stChar) 
             Case "S":                                                           ; search selected text in chosen search engine msft
                 

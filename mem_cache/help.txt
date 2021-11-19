@@ -13,7 +13,7 @@
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
 | #Space      open command box or submit key          | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   System tray           |
-| enter       submit key                              | ------ -------------------------------------------- |  tm  Task manager          |c 
+| enter       submit key                              | ------ -------------------------------------------- |  tm  Task manager          | 
 | >+Space     capitalize 1st letter and submit key    | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
 | ^Space      focus CB input box from another app     | tt     [T] text manipulation interface layers       |  ce~ Close All Programs    |
 | !r          reenter last submitted CB key           | tf     [T] file management interface layers         |  rs~ Restart computer      |

@@ -115,7 +115,7 @@
     
   ; REPOSITION WINDOW -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_d",0)
-    PrintScreen & sc033::   
+    ; PrintScreen & sc033::   
     ;"f" : "0Maximize"                                        ;FunctionBox: resize & move window
                 q := { "q" : "1TopLeft"         
                      , "e" : "1TopRight"        
@@ -175,7 +175,9 @@
     lctrl::                                                                     ;ActvateApp: activate saved Window ID
     ralt::                          ActivateWinID("Lctrl")                      ;ActvateApp: activate saved Window ID
     rctrl::                         ActivateWinID("Rctrl")                      ;ActvateApp: activate saved Window ID
+    :X:sl~win::                                                                 ;ActvateApp (+ Alt): Save window ID for later activation 
     ralt & lctrl::                  SaveWinID("Lctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
+    :X:sr~win::                                                                 ;ActvateApp (+ Alt): Save window ID for later activation  
     ralt & rctrl::                  SaveWinID("Rctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
     alt & q::                       SaveWinID("Q")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
     alt & w::                       SaveWinID("W")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q

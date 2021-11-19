@@ -50,8 +50,7 @@
   #IF
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
-  !b::                                                                          ;Convenience: Lalt+b = ctrl+b (taken over by tab movement function) 
-  >+b::               send ^b                                                   ;Convenience: Lshift+b = ctrl+b (taken over by tab movement function)
+  !b::                send ^b                                                   ;Convenience: Lshift+b = ctrl+b (taken over by tab movement function)
   ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
   ~lwin & ~rshift::   CursorJump("C")                                           ;Convenience: move mouse cursor to center of active application window
   #SC035::            search()                                                  ;Convenience: google search selected text
@@ -73,7 +72,7 @@
   ^#q::                                                                         ;WindowMgmt: close active window 
   +#q::               WinClose,A                                                ;WindowMgmt: close active window
   !#q::               CloseClass()                                              ;WindowMgmt: close all instances of the active program
-  ralt & sc034::      moveWinBtnMonitors(), CFW()                               ;WindowMgmt: move window btn monitors, cursor follows active windows
+  >!m::               moveWinBtnMonitors(), CFW()                               ;WindowMgmt: move window btn monitors, cursor follows active windows
   !#b::               BluetoothSettings()                                       ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
   !#d::               DisplaySettings()                                         ;WinSetting: display settings
   !#n::               NotificationWindow()                                      ;WinSetting: notification window
