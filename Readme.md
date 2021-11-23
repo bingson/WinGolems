@@ -1,11 +1,9 @@
 # WinGolems
 
-## Overview
-
-WinGolems, aka Windows Golems, encompasses a collection of AutoHotkey (AHK) functions and interface templates that I have written to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from the tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface to better fit ones hardware and ergonomic preferences so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to bring to bear more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
+WinGolems, aka Windows Golems, encompasses a collection of AutoHotkey (AHK) functions and interface templates that I have written to automate and augment my Windows 10 environment. The initial value provided by this repository will come from new users modifying code examples from the tutorial templates to alleviate common workflow frictions. WinGolems helps users re-engineer their computer interface to better fit their hardware and ergonomic preferences so that the most frequently performed operations are the easiest to execute. As they gain more experience working with AHK, users will be able to bring to bear more of WinGolems' function library to build new capabilities into existing windows applications, creating cognitive artifacts that reduce the effort it takes to transform thought into output. 
 <br>
 
-Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the features of each dedicated interface layer. 
+Before investing any time into learning AHK, prospective users can try out the tutorial interface layers by [running the precompiled binary](#download)  `WinGolems.exe` included with the source code (no software installation or knowledge of AHK is required). The important keyboard shortcuts from the base (quick start) interface layer are shown below, with additional layers and UI options that can be turned on and off as users familiarize themselves with the features of each new interface layer. 
 <br><br>
 
 <p align="center"><img src="assets\Screens\QuickStartHotkeys.png" width = "800">  </p>
