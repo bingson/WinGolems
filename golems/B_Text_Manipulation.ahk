@@ -12,7 +12,7 @@
   +!u::              ConvertLower()                                             ;Convenience* make selected text to lower case
   ^!u::              Capitalize1stLetter()                                      ;Convenience; First letter capitalized
   ^!+u::             Capitalize1stLetter(,,0)                                   ;Convenience; Every First Letter Capitalized
-  !#space::          ReplaceAwithB(" ")                                         ;Convenience! remove all spaces from selected text
+  ^#s::              ReplaceAwithB(" ")                                         ;Convenience! remove all spaces from selected text
   ^#space::          ReplaceAwithB()                                            ;Convenience! replace multiple consecutive spaces w/ one space in selected text
   !#enter::          RemoveBlankLines()                                         ;Convenience! remove empty lines starting from selected text
   +!9::              Clip("(" Clip() ")")                                       ;Convenience: enclose selected text with ( )

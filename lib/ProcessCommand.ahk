@@ -475,9 +475,11 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     Case "ae"      : search("www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20210825091515&SearchText=", strng)
                     Case "e","ebay": search("www.ebay.ca/sch/", strng)
                     Case "so"      : search("www.stackoverflow.com/search?q=", strng) 
+                    Case "mse"     : search("math.stackexchange.com/search?q=", strng) 
+                    Case "se"      : search("stackexchange.com/search?q=", strng) 
                     Case "bv"      : search("www.bing.com/videos/search?q=", strng) 
-                    Case "imdb"    : search("www.imdb.com/find?q=", strng) r
-                    Case "id","fd" : search("www.investopedia.com/search?q=", strng) 
+                    Case "imdb"    : search("www.imdb.com/find?q=", strng) 
+                    Case "io","fd" : search("www.investopedia.com/search?q=", strng) 
                     Case "az","amz": search("www.amazon.ca/s?k=", strng) 
                     Case "twt"     : search("www.twitter.com/search?q=", strng)
                     default : 

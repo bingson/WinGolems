@@ -24,8 +24,6 @@
   :X:ce~~win::   CloseAllPrograms()                                             ;SC: close all open programs 
   :X:ss~win::    CloudSync("ON")                                                ;SC: turn on cloud sync 
   :X:qs~win::    CloudSync("OFF")                                               ;SC: turn off cloud sync
-  :X:lt~win::    WinLLock(True)                                                 ;SC: turn on win+L locks computer
-  :X:lf~win::    WinLLock(False)                                                ;SC: turn off win+L locks computer
   :X:ap~win::    Run assets\win\Add Remove Programs.lnk                         ;SC: open add remove programs 
   :X:phone~win:: Run assets\win\Your Phone.lnk                                  ;SC: open add remove programs 
   :X:s~win::     send ^{esc}                                                    ;SC: open start menu (alt: Ctrl+Esc)
@@ -42,7 +40,7 @@
   :X:dark~win::
   :X:TDL~win::  toggle_DarkMode()                                               ;SC: toggle dark/light mode 
 
-  :X:tm~win::                                                                   ;SC: open task manager with hotstring combines with max + cursor follows task manager window
+  :X:taskmanager~win::                                                          ;SC: open task manager with hotstring combines with max + cursor follows task manager window
   :X:.~win::                                                                    ;SC: open task manager with hotstring combines with max + cursor follows task manager window
                 send +^{esc}                                                    ;     TskMgrExt() will be executed after
   ~+^esc::      TskMgrExt()                                                     ;SC: maximize + mouse cursor follows window after task manager opens
@@ -73,10 +71,15 @@
 
 ; TOGGLES ______________________________________________________________________
   
+  :X:tm~win::        TC("T_mem", "memory layer: ")                              ;[T] Toggle memory hotkeys
+  :X:tb~win::        TC("T_base", "base layer: ")                               ;[T] Toggle base interface template
   :X:ts~win::        TC("T_WinEnterSelect", "WIN + ENTER SELECT: ")             ;[T] Toggle config.ini entry for auto select word mode when executing win+enter CB commands  
   :X:tt~win::        TC("T_TM","Text_Manipulation: ")                           ;[T] Toggle Text_Manipulation template ON|OFF by typing "tt" in a Command Box or "tt~win" anywhere in windows           
   :X:tf~win::        TC("T_FM","File_Management: ")                             ;[T] Toggle File_Navigation template ON|OFF
   :X:td~win::        TC("T_d","Developer options: ")                            ;[T] Toggle developer optns
+  :X:ln~win::        WinLLock(True)                                             ;[T] turn on win+L locks computer
+  :X:lf~win::        WinLLock(False)                                            ;[T] turn off win+L locks computer
+
     
 ; DEVELOPER OPTIONS ____________________________________________________________
 
@@ -145,7 +148,7 @@
     :X:ta~win::            CC("T_TM",1),CC("T_FM",1),CC("T_CF",1),CC("T_d",1)   ;turn on all interface layers and UI options 
                            ,CC("T_adv",1),PU("Advanced Mode: ON")   
                            
-    !pgdn::                HideShowTaskbar(hide := !hide)                       ;Convenience| toggle taskbar 
+    <+F11::                HideShowTaskbar(hide := !hide)                       ;Convenience| toggle taskbar 
     printscreen Up::                                                            ;Convenience| makes printscreen key inert so it can be used as a modifier key
     *printscreen::         Send {Blind}{vk07}                                   ;Convenience| makes printscreen key inert so it can be used as a modifier key
     :X:pscrn~win::         Send {PrintScreen}                                   ;windows 10 printscreen command

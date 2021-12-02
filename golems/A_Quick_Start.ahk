@@ -4,7 +4,7 @@
   ; AA("application_exe_path")
   ; SaveWinID("unique_string")
   ; ActivateWinID("unique_string")
-
+  #IF GC("T_base",1) 
   #q::                AA("xls_path")                                            ;Apps| Activate Excel
   #w::                AA("doc_path")                                            ;Apps| Activate Word
   #a::                AA("pdf_path")                                            ;Apps| Activate pdf viewer
@@ -47,7 +47,7 @@
   #IF GC("T_tabNav",1)                                                          ; can be toggled on/off by entering Gtc,T_tabNav in a CB 
   ^b::                sendinput ^{PgUp}                                         ;Navigation: navigate to left tab
   ^space::            sendinput ^{PgDn}                                         ;Navigation: navigate to right tab
-  #IF
+  #IF GC("T_base",1) 
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
   !b::                send ^b                                                   ;Convenience: Lshift+b = ctrl+b (taken over by tab movement function)
@@ -89,7 +89,7 @@
   ;       enter "?" in a command box to see additional memory file commands
   ; e.g., ^!a = AddToMemory() ; ctrl+alt+a -> will save selected text to a file called a.txt in the WinGolems/mem_cache folder
 
-  
+  #IF GC("T_mem",1) 
   ^!0::                                                                         ;Mem: overwrite 0.txt with selected text 
   ^!9::                                                                         ;Mem: overwrite 9.txt with selected text 
   ^!8::                                                                         ;Mem: overwrite 8.txt with selected text 
