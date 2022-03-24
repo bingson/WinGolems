@@ -65,6 +65,7 @@
   !i::          send !{left}                                                    ;FileExplorer: prev folder
   !o::          send !{right}                                                   ;FileExplorer: forward folder
   !z::          ToggleNavPane()                                                 ;FileExplorer: toggle navigation plane 
+  
   ^p::          Send {alt down}p{alt up}                                        ;FileExplorer: toggle preview plane
   !w::          ControlFocus, SysTreeView321, ahk_class CabinetWClass           ;FileExplorer: move focus to navigation pane
   !e::          ControlFocus, DirectUIHWND2, ahk_class CabinetWClass            ;FileExplorer: move focus to current folder pane
@@ -110,7 +111,7 @@
 
   SetTitleMatchMode, 2
   #If WinActive("ahk_group FileListers") and GC("T_FM",0) 
-  
+  !u::          send !{up}                                                      ;FileExplorer: up one folder level  
   >+sc029::     CF(A_ScriptDir)                                                 ;ChangeFolder: WinGolems folder
   >+m::         CF(A_ScriptDir "\mem_cache")                                    ;ChangeFolder: mem_cache
   >+u::         CF(UProfile)                                                    ;ChangeFolder: %UserProfile%

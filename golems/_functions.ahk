@@ -694,17 +694,18 @@
   }
 
   GUIFocusInput(t = "CB") {
-    global CB_hwnd, FB_hwnd, short
-    
+    global CB_hwnd, FB_hwnd, short, UserInput
     static GUI_hwnd := ""
     switch t
     {
         Case "CB": GUI_hwnd := CB_hwnd
         Case "FB": GUI_hwnd := FB_hwnd
     }
-    ActivateWin("ahk_id " GUI_hwnd)
+    ; msgbox % GUI_hwnd
+    ActivateWin("ahk_id " GUI_hwnd) 
+    sleep 100
     GuiControl, Focus, UserInput
-    sendinput {home}+{end}
+    ; sendinput {tab}{home}+{end}                                               bb
     return
   }
  
@@ -1135,7 +1136,7 @@
     global config_path
     section := sect ? sect : A_ComputerName
     IniDelete, %config_path%, %Section% , %Key%
-  }
+  }                                                                             ; Delete config.ini entry   
 
   CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
     global config_path
@@ -1441,7 +1442,7 @@
 
   CreateConfigINI(exe*) {
     global config_path, UProfile, med, C
-    timecode()
+    ; timecode()
     PATH := FindAppPath(exe*)
     CC("doc_path"      , PATH[exe["doc"]])
     CC("xls_path"      , PATH[exe["xls"]])
@@ -1450,7 +1451,7 @@
     CC("html_path"     , PATH[exe["html"]])
     CC("editor_path"   , PATH[exe["editor"]])
     CC("starting_icon" , "lg.ico", "settings")
-    timecode(0)
+    ; timecode(0)
     PopUp("Configuration complete`nYou are good to go!", C.lgreen, C.bgreen, "200", "60", "-1200", "15") 
     sleep, med*4
     ClosePopup()
@@ -1762,7 +1763,7 @@
  
   ToggleInvisible() {
     KeyWait()
-    send !v
+    send {alt down}{alt up}v
     sleep, 600
     send {h 2}
     return
@@ -2025,7 +2026,8 @@
     sleep med
     if (SubStr(url, 1,4) = "http") {
         ; code := "youtube-dl " """" url """" 
-        code := "youtube-dl --no-check-certificate " """" url """"
+        ; code := "youtube-dl --no-check-certificate " """" url """"
+        code := "yt-dlp --no-check-certificate " """" url """"
         Run cmd /K "cd /d " %path% 
         sleep med
         clip(code)
@@ -2039,6 +2041,46 @@
   }
   
   ClickVidDL(path=""){
+    global short, med, CB_hwnd
+    keywait()
+    BlockInput, on
+    settimer, BlockInputTimeOut,-1500
+    Click, Right
+    sleep, med * 2
+    winget, Pname, ProcessName, A 
+    app := WinExist("ahk_id " CB_hwnd) ? GC("CB_tgtExe") : Pname
+    switch app {
+        case "msedge.exe" : send % "{down " GC("click_DL", 4) "}{enter}"
+        case "chrome.exe" : send e
+        case "vivaldi.exe": send e
+        default:            send e
+    }
+    sleep med 
+    if !InStr(FileExist(path), "D") {
+        msg := "WinGolems can't find the folder`n`n" . dir . "`n`nWould you like to create it?"
+        MsgBox,4100,Create Hotstring,%msg% 
+        IfMsgBox Yes
+            FileCreateDir, %path%
+        return
+    }
+    if (SubStr(clipboard, 1,4) = "http") {
+        ; code := "youtube-dl --no-check-certificate " """" clipboard """" 
+        code := "yt-dlp --no-check-certificate " """" clipboard """" 
+        ; code := "youtube-dl " """" clipboard """" 
+        Run cmd /K "cd /d " %path% 
+        sleep med * 2
+        clip(code)
+        send {enter}
+        sleep short
+        WinMinimize,A
+    } else 
+        PU("invalid url: " clipboard,,,,,-800)
+    BlockInput, Off
+    return
+
+  }
+
+  ClickVidDL_old(path=""){
     global short, med, CB_hwnd
     keywait()
     BlockInput, on
@@ -2326,8 +2368,9 @@
   sendEmail() {
     global email := "", subject := "", body := ""
     Gui, New, ,%title%
+    Gui, Add, text, xs yp, To:
     Gui, Add, Edit, W300 vemail,
-    Gui, Add, text, xs yp+30, case insensitive
+    Gui, Add, text, xs yp+30, Subject:
     Gui, Add, Edit, W300 vsubject,
     Gui, Add, Edit, W300 R20 vbody,
     Gui, Add, Button, Default, Send

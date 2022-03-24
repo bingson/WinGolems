@@ -8,18 +8,26 @@
 ; CB SYSTEM COMMANDS ___________________________________________________________
   :X:b~win::     BluetoothSettings()                                            ;SC: bluetooth settings
   :X:d~win::     DisplaySettings()                                              ;SC: display settings
+  <!#n::                                                                        ;SC: notification window
   :X:n~win::     NotificationWindow()                                           ;SC: notification window
+  <!#s::                                                                        ;SC: sound settings
   :X:v~win::     SoundSettings()                                                ;SC: sound settings
+  <!#r::                                                                        ;SC: run program 
   :X:r~win::     RunProgWindow()                                                ;SC: run program
+  <!#x::                                                                        ;SC: context menu for the Start button 
   :X:x~win::     StartContextMenu()                                             ;SC: context menu for the Start button
+  <!#k::                                                                        ;SC: quick connect window
   :X:k~win::     QuickConnectWindow()                                           ;SC: quick connect window
   :X:i~win::     WindowsSettings()                                              ;SC: windows settings
   :X:p~win::     PresentationDisplayMode()                                      ;SC: presentation display mode
   :X:s~~win::    PowerOptions("sleep")                                          ;SC: enter sleep mode
+  esc & del::                                                                   ;SC: enter hybernate mode
   :X:h~~win::    PowerOptions("hybernate")                                      ;SC: enter hybernate mode
   :X:sd~~win::   PowerOptions("shutdown")                                       ;SC: shutdown + power down 
   :X:rs~~win::   PowerOptions("restart")                                        ;SC: restart the computer
+  <!#a::                                                                        ;SC: alarm clock 
   :X:a~win::     Run assets\win\Alarms & Clock.lnk                              ;SC: alarm clock
+  <!#m::                                                                        ;SC: send mail 
   :X:m~win::     sendEmail()                                                    ;SC: send mail
   :X:ce~~win::   CloseAllPrograms()                                             ;SC: close all open programs 
   :X:ss~win::    CloudSync("ON")                                                ;SC: turn on cloud sync 
@@ -68,6 +76,7 @@
   :X:r~~win::   reloadWG()                                                      ;AHK: reload ahk script 
 
   #^s::return                                                                   ;AHK: prevent windows speech recognition from popping up
+  esc::esc
 
 ; TOGGLES ______________________________________________________________________
   
@@ -155,8 +164,7 @@
     #o::                   Click, middle                                        ;MouseFn: mouse middle click
     PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
     #sc028::               Click, Right                                         ;MouseFn: mouse Right click
-    >^>!esc::                EditFile("golems\_system.ahk")                     ;Convenience: open _system.ahk
-    lwin & rctrl::         ActivateWinID("Rctrl")                               ;ActvateApp: activate saved Window ID
+    >^>!esc::              EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
     #n::                   AA("editor_path")                                    ;ActivateApp: Editor
     printscreen & lwin::   CursorJump("BL")
     lwin & printscreen::   CursorJump("BR")
@@ -176,12 +184,6 @@
     $!l::                           CursorJump("R","-40")                       ;MouseFn: move mouse cursor to Right edge
     p::                             WinClose,A                                  ;Convenience: close active window
     lctrl::                                                                     ;ActvateApp: activate saved Window ID
-    ralt::                          ActivateWinID("Lctrl")                      ;ActvateApp: activate saved Window ID
-    rctrl::                         ActivateWinID("Rctrl")                      ;ActvateApp: activate saved Window ID
-    :X:sl~win::                                                                 ;ActvateApp (+ Alt): Save window ID for later activation 
-    ralt & lctrl::                  SaveWinID("Lctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
-    :X:sr~win::                                                                 ;ActvateApp (+ Alt): Save window ID for later activation  
-    ralt & rctrl::                  SaveWinID("Rctrl")                          ;ActvateApp (+ Alt): Save window ID for later activation 
     alt & q::                       SaveWinID("Q")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
     alt & w::                       SaveWinID("W")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
     alt & a::                       SaveWinID("A")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & a
@@ -200,7 +202,7 @@
     ralt & l::                      CursorJump("R","-40")                       ;MouseFunctions: move mouse cursor to Right edge
     sc028::                         Click, Right                                ;MouseFunctions: mouse Right click
     !r::                            RunProgWindow()                             ;convenience: run programs alternate shortcut
-    SC035::                         search()                                    ;Convenience: google search selected text
+    ; SC035::                       search()                                    ;Convenience: google search selected text
     SC027::                         WinMinimize,A                               ;Convenience: minimize window
     h::                             sendinput ^{Left 4}                         ;TextNavigation: jump left 4 words (ctrl+left x 4)
     l::                             sendinput ^{Right 4}                        ;TextNavigation: jump right 4 words (ctrl+right x 4)

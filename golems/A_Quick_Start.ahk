@@ -55,7 +55,8 @@
   ~lwin & ~rshift::   CursorJump("C")                                           ;Convenience: move mouse cursor to center of active application window
   #SC035::            search()                                                  ;Convenience: google search selected text
   !Backspace::        delLine()                                                 ;Convenience: delete current line of text
-  esc & del::         suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
+  lshift & rshift::
+  rshift & lshift::   suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
   !SC027::            Send {esc}                                                ;WinOS: simulate esc key (alt + semicolon)
   ^SC027::            Send {AppsKey}                                            ;WinOS: simulate appkey
   #Lbutton::                                                                    ;WinOS: open start menu (alt: Ctrl+Esc)
@@ -68,6 +69,7 @@
   #del::              AlwaysOnTop(1)                                            ;WindowMgmt: Window always on top: ON
   #ins::              AlwaysOnTop(0)                                            ;WindowMgmt: Window always on top: OFF
   +#capslock::        s("{blind}"), ActivatePrevInstance()                      ;WindowMgmt: rotate through app instances from most recent
+  printscreen & rshift::                                                        ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
   #capslock::         s("{blind}"), ActivateNextInstance()                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
   ^#q::                                                                         ;WindowMgmt: close active window 
   +#q::               WinClose,A                                                ;WindowMgmt: close active window
@@ -80,7 +82,9 @@
   !#p::               PresentationDisplayMode()                                 ;WinSetting: presentation display mode
   !#i::               WindowsSettings()                                         ;WinSetting: windows settings
   $>+>!o::            % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")       ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2)
-  ;>!sc028::           GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1
+  >!sc028::           GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1
+  >!enter::           GotoDesktop("2")                                          ;VirtualDesktop: Switch to desktop 1
+
   ;>!enter::           % (t := !t) ? GotoDesktop("2") : GotoDesktop("1")         ;VirtualDesktop: Switch between desktop 1 and 2
 
 ; MEMORY FILE FUNCTIONS (BLUE)__________________________________________________
@@ -145,10 +149,10 @@
   #2::                                                                          ;Mem: paste contents of 2.txt   
   #1::               RetrieveMemory()                                           ;Mem: paste contents of 1.txt
   
-  $<^mButton::       RetrieveMemory(A_ThisHotkey)                               ;Mem: double click and paste contents of 0.txt at cursor position
+  $<^mButton::       RetrieveMemory(A_ThisHotkey,,,1)                           ;Mem: double click and paste contents of 1.txt at cursor position
   $+<^mButton::      RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
-      
+  +<!mbutton::       s("{blind}",,100), Clicks(2), s("^v")                      ;MouseFn: double click, paste clipboard contents
+  <!mbutton::        s("{blind}",,100), Clicks(3), s("^v")                      ;MouseFn: triple click, paste clipboard contents
+
 #IF
-/*
-   
-  
+/*  

@@ -10,7 +10,7 @@
   ^#v::              PasteOverwrite()                                           ;Convenience| Paste and overwrite the same number of spaces (aka. overtype paste)
   +^u::              ConvertUpper()                                             ;Convenience* capitalize selected text
   +!u::              ConvertLower()                                             ;Convenience* make selected text to lower case
-  ^!u::              Capitalize1stLetter()                                      ;Convenience; First letter capitalized
+  ^!u::              Capitalize1stLetter()                                      ;Convenience; First Letter Capitalized
   ^!+u::             Capitalize1stLetter(,,0)                                   ;Convenience; Every First Letter Capitalized
   ^#s::              ReplaceAwithB(" ")                                         ;Convenience! remove all spaces from selected text
   ^#space::          ReplaceAwithB()                                            ;Convenience! replace multiple consecutive spaces w/ one space in selected text
@@ -69,33 +69,23 @@
   !k::               sendinput {up}                                             ;Navigation| Down  
 
 ; MOUSE FUNCTION _______________________________________________________________
+  
+  printscreen & i::                                                             ;MouseFn: return to saved mouse position and click, return to original position (left click if no saved position found)  
+  printscreen & d::   CursorRecall(substr(A_ThisHotkey,0), 1,,1)                ;MouseFn: return to saved mouse position and click, return to original position (left click if no saved position found) 
   *#i::                                                                         ;MouseFn: return to saved mouse position and click (left click if no saved position found)
-  *#d::               CursorRecall(substr(A_ThisHotkey,0), 1)                   ;MouseFn: return to saved mouse position and click (left click if no saved position found)
+  *#d::               CursorRecall(substr(A_ThisHotkey,0), 1,,1)                ;MouseFn: return to saved mouse position and click (left click if no saved position found)
   ^#i::                                                                         ;MouseFn: Left click and save mouse position
   ^#d::               SaveMousPos(substr(A_ThisHotkey,0),1),PU("click saved")   ;MouseFn:f Left click and save mouse position
-  !#i::                                                                         ;MouseFn: erase saved curor position
-  !#d::               DC("MPos_" substr(A_ThisHotkey,0)),PU("Click reset")      ;MouseFn: erase saved curor position
+  
+  #If GetKeyState("printscreen", "P")
+  rctrl & i::                                                                   ;MouseFn: erase saved curor position                                                              
+  rctrl & d::         DC("MPos_" substr(A_ThisHotkey,0)),PU("Click reset")      ;MouseFn: erase saved curor position
+  #If
+
   #f::                Clicks(2)                                                 ;MouseFn: 2 Left clicks (select word)
   ^#f::               Clicks(3)                                                 ;MouseFn: 3 Left clicks (select line)
-  <!mbutton::         s("{blind}"),Clicks(2), s("^v")                           ;MouseFn: click twice, paste clipboard
-  +<!mbutton::        s("{blind}"),Clicks(3), s("^v")                           ;MouseFn: click thrice, paste clipboard
   $^!j::              Sendinput ^{sc00D}                                        ;MouseFn: zoom in
   $^!k::              Sendinput ^{sc00C}                                        ;MouseFn: zoom out
   
-  ~ralt & ~lctrl::                                                              ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
-  ~rctrl & ~lctrl::   CursorJump("BL")                                          ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
-  ~lalt & ~rctrl::                                                              ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
-  ~lctrl & ~rctrl::   CursorJump("BR")                                          ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
-
-  ~rctrl & ~lalt::
-  ~ralt  & ~lalt::    CursorJump("TL")                                          ;MouseFn: move mouse cursor to TOP LEFT of active app
-  ~lctrl & ~ralt::
-  ~lalt  & ~ralt::    CursorJump("TR")                                          ;MouseFn: move mouse cursor to TOP RIGHT of active app
-  
-  $!#k::              CursorJump("T")                                           ;MouseFn: move mouse cursor to top edge
-  $!#j::              CursorJump("B",,"-20")                                    ;MouseFn: move mouse cursor to bottom edge
-  $!#h::              CursorJump("L","20")                                      ;MouseFn: move mouse cursor to Left edge
-  $!#l::              CursorJump("R","-40")                                     ;MouseFn: move mouse cursor to Right edge
-
 #IF
 

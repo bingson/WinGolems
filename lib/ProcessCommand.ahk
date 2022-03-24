@@ -67,7 +67,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     sleep, long * 0.8
                     goto, addTextToFile
 
-                } else if (C_input ~= " .+") {                          ;# append|prepend 1st file to 2nd file; RegExMatch(C_input, " .+")                         
+                } else if (C_input ~= " .+") {                                  ;# append|prepend 1st file to 2nd file; RegExMatch(C_input, " .+")                         
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[2], oFileName, oDir, oExtension, oNameNoExt 
                     SplitPath,% arr[1], nFileName, nDir, nExtension, nNameNoExt 
@@ -148,7 +148,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder) : GetNumMemLines()
                     NameNoExt := "First lines of 0-9.txt"
                     dir := ""
-                } else if (2ndChar = "@") or (2ndChar = "I") {                  ; get first lines from 0-9.txt memory files 
+                ; } else if (2ndChar = "@") or (2ndChar = "I") {                  ; get first lines from 0-9.txt memory files 
+                } else if (2ndChar = "@") {                  ; get first lines from 0-9.txt memory files 
                     remainder := substr(C_input,2)
                     txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder,,1) : GetNumMemLines(,,,1)
                     NameNoExt := "First lines of 1 character files"
@@ -174,13 +175,13 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
             Case "O":                                                           ; overwrite file/clipboard
                 C_input := RegExReplace(C_input, "S) +", A_Space)               ; replaces multiple spaces w/ 1        
 
-                If ((2ndChar == ">") or (2ndChar == ":")) and RegExMatch(C_input,"[0-9A-Za-z]") { ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
+                If ((2ndChar == ">")) and RegExMatch(C_input,"[0-9A-Za-z]") { ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
                     NameNoExt := trim(C_input, " >:")
                     dir := (InStr(dir, ">")) ? "" : dir
                     dir := (InStr(dir, ":")) ? "" : dir
                     WriteToCache(namenoext,,dir,clipboard)   
                     goto, load
-                } else If ((SubStr(C_input, 0) == ">") or (SubStr(C_input, 0) == ":")) {   ; if C_input ends in ">" overwrite clipboard with file contents                           
+                } else If (SubStr(C_input, 0) == ">") {   ; if C_input ends in ">" overwrite clipboard with file contents                           
                      
                     
                     C_input := trim(C_input, " >:")
@@ -190,7 +191,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     goto, load
                 } else If (InStr(SubStr(C_input, 2), ":")) {
                     dPos        := InStr(C_input, ":")
-                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension,         ; parses everything after the command character as a file pathNameNoExt               
+                    SplitPath,% substr(C_input, 1, dPos-1), FileName, Dir, Extension, NameNoExt        ; parses everything after the command character as a file pathNameNoExt               
                     dir := dir ? dir . "\" : ""
                     text_to_add := substr(C_input, dPos+1)
                     
@@ -225,6 +226,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     }
                     WriteToCache(namenoext,, dir)   
                     goto, Load
+
                 } else If RegExMatch(C_input, " .+") {                          ; remaining case: two filenames given, w/ 1st overwriting the 2nd                         
                     arr := StrSplit(C_input, " ")
                     SplitPath,% arr[1], 1FileName, 1Dir, 1Extension, 1NameNoExt

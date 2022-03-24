@@ -9,7 +9,7 @@
   lwin & space::    CB("~win")                                                  ;CB. opens command box that runs ~win suffix CB keys
   
   rshift & enter::  RunCmd(,GC("win_S","~win")) 
-  Lwin & enter::  RunCmd(,GC("win_S","~win"))                                   ;CB.. selects word at text cursor position and run as CB "~win" key
+  Lwin & enter::    RunCmd(,GC("win_S","~win"))                                 ;CB.. selects word at text cursor position and run as CB "~win" key
  
   +<!space::                                                                    ;CB.. (V command) simulates ctrl+shift+left to select last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., 1 = 1.txt).
   <!space::         RunCmd(GC("win_P","V"))                                     ;CB.. (V command) simulates ctrl+shift+left to select last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., 1 = 1.txt).
@@ -61,10 +61,10 @@
 ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 ; Hotkeys below are active if a Command or Function Box exists but it not the active window
 
-#IF WinExist("ahk_id " CB_hwnd)                                                 
-  $>^space::         GUIFocusInput()                                              ;CB| activate already open Command Box and move focus to inputbox           
+#IF WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)                                                
+  rctrl & space::  GUIFocusInput("CB"), GC("CB_appActive", 0) ? s("{tab}") : "" ;CB| activate already open Command Box and move focus to inputbox    
 
 #IF WinExist("ahk_id " FB_hwnd)                                                 ;Function Box must exist for the below two lines to be valid
-  $>^space::         GUIFocusInput("FB")                                        ;FB: activate already open Function Box and move focus to inputbox           
+  $>^space::       GUIFocusInput("FB")                                          ;FB: activate already open Function Box and move focus to inputbox                                    
 
 #IF                                                                             ; end context dependent assignments
