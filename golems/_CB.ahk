@@ -6,18 +6,16 @@
   #If GetKeyState("lshift", "P")                                                  
   lwin & space::                                                                ;CB. (+Lshift) opens command box that runs ~win suffix CB keys
   #If 
-  lwin & space::    CB("~win")                                                  ;CB. opens command box that runs ~win suffix CB keys
+  lwin & space::     CB("~win")                                                 ;CB. opens command box that runs ~win suffix CB keys
   
-  rshift & enter::  RunCmd(,GC("win_S","~win")) 
-  Lwin & enter::    RunCmd(,GC("win_S","~win"))                                 ;CB.. selects word at text cursor position and run as CB "~win" key
- 
-  +<!space::                                                                    ;CB.. (V command) simulates ctrl+shift+left to select last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., 1 = 1.txt).
-  <!space::         RunCmd(GC("win_P","V"))                                     ;CB.. (V command) simulates ctrl+shift+left to select last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., 1 = 1.txt).
+  Lwin & enter::     RunCmd(,GC("#enter","~win"))                               ;CB.. selects word at text cursor position and run as CB "~win" key
+  ^#r::              ProcessCommand(GC("last_user_input"),GC("CB_sfx"))         ;CB.. rerun last CB submission 
  
 ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 ; Hotkeys below are active if a Command or Function Box is the active window
   #IF WinActive("ahk_id " CB_hwnd)   
-  ralt & space::     RunCmd("V")                                                ;CB: paste mem_cache file
+  <!space::     RunCmd(GC("LaltSpaceCommand","V"))                              ;CB: paste mem_cache file 
+  >!space::     RunCmd(GC("RaltSpaceCommand","V"))                              ;CB: paste mem_cache file                         
   esc::                                                                         ;CB: close command box
   ralt & SC027::     send {esc}                                                 ;CB: close command box
   $^!k::                                                                        ;CB: Font size decrease

@@ -60,7 +60,8 @@
     title_text := Capitalize1stLetter(Process_Name,0, 0)
     ldspl .= RetrieveExt(A_ScriptDir "\mem_cache\" ldspl)                       ; last display  
     ndspl := GC("CB_title")                                                     ; new display (if new file was loaded) 
-    title := CB_Title_ID title_text suffix l (ndspl ? ndspl : ldspl) 
+    ASC   := GC("LaltSpaceCommand","V") . ", " . GC("RaltSpaceCommand","V")
+    title := CB_Title_ID title_text suffix l ASC l (ndspl ? ndspl : ldspl) 
     CC("CBtitle",title)
     
   ; SET GUI OPTIONS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - 
@@ -174,7 +175,7 @@
     2GuiEscape:
     2GuiClose:
         Gui, 2: +LastFound
-        CleanHist(40)
+        CleanHist(100)
         gosub, save_win_coord
         Gui, 2: destroy
         exit
@@ -271,11 +272,6 @@
         afterExecution := IsFunc(ProcessMod) 
                         ? %ProcessMod%(UserInput, suffix, title, fsz, fnt, w_color, t_color)
                         : ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, w_color)
-
-        ; if !IsFunc(ProcessMod) 
-        ;     afterExecution := ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, w_color)
-        ; else 
-        ;     afterExecution := %ProcessMod%(UserInput, suffix, title, fsz, fnt, w_color, t_color)
         
         afterExecution := (GC("CB_persistent", 0) = 1) ? 2 : afterExecution
 

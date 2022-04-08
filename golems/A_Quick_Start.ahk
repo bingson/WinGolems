@@ -51,8 +51,14 @@
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
   !b::                send ^b                                                   ;Convenience: Lshift+b = ctrl+b (taken over by tab movement function)
-  ~ralt & ~rshift::                                                             ;Convenience: move mouse cursor to center of active application window
-  ~lwin & ~rshift::   CursorJump("C")                                           ;Convenience: move mouse cursor to center of active application window
+  
+  $<!^mButton::                                                                 ;MouseFn: move mouse cursor to center of active application window 
+  ~ralt & ~rshift::                                                             ;MouseFn: move mouse cursor to center of active application window
+  ~lwin & ~rshift::   CursorJump("C")                                           ;MouseFn: move mouse cursor to center of active application window
+  $<^mButton::        CursorJump("BL")                                          ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
+  $+<!mButton::       CursorJump("BR")                                          ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
+  $<+mButton::        CursorJump("TL")                                          ;MouseFn: move mouse cursor to TOP LEFT of active app
+  $<!mButton::        CursorJump("TR")                                          ;MouseFn: move mouse cursor to TOP RIGHT of active app
   #SC035::            search()                                                  ;Convenience: google search selected text
   !Backspace::        delLine()                                                 ;Convenience: delete current line of text
   lshift & rshift::
@@ -84,7 +90,7 @@
   $>+>!o::            % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")       ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2)
   >!sc028::           GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1
   >!enter::           GotoDesktop("2")                                          ;VirtualDesktop: Switch to desktop 1
-
+  
   ;>!enter::           % (t := !t) ? GotoDesktop("2") : GotoDesktop("1")         ;VirtualDesktop: Switch between desktop 1 and 2
 
 ; MEMORY FILE FUNCTIONS (BLUE)__________________________________________________
@@ -147,12 +153,16 @@
   #4::                                                                          ;Mem: paste contents of 4.txt   
   #3::                                                                          ;Mem: paste contents of 3.txt   
   #2::                                                                          ;Mem: paste contents of 2.txt   
-  #1::               RetrieveMemory()                                           ;Mem: paste contents of 1.txt
+  #1::                RetrieveMemory()                                          ;Mem: paste contents of 1.txt
   
-  $<^mButton::       RetrieveMemory(A_ThisHotkey,,,1)                           ;Mem: double click and paste contents of 1.txt at cursor position
-  $+<^mButton::      RetrieveMemory(,A_ThisHotkey)                              ;Mem: double click and paste contents of number entered at prompt
-  +<!mbutton::       s("{blind}",,100), Clicks(2), s("^v")                      ;MouseFn: double click, paste clipboard contents
-  <!mbutton::        s("{blind}",,100), Clicks(3), s("^v")                      ;MouseFn: triple click, paste clipboard contents
+  $<!space::          RunCmd(GC("LaltSpaceCommand","V"))                        ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
+  $>!space::          RunCmd(GC("RaltSpaceCommand","V"))                        ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
+  
+  $^!lbutton::        s("{blind}",,100),RetrieveMemory(A_ThisHotkey,,,1)        ;Mem: double click and paste contents of 1.txt at cursor position       
+  $^#lbutton::        s("{blind}",,100),RetrieveMemory(,A_ThisHotkey)           ;Mem: double click and paste contents of number entered at prompt   
+  $<!lbutton::        s("{blind}",,100), Clicks(2), s("^v")                     ;MouseFn: triple click, paste clipboard contents
+  $+<!lbutton::       s("{blind}",,100), Clicks(3), s("^v")                     ;MouseFn: double click, paste clipboard contents
+
 
 #IF
-/*  
+/*

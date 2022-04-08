@@ -183,7 +183,6 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     goto, load
                 } else If (SubStr(C_input, 0) == ">") {   ; if C_input ends in ">" overwrite clipboard with file contents                           
                      
-                    
                     C_input := trim(C_input, " >:")
                     SplitPath, C_input, , Dir, , NameNoExt 
                     clipboard := AccessCache(NameNoExt,dir, False)
@@ -394,22 +393,50 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 
                 C_First2chr := SubStr(C_input, 1, 2) 
                 C3_Remainder := SubStr(C_input, 3)
-
+                ; msgbox % C_First2chr
                 switch 
                 {   
-                    case SubStr(C_input, 1 , 1) == ":":
+                    case SubStr(C_input, 1 , 1) = ":":
                         ; implement option here to run native ahk syntax
                         return 1
-                    case C_First2chr == "f:":                                   ; create function name alias
+                    case C_First2chr = "f:":                                   ; create function name alias
                         arr := StrSplit(C3_Remainder, "~")
                         IniWrite,% arr[2], %f_path%ALIAS.ini, function,% arr[1]
                         UpdateGUI()
                         return 1
-                    case C_First2chr == "p:":                                   ; create parameter alias
+                    case C_First2chr = "p:":                                   ; create parameter alias
                         arr := StrSplit(C3_Remainder, "~")
                         IniWrite,% arr[2], %f_path%ALIAS.ini, parameter,% arr[1]
                         UpdateGUI()
                         return 1
+                    case C_First2chr = "l:":
+                        PU("LaltSpaceCommand set to: V" C3_Remainder)
+                        sleep 200
+                        CC("LaltSpaceCommand", "V" . C3_Remainder)
+                        return 
+                    case C_First2chr = "l!", C_First2chr = "!l":
+                        PU("LaltSpaceCommand reset to V")
+                        sleep 200
+                        DC("LaltSpaceCommand")
+                        return 
+                    case C_First2chr = "r:":
+                        ; msgbox % C_First2chr
+                        PU("RaltSpaceCommand set to: V" C3_Remainder)
+                        sleep 200
+                        ; msgbox % C3_Remainder
+                        CC("RaltSpaceCommand", "V" . C3_Remainder)
+                        return 
+                    case C_First2chr = "r!",C_First2chr = "!r":
+                        PU("RaltSpaceCommand reset to V")
+                        sleep 200
+                        DC("RaltSpaceCommand")
+                        return 
+                    case C_First2chr = "!!":
+                        PU("Alt Space Commands reset to V")
+                        sleep 200
+                        DC("LaltSpaceCommand")
+                        DC("RaltSpaceCommand")
+                        return 
                     default:
                         ActivateWin("ahk_id" tgt_hwnd)
                         arrO := StrSplit(C_input, "__")
