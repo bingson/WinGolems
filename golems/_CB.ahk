@@ -1,6 +1,6 @@
 ; COMMAND BOX __________________________________________________________________ 
 
-; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- c3
+; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 ; Valid anywhere in windows
  
   #If GetKeyState("lshift", "P")                                                  
@@ -9,8 +9,11 @@
   lwin & space::     CB("~win")                                                 ;CB. opens command box that runs ~win suffix CB keys
   
   Lwin & enter::     RunCmd(,GC("#enter","~win"))                               ;CB.. selects word at text cursor position and run as CB "~win" key
-  ^#r::              ProcessCommand(GC("last_user_input"),GC("CB_sfx"))         ;CB.. rerun last CB submission 
- 
+  ^#r::              
+    ProcessCommand(GC("last_user_input"),GC("CB_sfx"))         ;CB.. rerun last CB submission 
+    send {esc}
+    return
+                     
 ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 ; Hotkeys below are active if a Command or Function Box is the active window
   #IF WinActive("ahk_id " CB_hwnd)   

@@ -15,24 +15,6 @@
   #t::                AA("cmd.exe")                                             ;Apps| Activate Command window     
   #c::                ActivateCalc()                                            ;Apps| Activate Calculator   
 
-  ^!F1::                                                                        ;Apps: Save window for win+F1 activation 
-  ^!F2::                                                                        ;Apps: Save window for win+F2 activation
-  ^!F3::                                                                        ;Apps: Save window for win+F3 activation
-  ^!F4::                                                                        ;Apps: Save window for win+F4 activation
-  ^!F5::                                                                        ;Apps: Save window for win+F5 activation
-  ^!F6::                                                                        ;Apps: Save window for win+F6 activation
-  ^!F7::                                                                        ;Apps: Save window for win+F7 activation
-  ^!F8::              SaveWinID(ltrim(A_ThisHotkey, "^!"))                      ;Apps: Save window for win+F8 activation
-
-  #F1::                                                                         ;Apps: Activate saved F1 window
-  #F2::                                                                         ;Apps: Activate saved F2 window
-  #F3::                                                                         ;Apps: Activate saved F3 window
-  #F4::                                                                         ;Apps: Activate saved F4 window
-  #F5::                                                                         ;Apps: Activate saved F5 window
-  #F6::                                                                         ;Apps: Activate saved F6 window
-  #F7::                                                                         ;Apps: Activate saved F7 window
-  #F8::               ActivateWinID(ltrim(A_ThisHotkey, "#"))                   ;Apps: Activate saved F8 window
-
 ; NAVIGATION (PURPLE) __________________________________________________________
   
   $#j::               Sendinput {Blind}{WheelDown 2}                            ;Navigation: mouse scroll down 2 lines
@@ -53,7 +35,6 @@
   !b::                send ^b                                                   ;Convenience: Lshift+b = ctrl+b (taken over by tab movement function)
   
   $<!^mButton::                                                                 ;MouseFn: move mouse cursor to center of active application window 
-  ~ralt & ~rshift::                                                             ;MouseFn: move mouse cursor to center of active application window
   ~lwin & ~rshift::   CursorJump("C")                                           ;MouseFn: move mouse cursor to center of active application window
   $<^mButton::        CursorJump("BL")                                          ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
   $+<!mButton::       CursorJump("BR")                                          ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
@@ -61,8 +42,7 @@
   $<!mButton::        CursorJump("TR")                                          ;MouseFn: move mouse cursor to TOP RIGHT of active app
   #SC035::            search()                                                  ;Convenience: google search selected text
   !Backspace::        delLine()                                                 ;Convenience: delete current line of text
-  lshift & rshift::
-  rshift & lshift::   suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
+  ^#O::               suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
   !SC027::            Send {esc}                                                ;WinOS: simulate esc key (alt + semicolon)
   ^SC027::            Send {AppsKey}                                            ;WinOS: simulate appkey
   #Lbutton::                                                                    ;WinOS: open start menu (alt: Ctrl+Esc)
@@ -155,13 +135,13 @@
   #2::                                                                          ;Mem: paste contents of 2.txt   
   #1::                RetrieveMemory()                                          ;Mem: paste contents of 1.txt
   
-  $<!space::          RunCmd(GC("LaltSpaceCommand","V"))                        ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
-  $>!space::          RunCmd(GC("RaltSpaceCommand","V"))                        ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
+  <!space::          RunCmd(GC("LaltSpaceCommand","V"))                        ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
+  >!space::          RunCmd(GC("RaltSpaceCommand","V"))                        ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
   
   $^!lbutton::        s("{blind}",,100),RetrieveMemory(A_ThisHotkey,,,1)        ;Mem: double click and paste contents of 1.txt at cursor position       
   $^#lbutton::        s("{blind}",,100),RetrieveMemory(,A_ThisHotkey)           ;Mem: double click and paste contents of number entered at prompt   
-  $<!lbutton::        s("{blind}",,100), Clicks(2), s("^v")                     ;MouseFn: triple click, paste clipboard contents
-  $+<!lbutton::       s("{blind}",,100), Clicks(3), s("^v")                     ;MouseFn: double click, paste clipboard contents
+  $<!lbutton up::     s("{blind}",,100), Clicks(2), s("^v")                     ;MouseFn: triple click, paste clipboard contents
+  $+<!lbutton up::    s("{blind}",,100), Clicks(3), s("^v")                     ;MouseFn: double click, paste clipboard contents
 
 
 #IF

@@ -77,7 +77,7 @@
   ^k::          ToggleOpt("vo{down}")                                           ;FileExplorer: sort by date modified
   ^l::          ToggleOpt("vo{down 2}")                                         ;FileExplorer: sort by type
   ^h::          ToggleOpt("vo{down 3}")                                         ;FileExplorer: sort by size
-  !SC027::      DetailedView()                                                  ;FileExplorer| detailed file info with resized columnsnmn
+  >!SC027::     DetailedView()                                                  ;FileExplorer| detailed file info with resized columnsnmn
   $+!c::        clipboard := Explorer_GetSelection()                            ;FileExplorer| store file path(s) of selected file(s) in clipboard
   !s::          SelectByRegEx()                                                 ;FileExplorer| select all files matching regex pattern
   ^!h::         send {home}                                                     ;Navigation: Home

@@ -60,16 +60,15 @@
 |  G   Run AHK function from CB                Gcc,PC_V,Vr\        changes config.ini variable for PC_V to "vr\"                         |
 |                                                                  this is equivalent to ahk code: CC("PC_V","Vr\")                      |
 |                                                                  format: function_name,parameter_1,parameter_2,etc...                  |
-| Gr:  change ralt+space paste prefix          Gr:Vr\              ralt+space will paste matching .txt file from folder mem_cache\r\     |
-| Gr!  resets ralt+space paste prefix          Gr!                 ralt+space will paste matching .txt file from folder mem_cache\       |
-|                                                                                                                                        |
 |                                                                                                                                        |
 | KEY  GUI BEHAVIOR & APPEARANCE               USAGE EXAMPLES                                                                            |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")           |
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M,H,B behave the same as W to allow access to multiple CB suffixes    |
-|  T   CommandBox UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent CB, (f)ont            |
+|  T   CommandBox UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent CB (stays open)       |
 |      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
-|                                              Tr, Tf:arial        (r)eenter last userinput, (f)ont change to arial                      |
+| Tl:  change lalt+space paste folder prefix   Tl:r\               lalt+space will paste matching .txt file from folder mem_cache\r\     |
+| Tl!  resets lalt+space paste folder prefix   Tl!                 lalt+space will paste matching .txt file from folder mem_cache\       |
+| Tll  shows lalt+space folder with "LL"       Tl:r\, Tll, LL      Shows contents of mem_cache\r\ in the CB display window               |
 |________________________________________________________________________________________________________________________________________|
 

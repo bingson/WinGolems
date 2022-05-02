@@ -88,7 +88,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     % (1stChar == "A") 
                         ? FileAppend(path, text_to_add)
                         : FilePrepend(path, text_to_add)
-                    goto, Load
+                    if WinExist("ahk_id " CB_hwnd)                              ; if no CB exists, indicates append/prepend accessed by rerun last CB submission hotkey
+                        goto, Load
 
                 addTextToClipboard:
                     var := clipboard                                            ; [stability] placeholder var allows usage of clipwait errorLevel
@@ -148,17 +149,21 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder) : GetNumMemLines()
                     NameNoExt := "First lines of 0-9.txt"
                     dir := ""
-                ; } else if (2ndChar = "@") or (2ndChar = "I") {                  ; get first lines from 0-9.txt memory files 
-                } else if (2ndChar = "@") {                  ; get first lines from 0-9.txt memory files 
+                } else if (2ndChar = "@") {                                     ; get first lines from 0-9.txt memory files   
                     remainder := substr(C_input,2)
                     txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder,,1) : GetNumMemLines(,,,1)
                     NameNoExt := "First lines of 1 character files"
                     dir := ""
-                } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini")) 
+                } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini"))   ; load list of files in mem_cache
                   or (C_input = "L") {
                     NameNoExt := "list"
                     CC("CB_last_display", dir NameNoExt)
-                    txt := CreateCacheList("list")
+
+
+                    txt := ((GC("LaltSpaceCommand") != "ERROR") & GC("LaltList",0))                ; load files in mem_cache subdirectory corresponding to LaltSpaceCommand if exists
+                         ? CreateCacheList("list", substr(GC("LaltSpaceCommand"),2))
+                         : CreateCacheList("list")
+                        
                     tgt := f_path dir NameNoExt
 
                 } else {
@@ -175,13 +180,13 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
             Case "O":                                                           ; overwrite file/clipboard
                 C_input := RegExReplace(C_input, "S) +", A_Space)               ; replaces multiple spaces w/ 1        
 
-                If ((2ndChar == ">")) and RegExMatch(C_input,"[0-9A-Za-z]") { ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
+                If ((2ndChar == ">") and RegExMatch(C_input,"[0-9A-Za-z]")) {   ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
                     NameNoExt := trim(C_input, " >:")
                     dir := (InStr(dir, ">")) ? "" : dir
                     dir := (InStr(dir, ":")) ? "" : dir
                     WriteToCache(namenoext,,dir,clipboard)   
                     goto, load
-                } else If (SubStr(C_input, 0) == ">") {   ; if C_input ends in ">" overwrite clipboard with file contents                           
+                } else If (SubStr(C_input, 0) == ">") {                         ; if C_input ends in ">" overwrite clipboard with file contents  
                      
                     C_input := trim(C_input, " >:")
                     SplitPath, C_input, , Dir, , NameNoExt 
@@ -249,7 +254,6 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 namenoext := namenoext ? namenoext : GC("CB_title","")
                 ActivateWin("ahk_id"  tgt_hwnd)
                 AccessCache(namenoext, dir)
-                ; PopUp(namenoext " pasted",C.lgreen,"000000", "230", "70", "-300", "14", "610")
                 return
             Case "E":                                                           ; edit file
                 if !C_input {
@@ -409,34 +413,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         IniWrite,% arr[2], %f_path%ALIAS.ini, parameter,% arr[1]
                         UpdateGUI()
                         return 1
-                    case C_First2chr = "l:":
-                        PU("LaltSpaceCommand set to: V" C3_Remainder)
-                        sleep 200
-                        CC("LaltSpaceCommand", "V" . C3_Remainder)
-                        return 
-                    case C_First2chr = "l!", C_First2chr = "!l":
-                        PU("LaltSpaceCommand reset to V")
-                        sleep 200
-                        DC("LaltSpaceCommand")
-                        return 
-                    case C_First2chr = "r:":
-                        ; msgbox % C_First2chr
-                        PU("RaltSpaceCommand set to: V" C3_Remainder)
-                        sleep 200
-                        ; msgbox % C3_Remainder
-                        CC("RaltSpaceCommand", "V" . C3_Remainder)
-                        return 
-                    case C_First2chr = "r!",C_First2chr = "!r":
-                        PU("RaltSpaceCommand reset to V")
-                        sleep 200
-                        DC("RaltSpaceCommand")
-                        return 
-                    case C_First2chr = "!!":
-                        PU("Alt Space Commands reset to V")
-                        sleep 200
-                        DC("LaltSpaceCommand")
-                        DC("RaltSpaceCommand")
-                        return 
+                    
                     default:
                         ActivateWin("ahk_id" tgt_hwnd)
                         arrO := StrSplit(C_input, "__")
@@ -492,7 +469,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 {
                     Case "ta"      : search("www.macmillanthesaurus.com/", strng)                                 
                     Case "da"      : search("https://www.macmillandictionary.com/us/dictionary/american/", strng)                                 
-                    Case "t"       : search("www.thesaurus.com/browse/", strng)                                 
+                    Case "t"       : search("www.thesaurus.com/browse/", strng)    
+                    Case "m"       : search("https://www.google.com/maps/search/", strng)    
                     Case "d"       : search("www.dictionary.com/browse/", strng)  
                     Case "f"       : search("www.finviz.com/quote.ashx?t=", strng) 
                     Case "yf"      : search("ca.finance.yahoo.com/quote/", strng) 
@@ -517,7 +495,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 SetTimer, CFW, -600
                 return
             
-            ; Case "X":
+            Case "X":
             Case "Y":
                 if (SubStr(C_input, 1, 2) = "s:") {
                     C3_Remainder := SubStr(C_input, 3)
@@ -550,24 +528,61 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 AutoXYWH("y*", "UserInput")
                 return 2
             Case "T":
+                C_First2chr := SubStr(C_input, 1, 2) 
+                C3_Remainder := SubStr(C_input, 3)
                 Switch C_input 
                 {
                     case "persistent"  ,"p"  : TC("CB_persistent" , "Toggle persistent mode: ")
                     case "scrollbars"  ,"s"  : TC("CB_ScrollBars" , "Toggle scrollbars: ")
                     case "title"       ,"t"  : TC("CB_Titlebar"   , "Toggle titlebar: ")
-                    case "focus"       ,"a"  : 
-                        TC("CB_appActive"  , "Toggle application focus: ")
+                    case "focus"       ,"a"  : TC("CB_appActive"  , "Toggle application focus: ")
                         return 2
                     case "renter input","r"  : TC("CB_reenterInput" , "Re-enter last submit: ")
-                    case "wrap_text" ,"w": 
-                        TC("CB_Wrap", "Toggle text wrap: ")
+                    case "wrap_text" ,"w"    : TC("CB_Wrap", "Toggle text wrap: ")
                         return 2
-                    case "default"   ,"d": 
-                        ToggleDisplay("display")
-                    case "minimized" ,"m": 
-                        ToggleDisplay("minimal")
+                    case "default"   ,"d"    : ToggleDisplay("display")
+                    case "minimized" ,"m"    : ToggleDisplay("minimal")
                     default:
                 }
+
+                C_First2chr := SubStr(C_input, 1, 2) 
+                C3_Remainder := SubStr(C_input, 3)
+                Switch
+                {
+                    case C_First2chr = "l:":
+                        PU("LaltSpaceCommand set to: V" C3_Remainder)
+                        sleep 200
+                        CC("LaltSpaceCommand", "V" . C3_Remainder)
+                        CreateCacheList("list", substr(GC("LaltSpaceCommand"),2))
+                        return 
+                    case C_First2chr = "l!", C_First2chr = "!l":
+                        PU("LaltSpaceCommand reset to V")
+                        sleep 200
+                        DC("LaltSpaceCommand")
+                        CreateCacheList("list")
+                        return 
+                    case C_First2chr = "r:":
+                        PU("RaltSpaceCommand set to: V" C3_Remainder)
+                        sleep 200
+                        CC("RaltSpaceCommand", "V" . C3_Remainder)
+                        return 
+                    case C_First2chr = "r!",C_First2chr = "!r":
+                        PU("RaltSpaceCommand reset to V")
+                        sleep 200
+                        DC("RaltSpaceCommand")
+                        return 
+                    case C_First2chr = "ll": TC("LaltList", "Toggle LaltCommand Cache List: ")
+                        return 2
+                    case C_First2chr = "!!":
+                        PU("Alt Space Commands reset to V")
+                        sleep 200
+                        DC("LaltSpaceCommand")
+                        DC("RaltSpaceCommand")
+                        CreateCacheList("list")
+                        return 
+                    default:
+                }
+
                 UpdateGUI()
                 return 2
                 ; return 1

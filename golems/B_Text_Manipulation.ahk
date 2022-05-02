@@ -12,8 +12,7 @@
   +!u::              ConvertLower()                                             ;Convenience* make selected text to lower case
   ^!u::              Capitalize1stLetter()                                      ;Convenience; First Letter Capitalized
   ^!+u::             Capitalize1stLetter(,,0)                                   ;Convenience; Every First Letter Capitalized
-  ^#s::              ReplaceAwithB(" ")                                         ;Convenience! remove all spaces from selected text
-  ^#space::          ReplaceAwithB()                                            ;Convenience! replace multiple consecutive spaces w/ one space in selected text
+  !#s::              ReplaceAwithB(" ")                                         ;Convenience! remove all spaces from selected text
   !#enter::          RemoveBlankLines()                                         ;Convenience! remove empty lines starting from selected text
   +!9::              Clip("(" Clip() ")")                                       ;Convenience: enclose selected text with ( )
   $+!SC01A::         Clip("{" Clip() "}")                                       ;Convenience: enclose selected text with { }
@@ -50,8 +49,12 @@
   $+#!l::            Sendinput +^{Right 2}                                      ;Selection: extend selection Right 2 words
   $+^#h::            Sendinput +^{Left 3}                                       ;Selection: extend selection Left  3 words
   $+^#l::            Sendinput +^{Right 3}                                      ;Selection: extend selection Right 3 words
-  $+!l::             Sendinput +{Right}                                         ;Selection: extend selection Right 1 character
-  $+!h::             Sendinput +{Left}                                          ;Selection: extend selection Left  1 character
+  $+<!l::            Sendinput +{Right}                                         ;Selection: extend selection Right 1 character
+  $+<!h::            Sendinput +{Left}                                          ;Selection: extend selection Left  1 character
+  $+<!>!l::
+  $+>!l::            Sendinput +{Right 2}                                       ;Selection: extend selection Right 2 character
+  $+<!>!h::
+  $+>!h::            Sendinput +{Left 2}                                        ;Selection: extend selection Left  2 character
   $+#k::                                                                        ;Selection: extend selection up    1 row
   +!k::              sendinput +{up}                                            ;Selection: extend selection up    1 row
   $+#j::                                                                        ;Selection: extend selection down  1 row
@@ -74,13 +77,11 @@
   printscreen & d::   CursorRecall(substr(A_ThisHotkey,0), 1,,1)                ;MouseFn: return to saved mouse position and click, return to original position (left click if no saved position found) 
   *#i::                                                                         ;MouseFn: return to saved mouse position and click (left click if no saved position found)
   *#d::               CursorRecall(substr(A_ThisHotkey,0), 1,,1)                ;MouseFn: return to saved mouse position and click (left click if no saved position found)
-  ^#i::                                                                         ;MouseFn: Left click and save mouse position
-  ^#d::               SaveMousPos(substr(A_ThisHotkey,0),1),PU("click saved")   ;MouseFn:f Left click and save mouse position
+  home & i::                                                                       ;MouseFn: Left click and save mouse position
+  home & d::          SaveMousPos(substr(A_ThisHotkey,0),1),PU("click saved")   ;MouseFn: Left click and save mouse position
   
-  #If GetKeyState("printscreen", "P")
-  rctrl & i::                                                                   ;MouseFn: erase saved curor position                                                              
-  rctrl & d::         DC("MPos_" substr(A_ThisHotkey,0)),PU("Click reset")      ;MouseFn: erase saved curor position
-  #If
+  esc & i::                                                                     ;MouseFn: erase saved curor position                                                              
+  esc & d::           DC("MPos_" substr(A_ThisHotkey,0)),PU("Click reset")      ;MouseFn: erase saved curor position
 
   #f::                Clicks(2)                                                 ;MouseFn: 2 Left clicks (select word)
   ^#f::               Clicks(3)                                                 ;MouseFn: 3 Left clicks (select line)

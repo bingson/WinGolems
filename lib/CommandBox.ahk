@@ -3,6 +3,7 @@
     SetkeyDelay, -1
     SetWinDelay, -1
     ; Process, Priority,, High
+    ReleaseModifiers()
     kw()                                                                        ; wait for shift,ctrl, or win keys to send up
     BufferKeystrokes() 
     ; TimeCode()

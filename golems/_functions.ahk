@@ -136,6 +136,11 @@
     VD_sendToDesktop(wintitleOfActiveWindow,n,0,0)                              ; VD_sendToDesktop(wintitle,whichDesktop, followYourWindow := false, activate := true)
     return 
   } ; move window between virtual desktops https://github.com/FuPeiJiang/VD.ahk
+  
+  getCurrentDesktop() {
+    vd_init()
+    return % VD_getCurrentDesktop()
+  } ; return virtual desktop number
 
   GotoDesktop(n = "2") {                                                        ; https://github.com/FuPeiJiang/VD.ahk
     vd_init()
@@ -227,7 +232,7 @@
     if (n_instances > 1)
     {
         WinSet, Bottom,, A
-        WinActivate, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
+        WinActivate, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,   ; excludes windows with "tabs outliner" in the title
     }
     CursorFollowWin()
     BlockInput, MousemoveOff
@@ -642,9 +647,9 @@
     CommandBox(sfx, w_color, t_color, ProcessMod)
   }
   
-  CreateCacheList(name = "cc") {
+  CreateCacheList(name = "cc", folder = "") {
     global strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
-    global strDir  := A_ScriptDir . "\mem_cache\"
+    global strDir  := A_ScriptDir . "\mem_cache\" . folder
     global cacheList := ""
     global config_path
     
@@ -675,7 +680,7 @@
 
     }
     ; Sort, cache_contents, CL
-    cache_contents := "CACHE CONTENTS`n" . RepeatString("-", char_width) . "`n`r" . cache_contents
+    cache_contents := "CACHE CONTENTS " . folder . "`n" . RepeatString("-", char_width) . "`n`r" . cache_contents
     FileDelete, mem_cache\%name%.txt
     FileAppend, %cache_contents%, mem_cache\%name%.txt
     return % cache_contents
@@ -1785,8 +1790,9 @@
   }
  
   DetailedView() {
+    
     send {ctrl down}{shift down}6{ctrl up}{shift up}
-    send {Ctrl Down}{NumpadAdd}{Ctrl up}
+    send ^{NumpadAdd}
     return
   }
   
@@ -2257,7 +2263,8 @@
     switch Q
     {
         case "T":                                                               ;top
-            MouseGetPos, x
+            MouseGetPos, x 
+            y := offset_x
         case "B":                                                               ;bottom
             MouseGetPos, x
             y := winTopL_y + height
@@ -2314,26 +2321,33 @@
     }
   }
 
-  LURL(URL, i = false) {
+  LURL(URL, i = false, browser = "") {
     ; Browser path used to load urls dependent on computer
     global config_path, PF_x86
-    winget, Pname, ProcessName, A 
+
+    if browser
+        Pname := browser
+    Else
+        winget, Pname, ProcessName, A 
+
     Switch Pname
     {
         case "vivaldi.exe": output := GC("vivaldi_path", GC("html_path")) 
         case "chrome.exe" : output := GC("chrome_path", GC("html_path")) . (i ? " -incognito " : "")
-        case "msedge.exe" : output := GC("edge_path", GC("html_path"))
+        case "msedge.exe" : output := GC("edge_path", GC("html_path")) . (i ? " -inprivate " : "")
         ; case "firefox.exe": output := GC("firefox_path", GC("html_path"))     ; look into firefox url syntax
         default: output := GC("html_path")
     }
     output := (output = "ERROR") ? GC("html_path") : output
-    sleep 100
+    sleep 200
     Run, %output% "%URL%"
     return
   } ; load URL in web browser
 
   Search(prefix = "google.com/search?q=", var = "", suffix = "") {
     global short, med
+    ReleaseModifiers()
+    sleep short
     var := (!var ? clip() : var)
     url := prefix . var . suffix
     sleep med
@@ -2512,12 +2526,61 @@
   }
 
   command(tgt, opt = "") {
-    ; run obsidian command corresponding to tgt string
+
     Send ^p
     clip(tgt)
     send {Enter}%opt%
     return
-  }
+  } ; run obsidian command corresponding to tgt string
+
+  ObsidianQuickAdd(hotkey, action = "open") {
+    ReleaseModifiers()
+    ObsidianPath := GC("obsidian_path",UProfile "\AppData\Local\Obsidian\Obsidian.exe")  
+    
+    switch action 
+    {
+        case "open":
+            AA(ObsidianPath)
+            send %hotkey%
+        case "url":
+            ; Send !d
+            ; url := clip()
+            send yy
+            AA(ObsidianPath)
+            sleep med
+            send %hotkey%
+            ; clip(url)
+            send ^v
+            send ^{enter}
+            send !{tab}
+            ; send {F6}
+        case "text":
+            st := clip()
+            AA(ObsidianPath)
+            sleep med
+            send %hotkey%
+            clip(st)
+            send ^{enter}
+            send !{tab}
+        default:
+            return
+    }
+    return
+  }   
+
+  OpenInObsidian(FileName, ObsidianPath = "") { 
+    
+    ObsidianPath := !ObsidianPath 
+                  ? (UProfile "\AppData\Local\Obsidian\Obsidian.exe")
+                  : ObsidianPath
+    AA(ObsidianPath)                                                            ; AA(UProfile "\AppData\Local\Obsidian\Obsidian.exe") 
+    Send ^o                                                                     ; hotkey Ctrl+O set in Obsidian to open "QuickSwitcher"
+    Sleep 100                                                                   ; maybe not needed
+    clip(FileName)                                                              ; type in content of variable
+    Sleep 100                                                                   ; maybe not needed
+    Send {Enter}                                                                ; Ctrl+Enter opens in new pane. {Enter} would open in current pane
+  } ; OpenInObsidian(FileName) ; opens specified note in Obsidian by simulating keystrokes into "QuickSwitcher"      
+
 
 ; VS CODE ______________________________________________________________________
 
@@ -2535,11 +2598,11 @@
 
   FocusResults() {
     sleep 300
-    send ^m
+    send +!^m                                                                   ; shortcut in vscode for toggling "tab moves focus"
     sleep 200
     Send {shift down}{tab 7}{shift up}
     sleep 200
-    send ^m
+    send +!^m
     return
   }
 
@@ -2973,7 +3036,7 @@
     ReplaceAwithB(A,B,var,paste,select,regex)    
   }
   ReplaceAwithB(A = "", B = "", var = "", paste = True, select = True, regex = false) {
-    ;ReleaseModifiers()
+    ReleaseModifiers()
     BlockInput, on
     settimer, BlockInputTimeOut,-600
     var := (!var ? clip() : var)

@@ -10,7 +10,7 @@
   :X:d~win::     DisplaySettings()                                              ;SC: display settings
   <!#n::                                                                        ;SC: notification window
   :X:n~win::     NotificationWindow()                                           ;SC: notification window
-  <!#s::                                                                        ;SC: sound settings
+  ; <!#s::                                                                        ;SC: sound settings
   :X:v~win::     SoundSettings()                                                ;SC: sound settings
   <!#r::                                                                        ;SC: run program 
   :X:r~win::     RunProgWindow()                                                ;SC: run program
@@ -186,19 +186,6 @@
     $!h::                           CursorJump("L","20")                        ;MouseFn: move mouse cursor to Left edge
     $!l::                           CursorJump("R","-40")                       ;MouseFn: move mouse cursor to Right edge
     p::                             WinClose,A                                  ;Convenience: close active window
-    lctrl::                                                                     ;ActvateApp: activate saved Window ID
-    alt & q::                       SaveWinID("Q")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
-    alt & w::                       SaveWinID("W")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & q
-    alt & a::                       SaveWinID("A")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & a
-    alt & s::                       SaveWinID("S")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & s
-    alt & z::                       SaveWinID("Z")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & z
-    alt & x::                       SaveWinID("X")                              ;ActvateApp (+ Alt): Save window ID for later activation w/ alt & x
-    q::                             ActivateWinID("Q")                          ;ActvateApp: activate saved Window ID
-    w::                             ActivateWinID("W")                          ;ActvateApp: activate saved Window ID
-    a::                             ActivateWinID("A")                          ;ActvateApp: activate saved Window ID
-    s::                             ActivateWinID("S")                          ;ActvateApp: activate saved Window ID
-    z::                             ActivateWinID("Z")                          ;ActvateApp: activate saved Window ID
-    x::                             ActivateWinID("X")                          ;ActvateApp: activate saved Window ID
     ralt & k::                      CursorJump("T")                             ;MouseFunctions: move mouse cursor to top edge
     ralt & j::                      CursorJump("B",,"-20")                      ;MouseFunctions: move mouse cursor to bottom edge
     ralt & h::                      CursorJump("L","20")                        ;MouseFunctions: move mouse cursor to Left edge

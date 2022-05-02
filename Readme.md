@@ -177,6 +177,8 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
     * [How can we develop transformative tools for thought? — Matuschak & Nielsen](https://numinous.productions/ttft/) 
     * [Thought as a Technology — Nielsen](http://cognitivemedium.com/tat/index.html)
 7.  Misc.
+    * [backup windows registry before editing](https://support.microsoft.com/en-us/topic/how-to-back-up-and-restore-the-registry-in-windows-855140ad-e318-2a13-2829-d428a2ab0692)
+    * [disable native MS office shortcut](https://superuser.com/questions/1457073/how-do-i-disable-specific-windows-10-office-keyboard-shortcut-ctrlshiftwinal) 
     * [Send commands](https://www.autohotkey.com/docs/commands/Send.htm)
     * [Optimizing the speed of a script](https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413&sid=a3fa467747d78cedad4ca780b4e08dbb)
     * [Square Brackets Notation (documentation)](https://www.autohotkey.com/docs/Tutorial.htm#s81)
