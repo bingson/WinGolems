@@ -116,18 +116,21 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     CC("CB_position", d)
                 }
                 
-                if (C_input = "C") {
+                if (C_input = "~") {
                     NameNoExt := "config.ini"
                     RegExMatch(config_path, ".*(?=config.ini)", dir)           ; get everything before the last title separator and store in v
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
 
-                } else if (C_input = "K") {                                     ; shortcut list 
+                } else if (C_input = "$") or (C_input = "$$") {                                     ; shortcut list 
+
                     NameNoExt := "HotKey_List"
                     dir := "..\"
+                    if !FileExist(NameNoExt ".txt") or (C_input = "$$")
+                        GenerateHotkeyList()
                     CC("CB_last_display", dir NameNoExt)
-                    txt  := AccessCache(NameNoExt,dir, False)
+                    txt := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
 
                 } else if (C_input = ">") or (C_input = ":")  {                                     ; clipboard 
@@ -139,11 +142,11 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         PopUp("Sorry the CB only displays text strings", , ,, , drtn = "-2000") 
                         return 1
                     }
-                } else if (C_input = "H") {                                     ; User Input History 
+                } else if (C_input = "%") {                                     ; User Input History 
                     NameNoExt := "_hist.txt [starting with most recent]"
                     dir := ""
                     CC("CB_last_display", dir NameNoExt)
-                    txt  := AccessCache(RegExReplace(NameNoExt, "\[.+?\]"),dir, False)
+                    txt  := AccessCache(RegExReplace(NameNoExt, "\[.+?\]"),dir, False)  ; "\[.+?\]" removes any text surrounded by square brackets 
                 } else if (2ndChar = "#") {                                     ; get first lines from 0-9.txt memory files                        
                     remainder := substr(C_input,2)
                     txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder) : GetNumMemLines()
@@ -155,7 +158,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     NameNoExt := "First lines of 1 character files"
                     dir := ""
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini"))   ; load list of files in mem_cache
-                  or (C_input = "L") {
+                  or (C_input = "?") {
                     NameNoExt := "list"
                     CC("CB_last_display", dir NameNoExt)
 
@@ -172,10 +175,10 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 }
 
                 updateGUI:
-                new_title_file := dir . NameNoExt . RetrieveExt(tgt)            ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
-                CC("CB_title", new_title_file)
-                UpdateGUI(txt, new_title_file)
-                return 1
+                    new_title_file := dir . NameNoExt . RetrieveExt(tgt)            ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
+                    CC("CB_title", new_title_file)
+                    UpdateGUI(txt, new_title_file)
+                    return 1
 
             Case "O":                                                           ; overwrite file/clipboard
                 C_input := RegExReplace(C_input, "S) +", A_Space)               ; replaces multiple spaces w/ 1        
@@ -251,15 +254,68 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 return 2
             Case "V":                                                           ; paste file contents
                 ; sleep, short
-                namenoext := namenoext ? namenoext : GC("CB_title","")
-                ActivateWin("ahk_id"  tgt_hwnd)
-                AccessCache(namenoext, dir)
+
+                if InStr(UserInput, ":") {
+                    C_First2chr := SubStr(C_input, 1, 2) 
+                    C_First3chr := SubStr(C_input, 1, 3) 
+                    C3_Remainder := SubStr(C_input, 3)
+                    Switch
+                    {
+                        case C_First3chr = "l:!":
+                            PU("LaltSpaceCommand reset to V")
+                            sleep 200
+                            DC("LaltSpaceCommand")
+                            CreateCacheList("list")
+                            return 
+                        case C_First2chr = "l:?": TC("LaltList", "Toggle LaltCommand Cache List: ")
+                            return 2
+                        case C_First3chr = "r:!":
+                            PU("RaltSpaceCommand reset to V")
+                            sleep 200
+                            DC("RaltSpaceCommand")
+                            return 
+                        case C_First2chr = "l:":
+                            PU("LaltSpaceCommand set to: V" C3_Remainder)
+                            sleep 200
+                            CC("LaltSpaceCommand", "V" . C3_Remainder)
+                            CreateCacheList("list", substr(GC("LaltSpaceCommand"),2))
+                            return 
+                        case C_First2chr = "r:":
+                            PU("RaltSpaceCommand set to: V" C3_Remainder)
+                            sleep 200
+                            CC("RaltSpaceCommand", "V" . C3_Remainder)
+                            return 
+                        case C_First2chr = ":!":
+                            PU("Alt Space Commands reset to V")
+                            sleep 200
+                            DC("LaltSpaceCommand")
+                            DC("RaltSpaceCommand")
+                            CreateCacheList("list")
+                            return 
+                        default:
+                    }
+                } else {
+                    namenoext := namenoext ? namenoext : GC("CB_title","")
+                    ActivateWin("ahk_id"  tgt_hwnd)
+                    AccessCache(namenoext, dir)
+                }
                 return
             Case "E":                                                           ; edit file
-                if !C_input {
-                    path := f_path dir RegExReplace(GC("CB_title",""), "\[.+?\]")
-                    if FileExist(path) 
-                        EF(path)
+                path := f_path dir RegExReplace(GC("CB_title",""), "\[.+?\]")   ; "\[.+?\]" removes any text surrounded by square brackets 
+                if !C_input && FileExist(path) {
+                    EF(path)
+                } else if InStr(UserInput, "~") && FileExist(path) {
+                    EditFunc := substr(C_input,2)
+                    switch EditFunc
+                    {
+                        case "trim","ls":
+                            NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)|(\s+$)")
+                            ; Filecontent := RegExReplace(AccessCache(path,,0), "(^\s+)|(\s+$)", "")
+                            WriteToCache(path,,,NewText,,1)
+                            UpdateGUI(NewText, ltrim(path,f_path))
+
+                        default:
+                    }
                 } else {
                     input := f_path Dir FileName
                     if FileExist(input ".txt") 
@@ -321,6 +377,14 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     SplitPath,% GC("CB_title",""), FileName, Dir, Extension, NameNoExt
                     dir := dir ? dir . "\" : ""
                     FileDelete,% f_path . Dir . NameNoExt . "." . (Extension ? Extension : "txt")
+                } else if InStr(UserInput, ",") {
+                    arrD := StrSplit(C_input, ",")
+                    loop % arrD.MaxIndex()
+                    {
+                        SplitPath,% trim(arrD[A_index]), FileName, Dir, Extension, NameNoExt
+                        FileDelete,% f_path . (dir ? dir . "\" : "") . NameNoExt . "." . (Extension ? Extension : "txt")
+                    }
+
                 } else {
                     FileDelete,% f_path . Dir . NameNoExt . "." . (Extension ? Extension : "txt")
                 }
@@ -542,44 +606,6 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         return 2
                     case "default"   ,"d"    : ToggleDisplay("display")
                     case "minimized" ,"m"    : ToggleDisplay("minimal")
-                    default:
-                }
-
-                C_First2chr := SubStr(C_input, 1, 2) 
-                C3_Remainder := SubStr(C_input, 3)
-                Switch
-                {
-                    case C_First2chr = "l:":
-                        PU("LaltSpaceCommand set to: V" C3_Remainder)
-                        sleep 200
-                        CC("LaltSpaceCommand", "V" . C3_Remainder)
-                        CreateCacheList("list", substr(GC("LaltSpaceCommand"),2))
-                        return 
-                    case C_First2chr = "l!", C_First2chr = "!l":
-                        PU("LaltSpaceCommand reset to V")
-                        sleep 200
-                        DC("LaltSpaceCommand")
-                        CreateCacheList("list")
-                        return 
-                    case C_First2chr = "r:":
-                        PU("RaltSpaceCommand set to: V" C3_Remainder)
-                        sleep 200
-                        CC("RaltSpaceCommand", "V" . C3_Remainder)
-                        return 
-                    case C_First2chr = "r!",C_First2chr = "!r":
-                        PU("RaltSpaceCommand reset to V")
-                        sleep 200
-                        DC("RaltSpaceCommand")
-                        return 
-                    case C_First2chr = "ll": TC("LaltList", "Toggle LaltCommand Cache List: ")
-                        return 2
-                    case C_First2chr = "!!":
-                        PU("Alt Space Commands reset to V")
-                        sleep 200
-                        DC("LaltSpaceCommand")
-                        DC("RaltSpaceCommand")
-                        CreateCacheList("list")
-                        return 
                     default:
                 }
 

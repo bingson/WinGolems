@@ -708,7 +708,6 @@
     }
     ; msgbox % GUI_hwnd
     ActivateWin("ahk_id " GUI_hwnd) 
-    sleep 100
     GuiControl, Focus, UserInput
     ; sendinput {tab}{home}+{end}                                               bb
     return
@@ -773,7 +772,7 @@
     CleanedHist := TF_RemoveDuplicateLines(AccessCache("_hist",,False))
     CleanedHist := TF_RemoveLines(CleanedHist, lines)
     FileDelete, mem_cache\_hist.txt
-    WriteToCache("_hist",,,CleanedHist,1,1)
+    WriteToCache("_hist.txt",,,CleanedHist,1,1)
   } ; remove duplicates and truncate CB history file
   
 
@@ -985,17 +984,27 @@
     ; creates a txt file in \mem_cache from selected text
     global C
     
+    if (SubStr(mem_path, 2, 1) = ":")                                           ; check if second character is ":" to test if absolute path given 
+        key_path := mem_path . key . RetrieveExt(tgt)
+    else if (SubStr(key, 2, 1) = ":")
+        key_path := key . RetrieveExt(tgt)                                                       ; check if memory key is actually a path to a file, instead of just the file
+    else
+        key_path := A_ScriptDir . "\mem_cache\" mem_path . key . RetrieveExt(tgt)
+
     if !input
         input := clip()                                                         ; captures selected text if no input given 
     
-    input := Ltrim(input, " `t`n`r")
+    ; input := Ltrim(input, " `t")
 
-    if (input = "") {
+    if (input = "") {                                                           ; do nothing if no text selected and no input file given 
                                 
     } else {
+
         if !append
-            FileDelete, %A_ScriptDir%\mem_cache\%mem_path%%key%.txt
-        FileAppend, %input%, %A_ScriptDir%\mem_cache\%mem_path%%key%.txt
+            FileDelete, %key_path%
+        
+        FileAppend, %input%, %key_path%
+        
         if !supress
             PopUp("Written to `n" key, C.lgreen)
     }
@@ -1006,11 +1015,14 @@
 
   RetrieveExt(tgt) {
     out := ""
-    if FileExist(tgt ".txt") 
-        out := ".txt"
-    else if FileExist(tgt ".ini") 
-        out := ".ini"
-    return % out
+    if !RegExMatch(tgt,"(\.[a-zA-Z]{3})$") {                                    ; if no 3 character file extension given 
+        if FileExist(tgt ".txt") 
+            out := ".txt"
+        else if FileExist(tgt ".ini") 
+            out := ".ini"
+        return % out
+    } 
+    return
   }
 
   AccessCache(key, mem_path = "", paste = True) {
@@ -2536,7 +2548,7 @@
   ObsidianQuickAdd(hotkey, action = "open") {
     ReleaseModifiers()
     ObsidianPath := GC("obsidian_path",UProfile "\AppData\Local\Obsidian\Obsidian.exe")  
-    
+    sleep med
     switch action 
     {
         case "open":
@@ -2547,7 +2559,7 @@
             ; url := clip()
             send yy
             AA(ObsidianPath)
-            sleep med
+            sleep long
             send %hotkey%
             ; clip(url)
             send ^v
@@ -2557,7 +2569,7 @@
         case "text":
             st := clip()
             AA(ObsidianPath)
-            sleep med
+            sleep long
             send %hotkey%
             clip(st)
             send ^{enter}
@@ -3207,7 +3219,7 @@
    }
  
  ; COMMAND BOX ZOOM -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
- ; too much of delay if wrapped in a function; gosub is much faster 
+ ; too much of delay if wrapped in a function; gosub much faster 
 
   CBzoomOut:
     fsz := GC("CBfsz", "10")

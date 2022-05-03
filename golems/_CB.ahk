@@ -63,7 +63,8 @@
 ; Hotkeys below are active if a Command or Function Box exists but it not the active window
 
 #IF WinExist("ahk_id " CB_hwnd) and !WinActive("ahk_id " CB_hwnd)                                                
-  rctrl & space::  GUIFocusInput("CB"), GC("CB_appActive", 0) ? s("{tab}") : "" ;CB| activate already open Command Box and move focus to inputbox    
+;   rctrl & space::  GUIFocusInput("CB"), GC("CB_appActive", 0) ? s("{tab}") : "" ;CB| activate already open Command Box and move focus to inputbox    
+  rctrl & space::  GUIFocusInput("CB")                                          ;CB| activate already open Command Box and move focus to inputbox 
 
 #IF WinExist("ahk_id " FB_hwnd)                                                 ;Function Box must exist for the below two lines to be valid
   $>^space::       GUIFocusInput("FB")                                          ;FB: activate already open Function Box and move focus to inputbox                                    

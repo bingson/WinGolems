@@ -10,7 +10,7 @@
   :X:d~win::     DisplaySettings()                                              ;SC: display settings
   <!#n::                                                                        ;SC: notification window
   :X:n~win::     NotificationWindow()                                           ;SC: notification window
-  ; <!#s::                                                                        ;SC: sound settings
+  ; <!#s::                                                                      ;SC: sound settings
   :X:v~win::     SoundSettings()                                                ;SC: sound settings
   <!#r::                                                                        ;SC: run program 
   :X:r~win::     RunProgWindow()                                                ;SC: run program
@@ -59,7 +59,7 @@
 ; CB AHK UTILITIES _____________________________________________________________
 
   :X:wg~win::   LURL("https://github.com/bingson/wingolems")                    ;AHK: Load WinGolems GitHub Page   
-  :X:oc~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
+  :X:om~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
   :X:kh~win::   KeyHistory                                                      ;AHK: open key history
   :X:ll~win::   ListLines                                                       ;AHK: Displays the script lines most recently executed.
   :X:ws~win::   WindowSpy()                                                     ;AHK: open window spy 

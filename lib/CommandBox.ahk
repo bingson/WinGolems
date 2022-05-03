@@ -82,7 +82,7 @@
     ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
     if (show_txt = "") {                                                        ; reload last diplayed txt
         txt_file := GC("CB_last_display", "help.txt")
-        txt_file := RegExReplace(txt_file, "\[.+?\]")                           ; removes any text surrounded by round brackets 
+        txt_file := RegExReplace(txt_file, "\[.+?\]")                           ; removes any text surrounded by square brackets 
 
         if (txt_file = "help.txt")
             title := CB_Title_ID title_text suffix l txt_file
