@@ -30,8 +30,17 @@
   ^!sc028::          send {}}                                                   ;Convenience: right bracket
   ^!d::              SelectLine(), txt := clip(), s("right"), clip(txt)         ;Convenience: duplicate current line
 
-; SELECTION ____________________________________________________________________
-  
+; TEXT NAVIGATION & SELECTION __________________________________________________
+
+  #e::               send ^{home}                                               ;Navigation: ^home
+  #+e::              send ^{end}                                                ;Navigation: ^end
+  $#h::              sendinput ^{Left}                                          ;Navigation: jump to next word; simulate ctrl+Left
+  $#l::              sendinput ^{Right}                                         ;Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
+  $!h::              sendinput {Left}                                           ;Navigation| Left
+  $!l::              sendinput {Right}                                          ;Navigation| Right
+  $!j::              sendinput {down}                                           ;Navigation| Up
+  $!k::              sendinput {up}                                             ;Navigation| Down  
+
   $<!f::             SelectWord()                                               ;Selection: select word at text cursor position
   $+!f::             SelectLine()                                               ;Selection: select current line starting from begining of line
   $^!f::             Sendinput {end}+{home}                                     ;Selection: select line starting from end of line
@@ -60,17 +69,6 @@
   $+#j::                                                                        ;Selection: extend selection down  1 row
   +!j::              sendinput +{down}                                          ;Selection: extend selection down  1 row
   
-; NAVIGATION ___________________________________________________________________
-
-  #e::               send ^{home}                                               ;Navigation: ^home
-  #+e::              send ^{end}                                                ;Navigation: ^end
-  $#h::              sendinput ^{Left}                                          ;Navigation: jump to next word; simulate ctrl+Left
-  $#l::              sendinput ^{Right}                                         ;Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
-  $!h::              sendinput {Left}                                           ;Navigation| Left
-  $!l::              sendinput {Right}                                          ;Navigation| Right
-  !j::               sendinput {down}                                           ;Navigation| Up
-  !k::               sendinput {up}                                             ;Navigation| Down  
-
 ; MOUSE FUNCTION _______________________________________________________________
   
   printscreen & i::                                                             ;MouseFn: return to saved mouse position and click, return to original position (left click if no saved position found)  

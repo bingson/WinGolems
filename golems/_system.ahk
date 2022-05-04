@@ -20,18 +20,22 @@
   :X:i~win::     WindowsSettings()                                              ;SC: windows settings
   :X:p~win::     PresentationDisplayMode()                                      ;SC: presentation display mode
   :X:s~~win::    PowerOptions("sleep")                                          ;SC: enter sleep mode
-  esc & del::                                                                   ;SC: enter hybernate mode
+  
+  #If GetKeyState("shift", "P")
+  esc & del::                                                                   ;SC: (+shift) enter hybernate mode
   :X:h~~win::    PowerOptions("hybernate")                                      ;SC: enter hybernate mode
-  esc & end::                                                                   ;SC: shutdown + power down  
+  esc & end::                                                                   ;SC: (+shift) shutdown + power down  
   :X:sd~~win::   PowerOptions("shutdown")                                       ;SC: shutdown + power down 
+  esc & home::                                                                  ;SC: (+shift) close all open programs  
+  :X:ce~~win::   CloseAllPrograms()                                             ;SC: close all open programs 
+  #If
+  
   :X:rs~~win::   PowerOptions("restart")                                        ;SC: restart the computer
   <!#a::                                                                        ;SC: alarm clock 
   :X:a~win::     Run assets\win\Alarms & Clock.lnk                              ;SC: alarm clock
   <!#m::                                                                        ;SC: send mail 
   :X:m~win::     sendEmail()                                                    ;SC: send mail
 
-  esc & home::                                                                  ;SC: close all open programs  
-  :X:ce~~win::   CloseAllPrograms()                                             ;SC: close all open programs 
   ;:X:ss~win::    CloudSync("ON")                                               ;SC: turn on cloud sync 
   ;:X:qs~win::    CloudSync("OFF")                                              ;SC: turn off cloud sync
   :X:ap~win::    Run assets\win\Add Remove Programs.lnk                         ;SC: open add remove programs 
@@ -166,7 +170,7 @@
     #o::                   Click, middle                                        ;MouseFn: mouse middle click
     PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
     #sc028::               Click, Right                                         ;MouseFn: mouse Right click
-    >^>!esc::              EditFile("golems\_system.ahk")                       ;Convenience: open _system.ahk
+    >!esc::                EditFile("golems\_system.ahk")                      ;Convenience: open _system.ahk
     #n::                   AA("editor_path")                                    ;ActivateApp: Editor
     printscreen & lwin::   CursorJump("BL")
     lwin & printscreen::   CursorJump("BR")

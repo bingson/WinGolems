@@ -308,11 +308,34 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     EditFunc := substr(C_input,2)
                     switch EditFunc
                     {
-                        case "trim","ls":
-                            NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)|(\s+$)")
-                            ; Filecontent := RegExReplace(AccessCache(path,,0), "(^\s+)|(\s+$)", "")
+                        case "trim","t":
+                            NewText := RegExReplace(AccessCache(path,,0),  " {2,}", " ")
+                            ; NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)|(\s+$)")
                             WriteToCache(path,,,NewText,,1)
                             UpdateGUI(NewText, ltrim(path,f_path))
+                        case "trimTabs","tt":
+                            NewText := RegExReplace(AccessCache(path,,0),  "m)^`t+")
+                            ; NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)|(\s+$)")
+                            WriteToCache(path,,,NewText,,1)
+                            UpdateGUI(NewText, ltrim(path,f_path))
+                        case "trimTabs","ts":
+                            NewText := RegExReplace(AccessCache(path,,0),  " [ `t]+", " ")
+                            ; NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)|(\s+$)")
+                            WriteToCache(path,,,NewText,,1)
+                            UpdateGUI(NewText, ltrim(path,f_path))
+                        case "ltrim","lt":
+                            NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)")
+                            WriteToCache(path,,,NewText,,1)
+                            UpdateGUI(NewText, ltrim(path,f_path))
+                        case "cleanLines","cl":                                 ; removes multiple blank lines 
+                            NewText := RegExReplace(AccessCache(path,,0), "(`r`n){2,}", "`r`n`n")
+                            WriteToCache(path,,,NewText,,1)
+                            UpdateGUI(NewText, ltrim(path,f_path))
+                        case "removeBlankLines","rbl":                                 ; removes multiple blank lines 
+                            NewText := RemoveBlankLines(,AccessCache(path,,0))
+                            WriteToCache(path,,,NewText,,1)
+                            UpdateGUI(NewText, ltrim(path,f_path))
+
 
                         default:
                     }

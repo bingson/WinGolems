@@ -44,12 +44,13 @@
 |      Overwrite/create file entered text      O3:test             overwrites contents of 3.txt with the string "test"                   |
 |      overwrite using clipboard = ">"         O3>, O>3            3.txt overwrites clipboard, clipboard overwrites/create 3.txt         |   
 |  E   Edit file in default editor             E1, Er\test, E      edit => 1.txt, r\test.txt (r\ subfolder file path), (L)oaded file     |
+|      trim leading/trailing whitespace        E~t                 trims leading/trailing whitespace in currently loaded file            |
 | A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt          |
 |      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt              |
 |      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, 1.txt, the word "sample"            |
 |  F   Paste same string repeatedly            F-+~4               paste: -+-+ ; fmt: string ~ # of characters to fill                   |
-|  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, (L)loaded file            |
-|                                                                  __ = chains commands that can be repeated                             |
+|  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, currently loaded file     |
+|      Delete multiple files                   D1,test,2,3         Delete files 1.txt, test.txt, 2.txt, 3.txt in one command             |
 |                                                                                                                                        |
 | KEY  CONVENIENCE                             USAGE EXAMPLES                                                                            |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
@@ -57,11 +58,11 @@
 |      chain multiple replacements commands    R,~+__A~B           e.g. A,C -> B+C; format for >1 replacement: R?~?__?~?__?~?__...       |
 |      Change replacement separators (1|2)     R1~:%; R2~:@        Changes replacement separators from ~ and __ to % and @               |
 |  S   Search selected text in specified       Sd, St, Sw, Sn, Sf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inviz,(i)mages         |
-|      search engine                                               (io)investopedia,(se)StackExchange,(sse)stats.StackExchange,(q)uora   |
+|      search engine                           Sio, Sse, Ssse, Sq  (io)investopedia,(se)StackExchange,(sse)stats.StackExchange,(q)uora   |
 |      Query submitted text                    Sd:facetious        (so)stack overflow, (a)hk documentation,(y)outube,(twt)twitter,(e)bay |
 | J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection       |
 | K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered          |
-| Gcc  Change config.ini from CB               Gcc,html_path,c:\e\ changes config.ini variable value for html_path to "c:\e\"            |
+| Gcc  Change config.ini                       Gcc,html_path,c:\e\ changes config.ini variable value for html_path to "c:\e\"            |
 |                                                                                                                                        |
 | KEY  GUI BEHAVIOR & APPEARANCE               USAGE EXAMPLES                                                                            |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|

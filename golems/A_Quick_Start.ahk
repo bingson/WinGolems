@@ -141,7 +141,7 @@
   $^!lbutton::        s("{blind}",,100),RetrieveMemory(A_ThisHotkey,,,1)        ;Mem: double click and paste contents of 1.txt at cursor position       
   $^#lbutton::        s("{blind}",,100),RetrieveMemory(,A_ThisHotkey)           ;Mem: double click and paste contents of number entered at prompt   
   $<!lbutton up::     s("{blind}",,100), Clicks(2), s("^v")                     ;MouseFn: triple click, paste clipboard contents
-  $+<!lbutton up::    s("{blind}",,100), Clicks(3), s("^v")                     ;MouseFn: double click, paste clipboard contents
+  $<+<!lbutton up::    s("{blind}",,100), Clicks(3), s("^v")                    ;MouseFn: double click, paste clipboard contents
 
 
 #IF

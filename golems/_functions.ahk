@@ -148,16 +148,26 @@
     return 
   } ; switch to particular virtual desktop
   
-  TitleTest(tab_name="MISC.txt", exact = False) {
+  TitleTest(tab_name="MISC.txt", mode = "2") {
     ; checks if tab_name occurs somewhere in the window title
-    if exact 
-    {
-        SetTitleMatchMode, 3
-        return % WinActive(tab_name)
-    }
-    SetTitleMatchMode 2
+    ; MODES:
+    ; 1 = A window's title must start with the specified WinTitle to be a match.
+    ; 2 = A window's title can contain WinTitle anywhere inside it to be a match.
+    ; 3 = A window's title must exactly match WinTitle to be a match.
+    
     WinGetActiveTitle, title
-    return % InStr(title, tab_name)
+    switch mode 
+    {
+        case "1": result := (InStr(title, tab_name) == 1)
+        case "2": result := (InStr(title, tab_name) >= 1)
+        case "3": result := (InStr(title, tab_name) == 1) && (strlen(title) == strlen(tab_name))
+        default:
+    }
+    ; test := "`n" . mode . "," . title . "=" . tab_name "," . result . "," . InStr(title, tab_name)
+    ; msgbox % test
+    ; WriteToCache("1",,,"`n" . test,1,1)
+    return % result
+
   } ; creates condition for context-sensitive hotkeys
  
   ActivateWin(title="Chrome") {
@@ -984,6 +994,10 @@
     ; creates a txt file in \mem_cache from selected text
     global C
     
+    if !RegExMatch(key,"(\.[a-zA-Z]{3})$")
+        key .= ".txt"
+
+
     if (SubStr(mem_path, 2, 1) = ":")                                           ; check if second character is ":" to test if absolute path given 
         key_path := mem_path . key . RetrieveExt(tgt)
     else if (SubStr(key, 2, 1) = ":")
@@ -2558,6 +2572,7 @@
             ; Send !d
             ; url := clip()
             send yy
+            sleep med
             AA(ObsidianPath)
             sleep long
             send %hotkey%
