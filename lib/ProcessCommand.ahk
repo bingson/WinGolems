@@ -157,16 +157,27 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder,,1) : GetNumMemLines(,,,1)
                     NameNoExt := "First lines of 1 character files"
                     dir := ""
+                } else if (2ndChar = ",") {                                     ; LaltSpaceCommand: folder contents
+                    NameNoExt := "list"
+                    CC("CB_last_display", dir NameNoExt)
+                    txt := ((GC("LaltSpaceCommand") != "ERROR"))                ; load files in mem_cache subdirectory corresponding to LaltSpaceCommand if exists
+                         ? CreateCacheList("list", substr(GC("LaltSpaceCommand"),2))
+                         : CreateCacheList("list")
+                    tgt := f_path dir NameNoExt
+
+                } else if (2ndChar = ".") {                                     ; RaltSpaceCommand: folder contents
+                    NameNoExt := "list"
+                    CC("CB_last_display", dir NameNoExt)
+                    txt := ((GC("RaltSpaceCommand") != "ERROR"))                ; load files in mem_cache subdirectory corresponding to LaltSpaceCommand if exists
+                         ? CreateCacheList("list", substr(GC("RaltSpaceCommand"),2))
+                         : CreateCacheList("list")
+                    tgt := f_path dir NameNoExt
+
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini"))   ; load list of files in mem_cache
                   or (C_input = "?") {
                     NameNoExt := "list"
-                    CC("CB_last_display", dir NameNoExt)
-
-
-                    txt := ((GC("LaltSpaceCommand") != "ERROR") & GC("LaltList",0))                ; load files in mem_cache subdirectory corresponding to LaltSpaceCommand if exists
-                         ? CreateCacheList("list", substr(GC("LaltSpaceCommand"),2))
-                         : CreateCacheList("list")
-                        
+                    CC("CB_last_display", NameNoExt)
+                    txt := CreateCacheList("list")
                     tgt := f_path dir NameNoExt
 
                 } else {
@@ -267,7 +278,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                             DC("LaltSpaceCommand")
                             CreateCacheList("list")
                             return 
-                        case C_First2chr = "l:?": TC("LaltList", "Toggle LaltCommand Cache List: ")
+                        case C_First3chr = "l:?": 
+                            TC("LaltList", "Toggle LaltCommand Cache List: ")
                             return 2
                         case C_First3chr = "r:!":
                             PU("RaltSpaceCommand reset to V")

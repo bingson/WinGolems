@@ -121,11 +121,18 @@
   } ; creates function box to move windows to preset positions
  
   MaximizeWin(){
+    ReleaseModifiers()
     WinMaximize,A 
+  } 
+
+  MinimizeWin(){
+    ReleaseModifiers()
+    WinMinimize,A
   } 
  
   moveWinBtnMonitors() {
-    Sendinput +#{Left}
+    Send +#{Left}
+    ; Sendinput +#{Left}
     CursorFollowWin()
     return
   }
@@ -148,24 +155,23 @@
     return 
   } ; switch to particular virtual desktop
   
-  TitleTest(tab_name="MISC.txt", mode = "2") {
-    ; checks if tab_name occurs somewhere in the window title
+  TitleTest(tab_name="MISC.txt", mode = 2) {
+    ; checks if tab_name matches the active window title
+    ; returns boolean
+
     ; MODES:
-    ; 1 = A window's title must start with the specified WinTitle to be a match.
-    ; 2 = A window's title can contain WinTitle anywhere inside it to be a match.
-    ; 3 = A window's title must exactly match WinTitle to be a match.
+    ; 1 = A window's title must start with the specified tab_name to be a match.
+    ; 2 = A window's title can contain tab_name anywhere inside it to be a match.
+    ; 3 = A window's title must exactly match tab_name to be a match.
     
     WinGetActiveTitle, title
     switch mode 
     {
-        case "1": result := (InStr(title, tab_name) == 1)
-        case "2": result := (InStr(title, tab_name) >= 1)
-        case "3": result := (InStr(title, tab_name) == 1) && (strlen(title) == strlen(tab_name))
+        case 1: result := (InStr(title, tab_name) == 1)
+        case 2: result := (InStr(title, tab_name) >= 1)
+        case 3: result := (InStr(title, tab_name) == 1) && (strlen(title) == strlen(tab_name))
         default:
     }
-    ; test := "`n" . mode . "," . title . "=" . tab_name "," . result . "," . InStr(title, tab_name)
-    ; msgbox % test
-    ; WriteToCache("1",,,"`n" . test,1,1)
     return % result
 
   } ; creates condition for context-sensitive hotkeys
@@ -307,58 +313,7 @@
   }
 
   ActivateExplorer := Func("ActivateApp").Bind("explorer.exe")
-
-
-  CloudSync(state="ON") {                                                       ; Turn ON/OFF google cloud sync                              
-    global med, config_path, C 
-
-
-    DetectHiddenWindows On
-    if (state = "ON") {
-        Try {
-            ; AA() = ActivateApp()
-            Try AA(GC("sync_path"))
-            Catch {
-                gosub, FindSyncPath
-                AA(GC("sync_path"))
-            }
-
-            PU("cloud sync initiated",C.lgreen,C.bgreen)
-            sleep 600
-            return
-        } Catch e {
-            msgbox can't open cloud cloud sync app.
-        }
-    } else {
-        WinShow, ahk_exe %exe_name%
-        if WinExist("ahk_exe " exe_name) {
-            sleep 200
-            PU("closing cloud sync",C.pink)
-            sleep 600
-            Process, Close, %exe_name%
-        } else {
-            PU("cloud sync not running",C.lpurple,C.purple)
-            sleep 600
-        }
-        return
-    }
-
-    
-    
-    FindSyncPath:                                                               ; fix for google constantly changing the folder name with version number.                                                     
-    dir := "C:\Program Files\Google\Drive File Stream\*"
-    exe_name := "GoogleDriveFS.exe"
-    Loop Files, %dir%, R
-    {
-        RegExMatch(A_LoopFileFullPath, "[^\\]+$", file_name)
-        if (exe_name = file_name) {                                             ; Equal (=), case-sensitive-equal (==)                        
-            CC("sync_path", A_LoopFileFullPath)
-            Continue
-        }
-    }
-    return
-  }
-
+  
   ActivateCalc() {
     global winpath
     IfWinNotExist,  Calculator
@@ -421,7 +376,8 @@
   }
 
   RunProgWindow() {
-    Send {lwin down}r{lwin up}
+    PostMessage, 0x111, 401, 0, , ahk_class Shell_TrayWnd  ;Get Windows Run Dialog
+    ; Send {lwin down}r{lwin up}
   }
  
   StartContextMenu() {
@@ -481,32 +437,13 @@
     ExitApp
   }
   
-  WinMaximize(isHold, taps, state) {
-    if (taps > 1)
-        WinMaximize,A
-  }
- 
-  ActivatePrevInstanceTHM(isHold, taps, state) {
-    if (taps > 1)
-        ActivatePrevInstance()
-  }
- 
-  WinClose(isHold, taps, state) {
-    if (taps > 1)
-        WinClose,A
-  }
- 
-  WinMinimize(isHold, taps, state) {
-    if (taps > 1)
-        WinMinimize,A
-  }
   
  
 ; COMMAND BOX __________________________________________________________________
   
   RunCmd(Prefix="",sfx="~win"){
     global short
-    BlockInput, on
+    ReleaseModifiers()
     SetBatchLines, -1
     SetkeyDelay, -1
     SetWinDelay, -1
@@ -520,11 +457,7 @@
     {
         case substr(Prefix,1,1) == "V":
             Prefix := LTrim(Prefix, "V"), userInput := trim(userInput)
-            ; Msgbox % "`nPrefix: " . Prefix . "`nuserInput: " . userInput
             AccessCache(userInput,(userinput ~= "\b[0-9]\b") ? ("") : Prefix)
-        ; Case "?": 
-        ; Case "A", "P":   1 
-        ; Case "L": 
         default: 
             send {del}
             RunLabel(userInput, sfx, WinExist())  
@@ -534,7 +467,6 @@
     SetBatchLines, 10ms
     SetKeyDelay, 10, 50
     keywait()
-    BlockInput, Off
     return
   }
    
@@ -702,9 +634,9 @@
     Gui +LastFound
     GuiControl,2: Focus, UserInput
     ; GuiControl,2: Focus, UserInput
-    sendinput {home}+{end}
+    send {home}+{end}
     clip(OutputVar)
-    sendinput {home}+{end}
+    send {home}+{end}
     return
   }
 
@@ -769,7 +701,7 @@
     SetTimer, CheckKeystrokeBuffer, -300
     input, input_buffer, V T.3
     return
-  } ; saves user keystrokes while a GUI is loading and enters them in the input box
+  } ; captures keystrokes while a GUI is loading to pre-enter into the input box
 
   CheckKeystrokeBuffer(){
     global input_buffer
@@ -1132,12 +1064,14 @@
 ; AHK UTILITIES ________________________________________________________________
 
   SaveReloadAHK() {
+    BlockInput, on  
     SendInput, ^s
     sleep, 150
     WinGetTitle, WindowTitle
     If (InStr(WindowTitle, ".ahk")){
         Reload
     }
+    BlockInput, Off
     Return
   } ; Ctrl and S → Save changes and, if an AutoHotkey script, reload it
     
@@ -1167,7 +1101,7 @@
     global config_path
     section := sect ? sect : A_ComputerName
     IniDelete, %config_path%, %Section% , %Key%
-  }                                                                             ; Delete config.ini entry   
+  } ; Delete config.ini entry   
 
   CC(key = "CB_Titlebar", nval = "", sect = "") {                               ; Change Config.ini
     global config_path
@@ -1180,7 +1114,7 @@
         IniWrite, %nval%, %config_path%,%section%, %key%
     }
     return
-  } ; (C)hange (C)onfig.ini value
+  } ; (C)hange (C)onfig.ini entry
   
   GC(key = "CB_Titlebar", d = "") {                                             ; Get Config.ini value
     global config_path
@@ -1620,8 +1554,7 @@
   ReleaseModifiers(timeout := "") {                                             ; timeout in ms
     ; sometimes modifier keys get stuck while switching between programs
     ; this function call can be embedded in a function to fix that.
-    static  aModifiers := ["Ctrl", "Alt", "Shift", "LWin", "RWin"
-                            , "PrintScreen"]
+    static  aModifiers := ["Ctrl", "Alt", "Shift", "LWin", "RWin", "PrintScreen"]
 
     startTime := A_Tickcount
     while (isaKeyPhysicallyDown(aModifiers))
@@ -1899,11 +1832,11 @@
     return % dirup%n%
   }
   
-  AA(app_path = "", arguments = "", start_folder_toggle = False) {
-    ActivateApp(app_path,arguments,start_folder_toggle)
+  AA(app_path = "", arguments = "", stringMatch = False, start_folder_toggle = False) {
+    ActivateApp(app_path,arguments,stringMatch,start_folder_toggle)
   }
 
-  ActivateApp(app_path = "", arguments = "", start_folder_toggle = False) {
+  ActivateApp(app_path = "", arguments = "", stringMatch = False, start_folder_toggle = False) {
     ; wrapper for ActivateOrOpen to process ini file path references
     ; and arguments
     global config_path
@@ -1919,6 +1852,16 @@
             IniRead, arguments, %config_path%, %A_ComputerName%, %arguments%
         }
         ActivateOrOpen(app_path,,arguments, start_folder_toggle)                ; only compatible options are file explorer or command window 
+    }
+    else if stringMatch
+    {
+        SetTitleMatchMode, 2                                                    ; match anywhere in title
+        IfWinExist, %app_path%
+            WinActivate, %app_path%
+        sleep med
+        CursorFollowWin()
+        return
+
     }
     else
     {
@@ -1941,7 +1884,7 @@
         grp_ID := arguments "ahk_exe " exe_name
     }
     
-    WinGet, wList, List, %grp_ID%,,% ((grp_ID = "ahk_exe chrome.exe") ? "Tabs Outliner" : "")        ; exclude tabs outliner tab management window if app hhhis chrome
+    WinGet, wList, List, %grp_ID%,,% ((grp_ID = "ahk_exe chrome.exe") ? "Tabs Outliner" : "")        ; exclude tabs outliner tab management window if app is chrome
 
     if !wList 
     {
@@ -2248,7 +2191,7 @@
         Click
     }
     return
-  }
+  } ; clicks a previously mouse cursor position saved via SaveMousPos()
  
   CFW(Q = "center", offset_x = "100", offset_y = "100") {
     CursorFollowWin(Q, offset_x, offset_y) 
@@ -2323,30 +2266,6 @@
 
 ; BROWSERS _____________________________________________________________________
  
-  BrowserForward(isHold, taps, state) {
-    if (taps > 1) {
-        send  !{right}
-    }
-  }
- 
-  BrowserBack(isHold, taps, state) {
-    if (taps > 1) {
-        send !{left}
-    }
-  }
- 
-  NextPage(isHold, taps, state) {
-    if (taps > 1) {
-        sendinput {sc01b 2}                                                     ; vimium integration
-    }
-  }
- 
-  PrevPage(isHold, taps, state) {
-    if (taps > 1) {
-        sendinput {sc01a 2}                                                     ; vimium integration
-    }
-  }
-
   LURL(URL, i = false, browser = "") {
     ; Browser path used to load urls dependent on computer
     global config_path, PF_x86
@@ -2571,24 +2490,38 @@
         case "url":
             ; Send !d
             ; url := clip()
+            send {esc}
             send yy
             sleep med
             AA(ObsidianPath)
             sleep long
             send %hotkey%
-            ; clip(url)
-            send ^v
-            send ^{enter}
-            send !{tab}
-            ; send {F6}
+
+            MsgBox,4100, Obsidian QuickAdd, Paste URL?
+            IfMsgBox Yes 
+            {
+                send ^v
+                send ^{enter}
+                send !{tab}
+            } else {
+                s("{esc}!{tab}")
+            }
+                return
         case "text":
             st := clip()
             AA(ObsidianPath)
-            sleep long
+            sleep med
             send %hotkey%
-            clip(st)
-            send ^{enter}
-            send !{tab}
+            MsgBox,4100, Obsidian QuickAdd, Paste text?
+            IfMsgBox Yes
+            {
+                clip(st)
+                send ^{enter}
+                send !{tab}
+            } else {
+                s("{esc}!{tab}")
+            }
+            return
         default:
             return
     }

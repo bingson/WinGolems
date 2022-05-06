@@ -175,7 +175,9 @@
     printscreen & lwin::   CursorJump("BL")
     lwin & printscreen::   CursorJump("BR")
                                                                                     
-    
+    end & i::
+    end & d::   DC("MPos_" substr(A_ThisHotkey,0)),PU("Click reset")            ;MouseFn: erase saved curor position 
+
     #IF GC("T_d",0) and !WinActive("ahk_exe " exe["editor"])                    ; When editor not active 
     ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")    ;Convenience: duplicate line
     !capslock::
@@ -183,8 +185,6 @@
 
     
     #If GC("T_d",0) and GetKeyState("PrintScreen", "P")                         ; convert printscreen to another modifier key 
-    ralt & i::
-    ralt & d::   DC("MPos_" substr(A_ThisHotkey,0)),PU("Click reset")           ;MouseFn: erase saved curor position 
     $!k::                           CursorJump("T")                             ;MouseFn: move mouse cursor to top edge
     $!j::                           CursorJump("B",,"-20")                      ;MouseFn: move mouse cursor to bottom edge
     $!h::                           CursorJump("L","20")                        ;MouseFn: move mouse cursor to Left edge

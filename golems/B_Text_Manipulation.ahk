@@ -36,10 +36,14 @@
   #+e::              send ^{end}                                                ;Navigation: ^end
   $#h::              sendinput ^{Left}                                          ;Navigation: jump to next word; simulate ctrl+Left
   $#l::              sendinput ^{Right}                                         ;Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
+  $#>!h::            sendinput ^{Left 2}                                        ;Navigation: jump to next word; simulate ctrl+Left
+  $#>!l::            sendinput ^{Right 2}                                       ;Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
+  $<^>!h::           sendinput ^{Left 4}                                        ;Navigation: jump to next word; simulate ctrl+Left
+  $<^>!l::           sendinput ^{Right 4}                                       ;Navigation: jump to next word; simulate ctrl+Right (disable win+L lock w/ "lf")
   $!h::              sendinput {Left}                                           ;Navigation| Left
   $!l::              sendinput {Right}                                          ;Navigation| Right
-  $!j::              sendinput {down}                                           ;Navigation| Up
-  $!k::              sendinput {up}                                             ;Navigation| Down  
+  !j::               sendinput {down}                                           ;Navigation| Up
+  !k::               sendinput {up}                                             ;Navigation| Down  
 
   $<!f::             SelectWord()                                               ;Selection: select word at text cursor position
   $+!f::             SelectLine()                                               ;Selection: select current line starting from begining of line
@@ -54,15 +58,13 @@
   $+^l::             Sendinput +^{Right}                                        ;Selection: extend selection Right 1 word
   $+#h::             Sendinput +^{Left}                                         ;Selection: extend selection Left  1 word
   $+#l::             Sendinput +^{Right}                                        ;Selection: extend selection Right 1 word
-  $+#!h::            Sendinput +^{Left 2}                                       ;Selection: extend selection Left  2 words
-  $+#!l::            Sendinput +^{Right 2}                                      ;Selection: extend selection Right 2 words
-  $+^#h::            Sendinput +^{Left 3}                                       ;Selection: extend selection Left  3 words
-  $+^#l::            Sendinput +^{Right 3}                                      ;Selection: extend selection Right 3 words
+  $+#>!h::           Sendinput +^{Left 2}                                       ;Selection: extend selection Left  2 words
+  $+#>!l::           Sendinput +^{Right 2}                                      ;Selection: extend selection Right 2 words
+  #>+h::             Sendinput +^{Left 4}                                       ;Selection: extend selection Left  4 words
+  #>+l::             Sendinput +^{Right 4}                                      ;Selection: extend selection Right 4 words
   $+<!l::            Sendinput +{Right}                                         ;Selection: extend selection Right 1 character
   $+<!h::            Sendinput +{Left}                                          ;Selection: extend selection Left  1 character
-  $+<!>!l::
   $+>!l::            Sendinput +{Right 2}                                       ;Selection: extend selection Right 2 character
-  $+<!>!h::
   $+>!h::            Sendinput +{Left 2}                                        ;Selection: extend selection Left  2 character
   $+#k::                                                                        ;Selection: extend selection up    1 row
   +!k::              sendinput +{up}                                            ;Selection: extend selection up    1 row
@@ -75,7 +77,7 @@
   printscreen & d::   CursorRecall(substr(A_ThisHotkey,0), 1,,1)                ;MouseFn: return to saved mouse position and click, return to original position (left click if no saved position found) 
   *#i::                                                                         ;MouseFn: return to saved mouse position and click (left click if no saved position found)
   *#d::               CursorRecall(substr(A_ThisHotkey,0), 1,,1)                ;MouseFn: return to saved mouse position and click (left click if no saved position found)
-  home & i::                                                                       ;MouseFn: Left click and save mouse position
+  home & i::                                                                    ;MouseFn: Left click and save mouse position 
   home & d::          SaveMousPos(substr(A_ThisHotkey,0),1),PU("click saved")   ;MouseFn: Left click and save mouse position
   
   esc & i::                                                                     ;MouseFn: erase saved curor position                                                              
@@ -83,8 +85,8 @@
 
   #f::                Clicks(2)                                                 ;MouseFn: 2 Left clicks (select word)
   ^#f::               Clicks(3)                                                 ;MouseFn: 3 Left clicks (select line)
-  $^!j::              Sendinput ^{sc00D}                                        ;MouseFn: zoom in
-  $^!k::              Sendinput ^{sc00C}                                        ;MouseFn: zoom out
+  ^!j::               Sendinput ^{sc00D}                                        ;MouseFn: zoom in
+  ^!k::               Sendinput ^{sc00C}                                        ;MouseFn: zoom out
   
 #IF
 

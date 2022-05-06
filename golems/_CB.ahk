@@ -3,9 +3,6 @@
 ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 ; Valid anywhere in windows
  
-  #If GetKeyState("lshift", "P")                                                  
-  lwin & space::                                                                ;CB. (+Lshift) opens command box that runs ~win suffix CB keys
-  #If 
   lwin & space::     CB("~win")                                                 ;CB. opens command box that runs ~win suffix CB keys
   
   Lwin & enter::     RunCmd(,GC("#enter","~win"))                               ;CB.. selects word at text cursor position and run as CB "~win" key
@@ -17,8 +14,8 @@
 ; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 ; Hotkeys below are active if a Command or Function Box is the active window
   #IF WinActive("ahk_id " CB_hwnd)   
-  <!space::     RunCmd(GC("LaltSpaceCommand","V"))                              ;CB: paste mem_cache file 
-  >!space::     RunCmd(GC("RaltSpaceCommand","V"))                              ;CB: paste mem_cache file                         
+  <!space up::     RunCmd(GC("LaltSpaceCommand","V"))                              ;CB: paste mem_cache file m
+  >!space up::     RunCmd(GC("RaltSpaceCommand","V"))                              ;CB: paste mem_cache file                         
   esc::                                                                         ;CB: close command box
   ralt & SC027::     send {esc}                                                 ;CB: close command box
   $^!k::                                                                        ;CB: Font size decrease

@@ -166,6 +166,8 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 2.  [Sending Keystrokes](https://www.autohotkey.com/docs/Tutorial.htm#s3)
 3.  [Commands vs. Functions()](https://www.autohotkey.com/docs/Tutorial.htm#s5)
     * [Code blocks](https://www.autohotkey.com/docs/Tutorial.htm#s51)
+    * [GoSub command](https://www.autohotkey.com/docs/commands/Gosub.htm)
+    * [Libraries of Functions: Standard Library and User Library](https://www.autohotkey.com/docs/Functions.htm#lib)
 4.  [Variables](https://www.autohotkey.com/docs/Tutorial.htm#s6)
     * [When to use percents](https://www.autohotkey.com/docs/Tutorial.htm#s61)
     * [Examples](https://www.autohotkey.com/docs/Tutorial.htm#s63)
@@ -178,6 +180,7 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
     * [Thought as a Technology — Nielsen](http://cognitivemedium.com/tat/index.html)
 7.  Misc.
     * [backup windows registry before editing](https://support.microsoft.com/en-us/topic/how-to-back-up-and-restore-the-registry-in-windows-855140ad-e318-2a13-2829-d428a2ab0692)
+    * [disable all built-in Windows hotkeys except Win+L and Win+U](https://www.autohotkey.com/docs/misc/Override.htm) 
     * [disable native MS office shortcut](https://superuser.com/questions/1457073/how-do-i-disable-specific-windows-10-office-keyboard-shortcut-ctrlshiftwinal) 
     * [Send commands](https://www.autohotkey.com/docs/commands/Send.htm)
     * [Optimizing the speed of a script](https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413&sid=a3fa467747d78cedad4ca780b4e08dbb)
@@ -188,8 +191,8 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
     * [Send and Retrieve Text using the Clipboard](https://www.autohotkey.com/boards/viewtopic.php?f=6&t=62156)
     * [Comma character and its context, command, sub-expressions](https://www.autohotkey.com/boards/viewtopic.php?f=5&t=1411)
     * [Jeeswg's RegEx tutorial (RegExMatch, RegExReplace)](https://www.autohotkey.com/boards/viewtopic.php?f=7&t=28031)
-    * [Libraries of Functions: Standard Library and User Library](https://www.autohotkey.com/docs/Functions.htm#lib)
-    * [GoSub command](https://www.autohotkey.com/docs/commands/Gosub.htm)
+    
+    
 
 
 <br>

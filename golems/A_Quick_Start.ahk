@@ -17,14 +17,14 @@
 
 ; NAVIGATION (PURPLE) __________________________________________________________
   
-  $#j::               Sendinput {Blind}{WheelDown 2}                            ;Navigation: mouse scroll down 2 lines
-  $#k::               Sendinput {Blind}{WheelUp 2}                              ;Navigation: mouse scroll down 2 lines
-  $>!#j::             Sendinput {Blind}{WheelDown 6}                            ;Navigation: mouse scroll down 6 lines
-  $>!#k::             Sendinput {Blind}{WheelUp 6}                              ;Navigation: mouse scroll down 6 lines
-  $#>!h::             Sendinput {Blind}{Wheelleft 6}                            ;Navigation: mouse scroll left 
-  $#>!l::             Sendinput {Blind}{WheelRight 6}                           ;Navigation: mouse scroll right 
-  ^!h::               sendinput {home}                                          ;Navigation: Home
-  ^!l::               sendinput {end}                                           ;Navigation: End
+  $#j::               Send {Blind}{WheelDown 2}                                 ;Navigation: mouse scroll down 2 lines
+  $#k::               Send {Blind}{WheelUp 2}                                   ;Navigation: mouse scroll down 2 lines
+  $>!#j::             Send {Blind}{WheelDown 6}                                 ;Navigation: mouse scroll down 6 lines
+  $>!#k::             Send {Blind}{WheelUp 6}                                   ;Navigation: mouse scroll down 6 lines
+  $#>+j::             Send {Blind}{Wheelleft 6}                                 ;Navigation: mouse scroll left 
+  $#>+k::             Send {Blind}{WheelRight 6}                                ;Navigation: mouse scroll right 
+  ^!h::               send {home}                                               ;Navigation: Home
+  ^!l::               send {end}                                                ;Navigation: End
   
   #IF GC("T_tabNav",1)                                                          ; can be toggled on/off by entering Gtc,T_tabNav in a CB 
   ^b::                sendinput ^{PgUp}                                         ;Navigation: navigate to left tab
@@ -47,11 +47,11 @@
   ^SC027::            Send {AppsKey}                                            ;WinOS: simulate appkey
   #Lbutton::                                                                    ;WinOS: open start menu (alt: Ctrl+Esc)
   $^#Enter::          send ^{esc}                                               ;WinOS: open start menu 
-  #esc::              reloadWG()                                                ;WinGolems: reload WinGolems 
+  #!o::               reloadWG()                                                ;WinGolems: reload WinGolems 
   ^#sc027::           Send {lwin down}d{lwin up}                                ;WindowMgmt: show desktop
   #sc028::                                                                      ;WindowMgmt: maximize window
-  ^!space::           WinMaximize,A                                             ;WindowMgmt: maximize window
-  #SC027::            WinMinimize,A                                             ;WindowMgmt: minimize window
+  $^!space up::       MaximizeWin()                                             ;WindowMgmt: maximize window
+  $#SC027::           MinimizeWin()                                             ;WindowMgmt: minimize window
   #del::              AlwaysOnTop(1)                                            ;WindowMgmt: Window always on top: ON
   #ins::              AlwaysOnTop(0)                                            ;WindowMgmt: Window always on top: OFF
   +#capslock::        s("{blind}"), ActivatePrevInstance()                      ;WindowMgmt: rotate through app instances from most recent

@@ -12,12 +12,12 @@
 |                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
-| #Space      open command box                        | KEY    Toggle ON|Off WinGolem UI OPTIONS            |  t   System tray           |
-| enter       submit command                          | ------ -------------------------------------------- |  tm  Task manager          | 
-| >+Space     capitalize 1st letter and submit command| tcf    sets mouse cursor to follow active window    |  h~  Hibernate computer    |
-| >^Space     move focus to CB window if not active   | tt     text manipulation interface layers           |  ce~ Close All Programs    |
-| !r          reenter last submitted CB key           | tf     file management interface layers             |  rs~ Restart computer      |
-| !b          toggle GUI minimal or display mode      | ts     auto-selection after win+enter commands      |  sd~ Shut Down computer    |
+| #Space      open command box                        | KEY    Toggle ON|Off WinGolem UI OPTIONS            |  h~  Hibernate computer    |
+| enter       submit command                          | ------ -------------------------------------------- |  ce~ Close All Programs    | 
+| >+Space     capitalize 1st letter and submit command| tcf    sets mouse cursor to follow active window    |  rs~ Restart computer      |
+| >^Space     move focus to CB window if not active   | tt     text manipulation interface layers           |  sd~ Shut Down computer    |
+| !r          reenter last submitted CB key           | tf     file management interface layers             |                            |
+| !b          toggle GUI minimal or display mode      | ts     auto-selection after win+enter commands      |                            |
 | !q !e !z !c move & resize CB window to 4 quadrants  | td     trackpoint interface layers                  |                            |
 | !n          find text in CB display (+!n: prev)     | ln|lf  turn ON|OFF whether Win + L Locks Computer   |                            |
 |                                                     | tb     base interface layers                        |                            |

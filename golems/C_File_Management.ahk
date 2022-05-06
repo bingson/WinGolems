@@ -80,8 +80,6 @@
   >!SC027::     DetailedView()                                                  ;FileExplorer| detailed file info with resized columnsnmn
   $+!c::        clipboard := Explorer_GetSelection()                            ;FileExplorer| store file path(s) of selected file(s) in clipboard
   !s::          SelectByRegEx()                                                 ;FileExplorer| select all files matching regex pattern
-  ^!h::         send {home}                                                     ;Navigation: Home
-  ^!l::         send {end}                                                      ;Navigation: End
   !j::          send {down}                                                     ;Navigation| Up 
   !k::          send {up}                                                       ;Navigation| Down  
 
