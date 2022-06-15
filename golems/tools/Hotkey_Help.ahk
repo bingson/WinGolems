@@ -18,7 +18,7 @@
  ; File Names with Out Ext Seperated by |
  ; Files_Excluded 	:= "Test|Debugging"
  ; Files_Excluded 	:= "_functions|mm|hotkey_help"
- Files_Excluded 	:= "_functions|mm|hotkey_help|0_system.ahk"
+ Files_Excluded 	:= "_functions|mm|hotkey_help|_system.ahk"
  
  ; File Name for Exported Help Dialog 
  TextOut_FileName := "HotKey_List.txt"
