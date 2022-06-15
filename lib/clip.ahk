@@ -32,8 +32,8 @@ Clip(Text = "", Reselect = False) {
             ClipWait               
             while (ErrorLevel)
                 sleep 10                                                        ; ClipWait (might work better defaults to 0.5) 
-            Send, ^v
-            ; SendInput, ^v
+            ; Send, ^v
+            SendInput, ^v
         }
         SetTimer, %A_ThisFunc%, -700                                            ; Short sleep in case Clip() is followed by more keystrokes 
 

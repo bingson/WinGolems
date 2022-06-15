@@ -141,23 +141,15 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 
 ### I. Instructions <a name="instructions"></a>
 
-To help ease new users into the different interface layers, only the Quick Start Template and Command Box interface layers will be active on first run. 
+To help ease new users into the different interface layers, only the `Quick Start Template` and Command Box interface layers will be active on first run. Additional templates are placed in the `golems` folder; they can be added as a separate interface layer or as a reference for modifying the Quick Start Template
 
-To turn on UI options and other tutorial interface layers, open a CommandBox with `win + spacebar` and submit one of the following keys. 
-
-|KEY   |WinGolems Option|           
-|:-----|:----------------------------------------------------------------------------------------------------|
-|<code>tcf</code>   |Toggle mouse cursor follows active window when switching applications                   |     
-|<code>tt </code>   |Toggle text manipulation interface layers                                               |     
-|<code>tf </code>   |Toggle file management interface layers                                                 |     
-|<code>td </code>   |Toggle developer mode (trackpoint interface layer + extra shortcuts)                    |
-|<code>lt</code> &#124; <code>lf</code>  |Turn ON&#124;OFF  `Win + L` locks Computer <br>(allows reassignment through WinGolems templates)|
-| | |     
+To see a list of keyboard shortcuts in the `Quick Start Template` open a CommandBox with `win + spacebar` and type `L$` followed by `enter`. 
 
 Note: When text is selected, opening a CB and submitting `Qa` will query and load the corresponding webpage in the [AHK documentation](https://www.autohotkey.com/docs/AutoHotkey.htm). A search string can also be manually entered into the CB with the colon operator: e.g., `Qa:blind`, `Qa:sendinput`, etc. 
 
-<details><summary>&nbsp;📕&nbsp;<b> Recommended reading </b></summary><p>
+<br>
 
+<details><summary>&nbsp;📕&nbsp;<b> Recommended reading </b></summary><p>
 1.  [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2)
     * [Keys and their mysterious symbols](https://www.autohotkey.com/docs/Tutorial.htm#s21)
     * [Window specific hotkeys/hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s22)
@@ -191,14 +183,10 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
     * [Send and Retrieve Text using the Clipboard](https://www.autohotkey.com/boards/viewtopic.php?f=6&t=62156)
     * [Comma character and its context, command, sub-expressions](https://www.autohotkey.com/boards/viewtopic.php?f=5&t=1411)
     * [Jeeswg's RegEx tutorial (RegExMatch, RegExReplace)](https://www.autohotkey.com/boards/viewtopic.php?f=7&t=28031)
-    
-    
 
+<br></p></details>
 
-<br>
-</p></details>
-
-<details><summary>&nbsp;📕&nbsp;<b> Adding interface layers </b></summary><p>
+<details><summary>&nbsp;📕&nbsp;<b> Adding interface layers </b></summary><p><a name="addlayer"></a>
 
 `WinGolems.ahk` is the master script that calls/manages other AHK scripts. To change which scripts get loaded by WinGolems, modify the following section. You can think of `#Include` as "pasting" the included script's contents at the line where you wrote `#Include`. Although it's possible to run multiple AHK scripts concurrently, its better to combine multiple scripts together with include statements for improved stability and reliability. 
 
@@ -211,13 +199,14 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 #Include %A_ScriptDir%\golems\             
 #Include _functions.ahk                    ; system files 
 #Include _system.ahk                       ; modify with caution
-#Include _CB.ahk                           ; 
+#Include _CB.ahk                           ; command box
 
                                            ; TUTORIAL TEMPLATES
-#Include *i A_Quick_Start.ahk              ; base template
-#Include *i B_Text_Manipulation.ahk        ; text manipulation template
-#Include *i C_File_Management.ahk          ; file management template
-#Include *i D_App_Examples.ahk             ; application dependent code examples
+#Include *i Quick_Start.ahk                ; base template
+#Include *i 1_Apps_Misc.ahk                ; advanced base template
+#Include *i 2_Text_Manipulation.ahk        ; text manipulation template
+#Include *i 3_File_Management.ahk          ; file management template
+#Include *i 4_App_Examples.ahk             ; context (app) dependent code examples
 ```
 <br></p></details>
 
@@ -320,30 +309,18 @@ Note: that the base ~win label suffix will be checked if no valid `GoSub` label 
 
 <br></p></details>
 
-<details><summary>&nbsp;📕&nbsp;<b> Developer mode free keys</b></summary><p>
-
-The developer mode is a hidden template found in the _system.ahk file that adds an interface layer designed for the unique keyboard layout of a Lenovo Trackpoint Keyboards (e.g., transforms PrintScreen key into a modifier key, adds special macros designed to work with the TrackPoint nub and mouse keys).
-
-Turning on the developer interface does not make sense for non-TrackPoint keyboard layouts, leaving free keys that should be reassigned. 
-
-``` ahk
-Convenient free key combinations: #g, #u, #y, #i, #o, #n, #sc028
-```
-
-<br></p></details>
-
 <br>
 
 
-### II. &nbsp; Keyboard Shortcuts <a name="ks"></a>
+### II. &nbsp; Sample Keyboard Shortcuts <a name="ks"></a>
 
-Below is a snap shot (as of 30 Sept 2021) of WinGolems keyboard shortcuts and command box features. As the tutorial templates are a component of my own Windows setup, changes are constantly being made. Once WinGolems is installed, enter `gl` in a command box to generate an updated list of hotkeys.
+Below is a snap shot (as of 30 Sept 2021) of WinGolems keyboard shortcuts and command box features. As the tutorial templates are a component of my own Windows setup, changes are constantly being made. Once WinGolems is installed, enter `L$$` in a command box to generate an updated list of hotkeys.
 
 Note: under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed. The start menu can be accessed with `ctrl + esc` or `win + left click`.
 
 To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode).
 
-<details><summary>&nbsp;ℹ️&nbsp;<b> (A) Quick Start </b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b> Quick Start </b></summary><p>
 
 ```
 ==o====o====o====o====o====o== A_QUICK_START ==o====o====o====o====o====o===
@@ -469,7 +446,7 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
 
 </p></details>
 
-<details><summary>&nbsp;ℹ️&nbsp;<b> (B) Text Manipulation </b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b> Text Manipulation </b></summary><p>
 
 ```
 ==o====o====o====o====o== B_TEXT_MANIPULATION ==o====o====o====o====o====o==
@@ -551,7 +528,7 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
 
 </p></details>
 
-<details><summary>&nbsp;ℹ️&nbsp;<b> (C) File Management </b></summary><p>
+<details><summary>&nbsp;ℹ️&nbsp;<b> File Management </b></summary><p>
 
 ```
 ==o====o====o====o====o== C_FILE_MANAGEMENT ==o====o====o====o====o====o====
@@ -731,11 +708,11 @@ ________________________________________________________________________________
 | #Space      open command box or submit key          | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   System tray           |
 | <!Space     submit key (left alt: <! right alt: >!) | ------ -------------------------------------------- |  tm  Sask manager          |
 | >!Space     capitalize 1st letter and submit key    | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
-| ^Space      move to CB input box from another app   | tt     [T] text manipulation interface layers       |  ce~ Close All Programs    |
-| !r          reenter last submitted CB key           | tf     [T] file management interface layers         |  rs~ Restart computer      |
-| !b          toggle GUI minimal or display mode      | ts     [T] auto-selection after win+enter commands  |  sd~ Shut Down computer    |
-| !q !e !a !d move & resize CB window to 4 quadrants  | td     [T] trackpoint interface layers              |                            |
-| !n          find text in CB display (+!n: prev)     | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |                            |
+| ^Space      move to CB input box from another app   | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |  ce~ Close All Programs    |
+| !r          reenter last submitted CB key           | ts     [T] auto-selection after win+enter commands  |  rs~ Restart computer      |
+| !b          toggle GUI minimal or display mode      |                                                     |  sd~ Shut Down computer    |
+| !q !e !a !d move & resize CB window to 4 quadrants  |                                                     |                            |
+| !n          find text in CB display (+!n: prev)     |                                                     |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 ```
 
@@ -820,7 +797,7 @@ In any windows application text field pressing
 ----
 ## 3. Roadmap & Known Issues <a name="roadmap"></a>
 
-Current development priorities:
+Future development priorities:
 
 1. save/recall CB GUI profiles by command suffix.
 2. show images in CB display window.

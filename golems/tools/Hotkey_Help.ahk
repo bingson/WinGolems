@@ -18,7 +18,7 @@
  ; File Names with Out Ext Seperated by |
  ; Files_Excluded 	:= "Test|Debugging"
  ; Files_Excluded 	:= "_functions|mm|hotkey_help"
- Files_Excluded 	:= "_functions|mm|hotkey_help|_system.ahk"
+ Files_Excluded 	:= "_functions|mm|hotkey_help|0_system.ahk"
  
  ; File Name for Exported Help Dialog 
  TextOut_FileName := "HotKey_List.txt"
@@ -465,9 +465,9 @@
 					if (Hot_Text_Index2 != "Count")
 						Display_Section .= A_Space Format_Line(Hot_Text,Info_Text,Pos_Info) "`r`n"
 			if Set_SortInfo
-				Sort, Display_Section, P%Pos_Info%
+				Sort, Display_Section, P%Pos_Info% U
 			else
-				Sort, Display_Section
+				Sort, Display_Section, U
 			Display .= Display_Section
 		}
 	}
@@ -486,9 +486,9 @@
 					if (Hot_Text_Index2 != "Count")
 						Display_Section .= Format_Line(Hot_Text,Info_Text,Pos_Info) "`r`n"
 			if Set_SortInfo
-				Sort, Display_Section, P%Pos_Info%
+				Sort, Display_Section, P%Pos_Info% U
 			else
-				Sort, Display_Section
+				Sort, Display_Section, U
 			Display .= Display_Section
 		}
 	}
@@ -1006,8 +1006,9 @@ Format_Line(Hot,Info,Pos_Info)
 	Length := Pos_Info - StrLen(Hot) - 1
 	Loop %Length%
 		Spaces .= " "
-    fspaces := substr(hot Spaces, (StrLen(Hot) + 1), Length)
-	return Hot fspaces Info
+    Spaces .= "      "
+    ; fspaces := substr(hot Spaces, (StrLen(Hot) + 4), Length)
+	return Hot spaces Info
 }
 
 

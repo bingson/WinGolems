@@ -15,13 +15,11 @@
 | #Space      open command box                        | KEY    Toggle ON|Off WinGolem UI OPTIONS            |  h~  Hibernate computer    |
 | enter       submit command                          | ------ -------------------------------------------- |  ce~ Close All Programs    | 
 | >+Space     capitalize 1st letter and submit command| tcf    sets mouse cursor to follow active window    |  rs~ Restart computer      |
-| >^Space     move focus to CB window if not active   | tt     text manipulation interface layers           |  sd~ Shut Down computer    |
-| !r          reenter last submitted CB key           | tf     file management interface layers             |                            |
-| !b          toggle GUI minimal or display mode      | ts     auto-selection after win+enter commands      |                            |
-| !q !e !z !c move & resize CB window to 4 quadrants  | td     trackpoint interface layers                  |                            |
-| !n          find text in CB display (+!n: prev)     | ln|lf  turn ON|OFF whether Win + L Locks Computer   |                            |
-|                                                     | tb     base interface layers                        |                            |
-|                                                     | tm     memory system hotkeys                        |                            |
+| >^Space     move focus to CB window if not active   | ts     auto-selection after win+enter commands      |  sd~ Shut Down computer    |
+| !r          reenter last submitted CB key           | ln|lf  turn ON|OFF whether Win + L Locks Computer   |                            |
+| !b          toggle GUI minimal or display mode      |                                                     |                            |
+| !q !e !z !c move & resize CB window to 4 quadrants  |                                                     |                            |
+| !n          find text in CB display (+!n: prev)     |                                                     |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 | Uppercase 1st letters trigger the following functions            >  = windows clipboard reference                                      |
 | remaining characters are case insensitive                        ,  = separate usage examples (except for G examples)                  |
@@ -44,7 +42,8 @@
 |      Overwrite/create file entered text      O3:test             overwrites contents of 3.txt with the string "test"                   |
 |      overwrite using clipboard = ">"         O3>, O>3            3.txt overwrites clipboard, clipboard overwrites/create 3.txt         |   
 |  E   Edit file in default editor             E1, Er\test, E      edit => 1.txt, r\test.txt (r\ subfolder file path), (L)oaded file     |
-|      trim leading/trailing whitespace        E~t                 trims leading/trailing whitespace in currently loaded file            |
+|      trim functions                          E~t                 trim leading/trailing/double spaces                                   |
+|      line formatting                         E~!l, E~cl          !l: remove blank lines, cl: replace multi blank lines w/ 1 blank line |                                                                    
 | A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt          |
 |      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt              |
 |      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, 1.txt, the word "sample"            |
@@ -68,7 +67,7 @@
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")           |
 |  W:  Change W command suffix reference       W:~win, W:~pdf      M,H,B behave the same as W to allow access to multiple CB suffixes    |
-|  T   CommandBox UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent CB (CB always open)   |
+|  T   CommandBox UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent (CB always open)      |
 |      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)target window stays active, (t)itlebar, (s)crollbar, (w)Text Wrap  |
 |________________________________________________________________________________________________________________________________________|
 

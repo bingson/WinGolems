@@ -1,12 +1,14 @@
  CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand" , fwt = "500", show_txt = "", title = "",  input_txt = "?") {
+  ; BUFFER KEYSTROKES AND SPEED UP GUI LOADING -- -- -- -- -- -- -- -- -- -- -- 
+    /*
+    */
     SetBatchLines, -1
     SetkeyDelay, -1
     SetWinDelay, -1
-    ; Process, Priority,, High
-    ReleaseModifiers()
-    kw()                                                                        ; wait for shift,ctrl, or win keys to send up
+    Process, Priority,, High
+    ; ReleaseModifiers()
     BufferKeystrokes() 
-    ; TimeCode()
+    ;timecode()
   ; SAVE GUI INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- --; saves information between script reloads. 
     
     global long, med, short, C, config_path, CB_Display := ""
@@ -37,9 +39,9 @@
   ; VALIDATE GUI DIMENSIONS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
     d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2                      ;(2) calc default window dimensions to load when saved position data is not valid
-    oCB_position := CB_position := GC("CB_position", d)
+        
+    CB_position := GC("CB_position", d)
     WP := StrSplit(CB_position, " ")
-
     if (WP[4] < 10)                                                             ; check if monitor dimensions valid
        CB_position := d
        
@@ -70,7 +72,7 @@
     Gui, 2: +LastFound +OwnDialogs +Owner +E0x00200 -DPIscale +AlwaysOnTop +Resize    ; +E0x08000000 
     ; WinSet, TransColor,% w_color
     Gui, 2: Color, %w_color%
-    Gui, font, c%t_color% s%fsz% w%fwt%, %fnt%
+    Gui, 2: font, c%t_color% s%fsz% w%fwt%, %fnt%
     
     if (!title_state) 
         Gui, 2: -Caption
@@ -137,7 +139,7 @@
 
     if !GC("CB_ScrollBars", 0)
         GuiControl, 2: -HScroll -VScroll, CB_Display                            ; remove scrollbars before the GUI draw command
-
+    Gui, 2: -DPIScale
     Gui, 2: show, hide AutoSize,%title%
     Gui, 2: Show, % CB_position . ((GC("CB_appActive", 0)) ? (" NoActivate") : (" Restore"))
     if (!GC("CB_appActive", 0)) {
@@ -148,12 +150,15 @@
     if GC("CB_appActive", 0) {
         ActivateWin("ahk_id " tgt_hwnd) 
     }
-    ; TimeCode()
+    ;timecode()
+    /*
+    */
+
     SetWinDelay, 10
     SetBatchLines, 10ms
     SetKeyDelay, 10, 50
-    ; Process, Priority, , A
-    BlockInput OFF
+    Process, Priority, , A
+    ; BlockInput OFF
     ; WinWaitClose
     return
   
@@ -175,8 +180,7 @@
         
     2GuiEscape:
     2GuiClose:
-        Gui, 2: +LastFound
-        CleanHist(100)
+        Gui, 2: +LastFound 
         gosub, save_win_coord
         Gui, 2: destroy
         exit
@@ -262,10 +266,11 @@
         Return
 
     Enter_Button:
-        Gui, 2: Submit, Hide
-        leave_CB_open := ""
         
-        (substr(UserInput,0) = "~") ? ("") : CC("last_user_input", UserInput)   ; store key history, except keys ending in "~" (shutdown related)   
+        Gui, 2: Submit, Hide
+        
+        (substr(UserInput,0) = "~") ? ("") : CC("last_user_input", UserInput)   ; store key history, except keys ending in "~" (shutdown related)    
+        
         
         GuiControl, 2:, UserInput,
         GC("CB_hist",1) ? FilePrepend(A_ScriptDir "\mem_cache\_hist.txt", UserInput) : ("")
@@ -280,15 +285,23 @@
         {
             case "1": 
                 ldspl := GC("CB_last_display")
+                ;goto, 2GuiClose
             case "2": 
                 goto, redrawGUI
-            default:
+            case "3": 
                 goto, 2GuiClose
+            default:
+                Try {   
+                    goto, redrawGUI
+                } catch e {
+                    return
+                }
         }
         return
                                                             
     save_win_coord:
         WinGetPos(CB_hwnd, x, y, w, h, 1)
+        ; WinGetPos, x, y, w, h, A
         if (h > 0) {
             CC("CB_position", "x" x " y" y " w" w " h" h)
             CC("CB_MonIdx", GetCurrentMonitorIndex())

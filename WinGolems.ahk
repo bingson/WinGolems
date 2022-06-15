@@ -72,24 +72,8 @@
 
 #Include %A_ScriptDir%\golems\
 #Include *i A_Quick_Start.ahk
-#Include *i B_Text_Manipulation.ahk
-#Include *i C_File_Management.ahk
-#Include *i D_App_Examples.ahk
-#Include *i Test.ahk                                                            
 
 ; AHK files included earlier will have priority over ones included later, if there's overlap
-
-/* sample code for including other ahk scripts
-    #Include *i %A_ScriptDir%\..\Google Drive\secure\
-    #Include *i bh.ahk
-    #Include *i mm.ahk                                    
-
-    #Include *i %A_ScriptDir%\..\ahk\golems\
-    #Include *i office.ahk
-    #Include *i coding.ahk
-    #Include *i obsidian.ahk     
-    #Include *i chrome.ahk     
-*/
 
 /* #INCLUDE MECHANICS ********************************************************** 
  * Start.ahk:

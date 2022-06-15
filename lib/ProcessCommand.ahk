@@ -5,6 +5,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
     1stChar := SubStr(UserInput, 1, 1), 2ndChar := SubStr(UserInput, 2 , 1)
     f_path := A_ScriptDir "\mem_cache\" 
 
+    (substr(UserInput,0) = "~") ? ("") : CC("last_user_input", UserInput)   ; store key history, except keys ending in "~" (shutdown related)   
     ; if RegExMatch(1stChar,"[0-9A-Z\?jk:]") 
     if (1stChar ~= "[0-9A-Z\?jk:]")
     {
@@ -80,16 +81,19 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     goto, addTextToFile
                 } else {                                                        ;# append|prepend selected text to file                                                         
                     text_to_add := trim(clip()," `t`n`r")
-                    path         = %f_path%%Dir%%NameNoExt%.txt
+                    goto, addTextToFile                                         ; since all the  goto, addTextToFile are at the end of the if statement, they're uncessary because the addTextToFile: label will be run automatically
                 }
-
+                
                 addTextToFile:
                     path = %f_path%%Dir%%NameNoExt%.txt
                     % (1stChar == "A") 
                         ? FileAppend(path, text_to_add)
                         : FilePrepend(path, text_to_add)
-                    if WinExist("ahk_id " CB_hwnd)                              ; if no CB exists, indicates append/prepend accessed by rerun last CB submission hotkey
+                    if WinExist("ahk_id " CB_hwnd) {                            ; if no CB exists, indicates append/prepend accessed by rerun last CB submission hotkey
                         goto, Load
+                    }
+
+                return                                                           ; label will be automatically run otherwise 
 
                 addTextToClipboard:
                     var := clipboard                                            ; [stability] placeholder var allows usage of clipwait errorLevel
@@ -118,12 +122,12 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 
                 if (C_input = "~") {
                     NameNoExt := "config.ini"
-                    RegExMatch(config_path, ".*(?=config.ini)", dir)           ; get everything before the last title separator and store in v
+                    RegExMatch(config_path, ".*(?=config.ini)", dir)            ; get everything before the last title separator and store in v
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
 
-                } else if (C_input = "$") or (C_input = "$$") {                                     ; shortcut list 
+                } else if (C_input = "$") or (C_input = "$$") {                 ; shortcut list 
 
                     NameNoExt := "HotKey_List"
                     dir := "..\"
@@ -133,7 +137,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     txt := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
 
-                } else if (C_input = ">") or (C_input = ":")  {                                     ; clipboard 
+                } else if (C_input = ">") {                                     ; clipboard 
                     try {
                         txt := Clipboard
                         NameNoExt := "Clipboard Contents", dir := ""
@@ -157,22 +161,23 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     txt := % regexmatch(remainder, "\d+") ? GetNumMemLines(,remainder,,1) : GetNumMemLines(,,,1)
                     NameNoExt := "First lines of 1 character files"
                     dir := ""
-                } else if (2ndChar = ",") {                                     ; LaltSpaceCommand: folder contents
-                    NameNoExt := "list"
-                    CC("CB_last_display", dir NameNoExt)
-                    txt := ((GC("LaltSpaceCommand") != "ERROR"))                ; load files in mem_cache subdirectory corresponding to LaltSpaceCommand if exists
-                         ? CreateCacheList("list", substr(GC("LaltSpaceCommand"),2))
-                         : CreateCacheList("list")
-                    tgt := f_path dir NameNoExt
 
-                } else if (2ndChar = ".") {                                     ; RaltSpaceCommand: folder contents
-                    NameNoExt := "list"
-                    CC("CB_last_display", dir NameNoExt)
-                    txt := ((GC("RaltSpaceCommand") != "ERROR"))                ; load files in mem_cache subdirectory corresponding to LaltSpaceCommand if exists
-                         ? CreateCacheList("list", substr(GC("RaltSpaceCommand"),2))
-                         : CreateCacheList("list")
-                    tgt := f_path dir NameNoExt
+                } else if (2ndChar = ",") or (2ndChar = ".") {                                     ; RaltSpaceCommand: folder contents
+                    
+                    after2char := SubStr(C_input, 2)
+                    NameNoExt := after2char
+                    dir := (2ndChar = ".") ? GC("RaltSpaceCommand") : GC("LaltSpaceCommand")
+                    dir := (dir != "ERROR") ? substr(dir,2) : ""
 
+                    if (after2char != "") {
+                        CC("CB_last_display", dir . after2char)
+                        txt  := AccessCache(after2char, dir, False)
+                    } else {
+                        NameNoExt := "list"
+                        CC("CB_last_display", dir NameNoExt)
+                        txt := CreateCacheList("list", dir)
+                        tgt := f_path dir NameNoExt
+                    }
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini"))   ; load list of files in mem_cache
                   or (C_input = "?") {
                     NameNoExt := "list"
@@ -184,9 +189,10 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     CC("CB_last_display", dir NameNoExt)
                     txt  := AccessCache(NameNoExt,dir, False)
                 }
-
+                
                 updateGUI:
                     new_title_file := dir . NameNoExt . RetrieveExt(tgt)            ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
+                    ; msgbox % 1 new_title_file "`n" 2 "`n" txt
                     CC("CB_title", new_title_file)
                     UpdateGUI(txt, new_title_file)
                     return 1
@@ -251,6 +257,17 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     SplitPath,% arr[2], FileName, Dir, Extension, NameNoExt 
                     1dir := 1dir ? 1dir . "\" : ""
                     dir := dir ? dir . "\" : ""
+                    if !InStr(FileExist(f_path dir), "D") and dir
+                    {                                      
+                        msg := "WinGolems can't find the folder`n`n" . dir . "`n`nWould you like to create it?"
+                        MsgBox,4100,Create Hotstring,%msg% 
+                        IfMsgBox Yes
+                        {
+                            FileCreateDir, %f_path%%dir%
+                        } else 
+                            return 1
+                    } 
+ 
                     if FileExist(f_path 1dir 1NameNoExt ".txt")
                     {
                         try {
@@ -305,13 +322,31 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                             CreateCacheList("list")
                             return 
                         default:
+                            
+                    }
+                } else if (2ndChar = ",") or (2ndChar = ".") {                                     ; RaltSpaceCommand: folder contents
+                    
+                    after2char := SubStr(C_input, 2)
+                    NameNoExt := after2char
+                    dir := (2ndChar = ".") ? GC("RaltSpaceCommand") : GC("LaltSpaceCommand")
+                    dir := (dir != "ERROR") ? substr(dir,2) : ""
+
+                    if (after2char != "") {
+                        CC("CB_last_display", dir . after2char)
+                        txt  := AccessCache(after2char, dir)
+                    } else {
+                        NameNoExt := "list"
+                        CC("CB_last_display", dir NameNoExt)
+                        txt := CreateCacheList("list", dir)
+                        tgt := f_path dir NameNoExt
+                        goto, load
                     }
                 } else {
                     namenoext := namenoext ? namenoext : GC("CB_title","")
                     ActivateWin("ahk_id"  tgt_hwnd)
                     AccessCache(namenoext, dir)
                 }
-                return
+                return 3
             Case "E":                                                           ; edit file
                 path := f_path dir RegExReplace(GC("CB_title",""), "\[.+?\]")   ; "\[.+?\]" removes any text surrounded by square brackets 
                 if !C_input && FileExist(path) {
@@ -321,29 +356,28 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     switch EditFunc
                     {
                         case "trim","t":
-                            NewText := RegExReplace(AccessCache(path,,0),  " {2,}", " ")
-                            ; NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)|(\s+$)")
+                            NewText := RegExReplace(AccessCache(path,,0), "m)^ +")
+                            ; NewText := RegExReplace(NewText, "m)(^\s+)")
+                            ; NewText := RegExReplace(NewText, " [ `t]+")
+                            ; NewText := RegExReplace(NewText, "[ `t]{2,}")
+                            ; NewText := RegExReplace(NewText,  " {2,}", " ")
+                            ; NewText := RegExReplace(NewText, "m)(^\s+)|(\s+$)")
                             WriteToCache(path,,,NewText,,1)
                             UpdateGUI(NewText, ltrim(path,f_path))
                         case "trimTabs","tt":
-                            NewText := RegExReplace(AccessCache(path,,0),  "m)^`t+")
-                            ; NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)|(\s+$)")
+                            NewText :=   RegExReplace(AccessCache(path,,0),  "m)^`t+")
+                            NewText := RegExReplace(NewText,  " [ `t]+", " ")
                             WriteToCache(path,,,NewText,,1)
                             UpdateGUI(NewText, ltrim(path,f_path))
-                        case "trimTabs","ts":
-                            NewText := RegExReplace(AccessCache(path,,0),  " [ `t]+", " ")
-                            ; NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)|(\s+$)")
-                            WriteToCache(path,,,NewText,,1)
-                            UpdateGUI(NewText, ltrim(path,f_path))
-                        case "ltrim","lt":
-                            NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)")
-                            WriteToCache(path,,,NewText,,1)
-                            UpdateGUI(NewText, ltrim(path,f_path))
+                        ; case "ltrim","lt":
+                        ;     NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)")
+                        ;     WriteToCache(path,,,NewText,,1)
+                        ;     UpdateGUI(NewText, ltrim(path,f_path))
                         case "cleanLines","cl":                                 ; removes multiple blank lines 
                             NewText := RegExReplace(AccessCache(path,,0), "(`r`n){2,}", "`r`n`n")
                             WriteToCache(path,,,NewText,,1)
                             UpdateGUI(NewText, ltrim(path,f_path))
-                        case "removeBlankLines","rbl":                                 ; removes multiple blank lines 
+                        case "noBlankLines","!l","nbl":                           ; removes multiple blank lines 
                             NewText := RemoveBlankLines(,AccessCache(path,,0))
                             WriteToCache(path,,,NewText,,1)
                             UpdateGUI(NewText, ltrim(path,f_path))
@@ -474,10 +508,10 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                             vtext := ReplaceAwithB(AB[1], AB[2],vtext,0,0)
                         }
                         clip(vtext)   
-                        return
+                        return 3
 
                 }        
-                return
+                return 3
             Case "F":                                                           ; fill space with char 
                 sleep, short
                 ActivateWin("ahk_id " tgt_hwnd)                             
@@ -535,8 +569,8 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     else
                         UDSelect("down", "10", C_input)
                 }
-                GUI 2: destroy
-                return
+                ;GUI 2: destroy
+                return 3
             Case "K":                                                           ; select|goto rows above
                 if RegExMatch(c_input,"[a-jl-zA-JL-Z]")                         ; if there are any other letters of the alphabet in the input
                     RunLabel(UserInput, suffix, tgt_hwnd)
@@ -641,6 +675,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         return 2
                     case "default"   ,"d"    : ToggleDisplay("display")
                     case "minimized" ,"m"    : ToggleDisplay("minimal")
+                    Case "lshift", "ls"      : TC("T_lshift", "Toggle Lshift HJKL") 
                     default:
                 }
 
@@ -657,5 +692,5 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
     {
         RunLabel(UserInput, suffix, tgt_hwnd)
     }
-    return 1
+    return
  }

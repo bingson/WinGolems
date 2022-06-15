@@ -13,65 +13,61 @@
   #x::                AA("ppt_path")                                            ;Apps| Activate PowerPoint
   #b::                AA("explorer.exe")                                        ;Apps| Activate File Explorer         
   #t::                AA("cmd.exe")                                             ;Apps| Activate Command window     
-  #c::                ActivateCalc()                                            ;Apps| Activate Calculator   
+  #c::                ActivateCalc()                                            ;Apps| Activate Calculator  
+
+  ^!F1::                                                                        ;Apps: Save window for win+F1 activation 
+  ^!F2::                                                                        ;Apps: Save window for win+F2 activation
+  ^!F3::                                                                        ;Apps: Save window for win+F3 activation
+  ^!F4::                                                                        ;Apps: Save window for win+F4 activation
+  ^!F5::                                                                        ;Apps: Save window for win+F5 activation
+  ^!F6::                                                                        ;Apps: Save window for win+F6 activation
+  ^!F7::                                                                        ;Apps: Save window for win+F7 activation
+  ^!F8::              SaveWinID(ltrim(A_ThisHotkey, "^!"))                      ;Apps: Save window for win+F8 activation
+
+  #F1::                                                                         ;Apps: Activate saved F1 window
+  #F2::                                                                         ;Apps: Activate saved F2 window
+  #F3::                                                                         ;Apps: Activate saved F3 window
+  #F4::                                                                         ;Apps: Activate saved F4 window
+  #F5::                                                                         ;Apps: Activate saved F5 window
+  #F6::                                                                         ;Apps: Activate saved F6 window
+  #F7::                                                                         ;Apps: Activate saved F7 window
+  #F8::                ActivateWinID(ltrim(A_ThisHotkey, "#"))                  ;Apps: Activate saved F8 window         
+
+
 
 ; NAVIGATION (PURPLE) __________________________________________________________
   
-  $#j::               Send {Blind}{WheelDown 2}                                 ;Navigation: mouse scroll down 2 lines
-  $#k::               Send {Blind}{WheelUp 2}                                   ;Navigation: mouse scroll down 2 lines
-  $>!#j::             Send {Blind}{WheelDown 6}                                 ;Navigation: mouse scroll down 6 lines
-  $>!#k::             Send {Blind}{WheelUp 6}                                   ;Navigation: mouse scroll down 6 lines
-  $#>+j::             Send {Blind}{Wheelleft 6}                                 ;Navigation: mouse scroll left 
-  $#>+k::             Send {Blind}{WheelRight 6}                                ;Navigation: mouse scroll right 
-  ^!h::               send {home}                                               ;Navigation: Home
-  ^!l::               send {end}                                                ;Navigation: End
-  
-  #IF GC("T_tabNav",1)                                                          ; can be toggled on/off by entering Gtc,T_tabNav in a CB 
-  ^b::                sendinput ^{PgUp}                                         ;Navigation: navigate to left tab
-  ^space::            sendinput ^{PgDn}                                         ;Navigation: navigate to right tab
-  #IF GC("T_base",1) 
+  $#j::               Sendinput {WheelDown 2}                                   ;Navigation: mouse scroll down 2 lines
+  $#k::               Sendinput {WheelUp 2}                                     ;Navigation: mouse scroll down 2 lines
+  $>!#j::             Sendinput {WheelDown 6}                                   ;Navigation: mouse scroll down 6 lines
+  $>!#k::             Sendinput {WheelUp 6}                                     ;Navigation: mouse scroll down 6 lines
+  $#>+j::             Sendinput {Wheelleft 6}                                   ;Navigation: mouse scroll left 
+  $#>+k::             Sendinput {WheelRight 6}                                  ;Navigation: mouse scroll right 
+  ^!h::               sendinput {home}                                          ;Navigation: Home
+  ^!l::               sendinput {end}                                           ;Navigation: End
   
 ; CONVENIENCE (ORANGE) _________________________________________________________
-  !b::                send ^b                                                   ;Convenience: Lshift+b = ctrl+b (taken over by tab movement function)
   
-  $<!^mButton::                                                                 ;MouseFn: move mouse cursor to center of active application window 
-  ~lwin & ~rshift::   CursorJump("C")                                           ;MouseFn: move mouse cursor to center of active application window
-  $<^mButton::        CursorJump("BL")                                          ;MouseFn: move mouse cursor to BOTTOM LEFT of active app
-  $+<!mButton::       CursorJump("BR")                                          ;MouseFn: move mouse cursor to BOTTOM RIGHT of active app
-  $<+mButton::        CursorJump("TL")                                          ;MouseFn: move mouse cursor to TOP LEFT of active app
-  $<!mButton::        CursorJump("TR")                                          ;MouseFn: move mouse cursor to TOP RIGHT of active app
   #SC035::            search()                                                  ;Convenience: google search selected text
   !Backspace::        delLine()                                                 ;Convenience: delete current line of text
-  ^#O::               suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
+  #Esc::              suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
   !SC027::            Send {esc}                                                ;WinOS: simulate esc key (alt + semicolon)
   ^SC027::            Send {AppsKey}                                            ;WinOS: simulate appkey
-  #Lbutton::                                                                    ;WinOS: open start menu (alt: Ctrl+Esc)
   $^#Enter::          send ^{esc}                                               ;WinOS: open start menu 
-  #!o::               reloadWG()                                                ;WinGolems: reload WinGolems 
-  ^#sc027::           Send {lwin down}d{lwin up}                                ;WindowMgmt: show desktop
-  #sc028::                                                                      ;WindowMgmt: maximize window
   $^!space up::       MaximizeWin()                                             ;WindowMgmt: maximize window
   $#SC027::           MinimizeWin()                                             ;WindowMgmt: minimize window
   #del::              AlwaysOnTop(1)                                            ;WindowMgmt: Window always on top: ON
   #ins::              AlwaysOnTop(0)                                            ;WindowMgmt: Window always on top: OFF
-  +#capslock::        s("{blind}"), ActivatePrevInstance()                      ;WindowMgmt: rotate through app instances from most recent
-  printscreen & rshift::                                                        ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-  #capslock::         s("{blind}"), ActivateNextInstance()                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-  ^#q::                                                                         ;WindowMgmt: close active window 
-  +#q::               WinClose,A                                                ;WindowMgmt: close active window
-  !#q::               CloseClass()                                              ;WindowMgmt: close all instances of the active program
-  >!m::               moveWinBtnMonitors(), CFW()                               ;WindowMgmt: move window btn monitors, cursor follows active windows
+  >^capslock::        Send {capslock}                                           ;Convenience: capslock                                                                                 
+  +#capslock::        W("ls","lwin"), ActivatePrevInstance()                    ;WindowMgmt: rotate through app instances from most recent                   
+  #capslock::         S("{blind}"), ActivateNextInstance()                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+  >!.::               moveWinBtnMonitors(), CFW()                               ;WindowMgmt: move window btn monitors, cursor follows active windows
   !#b::               BluetoothSettings()                                       ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
   !#d::               DisplaySettings()                                         ;WinSetting: display settings
   !#n::               NotificationWindow()                                      ;WinSetting: notification window
   !#r::               RunProgWindow()                                           ;WinSetting: run program
   !#p::               PresentationDisplayMode()                                 ;WinSetting: presentation display mode
   !#i::               WindowsSettings()                                         ;WinSetting: windows settings
-  $>+>!o::            % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")       ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2)
-  >!sc028::           GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1
-  >!enter::           GotoDesktop("2")                                          ;VirtualDesktop: Switch to desktop 1
-  
-  ;>!enter::           % (t := !t) ? GotoDesktop("2") : GotoDesktop("1")         ;VirtualDesktop: Switch between desktop 1 and 2
 
 ; MEMORY FILE FUNCTIONS (BLUE)__________________________________________________
   
@@ -135,14 +131,8 @@
   #2::                                                                          ;Mem: paste contents of 2.txt   
   #1::                RetrieveMemory()                                          ;Mem: paste contents of 1.txt
   
-  <!space::          RunCmd(GC("LaltSpaceCommand","V"))                        ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
-  >!space::          RunCmd(GC("RaltSpaceCommand","V"))                        ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
-  
-  $^!lbutton::        s("{blind}",,100),RetrieveMemory(A_ThisHotkey,,,1)        ;Mem: double click and paste contents of 1.txt at cursor position       
-  $^#lbutton::        s("{blind}",,100),RetrieveMemory(,A_ThisHotkey)           ;Mem: double click and paste contents of number entered at prompt   
-  $<!lbutton up::     s("{blind}",,100), Clicks(2), s("^v")                     ;MouseFn: triple click, paste clipboard contents
-  $<+<!lbutton up::    s("{blind}",,100), Clicks(3), s("^v")                    ;MouseFn: double click, paste clipboard contents
-
+  <!space::           W("a"), RunCmd(GC("LaltSpaceCommand","V"))                ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).      
+  >!space::           W("a"), RunCmd(GC("RaltSpaceCommand","V"))                ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).        
 
 #IF
 /*
