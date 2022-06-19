@@ -36,7 +36,7 @@
   +#capslock::        W("ls","lwin"), ActivatePrevInstance()                    ;WindowMgmt: rotate through app instances from most recent                   
   printscreen & rshift::                                                        ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
   #capslock::         W("lwin"), ActivateNextInstance()                         ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-  >^capslock::        Send {capslock}                                           ;Convenience: capslock                                                                                 
+  >^capslock::        capslock                                                  ;Convenience: capslock                                                                                 
   >!SC035::           w("ra"),search()                                          ;Convenience: google search selected text 
   ^#o up::            W("lc","lw"), reloadWG()                                  ;WinGolems: reload WinGolems 
   #!o up::            suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
@@ -65,8 +65,8 @@
 ; NAVIGATION (PURPLE) __________________________________________________________
   
   #IF !WinActive("ahk_exe " exe["doc"])                                         ; can be toggled on/off by entering Gtc,T_tabNav in a CB              
-  ^b::                SI("^{PgUp}")                                             ;Navigation: navigate to left tab
-  ^space::            SI("^{PgDn}")                                             ;Navigation: navigate to right tab
+  ^b::                SI("^{PgUp}"),W("c")                                      ;Navigation: navigate to left tab
+  ^space::            SI("^{PgDn}"),W("c")                                      ;Navigation: navigate to right tab
   #if
 
 ; MEMORY FILE FUNCTIONS (BLUE)__________________________________________________

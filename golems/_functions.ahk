@@ -43,68 +43,6 @@
       MoveWin(Q)
   }
 
-  MoveWinWIP(Q = "TL", xa=0,ya=0, ha=0,wa=0) {
-
-    global config_path, CB_hwnd
-    CoordMode, Mouse, Screen
-    static x, y, w, h
-    WinRestore, A
-    MI := StrSplit(GetMonInfo()," ")                                            ;getmonitordimensions    
-    y:=MI[2]+ya-ha                                                              ;adjustments made to account for taskbar on top instead of taskbar on bottom 
-    h:=A_ScreenHeight
-    w:=A_ScreenWidth
-    x:=MI[1]+xa-wa    
-
-    hw:= w/2  , qw := w/4  , hh:= h/2  , qh := h/4
-
-    if (winactive("ahk_id " CB_hwnd) and !GC("CB_Display"))
-        return
-
-    switch Q
-    {
-        case "F" ,"0Maximize"             : x := x      , y := y       , w := w    , h := h                   
-        case "TL","1TopLeft"              : x := x      , y := y       , w := hw   , h := hh    
-        case "TR","1TopRight"             : x := x+hw   , y := y       , w := hw   , h := hh    
-        case "BL","2BottomLeft"           : x := x      , y := y+hh    , w := hw   , h := hh    
-        case "BR","2BottomRight"          : x := x+hw   , y := y+hh    , w := hw   , h := hh    
-        case "L" ,"0LeftHalf"             : x := x      , y := y       , w := hw   , h := h     
-        case "R" ,"0RightHalf"            : x := x+hw   , y := y       , w := hw   , h := h     
-        case "T" ,"0TopHalf"              : x := x      , y := y       , w := w    , h := hh    
-        case "B" ,"0BottomHalf"           : x := x      , y := y+hh    , w := w    , h := hh    
-        case "LS","3LeftHalfSmall"        : x := x      , y := y       , w := qw   , h := h
-        case "RS","3RightHalfSmall"       : x := x+3*qw , y := y       , w := qw   , h := h
-        case "TS","4TopHalfSmall"         : x := x      , y := y       , w := w    , h := qh
-        case "BS","4BottomHalfSmall"      : x := x      , y := y+hh+qh , w := w    , h := qh
-        case "L1","L1TopLeftSmall"       : x := x      , y := y       , w := hw   , h := qh
-        case "L1v","L1vTopLeftSmall"       : x := x      , y := y       , w := qw   , h := hh
-        case "L2","L2TopMidLeftSmall"     : x := x      , y := y+qh    , w := hw   , h := qh
-        case "L3","L3BottomMidLeftSmall"  : x := x      , y := y+hh    , w := hw   , h := qh
-        case "L4","L4BottomLeftSmall"    : x := x      , y := y+3*qh  , w := hw   , h := qh
-        case "L4v","L4vBottomLeftSmall"    : x := x      , y := y+hh    , w := qw   , h := hh
-        case "R1","R1TopRightSmall"     : x := x+hw   , y := y       , w := hw   , h := qh
-        case "R1v","R1vTopRightSmall"       : x := x+3*qw , y := y       , w := qw   , h := hh
-        case "R2","R2TopMidRightSmall"    : x := x+hw   , y := y+qh    , w := hw   , h := qh
-        case "R3","R3BottomMidRightSmall" : x := x+hw   , y := y+hh    , w := hw   , h := qh
-        case "R4","R4BottomRightSmall"  : x := x+hw   , y := y+3*qh  , w := hw   , h := qh
-        case "R4v","R4vBottomRightSmall"    : x := x+3*qw , y := y+hh    , w := qw   , h := hh
-        default:                                                              
-            return
-    }
-    
-    ;msgbox % x " " y " " h " " w    
-
-    if (winactive("ahk_id " CB_hwnd)) {
-        if !GC("CB_ScrollBars", 0)
-            GuiControl, 2: -HScroll -VScroll, CB_Display
-        Gui, 2: show
-        settimer, addHiddenScrollBar,-400
-        CC("CB_position", "x" x " y" y " w" w " h" h)
-    }
-
-    WinMove,A,, x, y, w, h
-    
-  } ; move active window to different areas of the screen
-
   MoveWin(Q = "TL", xa=0,ya=0, ha=0,wa=0) {
 
     global config_path, CB_hwnd
@@ -724,43 +662,67 @@
     ; return % cache_contents
   }
 
-  CreateCacheList(name = "cc", folder = "") {
+  CreateCacheList(name = "cc", folder = "", rowMax = 28) {
     global strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
     global strDir  := A_ScriptDir . "\mem_cache\" . folder
-    global cacheList := ""
+    global cacheListA := cacheListB := buffer_list := ""
     global config_path
-    
     FileDelete %strFile%
-    ; IniWrite, %name%, %config_path%, %A_ComputerName%, CB_display
     CC("CB_display", name)
-    max_len := count := 0
+    max_len := max_colwidth := cnt := 0
+
     Loop Files, %strDir%*.*, R                                                  ; Recurse into subfolders.  
     {   
         file := SubStr(A_LoopFileFullPath, strlen(strDir) + 1) . "`n"
-        count := count + 1
-        cacheList .= file
-        max_len := max(strlen(file), max_len)
-    }
-    halfCount := round(count/2,0) + 1
-    arr := StrSplit(cacheList , "`n","`n",halfCount)
-    right_arr := arr.Pop()
-    Rarr := StrSplit(right_arr, "`n", "`n")
-    cache_contents := ""
-    char_width := 0
-    loop % halfCount
-    {
-        space_len  := (max_len - strlen(arr[A_Index]))  
-        s := RepeatString(" ", space_len)
-        line := arr[A_Index] . s . Rarr[A_Index] . "`n" 
-        cache_contents .= line
-        char_width := max(strlen(line), char_width)
+        max_len := max(strlen(file) + 2, max_len)
+        cnt += 1
 
+        if (file = "z\cmd_del.txt`n") {
+            msgbox % file . " " . max_len . " " . strlen(file) " " max_colwidth
+        }
+        
+        if (cnt > rowMax) {
+            cacheListB .= file
+            if (mod(cnt,rowMax) = 0) {
+                max_colwidth += max_len
+                max_colwidth += 2
+                loop, parse, cacheListA,`n 
+                {
+                    buffer_list .= format("{:-" . max_colwidth . "s}", A_LoopField) . "`n"
+                }
+                
+                
+                cacheListA := TF_concat(buffer_list, cacheListB)
+                cacheListB := buffer_list := ""
+            }
+        } else {
+            cacheListA .= file
+        }
     }
-    ; Sort, cache_contents, CL
-    cache_contents := "CACHE CONTENTS " . folder . "`n" . RepeatString("-", char_width) . "`n`r" . cache_contents
+    max_colwidth += max_len
+    loop, parse, cacheListA,`n 
+    {
+        buffer_list .= format("{:-" . max_colwidth . "s}", A_LoopField) . "`n"
+    }
+    cacheList := TF_concat(buffer_list, cacheListB)
     FileDelete, mem_cache\%name%.txt
-    FileAppend, %cache_contents%, mem_cache\%name%.txt
-    return % cache_contents
+    FileAppend, %cacheList%, mem_cache\%name%.txt
+    return % cacheList
+  }
+
+  String_Columns(String, Columns)
+  {
+      Lines := {}
+      Loop, Parse, String, `n
+          Lines.Push(A_LoopField)
+      Loop, % Ceil(Lines.MaxIndex() / Columns)
+      {
+          x := A_Index
+          Loop, % Columns
+              Result .= Lines[(x-1)*Columns+A_Index]"`t"
+          Result .= "`n"
+      }
+      return Trim(Result,"`n`t ")
   }
 
   GUIRecall() {
