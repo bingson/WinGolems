@@ -141,7 +141,7 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 
 ### I. Instructions <a name="instructions"></a>
 
-To help ease new users into the different interface layers, only the `Quick Start Template` and Command Box interface layers will be active on first run. Additional templates are placed in the `golems` folder; they can be added as a separate interface layer or as a reference for modifying the Quick Start Template
+To help ease new users into the different interface layers, only the `Quick Start Template` and Command Box interface layers will be active on first run. Additional templates are placed in the `golems` folder. These sample templates can be added as additional interface layers or be used as a reference for modifying the Quick Start Template.
 
 To see a list of keyboard shortcuts in the `Quick Start Template` open a CommandBox with `win + spacebar` and type `L$` followed by `enter`. 
 
@@ -666,26 +666,39 @@ The Command Box (CB) is a GUI that can execute any script. Where applicable, the
 
 <p align="center"><img src="assets\Screens\CB_header.png" width="600"></p>
 
-The Command Box (CB) was conceived to alleviate the following problems:
+<b>The Command Box (CB) was conceived to alleviate the following problems:</b>
+
+<br>
 
  > A lack of keyboard real-estate and mental bandwidth for assigning and remembering less frequently used operations.
     
  With the CB users can
-- create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember hotkey combinations;
-    
-- create interface layers active only when a particular CB is open;
 
-- execute commands in any text field of any windows application without needing to call the GUI (i.e., pseudo command-line interface);
+- create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember hotkey combinations.
+    
+- create interface layers active only when a particular CB is open.
+
+- execute commands in any text field of any windows application without needing to call the GUI (i.e., pseudo command-line interface).
+
+<br>
  
 > Having to go back and forth repeatedly between two application windows to copy and paste sections of text in a particular order.
+
 With the CB users can
+
 - use WinGolems text manipulation and file saving functions that allow users to prepend or append text to the clipboard through txt file functions and hotkeys.
 
-- view, modify, and paste contents of .txt files (e.g., code snippets, regex patterns, frequently typed text) into any windows application through named txt files (aka., memory slots)
+- view, modify, and paste contents of .txt files (e.g., code snippets, regex patterns, frequently typed text) into any windows application through named txt files (aka., memory slots).
+
+<br>
  
 > A limited ability to dynamically pass parameters to a called function using keyboard shortcuts alone.
 
-- Users can swap in their own command-line processor module to create their own specialized syntax for dynamically parameterizing called functions written in any language.
+With the CB users can
+
+- swap in their own command-line processor module to create their own specialized syntax for dynamically parameterizing called functions written in any language.
+
+- create parameter text files that can be passed to user-defined functions.
 
 <br>
 
