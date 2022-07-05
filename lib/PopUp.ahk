@@ -9,7 +9,7 @@
     if WinExist("ahk_id " CB_WinID) 
         Gui, PopUp:+Owner2
 
-        Gui, -Caption
+    Gui, -Caption                                                               ; To remove the border and title bar from a window with a transparent background, use the following after the window has been made transparent:
     Gui, font ,s%fsz% W%fwt%, %fnt%
     Gui, PopUp: Add, Text, c%ctn% xm ym-1 Center, %msg%
     Gui, PopUp: Color, %w_color%

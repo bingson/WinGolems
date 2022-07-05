@@ -666,25 +666,26 @@ The Command Box (CB) is a GUI that can execute any script. Where applicable, the
 
 <p align="center"><img src="assets\Screens\CB_header.png" width="600"></p>
 
-The Command Box was conceived to alleviate the following problems:
+The Command Box (CB) was conceived to alleviate the following problems:
 
- * a lack of keyboard real-estate and mental bandwidth for assigning and remembering less frequently used operations;
+ > A lack of keyboard real-estate and mental bandwidth for assigning and remembering less frequently used operations.
     
-    - The CB lets users create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember hotkeys. 
+ With the CB users can
+- create meaningful keywords to execute commands, freeing them from having to rely on increasingly obscure and hard to remember hotkey combinations;
     
-    - The CB can be used to create interface layers active only when a particular CB is open.
+- create interface layers active only when a particular CB is open;
 
-    - CB commands can be executed in any text field of any windows application without calling the GUI (i.e., pseudo command-line interface).
+- execute commands in any text field of any windows application without needing to call the GUI (i.e., pseudo command-line interface);
  
- * having to repeatedly go back and forth between two application windows to copy and paste multiple sections of text in a specific order;
+> Having to go back and forth repeatedly between two application windows to copy and paste sections of text in a particular order.
+With the CB users can
+- use WinGolems text manipulation and file saving functions that allow users to prepend or append text to the clipboard through txt file functions and hotkeys.
 
-    - The CB provides text manipulation and file saving functions that allow users to append and prepend text to the clipboard in any order.
-
-    - Through its display window, the CB lets users view, modify, and paste contents of .txt files (e.g., code snippets, regex patterns, frequently typed text) into any windows application. 
+- view, modify, and paste contents of .txt files (e.g., code snippets, regex patterns, frequently typed text) into any windows application through named txt files (aka., memory slots)
  
- * a limited ability to dynamically pass parameters to a called function using keyboard shortcuts alone.
+> A limited ability to dynamically pass parameters to a called function using keyboard shortcuts alone.
 
-    - Users can swap in their own command-line processor module to create their own specialized syntax for dynamically parameterizing and calling functions.
+- Users can swap in their own command-line processor module to create their own specialized syntax for dynamically parameterizing called functions written in any language.
 
 <br>
 

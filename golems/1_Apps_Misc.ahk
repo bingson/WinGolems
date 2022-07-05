@@ -19,19 +19,9 @@
   printscreen & l:: AA(UProfile "\Desktop\Power BI Desktop - Shortcut.lnk", "pbidesktop.exe",2) ;Apps| power BI                        
   ;#x up::          AA("ppt_path")                                              ;Apps| Activate PowerPoint   
 
-; SEARCH _______________________________________________________________________
-  :X*:y>::      LURL("https://yandex.com/images/",1)                            ;search: yandex                     
-  :X*:as>::     LURL("https://www.google.ca/advanced_search")                   ;search: google advanced                                 
-  :X*:ts>::     LURL("twitter.com/search-advanced")                             ;search: twitter advanced    
-                               
-  !#SC035::     W("a","lw"), search("en.wikipedia.org/w/index.php?search=")          ;search: wikipedia                
-  <+>!SC035::   W("ra","ls"),search("www.youtube.com/results?search_query=", strng)  ;search: youtubes                 
-  +#SC035::     W("lw","s"), search("www.autohotkey.com/docs/search.htm?q=",,"&m=2") ;search: AutoHotkey documentation 
-  >+>!SC035::   W("rs","ra"),search("google.com/search?tbm=isch&q=")                 ;search: google image                    
-  ^#SC035::     W("lc","lw"),search("www.google.com/maps/search/", strng)            ;search: maps                     
-  esc & SC035:: LURL(clip())                                                         ;search: load selected text in browser                           
-     
+
 ; SYSTEM CONVENIENCE ___________________________________________________________
+  +#s::               send {printscreen}                                        ;snipping tool  
   <!capslock::        SI("{del}"),W("la","cl")                                  ;Convenience: del                                                                                               
   +#capslock::        W("ls","lwin"), ActivatePrevInstance()                    ;WindowMgmt: rotate through app instances from most recent                   
   printscreen & rshift::                                                        ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
@@ -48,6 +38,7 @@
   <!esc::             WinClose,A                                                ;WindowMgmt: close active window
   !#esc::             CloseClass()                                              ;WindowMgmt: close all instances of the active program
   ^#sc027::           Send {lwin down}d{lwin up}                                ;WindowMgmt: show desktop
+  #u::                run, ms-settings:screenrotation 
   !#b up::            BluetoothSettings()                                       ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
   !#d up::            DisplaySettings()                                         ;WinSetting: display settings 
   !#n up::            NotificationWindow()                                      ;WinSetting: notification window
@@ -64,10 +55,26 @@
 
 ; NAVIGATION (PURPLE) __________________________________________________________
   
-  #IF !WinActive("ahk_exe " exe["doc"])                                         ; can be toggled on/off by entering Gtc,T_tabNav in a CB              
-  ^b::                SI("^{PgUp}"),W("c")                                      ;Navigation: navigate to left tab
-  ^space::            SI("^{PgDn}"),W("c")                                      ;Navigation: navigate to right tab
-  #if
+    #IF !WinActive("ahk_exe " exe["doc"])                                          ; can be toggled on/off by entering Gtc,T_tabNav in a CB              
+    ^b::                SI("^{PgUp}",50),W("c")                                      ;Navigation: navigate to left tab
+    ^space::            SI("^{PgDn}",50),W("c")                                      ;Navigation: navigate to right tab
+
+    #if
+
+    :X:tfn~win:: TC("T_Mod","Extra Modifier Keys: ")
+; ADDITIONAL MODIFIER KEYS _____________________________________________________
+    #IF GC("T_Mod",1)
+    printscreen::
+    F1::
+    ; F2::
+    ; F3::
+    ; F11::
+    F12::
+    pgdn::
+    end::
+    home:: return
+    #IF
+
 
 ; MEMORY FILE FUNCTIONS (BLUE)__________________________________________________
   
@@ -109,9 +116,12 @@
   #2::                                                                          ;Mem: paste contents of 2.txt   
   #1::                RetrieveMemory()                                          ;Mem: paste contents of 1.txt
   
-  <!space::          W("a"), RunCmd(GC("LaltSpaceCommand","V"))                 ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).      
-  >!space::          W("a"), RunCmd(GC("RaltSpaceCommand","V"))                 ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).        
+  <!space::          RunCmd(GC("LaltSpaceCommand","V")), W("a")                 ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).      
+  >!space::          RunCmd(GC("RaltSpaceCommand","V")), W("a")                 ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).        
   
+  <+#c::             addtoCB("A")                                               ; append text to clipboard
+  >+#c::             addtoCB("P")                                               ; prepend text to clipboard
+
   /* 
     $^!lbutton::        s("{blind}",100),RetrieveMemory(A_ThisHotkey,,,1)        ;Mem: double click and paste contents of 1.txt at cursor position       
     $^#lbutton::        s("{blind}",100),RetrieveMemory(,A_ThisHotkey)           ;Mem: double click and paste contents of number entered at prompt   

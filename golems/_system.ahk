@@ -1,23 +1,24 @@
 #IF
 ; DISABLE KEYS ____________________________________________________________
   ;#^s::return                                                                   ;AHK: prevent windows speech recognition from popping up  
-    ~LWin::       Send {Blind}{vk07}                                              ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
-    *LWin::       Send {Blind}{LWin Down}                                         ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
-    LWin Up::     Send {Blind}{vk07}{LWin Up}                                     ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+    ~LWin::       Send {Blind}{vk07}                                            ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
+    *LWin::       Send {Blind}{LWin Down}                                       ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
+    LWin Up::     Send {Blind}{vk07}{LWin Up}                                   ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
 ; CB SYSTEM COMMANDS ___________________________________________________________
-    :X:b~win::     BluetoothSettings()                                            ;SC: bluetooth settings
-    :X:d~win::     DisplaySettings()                                              ;SC: display settings
-    <!#n up::                                                                     ;SC: notification window
-    :X:n~win::     NotificationWindow()                                           ;SC: notification window
-    :X:v~win::     SoundSettings()                                                ;SC: sound settings
-    <!#r up::                                                                     ;SC: run program 
-    :X:r~win::     RunProgWindow()                                                ;SC: run program
-    <!#x up::                                                                     ;SC: context menu for the Start button 
-    :X:x~win::     StartContextMenu()                                             ;SC: context menu for the Start button
-    :X:k~win::     QuickConnectWindow()                                           ;SC: quick connect window
-    :X:i~win::     WindowsSettings()                                              ;SC: windows settings
-    :X:p~win::     PresentationDisplayMode()                                      ;SC: presentation display mode
-    :X:s~~win::    PowerOptions("sleep")                                          ;SC: enter sleep mode
+    
+    :X:b~win::     BluetoothSettings()                                          ;SC: bluetooth settings
+    :X:d~win::     DisplaySettings()                                            ;SC: display settings
+    <!#n up::                                                                   ;SC: notification window
+    :X:n~win::     NotificationWindow()                                         ;SC: notification window
+    :X:v~win::     SoundSettings()                                              ;SC: sound settings
+    <!#r up::                                                                   ;SC: run program 
+    :X:r~win::     RunProgWindow()                                              ;SC: run program
+    <!#x up::                                                                   ;SC: context menu for the Start button 
+    :X:x~win::     StartContextMenu()                                           ;SC: context menu for the Start button
+    :X:k~win::     QuickConnectWindow()                                         ;SC: quick connect window
+    :X:i~win::     WindowsSettings()                                            ;SC: windows settings
+    :X:p~win::     PresentationDisplayMode()                                    ;SC: presentation display mode
+    :X:s~~win::    PowerOptions("sleep")                                        ;SC: enter sleep mode
 
     #If GetKeyState("F12", "P")
     esc & del::                                                                   ;SC: (+shift) enter hybernate mode

@@ -9,7 +9,7 @@
   #space up::     CB("~win")                                                    ;CB.. opens command box that runs ~win suffix CB keys
   #enter up::     RunCmd(,"~win")                                               ;CB.. selects word at text cursor position and run as CB "~win" key  
   
-  ^#r up::        ProcessCommand(GC("last_user_input"),GC("CB_sfx")), s("{esc}")  ;CB.. rerun last CB submission                    
+  ^#r up::        w("lw","c"),ProcessCommand(GC("last_user_input"),GC("CB_sfx")), s("{esc}")  ;CB.. rerun last CB submission                    
   esc & SC033::   DC("LaltSpaceCommand"), PU("LaltSpaceCommand reset to V") 
   esc & SC034::   DC("RaltSpaceCommand"), PU("RaltSpaceCommand reset to V")
     
@@ -41,20 +41,20 @@
   +!d::              MoveWin("RS")                                              ;CB: move CB window to right side small
   +!w::              MoveWin("TS")                                              ;CB: move CB window to top half small
   +!s::              MoveWin("BS")                                              ;CB: move CB window to bottom half small
-  +!q::              MoveWin("L1")                                             ;CB: move CB window to top left small (portrait)
-  +!e::              MoveWin("R1")                                             ;CB: move CB window to top right small (portrait)
-  +!z::              MoveWin("L4")                                             ;CB: move CB window to bottom left small (portrait)
-  +!c::              MoveWin("R4")                                             ;CB: move CB window to bottom right small (portrait)
-  >+!e::                                                                        ;CB: move CB window to top right small (landscape)
-  +>!e::             MoveWin("R1v")                                              ;CB: move CB window to top right small (landscape)
-  >+!q::                                                                        ;CB: move CB window to top left small (landscape)
-  +>!q::             MoveWin("L1v")                                              ;CB: move CB window to top left small (landscape)
-  >+!z::                                                                        ;CB: move CB window to bottom left small (landscape)
-  +>!z::             MoveWin("L4v")                                              ;CB: move CB window to bottom left small (landscape)
-  >+!c::                                                                        ;CB: move CB window to bottom right small (landscape)
-  +>!c::             MoveWin("R4v")                                              ;CB: move CB window to bottom right small (landscape)
+  <+!q::             MoveWin("L1")                                              ;CB: move CB window to top left small (portrait)
+  >+!q::             MoveWin("L1v")                                             ;CB: move CB window to top left small (landscape)
+  <+!e::             MoveWin("R1")                                              ;CB: move CB window to top right small (portrait)
+  >+!e::             MoveWin("R1v")                                             ;CB: move CB window to top right small (landscape)
+  <+!z::             MoveWin("L4")                                              ;CB: move CB window to bottom left small (portrait)
+  >+!z::             MoveWin("L4v")                                             ;CB: move CB window to bottom left small (landscape)
+  <+!c::             MoveWin("R4")                                              ;CB: move CB window to bottom right small (portrait)
+  >+!c::             MoveWin("R4v")                                             ;CB: move CB window to bottom right small (landscape)
+  ^!e::              MoveWin("R1vh")                                            ;CB: move CB window to top right smallest 
+  ^!q::              MoveWin("L1vh")                                            ;CB: move CB window to top left smallest 
+  ^!z::              MoveWin("L4vh")                                            ;CB: move CB window to bottom left smallest
+  ^!c::              MoveWin("R4vh")                                            ;CB: move CB window to bottom right smallest
   #space::           GUISubmit()                                                ;CB| submit user input
-  rshift & enter::   GUISubmit("rshift")                                        ;CB| Capitalize first letter of user input, then submit
+  rshift & enter::   GUISubmit("rshift"), W("rs")                               ;CB| Capitalize first letter of user input, then submit
   $!b::              ToggleDisplay()                                            ;CB| toggle Command Box display|minimalist mode
   $!x::              ToggleDisplay()                                            ;CB| toggle Command Box display|minimalist mode
   !r::               GUIRecall()                                                ;CB| reenter last command

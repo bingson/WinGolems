@@ -32,7 +32,7 @@
     SetKeyDelay, 10, 50
     SetWinDelay, 10
     Process, Priority, , A
-
+    DllCall("SetThreadDpiAwarenessContext", "ptr", -3, "ptr")                   ; adjusts Screen bounds / MouseGetPos / WinGetPos coordinates for different DPI scaling in multi monitor setups https://bityl.co/D5Ea
   ; GLOBAL VARIABLES -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
   
     #NoEnv                                                                      ; prevents empty variables from being looked up as potential environment variables

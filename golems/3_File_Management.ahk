@@ -25,16 +25,18 @@
     ralt & j::    send {down}                                                   ;Navigation| Up 
     ralt & k::    send {up}                                                     ;Navigation| Down  
 
+
 ; OPEN FILE|FOLDER PATH|FB _____________________________________________________
     ; works on full file paths for all MS office files (xls, doc, ppt, etc.)
     ; functions below are valid anywhere in windows if "T_FM" variable in config.ini = 1
     
     #IF GC("T_FM",0) 
                                                                                 ; GC = (G)et (C)onfig.ini("var_name", "value returned if none found") 
-    >+F4::        OP("golems\0_system.ahk")                                     ;OpenPath: _system.ahk                         
-    >+F1::        OP("golems\1_Apps_Misc.ahk")                                       ;OpenPath: A_Quick_Start.ahk 
+    >+F4::        OP("golems\_system.ahk")                                      ;OpenPath: _system.ahk                         
+    >+F1::        OP("golems\1_Apps_Misc.ahk")                                  ;OpenPath: A_Quick_Start.ahk 
     >+F2::        OP("golems\2_Text_Manipulation.ahk")                          ;OpenPath: B_Text_Manipulation.ahk 
     >+F3::        OP("golems\3_File_Management.ahk")                            ;OpenPath: C_File_Management.ahk 
+
 
     ; Function Box: opens a window that gives the user a menu of parameter choices for calling a function
     ; #SC034: :      FB((WinActive("ahk_group FileListers") ? "ChangeFolder" : "OpenPath"), Paths(), C.lpurple)  ;FB: Opens Jump Menu for opening saved paths to files, folders, URLs (works in save dialogue windows)
@@ -59,6 +61,6 @@
   >+d::           CF(UProfile "\Documents")                                     ;ChangeFolder: My Documents
   >+c::           CF(hdrive)                                                    ;ChangeFolder: %Homedrive% (C:)
   >+r::           CF("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()       ;ChangeFolder: Recycle bin (doesn't work for save as diag)
-  >+t::           CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()       ;ChangeFolder: This PC / My Computer
+  esc & h::       CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()       ;ChangeFolder: This PC / My Computer
                                                                                 ; https://www.autohotkey.com/docs/misc/CLSID-List.htm 
 #IF

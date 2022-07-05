@@ -352,6 +352,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 if !C_input && FileExist(path) {
                     EF(path)
                 } else if InStr(UserInput, "~") && FileExist(path) {
+                    
                     EditFunc := substr(C_input,2)
                     switch EditFunc
                     {
@@ -588,10 +589,15 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 RunOtherCB(C_input, 1stChar) 
             Case "S":                                                           ; search selected text in chosen search engine msft
                 
-                if (InStr(C_input, ":")) {                                      ; get search string from command box if colon detected
+                if (InStr(C_input, ":") AND !InStr(C_input, ":>")) {                                      ; get search string from command box if colon detected
                     dPos  := InStr(C_input, ":")
                     case  := substr(C_input, 1, dPos-1)
                     strng := substr(C_input, dPos+1)
+                }
+                else if (InStr(C_input, ":>")) {                                      ; get search string from command box if colon detected
+                    dPos  := InStr(C_input, ">")
+                    case  := substr(C_input, 1, dPos-1)
+                    strng := clipboard . substr(C_input, dPos+1)
                 }
                 else                                                            ; get search string from selected text
                 {
@@ -626,7 +632,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         search(, strng)                                         ; defaults to google search
                 }            
                 SetTimer, CFW, -600
-                return
+                return 3
             
             Case "X":
             Case "Y":

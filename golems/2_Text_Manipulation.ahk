@@ -1,4 +1,4 @@
-; CONVENIENCE __________________________________________________________________
+; CONVENIENCE/TEXT MANIPULATION ________________________________________________
   
   !Backspace::       delLine()                                                  ;Convenience: delete current line of text
   ^#Backspace::      ReplaceBackspaceWithSpaces()                               ;Convenience| Delete and replace selected text with blank spaces
@@ -62,11 +62,11 @@
     ^!h::              Sendinput {home}                                         ;Navigation: Home
     ^!l::              Sendinput {end}                                          ;Navigation: End
     #e::               W("lw"),SI("^{home}")                                    ;Navigation: ^home                        
-    >^K::              W("lc"),SI("^{home}")                                    ;Navigation: ^home
     +#e up::           W("lw","ls"),SI("^{end}")                                ;Navigation: ^end
-    >^J::              W("lc"),SI("^{end}")                                     ;Navigation: ^end
+    ;>^K::              W("rc"),SI("^{home}")                                    ;Navigation: ^home
+    ;>^J::              W("rc"),SI("^{end}")                                     ;Navigation: ^end
 
-    #IF GC("T_lshift",1) ;-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    #IF GC("T_rshift",1) ;-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     >+l::              Sendinput {Right 4}                                      ;Navigation: extend selection Right 4 character
     >+h::              Sendinput {Left 4}                                       ;Navigation: extend selection Left  4 character
     >+j::              Sendinput {down 4}                                       ;Navigation: extend selection Right 4 character
@@ -119,14 +119,14 @@
     $<+>+!h::          Sendinput +{Left 10}                                     ;Selection: extend selection Left  10 characters
     <+>+!k::           Sendinput +{up 8}                                        ;Selection: extend selection up    8 rows
     <+>+!j::           Sendinput +{down 8}                                      ;Selection: extend selection down  8 rows
-    <+>+#h::           Sendinput +^{left 4}                                     ;Selection: extend selection up    8 rows
-    <+>+#l::           Sendinput +^{right 4}                                    ;Selection: extend selection down  8 rows
-    >+!l::             Sendinput +{Right 8}                                     ;Selection: extend selection Right
-    >+!h::             Sendinput +{Left 8}                                      ;Selection: extend selection Left
-    <+>+l::            Sendinput +{Right 5}                                     ;Selection: extend selection Right
-    <+>+h::            Sendinput +{Left 5}                                      ;Selection: extend selection Left
-    <+>+k::            Sendinput +{up 4}                                        ;Selection: extend selection up    4 row
-    <+>+j::            Sendinput +{down 4}                                      ;Selection: extend selection down  4 row
+    <+>+#h::           Sendinput +^{left 4}                                     ;Selection: extend selection up    4 rows
+    <+>+#l::           Sendinput +^{right 4}                                    ;Selection: extend selection down  4 rows
+    >+!l::             Sendinput +{Right 8}                                     ;Selection: extend selection Right 8 rows
+    >+!h::             Sendinput +{Left 8}                                      ;Selection: extend selection Left  8 rows
+    <+>+l::            Sendinput +{Right 5}                                     ;Selection: extend selection Right 5 rows
+    <+>+h::            Sendinput +{Left 5}                                      ;Selection: extend selection Left  5 rows
+    <+>+k::            Sendinput +{up 4}                                        ;Selection: extend selection up    4 rows
+    <+>+j::            Sendinput +{down 4}                                      ;Selection: extend selection down  4 rows
 
   
 ; MOUSE FUNCTION _______________________________________________________________

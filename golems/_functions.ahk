@@ -27,7 +27,7 @@
        , "Lcoral"       : "FFA07A"   ,   "White"        : "FFFFFF"
        , "Ldaisy"       : "EFD469"   ,   "WhiteSmoke"   : "F5F5F5" 
        , "lgrey"        : "EDEDED"   }
-  
+
   GroupAdd, FileListers, ahk_class CabinetWClass                                ; create reference group for file explorer and open + save dialogue boxes
   GroupAdd, FileListers, ahk_class WorkerW                                      ; https://www.autohotkey.com/boards/viewtopic.php?t=28347
   GroupAdd, FileListers, ahk_class #32770, ShellView
@@ -76,16 +76,20 @@
         case "BS","4BottomHalfSmall"      : x := x      , y := y+hh+qh , w := w    , h := qh
         case "L1","L1TopLeftSmall"       : x := x      , y := y       , w := hw   , h := qh
         case "L1v","L1vTopLeftSmall"       : x := x      , y := y       , w := qw   , h := hh
+        case "L1vh","L1vhTopLeftSmall"       : x := x      , y := y       , w := qw   , h := qh
         case "L2","L2TopMidLeftSmall"     : x := x      , y := y+qh    , w := hw   , h := qh
         case "L3","L3BottomMidLeftSmall"  : x := x      , y := y+hh    , w := hw   , h := qh
         case "L4","L4BottomLeftSmall"    : x := x      , y := y+3*qh  , w := hw   , h := qh
         case "L4v","L4vBottomLeftSmall"    : x := x      , y := y+hh    , w := qw   , h := hh
+        case "L4vh","L4vhBottomLeftSmall"    : x := x      , y := y+3*qh    , w := qw   , h := qh
         case "R1","R1TopRightSmall"     : x := x+hw   , y := y       , w := hw   , h := qh
         case "R1v","R1vTopRightSmall"       : x := x+3*qw , y := y       , w := qw   , h := hh
+        case "R1vh","R1vhTopRightSmall"       : x := x+3*qw , y := y       , w := qw   , h := qh
         case "R2","R2TopMidRightSmall"    : x := x+hw   , y := y+qh    , w := hw   , h := qh
         case "R3","R3BottomMidRightSmall" : x := x+hw   , y := y+hh    , w := hw   , h := qh
         case "R4","R4BottomRightSmall"  : x := x+hw   , y := y+3*qh  , w := hw   , h := qh
         case "R4v","R4vBottomRightSmall"    : x := x+3*qw , y := y+hh    , w := qw   , h := hh
+        case "R4vh","R4vhBottomRightSmall"    : x := x+3*qw , y := y+3*qh    , w := qw   , h := qh
         default:                                                              
             return
     }
@@ -138,10 +142,13 @@
     WinMinimize,A
   } 
  
-  moveWinBtnMonitors() {
-    Send +#{Left}
-    ; Sendinput +#{Left}
-    CursorFollowWin()
+  moveWinBtnMonitors(D = "L") {
+    if (D = "L") {
+        Send +#{Left}
+    } else {
+        Send +#{right}
+    }
+    CFW()
     return
   }
  
@@ -198,6 +205,7 @@
     WinID_%vde%_%key% := WinExist("A")
     IniWrite, % WinID_%vde%_%key%, %config_path%, %A_ComputerName%, WinID_%vde%_%key%
     PopUp("WinID_" vde "_" key " saved", C.lgreen, C.bgreen, "300", "60", "-1000", "16", "610")
+    sleep, 100
     return
   }
  
@@ -441,13 +449,12 @@
     }
     return
   }
-
-  
   
   ExitAHK() {
     ExitApp
   }
   
+
   
  
 ; COMMAND BOX __________________________________________________________________
@@ -579,6 +586,7 @@
     {
         Case IsLabel(        UserInput . suffix)   : UserInput :=         UserInput . suffix
         Case IsLabel(":X:" . UserInput . suffix)   : UserInput := ":X:" . UserInput . suffix
+        Case IsLabel(":*X:" . UserInput . suffix)  : UserInput := ":*X:" . UserInput . suffix
         Case IsLabel(":*:" . UserInput . suffix)   : UserInput := ":*:" . UserInput . suffix
         Case IsLabel(        UserInput . base_sfx) : UserInput :=         UserInput . base_sfx
         Case IsLabel(":X:" . UserInput . base_sfx) : UserInput := ":X:" . UserInput . base_sfx
@@ -617,10 +625,10 @@
     Loop Files, %strDir%*.*, R                                                  ; Recurse into subfolders.  
     {   
         file := SubStr(A_LoopFileFullPath, strlen(strDir) + 1) . "`n"           ; get file name  
-        ; count := count + 1                                                      ; count rows 
+        ; count := count + 1                                                    ; count rows
         cacheList .= file                                                       ; append file name to list 
         LV_Add("", A_LoopFileFullPath)
-        ; max_len := max(strlen(file), max_len)                                   ; get max column width 
+        ; max_len := max(strlen(file), max_len)                                 ; get max column width
     }
     LV_ModifyCol()
     Gui, 2:Show
@@ -637,32 +645,10 @@
 
     GuiClose:  ; Indicate that the script should exit automatically when the window is closed.
     ExitApp
-    ; return % cacheList
-    
 
-    ; halfCount := round(count/2,0) + 1
-    ; arr := StrSplit(cacheList , "`n","`n",halfCount)
-    ; right_arr := arr.Pop()
-    ; Rarr := StrSplit(right_arr, "`n", "`n")
-    ; cache_contents := ""
-    ; char_width := 0
-    ; loop % halfCount
-    ; {
-    ;     space_len  := (max_len - strlen(arr[A_Index]))  
-    ;     s := RepeatString(" ", space_len)
-    ;     line := arr[A_Index] . s . Rarr[A_Index] . "`n" 
-    ;     cache_contents .= line
-    ;     char_width := max(strlen(line), char_width)
-
-    ; }
-    ; ; Sort, cache_contents, CL
-    ; cache_contents := "CACHE CONTENTS " . folder . "`n" . RepeatString("-", char_width) . "`n`r" . cache_contents
-    ; FileDelete, mem_cache\%name%.txt
-    ; FileAppend, %cache_contents%, mem_cache\%name%.txt
-    ; return % cache_contents
   }
 
-  CreateCacheList(name = "cc", folder = "", rowMax = 28) {
+  CreateCacheList(name = "cacheList", folder = "", rowMax = 26) {
     global strFile := A_ScriptDir . "\mem_cache\" . name . ".txt"
     global strDir  := A_ScriptDir . "\mem_cache\" . folder
     global cacheListA := cacheListB := buffer_list := ""
@@ -677,9 +663,9 @@
         max_len := max(strlen(file) + 2, max_len)
         cnt += 1
 
-        if (file = "z\cmd_del.txt`n") {
-            msgbox % file . " " . max_len . " " . strlen(file) " " max_colwidth
-        }
+        ; if (file = "z\cmd_del.txt`n") {
+        ;     msgbox % file . " " . max_len . " " . strlen(file) " " max_colwidth
+        ; }
         
         if (cnt > rowMax) {
             cacheListB .= file
@@ -690,7 +676,6 @@
                 {
                     buffer_list .= format("{:-" . max_colwidth . "s}", A_LoopField) . "`n"
                 }
-                
                 
                 cacheListA := TF_concat(buffer_list, cacheListB)
                 cacheListB := buffer_list := ""
@@ -1093,6 +1078,7 @@
   OverwriteMemory(del_toggle = false) {
     slot := substr(A_ThisHotkey, 0)        
     WriteToCache(slot, del_toggle)                                              ; note: if no text selected, no overwrite will occur                                        
+    sleep 100
     return
   }
 
@@ -1206,7 +1192,7 @@
     return
   } ; Send namespace alias/function wrapper to chain line commands using the comma operator
 
-  SI(k = "down", n = 1, sleep = 0 , si =True) {                                        
+  SI(k = "down", sleep = 0 , si=True, n = 1) {                                        
     ; function wrapper to chain line commands using the comma operator
     ; also contains shorter aliases for frequently performed send operations
     switch k 
@@ -1252,22 +1238,23 @@
     return
   } ; (C)hange (C)onfig.ini entry
   
-  GC(key = "CB_Titlebar", d = "") {                                             ; Get Config.ini value
+  GC(key = "CB_Titlebar", d = "", sect = "") {                                             ; Get Config.ini value
     global config_path
+    if !sect 
+        sect := A_ComputerName
     try {
-        IniRead,  val, %config_path%, %A_ComputerName%, %key%, %d%
+        IniRead,  val, %config_path%, %sect%, %key%, %d%
     } catch {
         /*  loop other sections of config.ini 
             IniRead, SectionNames, %config_path%
             arr := StrSplit(SectionNames, "`n")
             loop 
-
         */
         return
     }
     arr := StrSplit(SectionNames, "`n")
     return % val
-  } ; (G)et (C)onfig.ini value
+  } ; Get Config.ini value ; d = default value if config.ini entry not found
 
   TC(sect = "T_CF", msg = "") {
 
@@ -2275,12 +2262,29 @@
     
 
 ; MOUSE FUNCTIONS ______________________________________________________________
- 
+  
   SaveMousPos(key = "A", n = "0") {
     global config_path
-    ; CoordMode, Mouse, Screen
     CoordMode, Mouse, window
-    ; CoordMode, Mouse, client
+    
+    loop % n
+        click
+    
+    MouseGetPos, StartX, StartY
+    WinGetPos, winX, winY, winWidth, winHeight, A
+    ;Msgbox % "`nStartX: " . StartX . "`nStartY: " . StartY . "`nwinWidth: " . winWidth . "`nwinHeight: " . winHeight . "`nwinX: " . winX . "`nwinY: " . winY
+    vde := getCurrentDesktop()                                                  ; virtual desktop environment 
+    IniWrite,%StartX% %StartY% %winWidth% %winHeight% %winX% %winY%
+        ,%config_path%,%A_ComputerName%,MPos_%vde%_%Key%
+
+    PU("MPos_" vde "_" Key " saved")
+
+    return
+  }
+  
+  SaveMousPosBU(key = "A", n = "0") {
+    global config_path
+    CoordMode, Mouse, window
     loop % n
         click
     MouseGetPos, StartX, StartY
@@ -2290,24 +2294,42 @@
 
     return
   }
-  
+
   CursorRecall(key = "A", n = "1", lrm = "l", rtn_mouse = False, H=False, msg = 0) {
     global config_path, short
     CoordMode, Mouse, window
-    ; CoordMode, Mouse, client
     vde := getCurrentDesktop()
     if (GC("MPos_" vde "_" Key) != "ERROR") {
         KeyWait()
         MouseGetPos, StartX, StartY
         vde := getCurrentDesktop()
         IniRead, mpos, %config_path%, %A_ComputerName%, MPos_%vde%_%Key%
-        ; GC("MPos_" vde "_" Key) 
         pos_array := StrSplit(mpos, " ")
         ; DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
-        if (H) {
-            pos_array[2] := StartY
+        
+        mouseX_O    := pos_array[1]
+        mouseY_O    := pos_array[2]
+        winW_O  := pos_array[3]
+        winH_O := pos_array[4]
+
+        WinGetPos, winX_tgt, winY_tgt, winW_tgt, winH_tgt, A
+        
+        ; msgbox % mpos . " " . (mouseX > winW_tgt/2)
+        MouseX_tgt := mouseX_O
+        MouseY_tgt := mouseY_O
+
+        if (mouseX_O > winW_O/2) 
+            MouseX_tgt := winW_tgt - (winW_O - mouseX_O)
+
+        if (mouseY_O > winH_O/2)
+            MouseY_tgt := winH_tgt - (winH_O - mouseY_O)
+
+        if (H) {                                                                
+            MouseY_tgt := StartY  ; don't change current vertical position of cursor upon recall                                             
+            ; pos_array[2] := StartY
         }
-        MouseMove, pos_array[1], pos_array[2]
+        
+        MouseMove, MouseX_tgt, MouseY_tgt
         sleep, short
         Clicks(n, lrm)
         msg ? pu("click recall") : ""
@@ -2320,6 +2342,34 @@
     return
   } ; clicks a previously mouse cursor position saved via SaveMousPos() 
  
+  CursorRecallBU(key = "A", n = "1", lrm = "l", rtn_mouse = False, H=False, msg = 0) {
+    global config_path, short
+    CoordMode, Mouse, window
+    vde := getCurrentDesktop()
+    if (GC("MPos_" vde "_" Key) != "ERROR") {
+        KeyWait()
+        MouseGetPos, StartX, StartY
+        vde := getCurrentDesktop()
+        IniRead, mpos, %config_path%, %A_ComputerName%, MPos_%vde%_%Key%
+        pos_array := StrSplit(mpos, " ")
+        ; DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
+        if (H) {
+            pos_array[2] := StartY
+        }
+        
+        MouseMove, pos_array[1], pos_array[2]
+        sleep, short
+        Clicks(n, lrm)
+        msg ? pu("click recall") : ""
+        if rtn_mouse
+            MouseMove, StartX, StartY
+        return
+    } else {
+        Click
+    }
+    return
+  }
+
   KW(k="") {
     keywait(k)
     ; switch k
@@ -2469,12 +2519,18 @@
     Sleep, short 
     BlockInput, Mousemove
     settimer, BlockInputTimeOut,-600
-    CoordMode, Mouse, window
+    ; CoordMode, Mouse, Client 
+    CoordMode, Mouse, window  ;usual
     ; CoordMode, Mouse, screen                                                    ; defines coordinates relative to active screen for multimonitor support
     if ScreenDim {
         winTopL_x := 0, winTopL_y := 0, width := A_ScreenWidth, height := A_ScreenHeight
     } else {
+        ; MouseGetPos , , , OutputVarWin
         WinGetPos, winTopL_x, winTopL_y, width, height, A
+        ; MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
+        ; d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2  
+        ; msgbox % GetMonInfo() "`n x:" winTopL_x " y" winTopL_y " w:" width " h:" height
+        ; WinGetPos(WinExist("A"), x, y, w, h, 0)
     }
     switch Q
     {
@@ -2513,6 +2569,63 @@
     return
   }
 
+  CursorJumpBU(Q = "center", offset_x = 0, offset_y = 0, ScreenDim = 0) {
+    ; move mouse cursor to the middle of active window
+    global short
+    Sleep, short 
+    BlockInput, Mousemove
+    settimer, BlockInputTimeOut,-600
+    ; CoordMode, Mouse, Client 
+    CoordMode, Mouse, window  ;usual
+    ; CoordMode, Mouse, screen                                                    ; defines coordinates relative to active screen for multimonitor support
+    if ScreenDim {
+        winTopL_x := 0, winTopL_y := 0, width := A_ScreenWidth, height := A_ScreenHeight
+    } else {
+        ; MouseGetPos , , , OutputVarWin
+        WinGetPos, winTopL_x, winTopL_y, width, height, A
+        ; MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
+        ; d := "x" MI[3] // 2 " y0 w" MI[3] // 2 " h" MI[4] // 2  
+        ; msgbox % GetMonInfo() "`n x:" winTopL_x " y" winTopL_y " w:" width " h:" height
+        ; WinGetPos(WinExist("A"), x, y, w, h, 0)
+    }
+    switch Q
+    {
+        case "T":                                                               ;top
+            MouseGetPos, x 
+            y := 0
+        case "B":                                                               ;bottom
+            MouseGetPos, x
+            y := height
+        case "L":                                                               ;left
+            x := 0
+            ; x := winTopL_x
+            MouseGetPos,,y
+        case "R":                                                               ;right
+            x := width
+            MouseGetPos,,y
+        case "TL":
+            x := 0
+            y := 0
+        case "TR":
+            x := width
+            y := 0
+        case "BL":
+            x := 0
+            y := height
+        case "BR":
+            x := width
+            y := height
+        default:                                                                ; center
+            x := width  * .5
+            y := height * .5
+    }
+    ; DllCall("SetCursorPos", int, x + offset_x, int, y + offset_y) 
+    MouseMove, x + offset_x, y + offset_y
+    BlockInput, MousemoveOff
+    return
+  }
+
+
 ; BROWSERS _____________________________________________________________________
  
   LURL(URL, i = false, browser = "") {
@@ -2539,35 +2652,47 @@
     return
   } ; load URL in web browser
 
-  Search(prefix = "google.com/search?q=", var = "", suffix = "") {
+  Search(prefix = "google.com/search?q=", var = "", suffix = "", i=false, browser = "") {
     global short, med
-    ; ReleaseModifiers()
     sleep, short
-    var := (!var ? clip() : var)
+    rpl :={"&":"%26"} ; replace ampersand with url stand-in
+
+    var := (!var ? trim(clip()) : var)
+    var := CS(var,rpl) ; clean string
     url := prefix . var . suffix
     sleep, med
-    LURL(url)
+    LURL(url,i,browser)
     CursorFollowWin()
     return
   }
+
+  CS(strng="",replace="",remove="") {
+
+    if remove 
+        strng := RegExReplace(strng, remove)
+    For what,with in replace {
+        strng := StrReplace(strng,what,with)
+    }
+    return % strng
+
+  } ; Clean String (for search)
  
   OpenGoogleDrive(num) {
     ; Function for opening different google drive folders
     global config_path
-    LURL("-incognito https://drive.google.com/drive/my-drive")                  ; icognito to avoid signing out of google account              
-    MsgBox,4100, Accessing Google Drive, Enter login/pwd after page loads?
+    LURL("-incognito https://drive.google.com/drive/my-drive",1)                ; icognito to avoid signing out of google account              
+    MsgBox,4100, Accessing Google Drive, Enter login?
     IfMsgBox Yes
-    {
-        IniRead, output, %config_path%, PASSWORDS, gd%num%_login
-        clip(output)
-        Send {enter}
-        sleep 2000
-        SelectLine()
-        IniRead, output, %config_path%, PASSWORDS, gd%num%_pwd
-        clip(output)
-        Send {enter}
+        clip(GC("gd" num "_login",,"PASSWORDS")),S("{enter}")
+    else 
         return
-    }
+    
+    sleep, 1000
+    
+    MsgBox,4100, Accessing Google Drive, Enter password?
+    IfMsgBox Yes
+        SelectLine(), clip(GC("gd" num "_pwd",,"PASSWORDS")),S("{enter}")
+        ; IniRead, output, %config_path%, PASSWORDS, gd%num%_pwd
     else
         return
   }
@@ -2773,7 +2898,7 @@
                 clipboard := "" 
                 Sendinput !y
                 sleep, long * 1.2
-                while pos := RegExMatch(clipboard, "://\K([^/:\s]+)", m, A_Index=1?1:pos+StrLen(m))
+                while pos := RegExMatch(clipboard, "://\K([^/:\s]+)", m, A_Index=1?1:pos+StrLen(m))  ; gets the domain from the url
                 url := " | [" m1 "](" clipboard ")"
                 FileAppend, %url%, %f_path%
             }
@@ -2896,6 +3021,32 @@
 
 ; TEXT MANIPULATION ____________________________________________________________
   
+  addtoCB(AP="A") {
+    global short, med, long, CB_hwnd
+    var := clipboard                                                            ; [stability] placeholder var allows usage of clipwait errorLevel
+    clipboard := ""         
+    text_to_add := trim(clip()," `t`n`r")
+    % (AP == "A") 
+        ? (var .= "`n" text_to_add) 
+        : (var := text_to_add "`n" var)  
+    clipboard := var
+    clipwait 
+    sleep, 200
+    while (ErrorLevel)
+        sleep 10      
+
+    if WinExist("ahk_id " CB_hwnd) AND (GC("CB_title") = "Clipboard Contents") { 
+        NameNoExt := "Clipboard Contents", dir := ""
+        new_title_file := dir . NameNoExt . RetrieveExt(tgt)                    ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
+        CC("CB_title", new_title_file)
+        UpdateGUI(var, new_title_file)
+    }
+
+    % (AP == "A") 
+        ? PU("appended to Clipboard")
+        : PU("prepended to Clipboard")  
+  } ; append or prepend text to windows clipboard
+
   sortArray(arr,options="") {   
     ; specify only "Flip" in the options to reverse otherwise unordered array items
     ; https://autohotkey.com/board/topic/93570-sortarray/
@@ -3176,40 +3327,24 @@
     return
   }
 
-  AddSpaceBeforeComment(length = "80", char = " ", lines = 1) {
+  AddSpaceBeforeComment(length = "", char = " ", lines = 1) {
     global short,med,long 
-    ; BlockInput, on
-    ; settimer, BlockInputTimeOut,-600
-    
-    Send {space}{left}+{end}                                                    ; fixes issue in vscode where ^x on empty selection will cut the whole line                                                   
+    Send {space}{left}+{end}                                                    ; fixes issue in vscode where ^x on empty selection will cut the whole line
     end_txt := Trim(clip())
     Send {del}
     sleep, short
-    
-    Send {home}+{end} 
-    h1 := rtrim(clip())
+    Send {home 2}+{end} 
+    ls_beg_txt := clip()
     sleep, short
-    
-    Send {left}+{home}
-    h2 := clip()
-    l2 := strlen(h2), l1 := strlen(h1)
-    if (substr(h2,1,1) = A_space) {                                             ;  run if there's space(s) before the first character in a line       
-        Sendinput % "{right "  (strlen(h1) + 1) "}"  
-        space_btn := RepeatString(A_space, length - (l1 + l2))
-        sleep, med*2
-        clip(space_btn end_txt)
-    } else {
-        Sendinput % "{right "  (strlen(h1)) "}"                                 ; move cursor to end of first group of text   
-        space_btn := RepeatString(A_space, length - l1)
-        sleep, med*2
-        clip(space_btn end_txt)
-    }
+    send {right}
+    sleep, short
+    w := length - strlen(ls_beg_txt)
+    clip(Format("{:" w "}{:}"," ",end_txt))
+    sleep, short
     Sendinput % "{left "  (strlen(end_txt)) "}"
-    ; BlockInput, off
-    sleep short
     return      
   }
- 
+
   AddBorder(length = "80", char = "_", prefix = "" )  {
     ; Add line border to separate code sections
     Send {home}
