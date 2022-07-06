@@ -205,7 +205,6 @@
     WinID_%vde%_%key% := WinExist("A")
     IniWrite, % WinID_%vde%_%key%, %config_path%, %A_ComputerName%, WinID_%vde%_%key%
     PopUp("WinID_" vde "_" key " saved", C.lgreen, C.bgreen, "300", "60", "-1000", "16", "610")
-    sleep, 100
     return
   }
  
@@ -358,10 +357,11 @@
     return
   } ; activate windows mail app
  
-  TskMgrExt() {
+  TskMgrExt(max=FALSE) {
     global long
     sleep, long
-    WinMaximize,A
+    if max
+        WinMaximize,A
     CursorFollowWin()                                                           
     return
   }
@@ -453,9 +453,6 @@
   ExitAHK() {
     ExitApp
   }
-  
-
-  
  
 ; COMMAND BOX __________________________________________________________________
   
@@ -1078,7 +1075,6 @@
   OverwriteMemory(del_toggle = false) {
     slot := substr(A_ThisHotkey, 0)        
     WriteToCache(slot, del_toggle)                                              ; note: if no text selected, no overwrite will occur                                        
-    sleep 100
     return
   }
 
@@ -1960,14 +1956,14 @@
   }
   
   AA(app_path = "", arguments = "", optn = False, start_folder_toggle = False) {
-    W("lw")
+    ;W("lw")
     ActivateApp(app_path,arguments,optn,start_folder_toggle)
   }
 
   ActivateApp(app_path = "", arguments = "", optn = False, start_folder_toggle = False) {
     ; wrapper for ActivateOrOpen to process ini file path references
     ; and arguments
-    global config_path
+    global config_path, short, med, long
     if InStr(app_path , "_path")                                                ; "_path" string match indicates a config.ini path reference                                         
     {
         ini_app_path := GC(app_path)
@@ -1986,7 +1982,7 @@
         SetTitleMatchMode, 2                                                    ; match anywhere in title
         IfWinExist, %app_path%
             WinActivate, %app_path%
-        sleep med
+        sleep, med
         CursorFollowWin()
         return
     }
@@ -1998,7 +1994,7 @@
         } else {
             Run, %app_path%
         }
-        sleep med
+        sleep, med
         CursorFollowWin()
     }
     else
@@ -2265,7 +2261,9 @@
   
   SaveMousPos(key = "A", n = "0") {
     global config_path
-    CoordMode, Mouse, window
+    CoordMode, Mouse, window ;default
+    ; CoordMode, Mouse, client
+    ; CoordMode, Mouse, Screen
     
     loop % n
         click
@@ -2282,22 +2280,11 @@
     return
   }
   
-  SaveMousPosBU(key = "A", n = "0") {
-    global config_path
-    CoordMode, Mouse, window
-    loop % n
-        click
-    MouseGetPos, StartX, StartY
-    vde := getCurrentDesktop()                                                  ; virtual desktop environment 
-    IniWrite,%StartX% %StartY%, %config_path%, %A_ComputerName%, MPos_%vde%_%Key%
-    PU("MPos_" vde "_" Key " saved")
-
-    return
-  }
-
   CursorRecall(key = "A", n = "1", lrm = "l", rtn_mouse = False, H=False, msg = 0) {
     global config_path, short
-    CoordMode, Mouse, window
+    CoordMode, Mouse, window  ;default
+    ; CoordMode, Mouse, client
+    ; CoordMode, Mouse, Screen
     vde := getCurrentDesktop()
     if (GC("MPos_" vde "_" Key) != "ERROR") {
         KeyWait()
@@ -2342,34 +2329,6 @@
     return
   } ; clicks a previously mouse cursor position saved via SaveMousPos() 
  
-  CursorRecallBU(key = "A", n = "1", lrm = "l", rtn_mouse = False, H=False, msg = 0) {
-    global config_path, short
-    CoordMode, Mouse, window
-    vde := getCurrentDesktop()
-    if (GC("MPos_" vde "_" Key) != "ERROR") {
-        KeyWait()
-        MouseGetPos, StartX, StartY
-        vde := getCurrentDesktop()
-        IniRead, mpos, %config_path%, %A_ComputerName%, MPos_%vde%_%Key%
-        pos_array := StrSplit(mpos, " ")
-        ; DllCall("SetCursorPos", int, pos_array[1], int, pos_array[2]) 
-        if (H) {
-            pos_array[2] := StartY
-        }
-        
-        MouseMove, pos_array[1], pos_array[2]
-        sleep, short
-        Clicks(n, lrm)
-        msg ? pu("click recall") : ""
-        if rtn_mouse
-            MouseMove, StartX, StartY
-        return
-    } else {
-        Click
-    }
-    return
-  }
-
   KW(k="") {
     keywait(k)
     ; switch k
@@ -2378,7 +2337,6 @@
     ; }
     return
   }
-
 
   W(keys*) {
     loop % keys.MaxIndex()  
@@ -3022,7 +2980,7 @@
 ; TEXT MANIPULATION ____________________________________________________________
   
   addtoCB(AP="A") {
-    global short, med, long, CB_hwnd
+    global short, med, long, CB_hwnd, C
     var := clipboard                                                            ; [stability] placeholder var allows usage of clipwait errorLevel
     clipboard := ""         
     text_to_add := trim(clip()," `t`n`r")
@@ -3043,8 +3001,8 @@
     }
 
     % (AP == "A") 
-        ? PU("appended to Clipboard")
-        : PU("prepended to Clipboard")  
+        ? PU("Appended to Clipboard",C.Lgreen)
+        : PU("Prepended to Clipboard",C.Lgreen,C.red)  
   } ; append or prepend text to windows clipboard
 
   sortArray(arr,options="") {   

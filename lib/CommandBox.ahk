@@ -69,7 +69,7 @@
     
   ; SET GUI OPTIONS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - 
     Gui, 2: New                                                                 
-    Gui, 2: +LastFound +OwnDialogs +Owner +E0x00200 -DPIscale +AlwaysOnTop +Resize    ; +E0x08000000 
+    Gui, 2: +LastFound +OwnDialogs +Owner +E0x00200 +AlwaysOnTop +Resize    ; +E0x08000000, -DPIscale
     ; WinSet, TransColor,% w_color
     Gui, 2: Color, %w_color%
     Gui, 2: font, c%t_color% s%fsz% w%fwt%, %fnt%

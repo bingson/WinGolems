@@ -61,6 +61,6 @@
   >+d::           CF(UProfile "\Documents")                                     ;ChangeFolder: My Documents
   >+c::           CF(hdrive)                                                    ;ChangeFolder: %Homedrive% (C:)
   >+r::           CF("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()       ;ChangeFolder: Recycle bin (doesn't work for save as diag)
-  esc & h::       CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()       ;ChangeFolder: This PC / My Computer
+  F1 & h::        CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()       ;ChangeFolder: This PC / My Computer
                                                                                 ; https://www.autohotkey.com/docs/misc/CLSID-List.htm 
 #IF

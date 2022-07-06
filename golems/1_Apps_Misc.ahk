@@ -23,9 +23,9 @@
 ; SYSTEM CONVENIENCE ___________________________________________________________
   +#s::               send {printscreen}                                        ;snipping tool  
   <!capslock::        SI("{del}"),W("la","cl")                                  ;Convenience: del                                                                                               
-  +#capslock::        W("ls","lwin"), ActivatePrevInstance()                    ;WindowMgmt: rotate through app instances from most recent                   
+  +#capslock::        W("ls","lw"), ActivatePrevInstance()                      ;WindowMgmt: rotate through app instances from most recent                   
   printscreen & rshift::                                                        ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-  #capslock::         W("lwin"), ActivateNextInstance()                         ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+  #capslock::         W("lw"), ActivateNextInstance()                           ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
   >^capslock::        capslock                                                  ;Convenience: capslock                                                                                 
   >!SC035::           w("ra"),search()                                          ;Convenience: google search selected text 
   ^#o up::            W("lc","lw"), reloadWG()                                  ;WinGolems: reload WinGolems 
@@ -38,7 +38,7 @@
   <!esc::             WinClose,A                                                ;WindowMgmt: close active window
   !#esc::             CloseClass()                                              ;WindowMgmt: close all instances of the active program
   ^#sc027::           Send {lwin down}d{lwin up}                                ;WindowMgmt: show desktop
-  #u::                run, ms-settings:screenrotation 
+  #u::                run, ms-settings:screenrotation                           ;WinOS: Display settings
   !#b up::            BluetoothSettings()                                       ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
   !#d up::            DisplaySettings()                                         ;WinSetting: display settings 
   !#n up::            NotificationWindow()                                      ;WinSetting: notification window
@@ -49,6 +49,9 @@
   ralt & sc028::      GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
   ralt & enter::      GotoDesktop("2")                                          ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
   !SC027::            Sendinput {esc}                                           ;WinOS: simulate esc key (alt + semicolon)
+  $>!n::              moveWinBtnMonitors("L")                                   ;WindowMgmt: move window to left monitor
+  $>!m::              moveWinBtnMonitors("R")                                   ;WindowMgmt: move window to right monitor
+
   #IF IsCMODE()
   SC027::             Sendinput {esc}                                           ;WinOS: simulate esc key (+capslock) 
   #IF
@@ -66,9 +69,6 @@
     #IF GC("T_Mod",1)
     printscreen::
     F1::
-    ; F2::
-    ; F3::
-    ; F11::
     F12::
     pgdn::
     end::
@@ -119,8 +119,8 @@
   <!space::          RunCmd(GC("LaltSpaceCommand","V")), W("a")                 ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).      
   >!space::          RunCmd(GC("RaltSpaceCommand","V")), W("a")                 ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).        
   
-  <+#c::             addtoCB("A")                                               ; append text to clipboard
-  >+#c::             addtoCB("P")                                               ; prepend text to clipboard
+  >^c::              addtoCB("A")                                               ; append text to clipboard
+  +>^c::             addtoCB("P")                                               ; prepend text to clipboard
 
   /* 
     $^!lbutton::        s("{blind}",100),RetrieveMemory(A_ThisHotkey,,,1)        ;Mem: double click and paste contents of 1.txt at cursor position       
