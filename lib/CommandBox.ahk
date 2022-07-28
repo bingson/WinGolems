@@ -6,6 +6,8 @@
     SetkeyDelay, -1
     SetWinDelay, -1
     Process, Priority,, High
+
+    ; BlockInput, Mousemove
     ; ReleaseModifiers()
     BufferKeystrokes() 
     ;timecode()
@@ -46,12 +48,12 @@
        CB_position := d
        
     wdth := WP[3]
-    IBwidth := 400
-    CC("CB_InputBox_width", IBwidth)
+    ; IBwidth := 400
+    ; IBwidth := round(SubStr(WP[3], 2) * 0.90)
+    ; CC("CB_InputBox_width", IBwidth)
 
     display  := GC("CB_Display",1) , title_state := GC("CB_Titlebar",1)         ;(2a) get other CB window data
     wrap_txt := GC("CB_Wrap",0)    , ldspl       := GC("CB_last_display")
-
   ; BUILD TITLE BAR -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     UserInput := ""
     winget, Process_Name, ProcessName, A                                        ;(3) build title bar
@@ -62,14 +64,14 @@
     
     title_text := Capitalize1stLetter(Process_Name,0, 0)
     ldspl .= RetrieveExt(A_ScriptDir "\mem_cache\" ldspl)                       ; last display  
-    ndspl := GC("CB_title")                                                     ; new display (if new file was loaded) 
-    ASC   := GC("LaltSpaceCommand","V") . ", " . GC("RaltSpaceCommand","V")
+    ndspl := GC("CB_title_file")                                                ; new display (if new file was loaded)
+    ASC   := GC("CommaAlias","V") . ", " . GC("PeriodAlias","V")
     title := CB_Title_ID title_text suffix l ASC l (ndspl ? ndspl : ldspl) 
     CC("CBtitle",title)
     
   ; SET GUI OPTIONS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - 
     Gui, 2: New                                                                 
-    Gui, 2: +LastFound +OwnDialogs +Owner +E0x00200 +AlwaysOnTop +Resize    ; +E0x08000000, -DPIscale
+    Gui, 2: +LastFound +OwnDialogs +Owner +E0x00200 +AlwaysOnTop +Resize        ; +E0x08000000, -DPIscale
     ; WinSet, TransColor,% w_color
     Gui, 2: Color, %w_color%
     Gui, 2: font, c%t_color% s%fsz% w%fwt%, %fnt%
@@ -80,8 +82,7 @@
         Gui, 2: +Caption
 
   ; ADD GUI INTERFACE ELEMENTS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    
-    ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
+   ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
     if (show_txt = "") {                                                        ; reload last diplayed txt
         txt_file := GC("CB_last_display", "help.txt")
         txt_file := RegExReplace(txt_file, "\[.+?\]")                           ; removes any text surrounded by square brackets 
@@ -93,21 +94,29 @@
         IniWrite, %txt_file%, %config_path%, %A_ComputerName%, CB_last_display
         title := CB_Title_ID title_text suffix l txt_file RetrieveExt(A_ScriptDir "\mem_cache\" txt_file)
     }
-    
-    switch ndspl 
+    switch trim(ndspl) 
     {
         case "First lines of 0-9.txt"          : txt := GetNumMemLines(,GC("MemSummaryLines", 1))
         case "First lines of 1 character files": txt := GetNumMemLines(,GC("MemSummaryLines", 1),,1)
+        case "Saved PATHS"                     : txt := GetIniSect("PATHS")
+        case "Saved URLS"                      : txt := GetIniSect("URLS")
+        case "Saved W_Links"                   : txt := GetIniSect("W_LINKS")
+        case "Saved B_Links"                   : txt := GetIniSect("B_LINKS")
+        case "Saved U_Links"                   : txt := GetIniSect("U_LINKS")
         case "Clipboard Contents"              : txt := Clipboard
+        case "list.txt"                        : txt := CreateCacheList("list",,GC("rowMax",26))
         default                                :
-            txt := AccessCache(txt_file,, False)
+            if instr(ndspl, "*.*") 
+                txt := CreateCacheList("list", RegExReplace(ndspl, "\*\.\*"), GC("rowMax",26))
+            else
+                txt := AccessCache(txt_file,, False)
     }
 
     Gui, 2: Margin, 2, 2
     rows := countrows(txt)
     rows := (rows < 2) ? 2 : (rows > 30) ? 30 : rows
     wrap := wrap_txt ? "+Wrap" : ""
-    Gui, 2: Add, Edit, section x5 %wdth% R%rows% %wrap% HScroll VScroll ReadOnly -WantReturn -E0x200 vCB_Display         ; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=16964
+    Gui, 2: Add, Edit, section %wdth% R%rows% %wrap% HScroll VScroll ReadOnly -WantReturn -E0x200 vCB_Display         ; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=16964
     
     if display {
         Guicontrol, ,CB_Display, %txt%
@@ -123,9 +132,11 @@
         Gui, 2: Color,,%w_color% 
     }
 
-    ; BUILD GUI CONTROLS ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
-    CtrX    := (SubStr(wdth, 2) - IBwidth) // 2
-    Gui, 2: Add, Edit, x%CtrX% w%IBwidth% r1 vUserInput, %input_txt% 
+   ; BUILD GUI CONTROLS ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
+    ; IBx    := substr(WP[1],2) + round((SubStr(wdth, 2) - IBwidth) // 2)
+    Gui, 2: Add, Edit, section wp r1 vUserInput, %input_txt% 
+    ; Gui, 2: Add, Edit, xp y+m wp-10 r1 vUserInput, %input_txt% 
+    ; Gui, 2: Add, Edit, x%IBx% w%IBwidth% r1 vUserInput, %input_txt% 
     Gui, 2: Add, Button, Default Hidden gEnter_Button                           ; Gui, 2: Add, Button, ys h35 x+5 w80 Default gEnter_Button, Enter  ;Gui, 2: Add, Button, Default Hidden x0 y0 gEnter_Button
     Gui  2: Add, Button, Hidden gSearch_button, &n
     Gui  2: Add, Button, Hidden gReverseSearch_button, &p
@@ -143,7 +154,7 @@
     Gui, 2: show, hide AutoSize,%title%
     Gui, 2: Show, % CB_position . ((GC("CB_appActive", 0)) ? (" NoActivate") : (" Restore"))
     if (!GC("CB_appActive", 0)) {
-        GuiControl, Focus, UserInput 
+        GuiControl, 2: Focus, UserInput 
         Send % GC("CB_reenterInput", 1) ? ("^a") : ("")
     }
 
@@ -158,6 +169,7 @@
     SetBatchLines, 10ms
     SetKeyDelay, 10, 50
     Process, Priority, , A
+    ; BlockInput, MousemoveOff
     ; BlockInput OFF
     ; WinWaitClose
     return
@@ -168,9 +180,9 @@
         If A_EventInfo = 1                                                      ; window has been minimized.  No action needed.
             Return
         AutoXYWH("wh*", "CB_Display")
-        CtrXpos := (A_GuiWidth - GC("CB_InputBox_width")) // 2
-        GuiControl, MoveDraw, UserInput, x%CtrXpos%
-        AutoXYWH("y*", "UserInput")
+        CtrXpos := substr(WP[1],2) 
+        AutoXYWH("yw*", "UserInput")
+        GuiControl, MoveDraw, UserInput
         if !GC("CB_ScrollBars", 0)
             GuiControl, 2: -HScroll -VScroll, CB_Display
         Gui, 2: show
@@ -183,6 +195,7 @@
         Gui, 2: +LastFound 
         gosub, save_win_coord
         Gui, 2: destroy
+        CC("CB_hist_counter",0)
         exit
 
     ReverseSearch_button:
@@ -266,7 +279,7 @@
         Return
 
     Enter_Button:
-        
+        CC("CB_hist_counter",0)
         Gui, 2: Submit, Hide
         
         (substr(UserInput,0) = "~") ? ("") : CC("last_user_input", UserInput)   ; store key history, except keys ending in "~" (shutdown related)    
@@ -280,12 +293,10 @@
                         : ProcessCommand(UserInput, suffix, title, fsz, fnt, w_color, w_color)
         
         afterExecution := (GC("CB_persistent", 0) = 1) ? 2 : afterExecution
-
         switch afterExecution
         {
             case "1": 
-                ldspl := GC("CB_last_display")
-                ;goto, 2GuiClose
+                ldspl := GC("CB_last_display") 
             case "2": 
                 goto, redrawGUI
             case "3": 

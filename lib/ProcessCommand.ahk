@@ -6,19 +6,33 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
     f_path := A_ScriptDir "\mem_cache\" 
 
     (substr(UserInput,0) = "~") ? ("") : CC("last_user_input", UserInput)   ; store key history, except keys ending in "~" (shutdown related)   
+
     ; if RegExMatch(1stChar,"[0-9A-Z\?jk:]") 
-    if (1stChar ~= "[0-9A-Z\?jk:]")
-    {
+    if (1stChar ~= "[\.\,>0-9A-Z\?jk:]") {
         C_input := SubStr(UserInput, 2)                                         ; everything after the first character
         SplitPath, C_input, FileName, Dir, Extension, NameNoExt                 ; parses everything after the command character as a file path 
         dir := dir ? dir . "\" : ""
         Switch 1stChar                                                          ; free: h,i,u,x,y
         { 
+            
             Case 1,2,3,4,5,6,7,8,9,0:
                 NameNoExt := 1stChar
                 C_input := 1stChar
                 gosub, Load
                 return 1
+            Case ".",",":
+                C2_Remainder := substr(C_input,2)
+                if (substr(C_input,1,1) = ":") {
+                    (1stChar = ".") ? (CC("PeriodAlias", "V" C2_Remainder), PU("PeriodAlias set to: V" C2_Remainder))
+                                    : (CC("CommaAlias", "V" C2_Remainder), PU("Commaalias set to: V" C2_Remainder))
+                } else if (substr(C_input,1,1) = "!") {
+                    (1stChar = ".") ? (DC("Periodalias"), PU("PeriodAlias reset to V"))
+                                    : (DC("CommaAlias"), PU("CommaAlias reset to V"))
+                }
+                return 2
+            Case ">":
+                c_input := ">"
+                goto, load
             Case "?":                                                           ; load help.txt file in display                                                    
                 NameNoExt := "help"
                 C_input := "help"
@@ -127,7 +141,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     txt  := AccessCache(NameNoExt,dir, False)
                     tgt := f_path dir NameNoExt
 
-                } else if (C_input = "$") or (C_input = "$$") {                 ; shortcut list 
+                } else if (C_input = "$") or (C_input = "$$") {                 ; list of all hotkeys 
 
                     NameNoExt := "HotKey_List"
                     dir := "..\"
@@ -143,13 +157,14 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         NameNoExt := "Clipboard Contents", dir := ""
                         goto, updateGUI
                     } catch e {
-                        PopUp("Sorry the CB only displays text strings", , ,, , drtn = "-2000") 
+                        PU("Sorry the CB only displays text strings", , ,, , drtn = "-2000") 
                         return 1
                     }
                 } else if (C_input = "%") {                                     ; User Input History 
                     NameNoExt := "_hist.txt [starting with most recent]"
                     dir := ""
                     CC("CB_last_display", dir NameNoExt)
+                    CleanHist(100)
                     txt  := AccessCache(RegExReplace(NameNoExt, "\[.+?\]"),dir, False)  ; "\[.+?\]" removes any text surrounded by square brackets 
                 } else if (2ndChar = "#") {                                     ; get first lines from 0-9.txt memory files                        
                     remainder := substr(C_input,2)
@@ -162,28 +177,41 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     NameNoExt := "First lines of 1 character files"
                     dir := ""
 
-                } else if (2ndChar = ",") or (2ndChar = ".") {                                     ; RaltSpaceCommand: folder contents
+                } else if (2ndChar = ",") or (2ndChar = ".") {                                     ; PeriodAlias: folder contents
                     
                     after2char := SubStr(C_input, 2)
                     NameNoExt := after2char
-                    dir := (2ndChar = ".") ? GC("RaltSpaceCommand") : GC("LaltSpaceCommand")
+                    dir := (2ndChar = ".") ? GC("PeriodAlias") : GC("CommaAlias")
                     dir := (dir != "ERROR") ? substr(dir,2) : ""
 
                     if (after2char != "") {
                         CC("CB_last_display", dir . after2char)
                         txt  := AccessCache(after2char, dir, False)
                     } else {
-                        NameNoExt := "list"
+                        NameNoExt := "*.*"
+                        ; NameNoExt := "*.*" . " [ " . 2ndChar . " ]"
                         CC("CB_last_display", dir NameNoExt)
-                        txt := CreateCacheList("list", dir)
+                        txt := CreateCacheList("list", dir, GC("rowMax",26))
                         tgt := f_path dir NameNoExt
                     }
+                } else if (2ndChar = ":") {                                     ; load folders and files that match string entered after ":"
+                    dir := SubStr(C_input, 2)
+                    dir := CS(dir,,"(\*\.\*|\*)")
+                    NameNoExt := "*.*"
+                    CC("CB_last_display", dir NameNoExt)
+                    txt := CreateCacheList("list", dir, GC("rowMax",26))
+                    tgt := f_path dir NameNoExt
+                } else if (SubStr(UserInput,2 , 2) = "r:") {                                     ; load folders and files that match string entered after ":"
+                    CC("rowMax", SubStr(UserInput,4))
+                    return 2
                 } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini"))   ; load list of files in mem_cache
                   or (C_input = "?") {
                     NameNoExt := "list"
                     CC("CB_last_display", NameNoExt)
-                    txt := CreateCacheList("list")
+                    txt := CreateCacheList("list",,GC("rowMax",26))
                     tgt := f_path dir NameNoExt
+
+                ; } else if (!FileExist(tgt ".txt") and !FileExist(tgt ".ini"))   ; todo: A>3 GUIupdate
 
                 } else {
                     CC("CB_last_display", dir NameNoExt)
@@ -193,25 +221,31 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 updateGUI:
                     new_title_file := dir . NameNoExt . RetrieveExt(tgt)            ; new_title_file := """" dir """" . NameNoExt . RetrieveExt(tgt)
                     ; msgbox % 1 new_title_file "`n" 2 "`n" txt
-                    CC("CB_title", new_title_file)
+                    CC("CB_title_file", new_title_file)
                     UpdateGUI(txt, new_title_file)
                     return 1
 
             Case "O":                                                           ; overwrite file/clipboard
                 C_input := RegExReplace(C_input, "S) +", A_Space)               ; replaces multiple spaces w/ 1        
-
-                If ((2ndChar == ">") and RegExMatch(C_input,"[0-9A-Za-z]")) {   ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
-                    NameNoExt := trim(C_input, " >:")
+                
+                If (SubStr(UserInput, 2) == ">") {
+                    SplitPath,% GC("CB_title_file",""), FileName, dir, Extension, NameNoExt
+                    dir := dir ? dir . "\" : ""
+                    if FileExist(f_path dir NameNoExt "." (Extension ? Extension : "txt")) {
+                        clipboard := AccessCache(NameNoExt,dir, False)
+                        goto, load
+                    }
+                } else If ((2ndChar == ">") and RegExMatch(C_input,"[0-9A-Za-z]")) {   ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
+                    NameNoExt := trim(C_input, " >")
                     dir := (InStr(dir, ">")) ? "" : dir
                     dir := (InStr(dir, ":")) ? "" : dir
                     WriteToCache(namenoext,,dir,clipboard)   
                     goto, load
                 } else If (SubStr(C_input, 0) == ">") {                         ; if C_input ends in ">" overwrite clipboard with file contents  
-                     
-                    C_input := trim(C_input, " >:")
+                    C_input := trim(C_input, " >")
                     SplitPath, C_input, , Dir, , NameNoExt 
                     clipboard := AccessCache(NameNoExt,dir, False)
-                    C_input := ">"
+                    C_input := ">" ; for loading clipboard into CB display 
                     goto, load
                 } else If (InStr(SubStr(C_input, 2), ":")) {
                     dPos        := InStr(C_input, ":")
@@ -273,7 +307,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         try {
                             Filecopy,% f_path . 1Dir . 1NameNoExt . ".txt",% f_path . Dir . NameNoExt . ".txt", 1
                         } catch {
-                            PopUp("invalid path",C.lgreen,C.bgreen,,,-2000)
+                            PU("invalid path",C.lgreen,C.bgreen,,,-2000)
                             UpdateGUI()
                         }
                     }
@@ -282,6 +316,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 return 2
             Case "V":                                                           ; paste file contents
                 ; sleep, short
+                paste:
 
                 if InStr(UserInput, ":") {
                     C_First2chr := SubStr(C_input, 1, 2) 
@@ -289,46 +324,46 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     C3_Remainder := SubStr(C_input, 3)
                     Switch
                     {
-                        case C_First3chr = "l:!":
-                            PU("LaltSpaceCommand reset to V")
+                        case C_First3chr = "l:!", C_First3chr = ",:!":
+                            PU("CommaAlias reset to V")
                             sleep 200
-                            DC("LaltSpaceCommand")
-                            CreateCacheList("list")
+                            DC("CommaAlias")
+                            CreateCacheList("list",,GC("rowMax",26))
                             return 
                         case C_First3chr = "l:?": 
                             TC("LaltList", "Toggle LaltCommand Cache List: ")
                             return 2
-                        case C_First3chr = "r:!":
-                            PU("RaltSpaceCommand reset to V")
+                        case C_First3chr = "r:!", C_First3chr = ".:!":
+                            PU("PeriodAlias reset to V")
                             sleep 200
-                            DC("RaltSpaceCommand")
+                            DC("PeriodAlias")
                             return 
-                        case C_First2chr = "l:":
-                            PU("LaltSpaceCommand set to: V" C3_Remainder)
+                        case C_First2chr = "l:" or C_First2chr = ",:":
+                            PU("CommaAlias set to: V" C3_Remainder)
                             sleep 200
-                            CC("LaltSpaceCommand", "V" . C3_Remainder)
-                            CreateCacheList("list", substr(GC("LaltSpaceCommand"),2))
+                            CC("CommaAlias", "V" . C3_Remainder)
+                            CreateCacheList("list", substr(GC("CommaAlias"),2), GC("rowMax",26))
                             return 
-                        case C_First2chr = "r:":
-                            PU("RaltSpaceCommand set to: V" C3_Remainder)
+                        case C_First2chr = "r:", C_First2chr = ".:":
+                            PU("PeriodAlias set to: V" C3_Remainder)
                             sleep 200
-                            CC("RaltSpaceCommand", "V" . C3_Remainder)
+                            CC("PeriodAlias", "V" . C3_Remainder)
                             return 
                         case C_First2chr = ":!":
                             PU("Alt Space Commands reset to V")
                             sleep 200
-                            DC("LaltSpaceCommand")
-                            DC("RaltSpaceCommand")
-                            CreateCacheList("list")
+                            DC("CommaAlias")
+                            DC("PeriodAlias")
+                            CreateCacheList("list",,GC("rowMax",26))
                             return 
                         default:
                             
                     }
-                } else if (2ndChar = ",") or (2ndChar = ".") {                                     ; RaltSpaceCommand: folder contents
+                } else if (2ndChar = ",") or (2ndChar = ".") {                                     ; PeriodAlias: folder contents
                     
                     after2char := SubStr(C_input, 2)
                     NameNoExt := after2char
-                    dir := (2ndChar = ".") ? GC("RaltSpaceCommand") : GC("LaltSpaceCommand")
+                    dir := (2ndChar = ".") ? GC("PeriodAlias") : GC("CommaAlias")
                     dir := (dir != "ERROR") ? substr(dir,2) : ""
 
                     if (after2char != "") {
@@ -337,56 +372,54 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     } else {
                         NameNoExt := "list"
                         CC("CB_last_display", dir NameNoExt)
-                        txt := CreateCacheList("list", dir)
+                        txt := CreateCacheList("list", dir, GC("rowMax",26))
                         tgt := f_path dir NameNoExt
                         goto, load
                     }
                 } else {
-                    namenoext := namenoext ? namenoext : GC("CB_title","")
+                    namenoext := namenoext ? namenoext : GC("CB_title_file","")
                     ActivateWin("ahk_id"  tgt_hwnd)
                     AccessCache(namenoext, dir)
                 }
                 return 3
             Case "E":                                                           ; edit file
-                path := f_path dir RegExReplace(GC("CB_title",""), "\[.+?\]")   ; "\[.+?\]" removes any text surrounded by square brackets 
+                path := f_path RegExReplace(GC("CB_title_file",""), "\[.+?\]")   ; "\[.+?\]" removes any text surrounded by square brackets 
                 if !C_input && FileExist(path) {
                     EF(path)
-                } else if InStr(UserInput, "~") && FileExist(path) {
-                    
-                    EditFunc := substr(C_input,2)
+                } else if (InStr(C_input, "~") && FileExist(path)) {
+                    EditFunc := substr(C_input,2,2)
                     switch EditFunc
                     {
-                        case "trim","t":
-                            NewText := RegExReplace(AccessCache(path,,0), "m)^ +")
+                        case "t": ;trime leading tabs and spaces
+                            NewText := RegExReplace(AccessCache(path,,0), "m)^( +|`t+)( +)")
+                            ; NewText := RegExReplace(AccessCache(path,,0), "m)^( +)|(`t+)")
+                            ; NewText := RegExReplace(AccessCache(path,,0), "m)^ +") ;removes just leading spaces
                             ; NewText := RegExReplace(NewText, "m)(^\s+)")
                             ; NewText := RegExReplace(NewText, " [ `t]+")
                             ; NewText := RegExReplace(NewText, "[ `t]{2,}")
                             ; NewText := RegExReplace(NewText,  " {2,}", " ")
                             ; NewText := RegExReplace(NewText, "m)(^\s+)|(\s+$)")
-                            WriteToCache(path,,,NewText,,1)
-                            UpdateGUI(NewText, ltrim(path,f_path))
-                        case "trimTabs","tt":
+                        case "ts":                                              ; trim leading spaces
+                            NewText := RegExReplace(AccessCache(path,,0), "m)^( +|`t+)( +)")
+                        case "tt":                                              ; trim leading tabs
                             NewText :=   RegExReplace(AccessCache(path,,0),  "m)^`t+")
                             NewText := RegExReplace(NewText,  " [ `t]+", " ")
-                            WriteToCache(path,,,NewText,,1)
-                            UpdateGUI(NewText, ltrim(path,f_path))
-                        ; case "ltrim","lt":
-                        ;     NewText := RegExReplace(AccessCache(path,,0), "m)(^\s+)")
-                        ;     WriteToCache(path,,,NewText,,1)
-                        ;     UpdateGUI(NewText, ltrim(path,f_path))
-                        case "cleanLines","cl":                                 ; removes multiple blank lines 
+                        case "cl":                                              ; replaces multiple blank lines with 1
                             NewText := RegExReplace(AccessCache(path,,0), "(`r`n){2,}", "`r`n`n")
-                            WriteToCache(path,,,NewText,,1)
-                            UpdateGUI(NewText, ltrim(path,f_path))
-                        case "noBlankLines","!l","nbl":                           ; removes multiple blank lines 
+                        case "!l","nl":                                         ; removes all blank lines
                             NewText := RemoveBlankLines(,AccessCache(path,,0))
-                            WriteToCache(path,,,NewText,,1)
-                            UpdateGUI(NewText, ltrim(path,f_path))
-
-
+                        case "i:":                                              ;insert line line
+                            dPos := InStr(C_input, ":")
+                            lines := substr(C_input,4,dPos-4)                   ;last term is length not end position
+                            text_to_add := !substr(C_input, dPos+1) ? "`n" : substr(C_input, dPos+1)
+                            NewText := TF_InsertLine(AccessCache(path,,0), lines, , text_to_add)
                         default:
+                            msgbox, error
                     }
-                } else {
+                    WriteToCache(path,,,NewText,,1)
+                    UpdateGUI(NewText, ltrim(path,f_path))
+
+                } else if !InStr(C_input, "~") {
                     input := f_path Dir FileName
                     if FileExist(input ".txt") 
                         input .= ".txt"
@@ -394,11 +427,11 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                         input .= ".ini"
                     EditFile(input)
                 }
-                return 1
+                return 2
             Case "C":                                                           ; copy file
                 If !RegExMatch(C_input, " .+")                                  ; if no second file name given add suffix  
                 {
-                    PopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
+                    PU("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
                     var := 1
                     source := f_path . Dir . namenoext . "." . (Extension ? Extension : "txt")
                     dest := f_path . Dir . namenoext . "_" . var . "." . (Extension ? Extension : "txt")
@@ -406,7 +439,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     exist = %ErrorLevel%                                        ; get the error level 0 = no errors
                     while exist > 0                                             ; what to do if there is an error like filename already exists
                     {
-                        PopUp("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
+                        PU("DUPLICATE DETECTED!`nappending suffix to filename", lpurple,purple )
                         ++var
                         Filecopy,%f_path%%Dir%%namenoext%.txt, %f_path%%Dir%%namenoext%_%var%.txt,0
                         exist = %ErrorLevel%
@@ -436,15 +469,15 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
     
                         Msgbox % "`ndest_path: " . dest_path . "`n source_path: " .  source_path
                         Filecopy,%source_path%,%dest_path%,1    ; 1 = overwrite 
-                        ; PopUp(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
+                        ; PU(oFileName . " copied to " . nFileName,lgreen,C.bgreen,,,-2000)
                     } catch {
-                        PopUp("invalid file path",C.lgreen,C.bgreen,,,-2000)
+                        PU("invalid file path",C.lgreen,C.bgreen,,,-2000)
                     }
                 }
                 goto, Load
             Case "D":                                                           ; delete file
                 if (UserInput == "D") {
-                    SplitPath,% GC("CB_title",""), FileName, Dir, Extension, NameNoExt
+                    SplitPath,% GC("CB_title_file",""), FileName, Dir, Extension, NameNoExt
                     dir := dir ? dir . "\" : ""
                     FileDelete,% f_path . Dir . NameNoExt . "." . (Extension ? Extension : "txt")
                 } else if InStr(UserInput, ",") {
@@ -469,11 +502,15 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 switch C_3
                 {
                     case "1~:":
-                        CC("Rsep1", C4_Remainder), PU("Rsep1: " C4_Remainder), UpdateGUI()
+                        CC("Rsep1", C4_Remainder), PU("Rsep1: " C4_Remainder,,,,,2000), UpdateGUI()
                         return 1
                     case "2~:":
-                        CC("Rsep2", C4_Remainder), PU("Rsep2: " C4_Remainder), UpdateGUI()
+                        CC("Rsep2", C4_Remainder), PU("Rsep2: " C4_Remainder,,,,,2000), UpdateGUI()
                         return 1
+                    case "??":
+                        PU("Rsep 1:" GC("Rsep1", "~") "2:"  GC("Rsep2", "__"),,,,,2000)
+                    case "!!":
+                        DC("Rsep2"), DC("Rsep1"), PU("Rsep reset to 1:~ 2:__",,,,,2000) 
                     Case "f~:":
                         OuterArr := StrSplit(C4_Remainder, " ")
                         InnerArr := StrSplit(OuterArr[1], sep1)
@@ -500,6 +537,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
 
                     default:
                         sleep short
+                        StringCaseSense, On
                         ActivateWin("ahk_id " tgt_hwnd)      
                         vtext := clip()                       
                         arrN := StrSplit(C_input, GC("Rsep2", "__"))  
@@ -508,6 +546,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                             AB := StrSplit(arrN[A_index], GC("Rsep1", "~"))
                             vtext := ReplaceAwithB(AB[1], AB[2],vtext,0,0)
                         }
+                        StringCaseSense, Off
                         clip(vtext)   
                         return 3
 
@@ -515,11 +554,15 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 return 3
             Case "F":                                                           ; fill space with char 
                 sleep, short
-                ActivateWin("ahk_id " tgt_hwnd)                             
-                arr := (InStr(C_input, "~")) ? StrSplit(C_input, "~") 
-                                             : StrSplit(C_input, ",")
-                FillChar(arr[2], arr[1], 0)
-                return 
+                ActivateWin("ahk_id " tgt_hwnd)   
+                if !InStr(C_input, "~") AND !InStr(C_input, ",") {
+                    FillChar(50, C_input, 0)
+                } else {                          
+                    arr := (InStr(C_input, "~")) ? StrSplit(C_input, "~") 
+                                                : StrSplit(C_input, ",")
+                    FillChar(arr[2], arr[1], 0)
+                } 
+                return 3
             case "I":                                                           ; change retrieve path letter variable  
                 if (2ndChar = ":") 
                     CC("chr2_path", ConvertUpper(ltrim(C_input,":"),0))
@@ -585,8 +628,46 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                 }
                 GUI 2: destroy
                 return
-            Case "W","B","H","N","M":
+            Case "H","N","Q":
                 RunOtherCB(C_input, 1stChar) 
+            
+            Case "W": SaveLinkOps(C_input,"W_LINKS","Saved W_Links")
+                
+            Case "B": SaveLinkOps(C_input,"B_LINKS","Saved B_Links")
+                
+            Case "U": SaveLinkOps(C_input,"U_LINKS","Saved U_Links")
+            Case "M":                                                           ; move tgt window
+                switch C_input
+                {
+                      case "q", "TL"   : MoveWin("TL")                          ;move tgt window to top left                      
+                      case "e", "TR"   : MoveWin("TR")                          ;move tgt window to top right                     
+                      case "z", "BL"   : MoveWin("BL")                          ;move tgt window to bottom left                   
+                      case "c", "BR"   : MoveWin("BR")                          ;move tgt window to bottom right                  
+                      case "w", "T"    : MoveWin("T")                           ;move tgt window to top half                      
+                      case "s", "B"    : MoveWin("B")                           ;move tgt window to bottom half                   
+                      case "a", "L"    : MoveWin("L")                           ;move tgt window to left half                     
+                      case "d", "R"    : MoveWin("R")                           ;move tgt window to right half                    
+                      case "+a", "LS"  : MoveWin("LS")                          ;move tgt window to left side small               
+                      case "+d", "RS"  : MoveWin("RS")                          ;move tgt window to right side small              
+                      case "+w", "TS"  : MoveWin("TS")                          ;move tgt window to top half small                
+                      case "+s", "BS"  : MoveWin("BS")                          ;move tgt window to bottom half small             
+                      case "<+q", "L1" : MoveWin("L1")                          ;move tgt window to top left small      
+                      case "L2"        : MoveWin("L2")                          ;move tgt window to top left small      
+                      case "L3"        : MoveWin("L3")                          ;move tgt window to top left small      
+                      case "<+z", "L4" : MoveWin("L4")                          ;move tgt window to bottom left small   
+                      case "<+e", "R1" : MoveWin("R1")                          ;move tgt window to top right small     
+                      case "R2"        : MoveWin("R2")                          ;move tgt window to top right small     
+                      case "R3"        : MoveWin("R3")                          ;move tgt window to top right small     
+                      case "<+c", "R4" : MoveWin("R4")                          ;move tgt window to bottom right small  
+                      case ">+q", "L1v": MoveWin("L1v")                         ;move tgt window to top left small (portrait)    
+                      case ">+e", "R1v": MoveWin("R1v")                         ;move tgt window to top right small (portrait)   
+                      case ">+z", "L4v": MoveWin("L4v")                         ;move tgt window to bottom left small (portrait) 
+                      case ">+c", "R4v": MoveWin("R4v")                         ;move tgt window to bottom right small (portrait)
+                      case "^e", "R1s" : MoveWin("R1s")                         ;move tgt window to top right smallest            
+                      case "^q", "L1s" : MoveWin("L1s")                         ;move tgt window to top left smallest             
+                      case "^z", "L4s" : MoveWin("L4s")                         ;move tgt window to bottom left smallest          
+                      case "^c", "R4s" : MoveWin("R4s")                         ;move tgt window to bottom right smallest         
+                }
             Case "S":                                                           ; search selected text in chosen search engine msft
                 
                 if (InStr(C_input, ":") AND !InStr(C_input, ":>")) {                                      ; get search string from command box if colon detected
@@ -677,6 +758,7 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
                     case "focus"       ,"a"  : TC("CB_appActive"  , "Toggle application focus: ")
                         return 2
                     case "renter input","r"  : TC("CB_reenterInput" , "Re-enter last submit: ")
+                    case "lrows"  : TC("CB_reenterInput" , "Re-enter last submit: ")
                     case "wrap_text" ,"w"    : TC("CB_Wrap", "Toggle text wrap: ")
                         return 2
                     case "default"   ,"d"    : ToggleDisplay("display")
@@ -700,3 +782,6 @@ ProcessCommand(UserInput, suffix = "~win", title = "", fsz = "", fnt = "", w_col
     }
     return
  }
+
+
+ 

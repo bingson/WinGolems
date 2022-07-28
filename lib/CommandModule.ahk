@@ -35,7 +35,7 @@ CommandModule(UserInput, suffix, title, fsz, fnt, w_color, t_color) {
         Case "L":                                                           ; display file in command box
             Load:                                                    
             if !FileExist(f_path dir NameNoExt ".txt") or (C_input = "list") {
-                txt  := CreateCacheList("list")
+                txt  := CreateCacheList("list",,GC("rowMax",26))
             } else {
                 IniWrite, %dir%%NameNoExt%, %config_path%, %A_ComputerName%, CB_last_display
                 txt  := AccessCache(NameNoExt,dir, False)

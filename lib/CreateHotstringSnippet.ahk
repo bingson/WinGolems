@@ -68,7 +68,7 @@
      FileAppend, %new_hotstring%, %dest_file%                                    ; add hotstring code to relevant ahk file ()
      AccessCache(key, dest)
      
-     PopUp("new hotstring created",C.lgreen, C.bgreen, "300", "75", "-1000", "16", "610")
+     PU("new hotstring created",C.lgreen, C.bgreen)
      sleep, long
      reload
      return

@@ -2,8 +2,7 @@
 #IF
 
 ; FILE EXPLORER CONVENIENCE ____________________________________________________
-
-  #If WinActive("ahk_exe Explorer.EXE") and GC("T_FM",0) ; -- -- -- -- -- -- -- below shortcuts active in file explorer if "T_FM" variable in config.ini = 1
+    #If WinActive("ahk_exe Explorer.EXE") and GC("T_FM",0) ; -- -- -- -- -- -- -- below shortcuts active in file explorer if "T_FM" variable in config.ini = 1
     !u::          Send !{up}                                                    ;FileExplorer: up one folder level 
     <!i::         Send !{left}                                                  ;FileExplorer: prev folder         
     <!o::         Send !{right}                                                 ;FileExplorer: forward folder      
@@ -52,15 +51,15 @@
   <!o::           Send {blind}!{right}                                          ;FileExplorer: forward folder      
   !d::            Send {blind}!d                                                ;FileExplorer: select path bar     
   >+sc029::       CF(A_ScriptDir)                                               ;ChangeFolder: WinGolems folder    
-  >+m::           CF(A_ScriptDir "\mem_cache")                                  ;ChangeFolder: mem_cache
+  esc & m::       CF(A_ScriptDir "\mem_cache")                                  ;ChangeFolder: mem_cache
   >+u::           CF(UProfile)                                                  ;ChangeFolder: %UserProfile%
   >+j::           CF(UProfile "\Downloads")                                     ;ChangeFolder: Downloads
   >+o::           CF(A_ProgramFiles)                                            ;ChangeFolder: C:\Program Files
   >+>!o::         CF(PF_x86)                                                    ;ChangeFolder: C:\Program Files(x86)
   >+p::           CF(UProfile "\Pictures")                                      ;ChangeFolder: Pictures
   >+d::           CF(UProfile "\Documents")                                     ;ChangeFolder: My Documents
-  >+c::           CF(hdrive)                                                    ;ChangeFolder: %Homedrive% (C:)
-  >+r::           CF("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()       ;ChangeFolder: Recycle bin (doesn't work for save as diag)
-  F1 & h::        CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()       ;ChangeFolder: This PC / My Computer
+  pgdn & c::      CF(hdrive)                                                    ;ChangeFolder: %Homedrive% (C:)
+  pgdn & r::      CF("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()       ;ChangeFolder: Recycle bin (doesn't work for save as diag)
+  pgdn & t::      CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()       ;ChangeFolder: This PC / My Computer
                                                                                 ; https://www.autohotkey.com/docs/misc/CLSID-List.htm 
 #IF

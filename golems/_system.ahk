@@ -32,7 +32,7 @@
     :X:rs~~win::   PowerOptions("restart")                                        ;SC: restart the computer 
     F12 & a::                                                                     ;SC: alarm clock 
     :X:alarm~win::
-    :X:a~win::     Run assets\win\Alarms & Clock.lnk                              ;SC: alarm clock
+    :X:a~win::     WinTimer()
     <!#m::                                                                        ;SC: Send mail 
     :X:m~win::     SendEmail()                                                    ;SC: Send mail
 
@@ -121,66 +121,35 @@
     
 ; DEVELOPER OPTIONS ____________________________________________________________
 
-  ; CB -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    
-    #IF WinActive("ahk_id " CB_hwnd) and GC("T_d",0)                            ; If Command or Function Box active                       
-    printscreen & space::  GUISubmit()                                          ;CB| submit GUI input
-    #IF GC("T_d",0) 
-    printscreen & space::  CB()
-
   ; MEMORY -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_d",0) 
 
-    PrintScreen & 0::                                                           ;Memory: paste overwrite 0.txt at current cursor position
-    PrintScreen & 9::                                                           ;Memory: paste overwrite 9.txt at current cursor position
-    PrintScreen & 8::                                                           ;Memory: paste overwrite 8.txt at current cursor position
-    PrintScreen & 7::                                                           ;Memory: paste overwrite 7.txt at current cursor position
-    PrintScreen & 6::                                                           ;Memory: paste overwrite 6.txt at current cursor position
-    PrintScreen & 5::                                                           ;Memory: paste overwrite 5.txt at current cursor position
-    PrintScreen & 4::                                                           ;Memory: paste overwrite 4.txt at current cursor position
-    PrintScreen & 3::                                                           ;Memory: paste overwrite 3.txt at current cursor position
-    PrintScreen & 2::                                                           ;Memory: paste overwrite 2.txt at current cursor position
-    PrintScreen & 1::      Send % "#" . substr(A_ThisHotkey,0)                  ;Memory: paste overwrite 1.txt at current cursor position
+    pgdn & 0::                                                           
+    pgdn & 9::                                                           
+    pgdn & 8::                                                           
+    pgdn & 7::                                                           
+    pgdn & 6::                                                           
+    pgdn & 5::                                                           
+    pgdn & 4::                                                           
+    pgdn & 3::                                                           
+    pgdn & 2::                                                           
+    pgdn & 1::      Send % "#" . substr(A_ThisHotkey,0)                  
     
-    #IF GC("T_d",0) and GetKeyState("shift", "P")
-    PrintScreen & 0::                                                           ;Memory: paste overwrite 0.txt at current cursor position
-    PrintScreen & 9::                                                           ;Memory: paste overwrite 9.txt at current cursor position
-    PrintScreen & 8::                                                           ;Memory: paste overwrite 8.txt at current cursor position
-    PrintScreen & 7::                                                           ;Memory: paste overwrite 7.txt at current cursor position
-    PrintScreen & 6::                                                           ;Memory: paste overwrite 6.txt at current cursor position
-    PrintScreen & 5::                                                           ;Memory: paste overwrite 5.txt at current cursor position
-    PrintScreen & 4::                                                           ;Memory: paste overwrite 4.txt at current cursor position
-    PrintScreen & 3::                                                           ;Memory: paste overwrite 3.txt at current cursor position
-    PrintScreen & 2::                                                           ;Memory: paste overwrite 2.txt at current cursor position
-    PrintScreen & 1::      RetrieveMemory(,,"PrintScreen")                      ;Memory: paste overwrite 1.txt at current cursor position
-    
-  ; REPOSITION WINDOW -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    #IF GC("T_d",0)
-    ; PrintScreen & sc033::   
-    ;"f" : "0Maximize"                                        ;FunctionBox: resize & move window
-                q := { "q" : "1TopLeft"         
-                     , "e" : "1TopRight"        
-                     , "z" : "2BottomLeft"      
-                     , "c" : "2BottomRight"     
-                     , "a" : "0LeftHalf"     
-                     , "d" : "0RightHalf"       
-                     , "w" : "0TopHalf"         
-                     , "s" : "0BottomHalf"      
-                     , "dd": "5RightHalfSmall"       
-                     , "aa": "5LeftHalfSmall"       
-                     , "ww": "6TopHalfSmall"
-                     , "ss": "6BottomHalfSmall"
-                     , "qq": "L1TopLeftSmall"    
-                     , "qa": "L2TopMidLeftSmall"    
-                     , "za": "L3BottomMidLeftSmall"    
-                     , "zz": "L4BottomLeftSmall" 
-                     , "ee": "R1TopRightSmall"   
-                     , "ed": "R2TopMidRightSmall"    
-                     , "cd": "R3BottomMidRightSmall"                                     ; "r" optn sorts menu order by value instead of by key (default)  
-                     , "cc": "R4BottomRightSmall" }
-                FB("MoveWin", q, C.bwhite,, "rs")   ; "s" optn adds a space between case changes for GUI menu
-                return
-                                                                                              
+    /*
+        #IF GC("T_d",0) and GetKeyState("shift", "P")
+        PrintScreen & 0::                                                           ;Memory: paste overwrite 0.txt at current cursor position
+        PrintScreen & 9::                                                           ;Memory: paste overwrite 9.txt at current cursor position
+        PrintScreen & 8::                                                           ;Memory: paste overwrite 8.txt at current cursor position
+        PrintScreen & 7::                                                           ;Memory: paste overwrite 7.txt at current cursor position
+        PrintScreen & 6::                                                           ;Memory: paste overwrite 6.txt at current cursor position
+        PrintScreen & 5::                                                           ;Memory: paste overwrite 5.txt at current cursor position
+        PrintScreen & 4::                                                           ;Memory: paste overwrite 4.txt at current cursor position
+        PrintScreen & 3::                                                           ;Memory: paste overwrite 3.txt at current cursor position
+        PrintScreen & 2::                                                           ;Memory: paste overwrite 2.txt at current cursor position
+        PrintScreen & 1::      RetrieveMemory(,,"PrintScreen")                      ;Memory: paste overwrite 1.txt at current cursor position
+
+    */    
+   
   ; CONVENIENCE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_d",0) 
     :X:ta~win::            CC("T_TM",1),CC("T_FM",1),CC("T_CF",1),CC("T_d",1)   ;turn on all interface layers and UI options 

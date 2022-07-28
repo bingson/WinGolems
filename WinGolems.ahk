@@ -10,9 +10,10 @@
     ; explained: https://www.autohotkey.com/boards/viewtopic.php?f=7&t=6413
     
     SetWorkingDir %A_ScriptDir%
-    #MenuMaskKey vk07                                                           ; vk07 is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed https://www.autohotkey.com/boards/viewtopic.php?t=29595
+    #MenuMaskKey vkFF                                                           ; vk07 is no mapping; Avoid Ctrl getting stuck in down state, even when not physically pressed https://www.autohotkey.com/boards/viewtopic.php?t=29595
     #MaxMem 128
     #MaxHotkeysPerInterval 99000000
+    #HotkeyInterval 99000000
     ListLines Off ;On                                                           ; ListLines/KeyHistory are used to log lines of code and keys for debugging
     #KeyHistory 0 ;100                                                          ; change to a higher number for debugging
     #UseHook
@@ -69,6 +70,9 @@
 #Include _functions.ahk                                                         ; ***end of auto-execution section***
 #Include _system.ahk
 #Include _CB.ahk
+#include <Vis2>  ; Equivalent to #include .\lib\Vis2.ahk
+#Include %A_ScriptDir%\golems\VD
+#Include _VD.ahk
 
 #Include %A_ScriptDir%\golems\
 #Include *i A_Quick_Start.ahk
