@@ -10,7 +10,7 @@ LoadURL(URL) {
         ; case "firefox.exe": output := GC("firefox_path", GC("html_path"))     ; look into firefox url syntax
         default: output := GC("html_path")
     }
-    output := (output = "ERROR") ? GC("html_path") : output
+    output := !output ? GC("html_path") : output
     Run, %output% %URL%
     return
 }

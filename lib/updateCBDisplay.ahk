@@ -6,10 +6,10 @@ updateCBDisplay(txt_file) {
     Width := (Width < 200) ? 200 : (Width > 800) ? 800 : Width
     Gui, 2: Margin, 10, 10
     Gui, 2: Add, Edit, section x5 w%Width% R%rows% HScroll VScroll ReadOnly vCB_Display         ; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=16964
-    Guicontrol, ,CB_Display, %txt%
     IniRead, CB_position, %config_path%, %A_ComputerName%, CB_position, Center
     wdth := StrSplit(CB_position, " ")[3]
     GuiControl, Move, CB_Display, %wdth%                                            ; set the width to the edit box to value stored in ini file
+    Guicontrol, 2:,CB_Display, %txt%
     ; Gui, 2: show, hide AutoSize
     ; Gui, 2: show, %CB_position%
 }

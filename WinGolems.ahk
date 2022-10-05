@@ -24,8 +24,6 @@
     SetDefaultMouseSpeed, 0
     SetBatchLines, -1
     SetWinDelay, -1
-    ;SetBatchLines, 20ms                                                        ; for slower computers 
-    ;SetWinDelay, 10
     SetControlDelay, 20
     SendMode Event
     SetBatchLines, 10ms
@@ -71,6 +69,7 @@
 #Include _system.ahk
 #Include _CB.ahk
 #include <Vis2>  ; Equivalent to #include .\lib\Vis2.ahk
+
 #Include %A_ScriptDir%\golems\VD
 #Include _VD.ahk
 

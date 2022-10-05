@@ -595,49 +595,132 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
 
 ```
 ==o====o====o====o====o====o====o== _CB ==o====o====o====o====o====o====o===
- Lwin & Enter            CB. (V command) selects word at cursor position and replaces it with \mem_cache .txt file with the same name (e.g., 1 = 1.txt).
- Win+Space               CB. opens command box that runs ~win suffix CB keys; enter "?" for help
- Lshift & Enter          CB. selects word at text cursor position and run as CB "~win" key
- Ctrl+Alt+K              CB: Font size decrease
- Ctrl+Alt+J              CB: Font size increase
- Alt+N                   CB: highlight next match of text in the CB display window with text entered in the input box
- Shift+Alt+N             CB: highlight previous match of text in the CB display window with text entered in the input box
- Alt+S                   CB: move CB window to bottom half
- Shift+Alt+S             CB: move CB window to bottom half small
- Alt+Z                   CB: move CB window to bottom left
- Rightshift+Alt+Z        CB: move CB window to bottom left small (landscape)
- Shift+Rightalt+Z        CB: move CB window to bottom left small (landscape)
- Shift+Alt+Z             CB: move CB window to bottom left small (portrait)
- Alt+C                   CB: move CB window to bottom right
- Shift+Rightalt+C        CB: move CB window to bottom right small (landscape)
- Rightshift+Alt+C        CB: move CB window to bottom right small (landscape)
- Shift+Alt+C             CB: move CB window to bottom right small (portrait)
- Alt+A                   CB: move CB window to left half
- Win+Left                CB: move CB window to left half
- Shift+Alt+A             CB: move CB window to left side small
- Alt+D                   CB: move CB window to right half
- Win+Right               CB: move CB window to right half
- Shift+Alt+D             CB: move CB window to right side small
- Alt+W                   CB: move CB window to top half
- Shift+Alt+W             CB: move CB window to top half small
- Alt+Q                   CB: move CB window to top left
- Shift+Rightalt+Q        CB: move CB window to top left small (landscape)
- Rightshift+Alt+Q        CB: move CB window to top left small (landscape)
- Shift+Alt+Q             CB: move CB window to top left small (portrait)
- Alt+E                   CB: move CB window to top right
- Rightshift+Alt+E        CB: move CB window to top right small (landscape)
- Shift+Rightalt+E        CB: move CB window to top right small (landscape)
- Shift+Alt+E             CB: move CB window to top right small (portrait)
- Leftctrl+Space          CB| activate already open Command Box and move focus to inputbox
- Rightctrl+Space         CB| activate already open Command Box and move focus to inputbox
- Rightalt+Space          CB| Capitalize first letter of user input and submit GUI
- Alt+R                   CB| reenter last command
- Leftalt+Space           CB| submit GUI input
- Win+Space               CB| submit GUI input
- Alt+X                   CB| toggle Command Box display|minimalist mode
- Alt+B                   CB| toggle Command Box display|minimalist mode
- Leftctrl+Space          FB: activate already open Function Box and move focus to inputbox
- Rightctrl+Space         FB: activate already open Function Box and move focus to inputbox
+ Lalt & Sc033                  1st lines of alias folder files
+ Lalt & Sc034                  1st lines of alias folder files
+ Ctrl+Del                      always on top
+ Ctrl+End                      app active after CB submission
+ Lwin & Space                  CB.. opens command box that runs ~win suffix CB keys
+ Printscreen & Space           CB.. opens command box that runs ~win suffix CB keys
+ Win+Enter                     CB.. selects word at text cursor position and run as CB "~win" key
+ Esc                           CB: close command box
+ Lalt & Sc027                  CB: close command box
+ Shift+Ctrl+K Up               CB: Font size decrease
+ Shift+Ctrl+J Up               CB: Font size increase
+ Alt+N                         CB: highlight next match of text in the CB display window with text entered in the input box
+ Ctrl+G                        CB: highlight next match of text in the CB display window with text entered in the input box
+ Shift+Alt+N                   CB: highlight previous match of text in the CB display window with text entered in the input box
+ Shift+Ctrl+G                  CB: highlight previous match of text in the CB display window with text entered in the input box
+ Leftalt+S                     CB: move CB window to bottom half
+ Shift+Alt+S                   CB: move CB window to bottom half small
+ Leftalt+X                     CB: move CB window to bottom left
+ Rightshift+Alt+Z              CB: move CB window to bottom left small (landscape)
+ Leftshift+Alt+Z               CB: move CB window to bottom left small (portrait)
+ Ctrl+Alt+Z                    CB: move CB window to bottom left smallest
+ Leftalt+Z                     CB: move CB window to bottom right
+ Rightshift+Alt+X              CB: move CB window to bottom right small (landscape)
+ Leftshift+Alt+X               CB: move CB window to bottom right small (portrait)
+ Ctrl+Alt+X                    CB: move CB window to bottom right smallest
+ Printscreen & Left            CB: move CB window to left half
+ Win+Left                      CB: move CB window to left half
+ Lalt & A                      CB: move CB window to left half
+ Shift & A                     CB: move CB window to left side small
+ Lalt & D                      CB: move CB window to right half
+ Printscreen & Right           CB: move CB window to right half
+ Win+Right                     CB: move CB window to right half
+ Shift & D                     CB: move CB window to right side small
+ Rightalt+X                    CB: move CB window to right side small
+ Alt+W                         CB: move CB window to top half
+ Shift+Alt+W                   CB: move CB window to top half small
+ Leftalt+Q                     CB: move CB window to top left
+ Leftshift+Alt+Q               CB: move CB window to top left f (portrait)
+ Rightshift+Alt+Q              CB: move CB window to top left small (landscape)
+ Ctrl+Alt+Q                    CB: move CB window to top left smallest
+ Leftalt+E                     CB: move CB window to top right
+ Rightshift+Alt+E              CB: move CB window to top right small (landscape)
+ Leftshift+Alt+E               CB: move CB window to top right small (portrait)
+ Ctrl+Alt+E                    CB: move CB window to top right smallest
+ Rightalt+Space                CB: paste mem_cache file
+ Leftalt+Space                 CB: paste mem_cache file
+ Rightctrl+K                   CB| activate already open Command Box and move focus to display box
+ Rightctrl+J                   CB| activate already open Command Box and move focus to input box
+ Ctrl+F                        CB| activate already open Command Box and move focus to input box
+ Rightctrl+M                   CB| activate already open Command Box and move focus to inputbox
+ Shift & Enter                 CB| Capitalize first letter of user input, then submit
+ Lwin & Space                  CB| Open CB
+ Alt+R                         CB| reenter last command
+ Alt+B                         CB| toggle Command Box display|minimalist mode
+ Rightalt+Sc027                close CommandBox
+ Capslock & A                  clipboard contents
+ Capslock & S                  contents of number file & 1 char length text file names
+ Capslock & D                  contents of number file & 1 char length text file names
+ Alt+Up                        cycle through past CB submissions
+ Alt+Down                      cycle through past CB submissions
+ Alt & F4                      destroy CB GUI
+ Leftctrl+Right^2              display corresponding mem file
+ Leftctrl+Right^3              display corresponding mem file
+ Leftctrl+Right^4              display corresponding mem file
+ Leftctrl+Right^5              display corresponding mem file
+ Leftctrl+Right^6              display corresponding mem file
+ Leftctrl+Right^7              display corresponding mem file
+ Leftctrl+Right^8              display corresponding mem file
+ Leftctrl+Right^9              display corresponding mem file
+ Ctrl+6                        display corresponding mem file
+ Ctrl+5                        display corresponding mem file
+ Ctrl+4                        display corresponding mem file
+ Ctrl+8                        display corresponding mem file
+ Leftctrl+Right^1              display corresponding mem file
+ Leftshift+Right+1             display corresponding mem file
+ Leftshift+Right+2             display corresponding mem file
+ Leftshift+Right+3             display corresponding mem file
+ Leftshift+Right+4             display corresponding mem file
+ Leftshift+Right+5             display corresponding mem file
+ Leftshift+Right+6             display corresponding mem file
+ Leftshift+Right+7             display corresponding mem file
+ Leftshift+Right+8             display corresponding mem file
+ Leftshift+Right+9             display corresponding mem file
+ Ctrl+2                        display corresponding mem file
+ Ctrl+1                        display corresponding mem file
+ Ctrl+0                        display corresponding mem file
+ Leftctrl+Right^0              display corresponding mem file
+ Leftshift+Right+0             display corresponding mem file
+ Ctrl+7                        display corresponding mem file
+ Ctrl+9                        display corresponding mem file
+ Ctrl+3                        display corresponding mem file
+ Ctrl & Sc035                  help
+ Ctrl+Alt+Space                maximize CB Window
+ Lalt & K                      Navigation: ctrl + end
+ Lalt & J                      Navigation: ctrl + home
+ Ctrl & Sc029                  number file overview
+ Shift+Ctrl+V                  paste file currently entered in userinput box
+ Ctrl+Home                     persistent
+ Rightctrl+A                   prepend "A" to current contents of input box and submit
+ Shift+Ctrl+A                  prepend "A>" to current contents of input box and submit
+ Ctrl+D                        prepend "D" to current contents of input box and submit
+ Leftctrl+E                    prepend "E" to current contents of input box and submit
+ Rightctrl+E                   prepend "E~" to current contents of input box and submit
+ Shift+Alt+R                   prepend "F" to current contents of input box and submit
+ Ctrl+U                        prepend "H" to current contents of input box and submit
+ Ctrl+H                        prepend "H" to current contents of input box and submit
+ Shift+Ctrl+L                  prepend "L" to current contents of input box and submit
+ Ctrl+L                        prepend "L" to current contents of input box and submit
+ Ctrl+O                        prepend "O" to current contents of input box and submit
+ Shift+Ctrl+O                  prepend "O>" to current contents of input box and submit
+ Ctrl+P                        prepend "P" to current contents of input box and submit
+ Shift+Ctrl+P                  prepend "P>" to current contents of input box and submit
+ Ctrl+R                        prepend "R" to current contents of input box and submit
+ Ctrl+S                        prepend "S" to current contents of input box and submit
+ Ctrl+Win+R                    rerun last CB submission
+ Ctrl+Win+E                    rerun last link operation submission
+ Esc & Space                   reset gui position to default
+ Capslock & N                  send pgdn to CB display box
+ Capslock & Down               send pgdn to CB display box
+ Capslock & O                  send pgup to CB display box
+ Capslock & Up                 send pgup to CB display box
+ Ctrl+Enter                    Shortcut for executing mode/link commands
+ Ctrl+Space                    Shortcut for executing mode/link commands, close CB after
+ Ctrl+Insert                   text wrap
+ Lbutton                       update CB suffix
+ Leftctrl+C                    update clipboard contents if command box display
 ```
 
 </p></details>
@@ -719,13 +802,13 @@ ________________________________________________________________________________
 |                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
-| #Space      open command box or submit key          | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   System tray           |
+| #Space      open command box                        | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   System tray           |
 | <!Space     submit key (left alt: <! right alt: >!) | ------ -------------------------------------------- |  tm  Sask manager          |
 | >!Space     capitalize 1st letter and submit key    | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
 | ^Space      move to CB input box from another app   | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |  ce~ Close All Programs    |
 | !r          reenter last submitted CB key           | ts     [T] auto-selection after win+enter commands  |  rs~ Restart computer      |
 | !b          toggle GUI minimal or display mode      |                                                     |  sd~ Shut Down computer    |
-| !q !e !a !d move & resize CB window to 4 quadrants  |                                                     |                            |
+| !q !e !z !x move & resize CB window to 4 quadrants  |                                                     |                            |
 | !n          find text in CB display (+!n: prev)     |                                                     |                            |
 |_____________________________________________________|_____________________________________________________|____________________________|
 ```
@@ -735,52 +818,85 @@ ________________________________________________________________________________
 <details><summary>&nbsp;ℹ️&nbsp;<b>Uppercase 1st letter initiated functions</b></summary><p>
 
 ```
-__________________________________________________________________________________________________________________________________________
-| Uppercase 1st letters trigger the following functions            >  = windows clipboard contents                                       |
-| remaining characters are case insensitive                        ,  = separate usage examples (except for G examples)                  |
-|                                                                  __ = chains commands that can be repeated                    reference|
-| KEY  CONVENIENCE                             USAGE EXAMPLE                                                                      Format?|
+_________________________________________________________________________________________________________________________________________
+| COMMAND BOX CAPITAL LETTER-INITIATED FUNCTIONS                                                                                         |
+| - Uppercase 1st letters in CB user input box trigger the following functions remaining characters are case insensitive                 |
+| - If multiple files in a command, file being modified is last                                                                          |
+| - "," is used below to separate multiple usage examples (except for G function examples)                                               |
+|                                                                                                                                        |
+| CLIPBOARD TEXT MANAGER & MEMORY SYSTEM FUNCTIONS                                                                                       |
+| KEY  DESCRIPTION                             USAGE EXAMPLES      NOTES:                                                                |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  R   Replace A with B in selected text       R,~+__A~B           usage example: A,C (input) -> A+C -> B+C             R?~?__?~? or R?~?|
-| R?:  Change replacement separators (1|2)     R1~:%; R2~:~:       Changes replacement separators to % and ~: from ~ and __         R?~:?|
-| S?   Query selected text in search engine    Sd, St, Sw, Sn, Sf  (d)ictionary,(t)hesaurus,(w)ikipedia,(n)ews,(f)inance,(i)mages      S?|
-| S?:  Query submitted text                    Sd:facetious        (so)stack overflow,(a)hk documentation,(y)outube,(twt)twitter     S?:?|
-| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     select # of rows below => 3, 10, 20 + delete, 23 + no selection     J?|
-| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered        K?|
-|  G   Run any function                        GMoveWin,TopLeft    format: fnName1,fnParams1__fnName2,fnParams2         G?,?__?,? or G?,?|
-| G?:  Create G function|parameter alias (f|p) Gf:mw~MoveWin       creates 2 alias => Gmw,tl will behave same as GMoveWin,TopLeft  G?:?~?|
-|                                              Gp:tl~TopLeft       list of current aliases in the file ALIAS.ini (see: "Lalias")         |
-|________________________________________________________________________________________________________________________________________|
-
-__________________________________________________________________________________________________________________________________________
-| KEY  CLIPBOARD TEXT MANAGER & MEMORY SYSTEM                      note: if multiple files in a command, output file is last in order    |
+|  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, current file in CB display          |
+|      non CB hotkey: "filename" Lwin + enter  1, sck              for any text field replace 1 with 1.txt contents with "lalt + space"  |
+|      Paste .txt file without opening CB      fileName + !space   text cursor will consume fileName and then paste matching .txt file   |
+|      paste file contents from string alias   "file" + <!space    (after setting , alias) paste matching .txt file from folder r\       |
+|                                              "file" + >!space    (after setting . alias) paste matching .txt file from folder z\       |
+|  L   Load .txt file into CB display          L1, Lr\testr, L>    show 1.txt, r\testr.txt, windows clipboard                            |
+|      symbol shortcuts for useful information L~, L$, L?          show config.ini, WinGolems command list, mem folder contents          |
+|      show 1st lines of files w/ 1 char names L#, L@              show first lines of 1 digit text files, 1 char text files (0-9 or A-Z)|
+|                                              L#4, L@3            show first 4 lines of #.txt files, first 3 lines of #.txt or a-z.txt  |
+|                                              L:z\, L:r\i         List files names starting with: z\, r\i                               |
+|                                              Lr:24               Any show mem_cache file listing command will have row height 24       |    
+| 0-9  Load .txt file 0-9 into CB display      0-9                 user can enter 1  to load 1.txt                                       |
+|  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with number suffix: C1 -> 1_1.txt            |
+|  O   Overwrite/create file w/ selected text  O1                  Overwrite: 1.txt w/ selected text                                     |
+|      Overwrite/create file from other file   Ohelp 2             Overwrite: 2.txt w/ help.txt  (1st file = source, 2nd file = target ) |
+|      Overwrite/create file entered text      O3:test             overwrites contents of 3.txt with the string "test"                   |
+|      overwrite using clipboard = ">"         O3>, O>3            3.txt overwrites clipboard, clipboard overwrites/create 3.txt         |   
+|                                              O>                  overwrites clipboard with current loaded txt file in command box      |
+|  E   Edit file in default editor             E1, Er\test, E      edit => 1.txt, r\test.txt (r\ subfolder file path), displayed file    |
+|      Trim leading spaces                     E~t                                                                                       |
+|      remove duplicate lines                  E~rd                                                                                      |
+|      remove only consecutive duplicate lines E~dd                                                                                      | 
+|      Line formatting                         E~nl, E~cl          nl: remove blank lines, cl: reduce multiple blank lines to 1          |  
+|      insert text                             E~il2,4:example     insert the word "example" at lines 2 and 4 in CB displayed file       |
+| A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt          |
+|      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt              |
+|      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, contents of 1.txt, the word "sample"|
+|      remove/delete rows from top of file     P!3                 remove top 3 rows of currently loaded file                            |
+|      remove/delete rows from bottom of file  A!3                 remove last 3 rows of currently loaded file                           |
+|  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, currently loaded file     |
+|      Delete multiple files                   D1,test,2,3         Delete files 1.txt, test.txt, 2.txt, 3.txt in one command             |
+|  ,   set alias for V L O A P D C commands    ,r\                 makes the comma character an alias (shortcut/placeholder) for "r\"    |
+|      use alias                               L,                  equivalent to Lr\                                                     |
+|      resets , alias to nothing               ,                                                                                         |
+|      other alias symbols:                    . ; [ ] { }         these symbols operate similarly to the "," alias                      |
+|      alias for clipboard contents            >                   used for CB functions  eg., A> (appends selected text to clipboard)   |
+|                                                                  O>1 (overwrites 1.txt with clipboard contents), etc.                  |
+| CONVENIENCE FUNCTIONS                                                                                                                  |
+| KEY  DESCRIPTION                             USAGE EXAMPLES                                                                            |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  L   Load .txt file into CB display          L1, Lr\testr, L>    Load: 1.txt, r\testr.txt ("Ll" .txt list), clipboard                L?|
-|      L?: shortcuts for useful information    LC, LK, LL, L#      Load: (C)onfig.ini, Hot(K)ey list, (L)ist of mem folder files         |
-|      L#? or LI?: 1st lines of a-z or #.txt   L#4, LI, LI2        (#) 1st line of #.txt files (#4: 1st 4 lines), (I) #.txt + A-Z.txt    |
-| 0-9  Load .txt file 0-9 into CB display      0,1,2,3,4,5,6,7,8,9 shortcut alternative to using L1 to load 1.txt                     0-9|
-|  V   Paste .txt file to anchored window      V1, Vsck, V         Paste contents of 1.txt, sck.txt, current file in CB display        V?|
-|  C   save a copy or save copy under new name C1, C1 new_name     duplicate names resolved with number suffix: C1 -> 1_1.txt          C?|
-|  O   Overwrite file options                  O1, Ohelp 2         Overwrite => 1.txt w/ selected, 2.txt w/ help.txt                   O?|
-|      Overwrite Clipboard options             O3>, O>3            Overwrite => Clipboard with 3.txt (3.txt with clipboard)       O?.|O.?|
-|  E   Edit file in default editor             E1, Er\test, E      edit => 1.txt, r\test.txt (r\ subfolder file path), (L)loaded file  E?|
-| A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt     A?|P?|
-|      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt     A?:?|P?:?|
-|      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, 1.txt, the word "sample"            |
-|  F   Paste same string repeatedly            F-+~4               paste => -+-+ ; format: (string) ~ (# of characters) to fill      F?~?|
-|  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, (L)loaded file          D?|
-| Rf~: Modify file w/ saved replace't pattern  R~f:1~p n           modify => 1.txt w/ pattern in p.txt & save result to n.txt    Rf:?~? ?|
-|      pattern file fmt: (no R at beginning)   ,~+__A~B,           all linebreaks will be ignored in pattern .txt file           ?~?__?~?|
-|________________________________________________________________________________________________________________________________________|
-
-__________________________________________________________________________________________________________________________________________
-| KEY  GUI BEHAVIOR & APPEARANCE                                                                                                         |
+|  R   Replace A with B in selected text       R,~+                "A,C" -> "A+C"; format for 1 replacement: R?~?                        |
+|      Remove character(s) in selected text    R,                  "A,C" -> "AC"                                                         |
+|      Chain multiple replacements commands    R,~+__A~B           "A,C" -> "B+C"; format for multiple replacements: R?~?__?~?__?~?__... |
+|      Change replacement separator            R~,                 Changes replacement separator from ~ (default) to ,                   |
+|      Change multi replacement separator      R~~|                Changes multi replacement separator  from __ (default) to |           |  
+|  F   Paste same string repeatedly            F-+,4               Paste: -+-+ ; fmt: string "," # of characters widths to fill          |
+|  S   Search selected text in specified       Sd, St, Sw, Sn, Sf  (d)dictionary,(t)thesaurus,(w)wikipedia,(n)news,(f)finviz,(i)images   |
+|      search engine                           Sio, Sse, Ssse, Sq  (io)investopedia,(se)StackExchange,(sse)stats.StackExchange,(q)quora  |
+|      Query submitted text                    Sd:facetious        (so)stack overflow, (a)ahk docs,(y)youtube, (twt)twitter, (e)ebay     | 
+| J|j  SELECT|goto or delete! rows below       J3, J, JJ!, j23     Select # of rows below => 3, 10, 20 + delete, 23 + no selection       |
+| K|k  SELECT|goto or delete! rows above       K3, K, KK!, k23     J|K|j|k = 10 if no numbers or other letters are also entered          |
+| Gcc  Change config.ini                       Gcc,html_path,c:\e\ Changes config.ini variable value for html_path to "c:\e\"            |
+|                                                                                                                                        |
+| GOTO/SAVE LINK/PATH FUNCTIONS  (ctrl + enter OR ctrl + space in CB to execute)                                                         |
+| KEY  DESCRIPTION                             USAGE EXAMPLES                                                                            |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  W   Run a different commandbox key suffix   Ws, Wb, Wtut        default suffix: ~win; "Wb" same as entering b in CB("~win")   M|H|B|W?|
-|  W:  Change W command suffix reference       W:~win, W:~pdf      M|H|B behave the same as W to allow access to multiple CBs         W:?|
-|  T   CommandBox UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent CB, (f)ont          T?|
-|      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)app stays active, (t)itlebar, (s)crollbar, (w)Text Wrap            |
-|                                              Tr, Tf:arial        (r)eenter last userinput, (f)ont change to arial                      |
+|  :   Save url|file|folder path               :work               Associates url/file/folder selected in explorer/browser w/ "work" key |
+|  ?   Open file|folder or load URL            work                Open url|file|folder associated with "work" key                       |
+|  !   Remove association entry                !work or work!      Remove "work" key association; "!" can be placed before or after key  |
+|:? ?  Rename association key word             :work job           Rename key: "work" to "job"                                           |
+| A-Z  load links with same capitalized letter A                   loads all links that start with capital letter A (eg. Abc, AAA, AaC)  |
+|  ,   Chain open/delete                       Bw,a,c or B!w,a,c   Open or delete multiple key associations (comma separated)            |
+|                                                                                                                                        |
+| GUI BEHAVIOR & APPEARANCE FUNCTIONS                                                                                                    |
+| KEY  DESCRIPTION                             USAGE EXAMPLES                                                                            |
+|----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
+|  H   Run a different command box key suffix  H:~FE, Hb           Assign "~FE" to H, Hb equivalent to executing b~FE in CB(~any_suffix) |
+|                                                                  N,Q are additional free letters for suffix associations               |
+|  T   CommandBox UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent (CB always open)      |
+|      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)target window stays active, (t)itlebar, (s)crollbar, (w)Text Wrap  |
 |________________________________________________________________________________________________________________________________________|
 ```
 

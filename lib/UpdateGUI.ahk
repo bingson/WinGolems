@@ -1,71 +1,76 @@
 UpdateGUI(new_txt = "" , new_title_file = "") {
-    global config_path, med, CB_hwnd, C
-    CoordMode, Mouse, screen
-    MouseGetPos, StartX, StartY   
-    ; Gui, 2: +LastFound
-    d := "x" A_ScreenWidth//2 " y0 w" A_ScreenWidth//2 " h" A_ScreenHeight//2
-    CB_position := GC("CB_position", d), display := GC("CB_Display", 1)      ;    GetConfig(section, default_value = "")
-    title_state  := GC("CB_Titlebar", 1), ldspl   := GC("CB_last_display")
-    ScrollBars   := GC("CB_ScrollBars", 0) ;, InputBox_width := GC("CB_InputBox_width")
-    old_title_bar := GC("CBtitle")
-    wdth := StrSplit(CB_position, " ")[3]
+    global config_path, med, CB_hwnd, C, CB_DisplayVar
+    
+    ; CoordMode, Mouse, screen
+    ; MouseGetPos, StartX, StartY   
+    
+    Gui, 2: +LastFound ;+E0x08000000                                     ;prevent GUI from stealing focus https://www.autohotkey.com/boards/viewtopic.php?t=99728
+
+    MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
+    hh := MI[4]*.455
+    hw := MI[3]*.495
+    d := "x" MI[1]+hw " y" MI[2]+hh " w" hw " h" hh                      ;(2) calc default window dimensions to load when saved position data is not valid
+
+    CB_position := GC("CB_position", d)
+
+    CB_position := GC("CB_position", d), display := GC("CB_Display", 1)
+    title_state := GC("CB_Titlebar", 1), ldspl   := GC("CB_last_display")
+    ScrollBars  := GC("CB_ScrollBars", 0)
+    title_bar   := GC("CBtitle")
+    wrap        := GC("CB_Wrap",0) ? " +Wrap" : " -Wrap"
+    wdth        := StrSplit(CB_position, " ")[3]
 
     if (!title_state) 
         Gui, 2: -Caption
     else 
     {
         Gui, 2: +Caption
-            RegExMatch(old_title_bar, ".*(?=\|  )", v)                         ; get everything before the last title separator and store in v
-        if new_title_file {
-            Gui, 2: Show, , %v%|    %new_title_file%
-            CC("CB_title_file", new_title_file)
-        } else {
-            ; GC("CB_title_file")
-            Gui, 2: Show, , % v " |    " GC("CB_title_file")
-        }
+        
+        ; optn := GetCurrentGUIoptions()
+
+        ; if new_title_file {
+        ;     title :=  GC("CB_tgtExe") GC("CB_sfx") " | " optn new_title_file
+        ;     CC("CB_last_display", new_title_file)
+        ; } else {
+        ;     title :=  GC("CB_tgtExe") GC("CB_sfx") " | " optn GC("CB_last_display")
+        ; }
+        new_title_file ? CC("CB_last_display", new_title_file) : ""
+        title :=  GC("CB_tgtExe") GC("CB_sfx") "  |  " GetCurrentGUIoptions() (new_title_file ? new_title_file : GC("CB_last_display"))
+        Gui, 2: Show, , % title 
     }
+    t_color := GC("CBt_color")
     
-    if (!display) {
-        Guicontrol, 2: ,CB_Display, %A_space%
-        t_color := GC("CBt_color")
-        w_color := GC("CBw_color")
-        ; Gui, 2: Font, +c%t_color% +Redraw
-        GuiControl, 2: Font +c%t_color% +Redraw, UserInput
-        Gui, 2: Color,,%w_color%
-        Gui, 2: show, hide 
-    } else if (display) {
-        if (new_txt) {
-            ; Gui, 2: Font, +c000000 +Redraw
-            input_txt := % GC("CB_reenterInput", 1) ? GC("last_user_input", "?") : ((input_txt = "Error") ? ("?") : input_txt) 
-            GuiControl, 2: +c000000 +Redraw, UserInput
-            GuiControl, 2: Text, UserInput, %input_txt%
-            GuiControl, 2:, CB_Display, %new_txt%
-            GuiControl, 2: MoveDraw, CB_Display
-            AutoXYWH("w*h", "CB_Display")
-        } 
-        else {
-            txt :=  AccessCache(ldspl,, 0)
-            GuiControl, 2:, CB_Display, %txt%
-        }
-        
-        Gui, 2: Color,,FFFFFF 
-        Gui, 2: show, hide
-        
-
-    }
-
     if !GC("CB_ScrollBars", 0)
-        GuiControl, 2: -HScroll -VScroll, CB_Display
+        GuiControl, 2: -HScroll -VScroll, CB_DisplayVar
     else 
-        GuiControl, 2: +HScroll +VScroll, CB_Display 
-    
-    GuiControl, 2: Focus, UserInput 
-    Send % GC("CB_reenterInput", 1) ? ("^a") : ("")
+        GuiControl, 2: +HScroll +VScroll, CB_DisplayVar 
 
     Gui, 2: show, hide AutoSize 
     WinSet, Redraw,, ahk_id %CB_hwnd%
-    Gui, 2: show, %CB_position%                                                 ;  Gui, 2: show, hide AutoSize
+    ;     GuiControl, 2:, +redraw CB_Display
+    
+    Gui, 2: show, % CB_position . (GC("CB_appActive", 0) ? (" NoActivate") : (" Restore"))                                                ;  Gui, 2: show, hide AutoSize
+    
+    ;DllCall("SetCursorPos", "int", StartX, "int", StartY)                       ; used instead of MouseMove for multi-monitor setups 
+    
+    Gui, 2: Color, % GC("CB_clr")
+    if (!display) {
+        Guicontrol, 2: ,CB_DisplayVar, %A_space%
+    } else if (display) {
+        Gui, 2: Font, +c%t_color%  ; If desired, use a line like this to set a new default font for the window.
+        GuiControl, 2: Font, CB_DisplayVar
+        if (new_txt) {
+            GuiControl, 2:, CB_DisplayVar, %new_txt%
+        } 
+    }
 
-    GuiControl, 2: +HScroll +VScroll, CB_Display
-    DllCall("SetCursorPos", "int", StartX, "int", StartY)                       ; necessary for multi-monitor setups over MouseMove
+
+    if GC("CB_appActive", 0) {
+        ; ActivateWin("ahk_id " GC("TGT_hwnd")) 
+        ActivateApp(GC("CB_tgtExe"))
+    } 
+
+    ; SendMessage,0x00B1,-1,0,, % "ahk_id " CB_Display ; EM_SETSEL=0x00B1
+    
+    return
   }

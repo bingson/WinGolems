@@ -1,187 +1,107 @@
-
-#IF
 ; ACTIVATE APPS (GREEN) ________________________________________________________
-  ; AA("application_exe_path")
-  ; SaveWinID("unique_string")
-  ; ActivateWinID("unique_string")
+    #IF
+    ; AA("application_exe_path")
+    ; SaveWinID("unique_string")
+    ; ActivateWinID("unique_string")
   
-    #c::           AA("cmd.exe")                                                ;Apps| Activate Command window
-    #t::           ActivateCalc()                                               ;Apps| Activate Calculator    
-    #x::           AA("pdf_path")                                               ;Apps| Activate pdf reader                 
-    #a::           AA("editor_path")                                            ;Apps| Activate text/code editor                 
-    #q::           AA("xls_path")                                               ;Apps| Activate Excel         
-    #w::           AA("doc_path")                                               ;Apps| Activate Word          
-    #b::           AA("explorer.exe")                                           ;Apps| Activate File Explorer 
-    #z::           AA("obsidian_path")                                          ;Apps| Activate Obsidian               
-    #s::           AA("html_path")                                              ;Apps| Activate Edge browser
-    #SC035::       AA("html2_path")                                             ;Apps| Activate Chrome browser
-    printscreen & l:: AA(UProfile "\Desktop\Power BI Desktop - Shortcut.lnk", "pbidesktop.exe",2) ;Apps| Activate Power BI                        
-    ;#x up::          AA("ppt_path")                                            ;Apps| Activate PowerPoint   
+    #z::          W("lw"),AA("obsidian_path")                                   ;Apps| Activate Obsidian               
+    #x::          W("lw"),AA("pdf_path")                                        ;Apps| Activate pdf reader                 
+    #c::          W("lw"),AA("cmd.exe")                                         ;Apps| Activate Command window
+    #a::          W("lw"),AA("editor_path")                                     ;Apps| Activate text/code editor                 
+    #s::          W("lw"),AA("html_path")                                       ;Apps| Activate Edge browser
+    #q::          W("lw"),AA("xls_path")                                        ;Apps| Activate Excel         
+    #w::          W("lw"),AA("doc_path")                                        ;Apps| Activate Word        
+    +#w::         W("lw","ls"),AA("ppt_path")                                   ;Apps| Activate Word        
+    #r::          W("lw"),AA("C:\Program Files\KeePassXC\KeePassXC.exe")        ;Apps| Activate keepass
+    #t::          W("lw"),ActivateCalc()                                        ;Apps| Activate Calculator    
+    #b::          W("lw"),AA("explorer.exe")                                    ;Apps| Activate File Explorer 
+    #n::          W("lw"),AA("html2_path")                                      ;Apps| Activate Chrome browser
+    :x:anki~win:: W("lw"),AA(A_ProgramFiles "\Anki\anki.exe")                   ;Apps| Anki
+    #m::          W("lw"),AA(A_ProgramFiles "\VideoLAN\VLC\vlc.exe")            ;Apps| Obsidian
+    #y::          W("lw"),everythingSearch()                                    ;Apps| everything search
+    <!#m::        W("lw"),AA(PF_x86 "\foobar2000\foobar2000.exe")               ;Apps| foobar
+                                                                                
+    +#p::           AA(PF "\HyperSnap v8.20\HyperSnapPortable.exe", "HprSnap8.exe",2)                                                                
+    :X:edge~win::   CC("html_path",GC("edge_path")), CC("html2_path",GC("chrome_path")), PU("1: edge, 2:chrome")
+    :X:chrome~win:: CC("html_path",GC("chrome_path")), CC("html2_path",GC("edge_path")), PU("1: chrome, 2:edge")
 
-; SAVE/ACTIVATE WINDOW by ID ___________________________________________________
-    >^>!SC033::                                                                 ; save current window ID to printscreen + "," 
-    >^>!SC034::                                                                 ; save current window ID to printscreen + "." 
-    >^>!SC035::                                                                 ; save current window ID to printscreen + "/" 
-    >^>!m::                                                                     ; save current window ID to printscreen + m 
-    >^>!n::                SaveWinID(ltrim(A_ThisHotkey, ">^>!"))               ; save current window ID to printscreen + n
+   ;#SC02b::      AA("- Remote Desktop",,1)                                       ;Apps| remote desktop
+   ;#n::           AA(A_ScriptDir "\assets\win\Power BI Desktop - Shortcut.lnk", "pbidesktop.exe",2) ;Apps| Activate Power BI     
+
+; SAVE/ACTIVATE WINDOW ID ______________________________________________________
     
-    ^!ESC:: 
-    ^!F1::                                                                      ;Apps: Save window for win+F1 activation
-    ^!F2::                                                                      ;Apps: Save window for win+F2 activation
-    ^!F3::                                                                      ;Apps: Save window for win+F3 activation
-    ^!F4::                                                                      ;Apps: Save window for win+F4 activation
-    ^!F5::                                                                      ;Apps: Save window for win+F5 activation
-    ^!F6::                                                                      ;Apps: Save window for win+F6 activation
-    ^!F7::                                                                      ;Apps: Save window for win+F7 activation
-    ^!F8::                 SaveWinID(ltrim(A_ThisHotkey, "^!"))                 ;Apps: Save window for win+F8 activation
-    
-    home & q::                                                                  ; Save current window ID to printscreent + q
-    home & w::                                                                  ; Save current window ID to printscreent + w
-    home & e::                                                                  ; Save current window ID to printscreent + e
-    home & a::                                                                  ; Save current window ID to printscreent + a
-    home & s::                                                                  ; Save current window ID to printscreent + s
-    home & d::                                                                  ; Save current window ID to printscreent + d
-    home & z::                                                                  ; Save current window ID to printscreent + z
-    home & x::                                                                  ; Save current window ID to printscreent + x
-    home & c::             SaveWinID(ltrim(A_ThisHotkey, "home & "))            ; Save current window ID to printscreent + c
-    
+    #If IsCmode() ;GetKeyState("lctrl", "P") 
+    tab & n::   
+    tab & m::
+    tab & SC033::
+    tab & SC034::
+    tab & SC035::       SaveWinID(StrReplace(A_ThisHotkey,"tab & "))
+
+    #If GetKeyState("printscreen", "P")
+    rctrl & ESC::                                                               ;Apps: Save window ID for printscreen + esc activation
+    rctrl & F1::                                                                ;Apps: Save window ID for printscreen+F1 activation
+    rctrl & F2::                                                                ;Apps: Save window ID for printscreen+F2 activation
+    rctrl & F3::                                                                ;Apps: Save window ID for printscreen+F3 activation
+    rctrl & F4::                                                                ;Apps: Save window ID for printscreen+F4 activation
+    rctrl & F5::                                                                ;Apps: Save window ID for printscreen+F5 activation
+    rctrl & F6::                                                                ;Apps: Save window ID for printscreen+F6 activation
+    rctrl & F7::                                                                ;Apps: Save window ID for printscreen+F7 activation
+    rctrl & F8::                                                                ;Apps: Save window ID for printscreen+F8 activation
+    rctrl & m::                                                                 ;Apps: Save window ID for printscreen+m activation
+    rctrl & n::                                                                 ;Apps: Save window ID for printscreen+n activation                     
+    rctrl & q::                                                                 ;Apps: Save window ID for printscreen+q activation
+    rctrl & w::                                                                 ;Apps: Save window ID for printscreen+w activation
+    rctrl & e::                                                                 ;Apps: Save window ID for printscreen+e activation
+    rctrl & r::                                                                 ;Apps: Save window ID for printscreen+r activation
+    rctrl & a::                                                                 ;Apps: Save window ID for printscreen+a activation
+    rctrl & s::                                                                 ;Apps: Save window ID for printscreen+s activation
+    rctrl & d::                                                                 ;Apps: Save window ID for printscreen+d activation
+    rctrl & f::                                                                 ;Apps: Save window ID for printscreen+f activation
+    rctrl & z::                                                                 ;Apps: Save window ID for printscreen+z activation
+    rctrl & x::                                                                 ;Apps: Save window ID for printscreen+x activation
+    rctrl & C::                                                                 ;Apps: Save window ID for printscreen+C activation
+    rctrl & v::   SaveWinID(StrReplace(A_ThisHotkey,"rctrl & "))                ;Apps: Save window ID for printscreen+v activation
+                                                                                
     #If GetKeyState("PrintScreen", "P")
-    esc::                                                                       ;ActvateApp: activate saved Window ID                  
-    SC033::                                                                     ;ActvateApp: activate saved Window ID                  
-    SC034::                                                                     ;ActvateApp: activate saved Window ID                  
+    esc::                                                                       ;ActvateApp: activate saved Window ID
+    SC033::                                                                     ;ActvateApp: activate saved Window ID
+    SC034::                                                                     ;ActvateApp: activate saved Window ID
     SC035::                                                                     ;ActvateApp: activate saved Window ID
     m::                                                                         ;ActvateApp: activate saved Window ID
     n::                                                                         ;ActvateApp: activate saved Window ID
     q::                                                                         ;ActvateApp: activate saved Window ID
     w::                                                                         ;ActvateApp: activate saved Window ID
     e::                                                                         ;ActvateApp: activate saved Window ID
+    r::                                                                         ;ActvateApp: activate saved Window ID
     a::                                                                         ;ActvateApp: activate saved Window ID
     s::                                                                         ;ActvateApp: activate saved Window ID
     d::                                                                         ;ActvateApp: activate saved Window ID
+    f::                                                                         ;ActvateApp: activate saved Window ID
     z::                                                                         ;ActvateApp: activate saved Window ID
     x::                                                                         ;ActvateApp: activate saved Window ID
-    C::                  ActivateWinID(A_ThisHotkey)                            ;ActvateApp: activate saved Window ID
-  
-    F1::                                                                        ;Apps: Activate saved F1 window
-    F2::                                                                        ;Apps: Activate saved F2 window
-    F3::                                                                        ;Apps: Activate saved F3 window
-    F4::                                                                        ;Apps: Activate saved F4 window
-    F5::                                                                        ;Apps: Activate saved F5 window
-    F6::                                                                        ;Apps: Activate saved F6 window
-    F7::                                                                        ;Apps: Activate saved F7 window
-    F8::                ActivateWinID(A_ThisHotkey)                             ;Apps: Activate saved F8 window
-    
+    C::                                                                         ;ActvateApp: activate saved Window ID
+    v::     ActivateWinID(A_ThisHotkey)                                         ;ActvateApp: activate saved Window ID
+                                                                                
+                                        
     #IF
 
-    #F1::                                                                       ;Apps: Activate saved F1 window
-    #F2::                                                                       ;Apps: Activate saved F2 window
-    #F3::                                                                       ;Apps: Activate saved F3 window
-    #F4::                                                                       ;Apps: Activate saved F4 window
-    #F5::                                                                       ;Apps: Activate saved F5 window
-    #F6::                                                                       ;Apps: Activate saved F6 window
-    #F7::                                                                       ;Apps: Activate saved F7 window
-    #F8::                ActivateWinID(ltrim(A_ThisHotkey, "#"))                ;Apps: Activate saved F8 window
+; ACTIVATE POSITION IN TASKBAR _________________________________________________
+    ;replacement for native windows app activation with lwin + #
+    printscreen & F9::                                                          ;activate 10th app on taskbar
+    printscreen & F8::                                                          ;activate 9th app on taskbar
+    printscreen & F7::                                                          ;activate 8th app on taskbar
+    printscreen & F6::                                                          ;activate 7th app on taskbar
+    printscreen & F5::                                                          ;activate 6th app on taskbar
+    printscreen & F4::                                                          ;activate 5th app on taskbar
+    printscreen & F3::                                                          ;activate 4th app on taskbar
+    printscreen & F2::                                                          ;activate 3rd app on taskbar
+    printscreen & F1::  SI("#" (substr(A_ThisHotkey,0) + 1)), CFW()             ;activate 2nd app on taskbar
+    printscreen & esc:: SI("#1"),CFW()                                          ;activate 1st app on taskbar (equivalent to win + 1)
+; MEMORY FUNCTIONS (BLUE)_______________________________________________________
+    ; Note: The below memory functions use the last key pressed to identify which memory file to operate on. 
+    ;       enter "?" in a command box to see additional memory file commands
+    ; e.g., ^!a = AddToMemory() ; ctrl+alt+a -> will save selected text to a file called a.txt in the WinGolems/mem_cache folder
   
-  
-; WEB SEARCH ___________________________________________________________________
-    
-    #IF
-    :X:tcs~win:: TC("T_SearchCB","Clipboard Search mode: ")                     ;search: toggle clipboard search mode
-    
-    ; search selected text; when clipboard search mode is on searches clipboard contents instead of selected text
-    >!SC035::       search("google.com/search?q=")                              ;search: google search selected text
-    !#SC035::       search("en.wikipedia.org/w/index.php?search=")              ;search: wikipedia
-    pgdn & rshift:: search("youtube.com/results?search_query=")                 ;search: youtubes
-    +#SC035::       search("autohotkey.com/docs/search.htm?q=",,"&m=2")         ;search: AutoHotkey documentation
-    >+>!SC035::     search("google.com/search?tbm=isch&q=")                     ;search: google image
-    ^#SC035::       search("google.com/maps/search/")                           ;search: maps
-    
-    #If isCMODE()   ; (+capslock) search clipboard contents instead of selected text
-    >!SC035::       search("google.com/search?q=",clipboard)                     ;Convenience: google search selected text
-    !#SC035::       search("en.wikipedia.org/w/index.php?search=",clipboard)     ;search (+capslock): use clipboard contents to search wikipedia
-    pgdn & rshift:: search("youtube.com/results?search_query=",clipboard)        ;search (+capslock): use clipboard contents to search youtubes
-    +#SC035::       search("autohotkey.com/docs/search.htm?q=",clipboard,"&m=2") ;search (+capslock): use clipboard contents to search AutoHotkey documentation
-    >+>!SC035::     search("google.com/search?tbm=isch&q=",clipboard)            ;search (+capslock): use clipboard contents to search google image
-    ^#SC035::       search("google.com/maps/search/",clipboard)                  ;search (+capslock): use clipboard contents to search maps
-    #If    
-
-
-
-
-; SYSTEM CONVENIENCE ___________________________________________________________
-  
-  
-  /*
-  */  
-  <^#c::              OCRtoClipboard(,"V2")                                     ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
-  !#c::               OCRtoClipboard(,"UWP")                                    ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
-  >^c::               addtoCB("A")                                              ; append text to clipboard
-
-  <+#c::              OCRtoClipboard("A","V2")                                     ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
-  >+#c::              OCRtoClipboard("A","UWP")                                    ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
-  
-  +>^c::              addtoCB("P")                                              ; prepend text to clipboard
-  ~<^c::              UpdateDisplay()                                           ;Update Command Box display of clipboard contents in Command Box
-  +#s::               send {printscreen}                                        ;snipping tool  
-  +#capslock::        W("ls","lw"), ActivatePrevInstance()                      ;WindowMgmt: rotate through app instances from most recent                   
-  printscreen & rshift::                                                        ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-  #capslock::         W("lw"), ActivateNextInstance()                           ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-  >^capslock::        capslock                                                  ;Convenience: capslock                                                                                 
-  lwin & pgup::       reloadWG()                                                ;WinGolems: reload WinGolems 
-  esc & pgup::        suspend                                                   ;WinGolems: toggle all hotkeys ON|OFF except for this one
-  f1 & pgup::         ExitApp                                                   ;WinGolems: quit WinGolems
-  ^SC027::            Send {AppsKey}                                            ;WinOS: simulate appkey
-  $^!space up::       MaximizeWin()                                             ;WindowMgmt: maximize window
-  $#SC027::           w("lw"), MinimizeWin()                                    ;WindowMgmt: minimize window
-  #del::              AlwaysOnTop(1)                                            ;WindowMgmt: Window always on top: ON
-  #ins::              AlwaysOnTop(0)                                            ;WindowMgmt: Window always on top: OFF
-  <!esc::             WinClose,A                                                ;WindowMgmt: close active window
-  !#esc::             CloseClass()                                              ;WindowMgmt: close all instances of the active program
-  ^#sc027::           Send {lwin down}d{lwin up}                                ;WindowMgmt: show desktop
-  #u::                run, ms-settings:screenrotation                           ;WinOS: Display settings
-  !#b up::            BluetoothSettings()                                       ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
-  !#d up::            DisplaySettings()                                         ;WinSetting: display settings 
-  !#n up::            NotificationWindow()                                      ;WinSetting: notification window
-  !#r up::            RunProgWindow()                                           ;WinSetting: run program
-  !#p up::            PresentationDisplayMode()                                 ;WinSetting: presentation display mode
-  !#i up::            WindowsSettings()                                         ;WinSetting: windows settings
-  ralt & PgDn::       % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")       ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2) requires: https://github.com/FuPeiJiang/VD.ahk
-  ralt & sc028::      GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
-  ralt & enter::      GotoDesktop("2")                                          ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
-  !SC027::            Sendinput {esc}                                           ;WinOS: simulate esc key (alt + semicolon)
-  $<!c::              moveWinBtnMonitors("L")                                   ;WindowMgmt: move window to left monitor
-  $>!m::              moveWinBtnMonitors("R")                                   ;WindowMgmt: move window to right monitor
-
-  ; ADDITIONAL MODIFIER KEYS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    
-    :X:tmod~win::    TC("T_Mod", "Extra Modifier keys = ")                      ; toggle modifier keys
-
-    #IF GC("T_Mod",1)
-    printscreen::                                                               ; modifier key
-    F1::                                                                        ; modifier key
-    F12::                                                                       ; modifier key
-    pgup::                                                                      ; modifier key
-    pgdn::                                                                      ; modifier key
-    end::                                                                       ; modifier key
-    home:: return                                                               ; modifier key
-    #IF
-
-  ; NAVIGATION (PURPLE) -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-  
-    #IF !WinActive("ahk_exe " exe["doc"])                                       ; can be toggled on/off by entering Gtc,T_tabNav in a CB              
-    ^b::                SI("^{PgUp}"),W("c")                                 ;Navigation: navigate to left tab
-    ^space::            SI("^{PgDn}"),W("c")                                 ;Navigation: navigate to right tab
-
-    #IF
-
-
-
-; MEMORY FILE FUNCTIONS (BLUE)__________________________________________________
-  
-  ; Note: The below memory functions use the last key pressed to identify which memory file to operate on. 
-  ;       enter "?" in a command box to see additional memory file commands
-  ; e.g., ^!a = AddToMemory() ; ctrl+alt+a -> will save selected text to a file called a.txt in the WinGolems/mem_cache folder
-
     #IF GC("T_mem",1) 
     ^!0::                                                                       ;Mem: overwrite 0.txt with selected text
     ^!9::                                                                       ;Mem: overwrite 9.txt with selected text
@@ -192,7 +112,8 @@
     ^!4::                                                                       ;Mem: overwrite 4.txt with selected text
     ^!3::                                                                       ;Mem: overwrite 3.txt with selected text
     ^!2::                                                                       ;Mem: overwrite 2.txt with selected text
-    ^!1::              OverwriteMemory()                                        ;Mem: overwrite 1.txt with selected text
+    ^!1:: OverwriteMemory()                                                     ;Mem: overwrite 1.txt with selected text
+
 
     PrintScreen & 0::                                                           ;Memory: overwrite 0.txt
     PrintScreen & 9::                                                           ;Memory: overwrite 9.txt
@@ -203,8 +124,8 @@
     PrintScreen & 4::                                                           ;Memory: overwrite 4.txt
     PrintScreen & 3::                                                           ;Memory: overwrite 3.txt
     PrintScreen & 2::                                                           ;Memory: overwrite 2.txt
-    PrintScreen & 1::      OverwriteMemory()                                    ;Memory: overwrite 1.txt
-    
+    PrintScreen & 1:: OverwriteMemory()                                         ;Memory: overwrite 1.txt
+                                                                                
     
     +#0::                                                                       ;Mem: add selected text to the bottom of 0.txt
     +#9::                                                                       ;Mem: add selected text to the bottom of 9.txt
@@ -227,16 +148,492 @@
     #2::                                                                        ;Mem: paste contents of 2.txt
     #1::                RetrieveMemory()                                        ;Mem: paste contents of 1.txt
     
-    <!space::          RunCmd(GC("CommaAlias","V")), W("a")                     ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).
-    >!space::          RunCmd(GC("PeriodAlias","V")), W("a")                    ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).        
+    <!space:: RunCmd("V" GC("CommaAlias")), W("a")                     ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
+    >!space:: RunCmd("V" GC("PeriodAlias")), W("a")                    ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
+                                                                                
+                                                                                
 
-  /* 
-    $^!lbutton::        s("{blind}",100),RetrieveMemory(A_ThisHotkey,,,1)       ;Mem: double click and paste contents of 1.txt at cursor position       
-    $^#lbutton::        s("{blind}",100),RetrieveMemory(,A_ThisHotkey)          ;Mem: double click and paste contents of number entered at prompt   
-    $<!lbutton up::     s("{blind}",100), Clicks(2), s("^v")                    ;MouseFn: triple click, paste clipboard contents
-    $<+<!lbutton up::   s("{blind}",100), Clicks(3), s("^v")                    ;MouseFn: double click, paste clipboard contents
-  */
+  
+; MANAGE SAVED LINKS ___________________________________________________________
+  ; load LINK -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    #If
+    home & 0::                                                                  ; load saved file/folder path or URL
+    home & 9::                                                                  ; load saved file/folder path or URL
+    home & 8::                                                                  ; load saved file/folder path or URL
+    home & 7::                                                                  ; load saved file/folder path or URL
+    home & 6::                                                                  ; load saved file/folder path or URL
+    home & 5::                                                                  ; load saved file/folder path or URL
+    home & 4::                                                                  ; load saved file/folder path or URL
+    home & 3::                                                                  ; load saved file/folder path or URL
+    home & 2::                                                                  ; load saved file/folder path or URL
+    home & 1::                                                                  ; load saved file/folder path or URL
+    home & z::                                                                  ; load saved file/folder path or URL
+    home & y::                                                                  ; load saved file/folder path or URL
+    home & x::                                                                  ; load saved file/folder path or URL
+    home & w::                                                                  ; load saved file/folder path or URL
+    home & v::                                                                  ; load saved file/folder path or URL
+    home & u::                                                                  ; load saved file/folder path or URL
+    home & t::                                                                  ; load saved file/folder path or URL
+    home & s::                                                                  ; load saved file/folder path or URL
+    home & r::                                                                  ; load saved file/folder path or URL
+    home & q::                                                                  ; load saved file/folder path or URL
+    home & p::                                                                  ; load saved file/folder path or URL
+    home & o::                                                                  ; load saved file/folder path or URL
+    home & n::                                                                  ; load saved file/folder path or URL
+    home & m::                                                                  ; load saved file/folder path or URL
+    home & l::                                                                  ; load saved file/folder path or URL
+    home & k::                                                                  ; load saved file/folder path or URL
+    home & j::                                                                  ; load saved file/folder path or URL
+    home & i::                                                                  ; load saved file/folder path or URL
+    home & h::                                                                  ; load saved file/folder path or URL
+    home & g::                                                                  ; load saved file/folder path or URL
+    home & f::                                                                  ; load saved file/folder path or URL
+    home & e::                                                                  ; load saved file/folder path or URL
+    home & d::                                                                  ; load saved file/folder path or URL
+    home & c::                                                                  ; load saved file/folder path or URL
+    home & b::                                                                  ; load saved file/folder path or URL
+    home & a::                                                                  ; load saved file/folder path or URL
+    PgDn & 0::                                                                  ; load saved file/folder path or URL
+    PgDn & 9::                                                                  ; load saved file/folder path or URL
+    PgDn & 8::                                                                  ; load saved file/folder path or URL
+    PgDn & 7::                                                                  ; load saved file/folder path or URL
+    PgDn & 6::                                                                  ; load saved file/folder path or URL
+    PgDn & 5::                                                                  ; load saved file/folder path or URL
+    PgDn & 4::                                                                  ; load saved file/folder path or URL
+    PgDn & 3::                                                                  ; load saved file/folder path or URL
+    PgDn & 2::                                                                  ; load saved file/folder path or URL
+    PgDn & 1::                                                                  ; load saved file/folder path or URL
+    PgDn & z::                                                                  ; load saved file/folder path or URL
+    PgDn & y::                                                                  ; load saved file/folder path or URL
+    PgDn & x::                                                                  ; load saved file/folder path or URL
+    PgDn & w::                                                                  ; load saved file/folder path or URL
+    PgDn & v::                                                                  ; load saved file/folder path or URL
+    PgDn & u::                                                                  ; load saved file/folder path or URL
+    PgDn & t::                                                                  ; load saved file/folder path or URL
+    PgDn & s::                                                                  ; load saved file/folder path or URL
+    PgDn & r::                                                                  ; load saved file/folder path or URL
+    PgDn & q::                                                                  ; load saved file/folder path or URL
+    PgDn & p::                                                                  ; load saved file/folder path or URL
+    PgDn & o::                                                                  ; load saved file/folder path or URL
+    PgDn & n::                                                                  ; load saved file/folder path or URL
+    PgDn & m::                                                                  ; load saved file/folder path or URL
+    PgDn & l::                                                                  ; load saved file/folder path or URL
+    PgDn & k::                                                                  ; load saved file/folder path or URL
+    PgDn & j::                                                                  ; load saved file/folder path or URL
+    PgDn & i::                                                                  ; load saved file/folder path or URL
+    PgDn & h::                                                                  ; load saved file/folder path or URL
+    PgDn & g::                                                                  ; load saved file/folder path or URL
+    PgDn & f::                                                                  ; load saved file/folder path or URL
+    PgDn & e::                                                                  ; load saved file/folder path or URL
+    PgDn & d::                                                                  ; load saved file/folder path or URL
+    PgDn & c::                                                                  ; load saved file/folder path or URL
+    PgDn & b::                                                                  ; load saved file/folder path or URL
+    PgDn & a::                                                                  ; load saved file/folder path or URL
+    ESC & 0::                                                                   ; save file/folder path or URL
+    ESC & 9::                                                                   ; load file/folder path or URL
+    ESC & 8::                                                                   ; load file/folder path or URL
+    ESC & 7::                                                                   ; load file/folder path or URL
+    ESC & 6::                                                                   ; load file/folder path or URL
+    ESC & 5::                                                                   ; load file/folder path or URL
+    ESC & 4::                                                                   ; load file/folder path or URL
+    ESC & 3::                                                                   ; load file/folder path or URL
+    ESC & 2::                                                                   ; load file/folder path or URL
+    ESC & 1::                                                                   ; load file/folder path or URL
+    ESC & z::                                                                   ; load file/folder path or URL
+    ESC & y::                                                                   ; load file/folder path or URL
+    ESC & x::                                                                   ; load file/folder path or URL
+    ESC & w::                                                                   ; load file/folder path or URL
+    ESC & v::                                                                   ; load file/folder path or URL
+    ESC & u::                                                                   ; load file/folder path or URL
+    ESC & t::                                                                   ; load file/folder path or URL
+    ESC & s::                                                                   ; load file/folder path or URL
+    ESC & r::                                                                   ; load file/folder path or URL
+    ESC & q::                                                                   ; load file/folder path or URL
+    ESC & p::                                                                   ; load file/folder path or URL
+    ESC & o::                                                                   ; load file/folder path or URL
+    ESC & n::                                                                   ; load file/folder path or URL
+    ESC & m::                                                                   ; load file/folder path or URL
+    ESC & l::                                                                   ; load file/folder path or URL
+    ESC & k::                                                                   ; load file/folder path or URL
+    ESC & j::                                                                   ; load file/folder path or URL
+    ESC & i::                                                                   ; load file/folder path or URL
+    ESC & h::                                                                   ; load file/folder path or URL
+    ESC & g::                                                                   ; load file/folder path or URL
+    ESC & f::                                                                   ; load file/folder path or URL
+    ESC & e::                                                                   ; load file/folder path or URL
+    ESC & d::                                                                   ; load file/folder path or URL
+    ESC & c::                                                                   ; load file/folder path or URL
+    ESC & b::                                                                   ; load file/folder path or URL
+    ESC & a::  LoadLink(substr(A_ThisHotkey,0))                                 ; save file/folder path or URL
+                                                                                
+  ; SWITCH LINK SET -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    F2 & 0::                                                                    ; switch mode
+    F2 & 9::                                                                    ; switch mode
+    F2 & 8::                                                                    ; switch mode
+    F2 & 7::                                                                    ; switch mode
+    F2 & 6::                                                                    ; switch mode
+    F2 & 5::                                                                    ; switch mode
+    F2 & 4::                                                                    ; switch mode
+    F2 & 3::                                                                    ; switch mode
+    F2 & 2::                                                                    ; switch mode
+    F2 & 1::                                                                    ; switch mode
+    F2 & z::                                                                    ; switch mode
+    F2 & y::                                                                    ; switch mode
+    F2 & x::                                                                    ; switch mode
+    F2 & w::                                                                    ; switch mode
+    F2 & v::                                                                    ; switch mode
+    F2 & u::                                                                    ; switch mode
+    F2 & t::                                                                    ; switch mode
+    F2 & s::                                                                    ; switch mode
+    F2 & r::                                                                    ; switch mode
+    F2 & q::                                                                    ; switch mode
+    F2 & p::                                                                    ; switch mode
+    F2 & o::                                                                    ; switch mode
+    F2 & n::                                                                    ; switch mode
+    F2 & m::                                                                    ; switch mode
+    F2 & l::                                                                    ; switch mode
+    F2 & k::                                                                    ; switch mode
+    F2 & j::                                                                    ; switch mode
+    F2 & i::                                                                    ; switch mode
+    F2 & h::                                                                    ; switch mode
+    F2 & g::                                                                    ; switch mode
+    F2 & f::                                                                    ; switch mode
+    F2 & e::                                                                    ; switch mode
+    F2 & d::                                                                    ; switch mode
+    F2 & c::                                                                    ; switch mode
+    F2 & b::                                                                    ; switch mode
+    F2 & a::  SwitchMode()                                                      ; switch mode
+    
+    INS & 0::                                                                   ; switch mode
+    INS & 9::                                                                   ; switch mode
+    INS & 8::                                                                   ; switch mode
+    INS & 7::                                                                   ; switch mode
+    INS & 6::                                                                   ; switch mode
+    INS & 5::                                                                   ; switch mode
+    INS & 4::                                                                   ; switch mode
+    INS & 3::                                                                   ; switch mode
+    INS & 2::                                                                   ; switch mode
+    INS & 1::                                                                   ; switch mode
+    INS & z::                                                                   ; switch mode
+    INS & y::                                                                   ; switch mode
+    INS & x::                                                                   ; switch mode
+    INS & w::                                                                   ; switch mode
+    INS & v::                                                                   ; switch mode
+    INS & u::                                                                   ; switch mode
+    INS & t::                                                                   ; switch mode
+    INS & s::                                                                   ; switch mode
+    INS & r::                                                                   ; switch mode
+    INS & q::                                                                   ; switch mode
+    INS & p::                                                                   ; switch mode
+    INS & o::                                                                   ; switch mode
+    INS & n::                                                                   ; switch mode
+    INS & m::                                                                   ; switch mode
+    INS & l::                                                                   ; switch mode
+    INS & k::                                                                   ; switch mode
+    INS & j::                                                                   ; switch mode
+    INS & i::                                                                   ; switch mode
+    INS & h::                                                                   ; switch mode
+    INS & g::                                                                   ; switch mode
+    INS & f::                                                                   ; switch mode
+    INS & e::                                                                   ; switch mode
+    INS & d::                                                                   ; switch mode
+    INS & c::                                                                   ; switch mode
+    INS & b::                                                                   ; switch mode
+    INS & a:: SwitchMode()                                                      ; switch mode
+                                                                                
+
+    #If GetKeyState("ralt", "P")
+    rshift & esc:: 
+    rshift & F8::
+    rshift & F7::
+    rshift & F6::
+    rshift & F5::
+    rshift & F4::  
+    rshift & F3::  
+    rshift & F2::  
+    rshift & F1::      SetModeQuickSlot("rshift & ")                            ;
+                                                                                ;ralt & rshift takes priority over >!
+
+    #IF
+    >+esc::                                                                     ;load quickslot
+    >+F8::                                                                      ;load quickslot 
+    >+F7::                                                                      ;load quickslot 
+    >+F6::                                                                      ;load quickslot 
+    >+F5::                                                                      ;load quickslot 
+    >+F4::                                                                      ;load quickslot 
+    >+F3::                                                                      ;load quickslot 
+    >+F2::                                                                      ;load quickslot 
+    >+F1::  LoadModeQuickSlot(">+")                                             ;load quickslot
+                                                                                
+        
+  ; SAVE LINK -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+        
+    end & 0::                                                                   ; save file/folder path or URL
+    end & 9::                                                                   ; save file/folder path or URL
+    end & 8::                                                                   ; save file/folder path or URL
+    end & 7::                                                                   ; save file/folder path or URL
+    end & 6::                                                                   ; save file/folder path or URL
+    end & 5::                                                                   ; save file/folder path or URL
+    end & 4::                                                                   ; save file/folder path or URL
+    end & 3::                                                                   ; save file/folder path or URL
+    end & 2::                                                                   ; save file/folder path or URL
+    end & 1::                                                                   ; save file/folder path or URL
+    end & z::                                                                   ; save file/folder path or URL
+    end & y::                                                                   ; save file/folder path or URL
+    end & x::                                                                   ; save file/folder path or URL
+    end & w::                                                                   ; save file/folder path or URL
+    end & v::                                                                   ; save file/folder path or URL
+    end & u::                                                                   ; save file/folder path or URL
+    end & t::                                                                   ; save file/folder path or URL
+    end & s::                                                                   ; save file/folder path or URL
+    end & r::                                                                   ; save file/folder path or URL
+    end & q::                                                                   ; save file/folder path or URL
+    end & p::                                                                   ; save file/folder path or URL
+    end & o::                                                                   ; save file/folder path or URL
+    end & n::                                                                   ; save file/folder path or URL
+    end & m::                                                                   ; save file/folder path or URL
+    end & l::                                                                   ; save file/folder path or URL
+    end & k::                                                                   ; save file/folder path or URL
+    end & j::                                                                   ; save file/folder path or URL
+    end & i::                                                                   ; save file/folder path or URL
+    end & h::                                                                   ; save file/folder path or URL
+    end & g::                                                                   ; save file/folder path or URL
+    end & f::                                                                   ; save file/folder path or URL
+    end & e::                                                                   ; save file/folder path or URL
+    end & d::                                                                   ; save file/folder path or URL
+    end & c::                                                                   ; save file/folder path or URL
+    end & b::                                                                   ; save file/folder path or URL
+    end & a::                                                                   ; save file/folder path or URL
+    F1 & 0::                                                                    ; save file/folder path or URL
+    F1 & 9::                                                                    ; save file/folder path or URL
+    F1 & 8::                                                                    ; save file/folder path or URL
+    F1 & 7::                                                                    ; save file/folder path or URL
+    F1 & 6::                                                                    ; save file/folder path or URL
+    F1 & 5::                                                                    ; save file/folder path or URL
+    F1 & 4::                                                                    ; save file/folder path or URL
+    F1 & 3::                                                                    ; save file/folder path or URL
+    F1 & 2::                                                                    ; save file/folder path or URL
+    F1 & 1::                                                                    ; save file/folder path or URL
+    F1 & z::                                                                    ; save file/folder path or URL
+    F1 & y::                                                                    ; save file/folder path or URL
+    F1 & x::                                                                    ; save file/folder path or URL
+    F1 & w::                                                                    ; save file/folder path or URL
+    F1 & v::                                                                    ; save file/folder path or URL
+    F1 & u::                                                                    ; save file/folder path or URL
+    F1 & t::                                                                    ; save file/folder path or URL
+    F1 & s::                                                                    ; save file/folder path or URL
+    F1 & r::                                                                    ; save file/folder path or URL
+    F1 & q::                                                                    ; save file/folder path or URL
+    F1 & p::                                                                    ; save file/folder path or URL
+    F1 & o::                                                                    ; save file/folder path or URL
+    F1 & n::                                                                    ; save file/folder path or URL
+    F1 & m::                                                                    ; save file/folder path or URL
+    F1 & l::                                                                    ; save file/folder path or URL
+    F1 & k::                                                                    ; save file/folder path or URL
+    F1 & j::                                                                    ; save file/folder path or URL
+    F1 & i::                                                                    ; save file/folder path or URL
+    F1 & h::                                                                    ; save file/folder path or URL
+    F1 & g::                                                                    ; save file/folder path or URL
+    F1 & f::                                                                    ; save file/folder path or URL
+    F1 & e::                                                                    ; save file/folder path or URL
+    F1 & d::                                                                    ; save file/folder path or URL
+    F1 & c::                                                                    ; save file/folder path or URL
+    F1 & b::                                                                    ; save file/folder path or URL
+    F1 & a::  saveLink(substr(A_ThisHotkey,0))                                  ; save file/folder path or URL
+                                                                                
+                                                                                
+        
+    #If
 
 
-#IF
+
+
+
+; ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
+; SYSTEM CONVENIENCE ___________________________________________________________
+  ; SHORTCUTS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    +#s::         screenShot()                                                  ;Convenience: screenshot
+    >^capslock::  capslock                                                      ;Convenience: capslock
+    ^SC027::      Send {AppsKey}                                                ;Convenience: simulate appkey
+    !SC027::      Sendinput {esc}                                               ;Convenience: simulate esc key (alt + semicolon)
+    lwin & pgup:: suspend                                                       ;WinGolems: toggle all hotkeys ON|OFF except for this one
+    lwin & pgdn:: reloadWG()                                                    ;WinGolems: reload WinGolems
+    esc & pgdn::  ExitApp                                                       ;WinGolems: quit WinGolems
+    #if iscmode()
+    sc027::      GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
+    sc028::      GotoDesktop("2")                                         ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
+    #IF
+                                  
+  ; CLIPBOARD MANAGEMENT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    <^#c:: OCRtoClipboard(,"V2")                                                ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
+    !#c::  OCRtoClipboard(,"UWP")                                               ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
+    >^c::  addtoCB("A")                                                         ; append text to clipboard
+    +!#c:: OCRtoClipboard("A","V2")                                             ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
+    +^#c:: OCRtoClipboard("A","UWP")                                            ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
+    +>^c:: addtoCB("P")                                                         ; prepend text to clipboard
+                                                                                
+                                     
+
+  ; WINDOWS SETTINGS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    ;#u::                run, ms-settings:screenrotation                        ;WinOS: Display settings
+    *!#b:: BluetoothSettings()                                                  ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
+    *!#d:: DisplaySettings()                                                    ;WinSetting: display settings 
+    *!#n:: NotificationWindow()                                                 ;WinSetting: notification window
+    *!#r:: RunProgWindow()                                                      ;WinSetting: run program
+    *!#p:: PresentationDisplayMode()                                            ;WinSetting: presentation display mode
+    *!#i:: WindowsSettings()                                                    ;WinSetting: windows settings
+                                                                                
+                                     
+  
+  ; WINDOWS MANAGEMENT/POSITIONING -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    #If IsCmode()
+    lwin::             ActivatePrevInstance(),,SI("{lwin up}")                  ;WindowMgmt: rotate through app instances from most recent
+    #IF
+
+    rshift & printscreen:: ActivatePrevInstance(),SI("{printscreen up}{rshift up}") ;WindowMgmt: rotate through app instances from most recent                                     
+    printscreen & rshift::                                                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+    #capslock::           ActivateNextInstance(),SI("{lwin up}")                ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+                                                                                
+    ralt & SC028::      MaximizeWin()                                           ;WindowMgmt: maximize window
+    $#SC027::           w("lw"), MinimizeWin()                                  ;WindowMgmt: minimize window
+    #del::              AlwaysOnTop(1)                                          ;WindowMgmt: Window always on top: ON
+    #ins::              AlwaysOnTop(0)                                          ;WindowMgmt: Window always on top: OFF
+    <!esc::             WinClose,A                                              ;WindowMgmt: close active window
+    !#esc::             CloseClass()                                            ;WindowMgmt: close all instances of the active program
+    ^#sc027::           Send {lwin down}d{lwin up}                              ;WindowMgmt: show desktop
+
+    #If GetKeyState("PrintScreen", "P")
+    left::  Sendinput #{left}                                                   ;move window to left half
+    right:: Sendinput #{right}                                                  ;move window to right half
+    up::    Sendinput #{up}                                                     ;move window to right half
+    down::  Sendinput #{down}                                                   ;move window to right half
+    
+    #IF GetKeyState("lctrl", "P")
+    lalt & PgDn::       % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")     ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2) requires: https://github.com/FuPeiJiang/VD.ahk
+    #IF
+
+    lalt & c:: s("{blind}",200),W("ra"),moveWinBtnMonitors("L")                 ;WindowMgmt: move window to left monitor
+    ralt & m:: s("{blind}",200),W("ra"),moveWinBtnMonitors("R")                 ;WindowMgmt: move window to right monitor
+
+    #If GetKeyState("rshift", "P") 
+    ralt & m::         s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("L")    ;WindowMgmt: move window to left monitor
+    #If GetKeyState("lshift", "P")
+    lalt & c::         s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("R")    ;WindowMgmt: move window to left monitor
+
+; ADDITIONAL MODIFIER KEYS _____________________________________________________
+    
+    :X:tmod~win::    TC("T_MK", "Extra Modifier keys = ") ; toggle modifier keys
+    
+    #IF IsCMODE()
+    ins::  sendinput {ins}                                                      ;replacement for using ins key as a modifier key
+    1::                                                                         ;replacement for using F1  key as a modifier key
+    f1::   SendInput {F1}                                                       ;replacement for using F1 key as a modifier key
+    2::    SendInput {F2}                                                       ;replacement for using F2 key as a modifier key
+    f12::  SendInput {F12}                                                      ;replacement for using F12 key as a modifier key
+    n::                                                                         ;replacement for using PgDn key as a modifier key
+    down:: SendInput {pgdn}                                                     ;replacement for using PgDn key as a modifier key
+    o::                                                                         ;replacement for using PgUp key as a modifier key
+    up::   SendInput {pgup}                                                     ;replacement for using PgUp key as a modifier key
+                                                                                
+
+    
+    #IF GC("T_MK",1)
+    ESC & SC029::                                                               ; modifier key
+    ESC & F1::                                                                  ; modifier key
+    ESC & F2::                                                                  ; modifier key
+    rshift & pgdn::                                                             ; modifier key
+    rshift & pgup::                                                             ; modifier key
+    rshift & right::                                                            ; modifier key
+    rshift & left::                                                             ; modifier key
+    pgdn & rshift::                                                             ; modifier key
+    pgup & pgdn::                                                               ; modifier key
+    pgdn & pgup::                                                               ; modifier key
+    pgup & up::                                                                 ; modifier key
+    pgdn & up::                                                                 ; modifier key
+    pgup & left::                                                               ; modifier key
+    pgup & right::                                                              ; modifier key
+    pgdn & right::                                                              ; modifier key
+    printscreen::                                                               ; modifier key
+    F1::                                                                        ; modifier key
+    F2::                                                                        ; modifier key
+    F3::                                                                        ; modifier key
+    F4::                                                                        ; modifier key
+    F12::                                                                       ; modifier key
+    pgup::                                                                      ; modifier key
+    pgdn::                                                                      ; modifier key
+    ins::                                                                       ; modifier key
+    end::                                                                       ; modifier key
+    home::           return                                                     ; modifier key
+
+; TAB NAVIGATION _______________________________________________________________
+  
+    #IF !WinActive("ahk_exe " exe["doc"])                                       ; can be toggled on/off by entering Gtc,T_tabNav in a CB              
+    *^b::     SI("^{PgUp}"), SI("{ctrl up}"),W("c")                             ;Navigation: navigate to left tab
+    *^space:: SI("^{PgDn}"), SI("{ctrl up}"),W("c")                             ;Navigation: navigate to right tab
+    
+    #If WinActive("ahk_exe Explorer.EXE")
+    ctrl & b::     SI("^+{tab}") , SI("{ctrl up}"),W("c")                       ;Navigation: navigate to left tab
+    ctrl & space:: SI("^{tab}")  , SI("{ctrl up}"),W("c")                       ;Navigation: navigate to right tab
+
+; WEB SEARCH ___________________________________________________________________
+    
+    #IF
+    >!SC035::     search("google.com/search?q=")                                ;search: google search selected text
+    +#SC035::     search("autohotkey.com/docs/search.htm?q=",,"&m=2")           ;search: AutoHotkey documentation
+    >!Backspace:: search("google.com/search?tbm=isch&q=")                       ;search: google image search
+    !SC02b::      search("youtube.com/results?search_query=")                   ;search (+capslock): use clipboard contents to search youtubes
+                                                                                
+    #If isCMODE()   ; (+capslock) search clipboard contents instead of selected text
+    SC035::          search("google.com/search?q=")                             ;Convenience: google search selected text
+    SC034::          search("google.com/search?tbm=isch&q=")                    ;search (+capslock): use clipboard contents to search google image
+    SC033::          search("youtube.com/results?search_query=")                ;search (+capslock): use clipboard contents to search youtubes
+    RSHIFT & SC035:: search("autohotkey.com/docs/search.htm?q=",clipboard,"&m=2") ;Convenience: google search selected text
+    LSHIFT & SC035:: search("google.com/search?q=",clipboard)                   ;Convenience: google search selected text
+    LSHIFT & SC034:: search("google.com/search?tbm=isch&q=",clipboard)          ;search (+capslock): use clipboard contents to search google image
+    LSHIFT & SC033:: search("youtube.com/results?search_query=",clipboard)      ;search (+capslock): use clipboard contents to search youtubes
+                                                                                
+    #If    
+    #SC035::     
+    >^SC035::     
+    ChordSearch(options :="L1 T9", escape := "{esc}{ralt}") {
+        global reChordMenuPattern, C
+        ;pop up website menu
+        menu := rtrim(AccessCache("zb\SearchMenu",,0),"`n")
+       
+        PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)
+        
+        keysPressed :=  KeyWaitHook(options,escape)
+        input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
+        Gui, PopUp: cancel
+        Switch % keysPressed
+        {
+            Case "<+a",">+a","a":   (input ? Search("www.amazon.ca/s?k=", input)                                                               : LURL("www.amazon.ca"))
+            Case "<+i",">+i","i":   (input ? Search("www.imdb.com/find?q=", input)                                                             : LURL("www.imdb.com"))
+            Case "<+d",">+d","d":   (input ? Search("www.dictionary.com/browse/", input)                                                       : LURL("www.dictionary.com"))
+            Case "<+e",">+e","e":   (input ? Search("www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20210825091515&SearchText=", input) : LURL("www.aliexpress.com"))
+            Case "<+f",">+f","f":   (input ? Search("ca.finance.yahoo.com/quote/", input)                                                      : LURL("ca.finance.yahoo.com"))
+            Case "<+h",">+h","h":   (input ? Search("math.stackexchange.com/search?q=", input)                                                 : LURL("math.stackexchange.com")) 
+            Case "<+b",">+b","b":   (input ? search("stackexchange.com/search?q=", input)                                                      : LURL("stackexchange.com"))
+            Case "<+m",">+m","m":   (input ? Search("google.com/maps/search/", input)                                                          : LURL("google.com/maps/"))
+            Case "<+o",">+o","o":   (input ? Search("www.stackoverflow.com/search?q=", input)                                                  : LURL("www.stackoverflow.com"))
+            Case "<+r",">+r","r":   (input ? Search("https://www.reddit.com/search/?q=", input)                                                : LURL("https://www.reddit.com"))
+            Case "<+s",">+s","s":   (input ? Search("www.twitter.com/search?q=", input)                                                        : LURL("www.twitter.com"))
+            Case "<+t",">+t","t":   (input ? Search("www.thesaurus.com/browse/", input)                                                        : LURL("www.thesaurus.com"))
+            Case "<+v",">+v","v":   (input ? Search("www.bing.com/videos/search?q=", input)                                                    : LURL("www.bing.com/videos"))
+            Case "<+w",">+w","w":   (input ? Search("en.wikipedia.org/w/index.php?search=", input)                                             : LURL("en.wikipedia.org"))
+            Case "<+y",">+y","y":   (input ? Search("youtube.com/results?search_query=", input)                                                : LURL("youtube.com"))
+            
+            default:
+                sleep,0
+                ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
+        }
+        
+        return 
+    }
+
 /*
+
+
+
+
+

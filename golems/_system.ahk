@@ -1,7 +1,7 @@
 #IF
-; DISABLE KEYS ____________________________________________________________
-  ;#^s::return                                                                   ;AHK: prevent windows speech recognition from popping up  
-    ~LWin::       Send {Blind}{vk07}                                            ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
+; DISABLE KEYS _________________________________________________________________
+    ;#^s::return                                                                   ;AHK: prevent windows speech recognition from popping up  
+    LWin::       Send {Blind}{vk07}                                            ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
     *LWin::       Send {Blind}{LWin Down}                                       ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
     LWin Up::     Send {Blind}{vk07}{LWin Up}                                   ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
 ; CB SYSTEM COMMANDS ___________________________________________________________
@@ -21,20 +21,20 @@
     :X:s~~win::    PowerOptions("sleep")                                        ;SC: enter sleep mode
 
     #If GetKeyState("F12", "P")
-    esc & del::                                                                   ;SC: (+shift) enter hybernate mode
-    :X:h~~win::    PowerOptions("hybernate")                                      ;SC: enter hybernate mode
-    esc & end::                                                                   ;SC: (+shift) shutdown + power down  
-    :X:sd~~win::   PowerOptions("shutdown")                                       ;SC: shutdown + power down 
-    esc & home::                                                                  ;SC: (+shift) close all open programs  
-    :X:ce~~win::   CloseAllPrograms()                                             ;SC: close all open programs 
+    esc & del::                                                                 ;SC: (+shift) enter hybernate mode
+    :X:h~~win::    W("esc"),PowerOptions("hybernate")                           ;SC: enter hybernate mode
+    esc & end::                                                                 ;SC: (+shift) shutdown + power down  
+    :X:sd~~win::   W("esc"),clearQuickAccessHistory(),PowerOptions("shutdown")  ;SC: shutdown + power down
+    esc & home::                                                                ;SC: (+shift) close all open programs  
+    :X:ce~~win::   W("esc"), CloseAllPrograms()                                             ;SC: close all open programs 
     #If
     
+    :X:ch~~win:: clearQuickAccessHistory()                                      ;SC: clear file explorer quick access history
+
     :X:rs~~win::   PowerOptions("restart")                                        ;SC: restart the computer 
     F12 & a::                                                                     ;SC: alarm clock 
     :X:alarm~win::
     :X:a~win::     WinTimer()
-    <!#m::                                                                        ;SC: Send mail 
-    :X:m~win::     SendEmail()                                                    ;SC: Send mail
 
     ;:X:ss~win::    CloudSync("ON")                                               ;SC: turn on cloud sync 
     ;:X:qs~win::    CloudSync("OFF")                                              ;SC: turn off cloud sync
@@ -53,7 +53,7 @@
     ~+#left::                                                                     ;SC: cursor follows active window when moving apps btn monitors (if turned on)
     ~+#right::                                                                    ;SC: cursor follows active window when moving apps btn monitors (if turned on)
     ~+!tab::                                                                      ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
-    ~!tab::       settimer, CFW,-250                                              ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
+    ~!tab::       settimer, CFW,-200                                              ;SC: cursor follows active window when switch apps with alt+tab (if turned on)
     
 
 
@@ -124,16 +124,6 @@
   ; MEMORY -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_d",0) 
 
-    pgdn & 0::                                                           
-    pgdn & 9::                                                           
-    pgdn & 8::                                                           
-    pgdn & 7::                                                           
-    pgdn & 6::                                                           
-    pgdn & 5::                                                           
-    pgdn & 4::                                                           
-    pgdn & 3::                                                           
-    pgdn & 2::                                                           
-    pgdn & 1::      Send % "#" . substr(A_ThisHotkey,0)                  
     
     /*
         #IF GC("T_d",0) and GetKeyState("shift", "P")
@@ -163,12 +153,11 @@
     #IF GC("T_d",0) and !WinActive("ahk_exe " exe["editor"])                    ; When editor not active 
     ^!d::             SelectLine(), s("^c"), s("right"), s("enter"), s("^v")    ;Convenience: duplicate line
     ralt & down::     s("{blind}"), s("{F11}")                                  ;Convenience: full screen {F11}
-
     
     #If GC("T_d",0) and GetKeyState("PrintScreen", "P")                         ; convert printscreen to another modifier key 
     p::                             WinClose,A                                  ;Convenience: close active window
     sc028::                         Click, Right                                ;MouseFunctions: mouse Right click
-    ;!r::                            RunProgWindow()                             ;convenience: run programs alternate shortcut
+    ralt & r::                      RunProgWindow()                             ;send #r ; run programs alternate shortcut 
     SC027::                         WinMinimize,A                               ;Convenience: minimize window
     j::                             Sendinput {Blind}{WheelDown 5}              ;MouseFunctions: scroll wheel down
     k::                             Sendinput {Blind}{WheelUp 5}                ;MouseFunctions: scroll wheel Up
