@@ -76,6 +76,11 @@
 #Include %A_ScriptDir%\golems\
 #Include *i A_Quick_Start.ahk
 
+; ADVANCED TEMPLATE (must deactivate A_Quick_Start.ahk)
+; #Include *i 1_Apps_Misc.ahk
+; #Include *i 2_Text_Manipulation.ahk
+; #Include *i 3_File_Management.ahk
+
 ; AHK files included earlier will have priority over ones included later, if there's overlap
 
 /* #INCLUDE MECHANICS ********************************************************** 

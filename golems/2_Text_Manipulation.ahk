@@ -243,7 +243,7 @@
             Case "<+a",">+a":   SortSelectedText("R")                                               ;TEXT MANIPULATION Sort Selected Text
             Case "s":           ReplaceAwithB()                                                     ;TEXT MANIPULATION replaces multiple consecutive spaces with character length 1 space
             Case "<+s",">+s":   ReplaceAwithB(" ")                                                  ;TEXT MANIPULATION! remove all spaces from selected text
-            Case "2":           SelectLine(), txt := clip(), s("{right}{enter}"), clip(txt)         ;TEXT MANIPULATION: duplicate current line
+            Case "2":           SelectLine(), txt := clip(), SI("{right}{enter}"), clip(txt)         ;TEXT MANIPULATION: duplicate current line
             Case "m":           ReplaceAwithB("_"," "),Capitalize1stLetter(,,0),,ReplaceAwithB(" ") ;CamelCase
             Case "n":           AddSpaceBtnCaseChange(), ReplaceAwithB(" ","_")                     ;snake_case
             Case "i":           SaveMousPos("i",1)                                                  ;save mouse position for #i
