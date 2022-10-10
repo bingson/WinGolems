@@ -681,7 +681,12 @@
             case "First lines of " GC("PeriodAlias"): txt :=  See1stLines(GC("PeriodAlias"),,,GC("MemSummaryLines", 1))
             case "First lines of " GC("CommaAlias"): txt :=  See1stLines(GC("CommaAlias"),,,GC("MemSummaryLines", 1))
             case "Saved " GC("mode") "_LINKS" : txt := GetIniSect(GC("mode") "_LINKS")
-            case "Clipboard Contents" : txt := Clipboard
+            case "Clipboard Contents" : 
+                try {
+                    txt := Clipboard
+                } catch e {
+                    txt := GetIniSect(GC("mode") "_LINKS")
+                }
             case "list.txt", "list" : txt := CreateCacheList(,GC("rowMax",26))
             default :
                 if instr(ndspl, "*") or !IfMemFileExist(A_ScriptDir "\mem_cache\" ndspl) {
@@ -1240,10 +1245,13 @@
         sleep, med 
         if (RegExMatch(input, "^(\:[0-9A-Za-z]+)(?!\s[0-9A-Za-z]+)$")) { ;save URL or file/folder path
             
-            If GetGUIFocus() == "UserInput"
+            If (GetGUIFocus() == "UserInput") {
                 ActivateApp(GC("CB_tgtExe"))
+                sleep, 200
+            }
 
             winget, Pname, ProcessName, A
+
             RegExMatch(GC("edge_path"), "[^\\]+$", edge_exe) ; get application.exe name
             RegExMatch(GC("chrome_path"), "[^\\]+$", chrome_exe) ; get application.exe name 
 
@@ -1253,8 +1261,9 @@
             { 
                 case edge_exe : 
                     link := GetURL("Ahk_exe " edge_exe)
-                    if !RegExMatch(link,"^(https?:\/\/)")
-                        link := "https://" . url
+                    if !RegExMatch(link,"^(https?:\/\/)") {
+                        link := "https://" . link
+                    }
                 case chrome_exe : 
                     link := GetURL("Ahk_exe " chrome_exe)
                     if !RegExMatch(link,"^(https?:\/\/)")
@@ -1602,6 +1611,7 @@
     } ; retrieves text to single digit memory file
 
 ; AHK/INI UTILITIES ____________________________________________________________
+
   ; VSCODE-LIKE COORD COMBINATIONS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
     KeyWaitHook(Options:= "",EndKeys:="{esc}",MatchList:="") {
@@ -2385,17 +2395,6 @@
         return
     }
 
-    ToggleOpt(optn ="", e = 1 ) {
-        ControlFocus, DirectUIHWND2, ahk_class CabinetWClass
-        KeyWait()
-        Send {Alt}
-        Send %optn%
-        sleep 200
-        if e
-            Send {enter}
-        return
-    }
-
     SP(key = "") {
         SavePath(key)
         return
@@ -2507,63 +2506,70 @@
 
     GroupBy(category="",win11=FALSE) {
         global short
-        if (win11 AND A_OSVersion >= 10.0.22000) { ;windows 11
-            AA("explorer.exe"),
-            SI("{alt}{right}{enter}",100),
-            SI("{up}{enter}",100)
-            switch category
-            {
-                case "name": SI("{enter}")
-                case "date modified": SI("{down}{enter}")
-                case "file type": SI("{down 2}{enter}")
-                case "size": SI("{down 3}{enter}")
-                case "date created": SI("{down 4}{enter}")
-                default:
-                return 
-            }
-        } else {
-            switch category
-            {
-                case "name": ToggleOpt("vg{enter}")
-                case "file type": ToggleOpt("vg{down 2}")
-                case "date modified": ToggleOpt("vg{down 1}")
-                case "date created": ToggleOpt("vg{down 4}")
-                case "none": ToggleOpt("vg{up 4}")
-                default:
-                return 
-
-            }
+        sleep, 200
+        SI("{alt}",100), SI("vg",100)
+        switch category
+        {
+            case "name":          SI("{enter}")
+            case "date modified": SI("{down 1}{enter}") 
+            case "file type":     SI("{down 2}{enter}")
+            case "size":          SI("{down 3}{enter}") 
+            case "date created":  SI("{down 4}{enter}")
+            case "none":          SI("{up 4}{enter}")
+            default:
+            return 
         }
+        /*
+            if (win11 AND A_OSVersion >= 10.0.22000) { ;windows 11
+                AA("explorer.exe"),
+                SI("{alt}{right}{enter}",100),
+                SI("{up}{enter}",100)
+                switch category
+                {
+                    case "name":          SI("{enter}")
+                    case "date modified": SI("{down}{enter}")
+                    case "file type":     SI("{down 2}{enter}")
+                    case "size":          SI("{down 3}{enter}")
+                    case "date created":  SI("{down 4}{enter}")
+                    default:
+                    return 
+                }
+            } else {
+                
+            }
+        */
     }
 
     SortBy(category="",win11=FALSE) {
         global short
-        If (win11 AND A_OSVersion >= 10.0.22000) {
-            AA("explorer.exe"),
-            SI("{alt}{right}{enter}",100),
-            switch category
-            {
-                case "name": SI("{enter}")
-                case "date modified": SI("{down}{enter}")
-                case "file type": SI("{down 2}{enter}")
-                case "size": SI("{down 3}{right}{enter}")
-                case "date created": SI("{down 3}{right}{down}{enter}")
-                default:
-                return 
-            }
-        } else {
-            switch category
-            {
-                case "name": ToggleOpt("vo")
-                case "date modified": ToggleOpt("vo{down}")
-                case "file type": ToggleOpt("vo{down 2}")
-                case "size": ToggleOpt("vo{down 3}")
-                case "date created": ToggleOpt("vo{down 4}")
-                default:
-                return 
-
-            }
+        SI("{alt}",100), SI("vo",100)
+        switch category
+        {
+            case "name":          SI("{enter}")
+            case "date modified": SI("{down}{enter}")
+            case "file type":     SI("{down 2}{enter}")
+            case "size":          SI("{down 3}{enter}")
+            case "date created":  SI("{down 4}{enter}")
+            default:
+            return 
         }
+        /*
+            If (win11 AND A_OSVersion >= 10.0.22000) {
+                AA("explorer.exe"),
+                SI("{alt}{right}{enter}",100),
+                switch category
+                {
+                    case "name":          SI("{enter}")
+                    case "date modified": SI("{down}{enter}")
+                    case "file type":     SI("{down 2}{enter}")
+                    case "size":          SI("{down 3}{right}{enter}")
+                    case "date created":  SI("{down 3}{right}{down}{enter}")
+                    default:
+                    return 
+                }
+            } else {
+            }
+        */
     }
 
     SortByDate(optn="modified") {
@@ -3244,6 +3250,15 @@
 
 
 ; BROWSERS _____________________________________________________________________
+    
+    EncodeDecodeURI(str, encode := true, component := true) {
+        Static Doc, JS
+        str := RegExReplace(str, "\R++(?<!\n\n|\r\n\r\n)"," ")
+        If !Doc
+            Doc := ComObjCreate("htmlfile"), Doc.write("<meta http-equiv=""X-UA-Compatible"" content=""IE=9"">")
+            , JS := Doc.parentWindow       , (Doc.documentMode < 9 && JS.execScript())
+        Return JS[(encode ? "en" : "de") "codeURI" (component ? "Component" : "")](str)
+    } ;converts raw text string into valid URI or vice versa
 
     CheckIncogWinID() {
 
@@ -3304,7 +3319,7 @@
         WinGetTitle, title, ahk_exe msedge.exe   ; active msedge window title
         i := (instr(title,"[InPrivate]") or CheckIncogWinID() or GC("T_x")) ? 1 : i  
 
-        sleep, short
+        sleep, med
         if browser
             Pname := browser
         else if (WinActive("ahk_exe " GC("html2_path")) or WinActive("ahk_exe " GC("html_path"))) {
@@ -3338,10 +3353,7 @@
             var := (!var ? trim(clip()) : var) ; selected text
 
         sleep, short 
-        var := CS(var
-            , {"&":"%26", """":"\"""} ; string replace to preserve ampersand and double quotes in query string
-        ,"\R++(?<!\n\n|\r\n\r\n)"," ") ; regex to remove line breaks
-
+        var := EncodeDecodeURI(var) ;replace special characters
         WinGetActiveTitle, title
         if instr(title,"[InPrivate]")
             i=1
@@ -3698,37 +3710,57 @@
 
     FormatAHKcodeBlock(CspaceLen = 80) {
         var := clip()
-        hot_key :=   "(?P<Hotkey>[+#!;\^\*<>~$A-Za-z0-9&:\(\), ""]+::)?"        ; "(?P<Hotkey>[+#!;\^\*<>~$A-Za-z0-9&:\(\), ""]+::|#[+#!;\^\*<>~$A-Za-z0-9&:\(\), ""]+)?" for #IF statements
         whitespace := "( +)?"
-        Command :=   "(?P<Command>[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\/:\|\._\?=,\^""\S]+)?"
-        Comment :=  "(?P<Comment>;[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\/:\|\._\?=,\^"";\S]*)$" 
-        matchPattern = ^%whitespace%%hot_key%%whitespace%%Command%%Comment%
+        hot_key :=    "(?P<Hotkey>[+#!A-Za-z0-9<>?&`\%\- \(\);\*$\\\/:\|\._\?=,\^''""``~]+::)"        ; "(?P<Hotkey>[+#!;\^\*<>~$A-Za-z0-9&:\(\), ""]+::|#[+#!;\^\*<>~$A-Za-z0-9&:\(\), ""]+)?" for #IF statements
+        Command :=   "(?P<Command>[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^''""``\S]+)?"
+        Comment :=  "(?P<Comment>;[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^''""``;\S]*)$" 
         
+        hotkeyPattern = ^%whitespace%%hot_key%%whitespace%%Command%%Comment%
+        altPattern := "^( *)?(?P<expression>[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\*$\\\/:\|\._\?=,\^''""``~]+)( *)?(?P<comment>;[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^""\S]+)?"
+
         maxHotkeyLen = 0
         maxCommandLen = 0
         IndexLen = 0
         Loop, parse, var, `n, `r
         {
-            RegExMatch(A_LoopField, matchPattern, o)
+            RegExMatch(A_LoopField, hotkeyPattern, o)
+            if (strlen(oHotkey) > 0) {
+                IndexLen := max(IndexLen, A_Index)
+                maxHotkeyLen := max(maxHotkeyLen,strlen(oHotkey))
+                maxCommandLen := max(maxCommandLen,strlen(rtrim(oCommand)))
+            } else {
+                RegExMatch(A_LoopField, altPattern, o)
+                ; msgbox % "`no1: " . o1 . "`n oexpression: " .  oexpression . "`n oComment: " .  oComment
+            }
             if (A_Index = 1) {
                 frontPadding := strlen(o1)
+                ; msgbox % "`nfrontPadding: " . frontPadding 
             }
-            IndexLen := max(IndexLen, A_Index)
-            maxHotkeyLen := max(maxHotkeyLen,strlen(oHotkey))
-            maxCommandLen := max(maxCommandLen,strlen(rtrim(oCommand)))
 
         }
         formatted := ""
         Loop, parse, var, `n, `r
         {
-            RegExMatch(A_LoopField, matchPattern, f)
-            hotkeyPadding := (maxHotkeyLen - strlen(fHotkey) + 1)  
-            fCommand := rtrim(fCommand)
-            CommandPadding := (maxCommandLen - strlen(fCommand) + 1) 
-            NewPadding := max(0,CspaceLen - (strlen(fHotkey) + strlen(fCommand) + frontPadding + hotkeyPadding + CommandPadding))
-            formatted .= format( "{1:" frontPadding "}{2:}{1:" hotkeyPadding "}{3:}{1:" CommandPadding + NewPadding "}{4:}"," ",fHotkey,fCommand,fComment) . "`n"
+            RegExMatch(A_LoopField, hotkeyPattern, f)
+            if (strlen(fHotkey) > 0) { 
+                hotkeyPadding := (maxHotkeyLen - strlen(fHotkey) + 1)  
+                fCommand := rtrim(fCommand)
+                CommandPadding := (maxCommandLen - strlen(fCommand) + 1) 
+                NewPadding := max(0,CspaceLen - (strlen(fHotkey) + strlen(fCommand) + frontPadding + hotkeyPadding + CommandPadding))
+                ; if strlen(fComment) = 0
+                ; Msgbox % "`nfHotkey: " . fHotkey . "`nfCommand: " . fCommand . "`nfComment: " . fComment
+                formatted .= format( "{1:" frontPadding "}{2:}{1:" hotkeyPadding "}{3:}{1:" CommandPadding + NewPadding "}{4:}"," ",fHotkey,fCommand,fComment) . "`n"
+            } else {
+                RegExMatch(A_LoopField, altPattern, f)
+                fexpression := rtrim(fexpression)
+                NewPadding := max(0,CspaceLen - (strlen(fexpression) + frontPadding))
+                formatted .= format( "{1:" frontPadding "}{2:}{1:" NewPadding "}{3:}"," ",fexpression, fComment) . "`n"
+                ; Msgbox % "`nNewPadding: " . NewPadding . "`nfexpression: " . fexpression . "`nfComment: " . fComment
+            }
         }
         clip(formatted)
+        return
+
     }
     /*
     

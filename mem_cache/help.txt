@@ -52,7 +52,8 @@
 |      remove duplicate lines                  E~rd                                                                                      |
 |      remove only consecutive duplicate lines E~dd                                                                                      | 
 |      Line formatting                         E~nl, E~cl          nl: remove blank lines, cl: reduce multiple blank lines to 1          |  
-|      insert text                             E~il2,4:example     insert the word "example" at lines 2 and 4 in CB displayed file       |
+|      insert text at line                     E~i2:example        insert the word "example" at line 2 in CB displayed file              |
+|      remove line                             E~r2                remove line 2                                                         |
 | A|P  Append|Prepend selected text to file    A1, Ar\test 1       add selected text to bottom of => 1.txt, r\test.txt to 1.txt          |
 |      A|P manually entered text               P1:title, A2:end    add => "title" to top of 1.txt, "end" to bottom of 2.txt              |
 |      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, contents of 1.txt, the word "sample"|

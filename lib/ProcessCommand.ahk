@@ -450,12 +450,12 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                             NewText := RegExReplace(AccessCache(path,,0), "(`r`n){2,}", "`r`n`n")
                         case E_Input = "l":                                                  ; remove blank lines
                             NewText := RemoveBlankLines(,AccessCache(path,,0))
-                        case substr(E_Input, 1,1) = "i":                                       ; insert line line (E~i2:example -> insert the word "example" at line 2 )
+                        case substr(E_Input, 1,1) = "i":                                       ; insert line line (E~i2:example -> insert the word "example" at line 2)
                             dPos      := InStr(E_Input, ":")
                             text_to_add := substr(E_Input, dPos+1)
                             rowIndex  := substr(E_Input,2,-strlen(text_to_add)-1)              ;last term is length not end position
                             NewText := TF_InsertLine(AccessCache(path,,0), rowIndex,rowIndex,text_to_add)
-                        case substr(E_Input, 1,1) = "r":                                       ; remove line (E~i2:example -> insert the word "example" at line 2 )
+                        case substr(E_Input, 1,1) = "r":                                       ; remove line (E~r2:example -> line 2 )
                             rowIndex  := substr(E_Input,2)              ;last term is length not end position
                             NewText := (rowIndex > 0) ? TF_RemoveLines(AccessCache(path,,0), rowIndex, rowIndex) 
                                                       : TF_RemoveLines(AccessCache(path,,0), rowIndex) 

@@ -4,22 +4,22 @@
     ; SaveWinID("unique_string")
     ; ActivateWinID("unique_string")
   
-    #z::          W("lw"),AA("obsidian_path")                                   ;Apps| Activate Obsidian               
-    #x::          W("lw"),AA("pdf_path")                                        ;Apps| Activate pdf reader                 
-    #c::          W("lw"),AA("cmd.exe")                                         ;Apps| Activate Command window
-    #a::          W("lw"),AA("editor_path")                                     ;Apps| Activate text/code editor                 
-    #s::          W("lw"),AA("html_path")                                       ;Apps| Activate Edge browser
-    #q::          W("lw"),AA("xls_path")                                        ;Apps| Activate Excel         
-    #w::          W("lw"),AA("doc_path")                                        ;Apps| Activate Word        
-    +#w::         W("lw","ls"),AA("ppt_path")                                   ;Apps| Activate Word        
-    #r::          W("lw"),AA("C:\Program Files\KeePassXC\KeePassXC.exe")        ;Apps| Activate keepass
-    #t::          W("lw"),ActivateCalc()                                        ;Apps| Activate Calculator    
-    #b::          W("lw"),AA("explorer.exe")                                    ;Apps| Activate File Explorer 
-    #n::          W("lw"),AA("html2_path")                                      ;Apps| Activate Chrome browser
-    :x:anki~win:: W("lw"),AA(A_ProgramFiles "\Anki\anki.exe")                   ;Apps| Anki
-    #m::          W("lw"),AA(A_ProgramFiles "\VideoLAN\VLC\vlc.exe")            ;Apps| Obsidian
-    #y::          W("lw"),everythingSearch()                                    ;Apps| everything search
-    <!#m::        W("lw"),AA(PF_x86 "\foobar2000\foobar2000.exe")               ;Apps| foobar
+    #z::          AA("obsidian_path"),SI("{lwin up}")                                   ;Apps| Activate Obsidian               
+    #x::          AA("pdf_path"),SI("{lwin up}")                                        ;Apps| Activate pdf reader                 
+    #c::          AA("cmd.exe"),SI("{lwin up}")                                         ;Apps| Activate Command window
+    #a::          AA("editor_path"),SI("{lwin up}")                                     ;Apps| Activate text/code editor                 
+    #s::          AA("html_path"),SI("{lwin up}")                                       ;Apps| Activate Edge browser
+    #q::          AA("xls_path"),SI("{lwin up}")                                        ;Apps| Activate Excel         
+    #w::          AA("doc_path"),SI("{lwin up}")                                        ;Apps| Activate Word        
+    +#w::         AA("ppt_path"),SI("{lwin up}")                                   ;Apps| Activate Word        
+    #r::          AA("C:\Program Files\KeePassXC\KeePassXC.exe"),SI("{lwin up}")        ;Apps| Activate keepass
+    #t::          ActivateCalc(),SI("{lwin up}")                                        ;Apps| Activate Calculator    
+    #b::          AA("explorer.exe"),SI("{lwin up}")                                    ;Apps| Activate File Explorer 
+    #n::          AA("html2_path"),SI("{lwin up}")                                      ;Apps| Activate Chrome browser
+    :x:anki~win:: AA(A_ProgramFiles "\Anki\anki.exe"),SI("{lwin up}")                   ;Apps| Anki
+    #m::          AA(A_ProgramFiles "\VideoLAN\VLC\vlc.exe"),SI("{lwin up}")            ;Apps| Obsidian
+    #y::          everythingSearch(),SI("{lwin up}")                                    ;Apps| everything search
+    <!#m::        AA(PF_x86 "\foobar2000\foobar2000.exe"),SI("{lwin up}")               ;Apps| foobar
                                                                                 
     +#p::           AA(PF "\HyperSnap v8.20\HyperSnapPortable.exe", "HprSnap8.exe",2)                                                                
     :X:edge~win::   CC("html_path",GC("edge_path")), CC("html2_path",GC("chrome_path")), PU("1: edge, 2:chrome")
@@ -30,14 +30,12 @@
 
 ; SAVE/ACTIVATE WINDOW ID ______________________________________________________
     
-    #If IsCmode() ;GetKeyState("lctrl", "P") 
-    tab & n::   
-    tab & m::
-    tab & SC033::
-    tab & SC034::
-    tab & SC035::       SaveWinID(StrReplace(A_ThisHotkey,"tab & "))
-
     #If GetKeyState("printscreen", "P")
+    rctrl & n::                                                                   
+    rctrl & m::                                                                   
+    rctrl & SC033::                                                               
+    rctrl & SC034::                                                               
+    rctrl & SC035::
     rctrl & ESC::                                                               ;Apps: Save window ID for printscreen + esc activation
     rctrl & F1::                                                                ;Apps: Save window ID for printscreen+F1 activation
     rctrl & F2::                                                                ;Apps: Save window ID for printscreen+F2 activation
@@ -47,8 +45,6 @@
     rctrl & F6::                                                                ;Apps: Save window ID for printscreen+F6 activation
     rctrl & F7::                                                                ;Apps: Save window ID for printscreen+F7 activation
     rctrl & F8::                                                                ;Apps: Save window ID for printscreen+F8 activation
-    rctrl & m::                                                                 ;Apps: Save window ID for printscreen+m activation
-    rctrl & n::                                                                 ;Apps: Save window ID for printscreen+n activation                     
     rctrl & q::                                                                 ;Apps: Save window ID for printscreen+q activation
     rctrl & w::                                                                 ;Apps: Save window ID for printscreen+w activation
     rctrl & e::                                                                 ;Apps: Save window ID for printscreen+e activation
@@ -60,7 +56,7 @@
     rctrl & z::                                                                 ;Apps: Save window ID for printscreen+z activation
     rctrl & x::                                                                 ;Apps: Save window ID for printscreen+x activation
     rctrl & C::                                                                 ;Apps: Save window ID for printscreen+C activation
-    rctrl & v::   SaveWinID(StrReplace(A_ThisHotkey,"rctrl & "))                ;Apps: Save window ID for printscreen+v activation
+    rctrl & v:: SaveWinID(StrReplace(A_ThisHotkey,"rctrl & "))                  ;Apps: Save window ID for printscreen+v activation
                                                                                 
     #If GetKeyState("PrintScreen", "P")
     esc::                                                                       ;ActvateApp: activate saved Window ID
@@ -148,11 +144,9 @@
     #2::                                                                        ;Mem: paste contents of 2.txt
     #1::                RetrieveMemory()                                        ;Mem: paste contents of 1.txt
     
-    <!space:: RunCmd("V" GC("CommaAlias")), W("a")                     ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
-    >!space:: RunCmd("V" GC("PeriodAlias")), W("a")                    ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
+    <!space:: RunCmd("V" GC("CommaAlias")), W("a")                              ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
+    >!space:: RunCmd("V" GC("PeriodAlias")), W("a")                             ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
                                                                                 
-                                                                                
-
   
 ; MANAGE SAVED LINKS ___________________________________________________________
   ; load LINK -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -459,12 +453,13 @@
     lwin & pgup:: suspend                                                       ;WinGolems: toggle all hotkeys ON|OFF except for this one
     lwin & pgdn:: reloadWG()                                                    ;WinGolems: reload WinGolems
     esc & pgdn::  ExitApp                                                       ;WinGolems: quit WinGolems
-    #if iscmode()
-    sc027::      GotoDesktop("1")                                          ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
-    sc028::      GotoDesktop("2")                                         ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
+    #IF isCmode() 
+    sc027:: GotoDesktop("1")                                                    ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
+    sc028:: GotoDesktop("2")                                                    ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
+     
     #IF
-                                  
-  ; CLIPBOARD MANAGEMENT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+  ; CLIPBOARD -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     <^#c:: OCRtoClipboard(,"V2")                                                ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
     !#c::  OCRtoClipboard(,"UWP")                                               ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
     >^c::  addtoCB("A")                                                         ; append text to clipboard
@@ -487,39 +482,41 @@
   
   ; WINDOWS MANAGEMENT/POSITIONING -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #If IsCmode()
-    lwin::             ActivatePrevInstance(),,SI("{lwin up}")                  ;WindowMgmt: rotate through app instances from most recent
-    #IF
-
-    rshift & printscreen:: ActivatePrevInstance(),SI("{printscreen up}{rshift up}") ;WindowMgmt: rotate through app instances from most recent                                     
-    printscreen & rshift::                                                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-    #capslock::           ActivateNextInstance(),SI("{lwin up}")                ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+    lwin::                 ActivatePrevInstance(),,SI("{lwin up}")                  ;WindowMgmt: rotate through app instances from most recent
+    #IF                                                                         
                                                                                 
-    ralt & SC028::      MaximizeWin()                                           ;WindowMgmt: maximize window
-    $#SC027::           w("lw"), MinimizeWin()                                  ;WindowMgmt: minimize window
-    #del::              AlwaysOnTop(1)                                          ;WindowMgmt: Window always on top: ON
-    #ins::              AlwaysOnTop(0)                                          ;WindowMgmt: Window always on top: OFF
-    <!esc::             WinClose,A                                              ;WindowMgmt: close active window
-    !#esc::             CloseClass()                                            ;WindowMgmt: close all instances of the active program
-    ^#sc027::           Send {lwin down}d{lwin up}                              ;WindowMgmt: show desktop
+    rshift & printscreen:: ActivatePrevInstance(),SI("{printscreen up}{rshift up}") ;WindowMgmt: rotate through app instances from most recent                                     
+    printscreen & rshift::                                                          ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+    #capslock::            ActivateNextInstance(),SI("{lwin up}")                   ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+    >!SC028::              MaximizeWin()                                            ;WindowMgmt: maximize window
+    <!SC028::                                                                       ;Convenience: minimize window              
+    printscreen & SC028::  WinMinimize,A                                            ;Convenience: minimize window
+    #del::                 AlwaysOnTop(1)                                           ;WindowMgmt: Window always on top: ON
+    #ins::                 AlwaysOnTop(0)                                           ;WindowMgmt: Window always on top: OFF
+    <!esc::                WinClose,A                                               ;WindowMgmt: close active window
+    !#esc::                CloseClass()                                             ;WindowMgmt: close all instances of the active program
+    ^#sc027::              Send {lwin down}d{lwin up}                               ;WindowMgmt: show desktop
+                                                                                
 
     #If GetKeyState("PrintScreen", "P")
     left::  Sendinput #{left}                                                   ;move window to left half
     right:: Sendinput #{right}                                                  ;move window to right half
     up::    Sendinput #{up}                                                     ;move window to right half
     down::  Sendinput #{down}                                                   ;move window to right half
+                                                                                
     
     #IF GetKeyState("lctrl", "P")
-    lalt & PgDn::       % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")     ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2) requires: https://github.com/FuPeiJiang/VD.ahk
+    lalt & PgDn:: % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")           ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2) requires: https://github.com/FuPeiJiang/VD.ahk
     #IF
 
     lalt & c:: s("{blind}",200),W("ra"),moveWinBtnMonitors("L")                 ;WindowMgmt: move window to left monitor
     ralt & m:: s("{blind}",200),W("ra"),moveWinBtnMonitors("R")                 ;WindowMgmt: move window to right monitor
 
-    #If GetKeyState("rshift", "P") 
-    ralt & m::         s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("L")    ;WindowMgmt: move window to left monitor
-    #If GetKeyState("lshift", "P")
-    lalt & c::         s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("R")    ;WindowMgmt: move window to left monitor
-
+    #If GetKeyState("rshift", "P")                                              
+    ralt & m:: s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("L")            ;WindowMgmt: move window to left monitor
+    #If GetKeyState("lshift", "P")                                              
+    lalt & c:: s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("R")            ;WindowMgmt: move window to left monitor
+                                                                                
 ; ADDITIONAL MODIFIER KEYS _____________________________________________________
     
     :X:tmod~win::    TC("T_MK", "Extra Modifier keys = ") ; toggle modifier keys
@@ -538,36 +535,36 @@
 
     
     #IF GC("T_MK",1)
-    ESC & SC029::                                                               ; modifier key
-    ESC & F1::                                                                  ; modifier key
-    ESC & F2::                                                                  ; modifier key
-    rshift & pgdn::                                                             ; modifier key
-    rshift & pgup::                                                             ; modifier key
-    rshift & right::                                                            ; modifier key
-    rshift & left::                                                             ; modifier key
-    pgdn & rshift::                                                             ; modifier key
-    pgup & pgdn::                                                               ; modifier key
-    pgdn & pgup::                                                               ; modifier key
-    pgup & up::                                                                 ; modifier key
-    pgdn & up::                                                                 ; modifier key
-    pgup & left::                                                               ; modifier key
-    pgup & right::                                                              ; modifier key
-    pgdn & right::                                                              ; modifier key
-    printscreen::                                                               ; modifier key
-    F1::                                                                        ; modifier key
-    F2::                                                                        ; modifier key
-    F3::                                                                        ; modifier key
-    F4::                                                                        ; modifier key
-    F12::                                                                       ; modifier key
-    pgup::                                                                      ; modifier key
-    pgdn::                                                                      ; modifier key
-    ins::                                                                       ; modifier key
-    end::                                                                       ; modifier key
-    home::           return                                                     ; modifier key
+    ESC & SC029::                                                               ;modifier key
+    ESC & F1::                                                                  ;modifier key
+    ESC & F2::                                                                  ;modifier key
+    rshift & pgdn::                                                             ;modifier key
+    rshift & pgup::                                                             ;modifier key
+    rshift & right::                                                            ;modifier key
+    rshift & left::                                                             ;modifier key
+    pgdn & rshift::                                                             ;modifier key
+    pgup & pgdn::                                                               ;modifier key
+    pgdn & pgup::                                                               ;modifier key
+    pgup & up::                                                                 ;modifier key
+    pgdn & up::                                                                 ;modifier key
+    pgup & left::                                                               ;modifier key
+    pgup & right::                                                              ;modifier key
+    pgdn & right::                                                              ;modifier key
+    printscreen::                                                               ;modifier key
+    F1::                                                                        ;modifier key
+    F2::                                                                        ;modifier key
+    F3::                                                                        ;modifier key
+    F4::                                                                        ;modifier key
+    F12::                                                                       ;modifier key
+    pgup::                                                                      ;modifier key
+    pgdn::                                                                      ;modifier key
+    ins::                                                                       ;modifier key
+    end::                                                                       ;modifier key
+    home::           return                                                     ;modifier key
 
 ; TAB NAVIGATION _______________________________________________________________
   
-    #IF !WinActive("ahk_exe " exe["doc"])                                       ; can be toggled on/off by entering Gtc,T_tabNav in a CB              
+    #IF !WinActive("ahk_exe " exe["doc"])                                       ;can be toggled on/off by entering Gtc,T_tabNav in a CB              
     *^b::     SI("^{PgUp}"), SI("{ctrl up}"),W("c")                             ;Navigation: navigate to left tab
     *^space:: SI("^{PgDn}"), SI("{ctrl up}"),W("c")                             ;Navigation: navigate to right tab
     
@@ -575,32 +572,34 @@
     ctrl & b::     SI("^+{tab}") , SI("{ctrl up}"),W("c")                       ;Navigation: navigate to left tab
     ctrl & space:: SI("^{tab}")  , SI("{ctrl up}"),W("c")                       ;Navigation: navigate to right tab
 
-; WEB SEARCH ___________________________________________________________________
+; COMMAND CHORDS (WEB SEARCH) __________________________________________________
     
-    #IF
-    >!SC035::     search("google.com/search?q=")                                ;search: google search selected text
-    +#SC035::     search("autohotkey.com/docs/search.htm?q=",,"&m=2")           ;search: AutoHotkey documentation
-    >!Backspace:: search("google.com/search?tbm=isch&q=")                       ;search: google image search
-    !SC02b::      search("youtube.com/results?search_query=")                   ;search (+capslock): use clipboard contents to search youtubes
-                                                                                
-    #If isCMODE()   ; (+capslock) search clipboard contents instead of selected text
-    SC035::          search("google.com/search?q=")                             ;Convenience: google search selected text
-    SC034::          search("google.com/search?tbm=isch&q=")                    ;search (+capslock): use clipboard contents to search google image
-    SC033::          search("youtube.com/results?search_query=")                ;search (+capslock): use clipboard contents to search youtubes
+    #IF                                                                         
+    >!SC035::        search("google.com/search?q=")                               ;search: google search selected text
+    +#SC035::        search("autohotkey.com/docs/search.htm?q=",,"&m=2")          ;search: AutoHotkey documentation
+    >!Backspace::    search("google.com/search?tbm=isch&q=")                      ;search: google image search
+    !SC02b::         search("youtube.com/results?search_query=")                  ;search (+capslock): use clipboard contents to search youtubes
+    #If isCMODE()                                                                 ;(+capslock) search clipboard contents instead of selected text
+    SC035::          search("google.com/search?q=",clipboard)                     ;Convenience: google search selected text
+    SC034::          search("google.com/search?tbm=isch&q=")                      ;search (+capslock): use clipboard contents to search google image
+    SC033::          search("youtube.com/results?search_query=")                  ;search (+capslock): use clipboard contents to search youtubes
     RSHIFT & SC035:: search("autohotkey.com/docs/search.htm?q=",clipboard,"&m=2") ;Convenience: google search selected text
-    LSHIFT & SC035:: search("google.com/search?q=",clipboard)                   ;Convenience: google search selected text
-    LSHIFT & SC034:: search("google.com/search?tbm=isch&q=",clipboard)          ;search (+capslock): use clipboard contents to search google image
-    LSHIFT & SC033:: search("youtube.com/results?search_query=",clipboard)      ;search (+capslock): use clipboard contents to search youtubes
+    LSHIFT & SC035:: search("google.com/search?q=",clipboard)                     ;Convenience: google search selected text
+    LSHIFT & SC034:: search("google.com/search?tbm=isch&q=",clipboard)            ;search (+capslock): use clipboard contents to search google image
+    LSHIFT & SC033:: search("youtube.com/results?search_query=",clipboard)        ;search (+capslock): use clipboard contents to search youtubes
+                                                                                
+                                                                                
                                                                                 
     #If    
     #SC035::     
     >^SC035::     
-    ChordSearch(options :="L1 T9", escape := "{esc}{ralt}") {
+    ChordSearch(options :="L1 T9", escape := "{esc}{ralt}",PUmenu:="zb\SearchMenu") {
         global reChordMenuPattern, C
-        ;pop up website menu
-        menu := rtrim(AccessCache("zb\SearchMenu",,0),"`n")
-       
-        PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)
+        
+        
+        menu := rtrim(AccessCache(PUmenu,,0),"`n")
+        PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
+                                                                                
         
         keysPressed :=  KeyWaitHook(options,escape)
         input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
@@ -622,7 +621,7 @@
             Case "<+v",">+v","v":   (input ? Search("www.bing.com/videos/search?q=", input)                                                    : LURL("www.bing.com/videos"))
             Case "<+w",">+w","w":   (input ? Search("en.wikipedia.org/w/index.php?search=", input)                                             : LURL("en.wikipedia.org"))
             Case "<+y",">+y","y":   (input ? Search("youtube.com/results?search_query=", input)                                                : LURL("youtube.com"))
-            
+            Case ">+?":              OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")       ;edit chord command menu
             default:
                 sleep,0
                 ; msgbox % "Nothing assigned to " keysPressed " which was pressed"

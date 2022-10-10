@@ -158,7 +158,6 @@
     p::                             WinClose,A                                  ;Convenience: close active window
     sc028::                         Click, Right                                ;MouseFunctions: mouse Right click
     ralt & r::                      RunProgWindow()                             ;send #r ; run programs alternate shortcut 
-    SC027::                         WinMinimize,A                               ;Convenience: minimize window
     j::                             Sendinput {Blind}{WheelDown 5}              ;MouseFunctions: scroll wheel down
     k::                             Sendinput {Blind}{WheelUp 5}                ;MouseFunctions: scroll wheel Up
     b::                             AA("explorer.exe")     ;AA: File explorer open at buffer_path defined in config.ini (defaults to My Documents if none found)

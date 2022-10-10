@@ -57,7 +57,7 @@
 
  
 ; TEXT NAVIGATION  _____________________________________________________________
-  #IF
+    #IF                                                                         
     *#h::      Sendinput ^{Left}                                                ;Navigation: jump to next word: simulate ctrl+Left
     *#l::      Sendinput ^{Right}                                               ;Navigation: jump to next word: simulate ctrl+Right (disable win+L lock w/ "lf")
     *#>!h::    Sendinput ^{Left 4}                                              ;Navigation: jump to next word: simulate ctrl+Left
@@ -71,19 +71,19 @@
     ^!l::      Sendinput {end}                                                  ;Navigation: end
     ^!j::      Sendinput ^{end}                                                 ;Navigation: ctrl + home
     ^!k::      Sendinput ^{home}                                                ;Navigation: ctrl + end
-    *!l::      Sendinput {Right}                                                ;Navigation| Right
-    *!h::      Sendinput {Left}                                                 ;Navigation| Left
-    *!j::      Sendinput {down}                                                 ;Navigation| Up
-    *!k::      Sendinput {up}                                                   ;Navigation| Down
-    #IF GetKeyState("lctrl", "P")                                                ;
-    lalt & h::  Sendinput {home}                                                 ;Navigation: home
-    lalt & l::  Sendinput {end}                                                  ;Navigation: end
-    lalt & j::  Sendinput ^{end}                                                 ;Navigation: ctrl + home
-    lalt & k::  Sendinput ^{home}                                                ;Navigation: ctrl + end
-                                                                                
-    #IF GetKeyState("rctrl", "P")                                               ;
+    !l::       Sendinput {Right}                                                ;Navigation| Right
+    !h::       Sendinput {Left}                                                 ;Navigation| Left
+    !j::       Sendinput {down}                                                 ;Navigation| Up
+    !k::       Sendinput {up}                                                   ;Navigation| Down
+    #IF GetKeyState("lctrl", "P")                                               
+    lalt & h:: Sendinput {home}                                                 ;Navigation: home
+    lalt & l:: Sendinput {end}                                                  ;Navigation: end
+    lalt & j:: Sendinput ^{end}                                                 ;Navigation: ctrl + home
+    lalt & k:: Sendinput ^{home}                                                ;Navigation: ctrl + end
+    #IF GetKeyState("rctrl", "P")                                               
     ralt & j:: Sendinput ^{end}                                                 ;Navigation: ctrl + home
     ralt & k:: Sendinput ^{home}                                                ;Navigation: ctrl + end
+                                                                                
                                                                                 
                                                                                  
   #IF IsCMODE() ; 4 char nav -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
@@ -132,7 +132,6 @@
   <+>+!k:: SendInput +{up 20}                                                   ;Selection: extend selection up    20 rows
   <+>+!j:: SendInput +{down 20}                                                 ;Selection: extend selection down  20 rows
                                                                                 
-                                                                                
   +<!l::   SendInput +{Right}                                                   ;Selection: extend selection Right 1 characters
   +<!h::   SendInput +{Left}                                                    ;Selection: extend selection Left  1 characters
   >+<!l::                                                                       ;Selection: extend selection Right 4 characters
@@ -143,37 +142,38 @@
   <+>+h::  SendInput +{Left 10}                                                 ;Selection: extend selection Left  # characters
   <+>+!l:: SendInput +{Right 20}                                                ;Selection: extend selection Right # characters
   <+>+!h:: SendInput +{Left 20}                                                 ;Selection: extend selection Left  # characters
-    
+  #If GetKeyState("lctrl", "P")
+  lwin & j::    SendInput +^{end}                                                    ;Selection: select all below
+  lwin & k::    SendInput +^{home}                                                   ;Selection: sejlect all above
+
   #IF IsCMODE() 
   shift & n:: Sendinput +{pgdn}                                                 ; page dn + selection
   shift & o:: Sendinput +{pgup}                                                 ; page up + selection
 
-  
 ; MOUSE FUNCTION _______________________________________________________________
   ; scrolling -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    #IF
+    #IF                                                                         
     #>^j::                Sendinput {WheelDown 10}                              ;MouseFn: scroll wheel down 15 clicks
     #>^k::                Sendinput {WheelUp 10}                                ;MouseFn: scroll wheel Up 15 clicks
     printscreen & j::     Sendinput {WheelDown 4}                               ;MouseFn: scroll wheel down 15 clicks
     printscreen & k::     Sendinput {WheelUp 4}                                 ;MouseFn: scroll wheel Up 15 clicks
-    lwin & k::            Sendinput {blind}{WheelUp 2}                                 ;Navigation: mouse scroll down 6 lines
-    lwin & j::            Sendinput {blind}{WheelDown 2}                               ;Navigation: mouse scroll down 6 lines
-    
-    #If GetKeyState("rshift", "P")
-    lwin & k::            Sendinput {blind}{WheelUp 6}                                 ;Navigation: mouse scroll down 6 lines
-    lwin & j::            Sendinput {blind}{WheelDown 6}                               ;Navigation: mouse scroll down 6 lines
-    #IF
-    <^+h::                Sendinput {Wheelleft 1}                               ;Navigation: mouse scroll left
-    <^+l::                Sendinput {WheelRight 1}                              ;Navigation: mouse scroll right
-    
-    >+#j::                Sendinput {WheelDown 6}                               ;mouse scroll wheel down 6
-    >+#k::                Sendinput {Wheelup 6}                                 ;mouse scroll wheel up 6
+    lwin & k::            Sendinput {blind}{WheelUp 2}                          ;MouseFn: mouse scroll down 6 lines
+    lwin & j::            Sendinput {blind}{WheelDown 2}                        ;MouseFn: mouse scroll down 6 lines
+                                                                                
+    #If GetKeyState("rshift", "P")                                              
+    lwin & k::            Sendinput {blind}{WheelUp 6}                          ;MouseFn: mouse scroll down 6 lines
+    lwin & j::            Sendinput {blind}{WheelDown 6}                        ;MouseFn: mouse scroll down 6 lines
+    #IF                                                                         
+    <^+h::                Sendinput {Wheelleft 1}                               ;MouseFn: mouse scroll left 1
+    <^+l::                Sendinput {WheelRight 1}                              ;MouseFn: mouse scroll right 1
+    >+#j::                Sendinput {WheelDown 6}                               ;MouseFn: mouse scroll wheel down 6
+    >+#k::                Sendinput {Wheelup 6}                                 ;MouseFn: mouse scroll wheel up 6
                                                                                 
     #f::                  Clicks(2)                                             ;MouseFn: 2 Left clicks (select word)
     ^#f::                 Clicks(3)                                             ;MouseFn: 3 Left clicks (select line)
     #o up::               Click, middle                                         ;MouseFn: mouse middle click
-    PrintScreen & sc028::                                                       ;MouseFn: mouse Right click
-    #sc028::              Click, Right                                          ;MouseFn: mouse Right click
+    ;PrintScreen & sc028::                                                      ;MouseFn: mouse Right click
+    #SC027::              Click, Right                                          ;MouseFn: mouse Right click
     ~>+space::            CursorJump(,500,300)                                  ;MouseFn: center cursor
   ; saved click points  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF
@@ -214,8 +214,9 @@
                                                                                 
     #IF
 ; SPECIAL CHARACTERS____________________________________________________________
-    :C*?:''E::{U+00C9} ; ' followed by E => É
-    :C*?:''e::{U+00E9} ; ' followed by e => é
+    :C*?:''E:: {U+00C9}                                                         ; ' followed by E => É
+    :C*?:''e:: {U+00E9}                                                         ; ' followed by e => é
+                                                                                
 ; CHORD COMMAND ________________________________________________________________
     
     #SC034::     
@@ -250,7 +251,7 @@
             Case "d":           SaveMousPos("d",1)                                                  ;save mouse position for #d
             Case "<+d",">+d":   resetMousPos("d")                                                   ;reset mouse position for #d 
             Case "e":           SI("#{SC034}")                                                      ;emojis
-            Case "c":           SI("+#c")                                                      ;color picker
+            Case "c":           SI("+#c")                                                           ;color picker
 
             default:
                 ; msgbox % "Nothing assigned to " keysPressed " which was pressed"

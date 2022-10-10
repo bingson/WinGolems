@@ -120,7 +120,8 @@
     ^1:: ProcessCommand(substr(A_ThisHotkey,0)), ActivateWin("ahk_id " CB_hwnd) ; display corresponding mem file
                                                                                 
     ctrl & sc029:: ProcessCommand("L#",GC("CB_sfx"),GC("CB_clr"))               ; number file overview
-    ctrl & SC035:: ProcessCommand("?",GC("CB_sfx"),GC("CB_clr"))                ; help
+    ^SC035::       ProcessCommand("?",GC("CB_sfx"),GC("CB_clr"))                ; help
+                                                                                
   ; persistent, Appactive Ontop, Wrap -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
     ^home::    ProcessCommand("Tp",GC("CB_sfx"),GC("CB_clr"))                   ;persistent
@@ -152,9 +153,17 @@
                                                                                 
   ; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
-    #IF WinExist("ahk_id " CB_hwnd) && GetKeyState("lctrl", "P")
-    lalt & SC034:: ProcessCommand("L|" GC("periodAlias",""),GC("CB_sfx"),GC("CB_clr")) ; 1st lines of alias folder files
-    lalt & SC033:: ProcessCommand("L|" GC("commaAlias",""),GC("CB_sfx"),GC("CB_clr"))  ; 1st lines of alias folder files
+    #IF WinExist("ahk_id " CB_hwnd) && IsCmode()
+    tab & SC034:: ProcessCommand("L|." ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files
+    tab & SC033:: ProcessCommand("L|," ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files
+    tab & SC027:: ProcessCommand("L|;" ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files  
+    tab & SC01A:: ProcessCommand("L|[" ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files 
+    tab & SC01b:: ProcessCommand("L|]" ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files 
+    SC034::       ProcessCommand("L." ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
+    SC033::       ProcessCommand("L," ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
+    SC027::       ProcessCommand("L;" ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
+    SC01A::       ProcessCommand("L[" ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
+    SC01b::       ProcessCommand("L]" ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
                                                                                        
     #IF WinExist("ahk_id " CB_hwnd) && IsCmode()
     d:: ProcessCommand("L",GC("CB_sfx"),GC("CB_clr"))                           ; contents of number file & 1 char length text file names  

@@ -23,10 +23,10 @@
     ^l::       SortBy("file type")                                              ;FileExplorer: sort by type
     ^h::       SortBy("size")                                                   ;FileExplorer: sort by size
     ^+j::      GroupBy("name")                                                  ;FileExplorer: group by name|remove grouping toggle
-    ^+k::      GroupBy("date modified")                                         ;FileExplorer: group by file type
+    ^+k::      GroupBy("date modified")                                         ;FileExplorer: group by date modified type
     ^+l::      GroupBy("file type")                                             ;FileExplorer: group by file type
-    ^+h::      GroupBy("size")                                                  ;FileExplorer: group by file type
-    ^+SC027::  GroupBy("none")                                                  ;FileExplorer: group by file type
+    ^+h::      GroupBy("size")                                                  ;FileExplorer: group by size type
+    ^+SC027::  GroupBy("none")                                                  ;FileExplorer: group by none type
                                                                                 
     #If WinActive("ahk_exe Explorer.EXE") && GetKeyState("shift", "P")
     lalt & c:: clipboard := Explorer_GetSelection()                             ;FileExplorer| store file path(s) of selected file(s) in clipboard
@@ -66,15 +66,50 @@
   <!o::      Send {blind}!{right}                                               ;FileExplorer: forward folder      
   !d::       Send {blind}!d                                                     ;FileExplorer: select path bar     
   >+u::      CF(UProfile)                                                       ;ChangeFolder: %UserProfile%
-  >+j::      CF(UProfile "\Downloads")                                          ;ChangeFolder: Downloads
   >+o::      CF(A_ProgramFiles)                                                 ;ChangeFolder: C:\Program Files
   >+>!o::    CF(PF_x86)                                                         ;ChangeFolder: C:\Program Files(x86)
   >+p::      CF(UProfile "\Pictures")                                           ;ChangeFolder: Pictures
+  PgUp & j:: CF(UProfile "\Downloads")                                          ;ChangeFolder: Downloads
   PgUp & d:: CF(UProfile "\Documents")                                          ;ChangeFolder: My Documents
   PgUp & c:: CF(hdrive)                                                         ;ChangeFolder: %Homedrive% (C:)
   PgUp & m:: CF(A_ScriptDir "\mem_cache")                                       ;ChangeFolder: mem_cache
   PgUp & r:: CF("`:`:{645FF040-5081-101B-9F08-00AA002F954E}"), CFW()            ;ChangeFolder: Recycle bin (doesn't work for save as diag)
   PgUp & t:: CF("`:`:{20D04FE0-3AEA-1069-A2D8-08002B30309D}"), CFW()            ;ChangeFolder: This PC / My Computer
                                                                                 
-                                                                                ; https://www.autohotkey.com/docs/misc/CLSID-List.htm 
+; CHORD COMMAND ________________________________________________________________
+    #If WinActive("ahk_exe Explorer.EXE")
+    #SC033::     
+    ^SC033::     
+    ChordFileExplorer(options := "L1 M T10", escape := "{esc}{ralt}",PUmenu:="zb\ChordFileMenu") {
+        global reChordMenuPattern, C
+        
+        ;pop up website menu
+        menu := rtrim(AccessCache(PUmenu,,0),"`n")
+        PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
+        
+        keysPressed :=  KeyWaitHook("L1 M T10",escape)
+        input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
+        Gui, PopUp: cancel
+        Switch % keysPressed
+        {
+            Case "j":         SortBy("name")                                                   ;FileExplorer: sort by name
+            Case "k":         SortBy("date modified")                                          ;FileExplorer: sort by date modified
+            Case "c":         SortBy("date created")                                           ;FileExplorer: sort by date created
+            Case "l":         SortBy("file type")                                              ;FileExplorer: sort by type
+            Case "h":         SortBy("size")                                                   ;FileExplorer: sort by size
+            Case "<+j",">+j": GroupBy("name")                                                  ;FileExplorer: group by name|remove grouping toggle
+            Case "<+k",">+k": GroupBy("date modified")                                         ;FileExplorer: group by date modified
+            Case "<+c",">+c": GroupBy("date created")                                          ;FileExplorer: group by date created
+            Case "<+l",">+l": GroupBy("file type")                                             ;FileExplorer: group by file type
+            Case "<+h",">+h": GroupBy("size")                                                  ;FileExplorer: group by size
+            Case ";":         GroupBy("none")                                                  ;FileExplorer: group by none
+            Case "i":         ToggleInvisible()                                                ;FileExplorer: toggle hide/unhide invisible files            
+            Case ">+?":       OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
+            default:
+                ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
+                sleep,0
+        }
+        return 
+    }
+                                                                                   ; https://www.autohotkey.com/docs/misc/CLSID-List.htm 
 #IF
