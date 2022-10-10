@@ -1,0 +1,17 @@
+﻿v  replace multiple paragraph breaks with 1 break (V replace breaks with 1 space)
++  replace  ,  with  +  
+,  replace  +  with  ,  
+-  replace  _  with     
+s  replace multiple consecutive spaces with a single space (S remove all spaces) 
+l  remove empty lines 
+
+a  Sort selected text ascending (A for descending)
+2  duplicate current line
+
+m  CamelCase: convert snake_case or space delimited text to CamelCase
+n  snake_case: convert CamelCase text to snake_case  
+e  emojis :) 
+c  color picker
+
+i  save mouse position for lwin + i (I to reset position)
+d  save mouse position for lwin + d (D to reset position)

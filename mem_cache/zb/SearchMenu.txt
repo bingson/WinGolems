@@ -1,0 +1,23 @@
+﻿d  dictionary
+t  thesaurus
+
+e  aliexpress
+a  amazon.ca
+
+f  finance.yahoo
+v  bing videos
+i  google images
+m  google maps
+y  youtube
+
+s  twitter
+r  reddit
+w  wikipedia
+i  imdb
+
+o  stackoverflow
+b  stackexchange
+h  math.stackexchange
+
++ LSHIFT -> query clipboard contents
++ RSHIFT -> query selected text

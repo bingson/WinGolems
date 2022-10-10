@@ -97,6 +97,8 @@
            , "golems\3_File_Management.ahk"
            , "golems\4_App_Examples.ahk"
            , "mem_cache\help.txt"
+           , "mem_cache\zb\SearchMenu.txt"
+           , "mem_cache\zb\ChordTextMenu.txt"
            , "lib"
            , "assets\Screens"
            , "assets\tutorial"
