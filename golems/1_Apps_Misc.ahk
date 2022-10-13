@@ -6,12 +6,12 @@
   
     #z::          AA("obsidian_path"),SI("{lwin up}")                                   ;Apps| Activate Obsidian               
     #x::          AA("pdf_path"),SI("{lwin up}")                                        ;Apps| Activate pdf reader                 
-    #c::          AA("cmd.exe"),SI("{lwin up}")                                         ;Apps| Activate Command window
+    +#c::         AA("cmd.exe"),SI("{lwin up}")                                         ;Apps| Activate Command window
     #a::          AA("editor_path"),SI("{lwin up}")                                     ;Apps| Activate text/code editor                 
     #s::          AA("html_path"),SI("{lwin up}")                                       ;Apps| Activate Edge browser
     #q::          AA("xls_path"),SI("{lwin up}")                                        ;Apps| Activate Excel         
     #w::          AA("doc_path"),SI("{lwin up}")                                        ;Apps| Activate Word        
-    +#w::         AA("ppt_path"),SI("{lwin up}")                                   ;Apps| Activate Word        
+    +#w::         AA("ppt_path"),SI("{lwin up}")                                        ;Apps| Activate Word        
     #r::          AA("C:\Program Files\KeePassXC\KeePassXC.exe"),SI("{lwin up}")        ;Apps| Activate keepass
     #t::          ActivateCalc(),SI("{lwin up}")                                        ;Apps| Activate Calculator    
     #b::          AA("explorer.exe"),SI("{lwin up}")                                    ;Apps| Activate File Explorer 
@@ -453,19 +453,18 @@
     lwin & pgup:: suspend                                                       ;WinGolems: toggle all hotkeys ON|OFF except for this one
     lwin & pgdn:: reloadWG()                                                    ;WinGolems: reload WinGolems
     esc & pgdn::  ExitApp                                                       ;WinGolems: quit WinGolems
-    #IF isCmode() 
-    sc027:: GotoDesktop("1")                                                    ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
-    sc028:: GotoDesktop("2")                                                    ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
-     
-    #IF
 
   ; CLIPBOARD -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    
     <^#c:: OCRtoClipboard(,"V2")                                                ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
     !#c::  OCRtoClipboard(,"UWP")                                               ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
     >^c::  addtoCB("A")                                                         ; append text to clipboard
     +!#c:: OCRtoClipboard("A","V2")                                             ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
     +^#c:: OCRtoClipboard("A","UWP")                                            ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
-    +>^c:: addtoCB("P")                                                         ; prepend text to clipboard
+    #If GetKeyState("rctrl", "P")
+    ralt & c::                                                                  ;prepend text to clipboard
+    #If
+    +^c:: addtoCB("P")                                                          ;prepend text to clipboard
                                                                                 
                                      
 
@@ -480,23 +479,26 @@
                                                                                 
                                      
   
-  ; WINDOWS MANAGEMENT/POSITIONING -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  ; WINDOWS MANAGEMENT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    
     #If IsCmode()
-    lwin::                 ActivatePrevInstance(),,SI("{lwin up}")                  ;WindowMgmt: rotate through app instances from most recent
+    sc027:: GotoDesktop("1")                                                    ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
+    sc028:: GotoDesktop("2")                                                    ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
+    lwin::  ActivatePrevInstance(),,SI("{lwin up}")                             ;WindowMgmt: rotate through app instances from most recent
     #IF                                                                         
                                                                                 
     rshift & printscreen:: ActivatePrevInstance(),SI("{printscreen up}{rshift up}") ;WindowMgmt: rotate through app instances from most recent                                     
-    printscreen & rshift::                                                          ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-    #capslock::            ActivateNextInstance(),SI("{lwin up}")                   ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-    >!SC028::              MaximizeWin()                                            ;WindowMgmt: maximize window
-    <!SC028::                                                                       ;Convenience: minimize window              
-    printscreen & SC028::  WinMinimize,A                                            ;Convenience: minimize window
-    #del::                 AlwaysOnTop(1)                                           ;WindowMgmt: Window always on top: ON
-    #ins::                 AlwaysOnTop(0)                                           ;WindowMgmt: Window always on top: OFF
-    <!esc::                WinClose,A                                               ;WindowMgmt: close active window
-    !#esc::                CloseClass()                                             ;WindowMgmt: close all instances of the active program
-    ^#sc027::              Send {lwin down}d{lwin up}                               ;WindowMgmt: show desktop
+    printscreen & rshift::                                                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+    #capslock:: ActivateNextInstance(),SI("{lwin up}")                          ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+    >!SC028::   MaximizeWin(),SI("{ralt up}")                                   ;WindowMgmt: maximize window
+    #SC027::    MinimizeWin(), S("{lwin up}")                                   ;Convenience: minimize window
+    #del::      AlwaysOnTop(1)                                                  ;WindowMgmt: Window always on top: ON
+    #ins::      AlwaysOnTop(0)                                                  ;WindowMgmt: Window always on top: OFF
+    <!esc::     WinClose,A                                                      ;WindowMgmt: close active window
+    !#esc::     CloseClass()                                                    ;WindowMgmt: close all instances of the active program
+    ^#sc027::   Send {lwin down}d{lwin up}                                      ;WindowMgmt: show desktop
                                                                                 
+                                                                                                                                                                
 
     #If GetKeyState("PrintScreen", "P")
     left::  Sendinput #{left}                                                   ;move window to left half
@@ -516,10 +518,13 @@
     ralt & m:: s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("L")            ;WindowMgmt: move window to left monitor
     #If GetKeyState("lshift", "P")                                              
     lalt & c:: s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("R")            ;WindowMgmt: move window to left monitor
-                                                                                
-; ADDITIONAL MODIFIER KEYS _____________________________________________________
+    #IF                                                                            
+; MODIFIER KEYS ________________________________________________________________
     
-    :X:tmod~win::    TC("T_MK", "Extra Modifier keys = ") ; toggle modifier keys
+    #sc029::      ToggleStuckKeyResetLoop()                                     ;Convenience: toggle looping timer that sends up presses to modifier keys
+    #esc::        resetModifiers(0)                                              ;Convenience: send up press to all modifier keys
+    :X:tmod~win:: TC("T_MK", "Extra Modifier keys = ")                          ; toggle modifier keys
+
     
     #IF IsCMODE()
     ins::  sendinput {ins}                                                      ;replacement for using ins key as a modifier key
@@ -600,19 +605,19 @@
         menu := rtrim(AccessCache(PUmenu,,0),"`n")
         PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
                                                                                 
-        
         keysPressed :=  KeyWaitHook(options,escape)
         input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
         Gui, PopUp: cancel
         Switch % keysPressed
         {
             Case "<+a",">+a","a":   (input ? Search("www.amazon.ca/s?k=", input)                                                               : LURL("www.amazon.ca"))
-            Case "<+i",">+i","i":   (input ? Search("www.imdb.com/find?q=", input)                                                             : LURL("www.imdb.com"))
+            Case "<+b",">+b","b":   (input ? Search("www.imdb.com/find?q=", input)                                                             : LURL("www.imdb.com"))
+            Case "<+i",">+i","i":   (input ? Search("google.com/search?tbm=isch&q=", input)                                                    : LURL("https://images.google.com/"))
             Case "<+d",">+d","d":   (input ? Search("www.dictionary.com/browse/", input)                                                       : LURL("www.dictionary.com"))
             Case "<+e",">+e","e":   (input ? Search("www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20210825091515&SearchText=", input) : LURL("www.aliexpress.com"))
             Case "<+f",">+f","f":   (input ? Search("ca.finance.yahoo.com/quote/", input)                                                      : LURL("ca.finance.yahoo.com"))
             Case "<+h",">+h","h":   (input ? Search("math.stackexchange.com/search?q=", input)                                                 : LURL("math.stackexchange.com")) 
-            Case "<+b",">+b","b":   (input ? search("stackexchange.com/search?q=", input)                                                      : LURL("stackexchange.com"))
+            Case "<+p",">+p","p":   (input ? search("stackexchange.com/search?q=", input)                                                      : LURL("stackexchange.com"))
             Case "<+m",">+m","m":   (input ? Search("google.com/maps/search/", input)                                                          : LURL("google.com/maps/"))
             Case "<+o",">+o","o":   (input ? Search("www.stackoverflow.com/search?q=", input)                                                  : LURL("www.stackoverflow.com"))
             Case "<+r",">+r","r":   (input ? Search("https://www.reddit.com/search/?q=", input)                                                : LURL("https://www.reddit.com"))
@@ -631,8 +636,3 @@
     }
 
 /*
-
-
-
-
-

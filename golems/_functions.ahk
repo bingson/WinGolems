@@ -646,14 +646,13 @@
         }
     }
 
-    setCaretWidth(CARETWIDTH = 9) {
-        ; CARETWIDTH := 0x9
+    SetCursorWidth(width){
+        CARETWIDTH := width
         SPI_SETCARETWIDTH := 0x2007
         SPIF_UPDATEINIFILE := 0x01
         SPIF_SENDCHANGE := 0x02
         FWININI := SPIF_UPDATEINIFILE | SPIF_SENDCHANGE
-        DllCall( "SystemParametersInfo", UInt,SPI_SETCARETWIDTH, UInt,0, UInt,CARETWIDTH, UInt,FWININI )
-        return
+        DllCall( "SystemParametersInfo", UInt,SPI_SETCARETWIDTH, UInt,0, UInt,CARETWIDTH, UInt,FWININI)
     }
 
     resetGUIposition() {
@@ -773,11 +772,10 @@
     } ; submit GUI userinput; commandkey -> submit also capitalizes first letter of user input 
 
     addHiddenScrollBar() {
-        GuiControl, 2: +HScroll +VScroll, CB_Display
-        GuiControl, fb: +HScroll +VScroll, FB_Menu
-        Send {shift up} ; corrects sticky key problem                                                    
-        Send {ctrl up} ; drawing of the CB sometimes interferes 
-        Send {lwin up} 
+        GuiControl, 2: +HScroll +VScroll, CB_DisplayVar
+        resetModifiers()
+        ; SendToCBdisplay("^{end}")
+        ; SendToCBdisplay("^{home}")
         return
     }
 
@@ -1373,6 +1371,7 @@
 
     LoadLink(key = "", default_sect = "B") {
         RunLinkFn(key,GC("mode", default_sect))
+        resetModifiers()
     }
 
 ; MEMORY SYSTEM ________________________________________________________________
@@ -1427,8 +1426,6 @@
         output := output  CBresult
         Return % output
     }
-
-    ; #g:: See1stLines(,"^[a-zA-Z0-9]\.txt")
 
     See1stLines(dir="", rePattern="\S+", startline=1,endline=1,blen=30){
         output := ""
@@ -1611,6 +1608,43 @@
     } ; retrieves text to single digit memory file
 
 ; AHK/INI UTILITIES ____________________________________________________________
+  ; stuck modifier key reset -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+       
+    resetModifiers(supressPopUp=1) {
+        if !supressPopUp
+            PU("modifier keys reset")
+        SendEvent {rShift Up}{rCtrl Up}{rAlt Up}{lShift Up}{lCtrl Up}{lAlt Up}{lwin up}{esc up}
+        return
+    }
+    
+    ToggleStuckKeyResetLoop(fnTimer:=3000, idletimer:=777)
+    {
+        static Toggle
+        resetModifiers(1)
+        SetTimer, KeyStuckFix, % (Toggle:=!Toggle) ? fnTimer : "Off" 
+        PU("Set stuck modifier key reset loop:" toggle)
+        KeyStuckFix: 
+            if (A_TimeIdlePhysical > idletimer) {
+                resetModifiers(1)
+            }
+            Return
+    } ; toggle repeating loop timer that sends up presses to modifier keys
+
+    KeyCombination(ExcludeKeys:="") { 
+        ;All pressed keys and buttons will be listed   
+        ;source: https://www.autohotkey.com/boards/viewtopic.php?style=7&t=98624
+
+        ExcludeKeys .= "{Shift}{Control}{Alt}{WheelUp}{WheelDown}"
+        Loop, 0xFF
+        { 
+            IF !GetKeyState(Key:=Format("VK{:02X}",0x100-A_Index))
+                Continue
+            If !InStr(ExcludeKeys,Key:="{" GetKeyName(Key) "}")
+                KeyCombination .= RegexReplace(Key,"Numpad(\D+)","$1")
+        }
+        Return, KeyCombination
+    } ; show which keys are being pressed in a tooltip popup
 
   ; VSCODE-LIKE COORD COMBINATIONS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
@@ -1997,12 +2031,12 @@
             Sec := round(TimedDuration/1000)
             msg := "around " Sec " sec have elapsed!`n" "(" round(TimedDuration) " ms)"
             . "`n WinDelay: " A_winDelay
-            . "`n KeyDelay : " A_KeyDelay 
-            . "`n BatchLines : " A_BatchLines 
+            . "`n BatchLines: " A_BatchLines 
+            . "`n ListLines: " A_ListLines 
             if !PU
                 MsgBox % msg
             else
-                PU(msg,,,,,-2000)
+                PU(msg,,,,,-9000)
 
             Return TimedDuration
         }
@@ -2706,8 +2740,12 @@
             CC("CB_clr",clr)
             CC("CBt_color",t_clr)
             CC("CB_sfx",sfx)
-            if (sfx != "~win")
+            
+            GuiMinState := DllCall("IsIconic", "Ptr", CB_hwnd, "UInt") ; GUI minimized = 1
+            
+            if (sfx != "~win") ;AND !GuiMinState
                 UpdateGUI()
+            
             ActivateWin("ahk_id " tgt_hwnd)
 
         }
@@ -3678,7 +3716,7 @@
         return
     }   
 
-    OpenInObsidian(FileName) { 
+    OpenInObsidian(FileName,newpane := FALSE) { 
 
         If WinExist("ahk_exe Obsidian.exe")
             AA("obsidian_path")
@@ -3691,18 +3729,18 @@
                 send !{tab}
                 return
             }
-        } ; AA(UProfile "\AppData\Local\Obsidian\Obsidian.exe") 
+        } 
         WinGetActiveTitle, title
         FileName := StrReplace(FileName, ".md")
         MDfile := RegExReplace(FileName,"\S+\/([A-Za-z0-9]+)$","$1")
         if (MDfile == substr(title,1,strlen(MDfile))) {
             return
         } else {
-            Send ^o ; hotkey Ctrl+O set in Obsidian to open "QuickSwitcher"
-            Sleep 100 ; maybe not needed
-            clip(FileName) ; type in content of variable
-            Sleep 100 ; maybe not needed
-            Send {Enter} ; Ctrl+Enter opens in new pane. {Enter} would open in current pane
+            Send ^o                                                             ; hotkey Ctrl+O set in Obsidian to open "QuickSwitcher"
+            Sleep 100                                                           ; maybe not needed
+            clip(FileName)                                                      ; type in content of variable
+            Sleep 100                                                           ; maybe not needed
+            Send % (newpane ? "^" : "") "{Enter}"                                                        ; Ctrl+Enter opens in new pane. {Enter} would open in current pane
         }
     } ; OpenInObsidian(FileName) ; opens specified note in Obsidian by simulating keystrokes into "QuickSwitcher"      
 
@@ -3861,7 +3899,6 @@
             default:
                 sleep,0
         }
-
         if (WinID != CB_hwnd) {
             ActivateApp(GC("CB_tgtExe"))
         }

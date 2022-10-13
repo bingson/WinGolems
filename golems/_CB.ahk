@@ -25,7 +25,7 @@
     <!space::      W("ra"),RunCmd("V" GC("CommaAlias",""))                      ;CB: paste mem_cache file
     >!space::      W("ra"),RunCmd("V" GC("PeriodAlias",""))                     ;CB: paste mem_cache file
     ~*esc::        GUI, 2: cancel                                               ;CB: close command box
-    lalt & SC027:: GUI, 2: cancel                                               ;CB: close command box
+    ;lalt & SC027:: GUI, 2: cancel                                              ;CB: close command box
     +^k up::                                                                    ;CB: Font size decrease
     ^SC00C::       goto, CBzoomOut                                              ;CB: Font size decrease
     +^j up::                                                                    ;CB: Font size increase
@@ -107,7 +107,7 @@
     +!R::    SubmitIB("F")                                                      ; prepend "F" to current contents of input box and submit
     ^u::     GotoLink(,,clip()),closeCB()                                       ; prepend "H" to current contents of input box and submit
                                                                                 
-  ; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ^0::                                                                        ; display corresponding mem file
     ^9::                                                                        ; display corresponding mem file
     ^8::                                                                        ; display corresponding mem file
@@ -151,7 +151,7 @@
     ~lbutton:: UpdateCBsfx()                                                    ; update CB suffix 
     ~<^c::     updateClipboardCBDisplay()                                       ;update clipboard contents if command box display
                                                                                 
-  ; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
     #IF WinExist("ahk_id " CB_hwnd) && IsCmode()
     tab & SC034:: ProcessCommand("L|." ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files
@@ -164,7 +164,8 @@
     SC027::       ProcessCommand("L;" ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
     SC01A::       ProcessCommand("L[" ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
     SC01b::       ProcessCommand("L]" ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
-                                                                                       
+    c::           ProcessCommand("Lza\sck" ,GC("CB_sfx"),GC("CB_clr"))   
+
     #IF WinExist("ahk_id " CB_hwnd) && IsCmode()
     d:: ProcessCommand("L",GC("CB_sfx"),GC("CB_clr"))                           ; contents of number file & 1 char length text file names  
     s:: ProcessCommand("L@",GC("CB_sfx"),GC("CB_clr"))                          ; contents of number file & 1 char length text file names  

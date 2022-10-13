@@ -1,7 +1,7 @@
 ﻿v  replace multiple paragraph breaks with 1 break (V replace breaks with 1 space)
 +  replace  ,  with  +  
 ,  replace  +  with  ,  
--  replace  _  with     
+-  replace  _ or - with a space    
 s  replace multiple consecutive spaces with a single space (S remove all spaces) 
 l  remove empty lines 
 

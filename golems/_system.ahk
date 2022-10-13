@@ -1,7 +1,7 @@
 #IF
 ; DISABLE KEYS _________________________________________________________________
-    ;#^s::return                                                                   ;AHK: prevent windows speech recognition from popping up  
-    LWin::       Send {Blind}{vk07}                                            ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
+    ;#^s::return                                                                ;AHK: prevent windows speech recognition from popping up  
+    LWin::       Send {Blind}{vk07}                                             ;Convenience: disables the ability for the left Win to activate the Start Menu, while allowing its use as a modifier 
     *LWin::       Send {Blind}{LWin Down}                                       ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
     LWin Up::     Send {Blind}{vk07}{LWin Up}                                   ;C: renders windows key inert so it can act as a modifier key for AHK hotkeys (start menu: ^#enter or lwin + left mouse click)
 ; CB SYSTEM COMMANDS ___________________________________________________________

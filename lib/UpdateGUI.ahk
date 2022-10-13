@@ -1,9 +1,12 @@
 UpdateGUI(new_txt = "" , new_title_file = "") {
     global config_path, med, CB_hwnd, C, CB_DisplayVar
     
-    ; CoordMode, Mouse, screen
-    ; MouseGetPos, StartX, StartY   
-    
+    SetBatchLines, -1
+    SetWinDelay, -1
+    Process, Priority,, High
+    ; timecode()
+
+    GuiMinState := DllCall("IsIconic", "Ptr", CB_hwnd, "UInt") ; GUI minimized = 1
     Gui, 2: +LastFound ;+E0x08000000                                     ;prevent GUI from stealing focus https://www.autohotkey.com/boards/viewtopic.php?t=99728
 
     MI := StrSplit(GetMonInfo()," ")                                            ; get monitor dimensions
@@ -38,6 +41,7 @@ UpdateGUI(new_txt = "" , new_title_file = "") {
         title :=  GC("CB_tgtExe") GC("CB_sfx") "  |  " GetCurrentGUIoptions() (new_title_file ? new_title_file : GC("CB_last_display"))
         Gui, 2: Show, , % title 
     }
+
     t_color := GC("CBt_color")
     
     if !GC("CB_ScrollBars", 0)
@@ -45,12 +49,11 @@ UpdateGUI(new_txt = "" , new_title_file = "") {
     else 
         GuiControl, 2: +HScroll +VScroll, CB_DisplayVar 
 
+
     Gui, 2: show, hide AutoSize 
     WinSet, Redraw,, ahk_id %CB_hwnd%
-    ;     GuiControl, 2:, +redraw CB_Display
-    
     Gui, 2: show, % CB_position . (GC("CB_appActive", 0) ? (" NoActivate") : (" Restore"))                                                ;  Gui, 2: show, hide AutoSize
-    
+
     ;DllCall("SetCursorPos", "int", StartX, "int", StartY)                       ; used instead of MouseMove for multi-monitor setups 
     
     Gui, 2: Color, % GC("CB_clr")
@@ -69,8 +72,15 @@ UpdateGUI(new_txt = "" , new_title_file = "") {
         ; ActivateWin("ahk_id " GC("TGT_hwnd")) 
         ActivateApp(GC("CB_tgtExe"))
     } 
+    if !GC("CB_ScrollBars", 0) 
+        settimer, addHiddenScrollBar,-300
 
     ; SendMessage,0x00B1,-1,0,, % "ahk_id " CB_Display ; EM_SETSEL=0x00B1
     
+    ; timecode()
+    SetWinDelay, 100
+    SetBatchLines, 10ms
+    Process, Priority, , A
+
     return
-  }
+}

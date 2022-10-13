@@ -1,16 +1,13 @@
 CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMod = "ProcessCommand" , fwt = "500", show_txt = "", title = "",  input_txt = "?") {
   ; BUFFER KEYSTROKES AND SPEED UP GUI LOADING -- -- -- -- -- -- -- -- -- -- -- 
-
-    W("lw") ; wait for lwin key up
     SetBatchLines, -1
-    SetkeyDelay, -1
     SetWinDelay, -1
     Process, Priority,, High
 
     ; BufferKeystrokes() 
     ; BlockInput, Mousemove
     ; ReleaseModifiers()
-    ;timecode()
+    ; timecode()
   ; SAVE GUI INITIALIZATION SETTINGS TO CONFIG.INI -- -- -- -- -- -- -- -- -- --; saves information between script reloads. 
 
 
@@ -84,7 +81,7 @@ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMo
         Gui, 2: -Caption
     else 
         Gui, 2: +Caption
-
+    
   ; ADD GUI INTERFACE ELEMENTS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
    ; BUILD TEXT DISPLAY BOX ... ... ... ... ... ... ... ... ... ... ... ... ... 
     if (show_txt = "") {                                                        ; reload last diplayed txt
@@ -96,7 +93,6 @@ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMo
     }
     
     ES_NOHIDESEL := 0x100	; don't hide selection when GUI not active https://www.autohotkey.com/docs/misc/Styles.htm
-    setCaretWidth(9)  
 
     Gui, 2: Margin, 2, 2
     rows := (rows < 2) ? 2 : (rows > 30) ? 30 : rows
@@ -130,9 +126,9 @@ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMo
     CB_hwnd  := WinExist()                                                      ; save window handle of Commandbuffer Box 
     CC("CB_hwnd", CB_hwnd)
 
-    if !GC("CB_ScrollBars", 0)
+    if !GC("CB_ScrollBars", 0) {
         GuiControl, 2: -HScroll -VScroll,  CB_DisplayVar                            ; remove scrollbars before the GUI draw command
-        ; GuiControl, 2: -HScroll -VScroll,  % "ahk_id " hDisplay                            ; remove scrollbars before the GUI draw command
+    }
     Gui, 2: -DPIScale
     Gui, 2: show, hide AutoSize,%title%
     Gui, 2: Show, % CB_position . ((GC("CB_appActive", 0)) ? (" NoActivate") : (" Restore"))
@@ -143,13 +139,11 @@ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMo
     if GC("CB_appActive", 0) {
         ActivateApp(GC("CB_tgtExe"))
     } 
-    ;timecode()
-    /*
-    */
+    
 
-    SetWinDelay, 10
+    ; timecode()
+    SetWinDelay, 100
     SetBatchLines, 10ms
-    SetKeyDelay, 10, 50
     Process, Priority, , A
     ; BlockInput, MousemoveOff
     ; BlockInput OFF
@@ -165,10 +159,14 @@ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMo
         CtrXpos := substr(WP[1],2) 
         AutoXYWH("yw*", "UserInput")
         GuiControl, MoveDraw, UserInput
-        if !GC("CB_ScrollBars", 0)
+        
+        if !GC("CB_ScrollBars", 0) 
             GuiControl, 2: -HScroll -VScroll, CB_DisplayVar
+            
         Gui, 2: show
-        settimer, addHiddenScrollBar,-400
+        if !GC("CB_ScrollBars", 0) 
+            settimer, addHiddenScrollBar,-300
+
         settimer, save_win_coord,-300
         Return
         

@@ -13,10 +13,10 @@ y  youtube
 s  twitter
 r  reddit
 w  wikipedia
-i  imdb
+b  imdb
 
 o  stackoverflow
-b  stackexchange
+p  stackexchange
 h  math.stackexchange
 
 + LSHIFT -> query clipboard contents
