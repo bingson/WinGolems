@@ -29,7 +29,7 @@
     ^+SC027::  GroupBy("none")                                                  ;FileExplorer: group by none type
                                                                                 
     #If WinActive("ahk_exe Explorer.EXE") && GetKeyState("shift", "P")
-    lalt & c:: clipboard := Explorer_GetSelection()                             ;FileExplorer| store file path(s) of selected file(s) in clipboard
+    ralt & c:: clipboard := Explorer_GetSelection()                             ;FileExplorer| store file path(s) of selected file(s) in clipboard
                                                                                 
     #If WinActive("ahk_exe Explorer.EXE") && IsCmode()
     i::                                                                         ;FileExplorer: toggle hide/unhide invisible files                                            
@@ -79,7 +79,6 @@
 ; CHORD COMMAND ________________________________________________________________
     #If WinActive("ahk_exe Explorer.EXE")
     #SC033::     
-    ^SC033::     
     ChordFileExplorer(options := "L1 M T10", escape := "{esc}{ralt}",PUmenu:="zb\ChordFileMenu") {
         global reChordMenuPattern, C
         
@@ -104,6 +103,46 @@
             Case "<+h",">+h": GroupBy("size")                                                  ;FileExplorer: group by size
             Case ";":         GroupBy("none")                                                  ;FileExplorer: group by none
             Case "i":         ToggleInvisible()                                                ;FileExplorer: toggle hide/unhide invisible files            
+            Case "p":         clipboard := Explorer_GetSelection()                             ;FileExplorer: clipboard := file/folder path 
+            Case ">+?":       OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
+            default:
+                ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
+                sleep,0
+        }
+        return 
+    }
+
+    +#SC033::     
+    ChordPaths(options := "L1 M T10", escape := "{esc}{ralt}",PUmenu:="zb\ChordPathsMenu") {
+        global reChordMenuPattern, C
+        
+        ;pop up website menu
+        menu := rtrim(AccessCache(PUmenu,,0),"`n")
+        PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
+        
+        keysPressed :=  KeyWaitHook("L1 M T10",escape)
+        input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
+        Gui, PopUp: cancel
+
+
+        Switch % keysPressed
+        {
+            Case "j":         SortBy("name")                                                   ;FileExplorer: sort by name
+            Case "k":         SortBy("date modified")                                          ;FileExplorer: sort by date modified
+            Case "c":         SortBy("date created")                                           ;FileExplorer: sort by date created
+            Case "l":         SortBy("file type")                                              ;FileExplorer: sort by type
+            Case "h":         SortBy("size")                                                   ;FileExplorer: sort by size
+            Case "<+j",">+j": GroupBy("name")                                                  ;FileExplorer: group by name|remove grouping toggle
+            Case "<+k",">+k": GroupBy("date modified")                                         ;FileExplorer: group by date modified
+            Case "<+c",">+c": GroupBy("date created")                                          ;FileExplorer: group by date created
+            Case "<+l",">+l": GroupBy("file type")                                             ;FileExplorer: group by file type
+            Case "<+h",">+h": GroupBy("size")                                                  ;FileExplorer: group by size
+            Case ";":         GroupBy("none")                                                  ;FileExplorer: group by none
+            Case "i":         ToggleInvisible()                                                ;FileExplorer: toggle hide/unhide invisible files            
+            Case "p":         
+                            sleep, 200
+                            sleep, 200
+                            clipboard := Explorer_GetSelection()                             ;FileExplorer: clipboard := file/folder path 
             Case ">+?":       OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
             default:
                 ; msgbox % "Nothing assigned to " keysPressed " which was pressed"

@@ -19,9 +19,7 @@
         return
                         
 ; ACTIVE IF COMMANDBOX IS THE ACTIVE WINDOW ____________________________________
-  #IF WinActive("ahk_id " CB_hwnd) 
-
-
+    #IF WinActive("ahk_id " CB_hwnd) 
     <!space::      W("ra"),RunCmd("V" GC("CommaAlias",""))                      ;CB: paste mem_cache file
     >!space::      W("ra"),RunCmd("V" GC("PeriodAlias",""))                     ;CB: paste mem_cache file
     ~*esc::        GUI, 2: cancel                                               ;CB: close command box
@@ -88,8 +86,8 @@
                                                                                 
 
   ; quick submit -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    ^space:: W("c"),SubmitLinkCommand(1)                                        ; Shortcut for executing mode/link commands, close CB after
-    ^enter:: W("c"),SubmitLinkCommand()                                         ; Shortcut for executing mode/link commands
+    ^space:: SubmitLinkCommand(1),W("c")                                        ; Shortcut for executing mode/link commands, close CB after
+    ^enter:: SubmitLinkCommand(),W("c")                                         ; Shortcut for executing mode/link commands
     +^L::    SubmitIB("L.")                                                     ; prepend "L" to current contents of input box and submit
     ^L::     SubmitIB("L")                                                      ; prepend "L" to current contents of input box and submit
     ^H::     SubmitIB("H",,1)                                                   ; prepend "H" to current contents of input box and submit
@@ -99,8 +97,8 @@
     +^P::    SubmitIB("P>")                                                     ; prepend "P>" to current contents of input box and submit
     ^O::     SubmitIB("O")                                                      ; prepend "O" to current contents of input box and submit
     +^O::    SubmitIB("O>")                                                     ; prepend "O>" to current contents of input box and submit
-    <^E::    SubmitIB("E")                                                      ; prepend "E" to current contents of input box and submit
-    >^E::    SubmitIB("E~")                                                     ; prepend "E~" to current contents of input box and submit
+    <^E::    SubmitIB_Edit("E")                                                      ; prepend "E" to current contents of input box and submit
+    >^E::    SubmitIB_Edit("E~")                                                     ; prepend "E~" to current contents of input box and submit
     ^D::     SubmitIB("D")                                                      ; prepend "D" to current contents of input box and submit
     ^S::     SubmitIB("S")                                                      ; prepend "S" to current contents of input box and submit
     ^R::     SubmitIB("R")                                                      ; prepend "R" to current contents of input box and submit
@@ -132,18 +130,22 @@
                                                                                 
 
 ; ACTIVE IF USERINPUT BOX HAS FOCUS ____________________________________________
-    #IF IsCMODE() AND (GetGUIFocus() == "UserInput")
-    n::                                                                         ; send pgdn to CB display box
-    down:: SendToCBdisplay("{pgdn}")                                            ; send pgdn to CB display box
-    o::                                                                         ; send pgup to CB display box         
-    up::   SendToCBdisplay("{pgup}")                                            ; send pgup to CB display box
+    #IF (GetGUIFocus() == "UserInput")                                          
+    !j::       SendToCBdisplay("{down}",1)                                      ;send down to CB display box (display retains focus)
+    !k::       SendToCBdisplay("{up}",1)                                        ;send up to CB display box (display retains focus)
                                                                                 
-    #IF (GetGUIFocus() == "UserInput") AND GetKeyState("lctrl", "P") 
+    #IF IsCMODE() AND (GetGUIFocus() == "UserInput")                            
+    n::                                                                         ;send pgdn to CB display box
+    down::     SendToCBdisplay("{pgdn}")                                        ;send pgdn to CB display box
+    o::                                                                         ;send pgup to CB display box         
+    up::       SendToCBdisplay("{pgup}")                                        ;send pgup to CB display box
+    *j::       SendToCBdisplay("{down 3}",1)                                    ;Navigation: extend selection Right 5 character (display retains focus)
+    *k::       SendToCBdisplay("{up 3}",1)                                      ;Navigation: extend selection Left  5 character (display retains focus)
+                                                                                
+    #IF (GetGUIFocus() == "UserInput") AND GetKeyState("lctrl", "P")            
     lalt & J:: SendToCBdisplay("^{end}")                                        ;Navigation: ctrl + home
     lalt & K:: SendToCBdisplay("^{home}")                                       ;Navigation: ctrl + end
                                                                                 
-
-
 ; ACTIVE IF COMMAND BOX INSTANCE EXISTS ________________________________________
   ; CB paste, update CB display -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF WinExist("ahk_id " CB_hwnd)

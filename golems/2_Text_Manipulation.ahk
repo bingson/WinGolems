@@ -30,14 +30,14 @@
   >!<+4::           Clip("$" Clip() "$")                                        ;TEXT MANIPULATION: enclose selected text with $ $
   !sc029::          Clip("``" Clip() "``")                                      ;TEXT MANIPULATION: enclose selected text with ` `
   +!sc029::         Clip("`````` " Clip() " ``````")                            ;TEXT MANIPULATION: enclose selected text with ``` ```
-  #!sc028::         s("{blind}"), ReplaceAwithB("""", "")                       ;TEXT MANIPULATION remove double quotes from selected text
-  #!sc00C::         s("{blind}"), ReplaceAwithB("-", " ")                       ;TEXT MANIPULATION replace "-" with " " in selected text
-  ^#sc00C::         s("{blind}"), ReplaceAwithB(" ", "-")                       ;TEXT MANIPULATION replace " " with "_" in selected text
-  #!SC034::         s("{blind}"), ReplaceAwithB(".", " ")                       ;TEXT MANIPULATION replace "." with " " in selected text
-  ^#SC034::         s("{blind}"), ReplaceAwithB(" ", ".")                       ;TEXT MANIPULATION replace "." with " " in selected text
-  ^#SC00D::         s("{blind}"), ReplaceAwithB(" ", "+")                       ;TEXT MANIPULATION replace " " with "+" in selected text
-  #!sc033::         s("{blind}"), ReplaceAwithB(",", " ")                       ;TEXT MANIPULATION replace "_" with " " in selected text
-  ^#SC033::         s("{blind}"), ReplaceAwithB(" ", ",")                       ;TEXT MANIPULATION replace " " with "," in selected text
+  #!sc028::         s("{blind}"), ReplaceAwithB("""", ""), SI("{lwin up}")      ;TEXT MANIPULATION remove double quotes from selected text
+  #!sc00C::         s("{blind}"), ReplaceAwithB("-", " "), SI("{lwin up}")      ;TEXT MANIPULATION replace "-" with " " in selected text
+  ^#sc00C::         s("{blind}"), ReplaceAwithB(" ", "-"), SI("{lwin up}")      ;TEXT MANIPULATION replace " " with "_" in selected text
+  #!SC034::         s("{blind}"), ReplaceAwithB(".", " "), SI("{lwin up}")      ;TEXT MANIPULATION replace "." with " " in selected text
+  ^#SC034::         s("{blind}"), ReplaceAwithB(" ", "."), SI("{lwin up}")      ;TEXT MANIPULATION replace "." with " " in selected text
+  ^#SC00D::         s("{blind}"), ReplaceAwithB(" ", "+"), SI("{lwin up}")      ;TEXT MANIPULATION replace " " with "+" in selected text
+  #!sc033::         s("{blind}"), ReplaceAwithB(",", " "), SI("{lwin up}")      ;TEXT MANIPULATION replace "_" with " " in selected text
+  ^#SC033::         s("{blind}"), ReplaceAwithB(" ", ","), SI("{lwin up}")      ;TEXT MANIPULATION replace " " with "," in selected text
   #If GetKeyState("esc", "P")                                                   ;
   SC00D::           s("{blind}"), ReplaceAwithB(" ", "+")                       ;TEXT MANIPULATION replace " " with "+" in selected text
   +SC00D::          s("{blind}"), ReplaceAwithB(",", "+")                       ;TEXT MANIPULATION replace "," with "+" in selected text
@@ -87,14 +87,14 @@
     ralt & k:: Sendinput ^{home}{rctrl up}{ralt up}                             ;Navigation: ctrl + end
                                                                                 
   #IF IsCMODE() ; 4 char nav -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-    *l::        Sendinput {Right 5}                                             ;Navigation: extend selection Right 5 character
-    *h::        Sendinput {Left 5}                                              ;Navigation: extend selection Left  5 character
-    *j::        Sendinput {down 3}                                              ;Navigation: extend selection Right 5 character
-    *k::        Sendinput {up 3}                                                ;Navigation: extend selection Left  5 character
-    shift & l:: Sendinput {Right 30}                                            ;Selection: extend selection Right 5 characters
-    shift & h:: Sendinput {Left 30}                                             ;Selection: extend selection Left  5 characters
-    shift & j:: Sendinput {down 10}                                             ;Navigation: extend selection Right 2 character
-    shift & k:: Sendinput {up 10}                                               ;Navigation: extend selection Left  2 character
+    *l::        Sendinput {Right 5}                                             ;Navigation: right 5 characters
+    *h::        Sendinput {Left 5}                                              ;Navigation: left 5 characters
+    *j::        Sendinput {down 3}                                              ;Navigation: down 3 lines
+    *k::        Sendinput {up 3}                                                ;Navigation: up 3 lines
+    shift & l:: Sendinput {Right 30}                                            ;Selection: Right 30 characters
+    shift & h:: Sendinput {Left 30}                                             ;Selection: Left  30 characters
+    shift & j:: Sendinput {down 10}                                             ;Navigation: down 10 lines
+    shift & k:: Sendinput {up 10}                                               ;Navigation: up 10 lines
                                                                                 
 
 ; TEXT SELECTION _______________________________________________________________
@@ -213,58 +213,13 @@
     lshift:: CursorJump("BL",150,-150)                                          ;MouseFn: move mouse cursowr to BOTTOM LEFT of active app
                                                                                 
     #IF
-; SPECIAL CHARACTERS____________________________________________________________
-    :C*?:''E::   {U+00C9}                                                       ; ' followed by E => É
-    :C*?:''e::   {U+00E9}                                                       ; ' followed by e => é
-    :*X:date__:: clip(a_YYYY "_" a_MM "_" a_dd)                                 ;date: yyyy_mm_dd
-    :*X:date//:: clip(a_YYYY "/" a_MM "/" a_dd)                                 ;date: yyyy/mm/dd
-    :*X:*>::    Send {ASC 0176}                                                ;°
+; TEXT REPLACEMENT _____________________________________________________________
+    :C*?:''E::{U+00C9}                                                       ; '' followed by E -> É
+    :C*?:''e::{U+00E9}                                                       ; '' followed by e -> é
+    :*X:date__:: clip(a_YYYY "_" a_MM "_" a_dd)                                 ;date__ -> yyyy_mm_dd
+    :*X:date//:: clip(a_YYYY "/" a_MM "/" a_dd)                                 ;date// -> yyyy/mm/dd
+    :*X:*>::    Send {ASC 0176}                                                 ;° 
 
-                                                                                
-; CHORD COMMAND ________________________________________________________________
     
-    #SC034::     
-    ^SC034::     
-    ChordTextManipulation(options := "L1 M T10", escape := "{esc}{ralt}", PUmenu := "zb\ChordTextMenu") {
-        global reChordMenuPattern, C
-        
-        ;pop up website menu
-        menu := rtrim(AccessCache("zb\ChordTextMenu",,0),"`n")
-        menu := rtrim(AccessCache(PUmenu,,0),"`n")
-        PU(menu,C.lblue,,,,90000,12,700,"Lucida Sans Typewriter",1)
-        
-
-        
-        keysPressed :=  KeyWaitHook("L1 M T10",escape)
-        input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
-        Gui, PopUp: cancel
-        Switch % keysPressed
-        {
-            Case "v":           PasteWithoutBreaks()                                                ;TEXT MANIPULATION| replace multiple paragraph breaks w/ 1 break in selected text
-            Case "<+v",">+v":   PasteWithoutBreaks(True)                                            ;TEXT MANIPULATION| replace multiple paragraph breaks with space (remove paragraphs breaks)
-            Case "l":           RemoveBlankLines()                                                  ;TEXT MANIPULATION! remove empty lines starting from selected text
-            Case "+":           ReplaceAwithB(",", "+")                                             ;TEXT MANIPULATION replace "," with "+" in selected text
-            Case ",":           ReplaceAwithB("+", ",")                                             ;C.TM: replace "+" with "," in selected text
-            Case "-":           clip(CS(clip(), {"_":" ","-":" "}))                                 ;C.TM: replace "_" with " " in selected text
-            Case "a":           SortSelectedText()                                                  ;TEXT MANIPULATION Sort Selected Text
-            Case "<+a",">+a":   SortSelectedText("R")                                               ;TEXT MANIPULATION Sort Selected Text
-            Case "s":           ReplaceAwithB()                                                     ;TEXT MANIPULATION replaces multiple consecutive spaces with character length 1 space
-            Case "<+s",">+s":   ReplaceAwithB(" ")                                                  ;TEXT MANIPULATION! remove all spaces from selected text
-            Case "2":           SelectLine(), txt := clip(), SI("{right}{enter}"), clip(txt)         ;TEXT MANIPULATION: duplicate current line
-            Case "m":           ReplaceAwithB("_"," "),Capitalize1stLetter(,,0),,ReplaceAwithB(" ") ;CamelCase
-            Case "n":           AddSpaceBtnCaseChange(), ReplaceAwithB(" ","_")                     ;snake_case
-            Case "i":           SaveMousPos("i",1)                                                  ;save mouse position for #i
-            Case "<+i",">+i":   resetMousPos("i")                                                   ;reset mouse position for #i
-            Case "d":           SaveMousPos("d",1)                                                  ;save mouse position for #d
-            Case "<+d",">+d":   resetMousPos("d")                                                   ;reset mouse position for #d 
-            Case "e":           SI("#{SC034}")                                                      ;emojis
-            Case "c":           SI("#F6")                                                           ;color picker
-            Case ">+?": OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
-            default:
-                ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
-                sleep,0
-        }
-        return 
-    }
-        
-#IF
+    
+#IF 

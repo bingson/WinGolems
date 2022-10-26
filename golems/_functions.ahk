@@ -167,7 +167,7 @@
 
             ;CommandBox(GC("CB_sfx"),GC("CB_clr"))
             if !GC("CB_ScrollBars", 0)
-                GuiControl, 2: -HScroll -VScroll, CB_Display
+                GuiControl, 2: -HScroll +VScroll, CB_Display
             Gui, 2: show
             settimer, addHiddenScrollBar,-400
             CC("CB_position", "x" x " y" y " w" w " h" h)
@@ -549,11 +549,12 @@
         return % control
     }
 
-    SendToCBdisplay(key) {
+    SendToCBdisplay(key,DisplayFocus=0) {
         global CB_DisplayVar, UserInput
         GuiControl 2:Focus, CB_DisplayVar            
         SI(key)                               ;replacement for using PgDn key as a modifier key
-        GuiControl 2:Focus, UserInput
+        if !DisplayFocus
+            GuiControl 2:Focus, UserInput
         return
     }
 
@@ -590,6 +591,7 @@
             return
     }
 
+    
     SubmitIB(prefix = "L",clear = 0,closeAfter=0) {
         ChgFocus("IB"),SI("^a") 
         if clear  
@@ -599,6 +601,25 @@
         if (substr(input,1,1) ~= "[A-Z]")
             input :=  substr(input,2)
         sleep, 50            
+        ProcessCommand(prefix input,GC("CB_sfx"),GC("CB_clr"))                      
+        sleep, 50
+        if closeAfter
+            Gui, 2:Cancel
+    }
+
+    SubmitIB_Edit(prefix = "L",clear = 0,closeAfter=0) {
+        ChgFocus("IB"),SI("^a") 
+        if clear  
+            SI("{del}")
+        input := trim(clip())
+        sleep, 50
+
+        if (substr(input,1,1) ~= "[A-Z]") {
+            input := substr(input,2)
+        } 
+        
+        prefix := (input == "") ? "E" : prefix
+        sleep, 50       
         ProcessCommand(prefix input,GC("CB_sfx"),GC("CB_clr"))                      
         sleep, 50
         if closeAfter
@@ -1127,6 +1148,7 @@
         slot := StrReplace(A_thishotkey, prefix)
         switchMode(GC(slot "_mode","1"))
         ActivateWin("ahk_id " WinID)
+        
     }
 
     SubmitLinkCommand(CBcloseAfter=0) {
@@ -1614,7 +1636,9 @@
     resetModifiers(supressPopUp=1) {
         if !supressPopUp
             PU("modifier keys reset")
-        SendEvent {rShift Up}{rCtrl Up}{rAlt Up}{lShift Up}{lCtrl Up}{lAlt Up}{lwin up}{esc up}
+
+        
+        SendEvent {rShift Up}{rCtrl Up}{rAlt Up}{lShift Up}{lCtrl Up}{lAlt Up}{lwin up}{esc up}{pgdn up}{pgup up}
         return
     }
     
@@ -1763,7 +1787,6 @@
         try {
             IniRead, val, %config_path%, %sect%, %key%, %d%
         } catch {
-            ; msgbox % 1
                 /*  loop other sections of config.ini 
                     IniRead, SectionNames, %config_path%
                     arr := StrSplit(SectionNames, "`n")
@@ -2544,12 +2567,12 @@
         SI("{alt}",100), SI("vg",100)
         switch category
         {
-            case "name":          SI("{enter}")
-            case "date modified": SI("{down 1}{enter}") 
-            case "file type":     SI("{down 2}{enter}")
-            case "size":          SI("{down 3}{enter}") 
-            case "date created":  SI("{down 4}{enter}")
-            case "none":          SI("{up 4}{enter}")
+            case "name":          S("{enter}")
+            case "date modified": S("{down 1}{enter}") 
+            case "file type":     S("{down 2}{enter}")
+            case "size":          S("{down 3}{enter}") 
+            case "date created":  S("{down 4}{enter}")
+            case "none":          S("{up 4}{enter}")
             default:
             return 
         }
@@ -2757,8 +2780,7 @@
         UpdateCBsfx()
         ; if !WinActive("ahk_exe " GC("CB_tgtExe"))
         ; ActivateApp(app_path) ; AA() = infinite loop
-        CFW(,500,250)
-        ; SetTimer,CFW,-50
+        CFW(,200,250)
 
     }
 
@@ -2902,7 +2924,7 @@
         ; WinGet, hWnd, ID, A 
         ; WinGet, Process_Name, ProcessName, A
         ; msgbox % Process_Name
-        
+        sleep, 100
         try {
             CF(folder_path)
         } catch e {
@@ -3289,6 +3311,19 @@
 
 ; BROWSERS _____________________________________________________________________
     
+    setRightClickMenuChoice() {
+        ;used in other functions as a fix for when right-click menu changes 
+        ;depending on context and plugins
+
+        PU("Enter menu option number",C.pink,,,,100000)
+        Moption :=  KeyWaitHook("L1 M",escape)
+        Gui, PopUp: cancel
+        if Moption ~= "[0-9]"
+            CC("click_DL", Moption), PU(Moption,C.lgreen)    
+        Else
+            PU("Must be a number input", C.pink)   
+    } ;sets right click menu choice used in other functions 
+
     EncodeDecodeURI(str, encode := true, component := true) {
         Static Doc, JS
         str := RegExReplace(str, "\R++(?<!\n\n|\r\n\r\n)"," ")
@@ -3320,7 +3355,7 @@
         else 
             SavedIDs := WinExist("A")
         CC("IncogWinID", SavedIDs)
-    } ; save window ID of chrome incognito window
+    } ;save window ID of chrome incognito window
 
     LURLotherBrowser(close = 1, i = 0) {
         global short
@@ -3638,12 +3673,12 @@
 
                     winget, Pname, ProcessName, A
                     URL_string := GetURL("Ahk_exe " Pname)
-                    sleep med
-                    m1 := RegexReplace(URL_string, "`am)^(https?:\/\/)?([^\/]+)(\/.*)", "$2")
-                    if !regexmatch(URL_string,"^https?:\/\/")
-                        URL_string := "https://" . URL_string
                     sleep, short
-                    url := " | [" m1 "](" URL_string ")"
+                    domain := RegexReplace(URL_string, "`am)^(https?:\/\/)?([A-Za-z0-9\.]+)(\/\S.*)?", "$2")
+                    sleep, short
+                    URL_string := !regexmatch(URL_string,"^https?:\/\/") ? "https://" . URL_string : URL_string       
+                    sleep, short
+                    url := " | [" domain "](" URL_string ")"
                     var .= url
                 }
                 If WinExist("ahk_exe Obsidian.exe")
@@ -3749,7 +3784,7 @@
     FormatAHKcodeBlock(CspaceLen = 80) {
         var := clip()
         whitespace := "( +)?"
-        hot_key :=    "(?P<Hotkey>[+#!A-Za-z0-9<>?&`\%\- \(\);\*$\\\/:\|\._\?=,\^''""``~]+::)"        ; "(?P<Hotkey>[+#!;\^\*<>~$A-Za-z0-9&:\(\), ""]+::|#[+#!;\^\*<>~$A-Za-z0-9&:\(\), ""]+)?" for #IF statements
+        hot_key :=    "(?P<Hotkey>[+#!A-Za-z0-9<>?&`\%\- \(\);\*$\\\/:\|\._\?=,\^''""``~]+::)"        
         Command :=   "(?P<Command>[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^''""``\S]+)?"
         Comment :=  "(?P<Comment>;[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^''""``;\S]*)$" 
         

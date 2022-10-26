@@ -86,21 +86,21 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                 } else if (SubStr(UserInput, 2 , 2) = ">:") {                          ;# append|prepend manually entered text to clipboard
                     dPos        := InStr(C_input, ":")
                     text_to_add := substr(C_input, dPos+1)
-                    sleep, long * 0.8
+                    sleep, long
                     C_input := ">"
                     goto, addTextToClipboard
-                } else if (C_input = ">") {                                     ;# append|prepend selected text to clipboard                                  
+                } else if (C_input == ">") {                                     ;# append|prepend selected text to clipboard                                  
                     AA(GC("CB_tgtExe"))
                     text_to_add := trim(clip()," `t`n`r")
-                    sleep, long * 0.8
+                    sleep, long
                     C_input := ">"
                     goto, addTextToClipboard
 
-                } else if (substr(C_input,0) = ">") AND (strlen(C_input) > 2) {                           ;# append|prepend file to clipboard                                     
+                } else if (substr(C_input,0) = ">") AND (strlen(C_input) > 1) {                           ;# append|prepend file to clipboard                                     
                     SplitPath,% trim(C_input,">"), FileName, Dir, Extension, NameNoExt
                     dir := dir ? dir . "\" : "" 
                     text_to_add := AccessCache(NameNoExt, dir, false)
-                    sleep, long * 0.8
+                    sleep, long
                     C_input := ">"
                     goto, addTextToClipboard
                     
@@ -428,7 +428,6 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                     path .= ".txt"
                 if !C_input && FileExist(path) {
                     EF(path)
-                    ; msgbox % 1
                     Gui, 2:Cancel
                     ; return
                 } else if (InStr(C_input, "~") && FileExist(path)) {

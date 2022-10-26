@@ -45,7 +45,7 @@ UpdateGUI(new_txt = "" , new_title_file = "") {
     t_color := GC("CBt_color")
     
     if !GC("CB_ScrollBars", 0)
-        GuiControl, 2: -HScroll -VScroll, CB_DisplayVar
+        GuiControl, 2: -HScroll +VScroll, CB_DisplayVar
     else 
         GuiControl, 2: +HScroll +VScroll, CB_DisplayVar 
 

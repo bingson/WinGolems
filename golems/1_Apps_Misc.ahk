@@ -6,7 +6,7 @@
   
     #z::          AA("obsidian_path"),SI("{lwin up}")                                   ;Apps| Activate Obsidian               
     #x::          AA("pdf_path"),SI("{lwin up}")                                        ;Apps| Activate pdf reader                 
-    +#c::         AA("cmd.exe"),SI("{lwin up}")                                         ;Apps| Activate Command window
+    #c::          AA("cmd.exe"),SI("{lwin up}")                                         ;Apps| Activate Command window
     #a::          AA("editor_path"),SI("{lwin up}")                                     ;Apps| Activate text/code editor                 
     #s::          AA("html_path"),SI("{lwin up}")                                       ;Apps| Activate Edge browser
     #q::          AA("xls_path"),SI("{lwin up}")                                        ;Apps| Activate Excel         
@@ -15,6 +15,7 @@
     #r::          AA("C:\Program Files\KeePassXC\KeePassXC.exe"),SI("{lwin up}")        ;Apps| Activate keepass
     #t::          ActivateCalc(),SI("{lwin up}")                                        ;Apps| Activate Calculator    
     #b::          AA("explorer.exe"),SI("{lwin up}")                                    ;Apps| Activate File Explorer 
+    +#b::         AA("C:\Program Files\WizTree\WizTree64.exe")  
     #n::          AA("html2_path"),SI("{lwin up}")                                      ;Apps| Activate Chrome browser
     :x:anki~win:: AA(A_ProgramFiles "\Anki\anki.exe"),SI("{lwin up}")                   ;Apps| Anki
     #m::          AA(A_ProgramFiles "\VideoLAN\VLC\vlc.exe"),SI("{lwin up}")            ;Apps| Obsidian
@@ -448,7 +449,7 @@
   ; SHORTCUTS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     +#s::         screenShot()                                                  ;Convenience: screenshot
     >^capslock::  capslock                                                      ;Convenience: capslock
-    ^SC027::      Send {AppsKey}                                                ;Convenience: simulate appkey
+    ^SC027::      Send {blind}{AppsKey}                                                ;Convenience: simulate appkey
     !SC027::      Sendinput {esc}                                               ;Convenience: simulate esc key (alt + semicolon)
     lwin & pgup:: suspend                                                       ;WinGolems: toggle all hotkeys ON|OFF except for this one
     lwin & pgdn:: reloadWG()                                                    ;WinGolems: reload WinGolems
@@ -480,18 +481,22 @@
                                      
   
   ; WINDOWS MANAGEMENT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    
-    #If IsCmode()
-    sc027:: GotoDesktop("1")                                                    ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
-    sc028:: GotoDesktop("2")                                                    ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
-    lwin::  ActivatePrevInstance(),,SI("{lwin up}")                             ;WindowMgmt: rotate through app instances from most recent
-    #IF                                                                         
+    #If Titletest("Calculator")
+    ^w:: WinClose,A                                                             ;close calculator
                                                                                 
+
+    #If IsCmode()
+    ;sc027:: GotoDesktop("1")                                                   ;VirtualDesktop: Switch to desktop 1 requires: https://github.com/FuPeiJiang/VD.ahk
+    ;sc028:: GotoDesktop("2")                                                   ;VirtualDesktop: Switch to desktop 2 requires: https://github.com/FuPeiJiang/VD.ahk
+    lwin::   ActivatePrevInstance(),,SI("{lwin up}")                            ;WindowMgmt: rotate through app instances from most recent
+    #IF                                                                         
+                                                                                      
     rshift & printscreen:: ActivatePrevInstance(),SI("{printscreen up}{rshift up}") ;WindowMgmt: rotate through app instances from most recent                                     
     printscreen & rshift::                                                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
     #capslock:: ActivateNextInstance(),SI("{lwin up}")                          ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
     >!SC028::   MaximizeWin(),SI("{ralt up}")                                   ;WindowMgmt: maximize window
-    #SC027::    MinimizeWin(), S("{lwin up}")                                   ;Convenience: minimize window
+    printscreen & SC027::
+    #SC027::    MinimizeWin()                                                   ;Convenience: minimize window
     #del::      AlwaysOnTop(1)                                                  ;WindowMgmt: Window always on top: ON
     #ins::      AlwaysOnTop(0)                                                  ;WindowMgmt: Window always on top: OFF
     <!esc::     WinClose,A                                                      ;WindowMgmt: close active window
@@ -501,14 +506,18 @@
                                                                                                                                                                 
 
     #If GetKeyState("PrintScreen", "P")
-    left::  Sendinput #{left}                                                   ;move window to left half
-    right:: Sendinput #{right}                                                  ;move window to right half
-    up::    Sendinput #{up}                                                     ;move window to right half
-    down::  Sendinput #{down}                                                   ;move window to right half
+    rctrl & right:: S("{blind}",200),W("rc"),S("^#{right}")                     ;switch virtual desktop
+    rctrl & left::  S("{blind}",200),W("rc"),S("^#{left}")                      ;switch virtual desktop
+    left::          Sendinput #{left}                                           ;move window to left half
+    right::         Sendinput #{right}                                          ;move window to right half
+    up::            Sendinput #{up}                                             ;move window to right half
+    down::          Sendinput #{down}                                           ;move window to right half
+                                                                                
                                                                                 
     
     #IF GetKeyState("lctrl", "P")
-    lalt & PgDn:: % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")           ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2) requires: https://github.com/FuPeiJiang/VD.ahk
+    lalt & PgDn:: WinToDesktop((CurrentDesktopNum() = 1) ? "2" : "1")           ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2) requires: https://github.com/FuPeiJiang/VD.ahk
+    ; lalt & PgDn:: % (t := !t) ? WinToDesktop("2") : WinToDesktop("1")           ;VirtualDesktop: Move active Window to other desktop (between desktops 1 and 2) requires: https://github.com/FuPeiJiang/VD.ahk
     #IF
 
     lalt & c:: s("{blind}",200),W("ra"),moveWinBtnMonitors("L")                 ;WindowMgmt: move window to left monitor
@@ -520,12 +529,16 @@
     lalt & c:: s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("R")            ;WindowMgmt: move window to left monitor
     #IF                                                                            
 ; MODIFIER KEYS ________________________________________________________________
-    
+  ; reset stuck modifier keys -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #sc029::      ToggleStuckKeyResetLoop()                                     ;Convenience: toggle looping timer that sends up presses to modifier keys
-    #esc::        resetModifiers(0)                                              ;Convenience: send up press to all modifier keys
-    :X:tmod~win:: TC("T_MK", "Extra Modifier keys = ")                          ; toggle modifier keys
-
-    
+    ~sc029::                                                                    ;Convenience: send up press to all modifier keys
+    ~q::                                                                        ;Convenience: send up press to all modifier keys
+    ~z::          resetModifiers(1)                                             ;Convenience: send up press to all modifier keys
+    F7::                                                                        ;Convenience: send up press to all modifier keys
+    #esc::        resetModifiers(0)                                             ;Convenience: send up press to all modifier keys
+    :X:tmod~win:: TC("T_MK", "Extra Modifier keys = ")                          ;toggle modifier keys
+  
+  ; replacement keys for original modifier key function   
     #IF IsCMODE()
     ins::  sendinput {ins}                                                      ;replacement for using ins key as a modifier key
     1::                                                                         ;replacement for using F1  key as a modifier key
@@ -536,9 +549,8 @@
     down:: SendInput {pgdn}                                                     ;replacement for using PgDn key as a modifier key
     o::                                                                         ;replacement for using PgUp key as a modifier key
     up::   SendInput {pgup}                                                     ;replacement for using PgUp key as a modifier key
-                                                                                
-
-    
+  
+  ; modifier key assignment -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_MK",1)
     ESC & SC029::                                                               ;modifier key
     ESC & F1::                                                                  ;modifier key
@@ -577,12 +589,11 @@
     ctrl & b::     SI("^+{tab}") , SI("{ctrl up}"),W("c")                       ;Navigation: navigate to left tab
     ctrl & space:: SI("^{tab}")  , SI("{ctrl up}"),W("c")                       ;Navigation: navigate to right tab
 
-; COMMAND CHORDS (WEB SEARCH) __________________________________________________
-    
+; WEB SEARCH ___________________________________________________________________
     #IF                                                                         
     >!SC035::        search("google.com/search?q=")                               ;search: google search selected text
     +#SC035::        search("autohotkey.com/docs/search.htm?q=",,"&m=2")          ;search: AutoHotkey documentation
-    >!Backspace::    search("google.com/search?tbm=isch&q=")                      ;search: google image search
+    +>!SC035::       search("google.com/search?tbm=isch&q=")                      ;search: google image search
     !SC02b::         search("youtube.com/results?search_query=")                  ;search (+capslock): use clipboard contents to search youtubes
     #If isCMODE()                                                                 ;(+capslock) search clipboard contents instead of selected text
     SC035::          search("google.com/search?q=",clipboard)                     ;Convenience: google search selected text
@@ -593,6 +604,7 @@
     LSHIFT & SC034:: search("google.com/search?tbm=isch&q=",clipboard)            ;search (+capslock): use clipboard contents to search google image
     LSHIFT & SC033:: search("youtube.com/results?search_query=",clipboard)        ;search (+capslock): use clipboard contents to search youtubes
                                                                                 
+; COMMAND CHORDS _______________________________________________________________
                                                                                 
                                                                                 
     #If    
@@ -634,5 +646,60 @@
         
         return 
     }
+
+    #SC034::     
+    ^SC034::     
+    ChordTextManipulation(options := "L1 M T10", escape := "{esc}{ralt}", PUmenu := "zb\ChordTextMenu") {
+        global reChordMenuPattern, C
+        
+        ;pop up website menu
+        menu := rtrim(AccessCache("zb\ChordTextMenu",,0),"`n")
+        menu := rtrim(AccessCache(PUmenu,,0),"`n")
+        PU(menu,C.lblue,,,,90000,12,700,"Lucida Sans Typewriter",1)
+        
+
+        
+        keysPressed :=  KeyWaitHook("L1 M T10",escape)
+        input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
+        Gui, PopUp: cancel
+        Switch % keysPressed
+        {
+            Case "v":           PasteWithoutBreaks()                                                ;TEXT MANIPULATION| replace multiple paragraph breaks w/ 1 break in selected text
+            Case "<+v",">+v":   PasteWithoutBreaks(True)                                            ;TEXT MANIPULATION| replace multiple paragraph breaks with space (remove paragraphs breaks)
+            Case "l":           RemoveBlankLines()                                                  ;TEXT MANIPULATION! remove empty lines starting from selected text
+            Case "+":           ReplaceAwithB(",", "+")                                             ;TEXT MANIPULATION replace "," with "+" in selected text
+            Case ",":           ReplaceAwithB("+", ",")                                             ;C.TM: replace "+" with "," in selected text
+            Case "-":           clip(CS(clip(), {"_":" ","-":" "}))                                 ;C.TM: replace "_" with " " in selected text
+            Case "a":           SortSelectedText()                                                  ;TEXT MANIPULATION Sort Selected Text
+            Case "<+a",">+a":   SortSelectedText("R")                                               ;TEXT MANIPULATION Sort Selected Text
+            Case "s":           ReplaceAwithB()                                                     ;TEXT MANIPULATION replaces multiple consecutive spaces with character length 1 space
+            Case "<+s",">+s":   ReplaceAwithB(" ")                                                  ;TEXT MANIPULATION! remove all spaces from selected text
+            Case "2":           SelectLine(), txt := clip(), SI("{right}{enter}"), clip(txt)        ;TEXT MANIPULATION: duplicate current line
+            Case "m":           ReplaceAwithB("_"," "),Capitalize1stLetter(,,0),,ReplaceAwithB(" ") ;CamelCase
+            Case "n":           AddSpaceBtnCaseChange(), ReplaceAwithB(" ","_")                     ;snake_case
+            Case "i":           SaveMousPos("i",1)                                                  ;save mouse position for #i
+            Case "<+i",">+i":   resetMousPos("i")                                                   ;reset mouse position for #i
+            Case "d":           SaveMousPos("d",1)                                                  ;save mouse position for #d
+            Case "<+d",">+d":   resetMousPos("d")                                                   ;reset mouse position for #d 
+            Case "e":           SI("#{SC034}")                                                      ;emojis
+            Case "c":           SI("#F6")                                                           ;color picker
+            Case "w":                                                                               ;set cursor width (1-9)
+                                PU("Enter cursor width (1-9)",C.lyellow,,,,100000)
+                                width :=  KeyWaitHook("L1 M",escape)
+                                Gui, PopUp: cancel
+                                if width ~= "[0-9]"
+                                    SetCursorWidth(width), PU("cursor width: " width)
+                                Else
+                                    PU("Must be a number input", C.pink)                                              
+                                                         
+
+            Case ">+?": OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
+            default:
+                ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
+                sleep,0
+        }
+        return 
+    }
+        
 
 /*

@@ -127,7 +127,7 @@ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMo
     CC("CB_hwnd", CB_hwnd)
 
     if !GC("CB_ScrollBars", 0) {
-        GuiControl, 2: -HScroll -VScroll,  CB_DisplayVar                            ; remove scrollbars before the GUI draw command
+        GuiControl, 2: -HScroll +VScroll,  CB_DisplayVar                            ; remove horizontal scrollbars before the GUI draw command
     }
     Gui, 2: -DPIScale
     Gui, 2: show, hide AutoSize,%title%
@@ -145,6 +145,7 @@ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMo
     SetWinDelay, 100
     SetBatchLines, 10ms
     Process, Priority, , A
+    send {lwin up}
     ; BlockInput, MousemoveOff
     ; BlockInput OFF
     ; WinWaitClose
@@ -161,7 +162,7 @@ CommandBox(suffix = "" , byref w_color = "F6F7F1", t_color = "000000", ProcessMo
         GuiControl, MoveDraw, UserInput
         
         if !GC("CB_ScrollBars", 0) 
-            GuiControl, 2: -HScroll -VScroll, CB_DisplayVar
+            GuiControl, 2: -HScroll +VScroll, CB_DisplayVar
             
         Gui, 2: show
         if !GC("CB_ScrollBars", 0) 
