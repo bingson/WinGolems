@@ -70,7 +70,7 @@
 ; CB AHK UTILITIES _____________________________________________________________
 
     :X:wg~win::   LURL("https://github.com/bingson/wingolems")                    ;AHK: Load WinGolems GitHub Page   
-    :X:om~win::   OpenFolder("mem_cache\")                                        ;AHK: open cache folder in file explorer
+    :X:om~win::   OP(A_ScriptDir "\mem_cache\")                                        ;AHK: open cache folder in file explorer
     :X:kh~win::   KeyHistory                                                      ;AHK: open key history
     :X:ll~win::   ListLines                                                       ;AHK: Displays the script lines most recently executed.
     :X:ws~win::   WindowSpy()                                                     ;AHK: open window spy 

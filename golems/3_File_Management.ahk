@@ -16,12 +16,17 @@
     $<!r::     Send {F2}                                                        ;FileExplorer: rename file
     >!SC027::  DetailedView()                                                   ;FileExplorer| detailed file info with resized columnsnmn
     !s::       SelectByRegEx()                                                  ;FileExplorer| select all files matching regex pattern
+    !del::     Send ^d                                                          ;FileExplorer: delete file
+    ^y::       Groupby("date created")                                          ;FileExplorer: group by date created
+    ^b::       Sendinput ^+{tab}                                                ;Navigation: navigate to left tab
+    ^space::   Sendinput ^{tab}                                                 ;Navigation: navigate to right tab
+    !SC034::   Send !p                                                          ;preview pane 
+    >!p up::   Send ^w                                                          ;close file explorer tab
+    !j::       Send {down}                                                      ;Navigation| Up 
+    !k::       Send {up}                                                        ;Navigation| Down  
     ralt & j:: send {down}                                                      ;Navigation| Up
     ralt & k:: send {up}                                                        ;Navigation| Down
-    ^j::       SortBy("name")                                                   ;FileExplorer: sort by name
-    ^k::       SortBy("date modified")                                          ;FileExplorer: sort by date modified
-    ^l::       SortBy("file type")                                              ;FileExplorer: sort by type
-    ^h::       SortBy("size")                                                   ;FileExplorer: sort by size
+    ^f::       Send !d{tab}                                                     ;search
     ^+j::      GroupBy("name")                                                  ;FileExplorer: group by name|remove grouping toggle
     ^+k::      GroupBy("date modified")                                         ;FileExplorer: group by date modified type
     ^+l::      GroupBy("file type")                                             ;FileExplorer: group by file type
@@ -78,7 +83,7 @@
                                                                                 
 ; CHORD COMMAND ________________________________________________________________
     #If WinActive("ahk_exe Explorer.EXE")
-    #SC033::     
+    >!SC033::     
     ChordFileExplorer(options := "L1 M T10", escape := "{esc}{ralt}",PUmenu:="zb\ChordFileMenu") {
         global reChordMenuPattern, C
         
@@ -104,6 +109,21 @@
             Case ";":         GroupBy("none")                                                  ;FileExplorer: group by none
             Case "i":         ToggleInvisible()                                                ;FileExplorer: toggle hide/unhide invisible files            
             Case "p":         clipboard := Explorer_GetSelection()                             ;FileExplorer: clipboard := file/folder path 
+            
+            Case "o": Sendinput ^{F8} ; merge tabs from all windows
+            Case "b": Sendinput ^{F1} ; show/hide extra view bottom  
+            Case "v": Sendinput ^{F2} ; show/hide extra view left
+            Case "r": Sendinput +{F2} ; rename current folder
+            Case "t": Sendinput +^e   ; copy to tab 
+            Case "T": Sendinput +^d   ; move to tab
+            Case "y": Sendinput +^u   ; copy from tab
+            Case "Y": Sendinput +^j   ; move from tab
+            Case "g": Sendinput +^g   ; create new group   
+            Case "l": Sendinput +^l   ; create new library
+            Case "'": Sendinput !o   ; Qttabplus settings
+            Case "/": Sendinput +^p   ; shortcut finder
+
+            
             Case ">+?":       OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
             default:
                 ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
@@ -112,43 +132,46 @@
         return 
     }
 
+    /*
     +#SC033::     
-    ChordPaths(options := "L1 M T10", escape := "{esc}{ralt}",PUmenu:="zb\ChordPathsMenu") {
-        global reChordMenuPattern, C
-        
-        ;pop up website menu
-        menu := rtrim(AccessCache(PUmenu,,0),"`n")
-        PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
-        
-        keysPressed :=  KeyWaitHook("L1 M T10",escape)
-        input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
-        Gui, PopUp: cancel
+        ChordPaths(options := "L1 M T10", escape := "{esc}{ralt}",PUmenu:="zb\ChordPathsMenu") {
+            global reChordMenuPattern, C
+            
+            ;pop up website menu
+            menu := rtrim(AccessCache(PUmenu,,0),"`n")
+            PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
+            
+            keysPressed :=  KeyWaitHook("L1 M T10",escape)
+            input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
+            Gui, PopUp: cancel
 
 
-        Switch % keysPressed
-        {
-            Case "j":         SortBy("name")                                                   ;FileExplorer: sort by name
-            Case "k":         SortBy("date modified")                                          ;FileExplorer: sort by date modified
-            Case "c":         SortBy("date created")                                           ;FileExplorer: sort by date created
-            Case "l":         SortBy("file type")                                              ;FileExplorer: sort by type
-            Case "h":         SortBy("size")                                                   ;FileExplorer: sort by size
-            Case "<+j",">+j": GroupBy("name")                                                  ;FileExplorer: group by name|remove grouping toggle
-            Case "<+k",">+k": GroupBy("date modified")                                         ;FileExplorer: group by date modified
-            Case "<+c",">+c": GroupBy("date created")                                          ;FileExplorer: group by date created
-            Case "<+l",">+l": GroupBy("file type")                                             ;FileExplorer: group by file type
-            Case "<+h",">+h": GroupBy("size")                                                  ;FileExplorer: group by size
-            Case ";":         GroupBy("none")                                                  ;FileExplorer: group by none
-            Case "i":         ToggleInvisible()                                                ;FileExplorer: toggle hide/unhide invisible files            
-            Case "p":         
-                            sleep, 200
-                            sleep, 200
-                            clipboard := Explorer_GetSelection()                             ;FileExplorer: clipboard := file/folder path 
-            Case ">+?":       OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
-            default:
-                ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
-                sleep,0
+            Switch % keysPressed
+            {
+                Case "j":         SortBy("name")                                                   ;FileExplorer: sort by name
+                Case "k":         SortBy("date modified")                                          ;FileExplorer: sort by date modified
+                Case "c":         SortBy("date created")                                           ;FileExplorer: sort by date created
+                Case "l":         SortBy("file type")                                              ;FileExplorer: sort by type
+                Case "h":         SortBy("size")                                                   ;FileExplorer: sort by size
+                Case "<+j",">+j": GroupBy("name")                                                  ;FileExplorer: group by name|remove grouping toggle
+                Case "<+k",">+k": GroupBy("date modified")                                         ;FileExplorer: group by date modified
+                Case "<+c",">+c": GroupBy("date created")                                          ;FileExplorer: group by date created
+                Case "<+l",">+l": GroupBy("file type")                                             ;FileExplorer: group by file type
+                Case "<+h",">+h": GroupBy("size")                                                  ;FileExplorer: group by size
+                Case ";":         GroupBy("none")                                                  ;FileExplorer: group by none
+                Case "i":         ToggleInvisible()                                                ;FileExplorer: toggle hide/unhide invisible files            
+                Case "p":         
+                                sleep, 200
+                                sleep, 200
+                                clipboard := Explorer_GetSelection()                             ;FileExplorer: clipboard := file/folder path 
+                Case ">+?":       OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
+                default:
+                    ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
+                    sleep,0
+            }
+            return 
         }
-        return 
-    }
+    */
                                                                                    ; https://www.autohotkey.com/docs/misc/CLSID-List.htm 
+
 #IF

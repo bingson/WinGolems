@@ -165,8 +165,14 @@
     #IF                                                                         
     <^+h::            Sendinput {Wheelleft 1}{lctrl up}{lshift up}              ;MouseFn: mouse scroll left 1
     <^+l::            Sendinput {WheelRight 1}{lctrl up}{lshift up}             ;MouseFn: mouse scroll right 1
+    
     >+#j::            Sendinput {WheelDown 6}{lwin up}{rshift up}               ;MouseFn: mouse scroll wheel down 6
     >+#k::            Sendinput {Wheelup 6}{lwin up}{rshift up}                 ;MouseFn: mouse scroll wheel up 6
+    
+    #If GetKeyState("lwin", "P")
+    rctrl & j::            Sendinput {WheelDown 6}{lwin up}{rctrl up}               ;MouseFn: mouse scroll wheel down 6
+    rctrl & k::            Sendinput {Wheelup 6}{lwin up}{rctrl up}                 ;MouseFn: mouse scroll wheel up 6
+    #If
                                                                                 
     #f::              Clicks(2),SI("{lwin up}")                                 ;MouseFn: 2 Left clicks (select word)
     ^#f::             Clicks(3),SI("{lwin up}{lctrl up}")                       ;MouseFn: 3 Left clicks (select line)
@@ -213,7 +219,7 @@
     lshift:: CursorJump("BL",150,-150)                                          ;MouseFn: move mouse cursowr to BOTTOM LEFT of active app
                                                                                 
     #IF
-; TEXT REPLACEMENT _____________________________________________________________
+; HOTSTRING REPLACEMENT _____________________________________________________________
     :C*?:''E::{U+00C9}                                                       ; '' followed by E -> É
     :C*?:''e::{U+00E9}                                                       ; '' followed by e -> é
     :*X:date__:: clip(a_YYYY "_" a_MM "_" a_dd)                                 ;date__ -> yyyy_mm_dd

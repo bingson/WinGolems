@@ -1,23 +1,17 @@
-﻿d  dictionary
-t  thesaurus
+﻿             SEARCH MENU
 
-e  aliexpress
-a  amazon.ca
+d  dictionary           t  thesaurus
+f  finance.yahoo        w  wikipedia
 
-f  finance.yahoo
-v  bing videos
-i  google images
-m  google maps
-y  youtube
+v  bing videos          y  youtube
+i  google images        m  google maps
 
-s  twitter
-r  reddit
-w  wikipedia
+r  reddit               s  twitter
+a  amazon.ca            e  aliexpress
 b  imdb
 
-o  stackoverflow
-p  stackexchange
-h  math.stackexchange
+o  stackoverflow        p  stackexchange
+h  math.stackexchange   
 
-+ LSHIFT -> query clipboard contents
-+ RSHIFT -> query selected text
+   + lshift: send clipboard contents
+   + rshift: send selected text

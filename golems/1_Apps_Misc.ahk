@@ -4,23 +4,24 @@
     ; SaveWinID("unique_string")
     ; ActivateWinID("unique_string")
   
-    #z::          AA("obsidian_path"),SI("{lwin up}")                                   ;Apps| Activate Obsidian               
-    #x::          AA("pdf_path"),SI("{lwin up}")                                        ;Apps| Activate pdf reader                 
-    #c::          AA("cmd.exe"),SI("{lwin up}")                                         ;Apps| Activate Command window
-    #a::          AA("editor_path"),SI("{lwin up}")                                     ;Apps| Activate text/code editor                 
-    #s::          AA("html_path"),SI("{lwin up}")                                       ;Apps| Activate Edge browser
-    #q::          AA("xls_path"),SI("{lwin up}")                                        ;Apps| Activate Excel         
-    #w::          AA("doc_path"),SI("{lwin up}")                                        ;Apps| Activate Word        
-    +#w::         AA("ppt_path"),SI("{lwin up}")                                        ;Apps| Activate Word        
-    #r::          AA("C:\Program Files\KeePassXC\KeePassXC.exe"),SI("{lwin up}")        ;Apps| Activate keepass
-    #t::          ActivateCalc(),SI("{lwin up}")                                        ;Apps| Activate Calculator    
-    #b::          AA("explorer.exe"),SI("{lwin up}")                                    ;Apps| Activate File Explorer 
-    +#b::         AA("C:\Program Files\WizTree\WizTree64.exe")  
-    #n::          AA("html2_path"),SI("{lwin up}")                                      ;Apps| Activate Chrome browser
-    :x:anki~win:: AA(A_ProgramFiles "\Anki\anki.exe"),SI("{lwin up}")                   ;Apps| Anki
-    #m::          AA(A_ProgramFiles "\VideoLAN\VLC\vlc.exe"),SI("{lwin up}")            ;Apps| Obsidian
-    #y::          everythingSearch(),SI("{lwin up}")                                    ;Apps| everything search
-    <!#m::        AA(PF_x86 "\foobar2000\foobar2000.exe"),SI("{lwin up}")               ;Apps| foobar
+    #z::          AA("obsidian_path")                                           ;Apps| Activate Obsidian               
+    #x::          AA("pdf_path")                                                ;Apps| Activate pdf reader                 
+    #c::          AA("cmd.exe")                                                 ;Apps| Activate Command window
+    #a::          AA("editor_path")                                             ;Apps| Activate text/code editor                 
+    #s::          AA("html_path", " --overscroll-history-navigation=0")         ;Apps| Activate Edge browser
+    #q::          AA("xls_path")                                                ;Apps| Activate Excel         
+    #w::          AA("doc_path")                                                ;Apps| Activate Word        
+    +#w::         AA("ppt_path")                                                ;Apps| Activate Word        
+    #r::          AA("C:\Program Files\KeePassXC\KeePassXC.exe")                ;Apps| Activate keepass
+    #t::          ActivateCalc()                                                ;Apps| Activate Calculator    
+    #b::          AA("explorer.exe")                                            ;Apps| Activate File Explorer 
+    +#b::         AA("C:\Program Files\WizTree\WizTree64.exe")                  ;Apps| Activate wiztree
+    #n::          AA("html2_path"," --overscroll-history-navigation=0")         ;Apps| Activate Chrome browser
+    #u::          AA(A_ProgramFiles "\Anki\anki.exe")                           ;Apps| Anki
+    #m::          AA(A_ProgramFiles "\VideoLAN\VLC\vlc.exe")                    ;Apps| Obsidian
+    #y::          everythingSearch()                                            ;Apps| everything search
+    <!#m::        AA(PF_x86 "\foobar2000\foobar2000.exe")                       ;Apps| foobar
+                                                                                
                                                                                 
     +#p::           AA(PF "\HyperSnap v8.20\HyperSnapPortable.exe", "HprSnap8.exe",2)                                                                
     :X:edge~win::   CC("html_path",GC("edge_path")), CC("html2_path",GC("chrome_path")), PU("1: edge, 2:chrome")
@@ -447,18 +448,21 @@
 ; ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
 ; SYSTEM CONVENIENCE ___________________________________________________________
   ; SHORTCUTS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    +#s::         screenShot()                                                  ;Convenience: screenshot
-    >^capslock::  capslock                                                      ;Convenience: capslock
-    ^SC027::      Send {blind}{AppsKey}                                                ;Convenience: simulate appkey
-    !SC027::      Sendinput {esc}                                               ;Convenience: simulate esc key (alt + semicolon)
-    lwin & pgup:: suspend                                                       ;WinGolems: toggle all hotkeys ON|OFF except for this one
-    lwin & pgdn:: reloadWG()                                                    ;WinGolems: reload WinGolems
-    esc & pgdn::  ExitApp                                                       ;WinGolems: quit WinGolems
+
+    +#s::                screenShot()                                           ;Convenience: screenshot
+    >^capslock::         capslock                                               ;Convenience: capslock
+    ^SC027::             Send {blind}{AppsKey}                                  ;Convenience: simulate appkey
+    !SC027::             Sendinput {esc}                                        ;Convenience: simulate esc key (alt + semicolon)
+    lwin & pgup::        suspend                                                ;WinGolems: toggle all hotkeys ON|OFF except for this one
+    HOME & END::                                                                ;WinGolems: reload WinGolems
+    F8::                                                                        ;WinGolems: reload WinGolems      
+    lwin & pgdn::        reloadWG()                                             ;WinGolems: reload WinGolems
+    esc & pgdn::         ExitApp                                                ;WinGolems: quit WinGolems
+    printscreen & lwin:: Sendinput ^{esc}                                       ;native windows start button function
 
   ; CLIPBOARD -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    
-    <^#c:: OCRtoClipboard(,"V2")                                                ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
-    !#c::  OCRtoClipboard(,"UWP")                                               ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
+    ;<^#c:: OCRtoClipboard(,"V2")                                                ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
+    ;!#c::  OCRtoClipboard(,"UWP")                                               ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
     >^c::  addtoCB("A")                                                         ; append text to clipboard
     +!#c:: OCRtoClipboard("A","V2")                                             ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
     +^#c:: OCRtoClipboard("A","UWP")                                            ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
@@ -529,13 +533,16 @@
     lalt & c:: s("{blind}",200),W("ra","rs"),moveWinBtnMonitors("R")            ;WindowMgmt: move window to left monitor
     #IF                                                                            
 ; MODIFIER KEYS ________________________________________________________________
-  ; reset stuck modifier keys -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  
+  /*; reset stuck modifier keys -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #sc029::      ToggleStuckKeyResetLoop()                                     ;Convenience: toggle looping timer that sends up presses to modifier keys
     ~sc029::                                                                    ;Convenience: send up press to all modifier keys
     ~q::                                                                        ;Convenience: send up press to all modifier keys
     ~z::          resetModifiers(1)                                             ;Convenience: send up press to all modifier keys
     F7::                                                                        ;Convenience: send up press to all modifier keys
     #esc::        resetModifiers(0)                                             ;Convenience: send up press to all modifier keys
+  */
+
     :X:tmod~win:: TC("T_MK", "Extra Modifier keys = ")                          ;toggle modifier keys
   
   ; replacement keys for original modifier key function   
@@ -610,12 +617,12 @@
     #If    
     #SC035::     
     >^SC035::     
-    ChordSearch(options :="L1 T9", escape := "{esc}{ralt}",PUmenu:="zb\SearchMenu") {
+    ChordSearch(options :="L1 T10", escape := "{esc}{ralt}",PUmenu:="zb\SearchMenu") {
         global reChordMenuPattern, C
         
         
         menu := rtrim(AccessCache(PUmenu,,0),"`n")
-        PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
+        PU(menu,C.Eyellow,,,,10000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
                                                                                 
         keysPressed :=  KeyWaitHook(options,escape)
         input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
@@ -643,19 +650,18 @@
                 sleep,0
                 ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
         }
-        
         return 
     }
 
-    #SC034::     
-    ^SC034::     
+    <!SC033::     
     ChordTextManipulation(options := "L1 M T10", escape := "{esc}{ralt}", PUmenu := "zb\ChordTextMenu") {
         global reChordMenuPattern, C
         
         ;pop up website menu
         menu := rtrim(AccessCache("zb\ChordTextMenu",,0),"`n")
         menu := rtrim(AccessCache(PUmenu,,0),"`n")
-        PU(menu,C.lblue,,,,90000,12,700,"Lucida Sans Typewriter",1)
+        PU(menu,C.lblue,,,,990000,12,700,"Lucida Sans Typewriter",1)
+        
         
 
         
@@ -677,6 +683,7 @@
             Case "2":           SelectLine(), txt := clip(), SI("{right}{enter}"), clip(txt)        ;TEXT MANIPULATION: duplicate current line
             Case "m":           ReplaceAwithB("_"," "),Capitalize1stLetter(,,0),,ReplaceAwithB(" ") ;CamelCase
             Case "n":           AddSpaceBtnCaseChange(), ReplaceAwithB(" ","_")                     ;snake_case
+            Case "<+n",">+n":   AddSpaceBtnCaseChange()                                             ;add space between case change
             Case "i":           SaveMousPos("i",1)                                                  ;save mouse position for #i
             Case "<+i",">+i":   resetMousPos("i")                                                   ;reset mouse position for #i
             Case "d":           SaveMousPos("d",1)                                                  ;save mouse position for #d

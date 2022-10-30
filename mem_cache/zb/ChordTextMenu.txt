@@ -1,16 +1,17 @@
-﻿v  replace multiple paragraph breaks with 1 break (V replace breaks with 1 space)
-+  replace  ,  with  +  
-,  replace  +  with  ,  
--  replace  _ or - with a space    
-s  replace multiple consecutive spaces with a single space (S remove all spaces) 
+﻿REPLACE 
+-------
+v  multiple paragraph breaks to 1 break (replace breaks w/ 1 space: V)
++   ,    to   +  
+,   +    to   ,  
+-   _|-  to   A_space    
+s  multiple spaces w/ 1 space (remove all: S) 
 l  remove empty lines 
 
-a  Sort selected text ascending (A for descending)
-s  duplicate current line
-m  CamelCase: convert snake_case or space delimited text to CamelCase
-n  snake_case: convert CamelCase text to snake_case  
-e  emojis :) 
-c  color picker
-w  set cursor width
-i  save mouse position for lwin + i (I to reset position)
-d  save mouse position for lwin + d (D to reset position)
+m  convert to CamelCase                  e  emojis :)                            
+n  convert to snake_case                 c  color picker                         
+N  add space between case change         w  set cursor width 
+
+a  Sort text ascending (descending: A)   i  save #i position (reset: I)
+s  duplicate current line                d  save #d position (reset: D)    
+
+

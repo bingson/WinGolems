@@ -766,17 +766,20 @@
         global med
         sleep, med
 
-        if (autoSelect = True)
+        if autoSelect
         {
-            Send % "+^{left " . n . "}"
+            ;Send % "+^{left " . n . "}"
+            SelectWord()
         }
-        userInput := clip()
+
+        U_input := clip()
+            
         if (substr(Prefix,1,1) == "V") {
-            Prefix := LTrim(Prefix, "V"), userInput := trim(userInput)
-            AccessCache(userInput,(userinput ~= "\b[0-9]\b") ? ("") : Prefix)
+            Prefix := LTrim(Prefix, "V"), U_input := trim(U_input)
+            AccessCache(U_input,(U_input ~= "\b[0-9]\b") ? ("") : Prefix)
         } else {
             Send {del}
-            RunLabel(userInput, sfx, WinExist("A")) 
+            RunLabel(U_input, sfx, WinExist("A")) 
         }
     }
 
@@ -2483,6 +2486,12 @@
         if (path = "") {
             PU("No saved path found")
             return
+        ; } else if (WinActive("ahk_exe Explorer.EXE") or (GC("CB_sfx") = "~fe")) {
+        ;     sleep, 200
+        ;     AA("explorer.exe")
+        ;     sleep, 200
+        ;     CF(A_script "\mem_cache")
+        ;     return
         } else {
             try {
                 sleep, short 
@@ -2781,6 +2790,7 @@
         ; if !WinActive("ahk_exe " GC("CB_tgtExe"))
         ; ActivateApp(app_path) ; AA() = infinite loop
         CFW(,200,250)
+        ;sendinput {lwin up}
 
     }
 
@@ -2835,7 +2845,8 @@
             ? "ahk_class CabinetWClass ahk_exe " exe_name ; after start folder first opening, make #b key activate last explorer window               
             : win_title " ahk_class CabinetWClass ahk_exe " exe_name
         } else {
-            grp_ID := arguments "ahk_exe " exe_name
+            grp_ID := "ahk_exe " exe_name
+            ; grp_ID := arguments "ahk_exe " exe_name
         }
 
         WinGet, wList, List, %grp_ID%,,% ((grp_ID = "ahk_exe chrome.exe") ? "Tabs Outliner" : "") ; exclude tabs outliner tab management window if app is chrome
