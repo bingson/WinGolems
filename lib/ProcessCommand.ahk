@@ -58,7 +58,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                     case "}": CC("RCBracketAlias", C2_Remainder), PU("} alias set to: " C2_Remainder)
                 }
                 updateGUI()
-                ; return 1
+                
             case "\":
                 UpdateGUI(GetIniSect("PATHS",0) , "Saved PATHS")
             Case ">":
@@ -68,7 +68,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                 NameNoExt := "help"
                 C_input := "help"
                 gosub, Load
-                ; return 1
+                
             Case "A", "P":                                                      ; append|prepend text to file
                 if (instr(UserInput,"!")) {                                     ; # delete lines
                 
@@ -222,7 +222,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                 } else if (C_input = ">") {                                     ; clipboard 
                     try {
                         UpdateGUI(Clipboard,"Clipboard Contents") 
-                        ; return 1
+                        
                     } 
                 } else if (C_input = "%") {                                     ; User Input History 
                     NameNoExt := "_hist.txt [starting with most recent]"
@@ -288,23 +288,32 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                         clipboard := AccessCache(NameNoExt,dir, False)
                         goto, load
                     }
-                } else If (SubStr(C_input,1,2) = ">:") {                         ; if C_input ends in ">" overwrite clipboard with file contents  
+                } else If (SubStr(C_input,1,2) = ">:") {                         ; if C_input has ">:" overwrite clipboard text after ">:"
                     dPos        := InStr(C_input, ":")
                     clipboard   := substr(C_input, dPos+1)
                     sleep, long * 0.8
                     C_input := ">" ; for loading clipboard into CB display 
                     goto, load
-                } else If ((2ndChar == ">") and RegExMatch(C_input,"[0-9A-Za-z]")) {   ; if C_input starts with ">" and there's a file name overwrite file w/ clipboard
+                } else If ((2ndChar == ">") and RegExMatch(C_input,"[0-9A-Za-z]")) {   ; if C_input starts with ">" and there's a file name, overwrite file w/ clipboard
                     NameNoExt := trim(C_input, " >")
                     dir := (InStr(dir, ">")) ? "" : dir
                     dir := (InStr(dir, ":")) ? "" : dir
-                    WriteToCache(namenoext,,dir,clipboard)   
+                    if FileExist(f_path dir NameNoExt "." (Extension ? Extension : "txt")) {
+                        MsgBox,4100,Overwrite File,File exists, are you sure?
+                        IfMsgBox Yes
+                        {
+                            WriteToCache(namenoext,,dir,clipboard) 
+                        } Else
+                            sleep, 0
+                    } else {
+                        WriteToCache(namenoext,,dir,clipboard) 
+                    }
                     goto, load
                 } else If (SubStr(C_input, 0) == ">") {                         ; if C_input ends in ">" overwrite clipboard with file contents  
                     C_input := trim(C_input, " >")
                     SplitPath, C_input, , Dir, , NameNoExt 
                     clipboard := AccessCache(NameNoExt,dir, False)
-                    C_input := ">" ; for loading clipboard into CB display 
+                    C_input := ">"                                              ; for loading clipboard into CB display
                     goto, load
                 } else If (InStr(SubStr(C_input, 2), ":")) {
                     dPos        := InStr(C_input, ":")
@@ -322,7 +331,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                             WriteToCache(namenoext,,dir,text_to_add)
                         } else 
                             return
-                            ; return 1
+                            
                     } else if FileExist(f_path Dir NameNoExt ".txt") {                                      
                         msg := "Overwrite " . Dir NameNoExt ".txt"
                         MsgBox,4100,Overwrite File,%msg% 
@@ -331,7 +340,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                             WriteToCache(namenoext,,dir,text_to_add)
                         } else 
                             return
-                            ; return 1
+                            
                     } else {
                         WriteToCache(namenoext,,dir,text_to_add)
                     }
@@ -355,7 +364,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                             FileCreateDir, %f_path%%dir%
                         else 
                             return 
-                            ; return 1
+                            
                     } else if FileExist(f_path Dir NameNoExt ".txt") {                                      
                         msg := "Overwrite " . Dir NameNoExt ".txt"
                         MsgBox,4100,Overwrite File,%msg% 
@@ -364,7 +373,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                             WriteToCache(namenoext,,dir,text_to_add)
                         } else 
                             return
-                            ; return 1
+                            
                     } else {
                         WriteToCache(namenoext,,dir,text_to_add)
                     }
@@ -386,7 +395,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                             FileCreateDir, %f_path%%dir%
                         } else 
                             return
-                            ; return 1
+                            
                     } 
                     
  
@@ -400,7 +409,6 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                                 Filecopy,% f_path . 1Dir . 1NameNoExt . ".txt",% f_path . Dir . NameNoExt . ".txt", 1
                             } else 
                                 return
-                                ; return 1
                         } else {
                             try {
                                 Filecopy,% f_path . 1Dir . 1NameNoExt . ".txt",% f_path . Dir . NameNoExt . ".txt", 1

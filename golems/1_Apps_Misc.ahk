@@ -4,26 +4,28 @@
     ; SaveWinID("unique_string")
     ; ActivateWinID("unique_string")
   
-    #z::          AA("obsidian_path")                                           ;Apps| Activate Obsidian               
-    #x::          AA("pdf_path")                                                ;Apps| Activate pdf reader                 
-    #c::          AA("cmd.exe")                                                 ;Apps| Activate Command window
-    #a::          AA("editor_path")                                             ;Apps| Activate text/code editor                 
-    #s::          AA("html_path", " --overscroll-history-navigation=0")         ;Apps| Activate Edge browser
-    #q::          AA("xls_path")                                                ;Apps| Activate Excel         
-    #w::          AA("doc_path")                                                ;Apps| Activate Word        
-    +#w::         AA("ppt_path")                                                ;Apps| Activate Word        
-    #r::          AA("C:\Program Files\KeePassXC\KeePassXC.exe")                ;Apps| Activate keepass
-    #t::          ActivateCalc()                                                ;Apps| Activate Calculator    
-    #b::          AA("explorer.exe")                                            ;Apps| Activate File Explorer 
-    +#b::         AA("C:\Program Files\WizTree\WizTree64.exe")                  ;Apps| Activate wiztree
-    #n::          AA("html2_path"," --overscroll-history-navigation=0")         ;Apps| Activate Chrome browser
-    #u::          AA(A_ProgramFiles "\Anki\anki.exe")                           ;Apps| Anki
-    #m::          AA(A_ProgramFiles "\VideoLAN\VLC\vlc.exe")                    ;Apps| Obsidian
-    #y::          everythingSearch()                                            ;Apps| everything search
-    <!#m::        AA(PF_x86 "\foobar2000\foobar2000.exe")                       ;Apps| foobar
+    $#z::   AA("obsidian_path")                                                  ;Apps| Activate Obsidian               
+    $#x::   AA("pdf_path")                                                       ;Apps| Activate pdf reader                 
+    $#c::   AA("cmd.exe")                                                        ;Apps| Activate Command window
+    $#a::   AA("editor_path")                                                    ;Apps| Activate text/code editor                 
+    $#s::   AA("html_path", " --overscroll-history-navigation=0")                ;Apps| Activate Edge browser
+    $#q::   AA("xls_path")                                                       ;Apps| Activate Excel         
+    $#w::   AA("doc_path")                                                       ;Apps| Activate Word        
+    $+#w::  AA("ppt_path")                                                       ;Apps| Activate Word        
+    $#r::   AA("C:\Program Files\KeePassXC\KeePassXC.exe")                       ;Apps| Activate keepass
+    $#t::   ActivateCalc()                                                       ;Apps| Activate Calculator    
+    $#b::   AA("explorer.exe")                                                   ;Apps| Activate File Explorer 
+    $+#b::  send #e                                                              ;new explorer instance
+    $+#r::  AA("C:\Program Files\WizTree\WizTree64.exe")                         ;Apps| Activate wiztree
+    $#n::   AA("html2_path"," --overscroll-history-navigation=0")                ;Apps| Activate Chrome browser
+    $#u::   AA(A_ProgramFiles "\Anki\anki.exe")                                  ;Apps| Anki
+    $#m::   AA(A_ProgramFiles "\VideoLAN\VLC\vlc.exe")                           ;Apps| Obsidian
+    $#y::   everythingSearch()                                                   ;Apps| everything search
+    $<!#m:: AA(PF_x86 "\foobar2000\foobar2000.exe")                              ;Apps| foobar
                                                                                 
                                                                                 
-    +#p::           AA(PF "\HyperSnap v8.20\HyperSnapPortable.exe", "HprSnap8.exe",2)                                                                
+                                                                                
+    $+#p::           AA(PF "\HyperSnap v8.20\HyperSnapPortable.exe", "HprSnap8.exe",2)                                                                
     :X:edge~win::   CC("html_path",GC("edge_path")), CC("html2_path",GC("chrome_path")), PU("1: edge, 2:chrome")
     :X:chrome~win:: CC("html_path",GC("chrome_path")), CC("html2_path",GC("edge_path")), PU("1: chrome, 2:edge")
 
@@ -61,24 +63,24 @@
     rctrl & v:: SaveWinID(StrReplace(A_ThisHotkey,"rctrl & "))                  ;Apps: Save window ID for printscreen+v activation
                                                                                 
     #If GetKeyState("PrintScreen", "P")
-    esc::                                                                       ;ActvateApp: activate saved Window ID
-    SC033::                                                                     ;ActvateApp: activate saved Window ID
-    SC034::                                                                     ;ActvateApp: activate saved Window ID
-    SC035::                                                                     ;ActvateApp: activate saved Window ID
-    m::                                                                         ;ActvateApp: activate saved Window ID
-    n::                                                                         ;ActvateApp: activate saved Window ID
-    q::                                                                         ;ActvateApp: activate saved Window ID
-    w::                                                                         ;ActvateApp: activate saved Window ID
-    e::                                                                         ;ActvateApp: activate saved Window ID
-    r::                                                                         ;ActvateApp: activate saved Window ID
-    a::                                                                         ;ActvateApp: activate saved Window ID
-    s::                                                                         ;ActvateApp: activate saved Window ID
-    d::                                                                         ;ActvateApp: activate saved Window ID
-    f::                                                                         ;ActvateApp: activate saved Window ID
-    z::                                                                         ;ActvateApp: activate saved Window ID
-    x::                                                                         ;ActvateApp: activate saved Window ID
-    C::                                                                         ;ActvateApp: activate saved Window ID
-    v::     ActivateWinID(A_ThisHotkey)                                         ;ActvateApp: activate saved Window ID
+    $esc::                                                                       ;ActvateApp: activate saved Window ID
+    $SC033::                                                                     ;ActvateApp: activate saved Window ID
+    $SC034::                                                                     ;ActvateApp: activate saved Window ID
+    $SC035::                                                                     ;ActvateApp: activate saved Window ID
+    $m::                                                                         ;ActvateApp: activate saved Window ID
+    $n::                                                                         ;ActvateApp: activate saved Window ID
+    $q::                                                                         ;ActvateApp: activate saved Window ID
+    $w::                                                                         ;ActvateApp: activate saved Window ID
+    $e::                                                                         ;ActvateApp: activate saved Window ID
+    $r::                                                                         ;ActvateApp: activate saved Window ID
+    $a::                                                                         ;ActvateApp: activate saved Window ID
+    $s::                                                                         ;ActvateApp: activate saved Window ID
+    $d::                                                                         ;ActvateApp: activate saved Window ID
+    $f::                                                                         ;ActvateApp: activate saved Window ID
+    $z::                                                                         ;ActvateApp: activate saved Window ID
+    $x::                                                                         ;ActvateApp: activate saved Window ID
+    $C::                                                                         ;ActvateApp: activate saved Window ID
+    $v::     ActivateWinID(ltrim(A_ThisHotkey,"$"))                                         ;ActvateApp: activate saved Window ID
                                                                                 
                                         
     #IF
@@ -101,16 +103,16 @@
     ; e.g., ^!a = AddToMemory() ; ctrl+alt+a -> will save selected text to a file called a.txt in the WinGolems/mem_cache folder
   
     #IF GC("T_mem",1) 
-    ^!0::                                                                       ;Mem: overwrite 0.txt with selected text
-    ^!9::                                                                       ;Mem: overwrite 9.txt with selected text
-    ^!8::                                                                       ;Mem: overwrite 8.txt with selected text
-    ^!7::                                                                       ;Mem: overwrite 7.txt with selected text
-    ^!6::                                                                       ;Mem: overwrite 6.txt with selected text
-    ^!5::                                                                       ;Mem: overwrite 5.txt with selected text
-    ^!4::                                                                       ;Mem: overwrite 4.txt with selected text
-    ^!3::                                                                       ;Mem: overwrite 3.txt with selected text
-    ^!2::                                                                       ;Mem: overwrite 2.txt with selected text
-    ^!1:: OverwriteMemory()                                                     ;Mem: overwrite 1.txt with selected text
+    $^!0::                                                                       ;Mem: overwrite 0.txt with selected text
+    $^!9::                                                                       ;Mem: overwrite 9.txt with selected text
+    $^!8::                                                                       ;Mem: overwrite 8.txt with selected text
+    $^!7::                                                                       ;Mem: overwrite 7.txt with selected text
+    $^!6::                                                                       ;Mem: overwrite 6.txt with selected text
+    $^!5::                                                                       ;Mem: overwrite 5.txt with selected text
+    $^!4::                                                                       ;Mem: overwrite 4.txt with selected text
+    $^!3::                                                                       ;Mem: overwrite 3.txt with selected text
+    $^!2::                                                                       ;Mem: overwrite 2.txt with selected text
+    $^!1:: OverwriteMemory()                                                     ;Mem: overwrite 1.txt with selected text
 
 
     PrintScreen & 0::                                                           ;Memory: overwrite 0.txt
@@ -125,29 +127,30 @@
     PrintScreen & 1:: OverwriteMemory()                                         ;Memory: overwrite 1.txt
                                                                                 
     
-    +#0::                                                                       ;Mem: add selected text to the bottom of 0.txt
-    +#9::                                                                       ;Mem: add selected text to the bottom of 9.txt
-    +#8::                                                                       ;Mem: add selected text to the bottom of 8.txt
-    +#7::                                                                       ;Mem: add selected text to the bottom of 7.txt
-    +#6::                                                                       ;Mem: add selected text to the bottom of 6.txt
-    +#5::                                                                       ;Mem: add selected text to the bottom of 5.txt
-    +#4::                                                                       ;Mem: add selected text to the bottom of 4.txt
-    +#3::                                                                       ;Mem: add selected text to the bottom of 3.txt
-    +#2::                                                                       ;Mem: add selected text to the bottom of 2.txt
-    +#1::              AddToMemory()                                            ;Mem: add selected text to the bottom of 1.txt
-    #0::                                                                        ;Mem: paste contents of 0.txt
-    #9::                                                                        ;Mem: paste contents of 9.txt
-    #8::                                                                        ;Mem: paste contents of 8.txt
-    #7::                                                                        ;Mem: paste contents of 7.txt
-    #6::                                                                        ;Mem: paste contents of 6.txt
-    #5::                                                                        ;Mem: paste contents of 5.txt
-    #4::                                                                        ;Mem: paste contents of 4.txt
-    #3::                                                                        ;Mem: paste contents of 3.txt
-    #2::                                                                        ;Mem: paste contents of 2.txt
-    #1::                RetrieveMemory()                                        ;Mem: paste contents of 1.txt
+    $+#0::                                                                       ;Mem: add selected text to the bottom of 0.txt
+    $+#9::                                                                       ;Mem: add selected text to the bottom of 9.txt
+    $+#8::                                                                       ;Mem: add selected text to the bottom of 8.txt
+    $+#7::                                                                       ;Mem: add selected text to the bottom of 7.txt
+    $+#6::                                                                       ;Mem: add selected text to the bottom of 6.txt
+    $+#5::                                                                       ;Mem: add selected text to the bottom of 5.txt
+    $+#4::                                                                       ;Mem: add selected text to the bottom of 4.txt
+    $+#3::                                                                       ;Mem: add selected text to the bottom of 3.txt
+    $+#2::                                                                       ;Mem: add selected text to the bottom of 2.txt
+    $+#1::              AddToMemory()                                            ;Mem: add selected text to the bottom of 1.txt
+
+    $#0::                                                                        ;Mem: paste contents of 0.txt
+    $#9::                                                                        ;Mem: paste contents of 9.txt
+    $#8::                                                                        ;Mem: paste contents of 8.txt
+    $#7::                                                                        ;Mem: paste contents of 7.txt
+    $#6::                                                                        ;Mem: paste contents of 6.txt
+    $#5::                                                                        ;Mem: paste contents of 5.txt
+    $#4::                                                                        ;Mem: paste contents of 4.txt
+    $#3::                                                                        ;Mem: paste contents of 3.txt
+    $#2::                                                                        ;Mem: paste contents of 2.txt
+    $#1::                RetrieveMemory()                                        ;Mem: paste contents of 1.txt
     
-    <!space:: RunCmd("V" GC("CommaAlias")), W("a")                              ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
-    >!space:: RunCmd("V" GC("PeriodAlias")), W("a")                             ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
+    $<!space:: RunCmd("V" GC("CommaAlias")), W("a")                              ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
+    $>!space:: RunCmd("V" GC("PeriodAlias")), W("a")                             ;Mem: (V command) selects last word typed and replaces it with \mem_cache .txt file with the corresponding name (e.g., typing "1" + !space => paste 1.txt).                                                                                                                                                  
                                                                                 
   
 ; MANAGE SAVED LINKS ___________________________________________________________
@@ -351,15 +354,15 @@
                                                                                 ;ralt & rshift takes priority over >!
 
     #IF
-    >+esc::                                                                     ;load quickslot
-    >+F8::                                                                      ;load quickslot 
-    >+F7::                                                                      ;load quickslot 
-    >+F6::                                                                      ;load quickslot 
-    >+F5::                                                                      ;load quickslot 
-    >+F4::                                                                      ;load quickslot 
-    >+F3::                                                                      ;load quickslot 
-    >+F2::                                                                      ;load quickslot 
-    >+F1::  LoadModeQuickSlot(">+")                                             ;load quickslot
+    $>+esc::                                                                     ;load quickslot
+    $>+F8::                                                                      ;load quickslot 
+    $>+F7::                                                                      ;load quickslot 
+    $>+F6::                                                                      ;load quickslot 
+    $>+F5::                                                                      ;load quickslot 
+    $>+F4::                                                                      ;load quickslot 
+    $>+F3::                                                                      ;load quickslot 
+    $>+F2::                                                                      ;load quickslot 
+    $>+F1::  LoadModeQuickSlot(">+")                                             ;load quickslot
                                                                                 
         
   ; SAVE LINK -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -449,13 +452,13 @@
 ; SYSTEM CONVENIENCE ___________________________________________________________
   ; SHORTCUTS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
-    +#s::                screenShot()                                           ;Convenience: screenshot
-    >^capslock::         capslock                                               ;Convenience: capslock
-    ^SC027::             Send {blind}{AppsKey}                                  ;Convenience: simulate appkey
-    !SC027::             Sendinput {esc}                                        ;Convenience: simulate esc key (alt + semicolon)
+    $+#s::                screenShot()                                           ;Convenience: screenshot
+    $>^capslock::         capslock                                               ;Convenience: capslock
+    $^SC027::             Send {blind}{AppsKey}                                  ;Convenience: simulate appkey
+    $!SC027::             Sendinput {esc}                                        ;Convenience: simulate esc key (alt + semicolon)
     lwin & pgup::        suspend                                                ;WinGolems: toggle all hotkeys ON|OFF except for this one
     HOME & END::                                                                ;WinGolems: reload WinGolems
-    F8::                                                                        ;WinGolems: reload WinGolems      
+    $F8::                                                                        ;WinGolems: reload WinGolems      
     lwin & pgdn::        reloadWG()                                             ;WinGolems: reload WinGolems
     esc & pgdn::         ExitApp                                                ;WinGolems: quit WinGolems
     printscreen & lwin:: Sendinput ^{esc}                                       ;native windows start button function
@@ -463,30 +466,30 @@
   ; CLIPBOARD -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ;<^#c:: OCRtoClipboard(,"V2")                                                ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
     ;!#c::  OCRtoClipboard(,"UWP")                                               ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
-    >^c::  addtoCB("A")                                                         ; append text to clipboard
-    +!#c:: OCRtoClipboard("A","V2")                                             ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
-    +^#c:: OCRtoClipboard("A","UWP")                                            ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
+    $>^c::  addtoCB("A")                                                         ; append text to clipboard
+    $+!#c:: OCRtoClipboard("A","V2")                                             ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
+    $+^#c:: OCRtoClipboard("A","UWP")                                            ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
     #If GetKeyState("rctrl", "P")
     ralt & c::                                                                  ;prepend text to clipboard
     #If
-    +^c:: addtoCB("P")                                                          ;prepend text to clipboard
+    $+^c:: addtoCB("P")                                                          ;prepend text to clipboard
                                                                                 
                                      
 
   ; WINDOWS SETTINGS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ;#u::                run, ms-settings:screenrotation                        ;WinOS: Display settings
-    *!#b:: BluetoothSettings()                                                  ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
-    *!#d:: DisplaySettings()                                                    ;WinSetting: display settings 
-    *!#n:: NotificationWindow()                                                 ;WinSetting: notification window
-    *!#r:: RunProgWindow()                                                      ;WinSetting: run program
-    *!#p:: PresentationDisplayMode()                                            ;WinSetting: presentation display mode
-    *!#i:: WindowsSettings()                                                    ;WinSetting: windows settings
+    $*!#b:: BluetoothSettings()                                                  ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
+    $*!#d:: DisplaySettings()                                                    ;WinSetting: display settings 
+    $*!#n:: NotificationWindow()                                                 ;WinSetting: notification window
+    $*!#r:: RunProgWindow()                                                      ;WinSetting: run program
+    $*!#p:: PresentationDisplayMode()                                            ;WinSetting: presentation display mode
+    $*!#i:: WindowsSettings()                                                    ;WinSetting: windows settings
                                                                                 
                                      
   
   ; WINDOWS MANAGEMENT -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #If Titletest("Calculator")
-    ^w:: WinClose,A                                                             ;close calculator
+    $^w:: WinClose,A                                                             ;close calculator
                                                                                 
 
     #If IsCmode()
@@ -497,25 +500,25 @@
                                                                                       
     rshift & printscreen:: ActivatePrevInstance(),SI("{printscreen up}{rshift up}") ;WindowMgmt: rotate through app instances from most recent                                     
     printscreen & rshift::                                                      ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
-    #capslock:: ActivateNextInstance(),SI("{lwin up}")                          ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
+    $#capslock:: ActivateNextInstance(),SI("{lwin up}")                          ;WindowMgmt: rotate through app instances from oldest (no thumbnail previews)
     >!SC028::   MaximizeWin(),SI("{ralt up}")                                   ;WindowMgmt: maximize window
     printscreen & SC027::
-    #SC027::    MinimizeWin()                                                   ;Convenience: minimize window
-    #del::      AlwaysOnTop(1)                                                  ;WindowMgmt: Window always on top: ON
-    #ins::      AlwaysOnTop(0)                                                  ;WindowMgmt: Window always on top: OFF
-    <!esc::     WinClose,A                                                      ;WindowMgmt: close active window
-    !#esc::     CloseClass()                                                    ;WindowMgmt: close all instances of the active program
-    ^#sc027::   Send {lwin down}d{lwin up}                                      ;WindowMgmt: show desktop
+    $#SC027::    MinimizeWin()                                                   ;Convenience: minimize window
+    $#del::      AlwaysOnTop(1)                                                  ;WindowMgmt: Window always on top: ON
+    $#ins::      AlwaysOnTop(0)                                                  ;WindowMgmt: Window always on top: OFF
+    $<!esc::     WinClose,A                                                      ;WindowMgmt: close active window
+    $!#esc::     CloseClass()                                                    ;WindowMgmt: close all instances of the active program
+    $^#sc027::   Send {lwin down}d{lwin up}                                      ;WindowMgmt: show desktop
                                                                                 
                                                                                                                                                                 
 
     #If GetKeyState("PrintScreen", "P")
     rctrl & right:: S("{blind}",200),W("rc"),S("^#{right}")                     ;switch virtual desktop
     rctrl & left::  S("{blind}",200),W("rc"),S("^#{left}")                      ;switch virtual desktop
-    left::          Sendinput #{left}                                           ;move window to left half
-    right::         Sendinput #{right}                                          ;move window to right half
-    up::            Sendinput #{up}                                             ;move window to right half
-    down::          Sendinput #{down}                                           ;move window to right half
+    $left::         Sendinput #{left}                                           ;move window to left half
+    $right::        Sendinput #{right}                                          ;move window to right half
+    $up::           Sendinput #{up}                                             ;move window to right half
+    $down::         Sendinput #{down}                                           ;move window to right half
                                                                                 
                                                                                 
     
@@ -547,15 +550,16 @@
   
   ; replacement keys for original modifier key function   
     #IF IsCMODE()
-    ins::  sendinput {ins}                                                      ;replacement for using ins key as a modifier key
-    1::                                                                         ;replacement for using F1  key as a modifier key
-    f1::   SendInput {F1}                                                       ;replacement for using F1 key as a modifier key
-    2::    SendInput {F2}                                                       ;replacement for using F2 key as a modifier key
-    f12::  SendInput {F12}                                                      ;replacement for using F12 key as a modifier key
-    n::                                                                         ;replacement for using PgDn key as a modifier key
-    down:: SendInput {pgdn}                                                     ;replacement for using PgDn key as a modifier key
-    o::                                                                         ;replacement for using PgUp key as a modifier key
-    up::   SendInput {pgup}                                                     ;replacement for using PgUp key as a modifier key
+    $ins::  sendinput {ins}                                                      ;replacement for using ins key as a modifier key
+    $1::                                                                         ;replacement for using F1  key as a modifier key
+    $f1::   SendInput {F1}                                                       ;replacement for using F1 key as a modifier key
+    $r::
+    $2::    SendInput {F2}                                                       ;replacement for using F2 key as a modifier key
+    $f12::  SendInput {F12}                                                      ;replacement for using F12 key as a modifier key
+    $n::                                                                         ;replacement for using PgDn key as a modifier key
+    $down:: SendInput {pgdn}                                                     ;replacement for using PgDn key as a modifier key
+    $o::                                                                         ;replacement for using PgUp key as a modifier key
+    $up::   SendInput {pgup}                                                     ;replacement for using PgUp key as a modifier key
   
   ; modifier key assignment -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF GC("T_MK",1)
@@ -564,8 +568,6 @@
     ESC & F2::                                                                  ;modifier key
     rshift & pgdn::                                                             ;modifier key
     rshift & pgup::                                                             ;modifier key
-    rshift & right::                                                            ;modifier key
-    rshift & left::                                                             ;modifier key
     pgdn & rshift::                                                             ;modifier key
     pgup & pgdn::                                                               ;modifier key
     pgdn & pgup::                                                               ;modifier key
@@ -574,38 +576,42 @@
     pgup & left::                                                               ;modifier key
     pgup & right::                                                              ;modifier key
     pgdn & right::                                                              ;modifier key
-    printscreen::                                                               ;modifier key
-    F1::                                                                        ;modifier key
-    F2::                                                                        ;modifier key
-    F3::                                                                        ;modifier key
-    F4::                                                                        ;modifier key
-    F12::                                                                       ;modifier key
-    pgup::                                                                      ;modifier key
-    pgdn::                                                                      ;modifier key
-    ins::                                                                       ;modifier key
-    end::                                                                       ;modifier key
-    home::           return                                                     ;modifier key
+    $printscreen::                                                              ;modifier key
+    $F1::                                                                       ;modifier key
+    $F2::                                                                       ;modifier key
+    $F3::                                                                       ;modifier key
+    $F4::                                                                       ;modifier key
+    $F12::                                                                      ;modifier key
+    $pgup::                                                                     ;modifier key
+    $pgdn::                                                                     ;modifier key
+    $ins::                                                                      ;modifier key
+    $end::                                                                      ;modifier key
+    $home::         return                                                      ;modifier key
 
 ; TAB NAVIGATION _______________________________________________________________
   
-    #IF !WinActive("ahk_exe " exe["doc"])                                       ;can be toggled on/off by entering Gtc,T_tabNav in a CB              
-    *^b::     SI("^{PgUp}"), SI("{ctrl up}"),W("c")                             ;Navigation: navigate to left tab
-    *^space:: SI("^{PgDn}"), SI("{ctrl up}"),W("c")                             ;Navigation: navigate to right tab
-    
-    #If WinActive("ahk_exe Explorer.EXE")
-    ctrl & b::     SI("^+{tab}") , SI("{ctrl up}"),W("c")                       ;Navigation: navigate to left tab
-    ctrl & space:: SI("^{tab}")  , SI("{ctrl up}"),W("c")                       ;Navigation: navigate to right tab
+    #IF WinActive("ahk_exe Code.exe")                                           
+    $^b::     Sendinput ^{PgUp}                                                  ;Navigation: navigate to left tab
+    $^space:: Sendinput ^{PgDn}                                                  ;Navigation: navigate to right tab
+                                                                                
+    #IF !WinActive("ahk_exe " exe["doc"])                                       
+    $^b::     Sendinput ^+{tab}                                                  ;Navigation: navigate to left tab
+    $^space:: Sendinput ^{tab}                                                   ;Navigation: navigate to right tab
+                                                                                
+    ;#If WinActive("ahk_exe Explorer.EXE") OR WinActive("ahk_exe Obsidian.exe") 
+    ;^b::      Sendinput ^+{tab}                                            ;Navigation: navigate to left tab
+    ;^space::  Sendinput ^{tab}                                             ;Navigation: navigate to right tab
 
 ; WEB SEARCH ___________________________________________________________________
     #IF                                                                         
-    >!SC035::        search("google.com/search?q=")                               ;search: google search selected text
-    +#SC035::        search("autohotkey.com/docs/search.htm?q=",,"&m=2")          ;search: AutoHotkey documentation
-    +>!SC035::       search("google.com/search?tbm=isch&q=")                      ;search: google image search
-    !SC02b::         search("youtube.com/results?search_query=")                  ;search (+capslock): use clipboard contents to search youtubes
+    $>!SC035::        search("google.com/search?q=")                               ;search: google search selected text
+    $+#SC035::        search("autohotkey.com/docs/search.htm?q=",,"&m=2")          ;search: AutoHotkey documentation
+    $+>!SC035::       search("google.com/search?tbm=isch&q=")                      ;search: google image search
+    $!SC02b::         search("youtube.com/results?search_query=")                  ;search (+capslock): use clipboard contents to search youtubes
     #If isCMODE()                                                                 ;(+capslock) search clipboard contents instead of selected text
-    SC035::          search("google.com/search?q=",clipboard)                     ;Convenience: google search selected text
-    SC034::          search("google.com/search?tbm=isch&q=")                      ;search (+capslock): use clipboard contents to search google image
-    SC033::          search("youtube.com/results?search_query=")                  ;search (+capslock): use clipboard contents to search youtubes
+    $SC035::          search("google.com/search?q=",clipboard)                     ;Convenience: google search selected text
+    $SC034::          search("google.com/search?tbm=isch&q=")                      ;search (+capslock): use clipboard contents to search google image
+    $SC033::          search("youtube.com/results?search_query=")                  ;search (+capslock): use clipboard contents to search youtubes
     RSHIFT & SC035:: search("autohotkey.com/docs/search.htm?q=",clipboard,"&m=2") ;Convenience: google search selected text
     LSHIFT & SC035:: search("google.com/search?q=",clipboard)                     ;Convenience: google search selected text
     LSHIFT & SC034:: search("google.com/search?tbm=isch&q=",clipboard)            ;search (+capslock): use clipboard contents to search google image
@@ -615,8 +621,8 @@
                                                                                 
                                                                                 
     #If    
-    #SC035::     
-    >^SC035::     
+    $#SC035::     
+    $>^SC035::     
     ChordSearch(options :="L1 T10", escape := "{esc}{ralt}",PUmenu:="zb\SearchMenu") {
         global reChordMenuPattern, C
         
@@ -653,25 +659,22 @@
         return 
     }
 
-    <!SC033::     
+    ;lalt & SC033::
+    $<!SC033::     
     ChordTextManipulation(options := "L1 M T10", escape := "{esc}{ralt}", PUmenu := "zb\ChordTextMenu") {
         global reChordMenuPattern, C
         
         ;pop up website menu
-        menu := rtrim(AccessCache("zb\ChordTextMenu",,0),"`n")
         menu := rtrim(AccessCache(PUmenu,,0),"`n")
         PU(menu,C.lblue,,,,990000,12,700,"Lucida Sans Typewriter",1)
-        
-        
-
         
         keysPressed :=  KeyWaitHook("L1 M T10",escape)
         input := (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : ""))
         Gui, PopUp: cancel
         Switch % keysPressed
         {
-            Case "v":           PasteWithoutBreaks()                                                ;TEXT MANIPULATION| replace multiple paragraph breaks w/ 1 break in selected text
-            Case "<+v",">+v":   PasteWithoutBreaks(True)                                            ;TEXT MANIPULATION| replace multiple paragraph breaks with space (remove paragraphs breaks)
+            Case "v":           FormatBreaks("1 break")                                             ;TEXT MANIPULATION| replace multiple paragraph breaks w/ 1 break in selected text
+            Case "<+v",">+v":   FormatBreaks("no break")                                            ;TEXT MANIPULATION| replace multiple paragraph breaks with space (remove paragraphs breaks)
             Case "l":           RemoveBlankLines()                                                  ;TEXT MANIPULATION! remove empty lines starting from selected text
             Case "+":           ReplaceAwithB(",", "+")                                             ;TEXT MANIPULATION replace "," with "+" in selected text
             Case ",":           ReplaceAwithB("+", ",")                                             ;C.TM: replace "+" with "," in selected text
@@ -690,6 +693,8 @@
             Case "<+d",">+d":   resetMousPos("d")                                                   ;reset mouse position for #d 
             Case "e":           SI("#{SC034}")                                                      ;emojis
             Case "c":           SI("#F6")                                                           ;color picker
+            Case "o":           OCRtoClipboard(,"V2")                                                           ;color picker
+            Case "<+o",">+o":   OCRtoClipboard(,"UWP")                                                           ;color picker
             Case "w":                                                                               ;set cursor width (1-9)
                                 PU("Enter cursor width (1-9)",C.lyellow,,,,100000)
                                 width :=  KeyWaitHook("L1 M",escape)
@@ -709,4 +714,3 @@
     }
         
 
-/*

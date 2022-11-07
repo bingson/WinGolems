@@ -4,34 +4,34 @@
 ; FILE EXPLORER CONVENIENCE ____________________________________________________
     #If WinActive("ahk_exe Explorer.EXE")               
     
-    #Del::     FileRecycleEmpty                                                 ;FileExplorer: Empty trash
-    !p::       Sendinput ^w                                                     ;FileExplorer: close tab
-    !u::       Send !{up}                                                       ;FileExplorer: up one folder level
-    <!i::      Send !{left}                                                     ;FileExplorer: prev folder
-    <!o::      Send !{right}                                                    ;FileExplorer: forward folder
-    !z::       ToggleNavPane()                                                  ;FileExplorer: toggle navigation plane
-    ^p::       Send {alt down}p{alt up}                                         ;FileExplorer: toggle preview plane
-    !w::       ControlFocus, SysTreeView321, ahk_class CabinetWClass            ;FileExplorer: move focus to navigation pane
-    !e::       ControlFocus, DirectUIHWND2, ahk_class CabinetWClass             ;FileExplorer: move focus to current folder pane
+    $#Del::    FileRecycleEmpty                                                 ;FileExplorer: Empty trash
+    $!p::      Sendinput ^w                                                     ;FileExplorer: close tab
+    $!u::      Send !{up}                                                       ;FileExplorer: up one folder level
+    $<!i::     Send !{left}                                                     ;FileExplorer: prev folder
+    $<!o::     Send !{right}                                                    ;FileExplorer: forward folder
+    $!z::      ToggleNavPane()                                                  ;FileExplorer: toggle navigation plane
+    $^p::      Send {alt down}p{alt up}                                         ;FileExplorer: toggle preview plane
+    $!w::      ControlFocus, SysTreeView321, ahk_class CabinetWClass            ;FileExplorer: move focus to navigation pane
+    $!e::      ControlFocus, DirectUIHWND2, ahk_class CabinetWClass             ;FileExplorer: move focus to current folder pane
     $<!r::     Send {F2}                                                        ;FileExplorer: rename file
-    >!SC027::  DetailedView()                                                   ;FileExplorer| detailed file info with resized columnsnmn
-    !s::       SelectByRegEx()                                                  ;FileExplorer| select all files matching regex pattern
-    !del::     Send ^d                                                          ;FileExplorer: delete file
-    ^y::       Groupby("date created")                                          ;FileExplorer: group by date created
-    ^b::       Sendinput ^+{tab}                                                ;Navigation: navigate to left tab
-    ^space::   Sendinput ^{tab}                                                 ;Navigation: navigate to right tab
-    !SC034::   Send !p                                                          ;preview pane 
-    >!p up::   Send ^w                                                          ;close file explorer tab
-    !j::       Send {down}                                                      ;Navigation| Up 
-    !k::       Send {up}                                                        ;Navigation| Down  
+    $>!SC027:: DetailedView()                                                   ;FileExplorer| detailed file info with resized columnsnmn
+    $!s::      SelectByRegEx()                                                  ;FileExplorer| select all files matching regex pattern
+    $!del::    Send ^d                                                          ;FileExplorer: delete file
+    $^y::      Groupby("date created")                                          ;FileExplorer: group by date created
+    $^b::      Sendinput ^+{tab}                                                ;Navigation: navigate to left tab
+    $^space::  Sendinput ^{tab}                                                 ;Navigation: navigate to right tab
+    $!SC034::  Send !p                                                          ;preview pane 
+    $>!p up::  Send ^w                                                          ;close file explorer tab
+    $!j::      Send {down}                                                      ;Navigation| Up 
+    $!k::      Send {up}                                                        ;Navigation| Down  
     ralt & j:: send {down}                                                      ;Navigation| Up
     ralt & k:: send {up}                                                        ;Navigation| Down
-    ^f::       Send !d{tab}                                                     ;search
-    ^+j::      GroupBy("name")                                                  ;FileExplorer: group by name|remove grouping toggle
-    ^+k::      GroupBy("date modified")                                         ;FileExplorer: group by date modified type
-    ^+l::      GroupBy("file type")                                             ;FileExplorer: group by file type
-    ^+h::      GroupBy("size")                                                  ;FileExplorer: group by size type
-    ^+SC027::  GroupBy("none")                                                  ;FileExplorer: group by none type
+    $^f::      Send !d{tab}                                                     ;search
+    $^+j::     GroupBy("name")                                                  ;FileExplorer: group by name|remove grouping toggle
+    $^+k::     GroupBy("date modified")                                         ;FileExplorer: group by date modified type
+    $^+l::     GroupBy("file type")                                             ;FileExplorer: group by file type
+    $^+h::     GroupBy("size")                                                  ;FileExplorer: group by size type
+    $^+SC027:: GroupBy("none")                                                  ;FileExplorer: group by none type
                                                                                 
     #If WinActive("ahk_exe Explorer.EXE") && GetKeyState("shift", "P")
     ralt & c:: clipboard := Explorer_GetSelection()                             ;FileExplorer| store file path(s) of selected file(s) in clipboard
@@ -66,14 +66,14 @@
 
   SetTitleMatchMode, 2
   #If WinActive("ahk_group FileListers") and GC("T_FM",0) 
-  !u::       Send {blind}!{up}                                                  ;FileExplorer: up one folder level 
-  <!i::      Send {blind}!{left}                                                ;FileExplorer: prev folder         
-  <!o::      Send {blind}!{right}                                               ;FileExplorer: forward folder      
-  !d::       Send {blind}!d                                                     ;FileExplorer: select path bar     
-  >+u::      CF(UProfile)                                                       ;ChangeFolder: %UserProfile%
-  >+o::      CF(A_ProgramFiles)                                                 ;ChangeFolder: C:\Program Files
-  >+>!o::    CF(PF_x86)                                                         ;ChangeFolder: C:\Program Files(x86)
-  >+p::      CF(UProfile "\Pictures")                                           ;ChangeFolder: Pictures
+  $!u::      Send {blind}!{up}                                                  ;FileExplorer: up one folder level 
+  $<!i::     Send {blind}!{left}                                                ;FileExplorer: prev folder         
+  $<!o::     Send {blind}!{right}                                               ;FileExplorer: forward folder      
+  $!d::      Send {blind}!d                                                     ;FileExplorer: select path bar     
+  $>+u::     CF(UProfile)                                                       ;ChangeFolder: %UserProfile%
+  $>+o::     CF(A_ProgramFiles)                                                 ;ChangeFolder: C:\Program Files
+  $>+>!o::   CF(PF_x86)                                                         ;ChangeFolder: C:\Program Files(x86)
+  $>+p::     CF(UProfile "\Pictures")                                           ;ChangeFolder: Pictures
   PgUp & j:: CF(UProfile "\Downloads")                                          ;ChangeFolder: Downloads
   PgUp & d:: CF(UProfile "\Documents")                                          ;ChangeFolder: My Documents
   PgUp & c:: CF(hdrive)                                                         ;ChangeFolder: %Homedrive% (C:)
@@ -83,7 +83,7 @@
                                                                                 
 ; CHORD COMMAND ________________________________________________________________
     #If WinActive("ahk_exe Explorer.EXE")
-    >!SC033::     
+    $>!SC033::     
     ChordFileExplorer(options := "L1 M T10", escape := "{esc}{ralt}",PUmenu:="zb\ChordFileMenu") {
         global reChordMenuPattern, C
         

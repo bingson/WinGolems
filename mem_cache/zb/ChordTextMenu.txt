@@ -14,4 +14,4 @@ N  add space between case change         w  set cursor width
 a  Sort text ascending (descending: A)   i  save #i position (reset: I)
 s  duplicate current line                d  save #d position (reset: D)    
 
-
+o  ocr V2                                O  ocr UWP

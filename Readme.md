@@ -150,7 +150,8 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 <br>
 
 <details><summary>&nbsp;📕&nbsp;<b> Recommended reading </b></summary><p>
-1.  [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2)
+
+1. [Hotkeys & Hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s2)
     * [Keys and their mysterious symbols](https://www.autohotkey.com/docs/Tutorial.htm#s21)
     * [Window specific hotkeys/hotstrings](https://www.autohotkey.com/docs/Tutorial.htm#s22)
     * [Multiple hotkeys/hotstrings per file](https://www.autohotkey.com/docs/Tutorial.htm#s23)

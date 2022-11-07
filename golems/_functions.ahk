@@ -12,7 +12,7 @@
            , "Blue"         : "0000FF" , "Lpurple"      : "CDC9D9"
            , "BurntUmber"   : "330000" , "Lsalmon"      : "ffc8b3"
            , "Buttercream"  : "EFE1CE" , "Lyellow"      : "FCE28A"
-           , "EYellow"      : "FDFCA3" 
+           , "EYellow"      : "FDFCA3" , "pdf"          : "ffcccb"
            , "Bwhite"       : "F6F7F1" , "Midnightblue" : "000033"
            , "Chrome"       : "E8F1D4" , "MintCream"    : "F5FFFA"
            , "Cornsilk"     : "FFF8DC" , "Navy"         : "000080"
@@ -1148,10 +1148,9 @@
 
     LoadModeQuickSlot(prefix="ralt & ") {
         WinID := WinExist("A")
-        slot := StrReplace(A_thishotkey, prefix)
+        slot := trim(StrReplace(A_thishotkey, prefix),"$")
         switchMode(GC(slot "_mode","1"))
         ActivateWin("ahk_id " WinID)
-        
     }
 
     SubmitLinkCommand(CBcloseAfter=0) {
@@ -1587,7 +1586,7 @@
         slot := slot ? slot : substr(A_ThisHotkey, 0)
         input := input ? input : clip()
         input := clip()
-        input := del_breaks ? PasteWithoutBreaks(del_breaks,input) : input
+        input := del_breaks ? FormatBreaks("no break",input) : input
         var := del_blank_lines ? RemoveBlankLines(0,var) : var
         input := del_leading_spaces ? RegExReplace(input, " [ `t]+", " ") : input
         new_text_to_add := Input
@@ -2390,6 +2389,12 @@
             return %LctrlMODE% = true
         }
     */
+  ; Debugging
+
+    Log(input,logFile="1",pop=1) {
+        writetocache(logFile,,,input,1,pop) ; log(GetURL("Ahk_exe chrome.exe"))    
+        return
+    } ; append variable value to a file
 
 ; FILE AND FOLDER ______________________________________________________________
 
@@ -2989,16 +2994,16 @@
         send {enter}
     }
 
-    URLvidDL(path="",altD=1,CB=0) {
+    URLvidDL(path="",source = "altD") {
         global short, med
         sleep, med
         keywait()
         ; BlockInput, on
         settimer, BlockInputTimeOut,-1000
         ; If WinActive("ahk_group browsers")
-        if altD
+        if (source = "altD")
             Send !d
-        url := CB ? Clipboard : clip()
+        url := (source = "CB") ? Clipboard : clip()
         sleep med
         if (SubStr(url, 1,4) = "http") {
             ; code := "youtube-dl " """" url """" 
@@ -3010,54 +3015,53 @@
             clip(code)
             Send {enter}
             sleep short
-            WinMinimize,A
+            ;WinMinimize,A
         } else 
             PU("invalid url: " clipboard,,,,,-1000)
         ; BlockInput, Off
         return
     }
 
-    ClickVidDL(path=""){
+    ClickVidDL(path="",ListNum=0){
 
         global short, med, CB_hwnd
         sleep, med
         keywait()
-        BlockInput, on
-        settimer, BlockInputTimeOut,-1500
+        ;BlockInput, on
+        ;settimer, BlockInputTimeOut,-1500
         Click, Right
         sleep, med * 2
         winget, Pname, ProcessName, A 
         app := WinExist("ahk_id " CB_hwnd) ? GC("CB_tgtExe") : Pname
         switch app {
-            case "msedge.exe" : Send % "{down " GC("click_DL", 4) "}{enter}"
+            case "msedge.exe" : Sendinput % "{down " GC("click_DL", 4) "}{enter}"
             case "chrome.exe" : Send e
             case "vivaldi.exe": Send e
             default: Send e
         }
         sleep med 
-        if !InStr(FileExist(path), "D") {
+        if !InStr(FileExist(path), "D") and !ListNum {
             msg := "WinGolems can't find the folder`n`n" . dir . "`n`nWould you like to create it?"
             MsgBox,4100,Create Hotstring,%msg% 
             IfMsgBox Yes
                 FileCreateDir, %path%
             return
-        }
-        if (SubStr(clipboard, 1,4) = "http") {
-            ; code := "youtube-dl --no-check-certificate " """" clipboard """" 
+        } 
+        if (SubStr(clipboard, 1,4) = "http") && !ListNum {
             code := "yt-dlp --no-check-certificate " """" clipboard """" 
-            ; code := "youtube-dl " """" clipboard """" 
             switch := RegExMatch(path,"^[A-Z]+") ? "cd /d " : "pushd "
-            Run cmd /K %switch%%path% 
+            Run, cmd /K %switch%%path% 
             sleep med * 2
             clip(code)
             Send {enter}
             sleep short
             WinMinimize,A
+        } else if (SubStr(clipboard, 1,4) = "http") && ListNum {
+            Log("`n" clipboard,ListNum,1)
         } else 
             PU("invalid url: " clipboard,,,,,-800)
         BlockInput, Off
         return
-
     }
 
     ClickDL(path=""){
@@ -3074,7 +3078,7 @@
 
         if (SubStr(clipboard, 1,4) = "http") {
             code := "youtube-dl " """" clipboard """" 
-            Run cmd /K "cd /d " %path% 
+            Run, cmd /K "cd /d " %path% 
             sleep med * 2
             clip(code)
         } else 
@@ -3666,18 +3670,20 @@
 
     ObsidianQuickAdd(file_anchor, action = "menu") {
         global short, med, long
-        sleep, short
-        selected_text := trim(clip(),"`r`n")
-        sleep, med
-        f_path := A_ScriptDir . "\mem_cache\qa.txt"
+        ; sleep, short
+        ;selected_text := trim(clip(),"`r`n")
+        ;f_path := A_ScriptDir . "\mem_cache\qa.txt"
+        ;sleep, short
         ObsidianPath := GC("obsidian_path",UProfile "\AppData\Local\Obsidian\Obsidian.exe") 
 
         switch action 
         {
             case "menu":
-                If (strlen(selected_text) > 0) {
-                    var := clip()
-                } 
+                ; If (strlen(selected_text) > 0) {
+                ;     var := clip()
+                ; } 
+                var := clipboard 
+                
 
                 sleep, short
                 If WinActive("ahk_group browsers") {
@@ -3685,7 +3691,7 @@
                     winget, Pname, ProcessName, A
                     URL_string := GetURL("Ahk_exe " Pname)
                     sleep, short
-                    domain := RegexReplace(URL_string, "`am)^(https?:\/\/)?([A-Za-z0-9\.]+)(\/\S.*)?", "$2")
+                    domain := RegexReplace(URL_string, "`am)^(https?:\/\/)?([A-Za-z0-9\-\.]+)(\/\S.*)?", "$2")
                     sleep, short
                     URL_string := !regexmatch(URL_string,"^https?:\/\/") ? "https://" . URL_string : URL_string       
                     sleep, short
@@ -3698,7 +3704,10 @@
                     AA(ObsidianPath)
                     MsgBox,4100, Opening Obsidian, Has Obsidian finished opening?
                     IfMsgBox Yes
-                    sleep, 0
+                    {
+                        AA(ObsidianPath)
+                    } else
+                        return
                 }
                 sleep, med
                 Sendinput %file_anchor%
@@ -3795,12 +3804,12 @@
     FormatAHKcodeBlock(CspaceLen = 80) {
         var := clip()
         whitespace := "( +)?"
-        hot_key :=    "(?P<Hotkey>[+#!A-Za-z0-9<>?&`\%\- \(\);\*$\\\/:\|\._\?=,\^''""``~]+::)"        
-        Command :=   "(?P<Command>[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^''""``\S]+)?"
-        Comment :=  "(?P<Comment>;[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^''""``;\S]*)$" 
+        hot_key :=    "(?P<Hotkey>[+#!A-Za-z0-9<>?&`\%\- \[\]\(\);\*$\\\/:\|\._\?=,\^''""``~]+::)"        
+        Command :=   "(?P<Command>[+#!A-Za-z0-9<>?&`\%\- \[\]\(\)\{\}\\\/:\|\._\?=,\^''""``\S]+)?"
+        Comment :=  "(?P<Comment>;[+#!A-Za-z0-9<>?&`\%\- \[\]\(\)\{\}\\\/:\|\._\?=,\^''""``;\S]*)$" 
         
         hotkeyPattern = ^%whitespace%%hot_key%%whitespace%%Command%%Comment%
-        altPattern := "^( *)?(?P<expression>[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\*$\\\/:\|\._\?=,\^''""``~]+)( *)?(?P<comment>;[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^""\S]+)?"
+        altPattern := "^( *)?(?P<expression>[+#!A-Za-z0-9<>?&`\%\- \[\]\(\)\{\}\*$\\\/:\|\._\?=,\^''""``~]+)( *)?(?P<comment>;[+#!A-Za-z0-9<>?&`\%\- \(\)\{\}\\\/:\|\._\?=,\^""\S]+)?"
 
         maxHotkeyLen = 0
         maxCommandLen = 0
@@ -4381,16 +4390,33 @@
             clipboard := var
             Send ^v ;    for stitching words back together if split by
         } 
-        /*
-        ; var := RegExReplace(var, "^(`r`n)+")
-        ; var := RegExReplace(var, "(`r`n){2,}", "`r`n")
-        ; var := RegExReplace(var, "(`r`n)+$")
-        var := RegExReplace(var, "m)(*ANYCRLF)")
-        ; var := RegExReplace(var, "m)^`t+")
-        ; var := RegExReplace(var, "`t{2,}", "`t")
-        ; var := RegExReplace(var, "m)`t+$")
-        ; sleep, long * 0.8
-        */
+        return % var
+    }
+
+    FormatBreaks(mode = "no break", input = "") {
+        ; Format clipboard contents: remove double spaces and line breaks
+        ; while keeping the empty lines between paragraphs
+        global long
+        var := (input) ? input : Clipboard
+        Switch mode 
+        {
+            case "no break":                                                    ; replace each line break with single space
+                var := RegExReplace(var, "\R", A_space)                         
+                var := RegExReplace(var, "(?<!<)-\s", "$1")                     ; <= remove "-" if not preceded by < ("<-")
+                                                                                
+            case "1 break": 
+                var := RegExReplace(RegExReplace(var, "m)^\h+$"), "\n\v+", "`n`n")
+            default:
+                sleep, 0
+        }
+        var := RegExReplace(var, "S) +", A_Space)                               ; replace multiple spaces with single space
+        
+                                                                                
+        if !input {
+            sleep, long * 0.8
+            clipboard := var
+            Send ^v ;    for stitching words back together if split by
+        } 
         return % var
     }
 
