@@ -653,7 +653,7 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
  Lwin & Space                  CB| Open CB
  Alt+R                         CB| reenter last command
  Alt+B                         CB| toggle Command Box display|minimalist mode
- Rightalt+Sc027                close `Command Box`
+ Rightalt+Sc027                close Command Box
  Capslock & A                  clipboard contents
  Capslock & S                  contents of number file & 1 char length text file names
  Capslock & D                  contents of number file & 1 char length text file names
@@ -792,7 +792,7 @@ With the CB users can
 
 ``` 
 _________________________________________________________________________________________________________________________________________
-| `Command Box` (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND    |
+| Command Box (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND    |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     lwin & space:: CB("~win")                       | tut    AHK Beginner Tutorial                        |  d   Display               |
@@ -898,7 +898,7 @@ ________________________________________________________________________________
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
 |  H   Run a different Command Box key suffix  H:~FE, Hb           Assign "~FE" to H, Hb equivalent to executing b~FE in CB(~any_suffix) |
 |                                                                  N,Q are additional free letters for suffix associations               |
-|  T   `Command Box` UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent (CB always open)      |
+|  T   Command Box UI options; also see CB     Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent (CB always open)      |
 |      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)target window stays active, (t)itlebar, (s)crollbar, (w)Text Wrap  |
 |________________________________________________________________________________________________________________________________________|
 ```
