@@ -1627,7 +1627,7 @@
             return
         }
         ; BlockInput, Off
-        W("lw")
+        SendInput {Lwin up}
         return
     } ; retrieves text to single digit memory file
 

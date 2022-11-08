@@ -13,5 +13,5 @@ b  imdb
 o  stackoverflow        p  stackexchange
 h  math.stackexchange   
 
-   + lshift: send clipboard contents
-   + rshift: send selected text
++ lshift: use clipboard contents in search
++ rshift: use selected text in search

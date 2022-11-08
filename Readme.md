@@ -8,16 +8,19 @@ Before investing any time into learning AHK, prospective users can try out the t
 
 <p align="center"><img src="assets\Screens\QuickStartHotkeys.png" width = "800">  </p>
 
-<br> 
+<br> <p>
 
-Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box (CB), a keyboard-driven GUI that can execute any script or manipulate any windows application through user-defined functions.
+Beyond adding new keyboard shortcuts, WinGolems also gives users access to the Command Box and Command Chord graphical user interface.
 
-| DISPLAY MODE | MINIMALIST MODE |
+* <b>Command Box:</b> a keyboard-driven GUI that can execute any script or manipulate any windows application through user-defined functions. 
+
+* <b>Command Chord:</b> a keyboard-driven pop up menu to access a different layer of shortcuts to execute sporadically used functions. 
+
+
+| COMMAND BOX | COMMAND CHORD |
 | :-: | :-: |
-| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\minimal.png" width="500"> |
-<p align="center">
-Press ALT + X to switch between modes
-</p>
+| <img src="assets\Screens\Display.png" width="500"> | <img src="assets\Screens\searchChords.png" width="500"> |
+
 
 <br>
 
@@ -143,7 +146,7 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 
 To help ease new users into the different interface layers, only the `Quick Start Template` and Command Box interface layers will be active on first run. Additional templates are placed in the `golems` folder. These sample templates can be added as additional interface layers or be used as a reference for modifying the Quick Start Template.
 
-To see a list of keyboard shortcuts in the `Quick Start Template` open a CommandBox with `win + spacebar` and type `L$` followed by `enter`. 
+To see a list of keyboard shortcuts in the `Quick Start Template` open a `Command Box` with `win + spacebar` and type `L$` followed by `enter`. 
 
 Note: When text is selected, opening a CB and submitting `Qa` will query and load the corresponding webpage in the [AHK documentation](https://www.autohotkey.com/docs/AutoHotkey.htm). A search string can also be manually entered into the CB with the colon operator: e.g., `Qa:blind`, `Qa:sendinput`, etc. 
 
@@ -200,7 +203,7 @@ Note: When text is selected, opening a CB and submitting `Qa` will query and loa
 #Include %A_ScriptDir%\golems\             
 #Include _functions.ahk                    ; system files 
 #Include _system.ahk                       ; modify with caution
-#Include _CB.ahk                           ; command box
+#Include _CB.ahk                           ; Command Box
 
                                            ; TUTORIAL TEMPLATES
 #Include *i Quick_Start.ahk                ; base template
@@ -244,7 +247,7 @@ WinGolems
   |
   ├──golems 
   |   ├── _functions.ahk            ; function library
-  |   ├── _CB.ahk                   ; command box interface)
+  |   ├── _CB.ahk                   ; Command Box interface)
   |   ├── _system.ahk               ; system related CB keys)
   |   ├── A_Quick_Start.ahk         ┐                                                              
   |   ├── B_Text_Manipulation.ahk   ├─ tutorial template files
@@ -252,7 +255,7 @@ WinGolems
   |   └── D_App_Examples.ahk        ┘                                            
   |
   ├──lib                            ; function library
-  |   ├── CommandBox.ahk            ; command box GUI code
+  |   ├── CommandBox.ahk            ; Command Box GUI code
   |   ├── ProcessCommand.ahk        ; example command processing module 
   |   └── large WinGolems functions 
   |       and third party functions
@@ -315,7 +318,7 @@ Note: that the base ~win label suffix will be checked if no valid `GoSub` label 
 
 ### II. &nbsp; Sample Keyboard Shortcuts <a name="ks"></a>
 
-Below is a snap shot (as of 30 Sept 2021) of WinGolems keyboard shortcuts and command box features. As the tutorial templates are a component of my own Windows setup, changes are constantly being made. Once WinGolems is installed, enter `L$$` in a command box to generate an updated list of hotkeys.
+Below is a snap shot (as of 30 Sept 2021) of WinGolems keyboard shortcuts and `Command Box` features. As the tutorial templates are a component of my own Windows setup, changes are constantly being made. Once WinGolems is installed, enter `L$$` in a Command Box to generate an updated list of hotkeys.
 
 Note: under WinGolems, the `win` key functions as a modifier key and will not bring up the start menu when pressed. The start menu can be accessed with `ctrl + esc` or `win + left click`.
 
@@ -600,11 +603,11 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
  Lalt & Sc034                  1st lines of alias folder files
  Ctrl+Del                      always on top
  Ctrl+End                      app active after CB submission
- Lwin & Space                  CB.. opens command box that runs ~win suffix CB keys
- Printscreen & Space           CB.. opens command box that runs ~win suffix CB keys
+ Lwin & Space                  CB.. opens Command Box that runs ~win suffix CB keys
+ Printscreen & Space           CB.. opens Command Box that runs ~win suffix CB keys
  Win+Enter                     CB.. selects word at text cursor position and run as CB "~win" key
- Esc                           CB: close command box
- Lalt & Sc027                  CB: close command box
+ Esc                           CB: close Command Box
+ Lalt & Sc027                  CB: close Command Box
  Shift+Ctrl+K Up               CB: Font size decrease
  Shift+Ctrl+J Up               CB: Font size increase
  Alt+N                         CB: highlight next match of text in the CB display window with text entered in the input box
@@ -650,7 +653,7 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
  Lwin & Space                  CB| Open CB
  Alt+R                         CB| reenter last command
  Alt+B                         CB| toggle Command Box display|minimalist mode
- Rightalt+Sc027                close CommandBox
+ Rightalt+Sc027                close `Command Box`
  Capslock & A                  clipboard contents
  Capslock & S                  contents of number file & 1 char length text file names
  Capslock & D                  contents of number file & 1 char length text file names
@@ -721,7 +724,7 @@ To toggle all hotkeys off and on: `esc + delete` (only hotkey active in off mode
  Ctrl+Space                    Shortcut for executing mode/link commands, close CB after
  Ctrl+Insert                   text wrap
  Lbutton                       update CB suffix
- Leftctrl+C                    update clipboard contents if command box display
+ Leftctrl+C                    update clipboard contents if Command Box display
 ```
 
 </p></details>
@@ -790,7 +793,7 @@ With the CB users can
 
 ``` 
 _________________________________________________________________________________________________________________________________________
-| CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND       |
+| `Command Box` (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND    |
 |-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     lwin & space:: CB("~win")                       | tut    AHK Beginner Tutorial                        |  d   Display               |
@@ -803,7 +806,7 @@ ________________________________________________________________________________
 |                                                     | r~     Reload WinGolems                             |  r   Open Run Dialog Box   |
 | CB Keyboard Shortcuts:   ( win: #  alt: !  ctrl: ^ )| q~     Quit WinGolems                               |  x   Start Context Menu    |
 |-----------------------------------------------------|                                                     |  s   Start Menu            |
-| #Space      open command box                        | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   System tray           |
+| #Space      open Command Box                        | KEY    UI OPTIONS: [T]oggle ON|Off                  |  t   System tray           |
 | <!Space     submit key (left alt: <! right alt: >!) | ------ -------------------------------------------- |  tm  Sask manager          |
 | >!Space     capitalize 1st letter and submit key    | tcf    [T] mouse cursor follows active window       |  h~  Hibernate computer    |
 | ^Space      move to CB input box from another app   | lt|lf  Turn ON|OFF:  Win + L Locks Computer         |  ce~ Close All Programs    |
@@ -845,7 +848,7 @@ ________________________________________________________________________________
 |      Overwrite/create file from other file   Ohelp 2             Overwrite: 2.txt w/ help.txt  (1st file = source, 2nd file = target ) |
 |      Overwrite/create file entered text      O3:test             overwrites contents of 3.txt with the string "test"                   |
 |      overwrite using clipboard = ">"         O3>, O>3            3.txt overwrites clipboard, clipboard overwrites/create 3.txt         |   
-|                                              O>                  overwrites clipboard with current loaded txt file in command box      |
+|                                              O>                  overwrites clipboard with current loaded txt file in Command Box      |
 |  E   Edit file in default editor             E1, Er\test, E      edit => 1.txt, r\test.txt (r\ subfolder file path), displayed file    |
 |      Trim leading spaces                     E~t                                                                                       |
 |      remove duplicate lines                  E~rd                                                                                      |
@@ -894,9 +897,9 @@ ________________________________________________________________________________
 | GUI BEHAVIOR & APPEARANCE FUNCTIONS                                                                                                    |
 | KEY  DESCRIPTION                             USAGE EXAMPLES                                                                            |
 |----- --------------------------------------- ------------------- ----------------------------------------------------------------------|
-|  H   Run a different command box key suffix  H:~FE, Hb           Assign "~FE" to H, Hb equivalent to executing b~FE in CB(~any_suffix) |
+|  H   Run a different Command Box key suffix  H:~FE, Hb           Assign "~FE" to H, Hb equivalent to executing b~FE in CB(~any_suffix) |
 |                                                                  N,Q are additional free letters for suffix associations               |
-|  T   CommandBox UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent (CB always open)      |
+|  T   `Command Box` UI options; also see CB      Td, Tm, Tp          (d)isplay mode, (m)inimalist mode, (p)ersistent (CB always open)      |
 |      keyboard shortcuts with "LK"            Ta, Tt, Ts, Tw      (a)target window stays active, (t)itlebar, (s)crollbar, (w)Text Wrap  |
 |________________________________________________________________________________________________________________________________________|
 ```

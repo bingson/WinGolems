@@ -1,6 +1,6 @@
 ﻿ _________________________________________________________________________________________________________________________________________
 | CommandBox (CB) CREATION:                           | KEY    WinGolems COMMAND ([T]oggle, [M]ode change ) | KEY  WINDOWS COMMAND       |
-|-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|j
+|-----------------------------------------------------|------- ---------------------------------------------|----- ----------------------|
 | 1) Create a "win + spacebar" shortcut to open a CB  | ?      load this help cheat sheet                   |  b   Bluetooth             |
 |     #space:: CB("~win")                             | tut    AHK Beginner Tutorial                        |  d   Display               |
 |                                                     | om     open memory .txt folder in file explorer     |  n   Notifications         |
