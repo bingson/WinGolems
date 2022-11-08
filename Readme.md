@@ -14,7 +14,7 @@ Beyond adding new keyboard shortcuts, WinGolems also gives users access to the C
 
 * <b>Command Box:</b> a keyboard-driven GUI that can execute any script or manipulate any windows application through user-defined functions. 
 
-* <b>Command Chord:</b> a keyboard-driven pop up menu to access a different layer of shortcuts to execute sporadically used functions. 
+* <b>Command Chord:</b> a keyboard-driven pop up menu to access a layer of single key press shortcuts. 
 
 
 | COMMAND BOX | COMMAND CHORD |
@@ -751,7 +751,6 @@ An ampersand (&) between two keys or mouse buttons combines them to create a cus
 ### III. &nbsp; Command Box </b><a name="cb"></a>
 The Command Box (CB) is a GUI that can execute any script. Where applicable, the CB operates on the last active application window (target application.exe).
 
-<p align="center"><img src="assets\Screens\CB_header.png" width="600"></p>
 
 <b>The Command Box (CB) was conceived to alleviate the following problems:</b>
 
