@@ -183,7 +183,9 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
 
             Case "L":                                                           ; display file in command box
                 Load:        
-                tgt := tgt ? tgt : f_path dir NameNoExt
+                
+                tgt := Trim(tgt ? tgt : f_path dir NameNoExt)
+
                 if !GC("CB_Display") {
                     CC("CB_Display", 1), CC("CB_Titlebar", 1), CC("CB_ScrollBars", 0)
                     MI := StrSplit(GetMonInfo()," ")                            ; get monitor dimensions

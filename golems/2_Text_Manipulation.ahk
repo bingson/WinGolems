@@ -234,3 +234,57 @@
 
     
 #IF 
+
+$<!SC033::     
+ChordTextManipulation(options := "L1 M T10", escape := "{esc}{ralt}", PUmenu := "zb\ChordTextMenu", noLRshift := 1) {
+    global C
+    
+    menu := rtrim(AccessCache(PUmenu,,0),"`n")
+    PU(menu,C.lblue,,,,990000,12,700,"Lucida Sans Typewriter",1)
+    keysPressed :=  KeyWaitHook("L1 M T10",escape)
+    input := !noLRshift ? (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : "")) : ""
+    keysPressed := noLRshift ? trim(keysPressed, "<>") : keysPressed ;removes left and right shift distinction
+    Gui, PopUp: cancel
+
+    Switch % keysPressed
+    {
+        Case "v" :  FormatBreaks("1 break")                                             ;TEXT MANIPULATION| replace multiple paragraph breaks w/ 1 break in selected text
+        Case "+v":  FormatBreaks("no break")                                            ;TEXT MANIPULATION| replace multiple paragraph breaks with space (remove paragraphs breaks)
+        Case "l" :  RemoveBlankLines()                                                  ;TEXT MANIPULATION! remove empty lines starting from selected text
+        Case "+" :  ReplaceAwithB(",", "+")                                             ;TEXT MANIPULATION replace "," with "+" in selected text
+        Case "," :  ReplaceAwithB("+", ",")                                             ;C.TM: replace "+" with "," in selected text
+        Case "-" :  clip(CS(clip(), {"_":" ","-":" "}))                                 ;C.TM: replace "_" with " " in selected text
+        Case "a" :  SortSelectedText()                                                  ;TEXT MANIPULATION Sort Selected Text
+        Case "+a":  SortSelectedText("R")                                               ;TEXT MANIPULATION Sort Selected Text
+        Case "s" :  ReplaceAwithB()                                                     ;TEXT MANIPULATION replaces multiple consecutive spaces with character length 1 space
+        Case "+s":  ReplaceAwithB(" ")                                                  ;TEXT MANIPULATION! remove all spaces from selected text
+        Case "2" :  SelectLine(), txt := clip(), SI("{right}{enter}"), clip(txt)        ;TEXT MANIPULATION: duplicate current line
+        Case "m" :  ReplaceAwithB("_"," "),Capitalize1stLetter(,,0),,ReplaceAwithB(" ") ;CamelCase
+        Case "n" :  AddSpaceBtnCaseChange(), ReplaceAwithB(" ","_")                     ;snake_case
+        Case "+n":  AddSpaceBtnCaseChange()                                             ;add space between case change
+        Case "i" :  SaveMousPos("i",1)                                                  ;save mouse position for #i
+        Case "+i":  resetMousPos("i")                                                   ;reset mouse position for #i
+        Case "d" :  SaveMousPos("d",1)                                                  ;save mouse position for #d
+        Case "+d":  resetMousPos("d")                                                   ;reset mouse position for #d
+        Case "e" :  SI("#{SC034}")                                                      ;emojis
+        Case "c" :  SI("#F6")                                                           ;color picker
+        Case "o" :  OCRtoClipboard(,"V2")                                               ;color picker
+        Case "+o":  OCRtoClipboard(,"UWP")                                              ;color picker
+        Case "w" :                                                                      ;set cursor width (1-9)
+                                                                            
+                    PU("Enter cursor width (1-9)",C.lyellow,,,,100000)
+                    width :=  KeyWaitHook("L1 M",escape)
+                    Gui, PopUp: cancel
+                    if width ~= "[0-9]"
+                        SetCursorWidth(width), PU("cursor width: " width)
+                    Else
+                        PU("Must be a number input", C.pink)                                              
+                                                        
+
+        Case "+?": OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
+        default:
+            ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
+            sleep,0
+    }
+    return 
+}

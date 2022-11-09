@@ -144,7 +144,7 @@ To fix/change WinGolems application associations, go to the WinGolems folder and
 
 ### I. Instructions <a name="instructions"></a>
 
-To help ease new users into the different interface layers, only the `Quick Start Template` and Command Box interface layers will be active on first run. Additional templates are placed in the `golems` folder. These sample templates can be added as additional interface layers or be used as a reference for modifying the Quick Start Template.
+To help ease new users into the different interface layers, only the `Quick Start Template` and Command Box interface layers will be active on first run. Additional templates are placed in the `golems` folder: 1_Apps_Misc.ahk, 2_Text_Manipulation.ahk, 3_File_Management.ahk. These sample templates can be run together as an alternative to the `Quick Start Template` or be used as a reference for modifying the `Quick Start Template`.
 
 To see a list of keyboard shortcuts in the `Quick Start Template` open a `Command Box` with `win + spacebar` and type `L$` followed by `enter`. 
 
