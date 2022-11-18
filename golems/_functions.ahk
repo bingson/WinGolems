@@ -154,15 +154,16 @@
 
         if (winactive("ahk_id " CB_hwnd)) {
             ; Gui, 2: +LastFound
+            rows := 25
             if (GC("CB_last_display","list") = "list") {
                 switch Q
                 {
                     case "TS", "BS": CC("rowMax",6)
-                    case "TL", "TR", "BL", "BR", "T", "B": CC("rowMax",15)
-                    case "L" ,"R", "LS", "RS", "RL": CC("rowMax",33)
+                    case "TL", "TR", "BL", "BR", "T", "B": rows := GC("rowMaxHalf",25)
+                    case "L" ,"R", "LS", "RS", "RL": rows := GC("rowMaxFull",50)
                     default: CC("rowMax",15)
                 }
-                UpdateGUI(CreateCacheList(,GC("rowMax")),"list")
+                UpdateGUI(CreateCacheList(,rows),"list")
             }
 
             ;CommandBox(GC("CB_sfx"),GC("CB_clr"))
@@ -179,7 +180,12 @@
 
     MaximizeWin(){
         global CB_hwnd
-        ; ReleaseModifiers()
+
+        if (GC("CB_last_display","list") = "list") AND WinActive("ahk_id " CB_hwnd) {
+            UpdateGUI(CreateCacheList(,GC("rowMaxFull",50)),"list")
+            ; update number of rows displayed in file listing 
+        }
+
         WinMaximize,A 
 
     } 
@@ -1634,7 +1640,37 @@
 ; AHK/INI UTILITIES ____________________________________________________________
   ; stuck modifier key reset -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
-       
+    StuckModKeyIndicator()
+    {
+        Global check_key 
+        key_list := ["RSHIFT","LSHIFT","LWIN","LALT","RALT","RCTRL","LCTRL"
+                    ,"ESCAPE","F1","F2","HOME","END","INSERT","PRINTSCREEN", "CAPSLOCK"]
+
+        loop % key_list.MaxIndex()
+        {
+            state := (GetKeyState(key_list[A_Index]) OR GetKeyState(key_list[A_Index],"P")) ? 1 : 0
+            if state
+            {
+                width := strlen(key_list[A_Index]) * 10, y_coord := A_ScreenHeight - 20, x_coord := A_ScreenWidth - strlen(key_list[A_Index]) * 10, check_key := key_list[A_Index]
+                SplashImage,,b x%x_coord% y%y_coord% H20 W%width% ZY0 ZX0 fs9 ct1C3DB8 cwFFFFE0, % key_list[A_Index], , ,Arial
+                SetTimer, CheckIfKeyUp, 600
+            }
+        }
+    } 
+
+    CheckIfKeyUp()
+    {
+        Global check_key
+        state := GetKeyState(check_key)
+        if !state
+        {
+            SplashImage, Off
+            SetTimer, CheckIfKeyUp, Off
+        }
+
+    }
+
+
     resetModifiers(supressPopUp=1) {
         if !supressPopUp
             PU("modifier keys reset")
@@ -2802,6 +2838,8 @@
     ActivateApp(app_path = "", arguments = "", optn = False, start_folder_toggle = False) {
         ; wrapper for ActivateOrOpen to process ini file path references
         ; and arguments
+        ; sleep, 100
+        keywait, lwin
         global config_path, short, med, long
         if InStr(app_path , "_path") ; "_path" string match indicates a config.ini path reference                                         
         {
@@ -3710,7 +3748,8 @@
                         return
                 }
                 sleep, med
-                Sendinput %file_anchor%
+                Send %file_anchor%
+                ; Sendinput %file_anchor%
                 sleep, med
                 Input, UserInput, V, {enter}{esc} 
                 if (ErrorLevel = "Timeout")
@@ -5021,5 +5060,6 @@
         GuiControl Font, %hwnd%
         return true
     }
+
 
 #IF

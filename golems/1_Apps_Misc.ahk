@@ -455,22 +455,24 @@
     $^SC027::            Send {blind}{AppsKey}                                  ;Convenience: simulate appkey
     $!SC027::            Sendinput {esc}                                        ;Convenience: simulate esc key (alt + semicolon)
     lwin & pgup::        suspend                                                ;WinGolems: toggle all hotkeys ON|OFF except for this one
-    HOME & END::                                                                ;WinGolems: reload WinGolems
+    HOME & END::     
+    $F4::                                                           ;WinGolems: reload WinGolems
     $F8::                                                                       ;WinGolems: reload WinGolems      
     lwin & pgdn::        reloadWG()                                             ;WinGolems: reload WinGolems
     esc & pgdn::         ExitApp                                                ;WinGolems: quit WinGolems
     printscreen & lwin:: Sendinput ^{esc}                                       ;native windows start button function
 
   ; CLIPBOARD -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    $>^c::     addtoCB("A")                                                     ; append text to clipboard
-    $+!#c::    OCRtoClipboard("A","V2")                                         ;OCR image text and put resultant string in clipboard (click and drag rectangle area)
-    $+^#c::    OCRtoClipboard("A","UWP")                                        ;OCR image text and append resultant string to the clipboard (click and drag rectangle area)
+    $^#c::     Sendinput +#t                                                    ;OCR image text to clipboard (click and drag rectangle area)
+    $>^c::     addtoCB("A")                                                     ;append text to clipboard
+    $+!#c::    OCRtoClipboard("A","V2")                                         ;Append OCR image text to clipboard (click and drag rectangle area)
+    $+^#c::    OCRtoClipboard("A","UWP")                                        ;Apeend OCR image text to clipboard (click and drag rectangle area)
     #If GetKeyState("rctrl", "P")                                               
     ralt & c::                                                                  ;prepend text to clipboard
     #If                                                                         
     $+^c::     addtoCB("P")                                                     ;prepend text to clipboard
 
-  ; WINDOWS SETTINGS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  ; OS SETTINGS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     ;#u::                run, ms-settings:screenrotation                        ;WinOS: Display settings
     $*!#b:: BluetoothSettings()                                                 ;WinSetting: bluetooth settings (reassign less used windows sys shortcuts)
     $*!#d:: DisplaySettings()                                                   ;WinSetting: display settings 
@@ -565,7 +567,6 @@
     $F1::                                                                       ;modifier key
     $F2::                                                                       ;modifier key
     $F3::                                                                       ;modifier key
-    $F4::                                                                       ;modifier key
     $F12::                                                                      ;modifier key
     $pgup::                                                                     ;modifier key
     $pgdn::                                                                     ;modifier key
@@ -611,7 +612,8 @@ ChordSearch(options :="L1 T10", escape := "{esc}{ralt}",PUmenu:="zb\SearchMenu",
     
     
     menu := rtrim(AccessCache(PUmenu,,0),"`n")
-    PU(menu,C.Eyellow,,,,10000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
+    PU(menu,C.Eyellow,,,,10000,13,,"Lucida Sans Typewriter",1)     
+             ;pop up website menu
                                                                             
     keysPressed :=  KeyWaitHook(options,escape)
     input := !noLRshift ? (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : "")) : ""

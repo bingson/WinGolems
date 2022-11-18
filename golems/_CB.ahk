@@ -105,28 +105,33 @@
     +!R::    SubmitIB("F")                                                      ; prepend "F" to current contents of input box and submit
     ^u::     GotoLink(,,clip()),closeCB()                                       ; prepend "H" to current contents of input box and submit
                                                                                 
-; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-    ^0::                                                                        ; display corresponding mem file
-    ^9::                                                                        ; display corresponding mem file
-    ^8::                                                                        ; display corresponding mem file
-    ^7::                                                                        ; display corresponding mem file
-    ^6::                                                                        ; display corresponding mem file
-    ^5::                                                                        ; display corresponding mem file
-    ^4::                                                                        ; display corresponding mem file
-    ^3::                                                                        ; display corresponding mem file
-    ^2::                                                                        ; display corresponding mem file
-    ^1:: ProcessCommand(substr(A_ThisHotkey,0)), ActivateWin("ahk_id " CB_hwnd) ; display corresponding mem file
-                                                                                
-    ctrl & sc029:: ProcessCommand("L#",GC("CB_sfx"),GC("CB_clr"))               ; number file overview
-    ^SC035::       ProcessCommand("?",GC("CB_sfx"),GC("CB_clr"))                ; help
-                                                                                
   ; persistent, Appactive Ontop, Wrap -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
     ^home::    ProcessCommand("Tp",GC("CB_sfx"),GC("CB_clr"))                   ;persistent
     ^del::     ProcessCommand("Tot",GC("CB_sfx"),GC("CB_clr"))                  ;always on top
     ^end::     ProcessCommand("Ta",GC("CB_sfx"),GC("CB_clr"))                   ;app active after CB submission
+    ^t::                                                                        ;text wrap
     ^insert::  ProcessCommand("Tw",GC("CB_sfx"),GC("CB_clr"))                   ;text wrap
     alt & F4:: Gui, 2: destroy                                                  ;destroy CB GUI
+
+; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    
+   #IF WinActive("ahk_id " CB_hwnd) AND IsCMODE() 
+    0::                                                                        ; display corresponding mem file
+    9::                                                                        ; display corresponding mem file
+    8::                                                                        ; display corresponding mem file
+    7::                                                                        ; display corresponding mem file
+    6::                                                                        ; display corresponding mem file
+    5::                                                                        ; display corresponding mem file
+    4::                                                                        ; display corresponding mem file
+    3::                                                                        ; display corresponding mem file
+    2::                                                                        ; display corresponding mem file
+    1:: ProcessCommand(substr(A_ThisHotkey,0)), ActivateWin("ahk_id " CB_hwnd) ; display corresponding mem file
+    
+    #IF WinActive("ahk_id " CB_hwnd)                                                                                
+    ctrl & sc029:: ProcessCommand("L#",GC("CB_sfx"),GC("CB_clr"))               ; number file overview
+    ^SC035::       ProcessCommand("?",GC("CB_sfx"),GC("CB_clr"))                ; help
+                                                                                
                                                                                 
 
 ; ACTIVE IF USERINPUT BOX HAS FOCUS ____________________________________________
@@ -205,7 +210,44 @@
     ^f::                                                                        ;CB| activate already open Command Box and move focus to input box
     >^j:: ChgFocus("IB"),SI("^a")                                               ;CB| activate already open Command Box and move focus to input box
                                                                                 
-                                                                                
-    
   
-#IF                                                                             ; end context dependent assignments
+
+#IF WinActive("ahk_id " CB_hwnd) 
+
+$>!SC033::           
+ChordCommandBox(options :="L1 T10", escape := "{esc}{ralt}",PUmenu:="zb\CBMenu", noLRshift := 1) {
+    global C
+    
+    
+    menu := rtrim(AccessCache(PUmenu,,0),"`n")
+    PU(menu,C.lgrey,,,,990000,12,700,"Lucida Sans Typewriter",1)       ;pop up website menu
+                                                                            
+    keysPressed :=  KeyWaitHook(options,escape)
+    input := !noLRshift ? (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : "")) : ""
+    keysPressed := noLRshift ? trim(keysPressed, "<>") : keysPressed    ;removes left and right shift distinction
+
+    Gui, PopUp: cancel
+    Switch % keysPressed
+    {
+        Case "r":   ChangeConfig("rowMaxFull")
+        Case "+r":  ChangeConfig("rowMaxHalf")
+        Case "+?":  OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")       ;edit chord command menu
+        default:
+            sleep,0
+            ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
+    }
+    return 
+}
+
+
+ChangeConfig(setting := "rowMaxFull", digits := 2) {
+    PU("Enter full height row max",C.pink,,,,100000)
+    rInput :=  KeyWaitHook("L" digits "M",escape)
+    Gui, PopUp: cancel
+    if rInput ~= "[0-9]"
+        CC(setting, rInput), PU(rInput,C.lgreen)    
+    Else
+        PU("Must be a number input", C.pink)   
+}
+#IF
+;rowMaxHalf

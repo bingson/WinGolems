@@ -62,6 +62,10 @@
     
     ConfigureWinGolems(config_path, apps *)
 
+  ; STARTUP SCRIPTS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    CBstartup()                                                                 ; preserve command box suffix between WinGolems reloads
+    Settimer, StuckModKeyIndicator, 600                                         ; show stuck modifier indicator in lower right corner (comment out to turn off)
+
 ; LOAD AHK SCRIPTS (GOLEMS) ____________________________________________________ 
 
 #Include %A_ScriptDir%\golems\
