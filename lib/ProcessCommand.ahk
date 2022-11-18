@@ -197,7 +197,7 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                     CC("CB_last_display", NameNoExt)
                     txt := CreateCacheList(,GC("rowMax",26))
                     tgt := f_path dir NameNoExt
-                    text_wrap_state := GC("CB_Wrap")jjj
+                    text_wrap_state := GC("CB_Wrap")
                     CC("CB_Wrap",0)
                     UpdateGUI(txt, NameNoExt)
                     CC("CB_Wrap",text_wrap_state)

@@ -1,0 +1,13 @@
+
+:  toggle menu bars
+;  hotkeys config           1|2  save hotkey menu tab|field position
+c  comment/styles palette    
+
+x  left index click           X  save mouse position left index
+o  right index click          O  save mouse position right index
+                              `  save mouse position BM
+
+s  save session               S  save session to file
+l  load/manage sessions       L  open session from file
+
+

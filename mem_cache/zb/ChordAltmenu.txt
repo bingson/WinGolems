@@ -1,0 +1,12 @@
+﻿a  playlist a           A  watch later      l  library             
+
+s  SR youtube           S  sr folder                          
+u  Udemy website SQL    U  SQL folder
+
+j  GC jobs              J job folder                 
+m  mem_cache            
+d  DS folder            
+
+p|P  Jupyter: GD|DS  (python)       i    install R pkg
+r|R  Jupyter: GD|DS  (R) 
+e    Conda base environment    
