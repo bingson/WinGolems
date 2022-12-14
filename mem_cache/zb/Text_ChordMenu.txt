@@ -1,0 +1,16 @@
+﻿Selection
++    ,    -->   +               s|S  remove all spaces | 1 space delimiters
+,    +    -->   ,               v|V  multi blank lines to 1 | space
+-    _-   -->   space           l    del empty lines
+                                                                              
+a|A  Sort asc|desc              i|I  save|reset i position
+q    duplicate                  d|D  save|reset d position
+                                R    toggle return cursor after i|d click
+                                                                              
+o|O  ocr V2  | and append       p|P  ocr UWP | and append
+m    CamelCase                  e    emojis :)
+M    CamelCase to Camel Case    w    set cursor width
+n    snake_case                 c    color picker
+
+
+

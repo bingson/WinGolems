@@ -1,0 +1,8 @@
+﻿1   Apply Heading 1      a   toggle add space before paragraph   
+2   Apply Heading 2      0   .SpaceBefore = 0 .SpaceAfter = 0
+3   Apply Heading 3      w   resize pictures
+4   Apply Heading 4      W   resize pictures shorter
+5   Apply Heading 5
+
+v   open VBA editor
+s   save as

@@ -1,0 +1,2 @@
+r  set rows for full screen height command box       R  set rows for half height command box
+m  set row max

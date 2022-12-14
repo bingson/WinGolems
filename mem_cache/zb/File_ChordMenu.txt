@@ -1,0 +1,19 @@
+﻿j|J  sort|group by name            ;    group by none
+k|K  sort|group by date modified   p    file/folder path to clipboard
+l|L  sort|group by type            i    toggle hide/unhide invisible files  
+h|H  sort|group by size           
+d|D  sort|group by date created 
+
+e|E  expand groups   | set expand/collapse click coordinate 
+c|C  collapse groups | set expand/collapse click coordinate 
+
+n    create new tab group  o    merge tabs from all windows ^F8
+l    create new library    b    show/hide extra view bottom ^F1
+'    Qttabplus settings    v    show/hide extra view left ^F2
+/    shortcut finder       r    rename current folder +F2
+
+t    copy to tab           T    move to tab 
+y    copy from tab         Y    move from tab 
+
+
+

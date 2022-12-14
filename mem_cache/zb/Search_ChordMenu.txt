@@ -1,0 +1,21 @@
+﻿             SEARCH MENU
+
+g  google               i  google images
+m  google maps          l  google translate 
+y  youtube              v  bing videos
+                       
+d  dictionary           t  thesaurus
+f  finance.yahoo        w  wikipedia
+
+r  reddit               b  imdb                 
+s  twitter
+
+
+e  aliexpress      
+a  amazon.ca
+
+o  stackoverflow        p  stackexchange
+h  math.stackexchange   
+
++ lshift: use clipboard contents in search
++ rshift: use selected text in search

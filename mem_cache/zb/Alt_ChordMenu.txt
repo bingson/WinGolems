@@ -1,0 +1,17 @@
+﻿k  Playground 
+v  lookmovie2     t  troddit         
+f  ahk forums     m  cache folder  
+......................................................
+
+j  GC jobs        J  job folder                 
+s  SR youtube     S  sr folder                          
+u  Udemy          U  SQL folder
+                  C  DS_cheatsheets folder
+......................................................
+
+p|P    JL: GD|DS python   i|<+I  install R pkg|w/ clipboard contents
+r|R    JL: GD|DS R        d  DS folder
+e      Conda base environment    
+......................................................
+
+a|A|l  playlist a | watch later | library

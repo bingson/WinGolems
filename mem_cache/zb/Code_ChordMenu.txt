@@ -1,0 +1,7 @@
+﻿VSCODE
+
+m  msgbox/var debug          v  var debug
+g  execute quick commit      t  trim trailing whitespace
+c  open settings json        y  toggle debug console
+
+s  clear then add bookmark 

@@ -1,0 +1,16 @@
+﻿
+,    outline
+t|T  tags  | outgoing links
+g|G  local | global graph                            
+y    insert template
+
+s|S  Extract selection to new note | use first line as file name
+   
+c|C  copy as html | remove html tags
+i    center image
+
+r    create task        R    show reminders
+m    move file          f    obsidian forum
+;    config             :    css folder
+
+k    create external file link
