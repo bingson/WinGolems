@@ -46,7 +46,7 @@
     ; works on full file paths for all MS office files (xls, doc, ppt, etc.)
     ; functions below are valid anywhere in windows if "T_FM" variable in config.ini = 1
     
-    #IF GC("T_FM",0) 
+    #IF GC("T_FM",1) 
                                                                                 ; GC = (G)et (C)onfig.ini("var_name", "value returned if none found") 
     PgUp & esc:: OP("golems\1_Apps_Misc.ahk")                                   ;OpenPath: A_Quick_Start.ahk 
     PgUp & F1::  OP("golems\2_Text_Manipulation.ahk")                           ;OpenPath: B_Text_Manipulation.ahk 
@@ -84,48 +84,43 @@
 ; CHORD COMMAND ________________________________________________________________
 #If WinActive("ahk_exe Explorer.EXE")
 $>!SC033::     
-ChordFileExplorer(options := "L1 M T10", escape := "{esc}{ralt}",PUmenu:="zb\ChordFileMenu",noLRshift := 1) {
-    global C
+Explorer_ChordCommand(PUmenu:="zb\File_ChordMenu.txt", Source:="3_File_Management.ahk", color:="Eyellow", noLRshift:=1
+                    , font:="Lucida Sans Typewriter", input_Opt:="L1 M T30", escape:="{esc}{ralt}") {
     
-    ;pop up website menu
-    menu := rtrim(AccessCache(PUmenu,,0),"`n")
-    PU(menu,C.Eyellow,,,,90000,13,,"Lucida Sans Typewriter",1)              ;pop up website menu
-    
-    keysPressed :=  KeyWaitHook("L1 M T10",escape)
-    input := !noLRshift ? (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : "")) : ""
-    keysPressed := noLRshift ? trim(keysPressed, "<>") : keysPressed        ;removes left and right shift distinction
-    Gui, PopUp: cancel
-    Switch % keysPressed
+    Switch % CallUI(PUmenu,color,noLRshift,font,input_Opt,escape,input)
     {
-        Case "j":         SortBy("name")                                    ;FileExplorer: sort by name
-        Case "k":         SortBy("date modified")                           ;FileExplorer: sort by date modified
-        Case "c":         SortBy("date created")                            ;FileExplorer: sort by date created
-        Case "l":         SortBy("file type")                               ;FileExplorer: sort by type
-        Case "h":         SortBy("size")                                    ;FileExplorer: sort by size
-        Case "+j":        GroupBy("name")                                   ;FileExplorer: group by name|remove grouping toggle
-        Case "+k":        GroupBy("date modified")                          ;FileExplorer: group by date modified
-        Case "+c":        GroupBy("date created")                           ;FileExplorer: group by date created
-        Case "+l":        GroupBy("file type")                              ;FileExplorer: group by file type
-        Case "+h":        GroupBy("size")                                   ;FileExplorer: group by size
-        Case ";":         GroupBy("none")                                   ;FileExplorer: group by none
-        Case "i":         ToggleInvisible()                                 ;FileExplorer: toggle hide/unhide invisible files            
-        Case "p":         clipboard := Explorer_GetSelection()              ;FileExplorer: clipboard := file/folder path 
-                                                                            
-        Case "o": Sendinput ^{F8}                                           ; merge tabs from all windows
-        Case "b": Sendinput ^{F1}                                           ; show/hide extra view bottom  
-        Case "v": Sendinput ^{F2}                                           ; show/hide extra view left
-        Case "r": Sendinput +{F2}                                           ; rename current folder
-        Case "t": Sendinput +^e                                             ; copy to tab 
-        Case "T": Sendinput +^d                                             ; move to tab
-        Case "y": Sendinput +^u                                             ; copy from tab
-        Case "Y": Sendinput +^j                                             ; move from tab
-        Case "g": Sendinput +^g                                             ; create new group   
-        Case "l": Sendinput +^l                                             ; create new library
-        Case "'": Sendinput !o                                              ; Qttabplus settings
-        Case "/": Sendinput +^p                                             ; shortcut finder
-                                                                            
-        
-        Case ">+?":       OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
+        Case "j":         SortBy("name")                                        ;FileExplorer: sort by name
+        Case "k":         SortBy("date modified")                               ;FileExplorer: sort by date modified
+        Case "d":         SortBy("date created")                                ;FileExplorer: sort by date created
+        Case "l":         SortBy("file type")                                   ;FileExplorer: sort by type
+        Case "h":         SortBy("size")                                        ;FileExplorer: sort by size
+        Case "+j":        GroupBy("name")                                       ;FileExplorer: group by name|remove grouping toggle
+        Case "+k":        GroupBy("date modified")                              ;FileExplorer: group by date modified
+        Case "+d":        GroupBy("date created")                               ;FileExplorer: group by date created
+        Case "+l":        GroupBy("file type")                                  ;FileExplorer: group by file type
+        Case "+h":        GroupBy("size")                                       ;FileExplorer: group by size
+        Case ";":         GroupBy("none")                                       ;FileExplorer: group by none
+        Case "i":         ToggleInvisible()                                     ;FileExplorer: toggle hide/unhide invisible files            
+        Case "p":         clipboard := Explorer_GetSelection()                  ;FileExplorer: clipboard := file/folder path 
+                                                                                
+        Case "e":         ExpandCollapseAllGroups("expand")                     ;FE groups: group folding: Collapse all
+        Case "c":         ExpandCollapseAllGroups("collapse")                   ;FE groups: group folding: Collapse all
+        Case "+e","+c":   SaveMousPos("FE_cg", "0")                             ;FE groups: save position of expand/collapse groups (right click menu)
+                                                                                
+        Case "o":         Sendinput ^{F8}                                       ; merge tabs from all windows
+        Case "b":         Sendinput ^{F1}                                       ; show/hide extra view bottom  
+        Case "v":         Sendinput ^{F2}                                       ; show/hide extra view left
+        Case "r":         Sendinput +{F2}                                       ; rename current folder
+        Case "t":         Sendinput +^e                                         ; copy to tab 
+        Case "T":         Sendinput +^d                                         ; move to tab
+        Case "y":         Sendinput +^u                                         ; copy from tab
+        Case "Y":         Sendinput +^j                                         ; move from tab
+        Case "n":         Sendinput +^g                                         ; create new group   
+        Case "l":         Sendinput +^l                                         ; create new library
+        Case "'":         Sendinput !o                                          ; Qttabplus settings
+        Case "/":         Sendinput +^p                                         ; shortcut finder
+        Case "+?":        EditChord(PUmenu, Source, A_LineNumber)
+
         default:
             ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
             sleep,0

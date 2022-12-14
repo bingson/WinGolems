@@ -32,7 +32,7 @@
     !n::           Send !n                                                      ;CB: highlight next match of text in the CB display window with text entered in the input box
     +^g::                                                                       ;CB: highlight previous match of text in the CB display window with text entered in the input box
     +!n::          Send !p                                                      ;CB: highlight previous match of text in the CB display window with text entered in the input box
-    ~^!space::     UpdateGUIRowHeight()                                         ; maximize CB Window
+    >!SC028::      UpdateGUIRowHeight(),MaximizeWin()                           ; maximize CB Window
     
   ; gui/move size -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     <!q::                 MoveWin("TL")                                         ;CB: move CB window to top left
@@ -114,7 +114,7 @@
     ^insert::  ProcessCommand("Tw",GC("CB_sfx"),GC("CB_clr"))                   ;text wrap
     alt & F4:: Gui, 2: destroy                                                  ;destroy CB GUI
 
-; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  ; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     
    #IF WinActive("ahk_id " CB_hwnd) AND IsCMODE() 
     0::                                                                        ; display corresponding mem file
@@ -148,8 +148,8 @@
     *k::       SendToCBdisplay("{up 3}",1)                                      ;Navigation: extend selection Left  5 character (display retains focus)
                                                                                 
     #IF (GetGUIFocus() == "UserInput") AND GetKeyState("lctrl", "P")            
-    lalt & J:: SendToCBdisplay("^{end}")                                        ;Navigation: ctrl + home
-    lalt & K:: SendToCBdisplay("^{home}")                                       ;Navigation: ctrl + end
+    lalt & J:: SendToCBdisplay("^{end}",1)                                        ;Navigation: ctrl + home
+    lalt & K:: SendToCBdisplay("^{home}",1)                                       ;Navigation: ctrl + end
                                                                                 
 ; ACTIVE IF COMMAND BOX INSTANCE EXISTS ________________________________________
   ; CB paste, update CB display -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -158,7 +158,7 @@
     ~lbutton:: UpdateCBsfx()                                                    ; update CB suffix 
     ~<^c::     updateClipboardCBDisplay()                                       ;update clipboard contents if command box display
                                                                                 
-; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  ; display file -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
     #IF WinExist("ahk_id " CB_hwnd) && IsCmode()
     tab & SC034:: ProcessCommand("L|." ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files
@@ -166,6 +166,7 @@
     tab & SC027:: ProcessCommand("L|;" ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files  
     tab & SC01A:: ProcessCommand("L|[" ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files 
     tab & SC01b:: ProcessCommand("L|]" ,GC("CB_sfx"),GC("CB_clr"))              ; 1st lines of alias folder files 
+    tab & s::     ProcessCommand("L|" ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of root mem_cache folder files 
     SC034::       ProcessCommand("L." ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
     SC033::       ProcessCommand("L," ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
     SC027::       ProcessCommand("L;" ,GC("CB_sfx"),GC("CB_clr"))               ; 1st lines of alias folder files
@@ -174,9 +175,10 @@
     c::           ProcessCommand("Lza\sck" ,GC("CB_sfx"),GC("CB_clr"))   
 
     #IF WinExist("ahk_id " CB_hwnd) && IsCmode()
-    d:: ProcessCommand("L",GC("CB_sfx"),GC("CB_clr"))                           ; contents of number file & 1 char length text file names  
+    d:: ProcessCommand("L",GC("CB_sfx"),GC("CB_clr"))                           ; contents of mem_cache root directory
     s:: ProcessCommand("L@",GC("CB_sfx"),GC("CB_clr"))                          ; contents of number file & 1 char length text file names  
     a:: UpdateGUI(clipboard,"Clipboard Contents")                               ; clipboard contents
+    q:: ProcessCommand("L~",GC("CB_sfx"),GC("CB_clr"))                          ; config.ini contents
 
     #IF WinExist("ahk_id " CB_hwnd)
     <^>^0::                                                                     ; display corresponding mem file
@@ -207,7 +209,7 @@
     
   ; activate hotkeys -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     >^k:: ChgFocus("DB"),CursorJump()                                           ;CB| activate already open Command Box and move focus to display box
-    ^f::                                                                        ;CB| activate already open Command Box and move focus to input box
+    >^f::                                                                       ;CB| activate already open Command Box and move focus to input box
     >^j:: ChgFocus("IB"),SI("^a")                                               ;CB| activate already open Command Box and move focus to input box
                                                                                 
   
@@ -215,30 +217,22 @@
 #IF WinActive("ahk_id " CB_hwnd) 
 
 $>!SC033::           
-ChordCommandBox(options :="L1 T10", escape := "{esc}{ralt}",PUmenu:="zb\CBMenu", noLRshift := 1) {
-    global C
-    
-    
-    menu := rtrim(AccessCache(PUmenu,,0),"`n")
-    PU(menu,C.lgrey,,,,990000,12,700,"Lucida Sans Typewriter",1)       ;pop up website menu
-                                                                            
-    keysPressed :=  KeyWaitHook(options,escape)
-    input := !noLRshift ? (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : "")) : ""
-    keysPressed := noLRshift ? trim(keysPressed, "<>") : keysPressed    ;removes left and right shift distinction
+; ChordCommandBox(options :="L1 M T30", escape := "{esc}{ralt}",PUmenu:="zb\CBMenu", noLRshift := 1) {
+CB_ChordCommand(PUmenu:="zb\CB_ChordMenu.txt", Source:="1_Apps_Misc.ahk", color:="OldWhite", noLRshift:=1
+              , font:="Lucida Sans Typewriter", input_Opt:="L1 M T30", escape:="{esc}{ralt}"){
 
-    Gui, PopUp: cancel
-    Switch % keysPressed
+    Switch % CallUI(PUmenu,color,noLRshift,font,input_Opt,escape,input)
     {
         Case "r":   ChangeConfig("rowMaxFull")
         Case "+r":  ChangeConfig("rowMaxHalf")
-        Case "+?":  OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")       ;edit chord command menu
+        Case "m":   ChangeConfig("rowMax")
+        Case "+?":  EditChord(PUmenu, Source, A_LineNumber)
         default:
             sleep,0
             ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
     }
     return 
 }
-
 
 ChangeConfig(setting := "rowMaxFull", digits := 2) {
     PU("Enter full height row max",C.pink,,,,100000)

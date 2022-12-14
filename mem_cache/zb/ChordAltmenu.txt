@@ -1,12 +1,14 @@
-﻿a  playlist a           A  watch later      l  library             
+﻿a  playlist a    A  watch later      l  library             
+v  lookmovie2   
+t  troddit          
 
-s  SR youtube           S  sr folder                          
-u  Udemy website SQL    U  SQL folder
+            
+j    GC jobs                 J  job folder                 
+s    SR youtube              S  sr folder                          
+u    Udemy                   U  SQL folder
 
-j  GC jobs              J job folder                 
-m  mem_cache            
-d  DS folder            
-
-p|P  Jupyter: GD|DS  (python)       i    install R pkg
-r|R  Jupyter: GD|DS  (R) 
+p|P  Jupyter: GD|DS python   i  install R pkg
+r|R  Jupyter: GD|DS R        d  DS folder
 e    Conda base environment    
+
+f    ahk forums              m  mem_cache

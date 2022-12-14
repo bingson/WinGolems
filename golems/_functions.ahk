@@ -339,8 +339,6 @@
         WinGet, p_name, ProcessName , ahk_class %ActiveClass%
         WinGet, n_instances, List, ahk_class %ActiveClass%
         SetStoreCapsLockMode, Off
-        ; BlockInput, MouseMove
-        settimer, BlockInputTimeOut,-600
         if (n_instances > 1) {
             WinActivateBottom, ahk_class %ActiveClass% ahk_exe %p_name%,,Tabs Outliner,
         } 
@@ -1636,6 +1634,54 @@
         SendInput {Lwin up}
         return
     } ; retrieves text to single digit memory file
+; CHORDS _______________________________________________________________________
+    
+    CallUI(PUmenu,color,noLRshift,font,input_Opt,escape, byref input){
+        Global C
+        menu := rtrim(AccessCache(PUmenu,,0),"`n")
+        if (SubStr(color, 0) = "_") || (SubStr(color, 1,1) = "_") {  ;if first or last characters are "_"
+            textColor := C["White"]
+            color := trim(color,"_")
+        } else {
+            textColor := C["black"]
+        }
+        PU(menu,C[color],textColor,,,990000,12,700,font,1)
+        keysPressed := KeyWaitHook(input_Opt,escape)
+        input := !noLRshift ? (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : "")) : ""
+        keysPressed := noLRshift ? trim(keysPressed, "<>") : keysPressed ;removes left and right shift distinction
+        Gui, PopUp: cancel
+        return keysPressed
+    }
+
+    EditChord(PUmenu, Source, lineNum) {
+        global UProfile
+        OP(A_ScriptDir "\mem_cache\" PUmenu)                                ;edit chord command menu
+        sleep, 200 
+        file := InStr(source,"\Google Drive\") 
+              ? UProfile source
+              : A_ScriptDir "\golems\" Source   
+
+        OP(file)                                   ;edit Chord commands
+        sleep, 200
+
+        MsgBox,4100, Edit Chords, go to chord code?
+        IfMsgBox Yes 
+        {
+            sleep,300
+            If !TitleTest(source) 
+            {
+                AA("editor_path")
+                Send ^e
+                clip(source)
+                Send {enter}
+            }
+            gotoLine(lineNum)
+        }
+        Else    
+            sleep 0
+        
+    } ; opens chord menu and function files for editing
+
 
 ; AHK/INI UTILITIES ____________________________________________________________
   ; stuck modifier key reset -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -1643,7 +1689,7 @@
     StuckModKeyIndicator()
     {
         Global check_key 
-        key_list := ["RSHIFT","LSHIFT","LWIN","LALT","RALT","RCTRL","LCTRL"
+        key_list := ["RSHIFT","LSHIFT","LWIN","LALT","RALT","RCTRL","LCTRL", "PGUP", "PGDN"
                     ,"ESCAPE","F1","F2","HOME","END","INSERT","PRINTSCREEN", "CAPSLOCK"]
 
         loop % key_list.MaxIndex()
@@ -1651,7 +1697,7 @@
             state := (GetKeyState(key_list[A_Index]) OR GetKeyState(key_list[A_Index],"P")) ? 1 : 0
             if state
             {
-                width := strlen(key_list[A_Index]) * 10, y_coord := A_ScreenHeight - 20, x_coord := A_ScreenWidth - strlen(key_list[A_Index]) * 10, check_key := key_list[A_Index]
+                width := strlen(key_list[A_Index]) * 14, y_coord := A_ScreenHeight - 20, x_coord := A_ScreenWidth - strlen(key_list[A_Index]) * 14, check_key := key_list[A_Index]
                 SplashImage,,b x%x_coord% y%y_coord% H20 W%width% ZY0 ZX0 fs9 ct1C3DB8 cwFFFFE0, % key_list[A_Index], , ,Arial
                 SetTimer, CheckIfKeyUp, 600
             }
@@ -1841,7 +1887,7 @@
 
         global config_path, C
         msg := msg ? msg : (sect . ":") 
-        IniRead, state, %config_path%, %A_ComputerName%, %sect%, 0
+        IniRead, state, %config_path%, %A_ComputerName%, %sect%, 0   ; retrieves 0 if no value found
         IniWrite, % !state, %config_path%, %A_ComputerName%, %sect%
 
         if msg 
@@ -1884,7 +1930,7 @@
         return
     } 
 
-    PU(msg, w_color = "F6F7F1", ctn = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi", alignL = 0) {
+    PU(msg, w_color = "F6F7F1", t_color = "000000", wn = "400", hn = "75", drtn = "-600", fsz = "16", fwt = "610", fnt = "Gaduigi", alignL = 0) {
         WinID := WinExist("A")
         WinGetPos, winX, winY, winWidth, winHeight, A
         ; WinGetTitle, Title, A
@@ -1900,7 +1946,7 @@
         Gui, -Caption ; To remove the border and title bar from a window with a transparent background, use the following after the window has been made transparent:
         Gui, font ,s%fsz% W%fwt%, %fnt%
         center := alignL ? "" : "center"
-        Gui, PopUp: Add, Text, c%ctn% xm ym-1 %Center%, %msg%
+        Gui, PopUp: Add, Text, c%t_color% xm ym-1 %Center%, %msg%
         Gui, PopUp: Color, %w_color%
         GetGUIWinCoords(GUI_X, GUI_Y) ; get coordinates for positioning PopUp in center of screen
         GUI_Y := GUI_Y + (GUI_Y*0.85) ; move y coordinate to bottom half of screen
@@ -2427,10 +2473,10 @@
     */
   ; Debugging
 
-    Log(input,logFile="1",pop=1) {
-        writetocache(logFile,,,input,1,pop) ; log(GetURL("Ahk_exe chrome.exe"))    
+    LogV(input,logFile="1",pop=1) {
+        writetocache(logFile,,,input . "`n",1,pop) 
         return
-    } ; append variable value to a file
+    } ; append variable value to a mem_cache file
 
 ; FILE AND FOLDER ______________________________________________________________
 
@@ -2502,15 +2548,12 @@
     }
 
     savePath(key = "") {
-        ;BlockInput, on
-        settimer, BlockInputTimeOut,-1000
         if WinActive("ahk_exe Explorer.EXE")
             path := Explorer_GetSelection()
         else 
             path := clip()
         CC(key, path)
         PU(key ": " path "`nSAVED",C.lgreen,,,,-1200) 
-        ;BlockInput, Off
         return 
     }
 
@@ -2570,7 +2613,7 @@
         Return result
     }
 
-    ExpandCollapseAllGroups(PosKey = "FE_cg"){
+    ExpandCollapseAllGroups(chord:="", PosKey:="FE_cg"){
         global med
         WinGetActiveStats, Title, Width, Height, X, Y
         CoordMode, Mouse, screen ;use "screen" for saving and returning mouse positions and "window" for saving and recalling clicks relative to an app window 
@@ -2582,15 +2625,27 @@
 
         n := 0
         Loop {
-            MouseGetPos,,,, fc
+            MouseGetPos,,,, fc       ;store the name (ClassNN) of the control under the mouse cursor
             Sleep, fc ? 25 : 0
         } Until !fc ||g_highlight ++n > 80
-        sleep 100
-
-        ; Send % (Instr(A_ThisHotkey, "^") ? "{down 3}" : "{down 2}") "{Enter}"       ; ternary: sends u if if detects ctrl was pressed as part of the hotkey, g otherwise       
-        Send % (Instr(A_ThisHotkey, "^") ? "u" : "g") "{Enter}" ; ternary: sends u if if detects ctrl was pressed as part of the hotkey, g otherwise                 
+        
         sleep, short
         DllCall("SetCursorPos", "int", StartX, "int", StartY) ; used instead of MouseMove for multi-monitor setups 
+        sleep, short
+
+        if !chord 
+            Send % (Instr(A_ThisHotkey, "^") ? "u" : "g") ;"{Enter}" ; ternary: sends u if if detects ctrl was pressed as part of the hotkey, g otherwise                 
+        else if (chord = "expand")
+        {
+            Sendinput g
+        }
+        else if (chord = "collapse")
+        {
+            Sendinput u
+        }
+
+        sleep, short
+        
         ; MouseMove StartX, StartY
         Return
     }
@@ -3061,12 +3116,10 @@
     }
 
     ClickVidDL(path="",ListNum=0){
-
+        ; list num = 0-9.txt in mem_cache  
         global short, med, CB_hwnd
         sleep, med
         keywait()
-        ;BlockInput, on
-        ;settimer, BlockInputTimeOut,-1500
         Click, Right
         sleep, med * 2
         winget, Pname, ProcessName, A 
@@ -3077,7 +3130,9 @@
             case "vivaldi.exe": Send e
             default: Send e
         }
+        
         sleep med 
+        
         if !InStr(FileExist(path), "D") and !ListNum {
             msg := "WinGolems can't find the folder`n`n" . dir . "`n`nWould you like to create it?"
             MsgBox,4100,Create Hotstring,%msg% 
@@ -3095,10 +3150,10 @@
             sleep short
             WinMinimize,A
         } else if (SubStr(clipboard, 1,4) = "http") && ListNum {
-            Log("`n" clipboard,ListNum,1)
+            PU("logged in 4.txt")
+            LogV("`n" clipboard,ListNum,4)
         } else 
             PU("invalid url: " clipboard,,,,,-800)
-        BlockInput, Off
         return
     }
 
@@ -3311,8 +3366,6 @@
         ; move mouse cursor to the middle of active window
         global short
         Sleep, short 
-        ; BlockInput, Mousemove
-        settimer, BlockInputTimeOut,-600
         CoordMode, Mouse, window  ;usual  ; defines coordinates relative to active screen for multimonitor support
         if ScreenDim {
             winTopL_x := 0, winTopL_y := 0, width := A_ScreenWidth, height := A_ScreenHeight
@@ -3900,15 +3953,19 @@
 
     */
 
-    gotoLine(){
-        BlockInput, on
-        settimer, BlockInputTimeOut,-1000
-        selectword()
-        sleep 200
-        var := trim(clip(), " `;")
-        sleep 200
-        s("^g"), clip(var), s("enter")
-        BlockInput, Off
+    gotoLine(line:=""){
+        if !line
+        {
+            selectword()
+            sleep 200
+            line := trim(clip(), " `;")
+            sleep 200
+        }
+        sendinput ^g
+        sleep, 400
+        clip(line)
+        sleep, 200
+        sendinput {enter}
         return 
     } ; select number and go to that position in file  
 
@@ -4258,15 +4315,12 @@
     ConvertUpper(var = "", paste = True) {
         ; Convert selected text to uppercase
         ;ReleaseModifiers()
-        ; BlockInput, on
-        settimer, BlockInputTimeOut,-600
         var := !var ? clip() : var
         StringReplace, var, var, `r`n, `n, All
         StringUpper, var, var
         if !paste
             return %var%
         clip(var, True)
-        ; BlockInput, Off
         return
     }
 
@@ -4306,8 +4360,6 @@
     Capitalize1stLetter(var = "", paste = True, firstWord = True, LowerCaseOthers = True) {
         ; Capitalize just first letter of selected text
         ;ReleaseModifiers()
-        ; BlockInput, on
-        settimer, BlockInputTimeOut,-600
         var := (!var ? clip() : var)
         StringReplace, var, var, `r`n, `n, All
         if firstWord 
@@ -4324,7 +4376,6 @@
         if !paste
             return %var%
         clip(var, True)
-        ; BlockInput, Off
         return
     }
 
@@ -4345,8 +4396,8 @@
             ; settimer, BlockInputTimeOut,-600
             var := (selected) ? rtrim(clip()) : ""
             num_char := (StrLen(char) < length) 
-            ? (length - StrLen(var))/StrLen(char) 
-            : StrLen(char)
+                      ? (length - StrLen(var))/StrLen(char) 
+                      : StrLen(char)
             string_char := RepeatString(char, num_char - buffer) ; -1 to account for 1 space after the heading string
             output := var . ((buffer) ? A_space : "") . string_char
             output := substr(output, 1, length)
@@ -4486,24 +4537,17 @@
     }
 
     ReplaceBackspaceWithSpaces() {
-        BlockInput, on
-        settimer, BlockInputTimeOut,-600
-        var := clip()
-        clip(RepeatString(" ", strlen(var)))
-        BlockInput, Off
+        clip(RepeatString(" ", strlen(clip())))
         return
     }
 
     PasteOverwrite() {
-        BlockInput, on
         global short
-        settimer, BlockInputTimeOut,-600
         char_count := strlen(clipboard)
         Send ^v
         sleep short
         ; Sendevent {del %char_count%}
         Sendinput {del %char_count%}
-        BlockInput, Off
         return
     }
 
@@ -4514,8 +4558,6 @@
         ; ReleaseModifiers()
         global short
         sleep, short
-        ; BlockInput, on
-        settimer, BlockInputTimeOut,-600
         var := (!var ? clip() : var)
         var := RegExReplace(var, "S) +", A_Space)
         if regex
@@ -4525,25 +4567,23 @@
         if !paste
             return %var%
         clip(var, select)
-        ; BlockInput, Off
         return
     }
 
     removeHtmlTags() {
         ; remove html tags from selected text
-        BlockInput, on
-        settimer, BlockInputTimeOut,-600
         cl := clip()
-        LR:=RegExReplace( cl, "<.*?>","`r`n" )
-        stringreplace,lr,lr,|`r`n,,all
-        Loop ; remove empty lines
-        {
-            StringReplace,lr,lr, `r`n`r`n, , UseErrorLevel
-            if ErrorLevel = 0
-                break
-        }
-        clip(lr)
-        BlockInput, Off
+        LR:=RegExReplace( cl, "<.*?>")
+        
+        ; LR:=RegExReplace( cl, "<.*?>","`r`n" )
+        ; stringreplace,lr,lr,|`r`n,,all
+        ; Loop ; remove empty lines
+        ; {
+        ;     StringReplace,lr,lr, `r`n`r`n, , UseErrorLevel
+        ;     if ErrorLevel = 0
+        ;         break
+        ; }
+        clip(trim(lr))
         return
     } 
 

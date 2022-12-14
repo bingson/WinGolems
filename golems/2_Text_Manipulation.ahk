@@ -3,7 +3,6 @@
   lalt & capslock:: Sendinput {del}                                             ;TEXT MANIPULATION: del                                                                                           
   $>!capslock::     Sendinput {del 5}                                           ;TEXT MANIPULATION: del 5 spaces                                                                                              
   $<+^del::         Sendinput {del 5}                                           ;TEXT MANIPULATION: del 5 spaces                                                                                              
-  $<!Backspace::    delLine()                                                   ;TEXT MANIPULATION: delete current line of text
   $^#Backspace::    ReplaceBackspaceWithSpaces()                                ;TEXT MANIPULATION: Delete and replace selected text with blank spaces
   $#backspace::     Send ^{backspace}                                           ;TEXT MANIPULATION: ^backspace (delete word from last character)
   $<+^Backspace::   Sendinput {BackSpace 5}                                     ;TEXT MANIPULATION: Send {BackSpace 5}
@@ -45,12 +44,12 @@
   $sc00C::          s("{blind}"), clip(CS(clip(), {"_":" "}))                   ;C.TM: replace "_" with " " Ain selected text
   $+sc00C::         s("{blind}"), clip(CS(clip(), {"_":" ","-":" "}))           ;C.TM: replace "_" with " " Ain selected text
   F1 & SC033::      s("{blind}"), ReplaceAwithB("+", ",")                       ;C.TM: replace "+" with "," in selected text
-  #IF IsCMODE()                                                                 
+  #IF IsCMODE()                         
+  $Backspace::      delLine()                                                   ;TEXT MANIPULATION: delete current line of text                                       
   $lalt::           Sendinput {backspace}                                       ;TEXT MANIPULATION: backspace                                                                                               
   $sc00C::          s("{blind}"), ReplaceAwithB(" ", "_")                       ;C.TM: replace " " with "_" in selected text
   $>+s::            SortSelectedText()                                          ;TEXT MANIPULATION Sort Selected Text
   $>+d::            SortSelectedText("R")                                       ;TEXT MANIPULATION Sort Selected Text
-  $backspace::      ReplaceAwithB(" ")                                          ;TEXT MANIPULATION remove all spaces               
   $SC00D::          ReplaceAwithB()                                             ;TEXT MANIPULATION replaces multiple consecutive spaces with character length 1 space 
 
 
@@ -188,18 +187,8 @@
                                                                                 
   ; saved click points  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
     #IF
-    $*#i::                                                                      ;MouseFn: return to saved mouse position and click (left click if no saved position found)
-    $*#d::      CursorRecall(substr(A_ThisHotkey,0), 1,,0)                      ;MouseFn: return to saved mouse position and click (left click if no saved position found) chng 4th parameter to 1 stay at saved clicked position
-                                                                                
-    #If GetKeyState("PrintScreen", "P")                                         
-    $i::        CursorRecall(substr(A_ThisHotkey,0), 1,,0)                      ;MouseFn: return to saved mouse position and click (left click if no saved position found)
-    #If                                                                         
-    F12 & i::                                                                   ;MouseFn: Left click and save mouse position
-    F12 & d::   SaveMousPos(substr(A_ThisHotkey,0),1)                           ;MouseFn: Left click and save mouse position
-                                                                                
-    #If GetKeyState("shift", "P")                                               
-    F12 & i::                                                                   ;MouseFn: Left click and save mouse position
-    F12 & d::   resetMousPos(substr(A_ThisHotkey,0))                            ;MouseFn: Left click and save mouse position
+    $*#i::      CursorRecall("i", 1,,GC("iRtn",1))  ;MouseFn: return to saved mouse position (chord command) and click (left click if no saved position found)
+    $*#d::      CursorRecall("d", 1,,GC("dRtn",1))  ;MouseFn: return to saved mouse position (chord command) and click (left click if no saved position found) chng 4th parameter to 1 stay at saved clicked position
                                                                                 
     #IF                                                                         
     :X:i!~win::                                                                 ;MouseFn: Left click and save mouse position
@@ -236,17 +225,11 @@
 #IF 
 
 $<!SC033::     
-ChordTextManipulation(options := "L1 M T10", escape := "{esc}{ralt}", PUmenu := "zb\ChordTextMenu", noLRshift := 1) {
-    global C
-    
-    menu := rtrim(AccessCache(PUmenu,,0),"`n")
-    PU(menu,C.lblue,,,,990000,12,700,"Lucida Sans Typewriter",1)
-    keysPressed :=  KeyWaitHook("L1 M T10",escape)
-    input := !noLRshift ? (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : "")) : ""
-    keysPressed := noLRshift ? trim(keysPressed, "<>") : keysPressed ;removes left and right shift distinction
-    Gui, PopUp: cancel
+$>^SC033::     
+Text_CommandChord(PUmenu:="zb\Text_ChordMenu.txt", Source:="2_Text_Manipulation.ahk", color:="lblue", noLRshift:=1
+                 , font:="Lucida Sans Typewriter", input_Opt:="L1 M T30", escape:="{esc}{ralt}"){
 
-    Switch % keysPressed
+    Switch % CallUI(PUmenu,color,noLRshift,font,input_Opt,escape,input)
     {
         Case "v" :  FormatBreaks("1 break")                                             ;TEXT MANIPULATION| replace multiple paragraph breaks w/ 1 break in selected text
         Case "+v":  FormatBreaks("no break")                                            ;TEXT MANIPULATION| replace multiple paragraph breaks with space (remove paragraphs breaks)
@@ -256,22 +239,25 @@ ChordTextManipulation(options := "L1 M T10", escape := "{esc}{ralt}", PUmenu := 
         Case "-" :  clip(CS(clip(), {"_":" ","-":" "}))                                 ;C.TM: replace "_" with " " in selected text
         Case "a" :  SortSelectedText()                                                  ;TEXT MANIPULATION Sort Selected Text
         Case "+a":  SortSelectedText("R")                                               ;TEXT MANIPULATION Sort Selected Text
-        Case "s" :  ReplaceAwithB()                                                     ;TEXT MANIPULATION replaces multiple consecutive spaces with character length 1 space
-        Case "+s":  ReplaceAwithB(" ")                                                  ;TEXT MANIPULATION! remove all spaces from selected text
-        Case "2" :  SelectLine(), txt := clip(), SI("{right}{enter}"), clip(txt)        ;TEXT MANIPULATION: duplicate current line
+        Case "+s" :  ReplaceAwithB()                                                     ;TEXT MANIPULATION replaces multiple consecutive spaces with character length 1 space
+        Case "s":  ReplaceAwithB(" ")                                                  ;TEXT MANIPULATION! remove all spaces from selected text
+        Case "q" :  SelectLine(), txt := clip(), SI("{right}{enter}"), clip(txt)        ;TEXT MANIPULATION: duplicate current line
         Case "m" :  ReplaceAwithB("_"," "),Capitalize1stLetter(,,0),,ReplaceAwithB(" ") ;CamelCase
         Case "n" :  AddSpaceBtnCaseChange(), ReplaceAwithB(" ","_")                     ;snake_case
-        Case "+n":  AddSpaceBtnCaseChange()                                             ;add space between case change
+        Case "+m":  AddSpaceBtnCaseChange()                                             ;add space between case change
+        Case "+r":  TC("iRtn"), TC("dRtn")                                              ;toggle cursor returns to original position afted recall click  
+        ; Case "r":   CB() add change separator                                             ;toggle cursor returns to original position afted recall click  
         Case "i" :  SaveMousPos("i",1)                                                  ;save mouse position for #i
         Case "+i":  resetMousPos("i")                                                   ;reset mouse position for #i
         Case "d" :  SaveMousPos("d",1)                                                  ;save mouse position for #d
         Case "+d":  resetMousPos("d")                                                   ;reset mouse position for #d
         Case "e" :  SI("#{SC034}")                                                      ;emojis
         Case "c" :  SI("#F6")                                                           ;color picker
-        Case "o" :  OCRtoClipboard(,"V2")                                               ;color picker
-        Case "+o":  OCRtoClipboard(,"UWP")                                              ;color picker
+        Case "o" :  OCRtoClipboard(,"V2")                                               ;OCR V2
+        Case "+o":  OCRtoClipboard("A","V2")                                            ;Append OCR V2
+        Case "p":   OCRtoClipboard(,"UWP")                                              ;OCR UWP
+        Case "+p":  OCRtoClipboard("A","UWP")                                           ;Apend OCR UWP
         Case "w" :                                                                      ;set cursor width (1-9)
-                                                                            
                     PU("Enter cursor width (1-9)",C.lyellow,,,,100000)
                     width :=  KeyWaitHook("L1 M",escape)
                     Gui, PopUp: cancel
@@ -281,10 +267,15 @@ ChordTextManipulation(options := "L1 M T10", escape := "{esc}{ralt}", PUmenu := 
                         PU("Must be a number input", C.pink)                                              
                                                         
 
-        Case "+?": OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")           
+        Case "+?":  EditChord(PUmenu, Source, A_LineNumber)
+
+        
         default:
             ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
             sleep,0
     }
     return 
 }
+
+
+        

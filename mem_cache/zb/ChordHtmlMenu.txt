@@ -1,12 +1,15 @@
 g  Group all tabs collapse        G  Group all tabs and expand          t  twitter search advanced    q  element picker 
 u  Ungroup current group          U  Ungroup all groups                 p  generate password          w  element zapper 
 x  Close current group            X  Close tabs not in current group    s  shorten URL                d  dashboard      
-o  Close all ungrouped tabs       O  Close other tabs                   a  Fireshot screenshot
+o  Close all ungrouped tabs       O  Close other tabs                   a  Fireshot screenshot        v  vimium
 e  collapse/expand all groups     b  send all tabs to onetab
 
-;  extensions                     f  ahk forums       1  bi.inscrutable@gmail.com
-'  browser keyboard shortcuts     h  btdig            2  b.inscrutable@gmail.com
-m  set r-click menu option        k  btmulu           3  blingson@gmail.com
-~  restart browser                n  bt4g             4  leefrank70@gmail.com
-`  send to other browser          r  rarbg            
+;  extensions                     1  bi.inscrutable@gmail.com
+'  browser keyboard shortcuts     2  b.inscrutable@gmail.com
+m  set r-click menu option        3  blingson@gmail.com
+~  restart browser                4  leefrank70@gmail.com
+`  send to other browser          
 i  browser sidebar (msedge)
+
+
+

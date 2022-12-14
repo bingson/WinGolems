@@ -2,6 +2,7 @@
 ,    outline
 t|T  tags  | outgoing links
 g|G  local | global graph                            
+y    insert template
    
 c|C  copy as html | remove html tags
 i    center image

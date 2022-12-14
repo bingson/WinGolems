@@ -10,8 +10,12 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
     ; msgbox % userinput
     if (1stChar ~= "[\\\.\,>0-9A-Z\?jk:\[\]\{\}\;]") {                                    ; equivalent to: if RegExMatch(1stChar,"[0-9A-Z\?jk:]") 
 
-        ; substitute period|comma alias
-        if (UserInput ~= "^(?>[OALVCDP])(>|\|)?(\.|\,|\;|\[|\]|\{|\})(\S.*)?$|( )(\.|\,|\;|\[|\]|\{|\})(\S*)$") {
+
+
+        Fn  := "^(?>[OALVCDP])", alias := "(\.|\,|\;|\[|\]|\{|\})(\S.*)?$"
+
+        ; replace alias
+        if (UserInput ~= Fn . "(>|\|)?" . alias . "|" . Fn . "(\S+)( )" . alias ) {
             if instr(UserInput,":") {
                 dPos        := InStr(UserInput, ":")
                 text_to_add := substr(UserInput, dPos+1)
@@ -445,34 +449,36 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                     ; return
                 } else if (InStr(C_input, "~") && FileExist(path)) {
                     E_Input := substr(C_input,2)
-                    switch 
+                    ; msgbox % substr(E_Input, 1,1) = "i"
+                    Switch E_Input         
                     {
-                        case E_Input == "dd": 
-                            NewText := TF_RemoveDuplicateLines(AccessCache(path,,0),,,1,false) ; remove consecutive duplicates
-                        case E_Input == "d": 
-                            NewText := TF_RemoveDuplicateLines(AccessCache(path,,0),,,,false)  ; remove any duplicates
-                        case E_Input == "t": 
-                            NewText := RegExReplace(AccessCache(path,,0), "m)^( +|`t+)( +)")   ; trim leading tabs and spaces
-                        case E_Input == "ts": 
-                            NewText := RegExReplace(AccessCache(path,,0), "m)^( +|`t+)( +)")   ; trim leading spaces
-                        case E_Input == "tt": 
-                            NewText := RegExReplace(AccessCache(path,,0),  "m)^`t+")           ; trim leading tabs
-                            NewText := RegExReplace(NewText,  " [ `t]+", " ")
-                        case E_Input == "cl":                                                  ; replace multiple consecutive blank lines with 1
-                            NewText := RegExReplace(AccessCache(path,,0), "(`r`n){2,}", "`r`n`n")
-                        case E_Input = "l":                                                  ; remove blank lines
-                            NewText := RemoveBlankLines(,AccessCache(path,,0))
-                        case substr(E_Input, 1,1) = "i":                                       ; insert line line (E~i2:example -> insert the word "example" at line 2)
-                            dPos      := InStr(E_Input, ":")
-                            text_to_add := substr(E_Input, dPos+1)
-                            rowIndex  := substr(E_Input,2,-strlen(text_to_add)-1)              ;last term is length not end position
-                            NewText := TF_InsertLine(AccessCache(path,,0), rowIndex,rowIndex,text_to_add)
-                        case substr(E_Input, 1,1) = "r":                                       ; remove line (E~r2:example -> line 2 )
-                            rowIndex  := substr(E_Input,2)              ;last term is length not end position
-                            NewText := (rowIndex > 0) ? TF_RemoveLines(AccessCache(path,,0), rowIndex, rowIndex) 
-                                                      : TF_RemoveLines(AccessCache(path,,0), rowIndex) 
+                        case "dd": NewText := TF_RemoveDuplicateLines(AccessCache(path,,0),,,1,false)      ; remove consecutive duplicates
+                        case "d":  NewText := TF_RemoveDuplicateLines(AccessCache(path,,0),,,,false)       ; remove any duplicates
+                        case "t":  NewText := RegExReplace(AccessCache(path,,0), "m)^[ `t]+")              ; trim leading tabs and spaces
+                        case "tt": NewText := RegExReplace(AccessCache(path,,0),  "m)^`t+")                ; trim leading tabs
+                        case "ts": NewText := RegExReplace(AccessCache(path,,0),  "m)^ +")                 ; trim leading spaces
+                        case "cl": NewText := RegExReplace(AccessCache(path,,0), "(`r`n){2,}", "`r`n`n")   ; replace multiple consecutive blank lines with 1
+                        case "l","nl":   NewText := RemoveBlankLines(,AccessCache(path,,0))                ; remove blank lines
                         default:
-                            msgbox % "error E_input:" E_Input " strlen(E_input):" strlen(E_Input)
+                            if (substr(E_Input, 1,1) = "i") {                                              ; insert line line (E~i2:example -> insert the word "example" at line 2)
+                                dPos        := InStr(E_Input, ":")
+                                text_to_add := substr(E_Input, dPos+1)
+                                rowIndex    := substr(E_Input,2,-strlen(text_to_add)-1)                      ;last term is length not end position
+                                NewText     := TF_InsertLine(AccessCache(path,,0), rowIndex,rowIndex,text_to_add)
+                            } else if (substr(E_Input, 1,1) = "r") {                                       ;remove line (E~r2:example -> line 2 )
+                                lines := substr(E_Input,2)                                                 ;last term is length not end position
+                                if RegExMatch(lines,"(\d+)-(\d+)") {
+                                    startline := RegExReplace(lines, "(\d+)-(\d+)" , "$1")
+                                    endline   := RegExReplace(lines, "(\d+)-(\d+)" , "$2")
+                                    NewText   := TF_RemoveLines(AccessCache(path,,0), startline, endline)
+                                } else {
+                                    NewText := (lines > 0) 
+                                        ? TF_RemoveLines(AccessCache(path,,0), lines, lines)   ;remove single line
+                                        : TF_RemoveLines(AccessCache(path,,0), lines)          ;if lines negative removes line(s) from bottom
+                                }
+                            } else {
+                                msgbox % "ERROR`nE_input: " E_Input "`nstrlen(E_input): " strlen(E_Input)
+                            }
                     }
                     WriteToCache(path,,,NewText,,1)
                     UpdateGUI(NewText, ltrim(path,f_path))
@@ -539,8 +545,8 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                     SplitPath,% GC("CB_last_display"), FileName, Dir, Extension, NameNoExt
                     dir := dir ? dir . "\" : ""
                     FileDelete,% f_path . Dir . NameNoExt . "." . (Extension ? Extension : "txt")
-                } else if InStr(UserInput, ",") {
-                    arrD := StrSplit(C_input, ",")
+                } else if InStr(UserInput, "~") {
+                    arrD := StrSplit(C_input, "~")
                     loop % arrD.MaxIndex()
                     {
                         SplitPath,% trim(arrD[A_index]), FileName, Dir, Extension, NameNoExt
@@ -613,8 +619,9 @@ ProcessCommand(UserInput, suffix = "", title = "", fsz = "", fnt = "", w_color =
                             AB := StrSplit(arrN[A_index], GC("Rsep1", "~"))
                             vtext := ReplaceAwithB(AB[1], AB[2],vtext,0,0)
                         }
-                        StringCaseSense, Off
+                        sleep 100
                         clip(vtext)   
+                        StringCaseSense, Off
                         return 3
 
                 }        

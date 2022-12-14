@@ -59,8 +59,8 @@
 |      A|P clipboard(>) variations             A>, P1>, A>:sample  A|P to clipboard=> selected text, contents of 1.txt, the word "sample"|
 |      remove/delete rows from top of file     P!3                 remove top 3 rows of currently loaded file                            |
 |      remove/delete rows from bottom of file  A!3                 remove last 3 rows of currently loaded file                           |
-|  D   Delete file                             D1, Da.ini, DD      Delete =>1.txt (".txt" is optional), a.ini, currently loaded file     |
-|      Delete multiple files                   D1,test,2,3         Delete files 1.txt, test.txt, 2.txt, 3.txt in one command             |
+|  D   Delete file                             Dfile1, DD          Delete => delete <file name 1>; DD: delete currently loaded CB file   |
+|      Delete multiple files                   D1~test~2~3         Delete files 1.txt, test.txt, 2.txt, 3.txt in one command             |
 |  ,   set alias for V L O A P D C commands    ,r\                 makes the comma character an alias (shortcut/placeholder) for "r\"    |
 |      use alias                               L,                  equivalent to Lr\                                                     |
 |      resets , alias to nothing               ,                                                                                         |
@@ -75,7 +75,7 @@
 |      Chain multiple replacements commands    R,~+__A~B           "A,C" -> "B+C"; format for multiple replacements: R?~?__?~?__?~?__... |
 |      Change replacement separator            R~,                 Changes replacement separator from ~ (default) to ,                   |
 |      Change multi replacement separator      R~~|                Changes multi replacement separator  from __ (default) to |           |  
-|  F   Paste same string repeatedly            F-+,4               Paste: -+-+ ; fmt: string "," # of characters widths to fill          |
+|  F   Paste same string repeatedly            F-+~4               Paste: -+-+ ; fmt: string "~" # of characters widths to fill          |
 |  S   Search selected text in specified       Sd, St, Sw, Sn, Sf  (d)dictionary,(t)thesaurus,(w)wikipedia,(n)news,(f)finviz,(i)images   |
 |      search engine                           Sio, Sse, Ssse, Sq  (io)investopedia,(se)StackExchange,(sse)stats.StackExchange,(q)quora  |
 |      Query submitted text                    Sd:facetious        (so)stack overflow, (a)ahk docs,(y)youtube, (twt)twitter, (e)ebay     | 

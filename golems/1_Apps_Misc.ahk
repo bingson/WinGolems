@@ -576,6 +576,7 @@
 
 ; TAB NAVIGATION _______________________________________________________________
   
+    
     #IF WinActive("ahk_exe Code.exe")                                           
     $^b::     Sendinput ^{PgUp}                                                 ;Navigation: navigate to left tab
     $^space:: Sendinput ^{PgDn}                                                 ;Navigation: navigate to right tab
@@ -584,10 +585,13 @@
     $^b::     Sendinput ^+{tab}                                                 ;Navigation: navigate to left tab
     $^space:: Sendinput ^{tab}                                                  ;Navigation: navigate to right tab
 
+    #IF IsCmode()
+    b::       Send ^b                                                           ;Navigation: replacement for ^b used in tab navigation
+
 ; WEB SEARCH ___________________________________________________________________
     #IF                                                                         
     $>!SC035::  search("google.com/search?q=")                                  ;search: google search selected text
-    $+#SC035::  search("autohotkey.com/docs/search.htm?q=",,"&m=2")             ;search: AutoHotkey documentation
+    $<+#SC035::  search("autohotkey.com/docs/search.htm?q=",,"&m=2")            ;search: AutoHotkey documentation
     $+>!SC035:: search("google.com/search?tbm=isch&q=")                         ;search: google image search
     #If isCMODE()                                                               ;(+capslock) search clipboard contents instead of selected text
     $SC035::    search("google.com/search?q=",clipboard)                        ;Convenience: google search selected text
@@ -607,24 +611,16 @@
 #If    
 $#SC035::     
 $>^SC035::     
-ChordSearch(options :="L1 T10", escape := "{esc}{ralt}",PUmenu:="zb\SearchMenu", noLRshift := 0) {
-    global C
+Search_ChordCommand(PUmenu:="zb\Search_ChordMenu.txt", Source:="1_Apps_Misc.ahk", color:="Eyellow", noLRshift:=0
+                  , font:="Lucida Sans Typewriter", input_Opt:="L1 M T30", escape:="{esc}{ralt}"){
     
-    
-    menu := rtrim(AccessCache(PUmenu,,0),"`n")
-    PU(menu,C.Eyellow,,,,10000,13,,"Lucida Sans Typewriter",1)     
-             ;pop up website menu
-                                                                            
-    keysPressed :=  KeyWaitHook(options,escape)
-    input := !noLRshift ? (Instr(keysPressed,"<+") ? clipboard : (Instr(keysPressed,">+") ? clip() : "")) : ""
-    keysPressed := noLRshift ? trim(keysPressed, "<>") : keysPressed ;removes left and right shift distinction
-
-    Gui, PopUp: cancel
-    Switch % keysPressed
+    Switch % CallUI(PUmenu,color,noLRshift,font,input_Opt,escape,input)
     {
         Case "<+a",">+a","a":   (input ? Search("www.amazon.ca/s?k=", input)                                                               : LURL("www.amazon.ca"))
         Case "<+b",">+b","b":   (input ? Search("www.imdb.com/find?q=", input)                                                             : LURL("www.imdb.com"))
-        Case "<+i",">+i","i":   (input ? Search("google.com/search?tbm=isch&q=", input)                                                    : LURL("https://images.google.com/"))
+        Case "<+i",">+i","i":   (input ? Search("google.com/search?tbm=isch&q=", input)                                                    : LURL("images.google.com/"))
+        Case "<+g",">+g","g":   (input ? Search("google.com/search?q=", input)                                                             : LURL("google.com/"))
+        Case "<+l",">+l","l":   (input ? Search("https://translate.google.com/?sl=auto&tl=en&text=", input)                                : LURL("translate.google.com/"))
         Case "<+d",">+d","d":   (input ? Search("www.dictionary.com/browse/", input)                                                       : LURL("www.dictionary.com"))
         Case "<+e",">+e","e":   (input ? Search("www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20210825091515&SearchText=", input) : LURL("www.aliexpress.com"))
         Case "<+f",">+f","f":   (input ? Search("ca.finance.yahoo.com/quote/", input)                                                      : LURL("ca.finance.yahoo.com"))
@@ -632,16 +628,18 @@ ChordSearch(options :="L1 T10", escape := "{esc}{ralt}",PUmenu:="zb\SearchMenu",
         Case "<+p",">+p","p":   (input ? search("stackexchange.com/search?q=", input)                                                      : LURL("stackexchange.com"))
         Case "<+m",">+m","m":   (input ? Search("google.com/maps/search/", input)                                                          : LURL("google.com/maps/"))
         Case "<+o",">+o","o":   (input ? Search("www.stackoverflow.com/search?q=", input)                                                  : LURL("www.stackoverflow.com"))
-        Case "<+r",">+r","r":   (input ? Search("https://www.reddit.com/search/?q=", input)                                                : LURL("https://www.reddit.com"))
+        Case "<+r",">+r","r":   (input ? Search("https://www.reddit.com/search/?q=", input)                                                : LURL("www.reddit.com"))
         Case "<+s",">+s","s":   (input ? Search("www.twitter.com/search?q=", input)                                                        : LURL("www.twitter.com"))
         Case "<+t",">+t","t":   (input ? Search("www.thesaurus.com/browse/", input)                                                        : LURL("www.thesaurus.com"))
         Case "<+v",">+v","v":   (input ? Search("www.bing.com/videos/search?q=", input)                                                    : LURL("www.bing.com/videos"))
         Case "<+w",">+w","w":   (input ? Search("en.wikipedia.org/w/index.php?search=", input)                                             : LURL("en.wikipedia.org"))
         Case "<+y",">+y","y":   (input ? Search("youtube.com/results?search_query=", input)                                                : LURL("youtube.com"))
-        Case ">+?":              OP(A_ScriptDir "\mem_cache\" PUmenu ".txt")       ;edit chord command menu
+        Case "<+y",">+y","y":   (input ? Search("youtube.com/results?search_query=", input)                                                : LURL("youtube.com"))
+        Case ">+?":              EditChord(PUmenu, Source, A_LineNumber)
+
         default:
             sleep,0
-            ; msgbox % "Nothing assigned to " keysPressed " which was pressed"
+            ; msgbox % "Nothing assigned to " keysPressed 
     }
     return 
 }

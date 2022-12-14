@@ -1,14 +1,18 @@
 ﻿             SEARCH MENU
 
+g  google               i  google images
+m  google maps          l  google translate 
+y  youtube              v  bing videos
+                       
 d  dictionary           t  thesaurus
 f  finance.yahoo        w  wikipedia
 
-v  bing videos          y  youtube
-i  google images        m  google maps
+r  reddit               b  imdb                 
+s  twitter
 
-r  reddit               s  twitter
-a  amazon.ca            e  aliexpress
-b  imdb
+
+e  aliexpress      
+a  amazon.ca
 
 o  stackoverflow        p  stackexchange
 h  math.stackexchange   
